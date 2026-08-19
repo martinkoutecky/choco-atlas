@@ -1,0 +1,340 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Computational Complexity of Verifying the Group No-show Paradox — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Computational Complexity of Verifying the Group No-show Paradox <span style="font-weight:normal;color:#8a7350">(ijcai24-00328)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> Under dense explicit-vector encoding the problem is \(\mathrm{P}\); under sparse-support encoding it is \(\mathrm{NP}\)-complete.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4 — class: hardness</p>
+<blockquote class="thmq">For any 0 ≤α ≤1, GNSP-STV is NP- complete to compute, where the tie-breaking mechanism is LEX, FA, MPSR+LEX or MPSR+FA.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given candidates \(C\), ranking types \(T=L(C)\), a rational society \(\mu\in\mathbb{Q}_{\ge 0}^{T}\) with \(\sum_t\mu_t=1\), and lexicographic tie-breaking, let \(a=\mathrm{STV}(\mu)\). Decide whether there exist \(b\ne a\) and rational abstention masses \(\nu_t\) such that \(0\le\nu_t\le\mu_t\), \(\sum_t\nu_t&gt;0\), \(\nu_t&gt;0\Rightarrow b\succ_t a\), and \(\mathrm{STV}(\mu-\nu)=b\).</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">Given a finite candidate set \(C\) with a fixed lexicographic order, let \(L(C)\) be its strict rankings. A rational society is \(\mu\in\mathbb{Q}_{\ge0}^{L(C)}\) with \(\sum_t\mu_t=1\). Under STV, repeatedly eliminate the candidate with least current first-place mass among remaining candidates, transferring each ranking&#x27;s mass to its highest remaining candidate; lexicographic tie-breaking resolves every tie.
+
+**Target.** Is deciding whether there exist \(b
+e a=\mathrm{STV}(\mu)\) and \(
+u\in\mathbb{Q}_{\ge0}^{L(C)}\) such that \(0\le
+u_t\le\mu_t\), \(\sum_t
+u_t&gt;0\), \(
+u_t&gt;0\Rightarrow b\succ_t a\), and \(\mathrm{STV}(\mu-
+u)=b\), NP-hard or in \(\mathrm{P}\)?
+
+**Nearest known results.** For finite profiles of individual voters, the analogous STV group no-show problem is NP-complete under lexicographic tie-breaking. No result for the rational-mass version was verified.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Complexity of Rational-Mass STV Group No-Show
+
+## Classification
+
+The answer depends on how the society \(\mu\) is encoded.
+
+- If the complete vector \((\mu_t)_{t\in L(C)}\) is represented explicitly, including zero coordinates, the problem belongs to \(\mathrm{P}\).
+
+- If \(\mu\) is represented sparsely by listing only rankings of positive mass, the problem is \(\mathrm{NP}\)-complete.
+
+Thus the literal full-vector formulation in the question is polynomial-time solvable. The sparse-support formulation, which is usually the more succinct representation, remains hard despite allowing fractional abstention.
+
+If \(C\) is a constant rather than part of the input, both encodings give a polynomial-time problem.
+
+## 1. Linear programming for a fixed elimination order
+
+Let \(m=|C|\), and let \(\triangleleft\) denote the lexicographic elimination priority: \(c\triangleleft d\) means that when \(c\) and \(d\) have equal least tally, \(c\) is eliminated first.
+
+Compute \(a=\operatorname{STV}(\mu)\). Fix \(b\neq a\) and an elimination order
+
+\[
+\sigma=(c_1,\ldots,c_{m-1},c_m)
+\]
+
+with \(c_m=b\). For round \(i\), let
+
+\[
+S_i=C\setminus\{c_1,\ldots,c_{i-1}\}.
+\]
+
+For a ranking \(t\), write \(h_t(S_i)\) for its highest-ranked candidate in \(S_i\). Given abstention masses \(\nu\), define the round-\(i\) tally
+
+\[
+F_{i,c}(\nu)=\sum_{\substack{t\in L(C)\\h_t(S_i)=c}}(\mu_t-\nu_t).
+\]
+
+The order \(\sigma\) is exactly the STV elimination order of \(\mu-\nu\) if, for every \(i&lt;m\) and every \(d\in S_i\setminus\{c_i\}\),
+
+- \(F_{i,c_i}(\nu)\leq F_{i,d}(\nu)\) when \(c_i\triangleleft d\);
+- \(F_{i,c_i}(\nu)&lt;F_{i,d}(\nu)\) when \(d\triangleleft c_i\).
+
+Indeed, equality is permitted precisely when the lexicographic rule chooses \(c_i\) rather than \(d\).
+
+The abstention restrictions are linear:
+
+- \(0\leq\nu_t\leq\mu_t\);
+- \(\nu_t=0\) whenever \(b\not\succ_t a\);
+- \(\sum_t\nu_t&gt;0\).
+
+All strict inequalities can be handled by one common slack variable \(\varepsilon\). Consider the rational linear program maximizing \(\varepsilon\), subject to
+
+- \(\varepsilon\geq0\);
+- \(\sum_t\nu_t\geq\varepsilon\);
+- the preceding bounds and zero constraints on \(\nu\);
+- \(F_{i,c_i}(\nu)\leq F_{i,d}(\nu)\) for weak comparisons;
+- \(F_{i,c_i}(\nu)+\varepsilon\leq F_{i,d}(\nu)\) for strict comparisons.
+
+This program has optimum greater than \(0\) if and only if there is a valid positive abstention realizing \(\sigma\).
+
+For the forward direction, take a feasible abstention. Its total abstention and all finitely many required strict tally gaps are positive, so their minimum supplies a positive \(\varepsilon\). The reverse direction follows directly from the constraints.
+
+Consequently, feasibility for a prescribed winner and elimination order is decidable by rational linear programming in polynomial time.
+
+## 2. Polynomial time for the explicit full vector
+
+Suppose all \(m!\) coordinates of \(\mu\) are explicitly represented. Let \(N\) be the bit length of this representation. Then \(m!\leq N\).
+
+There are exactly \(m!\) possible elimination orders. For every order whose last candidate differs from \(a\), solve the linear program above. Each program has
+
+- \(m!+1\) variables;
+- \(\mathcal O(m!+m^2)\) constraints;
+- rational coefficients whose encoding length is polynomial in \(N\).
+
+Exact rational linear programming is polynomial-time solvable. Since the number \(m!\) of linear programs is itself at most \(N\), the total running time is polynomial in \(N\).
+
+Soundness follows because an accepted program explicitly realizes an STV elimination order ending at a preferred new winner. Conversely, any successful abstention induces one of the enumerated elimination orders and therefore makes the corresponding program attain a positive value of \(\varepsilon\).
+
+Hence the dense explicit-vector problem belongs to \(\mathrm{P}\).
+
+## 3. Membership in \(\mathrm{NP}\) under sparse encoding
+
+Suppose instead that the input lists only the \(\tau\) rankings having positive mass.
+
+A nondeterministic algorithm guesses \(b\neq a\) and an elimination permutation ending at \(b\), then solves the corresponding linear program with only the \(\tau\) supported rankings as variables. The guessed permutation has polynomial length, and the linear program has polynomial size.
+
+Therefore the sparse-support problem belongs to \(\mathrm{NP}\).
+
+## 4. Sparse-support hardness
+
+We give a reduction from restricted exact cover by \(3\)-sets, denoted \(\mathrm{RXC3}\). This is the endpoint-forcing construction underlying the finite-profile STV hardness proof in [Theorem 4 of the IJCAI 2024 paper](https://www.ijcai.org/proceedings/2024/0328.pdf), with the additional argument showing that fractional abstention creates no new solutions.
+
+An instance consists of
+
+\[
+X=\{x_1,\ldots,x_q\},\qquad
+\mathcal S=\{S_1,\ldots,S_q\},
+\]
+
+where every \(S_i\) has three elements and every element occurs in exactly three sets. We may assume \(q\geq6\) and \(q\) is divisible by \(3\).
+
+### 4.1 Construction
+
+Use candidates
+
+\[
+\{w,c,d_0,d_1,\ldots,d_q\}
+\cup
+\{b_i,\bar b_i:1\leq i\leq q\}.
+\]
+
+Choose the lexicographic labels so that \(\bar b_i\triangleleft b_i\) for every \(i\). Each displayed ranking is completed by placing all unlisted candidates after the displayed prefix in any fixed order.
+
+The unnormalized profile consists of the following types.
+
+| Multiplicity | Ranking prefix |
+|---:|---|
+| \(12q\) | \(c\succ w\succ\text{others}\) |
+| \(12q-1\) | \(w\succ c\succ\text{others}\) |
+| \(10q+\frac{2q}{3}\) | \(d_0\succ w\succ c\succ\text{others}\) |
+| \(12q-2\), for each \(j\) | \(d_j\succ w\succ c\succ\text{others}\) |
+| \(6q+4i-2\), for each \(i\) | \(b_i\succ\bar b_i\succ w\succ c\succ\text{others}\) |
+| \(2\), for each \(i\) | \(b_i\succ d_0\succ w\succ c\succ\text{others}\) |
+| \(6q+4i-6\), for each \(i\) | \(\bar b_i\succ b_i\succ w\succ c\succ\text{others}\) |
+| \(2\), for each \(i\) and \(x_j\in S_i\) | \(\bar b_i\succ d_j\succ w\succ c\succ\text{others}\) |
+| \(1\), for each \(i\) | \(\bar b_i\succ b_i\succ c\succ w\succ\text{others}\) |
+
+There are at most \(8q+3\) supported rankings. Divide every multiplicity by the total mass \(W\) to obtain a rational society of total mass \(1\). Since STV is homogeneous under positive scaling, we may continue working with the displayed unnormalized masses.
+
+### 4.2 Original winner
+
+Initially,
+
+\[
+\operatorname{sc}(c)=12q,\qquad
+\operatorname{sc}(w)=12q-1,
+\]
+
+\[
+\operatorname{sc}(d_0)=10q+\frac{2q}{3},\qquad
+\operatorname{sc}(d_j)=12q-2,
+\]
+
+and
+
+\[
+\operatorname{sc}(b_i)=6q+4i,\qquad
+\operatorname{sc}(\bar b_i)=6q+4i+1.
+\]
+
+Thus \(b_1,b_2,\ldots,b_q\) are eliminated in that order. When \(b_i\) is eliminated, its two ballots of the second \(b_i\)-type transfer to \(d_0\), while its other ballots transfer to \(\bar b_i\).
+
+After these \(q\) rounds, every \(d_j\) still has tally \(12q-2\), whereas \(w\) has tally \(12q-1\). Hence some \(d_j\) is eliminated and transfers its entire tally to \(w\). Candidate \(w\) then has at least \(24q-3\).
+
+No pair candidate can ever accumulate \(20q\), \(d_0\) can never accumulate \(13q\), and no \(d_j\) can ever accumulate \(13q\). Candidate \(c\), while \(w\) remains, can receive at most its initial \(12q\) mass and the \(q\) unit ballots ranking \(c\succ w\). Thus \(w\) is never subsequently eliminated and wins. Therefore \(a=w\).
+
+### 4.3 The only possible new winner is \(c\)
+
+Consider any successful abstention with new winner \(y\neq w\). Suppose first that \(y\neq c\).
+
+The \(12q\) ballots beginning \(c\succ w\) and the \(12q-1\) ballots beginning \(w\succ c\) both rank \(w\) above \(y\). They therefore cannot abstain.
+
+Since \(y\) wins, one of \(c,w\) must eventually be eliminated. They are adjacent in every ranking. When the first of them is eliminated, all its current mass transfers to the other. The surviving candidate then contains the two undeleted blocks above and hence has tally at least \(24q-1\).
+
+Before reaching \(c\) or \(w\), the total mass that can accumulate at any other candidate is bounded by
+
+\[
+\operatorname{sc}(b_i)\leq12q+8i-5&lt;20q,
+\]
+
+\[
+\operatorname{sc}(\bar b_i)\leq12q+8i-1&lt;20q,
+\]
+
+\[
+\operatorname{sc}(d_0)\leq12q+\frac{2q}{3}&lt;13q,
+\qquad
+\operatorname{sc}(d_j)\leq12q+4&lt;13q.
+\]
+
+These bounds include every ballot that can ever transfer to the indicated candidate. Hence the survivor of \(c,w\), with at least \(24q-1\), can never be eliminated and must win. This contradicts \(y\notin\{c,w\}\).
+
+Therefore every successful no-show deviation has new winner \(c\).
+
+### 4.4 Fractional abstention is forced to make binary choices
+
+The only rankings preferring \(c\) to \(w\) are
+
+- the \(12q\)-mass type beginning \(c\succ w\);
+- the \(q\) unit types \(\bar b_i\succ b_i\succ c\succ w\).
+
+Let \(r\in[0,12q]\) be the deleted mass of the first type, and let \(z_i\in[0,1]\) be the deleted mass of the \(i\)-th unit type.
+
+During the first \(q\) relevant rounds, the two candidates of pair \(i\) have tallies
+
+\[
+6q+4i
+\quad\text{and}\quad
+6q+4i+1-z_i.
+\]
+
+If \(z_i&lt;1\), then \(b_i\) is strictly lower and is eliminated. If \(z_i=1\), the tallies are equal and the chosen lexicographic order eliminates \(\bar b_i\).
+
+Thus a fractional value \(0&lt;z_i&lt;1\) has exactly the same combinatorial effect as \(z_i=0\). Define
+
+\[
+I=\{i:z_i=1\},\qquad k=|I|.
+\]
+
+Conditional on \(c\) eventually winning, the first \(q\) eliminations must be one candidate from each pair in increasing order of \(i\). Indeed, the eliminated member of an unprocessed pair has tally at most \(10q\), while \(d_0,d_j,w\) and every processed pair survivor have strictly larger tallies. If \(c\) were selected instead, it could not win.
+
+After these \(q\) rounds, the tallies are
+
+\[
+\operatorname{sc}(w)=12q-1,\qquad
+\operatorname{sc}(c)=12q-r,
+\]
+
+\[
+\operatorname{sc}(d_0)
+=
+12q+\frac{2q}{3}-2k,
+\]
+
+and
+
+\[
+\operatorname{sc}(d_j)
+=
+12q-2+2r_j,
+\]
+
+where
+
+\[
+r_j=|\{i\in I:x_j\in S_i\}|.
+\]
+
+Every surviving pair candidate has tally strictly greater than \(12q\).
+
+If some \(d_j\) or \(d_0\) has tally below \(w\), then either \(c\) is eliminated first, or such a \(d\)-candidate is eliminated and transfers all its mass to \(w\). In the latter case \(w\)&#x27;s tally becomes greater than \(20q\), while every rival remains below \(20q\). Consequently \(w\) wins. Therefore, for \(c\) to win, \(w\) must be eliminated before every \(d\)-candidate.
+
+The inequalities necessary for this are
+
+\[
+12q-2+2r_j\geq12q-1
+\]
+
+for every \(j\), and
+
+\[
+12q+\frac{2q}{3}-2k\geq12q-1.
+\]
+
+The first family gives \(r_j\geq1\), so the sets indexed by \(I\) cover every element. The second gives
+
+\[
+k\leq\frac q3.
+\]
+
+Because every selected set contains exactly three elements,
+
+\[
+3k=\sum_{j=1}^q r_j\geq q,
+\]
+
+and hence \(k\geq q/3\). Therefore \(k=q/3\), and every \(r_j=1\). The sets indexed by \(I\) form an exact cover.
+
+### 4.5 Completeness
+
+Conversely, suppose \(I\) indexes an exact cover. Delete the entire unit ballot \(\bar b_i\succ b_i\succ c\succ w\) for every \(i\in I\), and delete no other mass.
+
+After the first \(q\) pair eliminations,
+
+\[
+\operatorname{sc}(d_0)=\operatorname{sc}(d_j)
+=\operatorname{sc}(c)=12q
+\]
+
+for every \(j\), while
+
+\[
+\operatorname{sc}(w)=12q-1.
+\]
+
+Thus \(w\) is uniquely eliminated. Its \(12q-1\) ballots transfer to \(c\), giving \(c\) tally \(24q-1\). All remaining candidates have tally below \(20q\), and subsequent transfers reach \(c\) before any unlisted candidate. Hence \(c\) wins.
+
+Every deleted ballot ranks \(c\) above \(w\), and the deleted mass is positive. This is a valid rational-mass group no-show witness.
+
+We have proved that the constructed rational society admits a successful abstention if and only if the \(\mathrm{RXC3}\) instance has an exact cover. The reduction has polynomially many supported rankings and polynomial bit length. Therefore the sparse-support problem is \(\mathrm{NP}\)-hard and, together with Section 3, \(\mathrm{NP}\)-complete.
+
+## 5. Final answer
+
+The continuous relaxation does not by itself remove the discrete hardness: the STV gadget forces every relevant fractional variable to reach an endpoint before it affects the elimination order. Nevertheless, the full \(L(C)\)-coordinate representation is factorially padded, making exhaustive enumeration of elimination orders polynomial in that representation size.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 4, immediately before the construction: The assumption q &gt;= 6 is not justified. The prover should state that excluding finitely many RXC3 instance sizes preserves NP-hardness; divisibility by 3 is already part of the cited RXC3 definition.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly distinguishes two non-equivalent input encodings:</p><ul><li>Dense encoding, in which all \(m!\) coordinates are explicitly present: polynomial time.</li><li>Sparse-support encoding, in which only positive coordinates are listed: NP-complete.</li></ul><p>The fixed-elimination-order linear program is correct, and the RXC3 reduction successfully prevents genuinely fractional choices from bypassing the discrete exact-cover condition. I found no false central step.</p><p>The only gap is a minor complexity-theoretic omission concerning the restriction \(q\ge 6\).</p><h3>1. Fixed-order linear program</h3><p>Let \(\sigma=(c_1,\ldots,c_m)\) be a proposed elimination order.</p><p>The stated comparison constraints correctly encode lexicographic elimination:</p><ul><li>If \(c_i\triangleleft d\), equality between their tallies is allowed.</li><li>If \(d\triangleleft c_i\), the tally of \(c_i\) must be strictly smaller.</li></ul><p>Comparing \(c_i\) separately with every remaining \(d\) is sufficient to ensure that \(c_i\) is the candidate eliminated in that round.</p><p>The abstention constraints also match the target:</p><ul><li>\(0\le\nu_t\le\mu_t\);</li><li>\(\nu_t=0\) unless \(b\succ_t a\);</li><li>positive total abstention.</li></ul><p>The common slack variable \(\varepsilon\) is valid. For any feasible witness, the total abstention and the finitely many strict tally gaps are positive rational numbers, so their minimum is positive. Conversely, \(\varepsilon&gt;0\) enforces both nonempty abstention and every required strict comparison.</p><p>Thus a fixed elimination order is realizable exactly when the corresponding rational LP has positive optimum.</p><h3>2. Dense encoding</h3><p>If all \(m!\) coordinates are explicitly encoded, then the input length \(N\) satisfies \(m!\le N\), up to the fixed overhead of the encoding.</p><p>There are \(m!\) possible elimination orders. Each associated LP has polynomial size in \(N\), and exact rational linear programming is polynomial-time solvable. Running at most \(m!\le N\) such LP computations is therefore polynomial in \(N\).</p><p>The completeness argument is also correct: every successful abstention produces one of the enumerated elimination orders.</p><p>Hence the dense problem is in \(\mathrm P\).</p><h3>3. Sparse membership in NP</h3><p>A certificate may specify the proposed new winner and elimination permutation. Once these are fixed, the existence of suitable abstention masses is decided by a polynomial-size rational LP over the supported rankings.</p><p>Using a deterministic polynomial-time LP algorithm inside a nondeterministic computation is legitimate. Therefore the sparse problem belongs to \(\mathrm{NP}\).</p><h3>4. Reduction construction</h3><p>The initial tallies were computed correctly:</p><ul><li>\(c\) has \(12q\);</li><li>\(w\) has \(12q-1\);</li><li>\(d_0\) has \(10q+\frac{2q}{3}\);</li><li>each \(d_j\) has \(12q-2\);</li><li>\(b_i\) has \(6q+4i\);</li><li>\(\bar b_i\) has \(6q+4i+1\).</li></ul><p>The \(b_i\) candidates are eliminated in increasing order. Their large blocks transfer to \(\bar b_i\), while their two special ballots transfer to \(d_0\). After these rounds, a \(d_j\) is below \(w\), is eliminated, and transfers to \(w\).</p><p>The claimed global capacity bounds also check out:</p><ul><li>A surviving \(b_i\) can receive at most \(12q+8i-5&lt;20q\).</li><li>A surviving \(\bar b_i\) can receive at most \(12q+8i-1&lt;20q\).</li><li>\(d_0\) can receive at most \(12q+\frac{2q}{3}&lt;13q\).</li><li>A \(d_j\) can receive at most \(12q+4&lt;13q\), using \(q\ge6\).</li></ul><p>After receiving one \(d_j\) tally, \(w\) has at least \(24q-3\), so it cannot subsequently be eliminated. Thus the original winner is indeed \(w\).</p><p>The construction has \(3q+3\) candidates, at most \(8q+3\) supported rankings, and polynomial-size rational weights after normalization.</p><h3>5. Exclusion of other new winners</h3><p>Suppose the new winner is \(y\notin\{c,w\}\). The blocks beginning \(c\succ w\) and \(w\succ c\) both rank \(w\) above \(y\), so none of their combined mass \(24q-1\) is eligible to abstain.</p><p>Because \(c\) and \(w\) are adjacent in every completed ranking, when the first of them is eliminated its mass transfers to the other. The survivor then has at least \(24q-1\), while every other candidate has capacity below \(20q\). It therefore cannot be eliminated.</p><p>This correctly rules out every new winner other than \(c\).</p><h3>6. Fractional endpoint forcing</h3><p>For a deviation making \(c\) win, the only eligible ranking types are precisely:</p><ul><li>the \(12q\)-mass type beginning \(c\succ w\);</li><li>the unit types beginning \(\bar b_i\succ b_i\succ c\succ w\).</li></ul><p>Writing their deleted masses as \(r\) and \(z_i\), the pair tallies are correctly given by \(6q+4i\) and \(6q+4i+1-z_i\).</p><p>Thus:</p><ul><li>If \(z_i&lt;1\), then \(b_i\) is strictly lower.</li><li>If \(z_i=1\), the pair ties, and the chosen lexicographic priority eliminates \(\bar b_i\).</li></ul><p>A fractional value strictly between \(0\) and \(1\) cannot reproduce the branch obtained at \(z_i=1\). Moreover, its small effect on the surviving pair tally does not affect the later critical round because every survivor remains strictly above \(12q\).</p><p>Conditional on \(c\) winning, the first \(q\) eliminations must process the pairs in increasing order. The stated comparisons are sufficient: every unprocessed eliminand has tally at most \(10q\), while every \(d\)-candidate, \(w\), and every processed survivor is strictly higher; eliminating \(c\) would contradict the assumed outcome.</p><h3>7. Extraction of an exact cover</h3><p>After the pair rounds, the tallies are correctly calculated as:</p><ul><li>\(w\): \(12q-1\);</li><li>\(c\): \(12q-r\);</li><li>\(d_0\): \(12q+\frac{2q}{3}-2k\);</li><li>\(d_j\): \(12q-2+2r_j\).</li></ul><p>If a \(d\)-candidate is eliminated before \(w\), its mass transfers to \(w\), placing \(w\) above \(20q\); the previously verified capacity bounds then ensure that \(w\) wins. Therefore a successful deviation requires every \(d\)-candidate to have tally at least that of \(w\).</p><p>These necessary inequalities yield \(r_j\ge1\) for every element and \(k\le q/3\). Since each selected set contains exactly three elements, \(\sum_j r_j=3k\ge q\), giving \(k\ge q/3\). Hence \(k=q/3\) and every \(r_j=1\), exactly the required exact cover.</p><p>No unjustified integrality is imposed on the abstention variables here: integrality enters only through the endpoint set \(I=\{i:z_i=1\}\).</p><h3>8. Completeness</h3><p>For an exact cover, deleting the corresponding unit ballots gives, after the pair rounds:</p><ul><li>\(w\) at \(12q-1\);</li><li>\(c,d_0,d_1,\ldots,d_q\) at \(12q\);</li><li>all pair survivors strictly above \(12q\).</li></ul><p>Therefore \(w\) is uniquely eliminated and transfers its \(12q-1\) mass to \(c\). Candidate \(c\) then has \(24q-1\), above the global capacity of every rival. Every deleted ballot prefers \(c\) to \(w\), so the witness satisfies the target conditions.</p><h3>Issues</h3><h3>Minor: restriction to sufficiently large RXC3 instances</h3><p>The proof says “we may assume \(q\ge6\)” without explaining why RXC3 remains NP-hard under this restriction. The cited source defines RXC3 with \(q\) divisible by \(3\) and identifies it as NP-complete, so the intended restriction is harmless: excluding the finitely many instances with \(q&lt;6\) does not affect NP-hardness. Nevertheless, that justification should be stated explicitly. See the [cited IJCAI paper](https://www.ijcai.org/proceedings/2024/0328.pdf).</p><p>Minimum clarification needed: add one sentence explaining that an algorithm for instances with \(q\ge6\), combined with brute force on the finitely many smaller instances, would solve unrestricted RXC3.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

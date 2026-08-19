@@ -1,0 +1,113 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Complexity of Probabilistic Inference in Random Dichotomous Hedonic Games — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Complexity of Probabilistic Inference in Random Dichotomous Hedonic Games <span style="font-weight:normal;color:#8a7350">(aaai23-25692)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{P}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 10 — class: hardness</p>
+<blockquote class="thmq">In marriage games, Perfect/Nash-stable- ∃CCAUP(-m) and deciding Pr[NSG′], Pr[PFG′] &gt; 0 are NPC. The same applies to roommates, Representation by In- dividually Rational Lists of Coalitions (RIRLC) (Ballester 2004), additively separable hedonic games (Olsen 2009), B- hedonic games and W-hedonic games (Aziz et al. (2012)).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given finite worker and employer type sets with rational initial masses, optional reserve masses, complete type-level approval or compatibility data, per-unit addition costs, and a budget B, can one choose added masses y and matching masses x so that all selected mass is perfectly matched along acceptable type pairs within budget B? The optimization version minimizes the addition cost.</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">### Definitions
+An instance has finite worker types \(W\), employer types \(E\), initial masses \(a_t\in\mathbb{Q}_{\ge0}\), reserve caps \(r_t\in\mathbb{Q}_{\ge0}\), acceptable pairs \(A\subseteq W	imes E\), addition costs \(c_t\in\mathbb{Q}_{\ge0}\), and budget \(B\in\mathbb{Q}_{\ge0}\). Choose \(0\le y_t\le r_t\) and \(x_{we}\ge0\) for \((w,e)\in A\), with \(\sum_e x_{we}=a_w+y_w\) and \(\sum_w x_{we}=a_e+y_e\); thus every initial and added unit is matched acceptably. The optimization version minimizes \(\sum_t c_ty_t\).
+
+### Target
+Is deciding whether such \(x,y\) exist with \(\sum_t c_ty_t\le B\) in \(\mathrm{P}\), or is it NP-hard?
+
+### Nearest known results
+For discrete marriage games, deciding whether adding a subset of available players can yield a perfect partition is NP-complete, including its bounded-additions variant. This is the discrete hardness anchor.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Complexity of Fractional Priced Additions
+
+## Encoding convention
+
+Assume the finite sets \(W\), \(E\), and \(A\) are represented explicitly, and all rational numbers are encoded in binary. This is the standard encoding under which the stated complexity question is defined.
+
+## Theorem
+
+The budget-feasibility problem is in \(\mathrm{P}\). Moreover, the optimization problem can be solved in polynomial time.
+
+## Proof
+
+Introduce one variable \(y_t\) for every \(t\in W\cup E\), and one variable \(x_{we}\) for every \((w,e)\in A\). The required conditions are exactly the following linear constraints:
+
+- \(y_t\geq 0\) and \(y_t\leq r_t\) for every \(t\in W\cup E\);
+- \(x_{we}\geq 0\) for every \((w,e)\in A\);
+- \(\sum_{e:(w,e)\in A}x_{we}-y_w=a_w\) for every \(w\in W\);
+- \(\sum_{w:(w,e)\in A}x_{we}-y_e=a_e\) for every \(e\in E\);
+- \(\sum_{t\in W\cup E}c_ty_t\leq B\).
+
+Thus the decision problem is feasibility of a rational linear program.
+
+There are \(N=|A|+|W|+|E|\) variables and \(O(|A|+|W|+|E|)\) constraints. Apart from the input rationals, every coefficient belongs to \(\{-1,0,1\}\). Consequently, the binary encoding length of this linear program is polynomial in the binary encoding length of the instance.
+
+The polynomial-time feasibility theorem for rational linear programming therefore decides whether this system has a real solution in time polynomial in the input length. Equality constraints cause no difficulty, since each equality can be replaced by two inequalities.
+
+There is also no distinction here between real and rational feasibility. Indeed, the feasible region is bounded: each \(y_t\) is bounded by \(r_t\), and for every acceptable pair \((w,e)\),
+
+\(0\leq x_{we}\leq\sum_{e&#x27;:(w,e&#x27;)\in A}x_{we&#x27;}=a_w+y_w\leq a_w+r_w\).
+
+Hence a nonempty feasible region is a rational polytope and contains a rational extreme point.
+
+## Equivalent min-cost circulation formulation
+
+The network structure gives a more specialized polynomial-time formulation. Introduce an auxiliary vertex \(q\), and construct the following arcs:
+
+- \(q\to w\) with lower capacity \(a_w\), upper capacity \(a_w+r_w\), and unit cost \(c_w\), for each \(w\in W\);
+- \(w\to e\) with lower capacity \(0\), upper capacity \(a_w+r_w\), and unit cost \(0\), for each \((w,e)\in A\);
+- \(e\to q\) with lower capacity \(a_e\), upper capacity \(a_e+r_e\), and unit cost \(c_e\), for each \(e\in E\).
+
+Given a feasible solution, set the corresponding arc flows to \(a_w+y_w\), \(x_{we}\), and \(a_e+y_e\). The worker and employer matching equalities are precisely flow conservation at \(w\) and \(e\). Conservation at \(q\) follows by summing those equalities.
+
+Conversely, any feasible circulation defines \(y_w=f(q,w)-a_w\), \(y_e=f(e,q)-a_e\), and \(x_{we}=f(w,e)\), and these variables satisfy all matching and reserve constraints.
+
+Let \(C_0=\sum_{t\in W\cup E}c_ta_t\). The circulation cost is
+
+\(C_0+\sum_{t\in W\cup E}c_ty_t\).
+
+Therefore, the original instance has a solution of addition cost at most \(B\) if and only if this network has a feasible circulation of cost at most \(C_0+B\). Rational minimum-cost circulation is polynomial-time solvable.
+
+## Consequence for the discrete hardness anchor
+
+The cited discrete hardness does not transfer to the stated model. The present feasible set contains only linear conservation, capacity, and budget constraints; it contains no indivisible subset-selection, stability, or other discrete partition requirement. The continuous variables therefore yield a rational linear program.
+
+Thus the target problem is in \(\mathrm{P}\). It could also be NP-hard under standard many-one reductions only if \(\mathrm{P}=\mathrm{NP}\).
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification Report</h3><h3>1. Faithfulness of the linear formulation</h3><p>The variables correspond exactly to the stated choices:</p><ul><li>\(y_t\) represents the added mass of type \(t\).</li><li>\(x_{we}\) represents mass matched along an acceptable pair \((w,e)\in A\).</li></ul><p>The bounds \(0\leq y_t\leq r_t\), nonnegativity \(x_{we}\geq 0\), worker equations</p><p>\[
+\sum_{e:(w,e)\in A}x_{we}-y_w=a_w,
+\]</p><p>and employer equations</p><p>\[
+\sum_{w:(w,e)\in A}x_{we}-y_e=a_e
+\]</p><p>are algebraically identical to the requirements in the problem. The budget inequality is also reproduced exactly. No integrality or subset-selection constraint appears in the stated model.</p><h3>2. Polynomial-size encoding</h3><p>There are \( |A|+|W|+|E| \) variables and polynomially many explicitly represented constraints. All structural coefficients are in \( \{-1,0,1\} \), while the remaining coefficients are input rationals. Thus the resulting rational linear program has encoding length polynomial in the original input length.</p><p>Invoking polynomial-time rational linear-program feasibility is valid. Replacing equalities with pairs of inequalities preserves feasibility and only increases the formulation size by a constant factor.</p><h3>3. Rational versus real feasibility</h3><p>The boundedness argument is correct. For every \((w,e)\in A\),</p><p>\[
+0\leq x_{we}
+\leq \sum_{e&#x27;:(w,e&#x27;)\in A}x_{we&#x27;}
+=a_w+y_w
+\leq a_w+r_w.
+\]</p><p>Together with the bounds on \(y_t\), this makes the feasible region bounded. A nonempty rational polytope has a rational extreme point, so real feasibility and rational feasibility coincide. This observation is correct, though rational LP feasibility alone already suffices for the complexity conclusion.</p><h3>4. Circulation equivalence</h3><p>The proposed network correctly represents the constraints:</p><ul><li>Conservation at each worker gives the worker matching equation.</li><li>Conservation at each employer gives the employer matching equation.</li><li>Conservation at \(q\) follows from equality of total worker-side and employer-side matched mass.</li><li>Conversely, conservation at the worker and employer vertices recovers all matching equations, while the lower and upper capacities recover \(0\leq y_t\leq r_t\).</li></ul><p>The upper capacity \(a_w+r_w\) on every acceptable-pair arc is valid because no individual outgoing flow can exceed the total flow entering worker \(w\).</p><p>The circulation cost calculation is also correct:</p><p>\[
+\sum_{w\in W}c_w(a_w+y_w)+
+\sum_{e\in E}c_e(a_e+y_e)
+=
+C_0+\sum_{t\in W\cup E}c_ty_t.
+\]</p><p>Thus the threshold \(C_0+B\) is exactly equivalent to the original budget threshold. Rational minimum-cost circulation, or directly rational linear programming, yields a polynomial-time optimization algorithm.</p><h3>5. Final complexity conclusion</h3><p>The continuous problem is in \( \mathrm{P} \). The cited discrete hardness result does not apply because the present formulation has no indivisible selection requirement. The statement that this problem can be NP-hard under standard polynomial-time many-one reductions only if \( \mathrm{P}=\mathrm{NP} \) is correct.</p><p>No substantive gap, false assertion, or omitted hypothesis was found.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

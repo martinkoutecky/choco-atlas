@@ -1,0 +1,222 @@
+<!doctype html><html><head><meta charset="utf-8"><title>SAT-based Judgment Aggregation — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>SAT-based Judgment Aggregation <span style="font-weight:normal;color:#8a7350">(p12)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\)-hard (indeed \(\Theta_2^p\)-hard)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 3.1 — class: other</p>
+<blockquote class="thmq">Let (¨, Γin, Γout, P) be a given judgment aggre- gation framework. For each R∈{Kemeny, Slater, MaxHamming, Young, Dodgson}, we have that J∈R(P) if and only if there is an optimal solution τto the MaxSAT instance FR(P) with τ∩¨ = J.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given an agenda \(\mathcal{A}\), constraints \(\Gamma_{\rm in},\Gamma_{\rm out}\), required literals \(L\), and rational masses \(\mu_t\) over finitely many complete \(\Gamma_{\rm in}\)-consistent judgment types \(t\), decide whether some \(J\in J(\mathcal{A},\Gamma_{\rm out})\) with \(L\subseteq J\) minimizes \(D_\mu(J)=\sum_t\mu_t H(J,t)\) among all output-feasible collective judgments.</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">### Definitions
+Let \(A=\{x_1,\ldots,x_m,\neg x_1,\ldots,\neg x_m\}\). A complete \(\Gamma\)-consistent judgment set chooses exactly one literal for every \(x_i\) and, together with \(\Gamma\), is satisfiable. The input gives formulas \(\Gamma_{in},\Gamma_{out}\), types \(T_1,\ldots,T_q\) that are complete \(\Gamma_{in}\)-consistent judgment sets, rational masses \(\mu_t\ge0\) with \(\sum_t\mu_t=1\), and \(L\subseteq A\). For a complete \(\Gamma_{out}\)-consistent \(J\), let \(C(J)=\sum_t\mu_t H(J,T_t)\), where \(H\) is Hamming distance.
+
+### Target
+Is rational-mass Kemeny outcome determination—whether some \(C\)-minimizing \(\Gamma_{out}\)-consistent \(J\) contains \(L\)—solvable in polynomial time, or is it NP-hard?
+
+### Nearest known results
+For finite profiles, Kemeny collective judgments are exactly the agenda restrictions of optimal solutions of a weighted MaxSAT encoding.
+For finite profiles, Kemeny outcome determination is \(\Theta^p_2\)-complete.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Rational-Mass Kemeny Outcome Determination
+
+## Theorem
+
+Rational-mass Kemeny outcome determination is NP-hard. In fact, under the stated finite-profile result, it is $\Theta_2^p$-hard. This remains true even with one judgment type of mass $1$, $\Gamma_{in}=\top$, and a singleton set $L$.
+
+Unless $P=NP$, the problem is therefore not polynomial-time solvable.
+
+## 1. Direct reduction from SAT
+
+Let $\varphi(u_1,\ldots,u_n)$ be a SAT instance, where we may assume $n\geq 1$. Introduce fresh variables $y,z_1,\ldots,z_n$. The agenda contains all literals over
+
+$$
+u_1,\ldots,u_n,y,z_1,\ldots,z_n.
+$$
+
+Set
+
+$$
+\Gamma_{in}=\top
+$$
+
+and
+
+$$
+\Gamma_{out}
+=
+(y\rightarrow\varphi)
+\wedge
+\bigwedge_{j=1}^n(z_j\leftrightarrow y).
+$$
+
+There is one type, of mass $1$:
+
+$$
+T=
+\{\neg u_1,\ldots,\neg u_n,y,z_1,\ldots,z_n\}.
+$$
+
+Finally, let
+
+$$
+L=\{y\}.
+$$
+
+The type $T$ is complete and $\Gamma_{in}$-consistent, and the construction has size polynomial in $|\varphi|$.
+
+### Case 1: $\varphi$ is satisfiable
+
+Let $a$ be a satisfying assignment of $\varphi$. Extend it by setting
+
+$$
+y=z_1=\cdots=z_n=1.
+$$
+
+The resulting judgment set $J_a$ satisfies $\Gamma_{out}$. It disagrees with $T$ only on those variables $u_i$ that are true under $a$. Consequently,
+
+$$
+C(J_a)=H(J_a,T)\leq n.
+$$
+
+Now consider any $\Gamma_{out}$-consistent judgment set $J$ with $\neg y\in J$. The equivalences in $\Gamma_{out}$ force
+
+$$
+\neg z_1,\ldots,\neg z_n\in J.
+$$
+
+Thus $J$ disagrees with $T$ on $y,z_1,\ldots,z_n$, giving
+
+$$
+C(J)=H(J,T)\geq n+1.
+$$
+
+Therefore no minimizing judgment set can contain $\neg y$. Every minimizing judgment set contains $y$, and in particular some minimizing judgment set contains $L$.
+
+### Case 2: $\varphi$ is unsatisfiable
+
+If a $\Gamma_{out}$-consistent judgment set contained $y$, then $y\rightarrow\varphi$ would force $\varphi$ to be true, which is impossible. Hence every feasible judgment set contains $\neg y$.
+
+Feasible judgment sets nevertheless exist: set every $u_i,y,z_j$ to false. Therefore a minimum exists, but no minimizing judgment set contains $L$.
+
+We have proved
+
+$$
+\varphi\text{ is satisfiable}
+\quad\Longleftrightarrow\quad
+\text{some minimizing judgment set contains }L.
+$$
+
+This is a polynomial-time many-one reduction from SAT, proving NP-hardness. If Hamming distance is defined using symmetric difference of literal sets, all displayed costs are multiplied by $2$, and the strict comparison is unchanged.
+
+## 2. Exact embedding of finite profiles
+
+The stated finite-profile result yields the stronger $\Theta_2^p$-hardness.
+
+Consider a finite profile
+
+$$
+P=(J_1,\ldots,J_N).
+$$
+
+Let $T_1,\ldots,T_q$ be its distinct judgment sets, and let $c_t$ be the multiplicity of $T_t$. Construct a rational-mass instance with
+
+$$
+\mu_t=\frac{c_t}{N}.
+$$
+
+These masses are nonnegative, sum to $1$, and have polynomial-size binary encodings. For every feasible collective judgment set $J$,
+
+$$
+\begin{aligned}
+C(J)
+&amp;=\sum_{t=1}^q\frac{c_t}{N}H(J,T_t)\\
+&amp;=\frac1N\sum_{r=1}^N H(J,J_r).
+\end{aligned}
+$$
+
+Thus the rational-mass objective is exactly the finite-profile Kemeny objective multiplied by the positive constant $1/N$. Positive scaling does not change the set of minimizers. Keeping the agenda, $\Gamma_{in}$, $\Gamma_{out}$, and $L$ unchanged therefore preserves the answer exactly.
+
+Collecting equal judgment sets and computing their multiplicities is polynomial-time. Hence finite-profile Kemeny outcome determination reduces to the rational-mass problem. By the given $\Theta_2^p$-completeness result, the rational-mass problem is $\Theta_2^p$-hard.
+
+## 3. Upper-bound context
+
+The rational-mass problem is in $\Delta_2^p=P^{NP}$ under the standard propositional encoding.
+
+Write $\mu_t=a_t/b_t$ and let
+
+$$
+D=\prod_{t=1}^q b_t,
+\qquad
+w_t=a_t\frac{D}{b_t}.
+$$
+
+Then minimizing $C(J)$ is equivalent to minimizing the integer objective
+
+$$
+W(J)=D\,C(J)=\sum_{t=1}^q w_tH(J,T_t).
+$$
+
+Although $D$ may be numerically exponential, its binary length is at most the sum of the binary lengths of the denominators and is therefore polynomial in the input length. Moreover, because the masses sum to $1$,
+
+$$
+\sum_t w_t=D.
+$$
+
+For an integer $K$, the threshold question
+
+$$
+\exists J:
+J\text{ is }\Gamma_{out}\text{-consistent and }W(J)\leq K
+$$
+
+is in NP. Binary search over the polynomial-bit-length range of possible values determines the optimum using polynomially many adaptive NP-oracle queries. One final NP query asks whether a feasible $J$ satisfying $L\subseteq J$ has cost at most that optimum.
+
+Consequently,
+
+$$
+\Theta_2^p\text{-hard}
+\;\subseteq\;
+\text{rational-mass Kemeny outcome determination}
+\;\subseteq\;
+\Delta_2^p.
+$$
+
+The exact upper-bound classification is not needed for the target dichotomy.
+
+## Conclusion
+
+Rational normalization does not make Kemeny outcome determination tractable. Ordinary finite profiles embed exactly, and NP-hardness already holds with a single unit-mass type.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Theorem, sentence &quot;This remains true even with one judgment type of mass 1...&quot;: The antecedent of &quot;This&quot; is ambiguous and grammatically appears to claim that Theta_2^p-hardness holds under the one-type restriction. The proof establishes only NP-hardness under that restriction; Theta_2^p-hardness is established for the unrestricted rational-mass problem. Clarify that it is NP-hardness that remains true under the restriction.</li></ul>
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The prover correctly resolves the target: rational-mass Kemeny outcome determination is NP-hard. The direct SAT reduction is valid, polynomial, and establishes NP-hardness even with one unit-mass type, $\Gamma_{in}=\top$, and singleton $L$.</p><p>The embedding of explicitly represented finite profiles also correctly establishes unrestricted $\Theta_2^p$-hardness, assuming the finite-profile completeness result stated in the task applies to the same outcome-determination formulation.</p><p>There is one minor ambiguity in the theorem statement concerning which hardness claim survives the severe restriction.</p><h3>1. Direct reduction from SAT</h3><h3>Construction</h3><p>The variables, agenda, constraints, single type, and target set are all specified in polynomial size. The type</p><p>$$
+T=\{\neg u_1,\ldots,\neg u_n,y,z_1,\ldots,z_n\}
+$$</p><p>chooses exactly one literal for every agenda variable and is consistent with $\Gamma_{in}=\top$.</p><p>No missing feasibility or encoding condition appears here.</p><h3>Satisfiable case</h3><p>Given a satisfying assignment $a$ for $\varphi$, setting $y=z_1=\cdots=z_n=1$ satisfies both:</p><ul><li>$y\rightarrow\varphi$, because $\varphi$ is true under $a$;</li><li>every $z_j\leftrightarrow y$.</li></ul><p>The resulting judgment set differs from $T$ only on those $u_i$ assigned true by $a$. Therefore its issue-based Hamming distance is at most $n$.</p><p>For any feasible judgment set containing $\neg y$, each equivalence $z_j\leftrightarrow y$ forces $\neg z_j$. Such a set differs from $T$ on $y,z_1,\ldots,z_n$, hence has distance at least $n+1$. This strict separation proves that every minimizer contains $y$.</p><p>This reasoning is correct. Possible disagreements on the $u_i$ only increase the lower bound for the $\neg y$ case.</p><h3>Unsatisfiable case</h3><p>If a feasible complete judgment set contained $y$, then $y\rightarrow\varphi$ would require the assignment selected by that judgment set to satisfy $\varphi$. This contradicts unsatisfiability.</p><p>The all-false assignment satisfies $\Gamma_{out}$ because $y\rightarrow\varphi$ is vacuously true and every $z_j\leftrightarrow y$ has both sides false. Thus the feasible set is nonempty and a minimizer exists.</p><p>Consequently, no minimizer contains $L=\{y\}$. The many-one equivalence with SAT is established.</p><h3>Hamming-distance convention</h3><p>The comment concerning symmetric difference is correct: two complete literal sets differ in two literal memberships for every issue on which their truth assignments disagree. Both relevant costs are therefore doubled, preserving the strict inequality.</p><h3>2. Embedding finite profiles</h3><p>Grouping identical judgments into types and assigning mass</p><p>$$
+\mu_t=\frac{c_t}{N}
+$$</p><p>is polynomial-time for an explicitly represented finite profile. The binary encoding length of each numerator and denominator is logarithmic in $N$.</p><p>The identity</p><p>$$
+C(J)=\frac1N\sum_{r=1}^N H(J,J_r)
+$$</p><p>is exact. Multiplication by the positive constant $1/N$ preserves precisely the set of minimizers, and hence preserves whether some minimizer contains $L$.</p><p>Thus, under the finite-profile $\Theta_2^p$-completeness result supplied in the task, the unrestricted rational-mass problem is indeed $\Theta_2^p$-hard.</p><h3>3. Upper-bound discussion</h3><p>The denominator-clearing argument is correct:</p><p>$$
+D=\prod_t b_t,\qquad w_t=a_tD/b_t
+$$</p><p>produces integer weights with polynomial binary length. Although $D$ may be exponentially large numerically, its encoding length is at most the sum of the denominator encoding lengths.</p><p>Since $\sum_t a_t/b_t=1$, the identity $\sum_t w_t=D$ is also correct. The possible objective values have polynomial bit length, so binary search requires polynomially many adaptive NP queries, not polynomially many queries in the numerical magnitude of the range.</p><p>The threshold predicate has an NP certificate consisting of a feasible judgment set, together with any auxiliary propositional assignment needed to certify consistency, and the weighted cost can be checked with polynomial-bit arithmetic.</p><p>After the optimum is computed, asking whether a feasible $J$ containing $L$ has cost at most that optimum correctly tests whether such an optimal $J$ exists.</p><p>The stated $\Delta_2^p=P^{NP}$ upper bound is therefore justified.</p><h3>Issue requiring clarification</h3><p>The theorem says:</p><blockquote>“In fact ... it is $\Theta_2^p$-hard. This remains true even with one judgment type...”</blockquote><p>Grammatically, “This remains true” most naturally refers to the immediately preceding $\Theta_2^p$-hardness claim. The direct reduction proves only NP-hardness under the one-type restriction. The later finite-profile embedding proves $\Theta_2^p$-hardness only for unrestricted numbers of types.</p><p>The intended statement is evidently that <b>NP-hardness</b> remains true under those restrictions. This is a minor wording issue because correcting it requires no new mathematics, but the current phrasing should not be read as establishing restricted $\Theta_2^p$-hardness.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

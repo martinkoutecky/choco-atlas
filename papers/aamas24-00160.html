@@ -1,0 +1,76 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Evaluating District-based Election Surveys with Synthetic Dirichlet Likelihood — triple</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script><style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 64em; margin: 2em auto; padding: 0 1.2em; line-height: 1.55; }
+ h1 { font-size: 1.35em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; margin-bottom: .2em; }
+ .meta { color: #6b573b; font-size: .9em; margin: 0 0 1em; }
+ h2 { font-size: .92em; color: #5a4632; margin: 2.2em 0 .5em; letter-spacing: 2px; text-transform: uppercase; }
+ .verdict { padding: .5em .9em; border: 2px solid; display: inline-block; font-weight: bold; margin: .3em .4em .8em 0; }
+ .vg { border-color:#3f7d45; color:#3f7d45; background:#eef4e9; }
+ .vr { border-color:#b3402e; color:#b3402e; background:#f8ece9; }
+ .vo { border-color:#c8a028; color:#8a6a12; background:#fdf4dc; }
+ .adv { background:#f9f3e3; border:1px solid #d6c69e; border-left-width:4px; padding:1em 1.2em; font-size:.94em; overflow-x:auto; overflow-wrap:anywhere; }
+ .adv p { margin: .55em 0; } .adv h3 { font-size: .95em; letter-spacing: .5px; text-transform: none; margin: 1.1em 0 .3em; color:#3b2f23; }
+ .adv blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; color:#4a3d2a; background:#fdf8ea; }
+ .adv code { background:#efe6cd; padding: 0 .25em; font-size:.92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; padding: .2em 0; }
+ body { overflow-wrap: anywhere; }
+ .adv.pro { border-left-color:#3f7d45; } .adv.opp { border-left-color:#b3402e; }
+ .thmq { border-left: 3px solid #c8a028; margin: .5em 0; padding: .4em 1em; background:#f9f3e3; font-style: italic; }
+ .src { color:#8a7350; font-size:.84em; }
+ ul { margin: .3em 0 .8em; } li { margin: .25em 0; }
+ a { color:#5a4632; }
+ .nav { font-size:.9em; margin-bottom:1.2em; }
+ table.kv { border-collapse: collapse; font-size:.92em; }
+ table.kv td { border-bottom:1px solid #e0d4b4; padding:.3em .8em .3em 0; vertical-align: top; }
+ table.kv td.k { color:#8a7350; white-space:nowrap; }
+</style></head><body>
+<p class="nav"><a href="../index.html">← back to the atlas</a></p>
+<h1>Evaluating District-based Election Surveys with Synthetic Dirichlet Likelihood</h1>
+<p class="meta"> · AAMAS 2024 <span class="src">(aamas24-00160)</span></p>
+<span class="verdict vr">no mirror</span>
+<table class="kv"><tr><td class="k">paper</td><td>Evaluating District-based Election Surveys with Synthetic Dirichlet Likelihood</td></tr><tr><td class="k">authors</td><td>—</td></tr><tr><td class="k">venue</td><td>AAMAS 2024</td></tr><tr><td class="k">filed under</td><td>frontier · tools-data</td></tr><tr><td class="k">judged by</td><td>gpt-5.6-luna / xhigh <span class="src">(triple__luna__xhigh__c2r1)</span></td></tr><tr><td class="k">judge confidence</td><td>high</td></tr><tr><td class="k">authors would recognise it</td><td>unclear</td></tr></table>
+<h2>Why no mirror</h2><p>Bit (a) fails: the paper contains no numbered theorem, lemma, proposition, or corollary asserting a computational or algorithmic result. Its district–party mass model is a plausible high-multiplicity formulation, but the proposed computational questions require new formal kernels and objectives rather than mirroring a named result of the paper.</p><p class="src">fails bit <b>a</b> — no named computational result to mirror</p>
+<h2>What the mirror covers</h2><p>The proposed mirror covers posterior reconstruction and reverse likelihood-ratio evaluation, but no numbered computational result; it leaves the paper’s simulation design and empirical validation as descriptive contributions.</p>
+<h2>Open questions for a prover</h2><ul><li>What finitely encoded kernel faithfully represents the paper’s SPM/PCM process in the high-multiplicity limit?</li><li>For a fixed kernel, what is the complexity of \(\varepsilon\)-MAP reconstruction or likelihood-ratio thresholding?</li></ul>
+<h2>The case FOR (proponent)</h2><div class="adv pro"><p>Strictly under the ChoCo rules, this paper has no eligible anchor. It contains no numbered Theorem, Lemma, Corollary, or Proposition asserting a complexity or algorithmic classification. Its numbered objects are equations, algorithmic steps, figures, and tables; its conclusions are empirical. Thus I cannot honestly cite a result such as “Theorem 1” or claim that the mirror covers a proved \(P\) or NP-hardness result. That limitation should be recorded plainly.</p><p>Nevertheless, the paper is an unusually good candidate for a continuous population model.</p><p>The natural type is a district–party pair \(t=(s,k)\). A society is a mass matrix</p><p>\[
+\mu=(\mu_{s,k})_{s\in[S],\,k\in[K]},
+\]</p><p>where \(\mu_{s,k}\) is the fraction of the whole electorate living in district \(s\) and voting for party \(k\). Let \(d_s=\sum_k\mu_{s,k}\) be the mass of district \(s\), and \(p_{s,k}=\mu_{s,k}/d_s\) its local party share. The national vote share and seat share are</p><p>\[
+v_k=\sum_s\mu_{s,k},
+\qquad
+u_k=\frac{1}{S}\sum_{s=1}^S
+\mathbf 1\!\left[k=\arg\max_j p_{s,j}\right],
+\]</p><p>with a fixed tie-breaking rule.</p><p>This is genuinely population continuization. The object made continuous is \(\mu\), not merely the Dirichlet prior on vote shares. The election’s spatial concentration remains present through a kernel \(H_\theta(\mathrm d\mu\mid v)\), representing a continuous analogue of the paper’s SPM or PCM. The survey remains stochastic: a survey selects districts, draws finitely many respondents from each selected district, obtains multinomial counts, and reports vote and seat shares. Keeping the survey sample finite is appropriate: high multiplicity concerns the electorate, not the agency’s sampling budget.</p><p>The regime is very plausible. In the Indian elections used by the paper, \(N\) ranges from \(2.4\) million to \(36\) million, while \(S\) ranges from \(60\) to \(224\) and \(K=3\). Thus there are at most \(SK\in\{180,204,546,672\}\) district–party types, versus millions of voters. A type can include any finite response or accessibility class if the survey model needs it. This is precisely a high-multiplicity regime: many voters are interchangeable for the problem, while district-level spatial concentration matters.</p><p>My lead proposed mirror would be:</p><p><b>Continuum Posterior-Mode Reconstruction.</b> An instance consists of \(S,K\), rational district masses \(d_s\), a Dirichlet prior \(g(v)\) over national party shares, a finitely represented spatial kernel \(H_\theta(\mathrm d\mu\mid v)\), survey designs and sample sizes, observed survey reports \(Y\), and an accuracy parameter \(\varepsilon\). For a survey selecting district set \(A\), with \(q_s\) respondents in district \(s\), the counts satisfy</p><p>\[
+W_s\sim \operatorname{Multinomial}
+\left(q_s,(p_{s,1},\ldots,p_{s,K})\right).
+\]</p><p>The reported vote and seat shares are deterministic functions of the \(W_s\). The task is to output \((\widehat v,\widehat u)\) whose posterior log-density is within \(\varepsilon\) of the optimum:</p><p>\[
+\log \pi(\widehat v,\widehat u\mid Y)
+\geq
+\sup_{v,u}\log \pi(v,u\mid Y)-\varepsilon,
+\]</p><p>where</p><p>\[
+\pi(v,u\mid Y)
+\propto
+g(v)
+\int_{\mathcal M_d(v)}
+\mathbf 1[U(\mu)=u]\,
+\prod_{\ell}L_\ell(y^\ell\mid\mu)\,
+H_\theta(\mathrm d\mu\mid v).
+\]</p><p>Here \(\mathcal M_d(v)\) is the set of district–party mass matrices with district masses \(d_s\) and national shares \(v\), and \(L_\ell\) is the exact survey likelihood.</p><p>This is a direct continuous version of the paper’s first task and its posterior-mode algorithm. It retains every substantive feature: national vote shares, district-level spatial allocation, seat shares, survey noise, and the SPM/PCM concentration mechanism. It is not a surrogate based only on aggregate vote shares.</p><p>I would expect the unrestricted problem to be potentially Class C: the difficulty comes from integrating over continuous spatial populations while partitioning the mass space according to district winners, often producing multimodal posteriors. For restricted, explicitly encoded kernels and fixed \(K\), there is a plausible Class A programme using piecewise-convex integration or approximation. Any hardness would arise from the district/party geometry or the inference operation, not from the number of named voters.</p><p>A related secondary mirror is the paper’s reverse task: given \((v,u)\), a spatial kernel \(H_\theta(\mathrm d\mu\mid v,u)\), and a survey report \(y\), compute or approximate</p><p>\[
+R(y\mid v,u)
+=
+\frac{\int L(y\mid\mu)\,H_\theta(\mathrm d\mu\mid v,u)}
+{\int L(y\mid\mu)\,H_\theta(\mathrm d\mu)},
+\]</p><p>and accept the survey when \(R(y\mid v,u)\) exceeds a specified threshold. This is the continuous population version of the paper’s nonparametric likelihood-ratio evaluation.</p><p>The weakest point is that the paper never defines a continuum limit of its sequential SPM/PCM simulators, nor supplies complexity guarantees for its Monte Carlo procedures. A formal ChoCo paper would therefore need to choose and justify the finite representation of \(H_\theta\). But that is a modelling obligation, not evidence that the mirror is unnatural: the paper’s own central latent object \(Z\) is already a district-by-party count matrix, and replacing those counts by masses is exactly the high-multiplicity relaxation.</p><p>So my honest conclusion is: strong continuous mirror, no qualifying named computational anchor. The paper supports a promising ChoCo problem formulation, but not yet an anchor-based positive verdict under the programme’s strict evidence rule.</p></div>
+<h2>The case AGAINST (opponent, writing after the proponent)</h2><div class="adv opp"><p>The negative case is unusually strong at the anchor stage: there is no eligible anchor. The paper contains no numbered Theorem, Lemma, Proposition, or Corollary asserting a complexity bound, an exact algorithm, an approximation guarantee, or a hardness result. Its numbered objects are equations, sampling procedures, figures, and empirical tables. Thus the proponent’s “posterior-mode reconstruction” and “reverse likelihood-ratio” are not results of the paper; they are new problems invented around its modelling framework. Under ChoCo’s stated standard, that is decisive.</p><p>The proposed district–party mass matrix is nevertheless a legitimate high-multiplicity model. I would not object that voters lack multiplicity: with \(S\) districts and \(K\) parties, millions of voters can indeed be grouped into \(SK\) exchangeable types. Nor is individual identity needed by the survey likelihood, since conditional on the masses one obtains the same multinomial sampling model. The positive case is strongest precisely here.</p><p>But that strength also exposes the mirror’s limitation. The proposed object is a finite-dimensional Bayesian inverse problem over</p><p>\[
+\mu\in\prod_{s=1}^{S}\Delta^{K-1},
+\]</p><p>not a computational-social-choice problem of the kind ChoCo is meant to chart. It contains no intervention, optimization over population mass, bribery, control, campaigning, or robustness objective. The continuous population is a state variable inside a statistical simulator; the paper supplies no computational theorem whose complexity could change under continuization.</p><p>More seriously, the proposed exact posterior is not the paper’s model. The paper uses sequential SPM/PCM simulators and Monte Carlo-estimated synthetic Dirichlet likelihoods. It never defines a probability kernel \(H_\theta(\mathrm d\mu\mid v)\), let alone a finite encoding for one. Replacing those simulators by such a kernel is a substantial new modelling choice. Different kernels with the same informal “concentration” interpretation produce different posterior modes and entirely different computational problems. If the kernel is left arbitrary, the problem has no fixed complexity landscape; if it is specified, the resulting theorem concerns the newly chosen kernel, not a result of this paper.</p><p>The proposed MAP objective is also not canonical. The posterior is a hybrid measure: \(v\) is continuous while \(u\) lies on a finite seat-share grid. A log-density depends on the chosen reference measure and can be unbounded at Dirichlet boundaries. Synthetic likelihood adds Monte Carlo-estimated parameters, so the claimed exact \(\varepsilon\)-MAP problem is not even the paper’s computational object. One could repair this by asking for posterior mass of a seat vector, a credible region, or a Bayes-optimal decision, but each repair creates a new statistical question rather than a continuous mirror of a named computational result.</p><p>The reverse likelihood ratio fares no better. Conditioning on \(x=(v,u)\) does not determine the district-level election \(\mu\); the missing conditional kernel \(H_\theta(\mathrm d\mu\mid v,u)\) must again be supplied. Once supplied, the ratio</p><p>\[
+R(y\mid v,u)
+=
+\frac{\int L(y\mid\mu)\,H_\theta(\mathrm d\mu\mid v,u)}
+{\int L(y\mid\mu)\,H_\theta(\mathrm d\mu\mid v)}
+\]</p><p>is a generic simulator-based model-checking statistic. Its threshold has no intrinsic meaning independent of the prior, kernel, survey design, tolerance, and synthetic-likelihood approximation. A decision version such as \(R(y\mid v,u)\ge r\) could certainly be studied, but it would be a newly designed likelihood-free inference problem, not an algorithmic result extracted from this election paper.</p><p>There is one genuine weakness in the negative case: if ChoCo is broadened to include computational Bayesian inference over high-multiplicity electorates, then the district–party mass model is sensible and potentially useful. The claim that no such model can ever be worthwhile would therefore be too strong. The defensible conclusion is narrower but sufficient: this paper offers no qualifying computational anchor, and its proposed continuous versions require replacing the paper’s underspecified simulators with new formal models. They may seed a future statistical-computation project, but they do not presently justify a ChoCo continuization programme.</p></div>
+<p class="src">The adversarial triple: the proponent anchors on up to three named results; the opponent sees that case and must defeat every anchor; the judge decides which case convinced it. These are the pipeline’s own outputs, generated by tools/triple_run.py — no human edited them. The paper’s own text is not reproduced here beyond the quoted statement above.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\textsc": "\textrm{#1}", "\mathbbm": "\mathbb{#1}"}, throwOnError: false}));</script></body></html>

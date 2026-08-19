@@ -1,0 +1,195 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Experimental paper on stable roommates — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Experimental paper on stable roommates <span style="font-weight:normal;color:#8a7350">(p08)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> polynomial-time solvable</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Observation 9 — class: algorithmic</p>
+<blockquote class="thmq">Given two SR instances I and I′ with 2n agents each, dMAD(I, I′) can be computed in O(n3) time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given two finite-type societies \(P=(T,\mu,(r_t)_{t\in T})\) and \(Q=(U,\nu,(s_u)_{u\in U})\), with rational masses and finitely encoded reciprocal-rank curves, find a coupling \(y\) minimizing \(\sum_{t,u} y_{t,u}\int_0^1 |r_t(q)-s_u(q)|\,dq\) subject to marginals \(\mu\) and \(\nu\).</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">A finite-type society is \(P=(T,\mu,(r_t)_{t\in T})\), where \(\mu\) is a rational probability distribution on finite \(T\), and each profile \(r_t:[0,1]\to\mathbb Q\) is given as a rational step function; define \(Q=(U,\nu,(s_u)_{u\in U})\) analogously. A coupling is nonnegative rational \(y=(y_{t,u})\) with \(\sum_u y_{t,u}=\mu_t\) and \(\sum_t y_{t,u}=
+u_u\). Its cost is \(\sum_{t,u}y_{t,u}\int_0^1|r_t(q)-s_u(q)|\,dq\).
+
+**Target.** Is computing a minimum-cost coupling for two finite-type societies in P, or is it NP-hard?
+
+**Nearest known results.** For two discrete Stable Roommates instances with \(2n\) agents, minimizing the sum of \(\ell_1\)-distances between matched mutual-attraction vectors is computable in \(O(n^3)\) time, via minimum-weight perfect bipartite matching. No verified result for the exact finite-type mass version above is recorded here.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Complexity of Minimum-Cost Coupling
+
+## Theorem
+
+Under the standard explicit binary encoding of rational masses, breakpoints, and step values, an exact minimum-cost coupling can be computed in deterministic polynomial time. Thus the problem is polynomial-time solvable; it is not NP-hard unless $\mathrm{P}=\mathrm{NP}$.
+
+## 1. Exact computation of pairwise costs
+
+Represent each profile $r_t$ by rational breakpoints
+
+$$
+0=\alpha_0&lt;\alpha_1&lt;\cdots &lt;\alpha_k=1
+$$
+
+and rational values such that $r_t$ is constant on every interval $[\alpha_{i-1},\alpha_i)$. Represent $s_u$ analogously.
+
+For a fixed pair $(t,u)$, sort the union of their breakpoints:
+
+$$
+0=\gamma_0&lt;\gamma_1&lt;\cdots &lt;\gamma_m=1.
+$$
+
+Both functions are constant on each interval $(\gamma_{j-1},\gamma_j)$. If their respective values there are $a_j$ and $b_j$, then
+
+$$
+c_{t,u}
+:=
+\int_0^1 |r_t(q)-s_u(q)|\,dq
+=
+\sum_{j=1}^{m}
+(\gamma_j-\gamma_{j-1})|a_j-b_j|.
+$$
+
+Values at the finitely many breakpoints do not affect the integral. Every quantity in this sum is rational, so $c_{t,u}$ is rational and can be computed exactly.
+
+Sorting rational breakpoints uses exact integer cross-multiplication. The number of arithmetic operations is polynomial in the explicit input size. Rational addition, subtraction, multiplication, comparison, and reduction by greatest common divisors all have polynomial bit complexity. Although denominators can grow, their binary lengths grow at most additively over the polynomially many operations. Consequently, the entire cost matrix
+
+$$
+C=(c_{t,u})_{(t,u)\in T\times U}
+$$
+
+has polynomial encoding length and is computable in polynomial time.
+
+## 2. Transportation formulation
+
+Once the costs have been computed, the problem is precisely the rational transportation program
+
+$$
+\begin{aligned}
+\text{minimize}\quad&amp;
+\sum_{t\in T}\sum_{u\in U} c_{t,u}y_{t,u},\\
+\text{subject to}\quad&amp;
+\sum_{u\in U}y_{t,u}=\mu_t
+&amp;&amp;\text{for every }t\in T,\\
+&amp;
+\sum_{t\in T}y_{t,u}=\nu_u
+&amp;&amp;\text{for every }u\in U,\\
+&amp;
+y_{t,u}\geq 0
+&amp;&amp;\text{for every }(t,u)\in T\times U.
+\end{aligned}
+$$
+
+The feasible set is nonempty: for example,
+
+$$
+y_{t,u}=\mu_t\nu_u
+$$
+
+has the required row and column sums because both $\mu$ and $\nu$ are probability distributions.
+
+## 3. Reduction to integer minimum-cost flow
+
+Let $D$ be the least common multiple of all denominators appearing in the masses $\mu_t$ and $\nu_u$. Define
+
+$$
+a_t=D\mu_t,\qquad b_u=D\nu_u.
+$$
+
+These are nonnegative integers satisfying
+
+$$
+\sum_t a_t=\sum_u b_u=D.
+$$
+
+Likewise, let $E$ be the least common multiple of the denominators of all computed costs $c_{t,u}$ and put
+
+$$
+w_{t,u}=E c_{t,u}\in\mathbb Z_{\geq 0}.
+$$
+
+The binary lengths of $D$ and $E$ are polynomially bounded: the logarithm of a least common multiple is at most the sum of the logarithms of the input denominators.
+
+Construct a directed network with vertices
+
+$$
+\{s,z\}\cup T\cup U
+$$
+
+and the following arcs:
+
+- $s\to t$ has capacity $a_t$ and cost $0$;
+- $t\to u$ has capacity $D$ and cost $w_{t,u}$;
+- $u\to z$ has capacity $b_u$ and cost $0$.
+
+Require a flow of value $D$ from $s$ to $z$.
+
+Because the total capacity leaving $s$ is exactly $D$, every such flow saturates every arc $s\to t$. Similarly, every arc $u\to z$ is saturated. Hence, if $x_{t,u}$ denotes the flow on $t\to u$, then
+
+$$
+\sum_u x_{t,u}=a_t,\qquad
+\sum_t x_{t,u}=b_u.
+$$
+
+Conversely, every nonnegative matrix satisfying these equations defines a flow of value $D$.
+
+The standard integral minimum-cost-flow theorem applies: a network with integral capacities and integral costs has an integral optimum, and such an optimum can be found in time polynomial in the network size and the binary encoding length of its capacities and costs.
+
+Let $x$ be the resulting integral optimum and define
+
+$$
+y_{t,u}=\frac{x_{t,u}}{D}.
+$$
+
+Then $y$ is a rational coupling. Moreover,
+
+$$
+\sum_{t,u}y_{t,u}c_{t,u}
+=
+\frac{1}{DE}\sum_{t,u}x_{t,u}w_{t,u}.
+$$
+
+The factor $1/(DE)$ is positive and independent of the coupling, so minimizing the integer flow cost is exactly equivalent to minimizing the original coupling cost. Therefore $y$ is an exact minimum-cost coupling.
+
+## 4. Conclusion
+
+Both stages—computing the rational cost matrix and solving the resulting transportation problem—have polynomial bit complexity. The Stable Roommates matching result is consistent with this conclusion but is not needed: the stated finite-type problem is directly a minimum-cost transportation problem.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly reduces the problem to a rational transportation problem and then to integer minimum-cost flow. The argument establishes deterministic polynomial-time solvability under an explicit binary encoding of all rational input data.</p><p>No false statements, missing essential lemmas, or unjustified complexity claims were found.</p><h3>Step-by-step audit</h3><h3>1. Computation of pairwise profile costs</h3><p>For each pair $(t,u)$, taking the common refinement of the two breakpoint partitions is valid. Both step functions are constant on every resulting open interval, so</p><p>$$
+c_{t,u}=\sum_j(\gamma_j-\gamma_{j-1})|a_j-b_j|
+$$</p><p>is exactly the required integral. Values at finitely many breakpoints indeed have no effect.</p><p>The bit-complexity claim is also sound:</p><ul><li>The number of breakpoints and arithmetic operations is polynomial in the explicit input size.</li><li>Rational comparisons can be performed by integer cross-multiplication.</li><li>Numerator and denominator bit lengths remain polynomial over polynomially many rational operations.</li><li>Hence every $c_{t,u}$ and the complete cost matrix have polynomial encoding length.</li></ul><h3>2. Transportation formulation</h3><p>The displayed linear program exactly matches the definition of a coupling and its cost.</p><p>The claimed feasible point</p><p>$$
+y_{t,u}=\mu_t\nu_u
+$$</p><p>has row sums $\mu_t$ and column sums $\nu_u$, because both distributions have total mass $1$. Thus feasibility is correctly established, including zero-mass types.</p><h3>3. Scaling the masses</h3><p>Taking $D$ to be the least common multiple of the mass denominators makes</p><p>$$
+a_t=D\mu_t,\qquad b_u=D\nu_u
+$$</p><p>nonnegative integers with common total $D$.</p><p>Although the numerical value of $D$ may be exponentially large, its binary length is at most the sum of the denominator bit lengths and is therefore polynomial. This is the relevant complexity measure.</p><h3>4. Scaling the costs</h3><p>The same reasoning applies to $E$, the least common multiple of the reduced cost denominators. The integers</p><p>$$
+w_{t,u}=Ec_{t,u}
+$$</p><p>are nonnegative and have polynomial binary encoding length.</p><h3>5. Minimum-cost-flow reduction</h3><p>The network construction is correct. A flow of value $D$ must saturate all arcs leaving $s$, since their total capacity is exactly $D$. It must likewise saturate all arcs entering $z$. Flow conservation therefore gives precisely</p><p>$$
+\sum_u x_{t,u}=a_t,\qquad \sum_t x_{t,u}=b_u.
+$$</p><p>Conversely, every nonnegative matrix satisfying these equations defines such a flow. Capacities $D$ on the middle arcs do not exclude any feasible transportation matrix because no individual entry can exceed the total flow $D$.</p><p>The invoked minimum-cost-flow result is applicable: all capacities, required flow values, and costs are integral. Standard minimum-cost-flow algorithms run in time polynomial in the network dimensions and the binary encoding lengths of those integers, and flow integrality ensures an integral optimum.</p><h3>6. Recovery and optimality of the coupling</h3><p>Defining</p><p>$$
+y_{t,u}=\frac{x_{t,u}}D
+$$</p><p>produces a nonnegative rational coupling with the required marginals.</p><p>The objective relation</p><p>$$
+\sum_{t,u}y_{t,u}c_{t,u}
+=
+\frac1{DE}\sum_{t,u}x_{t,u}w_{t,u}
+$$</p><p>is algebraically correct. Since $1/(DE)&gt;0$ and is independent of the flow, the two optimization objectives have exactly the same minimizers.</p><p>The resulting coupling also has polynomial output length because each integral flow value is between $0$ and $D$, whose binary length is polynomial.</p><h3>Conclusion</h3><p>The target is fully resolved: an exact minimum-cost coupling can be computed in deterministic polynomial time under the stated explicit binary encoding. The accompanying statement about NP-hardness is valid under the usual interpretation of polynomial-time reductions: the problem cannot be NP-hard unless $\mathrm P=\mathrm{NP}$.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

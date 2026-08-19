@@ -1,0 +1,434 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Best of Both Worlds Fairness under Entitlements -- probablistic allocation of indivisible items -- already probabilistic — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Best of Both Worlds Fairness under Entitlements -- probablistic allocation of indivisible items -- already probabilistic <span style="font-weight:normal;color:#8a7350">(p01)</span></h1>
+<p class="banner">claim: resolved · adversarial review: partial</p>
+<p class="answer"><b>Answer:</b> polynomial-time solvable</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 6.2. — class: algorithmic</p>
+<blockquote class="thmq">Algorithm 2 is a strongly polynomial-time algo- rithm that gives an outcome that is ex-ante WEF, and ex-post WPROP1, ex-ante Pareto optimal, and ex-post Pareto optimal.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given finite agent types \(T\), item categories \(G\), masses \(\mu_t\), per-person entitlements \(a_t\), additive values \(v_t(g)\), and supplies \(q_g\) per unit population, compute a weighted-MNW ex-ante allocation \(F\) and a succinct lottery over continuum allocation patterns implementing \(F\), such that every recipient receives an integral bundle satisfying WPROP1 and every supported pattern is Pareto optimal.</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">Let \(T\) be finite, with masses \(\mu_t&gt;0\), \(\sum_t\mu_t=1\), entitlements \(a_t&gt;0\), \(\sum_t\mu_ta_t=1\), additive values \(v_t(g)\), and per-capita supplies \(q_g\) of item categories \(g\in G\). A feasible integral pattern is a measurable assignment of finite integral bundles to recipients such that category \(g\) is assigned to mass \(q_g\); \(F_{tg}\) is type \(t\)&#x27;s expected number of \(g\)&#x27;s.
+Write \(U_t(F_s)=\sum_gv_t(g)F_{sg}\). Ex-ante WEF means \(U_t(F_t)/a_t\ge U_t(F_s)/a_s\) for all \(t,s\). An individual type-\(t\) bundle \(B\) is WPROP1 if \(v_t(B)\ge a_t\sum_gq_gv_t(g)\), or this holds after adding one unreceived item. A pattern is PO if no feasible measurable integral pattern weakly improves every recipient and strictly improves a positive-mass set.
+
+**Target.**
+For rational input data, is computing an expected allocation \(F\) and a finite implementing lottery that maximizes \(\sum_t\mu_ta_t\log U_t(F_t)\), is ex-ante WEF, and whose supported patterns are WPROP1 and PO in P, or is it NP-hard?
+
+**Nearest known results.**
+For a finite list of agents with weighted entitlements and additive valuations, this weighted maximum-Nash-welfare lottery problem has a strongly polynomial-time algorithm: its expectation is WEF and PO, and every supported integral allocation is WPROP1 and PO.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Complexity Classification
+
+## Theorem
+
+Assume the standard goods interpretation:
+
+- $G$ is finite and all $q_g,v_t(g)$ are nonnegative rationals encoded in binary;
+- $V_t:=\sum_g q_gv_t(g)&gt;0$ for every $t$, so the logarithmic objective is finite;
+- each type population is nonatomic;
+- $F_t$ denotes the conditional mean over type-$t$ recipients and the lottery;
+- a pattern is represented by finitely many bundles and their rational type-conditional masses.
+
+Then the target problem is polynomial-time solvable. In fact, the implementing lottery may be chosen to have a single pattern.
+
+The nonatomic assumption is essential to the formulation. If type populations may contain atoms, the masses $\mu_t$ alone do not determine which bundle frequencies are implementable.
+
+## 1. Computing the optimal expectation
+
+Put
+
+$$
+b_t:=\mu_ta_t,\qquad y_{tg}:=\mu_tF_{tg}.
+$$
+
+Then $\sum_t b_t=1$, and feasibility becomes
+
+$$
+\sum_t y_{tg}=q_g.
+$$
+
+Moreover,
+
+$$
+U_t(F_t)=\frac{1}{\mu_t}\sum_gv_t(g)y_{tg}.
+$$
+
+Consequently, up to the constant $-\sum_tb_t\log\mu_t$, the objective is
+
+$$
+\max_{y\ge0}
+\sum_tb_t\log\left(\sum_gv_t(g)y_{tg}\right)
+\quad\text{subject to}\quad
+\sum_ty_{tg}\le q_g.
+\tag{1}
+$$
+
+This is the Eisenberg–Gale program for a linear Fisher market with buyers $t$, budgets $b_t$, and supplies $q_g$. Exact rational equilibria of linear Fisher markets are computable in polynomial time; indeed, a strongly polynomial algorithm is known for the linear case ([Orlin, 2010](https://drops.dagstuhl.de/entities/document/10.4230/DagSemProc.10171.2)).
+
+If some constraint in (1) is slack, then the corresponding category is valued at zero by every type: otherwise assigning a positive additional amount to a type valuing it would strictly increase the objective. Such universally valueless leftovers can therefore be assigned arbitrarily. Hence we obtain a rational optimum satisfying
+
+$$
+\sum_ty_{tg}=q_g
+$$
+
+for every $g$. Set $F_{tg}=y_{tg}/\mu_t$.
+
+No denominator-clearing expansion into individual agents or individual items is used.
+
+## 2. The optimum is ex-ante WEF
+
+Let $p_g\ge0$ be optimal dual multipliers for the supply constraints in (1). The KKT conditions give, for every $t,g$,
+
+$$
+\frac{b_tv_t(g)}
+{\sum_hv_t(h)y_{th}}
+\le p_g,
+\tag{2}
+$$
+
+with equality whenever $y_{tg}&gt;0$. Since $b_t=\mu_ta_t$ and $\sum_hv_t(h)y_{th}=\mu_tU_t(F_t)$, (2) becomes
+
+$$
+\frac{a_tv_t(g)}{U_t(F_t)}\le p_g.
+\tag{3}
+$$
+
+Summing the equalities in (3) over the categories with $F_{tg}&gt;0$ gives
+
+$$
+p\mathbin{\cdot}F_t
+=
+\frac{a_t}{U_t(F_t)}
+\sum_gv_t(g)F_{tg}
+=a_t.
+\tag{4}
+$$
+
+For arbitrary $s,t$, inequality (3) and (4) imply
+
+$$
+U_t(F_s)
+=\sum_gv_t(g)F_{sg}
+\le
+\frac{U_t(F_t)}{a_t}
+\sum_gp_gF_{sg}
+=
+\frac{U_t(F_t)}{a_t}a_s.
+$$
+
+Thus
+
+$$
+\frac{U_t(F_t)}{a_t}
+\ge
+\frac{U_t(F_s)}{a_s},
+$$
+
+which is precisely ex-ante WEF.
+
+## 3. Ex-ante weighted proportionality
+
+Fix $t$. Multiply its WEF inequality against type $s$ by $\mu_sa_s$ and sum over $s$. Using $\sum_s\mu_sa_s=1$ gives
+
+$$
+\frac{U_t(F_t)}{a_t}
+\ge
+\sum_s\mu_sU_t(F_s).
+$$
+
+Feasibility gives
+
+$$
+\sum_s\mu_sU_t(F_s)
+=
+\sum_gv_t(g)\sum_s\mu_sF_{sg}
+=
+\sum_gq_gv_t(g)
+=V_t.
+$$
+
+Therefore
+
+$$
+U_t(F_t)\ge a_tV_t.
+\tag{5}
+$$
+
+This is the fractional weighted-proportionality bound needed for the WPROP1 implementation.
+
+## 4. A compact one-item rounding lemma
+
+### Lemma
+
+Given rational $x\in\mathbb Q_{\ge0}^G$ and nonnegative additive values $v_g$, one can compute in polynomial time a rational distribution over at most $|G|+1$ integral bundles $b$ such that
+
+$$
+\mathbb E[b]=x,
+$$
+
+and every supported $b$ satisfies either
+
+$$
+v(b)\ge v(x),
+$$
+
+or there is an unselected residual item $g$ such that
+
+$$
+v(b)+v_g&gt;v(x).
+\tag{6}
+$$
+
+### Proof
+
+Write
+
+$$
+x_g=n_g+r_g,\qquad n_g=\lfloor x_g\rfloor,\quad 0\le r_g&lt;1.
+$$
+
+Discard coordinates with $r_g=0$, and order the remaining coordinates as $g_1,\ldots,g_k$ so that
+
+$$
+v_{g_1}\ge v_{g_2}\ge\cdots\ge v_{g_k}.
+$$
+
+Put
+
+$$
+R_j:=\sum_{i=1}^jr_{g_i},\qquad R_0:=0.
+$$
+
+For $\theta\in[0,1)$, select $g_i$ precisely when the interval $(R_{i-1},R_i]$ contains a point of the shifted lattice $\theta+\mathbb Z$. Because $r_{g_i}&lt;1$, at most one such point lies in this interval.
+
+For uniform $\theta$, the selection probability of $g_i$ is exactly the length $r_{g_i}$ of the interval modulo one. Thus the bundle
+
+$$
+b_g=n_g+\mathbf 1[g\text{ is selected}]
+$$
+
+has expectation $x$.
+
+The selected set changes only when $\theta$ crosses one of the fractional parts of $R_0,\ldots,R_k$. Partitioning $[0,1)$ at these rational breakpoints therefore converts this construction into a rational distribution over at most $k+1$ bundles.
+
+For a supported selected set, define
+
+$$
+C_j:=\sum_{i=1}^j\mathbf 1[g_i\text{ is selected}],
+\qquad
+D_j:=C_j-R_j.
+$$
+
+The interval $(0,R_j]$ contains either $\lfloor R_j\rfloor$ or $\lceil R_j\rceil$ shifted lattice points. Hence
+
+$$
+-1&lt;D_j&lt;1.
+\tag{7}
+$$
+
+Let
+
+$$
+\Delta:=v(b)-v(x)
+=\sum_{i=1}^kv_{g_i}
+\left(\mathbf 1[g_i\text{ is selected}]-r_{g_i}\right).
+$$
+
+Summation by parts yields
+
+$$
+\Delta
+=
+v_{g_k}D_k+
+\sum_{j=1}^{k-1}
+\left(v_{g_j}-v_{g_{j+1}}\right)D_j.
+\tag{8}
+$$
+
+Suppose $\Delta&lt;0$. Then not every residual item is selected. Let $h$ be the first unselected index. For $j&lt;h$, every $g_1,\ldots,g_j$ is selected, so
+
+$$
+D_j=j-R_j&gt;0.
+$$
+
+For $j\ge h$, (7) gives $D_j&gt;-1$. Since the value sequence is nonincreasing, all coefficients in (8) are nonnegative. Therefore
+
+$$
+\begin{aligned}
+\Delta
+&amp;&gt;
+-\left(
+v_{g_k}
++
+\sum_{j=h}^{k-1}(v_{g_j}-v_{g_{j+1}})
+\right)\\
+&amp;=-v_{g_h}.
+\end{aligned}
+$$
+
+Thus $v(b)+v_{g_h}&gt;v(x)$. Since $g_h$ was not selected, this is an unreceived residual copy. This proves the lemma.
+
+## 5. Constructing one WPROP1 pattern
+
+Apply the lemma to $x=F_t$ and $v_g=v_t(g)$ separately for each type $t$. Let its resulting distribution be
+
+$$
+\{(\lambda_{t\ell},b^{t\ell})\}_{\ell=1}^{K_t},
+\qquad K_t\le |G|+1.
+$$
+
+Thus
+
+$$
+\sum_\ell\lambda_{t\ell}b^{t\ell}_g=F_{tg}.
+\tag{9}
+$$
+
+Because the type-$t$ population is nonatomic, partition it measurably into sets of masses
+
+$$
+\mu_t\lambda_{t1},\ldots,\mu_t\lambda_{tK_t},
+$$
+
+and give bundle $b^{t\ell}$ to every recipient in the $\ell$-th set.
+
+By (9), the total assigned mass of category $g$ is
+
+$$
+\sum_t\mu_t\sum_\ell\lambda_{t\ell}b^{t\ell}_g
+=
+\sum_t\mu_tF_{tg}
+=q_g.
+$$
+
+Hence this is a feasible integral pattern.
+
+For every supported bundle $b^{t\ell}$, the rounding lemma gives either
+
+$$
+v_t(b^{t\ell})\ge U_t(F_t),
+$$
+
+or an unreceived item $g$ such that
+
+$$
+v_t(b^{t\ell})+v_t(g)&gt;U_t(F_t).
+$$
+
+Combining this with (5) shows that every recipient is WPROP1.
+
+## 6. Pareto optimality of the pattern
+
+Let $A$ denote the constructed pattern. Suppose another feasible measurable integral pattern $A&#x27;$ weakly improves every recipient and strictly improves a positive-mass set.
+
+Define its type averages by
+
+$$
+F&#x27;_{tg}:=
+\frac1{\mu_t}
+\int_{\text{type }t}A&#x27;_g(x)\,dx.
+$$
+
+Then $F&#x27;$ is feasible. Moreover,
+
+$$
+U_t(F&#x27;_t)-U_t(F_t)
+=
+\frac1{\mu_t}
+\int_{\text{type }t}
+\left(v_t(A&#x27;(x))-v_t(A(x))\right)\,dx
+\ge0.
+$$
+
+Because $T$ is finite and strict improvement occurs on a positive-mass set, it occurs on a positive-mass subset of at least one type. The corresponding nonnegative integrand is strictly positive on a positive-measure set, so its integral is strictly positive. Therefore, for some $t$,
+
+$$
+U_t(F&#x27;_t)&gt;U_t(F_t).
+$$
+
+All $U_t(F_t)$ are positive. Consequently,
+
+$$
+\sum_t\mu_ta_t\log U_t(F&#x27;_t)
+&gt;
+\sum_t\mu_ta_t\log U_t(F_t),
+$$
+
+contradicting the optimality of $F$. Hence $A$ is PO.
+
+## 7. Lottery size and bit complexity
+
+Return the degenerate lottery placing probability $1$ on $A$.
+
+The output contains at most
+
+$$
+\sum_tK_t\le |T|(|G|+1)
+$$
+
+type-bundle classes. Exact Fisher-market algorithms return rational allocations of polynomial encoding length. Floors, cumulative sums, rational breakpoint sorting, and interval lengths all require polynomially many rational arithmetic operations, and all bundle counts are written in binary.
+
+Thus the entire expected allocation and implementing lottery have polynomial encoding length and are computable in polynomial time.
+
+Finally, $F$ maximizes the objective over all feasible expectations. Since the constructed $F$ also satisfies WEF and admits a WPROP1-and-PO implementation, it also maximizes the objective over the target’s more restricted feasible set.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Theorem assumptions and Sections 1–5: The proof assumes all valuations are nonnegative, although USER_TASK does not state this. The supply relaxation, Fisher-market interpretation, KKT argument, and rounding lemma all rely on nonnegativity.</li><li><b>major</b> — Theorem assumption V_t&gt;0: The prover excludes rational inputs with zero attainable utility. USER_TASK does not exclude them, and the logarithmic objective and required output are not classified for those cases.</li><li><b>major</b> — Theorem assumption that every type population is nonatomic: Nonatomicity is not specified in USER_TASK and is essential for the prescribed bundle-frequency partitions. With atoms, the same type masses can have different implementability properties, so the conditional theorem does not classify the stated problem.</li><li><b>major</b> — Theorem and Section 7: The proof imposes a finite rational class-mass representation of measurable patterns that USER_TASK does not specify. Without an input/output representation for the recipient measure space and patterns, the claimed complexity classification is not a classification of the literal task.</li><li><b>minor</b> — Section 1 and Section 7: The cited Fisher-market theorem is stated for integral money and utility data, while the present instance has rational budgets, utilities, and supplies. The necessary rational-to-integral normalization and polynomial-time recovery of a polynomial-bit allocation are not given.</li><li><b>minor</b> — Section 4: The finite distribution construction does not specify how selection is defined at rational breakpoints. These points have zero measure, so an explicit endpoint or interior-representative convention suffices.</li><li><b>minor</b> — Section 5: The proof identifies an unselected residual category unit, but the continuum category model does not formally define when such a unit counts as an &#x27;unreceived item.&#x27; This interpretation must be stated.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The argument is mathematically coherent under the prover’s added assumptions: finite goods, nonnegative valuations, positive attainable utility for every type, nonatomic populations, and the proposed finite representation of a pattern. Under those assumptions, the Fisher-market reduction, WEF derivation, rounding construction, WPROP1 conclusion, and Pareto-optimality argument all stand.</p><p>It does not fully resolve <code>USER_TASK</code> as written, however. Several assumptions essential to the proof are not present in the task. In particular, the proof gives only a conditional polynomial-time result, whereas the target asks for a classification for the stated rational inputs.</p><h3>Step-by-step verification</h3><h3>1. Fisher-market reduction</h3><p>The substitutions</p><p>$$
+b_t=\mu_ta_t,\qquad y_{tg}=\mu_tF_{tg}
+$$</p><p>are correct. Feasibility becomes</p><p>$$
+\sum_ty_{tg}=q_g,
+$$</p><p>and</p><p>$$
+U_t(F_t)=\frac{1}{\mu_t}\sum_gv_t(g)y_{tg}.
+$$</p><p>Consequently, the logarithmic objective differs from the Eisenberg–Gale objective by an allocation-independent constant. This reduction is valid when all relevant utilities are positive.</p><p>Replacing equality by</p><p>$$
+\sum_ty_{tg}\le q_g
+$$</p><p>is valid under nonnegative valuations: any slack good valued positively by some type could improve that type’s positive utility, while a universally valueless good can be used to fill the equality without changing utilities.</p><p>This reasoning fails without nonnegative valuations. The original task merely says “additive values”; it does not explicitly impose $v_t(g)\ge0$. For example, with one type and both a positive-valued and a negative-valued mandatory-supply category, the relaxed program may discard the negative item even though the original feasibility condition requires assigning it.</p><p>The cited source does verify a strongly polynomial algorithm for linear Fisher markets, but it explicitly describes divisible goods with integral money and integral utility inputs. The write-up does not state the reductions needed for rational budgets, rational supplies, or recovery of a polynomial-bit allocation from the computed market equilibrium. These are plausibly routine, but they are required for the precise complexity claim. See [Orlin, “Improved Algorithms for Computing Fisher’s Market Clearing Prices”](https://drops.dagstuhl.de/entities/document/10.4230/DagSemProc.10171.2).</p><h3>2. Ex-ante WEF</h3><p>The KKT inequality</p><p>$$
+\frac{b_tv_t(g)}{\sum_hv_t(h)y_{th}}\le p_g
+$$</p><p>with equality for $y_{tg}&gt;0$ is correct for the nonnegative linear Fisher program.</p><p>Substitution yields</p><p>$$
+\frac{a_tv_t(g)}{U_t(F_t)}\le p_g.
+$$</p><p>Summing the equalities over the support of $F_t$ correctly gives</p><p>$$
+p\cdot F_t=a_t.
+$$</p><p>Applying the coordinatewise inequality to $F_s$ then gives</p><p>$$
+U_t(F_s)\le\frac{U_t(F_t)}{a_t}p\cdot F_s
+=\frac{U_t(F_t)}{a_t}a_s.
+$$</p><p>Thus ex-ante WEF follows. No gap was found in this part under the stated positivity assumptions.</p><h3>3. Weighted proportionality</h3><p>Multiplying WEF by $\mu_sa_s$ and summing over $s$ is correct because</p><p>$$
+\sum_s\mu_sa_s=1.
+$$</p><p>Feasibility gives</p><p>$$
+\sum_s\mu_sU_t(F_s)=\sum_gq_gv_t(g)=V_t.
+$$</p><p>Therefore</p><p>$$
+U_t(F_t)\ge a_tV_t.
+$$</p><p>This step is correct.</p><h3>4. Rounding lemma</h3><p>The shifted-lattice construction gives each residual coordinate marginal probability $r_g$, so its expectation is $x$.</p><p>The number of positive-probability regions is at most $k+1$, since selection changes only at the fractional parts of $R_0,\ldots,R_k$. The treatment of exact breakpoint values is not specified, but those values have probability zero; an explicit convention would make the finite distribution completely formal.</p><p>For every prefix,</p><p>$$
+-1&lt;D_j&lt;1
+$$</p><p>is correct. The summation-by-parts identity</p><p>$$
+\Delta
+=
+v_{g_k}D_k+
+\sum_{j=1}^{k-1}(v_{g_j}-v_{g_{j+1}})D_j
+$$</p><p>is also correct.</p><p>If $h$ is the first unselected coordinate, then $D_j&gt;0$ for $j&lt;h$, while $D_j&gt;-1$ thereafter. Because the coefficients are nonnegative, the conclusion</p><p>$$
+\Delta&gt;-v_{g_h}
+$$</p><p>follows. Thus the lemma itself is sound.</p><h3>5. Construction of a WPROP1 pattern</h3><p>Assuming each type population is nonatomic, partitions with prescribed masses $\mu_t\lambda_{t\ell}$ exist. The resulting category totals are exactly</p><p>$$
+\sum_t\mu_tF_{tg}=q_g.
+$$</p><p>Each bundle either has value at least $U_t(F_t)$ or reaches a value strictly above $U_t(F_t)$ after adding the identified residual item. Combined with</p><p>$$
+U_t(F_t)\ge a_tV_t,
+$$</p><p>this establishes WPROP1.</p><p>The phrase “unreceived residual item” needs a precise interpretation in the continuum/category model. The construction proves that one extra unit of category $g$ was not selected for that bundle and that the residual marginal $r_g$ is positive. Whether this is exactly the task’s notion of an “unreceived item” depends on how physical copies are represented. The task does not define this point.</p><h3>6. Pareto optimality</h3><p>For a recipientwise Pareto improvement $A&#x27;$, averaging within types gives a feasible expectation $F&#x27;$.</p><p>Since every recipient’s utility change is nonnegative, each type’s mean utility is weakly higher. Because there are finitely many types, strict improvement on a positive-mass set occurs on a positive-mass subset of at least one type. The associated nonnegative measurable utility difference then has a strictly positive integral. Hence some type’s average utility is strictly higher.</p><p>As every original type utility is positive, strict monotonicity of the logarithm gives a strictly larger objective, contradicting optimality. This establishes Pareto optimality of the constructed pattern under the added assumptions.</p><h3>7. Complexity and output representation</h3><p>A degenerate lottery on the constructed pattern is indeed a finite implementing lottery. The rounding stage has at most $|T|(|G|+1)$ type-bundle classes, and its rational arithmetic has polynomial bit complexity.</p><p>However, the claim that the entire algorithm has polynomial bit complexity still relies on an unstated rational-input reduction to the cited Fisher-market algorithm and on polynomial-time recovery of a rational equilibrium allocation, not merely prices. This is a minor verification gap conditional on the model assumptions.</p><h3>Scope defects relative to <code>USER_TASK</code></h3><p>The following are not merely expositional:</p><ul><li>The prover assumes $v_t(g)\ge0$, but <code>USER_TASK</code> does not state this. The relaxed Fisher program and its monotonicity arguments depend essentially on it.</li></ul><ul><li>The prover assumes $V_t&gt;0$ for every type. Inputs with $V_t=0$ are included literally in <code>USER_TASK</code>. On such inputs the logarithmic objective may be identically $-\infty$ or otherwise require an explicit convention, and the proof does not classify them.</li></ul><ul><li>The prover assumes nonatomic type populations. This is essential: masses alone do not determine integral implementability in an atomic space. For example, one atom of mass $1$ cannot implement supply $q_g=1/2$ using an integral bundle, whereas a nonatomic population can. Thus the theorem answers one completion of the model, not the task in its full stated generality.</li></ul><ul><li>The prover chooses an output representation consisting of rational type-conditional bundle masses. The task does not specify that this constitutes a finite encoding of a measurable pattern. A complexity classification requires this representation to be part of the model.</li></ul><h3>Minimum clarification required</h3><p>To make the claimed classification verifiable, the task or theorem must explicitly restrict to finite $G$, nonnegative rational valuations, positive $V_t$, nonatomic type spaces, and the stated finite class-mass encoding of patterns. The write-up must also state how rational Fisher instances meet the cited algorithm’s input hypotheses and how a polynomial-bit equilibrium allocation is recovered.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

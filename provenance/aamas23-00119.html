@@ -1,0 +1,135 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Adapting Stable Matchings to Forced and Forbidden Pairs — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Adapting Stable Matchings to Forced and Forbidden Pairs <span style="font-weight:normal;color:#8a7350">(aamas23-00119)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> polynomial-time solvable</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: hardness</p>
+<blockquote class="thmq">Adapt SR to Forced and Forbidden Pairs is NP-hard, even if Q = ∅and P ⊆M1.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given a finite type set \(T\), rational masses \(\mu_t\), strict preferences over acceptable partner types, a stable incumbent census \(y^1\), forbidden type pairs \(P\) with \(y^1_e&gt;0\), and \(\kappa\in\mathbb{Q}_{\ge0}\), decide whether there exists a symmetric mass-pairing matrix \(y\) with \(\sum_u y_{tu}\le\mu_t\), \(y_e=0\) for every \(e\in P\), and \(\delta(y,y^1)=\frac12\sum_{t,u}|y_{tu}-y^1_{tu}|\le\kappa\), such that for every acceptable pair \(\{t,u\}\), it is not the case that both \(R_{t,u}(y)&gt;0\) and \(R_{u,t}(y)&gt;0\), where \(R_{t,u}(y)\) is the mass of type \(t\) assigned to partners ranked below \(u\).</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">Given a finite set \(T\), binary-encoded rational masses \(\mu_t\), and strict rankings \(\succ_t\) of acceptable partner types, a feasible pairing is a nonnegative symmetric matrix \(y\), supported on acceptable pairs, with \(\sum_{u\in T}y_{tu}\le\mu_t\). Let \(R_{t,u}(y)=\sum_{v:\,u\succ_t v}y_{tv}\); \(y\) is stable if no acceptable \(\{t,u\}\) has both \(R_{t,u}(y)&gt;0\) and \(R_{u,t}(y)&gt;0\).
+
+Given a stable feasible incumbent \(y^1\), forbidden acceptable pairs \(P\) with \(y^1_e&gt;0\), and \(\kappa\in\mathbb{Q}_{\ge0}\), require \(y_e=0\) for \(e\in P\) and \(\delta(y,y^1)=\frac12\sum_{t,u\in T}|y_{tu}-y^1_{tu}|\le\kappa\).
+
+**Target.** Is this continuous forbidden-pairs adaptation problem solvable in polynomial time, or is it NP-hard?
+
+For finite-agent Stable Roommates with strict preferences, the analogous adaptation problem is NP-hard even with no forced pairs and with every forbidden pair contained in the incumbent matching. No result for the mass-based problem above is assumed.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Result
+
+The problem is polynomial-time solvable. In fact, its optimum adaptation distance has an explicit formula.
+
+## Forbidden-coordinate lower bound
+
+Let
+
+\[
+\widehat P=\{(t,u)\in T^2:\{t,u\}\in P\}
+\]
+
+be the ordered coordinates corresponding to the forbidden unordered pairs, and define
+
+\[
+D_P=\frac12\sum_{(t,u)\in\widehat P}y^1_{tu}.
+\]
+
+Every admissible adaptation \(y\) must satisfy \(y_{tu}=0\) for \((t,u)\in\widehat P\). Since \(y^1_{tu}&gt;0\) on these coordinates,
+
+\[
+\delta(y,y^1)
+=\frac12\sum_{t,u\in T}|y_{tu}-y^1_{tu}|
+\ge
+\frac12\sum_{(t,u)\in\widehat P}y^1_{tu}
+=D_P.
+\]
+
+Thus \(D_P\) is a lower bound on the distance of every solution.
+
+If self-pairs are disallowed, symmetry gives the simpler expression
+
+\[
+D_P=\sum_{\{t,u\}\in P}y^1_{tu}.
+\]
+
+## A solution attaining the lower bound
+
+Define \(y^\star\) by deleting precisely the forbidden entries:
+
+\[
+y^\star_{tu}=
+\begin{cases}
+0,&amp;\text{if }\{t,u\}\in P,\\
+y^1_{tu},&amp;\text{otherwise.}
+\end{cases}
+\]
+
+This matrix is nonnegative and symmetric. Its support remains contained in the acceptable pairs. Moreover, for every \(t\),
+
+\[
+\sum_{u\in T}y^\star_{tu}
+\le
+\sum_{u\in T}y^1_{tu}
+\le \mu_t,
+\]
+
+so \(y^\star\) is feasible.
+
+It remains to prove stability. Coordinatewise, \(0\le y^\star_{tv}\le y^1_{tv}\). Hence for every acceptable ordered pair \((t,u)\),
+
+\[
+R_{t,u}(y^\star)
+=
+\sum_{v:\,u\succ_t v}y^\star_{tv}
+\le
+\sum_{v:\,u\succ_t v}y^1_{tv}
+=
+R_{t,u}(y^1).
+\]
+
+Suppose some acceptable pair \(\{t,u\}\) blocked \(y^\star\). Then both \(R_{t,u}(y^\star)&gt;0\) and \(R_{u,t}(y^\star)&gt;0\). The displayed inequalities would imply both \(R_{t,u}(y^1)&gt;0\) and \(R_{u,t}(y^1)&gt;0\), contradicting the assumed stability of \(y^1\). Therefore \(y^\star\) is stable.
+
+Finally, \(y^\star\) differs from \(y^1\) only on the forbidden coordinates, so
+
+\[
+\delta(y^\star,y^1)=D_P.
+\]
+
+Consequently,
+
+\[
+\min\{\delta(y,y^1):y\text{ is feasible, stable, and avoids }P\}=D_P.
+\]
+
+## Algorithm and complexity
+
+Compute \(D_P\) exactly and answer yes if and only if \(D_P\le\kappa\). Summing and comparing binary-encoded rational numbers takes polynomial time in the input length.
+
+The decisive feature is that, under the stated definition of stability, deleting mass can only decrease every quantity \(R_{t,u}\). Thus stability is downward closed under coordinatewise deletion. This is why the finite-agent NP-hardness result does not transfer to the present formulation.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly establishes that the problem is polynomial-time solvable and that the minimum adaptation distance is exactly \(D_P\). The argument is complete under the stability and feasibility definitions in the task.</p><h3>Step-by-step audit</h3><ul><li><b>Forbidden-coordinate lower bound</b></li></ul><p>Every admissible \(y\) must set each forbidden coordinate to zero. Thus each such coordinate contributes exactly \(y^1_{tu}\) to the corresponding absolute difference. Restricting the distance sum to these coordinates gives the claimed lower bound \(D_P\).</p><p>The factor \(1/2\) correctly compensates for the two ordered coordinates associated with an off-diagonal unordered pair. The prover also correctly notes the simpler expression when self-pairs are excluded.</p><ul><li><b>Construction of \(y^\star\)</b></li></ul><p>Deleting precisely the forbidden entries preserves nonnegativity, symmetry, and support on acceptable pairs. Because every row sum weakly decreases, all capacity inequalities remain satisfied.</p><ul><li><b>Preservation of stability</b></li></ul><p>For every acceptable ordered pair \((t,u)\), each summand in \(R_{t,u}\) weakly decreases, so<br>\[
+   R_{t,u}(y^\star)\le R_{t,u}(y^1).
+   \]<br>Therefore, if both relevant quantities were positive under \(y^\star\), both would also be positive under \(y^1\), contradicting incumbent stability. This directly verifies stability according to the definition in the task.</p><ul><li><b>Optimality</b></li></ul><p>The constructed matrix differs from \(y^1\) only on forbidden coordinates, so its distance is exactly \(D_P\). Together with the lower bound, this proves optimality.</p><ul><li><b>Complexity</b></li></ul><p>Computing a sum of polynomially many binary-encoded rational numbers and comparing it with \(\kappa\) is polynomial-time feasible. Hence testing whether \(D_P\le\kappa\) gives a polynomial-time decision algorithm.</p><p>No external theorem is invoked, and no relevant edge case invalidates the argument. In particular, possible self-pairs are accommodated by the ordered-coordinate definition of \(D_P\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

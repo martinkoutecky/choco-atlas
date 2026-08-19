@@ -1,0 +1,152 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Approximating APS Under Submodular and XOS Valuations with Binary Marginals — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Approximating APS Under Submodular and XOS Valuations with Binary Marginals <span style="font-weight:normal;color:#8a7350">(aamas24-00122)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}hard}\); indeed, the threshold problem is \(\mathrm{NP\text{-}complete}\) under polynomial-time value evaluation, and every approximation factor \(\alpha&gt;5/6\) is \(\mathrm{NP\text{-}hard}\), even for the singleton distribution \(\mu_t=1\) without expanding agent copies.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5.1 — class: hardness</p>
+<blockquote class="thmq">In an instance ([𝑛], [𝑚], (𝑣𝑖)𝑖∈[𝑛]), it is NP-hard to compute the MMS value of an agent approximately up to a factor better than 5/6, when the agent has a submodular valuation function, even when all the marginal utilities are in {0, 1/2, 1}. An immediate corollary, using Claim 2.1, is that computing the APS value approximately up to a factor better than 5/6 is also NP- hard for such an agent. The proof of the theorem has three parts. First, we show a reduction from the known NP-complete problem 3-D-MATCHING to a fair allocation instance with agents with identical valuations.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given an explicitly represented finite indivisible-good set \(G\), a population scale \(N\), a rational distribution \(\mu\) over complete submodular valuation types whose marginal values lie in \(\{0,1/2,1\}\), and a target type \(t\) with \(N\mu_t\in\mathbb{Z}\), decide whether \(\operatorname{MMS}_{N,t}(G)=\max_{(S_1,\ldots,S_N)\in\Pi_N(G)}\min_{j\in[N]}v_t(S_j)\ge q\), or approximate this value within a factor better than \(5/6\), without expanding the \(N\mu_t\) identical agents. The one-type case \(\mu=\delta_t\), with \(3N\) goods and the paper’s ternary valuation, is the hardness instance.</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">A type \(v:2^G\to\mathbb{R}_{\ge0}\) is submodular and has ternary marginals if \(v(S\cup\{g\})-v(S)\in\{0,1/2,1\}\) for every \(S\subseteq G\) and \(g\notin S\). Let \(\Pi_N(G)\) be the set of partitions \((S_1,\ldots,S_N)\) of \(G\), and define \(\operatorname{MMS}_{N,t}(G)=\max_{(S_1,\ldots,S_N)\in\Pi_N(G)}\min_{j\in[N]}v_t(S_j)\).
+
+**Target.** Given \(G,N,\mu,t,q\), where \(\mu\) is a rational distribution over finitely many such types and \(N\mu_t\in\mathbb{Z}\), is deciding whether \(\operatorname{MMS}_{N,t}(G)\ge q\), or approximating it within a factor strictly better than \(5/6\), in polynomial time or NP-hard without expanding the \(N\mu_t\) copies of type \(t\)?
+
+**Nearest known results.** For explicitly listed agents with identical submodular valuations whose marginals lie in \(\{0,1/2,1\}\), approximating an agent&#x27;s MMS within a factor strictly better than \(5/6\) is NP-hard. The hardness construction uses one valuation type, \(3N\) goods, and \(N\) identical agents.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Complexity of Succinct Typed MMS
+
+## Theorem
+
+Assume that each valuation type is represented by a polynomial-size description permitting polynomial-time value evaluation, as in the stated hardness result. Then:
+
+1. Deciding whether \(\operatorname{MMS}_{N,t}(G)\ge q\) is NP-hard, even when \(\mu\) has a single type \(t\) with \(\mu_t=1\).
+2. For every fixed \(\alpha&gt;5/6\), computing an \(\alpha\)-approximation of \(\operatorname{MMS}_{N,t}(G)\) is NP-hard under the same restriction.
+3. The reduction stores the valuation only once and never expands the \(N\mu_t=N\) identical copies.
+
+Thus compressing identical agents into a rational type distribution does not remove the hardness.
+
+The reduction below is the compact one-type version of the construction underlying Theorem \(5.1\) of Kulkarni, Kulkarni, and Mehta. [AAMAS 2024 paper](https://aamas.csc.liv.ac.uk/Proceedings/aamas2024/pdfs/p1057.pdf)
+
+## Reduction from \(3\)-Dimensional Matching
+
+Let \(X,Y,Z\) be pairwise disjoint sets of cardinality \(r\), and let \(\mathcal T\subseteq X\times Y\times Z\). The NP-complete question is whether \(\mathcal T\) contains \(r\) pairwise disjoint triples covering \(X\cup Y\cup Z\).
+
+Construct the following compact MMS instance:
+
+- \(G=X\mathbin{\dot\cup}Y\mathbin{\dot\cup}Z\), so \(|G|=3r\).
+- \(N=r\).
+- There is one type \(t\), with \(\mu_t=1\). Hence \(N\mu_t=r\in\mathbb Z\).
+- Set \(q=3\).
+- Store one copy of the following valuation \(v_t=v\):
+
+  - \(v(\varnothing)=0\).
+  - \(v(S)=1\) if \(|S|=1\).
+  - \(v(S)=2\) if \(|S|=2\).
+  - \(v(S)=3\) if \(|S|=3\) and \(S\in\mathcal T\).
+  - \(v(S)=5/2\) if \(|S|=3\) and \(S\notin\mathcal T\).
+  - \(v(S)=3\) if \(|S|\ge4\).
+
+The valuation has a polynomial-size description: it suffices to store \(\mathcal T\). Evaluating \(v(S)\) requires computing \(|S|\) and, only when \(|S|=3\), testing membership in \(\mathcal T\).
+
+## Verification of the Valuation Promise
+
+For \(g\notin S\), let \(\Delta(g\mid S)=v(S\cup\{g\})-v(S)\). Directly from the definition,
+
+- \(\Delta(g\mid S)=1\) when \(|S|\le1\);
+- when \(|S|=2\), the marginal is \(1\) if \(S\cup\{g\}\in\mathcal T\), and \(1/2\) otherwise;
+- when \(|S|=3\), the marginal is \(0\) if \(S\in\mathcal T\), and \(1/2\) otherwise;
+- \(\Delta(g\mid S)=0\) when \(|S|\ge4\).
+
+Consequently every marginal belongs to \(\{0,1/2,1\}\).
+
+It remains to verify submodularity. For finite set functions, it suffices to prove diminishing returns: if \(A\subseteq B\) and \(g\notin B\), then \(\Delta(g\mid A)\ge\Delta(g\mid B)\).
+
+- If \(|A|\le1\), then \(\Delta(g\mid A)=1\), which is the largest possible marginal.
+- If \(|A|=2\) and \(A\subsetneq B\), then \(\Delta(g\mid A)\in\{1/2,1\}\), while \(\Delta(g\mid B)\in\{0,1/2\}\).
+- If \(|A|=3\) and \(A\subsetneq B\), then \(\Delta(g\mid A)\in\{0,1/2\}\) and \(\Delta(g\mid B)=0\).
+- If \(|A|\ge4\), both marginals are \(0\).
+
+Thus \(v\) is submodular and satisfies the required ternary-marginal promise.
+
+## Correctness of the Decision Reduction
+
+First, \(v(S)\le3\) for every \(S\subseteq G\), so \(\operatorname{MMS}_{r,t}(G)\le3\).
+
+Suppose that \(\mathcal T\) contains a perfect \(3\)-dimensional matching. Its \(r\) triples partition \(G\), and every such triple has value \(3\). Therefore \(\operatorname{MMS}_{r,t}(G)=3\).
+
+Conversely, suppose that \(\operatorname{MMS}_{r,t}(G)\ge3\). There is then a partition \((S_1,\ldots,S_r)\) of \(G\) in which every bundle has value \(3\).
+
+Every bundle must have exactly three goods. Indeed, the average bundle cardinality is \(3\). If some bundle contained at least four goods, another would contain at most two goods and hence have value at most \(2\), contradicting the assumed minimum value \(3\).
+
+A three-good bundle has value \(3\) exactly when it belongs to \(\mathcal T\). Hence \(S_1,\ldots,S_r\) are \(r\) disjoint triples in \(\mathcal T\) covering \(G\), and therefore form a perfect \(3\)-dimensional matching.
+
+We have proved the equivalence
+\[
+\operatorname{MMS}_{r,t}(G)\ge3
+\quad\Longleftrightarrow\quad
+(X,Y,Z,\mathcal T)\text{ has a perfect }3\text{-dimensional matching}.
+\]
+
+Therefore the threshold problem is NP-hard under polynomial-time many-one reductions.
+
+## The \(5/6\) Approximation Gap
+
+If the \(3\)-dimensional matching instance is positive, the MMS value is \(3\).
+
+If it is negative, the MMS value is not \(3\). Every bundle value lies in \(\{0,1,2,5/2,3\}\), and hence every partition minimum, and therefore the MMS optimum itself, lies in this set. Consequently a negative instance satisfies
+\[
+\operatorname{MMS}_{r,t}(G)\le5/2.
+\]
+
+Let \(\alpha&gt;5/6\), and suppose an algorithm returns a lower approximation \(A\) satisfying
+\[
+\alpha\operatorname{MMS}_{r,t}(G)\le A\le\operatorname{MMS}_{r,t}(G).
+\]
+
+On a positive instance, \(A\ge3\alpha&gt;5/2\). On a negative instance, \(A\le5/2\). Comparing \(A\) with \(5/2\) would therefore decide \(3\)-Dimensional Matching. Thus approximation within every fixed factor strictly better than \(5/6\) is NP-hard.
+
+The same argument applies if the algorithm returns a partition whose minimum bundle value is at least \(\alpha\) times the optimum.
+
+## Why Succinct Multiplicity Does Not Help
+
+The displayed definition of \(\operatorname{MMS}_{N,t}(G)\) depends only on \(G\), \(N\), and \(v_t\); the distribution \(\mu\) and the number \(N\mu_t\) do not otherwise occur in the objective.
+
+In the reduction, \(\mu\) is the singleton distribution \(\mu_t=1\). The output contains:
+
+- one representation of \(v_t\);
+- the binary encoding of \(N=r\);
+- no list of \(r\) agents or \(r\) copies of \(v_t\).
+
+Although the agents are compressed, the \(3r\) goods are explicitly present, exactly as required by the target input. Therefore the reduction is polynomial in the compact input size and does not conceal any expansion of the type multiplicity.
+
+If the intended alternative definition used \(N\mu_t\), rather than \(N\), as the number of MMS bundles, the same reduction still applies because \(\mu_t=1\).
+
+## Optional Membership Observation
+
+Under a polynomial-time value-evaluation representation, the promised threshold problem is also in NP. A partition can be encoded by assigning each good an index in \([N]\), using \(O(|G|\log N)\) bits. Only the nonempty bundles need separate evaluation; all unused indices represent identical empty bundles. Thus the decision problem is NP-complete under this standard representation.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — The theorem&#x27;s representation assumption and the reduction-size discussion: The target problem does not specify an encoding of valuations, and the phrase &#x27;polynomial-size description permitting polynomial-time value evaluation&#x27; does not formally define the target language. The reduction is valid under a standard succinct exact-evaluation encoding, but that encoding should be stated precisely.</li><li><b>minor</b> — Definition of the valuation and every later use of the condition S in T: The notation is formally ill-typed because T contains ordered triples while S is a subset of G. The canonical identification of (x,y,z) with {x,y,z} must be stated.</li><li><b>minor</b> — Optional Membership Observation: NP membership additionally requires exact polynomial-time comparison of encoded values, a convention about empty bundles, and a clear treatment of the ternary-marginal and submodularity conditions as either a promise or syntactically guaranteed properties.</li></ul>
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The reduction correctly establishes NP-hardness of the threshold problem and hardness of every fixed approximation factor \(\alpha&gt;5/6\), provided valuations use a succinct representation that can encode the displayed function and evaluate it exactly in polynomial time. The singleton distribution \(\mu_t=1\) genuinely avoids expanding identical agent copies.</p><p>The central mathematical argument is sound. The only issues are minor formalization gaps concerning the input representation, the identification of tuples with sets, and the optional NP-membership claim.</p><h3>Step-by-step verification</h3><h3>1. Reduction size and succinctness</h3><p>The reduction maps a perfect \(3\)-dimensional matching instance with \(|X|=|Y|=|Z|=r\) to:</p><ul><li>\(3r\) explicitly represented goods;</li><li>\(N=r\);</li><li>one type with \(\mu_t=1\);</li><li>one stored representation of \(v_t\).</li></ul><p>Thus \(N\mu_t=r\in\mathbb Z\), and no list of \(r\) agents or \(r\) valuation copies is created. Storing \(\mathcal T\) and the fixed evaluation rule takes polynomial space in the source instance.</p><p>This part is correct.</p><p>There is, however, a formal encoding issue: the target problem does not specify how valuations are represented. The prover explicitly adds a polynomial-time evaluation assumption, which is necessary, but “a polynomial-size description permitting polynomial-time evaluation” does not by itself define a target language for a formal many-one reduction. The hardness result is valid for any standard representation capable of encoding this valuation family, such as an explicit list of \(\mathcal T\) together with the fixed rule, but that representation should be declared precisely.</p><h3>2. Definition of the valuation</h3><p>All possible cardinalities are covered, including \(S=\varnothing\), and every assigned value is nonnegative.</p><p>There is a minor type mismatch in the notation \(S\in\mathcal T\): \(\mathcal T\subseteq X\times Y\times Z\) consists of ordered triples, whereas \(S\subseteq G\) is a set. Because \(X,Y,Z\) are pairwise disjoint, there is a canonical identification between a tuple \((x,y,z)\) and the set \(\{x,y,z\}\), but the identification is not stated. The valuation should formally refer to the corresponding family of three-element subsets.</p><p>This does not affect the substance of the reduction.</p><h3>3. Ternary marginals</h3><p>The marginal calculations are correct:</p><ul><li>from cardinality \(0\) or \(1\), the increment is \(1\);</li><li>from cardinality \(2\), the increment is \(1\) for a designated triple and \(1/2\) otherwise;</li><li>from cardinality \(3\), the increment is \(0\) for a designated triple and \(1/2\) otherwise;</li><li>from cardinality at least \(4\), the increment is \(0\).</li></ul><p>Hence every marginal lies in \(\{0,1/2,1\}\).</p><h3>4. Submodularity</h3><p>The diminishing-returns verification covers every possible cardinality of \(A\):</p><ul><li>If \(|A|\le1\), then \(\Delta(g\mid A)=1\), while all marginals are at most \(1\).</li><li>If \(|A|=2\) and \(A\subsetneq B\), then \(\Delta(g\mid A)\in\{1/2,1\}\), whereas \(\Delta(g\mid B)\in\{0,1/2\}\).</li><li>If \(|A|=3\) and \(A\subsetneq B\), then \(|B|\ge4\), so \(\Delta(g\mid B)=0\), while \(\Delta(g\mid A)\ge0\).</li><li>If \(|A|\ge4\), both marginals are \(0\).</li><li>If \(A=B\), the required inequality is equality.</li></ul><p>Thus the proof of submodularity is complete.</p><p>The construction and theorem citation agree with Theorem \(5.1\) of the cited [AAMAS 2024 paper](https://aamas.csc.liv.ac.uk/Proceedings/aamas2024/pdfs/p1057.pdf).</p><h3>5. Positive instances</h3><p>A perfect \(3\)-dimensional matching supplies \(r\) disjoint designated triples covering all \(3r\) goods. These form an \(r\)-partition in which every bundle has value \(3\).</p><p>Since \(v(S)\le3\) for every \(S\), this proves that the MMS is exactly \(3\). This direction is correct.</p><h3>6. Converse direction</h3><p>Suppose a partition into \(r\) bundles has minimum value \(3\). Every bundle then has value \(3\).</p><p>The average bundle cardinality is \(3\). If one bundle had at least four goods, the remaining bundle cardinalities could not all be at least three; hence some bundle would have at most two goods and value at most \(2\), a contradiction. Therefore every bundle has exactly three goods.</p><p>A three-good bundle has value \(3\) precisely when it corresponds to a member of \(\mathcal T\). The bundles are disjoint and cover \(G\), so they yield a perfect \(3\)-dimensional matching.</p><p>This direction is correct. Strictly, the reduction should either restrict to the standard NP-hard family with \(r\ge2\) or mention the trivial \(r=1\) case, although no actual failure occurs when \(r=1\).</p><h3>7. Decision hardness</h3><p>The equivalence between a positive perfect-matching instance and the threshold condition \(\operatorname{MMS}_{r,t}(G)\ge3\) is established. The construction is polynomial in the source size under the stated succinct representation.</p><p>Therefore the threshold problem is NP-hard under that representation.</p><h3>8. Approximation gap</h3><p>Every bundle value belongs to \(\{0,1,2,5/2,3\}\). Therefore every partition minimum belongs to this set, and the maximum over partition minima also belongs to it.</p><p>If the matching instance is negative, the decision equivalence excludes MMS value \(3\); consequently the MMS is at most \(5/2\).</p><p>For a standard maximization approximation satisfying \(\alpha\operatorname{MMS}\le A\le\operatorname{MMS}\):</p><ul><li>positive instances give \(A\ge3\alpha&gt;5/2\);</li><li>negative instances give \(A\le5/2\).</li></ul><p>Thus comparison with \(5/2\) decides perfect \(3\)-dimensional matching. The same reasoning works when the algorithm returns a feasible partition with minimum value at least \(\alpha\) times optimum.</p><p>This correctly proves hardness for every fixed \(\alpha&gt;5/6\). The approximation convention should remain explicit because other, nonstandard two-sided conventions would require separate formulation.</p><h3>9. Optional NP-membership claim</h3><p>The proposed certificate is polynomial-sized even when \(N\) is binary encoded: assigning each of \(|G|\) goods a label in \([N]\) takes \(O(|G|\log N)\) bits, and at most \(|G|\) distinct bundles are nonempty.</p><p>The verifier can evaluate each nonempty bundle and, if empty bundles are permitted, evaluate the empty set once. This supports membership in NP if:</p><ul><li>value evaluation is exact and polynomial-time;</li><li>returned values and \(q\) have polynomial-size comparable encodings;</li><li>the convention about empty bundles in \(\Pi_N(G)\) is specified;</li><li>the valuation promise is treated as a promise or is guaranteed syntactically by the representation.</li></ul><p>These qualifications are omitted. They affect only the optional NP-completeness strengthening, not the NP-hardness or approximation result.</p><h3>Minimum required clarifications</h3><ul><li>Formally specify a valuation encoding under which the displayed valuation has polynomial encoding length and exact polynomial-time evaluation.</li><li>Identify each tuple \((x,y,z)\in\mathcal T\) with the subset \(\{x,y,z\}\), or define the corresponding family of subsets explicitly.</li><li>For the NP-completeness observation, state the exact numeric encoding, whether empty bundles are allowed, and whether the valuation conditions define a promise problem.</li></ul><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

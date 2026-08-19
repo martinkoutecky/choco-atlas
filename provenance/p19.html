@@ -1,0 +1,282 @@
+<!doctype html><html><head><meta charset="utf-8"><title>The Distortion of Approval Voting with Runoff — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>The Distortion of Approval Voting with Runoff <span style="font-weight:normal;color:#8a7350">(p19)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5.8 — class: algorithmic</p>
+<blockquote class="thmq">For 𝜏= 1 𝑚, let 𝑐1 and 𝑐2 be the two candidates with highest number of approvals, then the randomized rule 𝑓that (1) with probability 1/2, selects (𝑐1,𝑐2) as finalists, (2) and with probability 1/2, selects the pair (𝑐1,𝑐′) with a random candidate 𝑐′ ∈𝐶\ {𝑐1,𝑐2} as finalists, achieves a distortion of at most 4𝑚. We conclude by noting the optimal distortion attainable using randomized rules in approval voting with majority runoff.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given candidates \(C\), threshold \(\tau=1/m\), and a rational finite-support society \(\mu\in\Delta(T)\) whose types specify unit-sum utilities, approval sets, and consistent rankings, compute the winner distribution of the Theorem 5.8 randomized majority-runoff rule and establish its worst-case mean-welfare distortion over all such societies.</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">Let \(m=|C|\ge 3\) and \(\tau=1/m\). A type \(t\in T\) consists of unit-sum utilities \(u_t:C\to\mathbb{Q}_{\ge 0}\) and a strict ranking \(\succ_t\) consistent with \(u_t\). Its rational mass is \(\mu_t\), with \(\sum_t \mu_t=1\). Type \(t\) approves \(c\) iff \(u_t(c)\ge \tau\).
+
+The approval score of \(c\) is \(A(c)=\sum_{t: c \text{ approved by } t} \mu_t\). Let \(c_1, c_2\) be the two highest-scoring candidates, breaking ties by a fixed candidate order. With probability \(1/2\) use finalists \(\{c_1, c_2\}\); with probability \(1/2\) use \(\{c_1, c&#x27;\}\), where \(c&#x27;\) is uniform in \(C\setminus\{c_1, c_2\}\). In each runoff, elect the finalist preferred by greater total mass; resolve an exact tie by the fixed order. For outcome distribution \(x\), define \(SW(c)=\sum_t \mu_t u_t(c)\), \(SW(x)=\sum_c x(c)SW(c)\), and distortion \(\max_c SW(c)/SW(x)\).
+
+Target: Is evaluating this continuous approval-majority-runoff rule and determining its worst-case mean-welfare distortion over finite rational type societies solvable in polynomial time, or is it NP-hard?
+
+Known discrete result: for finite voter profiles at \(\tau=1/m\), this randomized finalist-selection rule has distortion at most \(4m\) (Theorem 5.8 of Ebadian, Latifian, and Shah, 2023).</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Classification
+
+For an explicitly listed finite rational type society, both the outcome distribution and its distortion are exactly computable in polynomial time. Thus the natural instance-evaluation problem is in $\mathrm{FP}$, and its threshold decision version is in $\mathrm{P}$.
+
+For the universal worst-case distortion, let
+
+$$
+D_m=\sup_{\mathcal S}
+\frac{\max_{c\in C}\operatorname{SW}_{\mathcal S}(c)}
+{\operatorname{SW}_{\mathcal S}(x_{\mathcal S})},
+$$
+
+where the supremum ranges over all finite rational type societies with $m$ candidates. Then
+
+$$
+m-1\le D_m\le 4m.
+$$
+
+Consequently, $D_m=\Theta(m)$. The upper bound follows exactly, not approximately, from the cited discrete theorem. The exact value of $D_m$ is not determined by the available argument.
+
+## 1. Exact polynomial-time evaluation
+
+Let $N=|T|$, and let $L$ be the total binary encoding length of the candidate list, utilities, rankings, and rational masses.
+
+For each candidate $c$, compute
+
+$$
+A(c)=\sum_{t\in T}\mu_t\mathbf 1[u_t(c)\ge 1/m].
+$$
+
+Sorting candidates by the pair $(-A(c),\text{fixed-order position of }c)$ determines $c_1,c_2$.
+
+For every $d\ne c_1$, compute the pairwise mass
+
+$$
+P(c_1,d)=\sum_{t\in T}\mu_t\mathbf 1[c_1\succ_t d].
+$$
+
+Let $w(d)$ denote the winner of the runoff between $c_1$ and $d$: it is $c_1$ when $P(c_1,d)&gt;1/2$, it is $d$ when $P(c_1,d)&lt;1/2$, and an equality is resolved by the fixed order. The outcome distribution is therefore
+
+$$
+x(c)=
+\frac12\mathbf 1[w(c_2)=c]
++
+\frac{1}{2(m-2)}
+\sum_{d\in C\setminus\{c_1,c_2\}}
+\mathbf 1[w(d)=c].
+$$
+
+Finally compute
+
+$$
+S(c)=\sum_{t\in T}\mu_tu_t(c),\qquad
+W=\sum_{c\in C}x(c)S(c),
+$$
+
+and return
+
+$$
+\operatorname{dist}(\mathcal S)=\frac{\max_{c\in C}S(c)}{W}.
+$$
+
+These calculations require $O(Nm+m\log m)$ rational arithmetic operations. Exact addition, multiplication, and comparison of the input rationals have polynomial bit complexity: even an unreduced product of all input denominators has bit length at most the sum of their bit lengths, hence $O(L)$.
+
+The denominator $W$ is positive. Indeed, every type approves at least one candidate because its utilities sum to one, so
+
+$$
+\sum_{c\in C}A(c)\ge 1
+\quad\text{and hence}\quad
+A(c_1)\ge \frac1m.
+$$
+
+Thus $S(c_1)\ge A(c_1)/m&gt;0$. If $c_1$ wins the first runoff, that branch already gives positive welfare. If $c_2$ wins and $A(c_2)&gt;0$, then $S(c_2)\ge A(c_2)/m&gt;0$. Finally, if $A(c_2)=0$, every candidate other than $c_1$ has zero approval score. Every type must consequently approve $c_1$, and consistency implies that every type ranks $c_1$ above $c_2$; hence $c_1$ wins that runoff.
+
+Therefore the associated decision problem
+
+$$
+\text{“is }\operatorname{dist}(\mathcal S)\ge K\text{?”}
+$$
+
+for rational $K$ also belongs to $\mathrm P$.
+
+## 2. Exact transfer from rational masses to discrete voters
+
+Consider any finite rational type society. Choose a positive integer $Q$ such that
+
+$$
+n_t=Q\mu_t
+$$
+
+is an integer for every $t$. Construct an unweighted finite profile containing $n_t$ identical voters of type $t$.
+
+For every candidate $c$, its discrete approval count is
+
+$$
+q(c)=\sum_{t:c\text{ approved by }t}n_t
+=Q A(c).
+$$
+
+Thus approval-score comparisons and all approval ties are preserved. Similarly, for every pair $a,b$, the number of voters preferring $a$ to $b$ is
+
+$$
+Q\sum_{t:a\succ_t b}\mu_t,
+$$
+
+so every strict majority and exact pairwise tie is preserved. The two finalist-selection branches and their runoff winners are therefore identical in the mass society and in the expanded profile.
+
+Discrete total welfare satisfies
+
+$$
+\operatorname{SW}_{\mathrm{disc}}(c)
+=\sum_t n_tu_t(c)
+=Q\operatorname{SW}_{\mathrm{mass}}(c).
+$$
+
+Hence both the optimal welfare and the outcome welfare are multiplied by $Q$, and the distortion ratio is unchanged.
+
+The expansion may contain exponentially many voters relative to the binary encoding of the masses, so it is not the evaluation algorithm. It is only a transfer argument.
+
+Theorem 5.8 of the cited [AAMAS paper](https://www.ifaamas.org/Proceedings/aamas2023/pdfs/p1752.pdf) applies to the resulting finite profile and gives distortion at most $4m$. Consequently,
+
+$$
+D_m\le 4m.
+$$
+
+## 3. A rational lower-bound construction
+
+We prove $D_m\ge m-1$.
+
+Write the candidates as
+
+$$
+C=\{z,d_1,\ldots,d_{m-1}\},
+$$
+
+and let
+
+$$
+R=\sum_{j=1}^{m-1}j=\frac{m(m-1)}2.
+$$
+
+Choose sufficiently small positive rational numbers $\epsilon,\delta,\eta$, and put $p=1/2-\epsilon$. There are two types.
+
+The first type has mass $p$ and utilities
+
+$$
+u_H(z)=1-\delta,\qquad
+u_H(d_j)=\frac{\delta j}{R}.
+$$
+
+Taking $\delta&lt;1/2$ ensures
+
+$$
+u_H(d_j)\le \frac{2\delta}{m}&lt;\frac1m,
+$$
+
+so this type approves only $z$.
+
+The second type has mass $1-p$ and utilities
+
+$$
+u_L(z)=0,\qquad
+u_L(d_j)=
+\frac{1+\eta j}{(m-1)+\eta R}.
+$$
+
+For sufficiently small $\eta&gt;0$, every $u_L(d_j)&gt;1/m$. Thus this type approves every $d_j$ and does not approve $z$. All displayed utilities are distinct within each relevant group, so rankings can be chosen strictly in decreasing utility order.
+
+The approval scores are
+
+$$
+A(z)=p&lt;\frac12,\qquad
+A(d_j)=1-p&gt;\frac12.
+$$
+
+Therefore $c_1,c_2$ are both among the $d_j$. Moreover, if $z$ is ever paired with $c_1$, the mass $1-p&gt;1/2$ strictly prefers $c_1$ to $z$. Hence $z$ never wins, and the rule&#x27;s outcome is supported entirely on $\{d_1,\ldots,d_{m-1}\}$.
+
+The welfare values are
+
+$$
+S(z)=p(1-\delta)
+$$
+
+and
+
+$$
+S(d_j)=
+p\frac{\delta j}{R}
++
+(1-p)\frac{1+\eta j}{(m-1)+\eta R}.
+$$
+
+Along any rational sequence with $\epsilon,\delta,\eta\to0^+$,
+
+$$
+S(z)\longrightarrow\frac12,
+\qquad
+S(d_j)\longrightarrow\frac{1}{2(m-1)}
+$$
+
+uniformly over $j$. For sufficiently small parameters, $z$ is the welfare-optimal candidate. Since the outcome is a distribution over the $d_j$,
+
+$$
+S(x)\longrightarrow\frac{1}{2(m-1)}.
+$$
+
+It follows that the corresponding distortion converges to $m-1$. Therefore
+
+$$
+D_m\ge m-1.
+$$
+
+Combining the bounds gives
+
+$$
+m-1\le D_m\le4m,
+$$
+
+and hence $D_m=\Theta(m)$.
+
+## 4. Scope of the complexity conclusion
+
+There are two different questions:
+
+1. Given an explicitly listed rational society, computing the rule, its mean welfare, and its distortion is polynomial-time solvable.
+
+2. Computing the exact universal number $D_m$ is not yet a well-specified complexity problem. An NP-hardness question would require, for example, a decision formulation such as “given $m$ and rational $K$, is $D_m\ge K$?”, together with an encoding convention and a treatment of the supremum. The bounds above determine its asymptotic order but not its exact value.
+
+Thus there is no NP-hardness in evaluating the stated rule on an explicit rational type society. What remains unresolved is only the exact universal extremal value, not instance evaluation.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 4 and the overall classification: The output does not determine whether computing or deciding the universal worst-case distortion is polynomial-time solvable or NP-hard. It proves only m-1 &lt;= D_m &lt;= 4m and leaves the exact universal problem unresolved.</li><li><b>minor</b> — Section 1, positivity of W: The assertion that every type must approve c1 when A(c2)=0 is false if zero-mass listed types are permitted. The argument only needs, and correctly implies, this for every positive-mass type.</li><li><b>minor</b> — Final paragraph: The unconditional wording that there is &#x27;no NP-hardness&#x27; is stronger than the proved statement. What is proved is membership of explicit-instance evaluation in FP and its threshold version in P.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The response establishes two genuine results:</p><ul><li>An explicitly listed rational type society can be evaluated exactly in polynomial time.</li><li>The universal distortion satisfies $m-1\le D_m\le 4m$, hence $D_m=\Theta(m)$.</li></ul><p>However, it does not answer the target’s second complexity question: no polynomial-time algorithm or NP-hardness result is given for determining the universal worst-case distortion. The response itself acknowledges this. The appropriate status is therefore <b>partial</b>.</p><h3>Step-by-step verification</h3><h3>1. Polynomial-time evaluation</h3><p>The approval-score computation is correct. Exact rational comparison determines $c_1,c_2$, including the prescribed fixed-order tie-breaking.</p><p>For each possible second finalist $d$, the quantity</p><p>$$
+P(c_1,d)=\sum_{t:c_1\succ_t d}\mu_t
+$$</p><p>correctly determines the majority winner because the total mass is $1$ and rankings are strict. The displayed formula for $x(c)$ correctly represents both finalist-selection branches.</p><p>The welfare calculations and distortion ratio are also correct.</p><p>The bit-complexity argument is sufficient in substance. A sum of input-denominator bit lengths is polynomial in the total input length, so exact rational arithmetic does not cause an exponential bit-length blowup. Reduction to lowest terms, if required for the output encoding, is routine polynomial-time arithmetic.</p><p>The proof that $W&gt;0$ is valid for positive-mass types:</p><ul><li>Unit-sum utilities imply each positive-mass type approves at least one candidate.</li><li>Therefore $\sum_c A(c)\ge1$ and $A(c_1)\ge1/m$.</li><li>Hence $S(c_1)\ge A(c_1)/m&gt;0$.</li><li>If $c_2$ wins the first runoff and $A(c_2)&gt;0$, then $S(c_2)&gt;0$.</li><li>If $A(c_2)=0$, every positive-mass type must approve $c_1$ and not $c_2$, so every positive-mass type strictly prefers $c_1$ to $c_2$.</li></ul><p>The sentence “every type must consequently approve $c_1$” is slightly too strong if zero-mass listed types are permitted. Such types do not affect approval scores. This does not affect the conclusion about $W$.</p><p>Thus the explicit-instance function problem is in $\mathrm{FP}$, and the stated rational-threshold decision problem is in $\mathrm P$.</p><h3>2. Transfer to a discrete profile</h3><p>The common-denominator expansion is correct. Since $\sum_t\mu_t=1$, the expanded profile contains exactly $Q$ voters. Approval counts satisfy</p><p>$$
+q(c)=QA(c),
+$$</p><p>so all approval comparisons and ties are preserved. Pairwise counts are likewise multiplied by $Q$, preserving strict majorities and exact ties.</p><p>Candidate welfare is multiplied uniformly by $Q$, so the distortion ratio is unchanged.</p><p>The cited theorem does state that precisely this randomized finalist-selection rule at $\tau=1/m$ has distortion at most $4m$. The paper also explicitly permits arbitrary resolution of exact majority ties, so the fixed-order convention is compatible with the theorem. See [Theorem 5.8 and the majority-runoff convention](https://www.ifaamas.org/Proceedings/aamas2023/pdfs/p1752.pdf).</p><p>Therefore the conclusion $D_m\le4m$ is justified.</p><h3>3. Lower-bound construction</h3><p>The two utility vectors are correctly normalized:</p><p>$$
+1-\delta+\sum_{j=1}^{m-1}\frac{\delta j}{R}=1
+$$</p><p>and</p><p>$$
+\sum_{j=1}^{m-1}\frac{1+\eta j}{(m-1)+\eta R}=1.
+$$</p><p>For type $H$,</p><p>$$
+u_H(d_j)\le\frac{2\delta}{m}&lt;\frac1m
+$$</p><p>when $\delta&lt;1/2$, while $u_H(z)&gt;1/m$ for sufficiently small $\delta$. Hence this type approves only $z$.</p><p>For type $L$, every $d_j$ exceeds $1/m$ for sufficiently small positive $\eta$, while $z$ is not approved. The strict rankings required by the problem can indeed be chosen consistently because the displayed utilities are distinct.</p><p>The approval scores are consequently correct. All $d_j$ have score $1-p&gt;1/2$, while $z$ has score $p&lt;1/2$, so both top-scoring candidates are among the $d_j$.</p><p>Whenever $z$ faces $c_1$, the type-$L$ mass $1-p&gt;1/2$ prefers $c_1$ to $z$. Thus $z$ cannot be elected, and every possible winner belongs to $\{d_1,\ldots,d_{m-1}\}$.</p><p>The welfare limits are correct and uniform over the finite set of indices $j$. At the limiting values, $z$ has welfare $1/2$, whereas every $d_j$ has welfare $1/(2(m-1))$. Since $m\ge3$, this is a strict gap, so $z$ remains optimal for sufficiently small parameters. Consequently the distortion approaches $m-1$.</p><p>Thus $D_m\ge m-1$ and $D_m=\Theta(m)$ are established.</p><h3>4. Failure to resolve the universal complexity question</h3><p>The response does not determine whether computing the universal worst-case distortion is polynomial-time solvable or NP-hard. It supplies only upper and lower bounds and then declares that an exact complexity problem has not been specified.</p><p>That observation is reasonable as a warning about the wording, but it does not resolve the target. At minimum, the response would need to select a precise interpretation—such as a threshold language with inputs $m$ and rational $K$—and classify that problem. No such classification is attempted.</p><p>The final statement that “there is no NP-hardness” should also be limited to saying that explicit-instance evaluation lies in $\mathrm P$. Membership in $\mathrm P$ does not unconditionally prove non-NP-hardness unless a reduction notion and the usual separation assumption are stated.</p><h3>Actionable feedback</h3><ul><li>Retain the explicit-instance evaluation algorithm, discrete transfer, and lower bound; they are substantively correct.</li><li>Restrict the “no NP-hardness” statement to the proved membership in $\mathrm{FP}$ or $\mathrm P$.</li><li>Clarify whether zero-mass listed types are allowed, or replace “every type” by “every positive-mass type.”</li><li>Most importantly, either formally define the universal optimization/threshold problem and classify it, or state explicitly that only the instance-evaluation part and asymptotic distortion order have been answered.</li></ul><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

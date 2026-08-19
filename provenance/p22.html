@@ -1,0 +1,424 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Free-Riding in Multi-Issue Decisions — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Free-Riding in Multi-Issue Decisions <span style="font-weight:normal;color:#8a7350">(p22)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> NP-complete (hence NP-hard)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 13 — class: hardness</p>
+<blockquote class="thmq">R-Free-Riding is NP-complete for every sequential f - Thiele rule for which there exists a ℓ∈N such that (i) for all j, j′ ∈[ℓ] it holds f (j) = f (j′) and (ii) f is strictly decreasing on N \ [ℓ−1].</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given rational masses \(\mu_t\) over approval-profile types, ordered issues, candidate sets, tie-breaking, and a designated coordinated strategic type \(p\), does some positive submass \(x\leq\mu_p\) alter reports on issues where the truthful winner remains unchanged, yet strictly increase that bloc&#x27;s true satisfaction under sequential PAV?</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">A society consists of finitely many approval-profile types \(t\), each with a nonnegative rational mass \(m_t\); each type specifies approval sets \(A_i(t)\subseteq C_i\) for ordered issues \(i=1,\ldots,k\). Sequential PAV chooses each issue&#x27;s candidate maximizing the total marginal PAV score \(\sum_{t:c\in A_i(t)}m_t/(s_t+1)\), where \(s_t\) is that type&#x27;s reported number of approvals of earlier winners; fixed tie-breaking resolves ties.
+
+A strategic type \(p\) may split off a positive rational mass \(x\) and alter its reports on a set \(I\) of issues, omitting the truthful winner from its altered approval set on every \(i\in I\). Every such issue must retain its truthful winner in the altered sequential-PAV outcome. True satisfaction is the number of final winners approved by \(p\)&#x27;s original profile.
+
+**Target.** Is Sequential-PAV Mass-Free-Riding NP-hard, or solvable in polynomial time?
+
+For finite voter lists, Sequential PAV Free-Riding is NP-complete: deciding whether one voter can free-ride on one or more issues while preserving the affected winners and strictly increase true satisfaction.
+No result for the rational-mass version above is verified here.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Complexity of Sequential-PAV Mass-Free-Riding
+
+## Theorem
+
+Under the standard explicit binary encoding of rational masses, approval sets, candidates, issues, and tie-breaking, Sequential-PAV Mass-Free-Riding is NP-complete. In particular, allowing an arbitrary positive rational submass does not yield a polynomial-time problem unless $\mathrm{P}=\mathrm{NP}$.
+
+The proof below handles all fractional choices of $x$ and all permitted altered reports. This is necessary: merely observing that the discrete problem is recovered when $x=m_p$ would not prove hardness, because fractional deviations could turn discrete no-instances into mass yes-instances.
+
+## 1. Membership in NP
+
+Fix altered reports for the deviating submass and fix a proposed altered winner sequence $u=(u_1,\ldots,u_k)$.
+
+Before issue $i$, let:
+
+- $a_i$ be the reported satisfaction of the truthful residual submass of $p$;
+- $b_i$ be the reported satisfaction of the deviating submass;
+- $K_{i,c}$ be the contribution to candidate $c$ from all types other than $p$.
+
+These quantities are determined by the reports and the proposed sequence $u$. The score of candidate $c$ in issue $i$ is
+
+$$
+S_{i,c}(x)
+=
+K_{i,c}
++
+\frac{m_p-x}{a_i+1}\mathbf 1[c\in A_i(p)]
++
+\frac{x}{b_i+1}\mathbf 1[c\in B_i].
+$$
+
+Thus $S_{i,c}(x)$ is an affine rational function of the single variable $x$.
+
+For $u_i$ to win issue $i$, its score must be at least that of every candidate that loses ties to $u_i$, and strictly greater than that of every candidate that defeats $u_i$ in the fixed tie-breaking. Consequently, the set of masses producing the sequence $u$ is the intersection of polynomially many one-variable rational weak or strict linear inequalities, together with
+
+$$
+0&lt;x\leq m_p.
+$$
+
+This feasible set is an interval whose finite endpoints are ratios of rational coefficients having polynomial encoding length. If it is nonempty, it contains a rational number of polynomial encoding length: one may take an included endpoint, or the midpoint of two rational endpoints when a strict inequality must be respected.
+
+Hence every yes-instance has a polynomial-size certificate consisting of:
+
+- the altered approval sets;
+- the altered issues;
+- a polynomial-size rational $x$.
+
+The verifier computes the truthful and altered sequential-PAV outcomes using exact rational arithmetic, checks the free-riding conditions, and compares true satisfaction. All these operations take polynomial time. Therefore the problem belongs to NP.
+
+## 2. Source problem
+
+We reduce from 3-SAT restricted to formulas in which every clause contains exactly three literals on three distinct variables. This restriction is NP-complete.
+
+Given such a formula $\psi$, introduce three fresh variables $y,z,w$ and form
+
+$$
+\varphi=\psi\land(y\lor z\lor w).
+$$
+
+Then $\varphi$ is satisfiable exactly when $\psi$ is satisfiable, and the all-false assignment does not satisfy $\varphi$. Let $\varphi$ have variables $x_1,\ldots,x_N$ and clauses $C_1,\ldots,C_M$.
+
+Set
+
+$$
+\delta=\frac{1}{10},
+\qquad
+\eta=\frac{\delta}{2(2N+1)(2N+2)}.
+$$
+
+## 3. Issues and candidates
+
+For each variable $x_i$, create three consecutive issues:
+
+- a free-riding issue $R_i$ with the single candidate $r_i$;
+- a variable issue $V_i$ with candidates $T_i,F_i$;
+- a balancing issue $S_i$ with candidates $P_i,Z_i$.
+
+After these $3N$ issues, create a final issue with candidates
+
+$$
+G,D_1,\ldots,D_M.
+$$
+
+Candidate $G$ will represent success; $D_j$ tests whether clause $C_j$ is false.
+
+## 4. Approval-profile types
+
+Unlisted approvals are empty.
+
+| Type | Mass | Approvals |
+|---|---:|---|
+| Strategic type $p$ | $\delta$ | $r_i,T_i,P_i$ for every $i$, and $G$ |
+| Balancing type $a$ | $\delta$ | $r_i,F_i$ for every $i$ |
+| Literal type $\ell_i^+$ | $1$ | $T_i$, and $D_j$ whenever $x_i\in C_j$ |
+| Literal type $\ell_i^-$ | $1$ | $F_i$, and $D_j$ whenever $\neg x_i\in C_j$ |
+| Helper $h_i^+$ | $1$ | $T_i,P_i$ |
+| Helper $h_i^-$ | $1$ | $F_i$ |
+| Helper $z_i$ | $3/4$ | $Z_i$ |
+| Bias type $e_i$ | $\eta$ | $F_i$ |
+| Goal supporter $g$ | $27/10$ | $G$ |
+
+If the model requires total mass one, divide every mass by their common total. This scales every candidate score equally and changes no winner.
+
+## 5. The truthful outcome
+
+We prove inductively that, before every $R_i$, types $p$ and $a$ have equal reported satisfaction. Let this common value be $q$.
+
+Both approve the unique winner $r_i$, so after $R_i$ both have satisfaction $q+1$.
+
+In $V_i$, all variable-specific types still have satisfaction zero. Therefore
+
+$$
+\operatorname{score}(T_i)
+=
+2+\frac{\delta}{q+2},
+$$
+
+while
+
+$$
+\operatorname{score}(F_i)
+=
+2+\frac{\delta}{q+2}+\eta.
+$$
+
+Hence $F_i$ is the unique winner.
+
+Since $T_i$ lost, $h_i^+$ still has satisfaction zero. In $S_i$,
+
+$$
+\operatorname{score}(P_i)
+=
+1+\frac{\delta}{q+2}
+&gt;
+\frac34
+=
+\operatorname{score}(Z_i).
+$$
+
+Thus $P_i$ wins. Type $p$ approves $r_i$ and $P_i$, while $a$ approves $r_i$ and $F_i$. Each gains exactly two reported approvals, establishing the induction.
+
+The truthful variable assignment encoded by the $V_i$ winners is therefore the all-false assignment. By construction, this does not satisfy $\varphi$.
+
+In the final issue, consider a clause false under this assignment. Its three distinct literal types all have satisfaction zero, so its candidate has score $3$. On the other hand,
+
+$$
+\operatorname{score}(G)
+\leq
+\frac{27}{10}+\delta
+=
+\frac{28}{10}
+&lt;3.
+$$
+
+Thus $G$ does not win truthfully. The truthful satisfaction of $p$ is exactly $2N$.
+
+## 6. Completeness of the reduction
+
+Suppose $\varphi$ has a satisfying assignment $\alpha$. Let the entire strategic mass deviate, so $x=\delta$.
+
+For every variable assigned true, alter only issue $R_i$ by reporting the empty approval set. For false variables, report truthfully. Because $R_i$ has only one candidate, its truthful winner $r_i$ remains the winner, while the altered report omits it. Hence every altered issue satisfies the free-riding requirement.
+
+Inductively suppose $p$ and $a$ have common reported satisfaction $q$ before $R_i$.
+
+If $\alpha(x_i)$ is false, the truthful calculation applies and $F_i,P_i$ win.
+
+If $\alpha(x_i)$ is true, then after $R_i$, type $p$ still has satisfaction $q$, whereas $a$ has satisfaction $q+1$. At $V_i$,
+
+$$
+\operatorname{score}(T_i)
+=
+2+\frac{\delta}{q+1},
+$$
+
+and
+
+$$
+\operatorname{score}(F_i)
+=
+2+\frac{\delta}{q+2}+\eta.
+$$
+
+Because $q\leq 2N$,
+
+$$
+\frac{\delta}{q+1}-\frac{\delta}{q+2}
+=
+\frac{\delta}{(q+1)(q+2)}
+\geq
+\frac{\delta}{(2N+1)(2N+2)}
+=
+2\eta.
+$$
+
+Therefore $T_i$ beats $F_i$ by at least $\eta$.
+
+Now $h_i^+$ has satisfaction one, so at $S_i$,
+
+$$
+\operatorname{score}(P_i)
+=
+\frac12+\frac{\delta}{q+2}
+\leq
+\frac35
+&lt;
+\frac34
+=
+\operatorname{score}(Z_i).
+$$
+
+Thus $Z_i$ wins. In this branch, both $p$ and $a$ gain one reported approval; in the false branch both gain two. Their reported satisfactions therefore remain equal before the next gadget.
+
+The true satisfaction of $p$ is exactly two in either branch:
+
+- false branch: $r_i$ and $P_i$;
+- true branch: $r_i$ and $T_i$.
+
+At the final issue, a literal type has marginal weight $1/2$ precisely when its literal is true, and weight $1$ when its literal is false. If a clause contains $q_j$ true literals, then
+
+$$
+\operatorname{score}(D_j)
+=
+\frac{q_j}{2}+(3-q_j)
+=
+3-\frac{q_j}{2}.
+$$
+
+Since $\alpha$ satisfies every clause, $q_j\geq1$, and hence
+
+$$
+\operatorname{score}(D_j)\leq\frac52.
+$$
+
+Meanwhile $G$ receives at least $27/10$. Therefore $G$ wins. Type $p$ obtains final true satisfaction $2N+1$, a strict improvement.
+
+## 7. Soundness for arbitrary rational submasses
+
+Suppose now that $\varphi$ is unsatisfiable, and consider any positive rational mass $x\leq\delta$ and any permitted altered reports.
+
+Every $R_i$ has only the candidate $r_i$, so $r_i$ always wins.
+
+Define an assignment $\alpha$ from the actual altered outcome by
+
+$$
+\alpha(x_i)=\text{true}
+\quad\Longleftrightarrow\quad
+T_i\text{ wins }V_i.
+$$
+
+We first show that the strategic type always receives exactly one true approval from $V_i,S_i$.
+
+If $T_i$ wins, then $h_i^+$ has satisfaction one before $S_i$. The total mass of $p$ is only $\delta$, so regardless of the split and reports, its total contribution to any candidate is at most $\delta$. Consequently,
+
+$$
+\operatorname{score}(P_i)
+\leq
+\frac12+\delta
+=
+\frac35
+&lt;
+\frac34
+\leq
+\operatorname{score}(Z_i).
+$$
+
+Thus $Z_i$ wins.
+
+If $F_i$ wins, then $h_i^+$ has satisfaction zero and contributes $1$ to $P_i$. Even if all deviating mass supports $Z_i$,
+
+$$
+\operatorname{score}(P_i)\geq1
+&gt;
+\frac34+\delta
+=
+\frac{17}{20}
+\geq
+\operatorname{score}(Z_i).
+$$
+
+Thus $P_i$ wins.
+
+Therefore the only possible pairs of winners are
+
+$$
+(T_i,Z_i)
+\quad\text{or}\quad
+(F_i,P_i).
+$$
+
+Since $p$ truly approves $T_i$ and $P_i$, it receives exactly one true approval from each such pair, plus its approval of $r_i$. Its true satisfaction before the final issue is therefore always exactly $2N$, independently of $x$ and all altered reports.
+
+Because $\varphi$ is unsatisfiable, the assignment encoded by the actual $V_i$ winners leaves some clause $C_j$ false. Each of its three literal types then has satisfaction zero, so
+
+$$
+\operatorname{score}(D_j)\geq3.
+$$
+
+Only $g$ and possibly submasses of $p$ can support $G$. Thus
+
+$$
+\operatorname{score}(G)
+\leq
+\frac{27}{10}+\delta
+=
+\frac{28}{10}
+&lt;3.
+$$
+
+Hence $G$ cannot win. Since $G$ is the only final candidate truly approved by $p$, the altered true satisfaction remains $2N$ and cannot strictly improve.
+
+Thus an arbitrary fractional deviation succeeds only if $\varphi$ is satisfiable.
+
+## 8. Conclusion
+
+The construction is polynomial in the size of $\varphi$, uses rational masses with polynomial encoding length, and satisfies
+
+$$
+\varphi\text{ is satisfiable}
+\quad\Longleftrightarrow\quad
+\text{the constructed mass-free-riding instance is a yes-instance}.
+$$
+
+The problem is NP-hard, and Section 1 proves membership in NP. Therefore Sequential-PAV Mass-Free-Riding is NP-complete.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The prover’s NP-completeness claim is established under the stated explicit binary encoding. The reduction handles arbitrary rational submasses and arbitrary permitted altered reports, rather than only deviations with $x=m_p$. No false statement, missing essential lemma, or unresolved edge case was found.</p><h3>1. Membership in NP</h3><p>This part is correct.</p><p>For fixed altered reports and a proposed winner sequence, every type’s prior reported satisfaction is determined combinatorially. Consequently, the score of each candidate is affine in the single variable $x$:</p><p>$$
+S_{i,c}(x)
+=
+K_{i,c}
++
+\frac{m_p-x}{a_i+1}\mathbf 1[c\in A_i(p)]
++
+\frac{x}{b_i+1}\mathbf 1[c\in B_i].
+$$</p><p>The treatment of tie-breaking is also correct:</p><ul><li>A candidate that loses a tie to $u_i$ imposes a weak inequality.</li><li>A candidate that wins a tie against $u_i$ imposes a strict inequality.</li></ul><p>The resulting feasible set is an intersection of one-dimensional rational half-spaces with $0&lt;x\leq m_p$, hence an interval, possibly open or half-open. Its endpoints have polynomial encoding length. Any nonempty such interval contains a polynomial-size rational witness: an included endpoint suffices when available, and otherwise the midpoint of two distinct rational endpoints suffices.</p><p>The altered approval sets themselves have polynomial size because the candidate and issue sets are explicitly represented. Exact score computation remains polynomial-time. Thus the NP-membership argument is valid.</p><h3>2. Source problem and construction size</h3><p>The cited restriction of 3-SAT to clauses containing three literals on three distinct variables is a standard NP-complete source problem.</p><p>Adding the fresh clause</p><p>$$
+y\lor z\lor w
+$$</p><p>preserves satisfiability and ensures that the all-false assignment is not satisfying. This latter property is used correctly to make the truthful outcome fail at the final issue.</p><p>The number of issues, candidates, types, and approval incidences is polynomial. The rational</p><p>$$
+\eta=\frac{\delta}{2(2N+1)(2N+2)}
+$$</p><p>has polynomial binary encoding length.</p><h3>3. Truthful outcome</h3><p>The induction comparing types $p$ and $a$ is correct.</p><p>Before $R_i$, suppose both have satisfaction $q$. After the unique winner $r_i$, both have satisfaction $q+1$. At $V_i$,</p><p>$$
+\operatorname{score}(T_i)=2+\frac{\delta}{q+2},
+$$</p><p>while</p><p>$$
+\operatorname{score}(F_i)=2+\frac{\delta}{q+2}+\eta.
+$$</p><p>Thus $F_i$ wins uniquely.</p><p>Since $T_i$ loses, helper $h_i^+$ has satisfaction zero, so at $S_i$,</p><p>$$
+\operatorname{score}(P_i)=1+\frac{\delta}{q+2}&gt;\frac34
+=\operatorname{score}(Z_i).
+$$</p><p>Hence $P_i$ wins. Type $p$ gains approvals from $r_i,P_i$, while $a$ gains approvals from $r_i,F_i$, preserving equal satisfaction.</p><p>The truthful variable assignment is therefore all-false. The added clause is false under this assignment, and its three distinct literal types each contribute $1$ to its candidate. Hence some $D_j$ scores $3$. Meanwhile,</p><p>$$
+\operatorname{score}(G)\leq\frac{27}{10}+\delta=\frac{28}{10}&lt;3.
+$$</p><p>Thus $G$ cannot win truthfully, and $p$ has truthful satisfaction exactly $2N$.</p><h3>4. Completeness</h3><p>For a satisfying assignment, the proposed deviation uses $x=\delta$ and alters precisely the $R_i$ corresponding to true variables. Each such issue has only candidate $r_i$, so removing approval from $r_i$ preserves its winner. The added clause guarantees at least one true variable, so the deviation is nonempty if the definition requires at least one altered issue.</p><p>For a false variable, the truthful gadget behavior remains $F_i,P_i$.</p><p>For a true variable, after free-riding on $R_i$, type $p$ has satisfaction $q$ while type $a$ has satisfaction $q+1$. The variable scores are</p><p>$$
+\operatorname{score}(T_i)=2+\frac{\delta}{q+1},
+$$</p><p>and</p><p>$$
+\operatorname{score}(F_i)=2+\frac{\delta}{q+2}+\eta.
+$$</p><p>The claimed bound is valid:</p><p>$$
+\frac{\delta}{q+1}-\frac{\delta}{q+2}
+=
+\frac{\delta}{(q+1)(q+2)}
+\geq
+\frac{\delta}{(2N+1)(2N+2)}
+=
+2\eta.
+$$</p><p>Therefore $T_i$ wins with margin at least $\eta$.</p><p>At $S_i$, helper $h_i^+$ has already approved $T_i$, so it contributes $1/2$ to $P_i$. The bound</p><p>$$
+\operatorname{score}(P_i)
+=
+\frac12+\frac{\delta}{q+2}
+\leq\frac35&lt;\frac34
+$$</p><p>is valid, and $Z_i$ wins.</p><p>In either branch, $p$ and $a$ gain equal reported satisfaction, preserving the induction. Type $p$ receives exactly two true approvals per gadget.</p><p>At the final issue, each literal type has weight $1/2$ exactly when its literal is true and weight $1$ otherwise. Thus, for a clause with $q_j$ true literals,</p><p>$$
+\operatorname{score}(D_j)
+=
+\frac{q_j}{2}+(3-q_j)
+=
+3-\frac{q_j}{2}.
+$$</p><p>Since every clause is satisfied, this is at most $5/2$. Candidate $G$ receives at least $27/10$, so it wins. The true satisfaction increases from $2N$ to $2N+1$.</p><h3>5. Soundness for fractional deviations</h3><p>This is the critical part of the reduction and is correct.</p><p>The argument permits arbitrary $0&lt;x\leq\delta$ and arbitrary altered reports. It therefore covers a superset of the permitted deviations, which is sufficient for soundness.</p><p>If $T_i$ wins, helper $h_i^+$ has satisfaction one and contributes $1/2$ to $P_i$. All residual and deviating portions of $p$ together can contribute at most their total mass $\delta$. Hence</p><p>$$
+\operatorname{score}(P_i)\leq\frac12+\delta=\frac35&lt;\frac34
+\leq\operatorname{score}(Z_i).
+$$</p><p>Thus $Z_i$ wins.</p><p>If $F_i$ wins, helper $h_i^+$ still has satisfaction zero and contributes $1$ to $P_i$. Even if all strategic mass supports $Z_i$,</p><p>$$
+\operatorname{score}(Z_i)\leq\frac34+\delta=\frac{17}{20}&lt;1
+\leq\operatorname{score}(P_i).
+$$</p><p>Thus $P_i$ wins.</p><p>Accordingly, the only possible pairs are</p><p>$$
+(T_i,Z_i)
+\quad\text{and}\quad
+(F_i,P_i).
+$$</p><p>Because the original profile of $p$ approves $T_i$ and $P_i$, exactly one of those two approvals is won in either pair. Together with the unavoidable winner $r_i$, each gadget always supplies exactly two true approvals.</p><p>For the assignment encoded by the actual $V_i$ winners, unsatisfiability guarantees a false clause. For each literal in that clause, its associated literal type did not approve the corresponding variable winner and therefore has satisfaction zero before the final issue. The use of distinct variables ensures these are three distinct unit-mass types. Hence the corresponding $D_j$ has score at least $3$.</p><p>All portions of $p$ together contribute at most $\delta$ to $G$, regardless of their reports or denominators, so</p><p>$$
+\operatorname{score}(G)
+\leq\frac{27}{10}+\delta
+=\frac{28}{10}&lt;3.
+$$</p><p>Thus $G$ cannot win, and no strict improvement in true satisfaction is possible.</p><h3>Final adjudication</h3><p>The polynomial reduction establishes equivalence in both directions, and the NP-membership argument supplies polynomial certificates even when the successful mass is an arbitrary rational number. The claimed NP-completeness result is fully supported.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

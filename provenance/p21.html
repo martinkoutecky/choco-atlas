@@ -1,0 +1,231 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Fairness in Participatory Budgeting via Equality of Resources — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Fairness in Participatory Budgeting via Equality of Resources <span style="font-weight:normal;color:#8a7350">(p21)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> As stated, no satisfying bundle exists because the zero function is a mass coalition for \(Q = \emptyset\). Under the natural correction requiring positive coalition mass, computing a continuous-EJS bundle is NP-hard.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 6 — class: hardness</p>
+<blockquote class="thmq">There is no polynomial-time algorithm that, given an instance 𝐼and a profile 𝑨as input, always computes a budget allocation satisfying EJS, unless P = NP. On the other hand, we recall that the greedy approach generally runs in FPT-time, when parameterized by the number of projects [1]. This is also the case in the share setting.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given rational costs \(c:P\to\mathbb{Q}_{\geq 0}\), budget \(b\), and a rational distribution \(\mu\) over approval types \(T\subseteq 2^P\), output a feasible bundle \(\pi\subseteq P\) satisfying EJS: for every \(Q\subseteq P\) and every \(Q\)-supporting mass vector \(g\) with \(0\leq g_t\leq\mu_t\) and \(\sum_t g_t\geq c(Q)/b\), some \(t\) with \(g_t&gt;0\) has \(\operatorname{sh}_\mu(\pi,t)\geq\operatorname{sh}_\mu(Q,t)\).</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">Let \(P\) be a finite project set, \(c:P\to\mathbb{Q}_{\ge0}\), \(b\in\mathbb{Q}_{&gt;0}\), and \(c(Q)=\sum_{p\in Q}c(p)\). A feasible bundle is \(\pi\subseteq P\) with \(c(\pi)\le b\).
+Let \(T\subseteq2^P\) be finite and let \(\mu:T\to\mathbb{Q}_{\ge0}\) have total mass \(1\); assume every project has positive approving mass. Define
+\(\operatorname{sh}_\mu(X,t)=\sum_{p\in X\cap t}c(p)/\sum_{u\in T:p\in u}\mu(u)\).
+For \(Q\subseteq P\), a mass coalition is \(g:T\to\mathbb{Q}_{\ge0}\) with \(g_t\le\mu_t\), \(g_t&gt;0\Rightarrow Q\subseteq t\), and \(\sum_tg_t\ge c(Q)/b\). A bundle satisfies continuous EJS if, for every \(Q\) and every such \(g\), some \(t\) with \(g_t&gt;0\) has \(\operatorname{sh}_\mu(\pi,t)\ge\operatorname{sh}_\mu(Q,t)\).
+
+**Target.** Is computing a feasible bundle satisfying continuous EJS polynomial-time solvable, or NP-hard?
+
+**Nearest known results.** For finite electorates, computing an EJS-satisfying bundle has no polynomial-time algorithm unless \(\mathrm{P}=\mathrm{NP}\). No verified result addresses the exact rational-distribution formulation above.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Complexity of Continuous EJS
+
+## 1. Literal formulation
+
+The problem as stated has no satisfying bundle.
+
+### Proposition 1
+
+For every legal input, every feasible bundle fails continuous EJS.
+
+### Proof
+
+Take $Q=\varnothing$. Then $c(Q)=0$. Define $g^0:T\to\mathbb Q_{\ge 0}$ by $g^0_t=0$ for every $t\in T$.
+
+This function satisfies every stated condition for being a mass coalition:
+
+- $g^0_t=0\le\mu_t$ for every $t$.
+- The implication $g^0_t&gt;0\Rightarrow Q\subseteq t$ is vacuously true.
+- Its total mass satisfies
+  $$
+  \sum_{t\in T}g^0_t=0\ge\frac{c(\varnothing)}b=0.
+  $$
+
+Thus $g^0$ is a mass coalition for $Q=\varnothing$ according to the given definition.
+
+Continuous EJS would consequently require some $t\in T$ such that $g^0_t&gt;0$. No such $t$ exists. Therefore the EJS condition fails, independently of the chosen feasible bundle $\pi$. $\square$
+
+## 2. Complexity consequence for the exact statement
+
+Let
+
+$$
+L=\{I:\text{instance }I\text{ admits a feasible continuous-EJS bundle}\}.
+$$
+
+Proposition 1 gives $L=\varnothing$. Hence:
+
+- the requested search problem is not a total search problem and no algorithm can output a valid bundle on any input;
+- the associated existence problem is the constant-NO problem, hence is decidable in constant time;
+- it is therefore not the intended NP-hard search problem.
+
+Thus the literal answer is neither “a polynomial-time algorithm computes such a bundle” nor “NP-hard to compute one”: such a bundle never exists.
+
+## 3. Natural correction
+
+The evident correction is to require a mass coalition to have positive total mass:
+
+$$
+\sum_{t\in T}g_t&gt;0.
+$$
+
+Under this correction, the intended search problem is NP-hard, already with one approval type of mass $1$. More precisely, a polynomial-time algorithm that always computes a corrected continuous-EJS bundle would imply $\mathrm P=\mathrm{NP}$.
+
+## 4. Direct NP-hardness proof for the corrected definition
+
+We reduce from SUBSET SUM with positive integers. Let an instance consist of positive integers $s_1,\ldots,s_m$ and a positive target $B$.
+
+Construct the continuous-EJS instance as follows:
+
+$$
+P=\{p_1,\ldots,p_m\},\qquad c(p_j)=s_j,\qquad b=B,
+$$
+
+and use the single approval type
+
+$$
+T=\{P\},\qquad \mu(P)=1.
+$$
+
+The construction has polynomial encoding length, and every project has approving mass $1$.
+
+### Lemma 2
+
+In the constructed instance, a feasible bundle $\pi$ satisfies corrected continuous EJS if and only if it maximizes $c(\pi)$ among all feasible bundles.
+
+### Proof
+
+Write $t^\star=P$ for the unique type. For every $X\subseteq P$,
+
+$$
+\operatorname{sh}_\mu(X,t^\star)
+=\sum_{p\in X}\frac{c(p)}1
+=c(X).
+$$
+
+Consider any $Q\subseteq P$.
+
+If a mass coalition for $Q$ exists, its sole coordinate must satisfy
+
+$$
+1\ge g_{t^\star}\ge\frac{c(Q)}B.
+$$
+
+Consequently $c(Q)\le B$, so $Q$ is feasible. Conversely, if $Q$ is feasible, then a positive coalition exists: use $g_{t^\star}=c(Q)/B$ when $c(Q)&gt;0$, and use any positive value at most $1$ when $c(Q)=0$.
+
+For every positive coalition, $t^\star$ is its only positive-support type. Hence the EJS condition for $Q$ is exactly
+
+$$
+c(\pi)
+=\operatorname{sh}_\mu(\pi,t^\star)
+\ge
+\operatorname{sh}_\mu(Q,t^\star)
+=c(Q).
+$$
+
+Therefore EJS requires and is implied by $c(\pi)\ge c(Q)$ for every feasible $Q$. This is precisely optimality for the subset-sum knapsack objective. $\square$
+
+Because $P$ is finite, such a maximum-cost feasible bundle always exists. Thus the corrected search problem is total on these reduction instances.
+
+Now suppose that a polynomial-time algorithm $\mathcal A$ always returned a corrected continuous-EJS bundle. Run it on the constructed instance and let $\pi=\mathcal A(I)$. By Lemma 2,
+
+$$
+c(\pi)=\max\left\{\sum_{j\in J}s_j:
+J\subseteq\{1,\ldots,m\},\ 
+\sum_{j\in J}s_j\le B
+\right\}.
+$$
+
+It follows that
+
+$$
+c(\pi)=B
+\quad\Longleftrightarrow\quad
+\exists J\subseteq\{1,\ldots,m\}:
+\sum_{j\in J}s_j=B.
+$$
+
+We could therefore decide SUBSET SUM in polynomial time by computing $\pi$ and testing whether $c(\pi)=B$. Hence a polynomial-time corrected continuous-EJS algorithm would imply $\mathrm P=\mathrm{NP}$. This establishes NP-hardness in the usual search-to-decision sense. The hardness is weak, since the reduction is from SUBSET SUM.
+
+This is also the mechanism behind the known finite-electorate hardness theorem; the original paper states EJS existence and hardness and gives the same one-voter SUBSET SUM construction in its appendix: [Fairness in Participatory Budgeting via Equality of Resources](https://simonrey.fr/assets/publications/MREL23.pdf).
+
+## 5. Exact transfer from finite electorates
+
+For completeness, after excluding zero-mass coalitions, aggregation into rational types preserves EJS exactly.
+
+Let a finite electorate have $n$ voters, with approval ballots $A_i$. For every distinct ballot $t$, let $n_t$ be its multiplicity and set
+
+$$
+\mu_t=\frac{n_t}{n}.
+$$
+
+If $a_p$ denotes the number of voters approving $p$, then
+
+$$
+\sum_{t:p\in t}\mu_t=\frac{a_p}{n}.
+$$
+
+Thus, for a voter $i$ of type $t=A_i$,
+
+$$
+\operatorname{sh}_\mu(X,t)
+=n\sum_{p\in X\cap A_i}\frac{c(p)}{a_p}.
+$$
+
+Continuous shares are exactly $n$ times finite-electorate shares, so every share comparison is preserved.
+
+Moreover:
+
+- A violating finite coalition $S$ induces
+  $$
+  g_t=\frac{|\{i\in S:A_i=t\}|}{n}.
+  $$
+  This is a positive rational mass coalition with the same violating types.
+- Conversely, from a violating positive mass coalition $g$, take all finite voters whose type $t$ has $g_t&gt;0$. Their normalized size is
+  $$
+  \sum_{t:g_t&gt;0}\mu_t
+  \ge
+  \sum_t g_t
+  \ge
+  \frac{c(Q)}b,
+  $$
+  and every one of them has the same strict share violation as its type.
+
+Hence the corrected rational-distribution formulation is not a relaxation of finite EJS: it contains the finite model exactly after type aggregation.
+
+## Conclusion
+
+The exact definition contains a zero-coalition defect, so no satisfying bundle exists. Once the necessary positive-mass condition is added, computing a satisfying bundle is NP-hard, even with one approval type of mass $1$.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 2, statement that the literal answer is neither polynomial-time solvable nor NP-hard: The classification of an empty search relation depends on the formal search-problem convention. The prover correctly establishes nonexistence, but should explicitly define whether algorithms must return a valid output on every legal input or are required to behave correctly only on the relation&#x27;s domain.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly identifies a fatal defect in the literal definition: the zero function is a mass coalition for $Q=\varnothing$, but its support is empty, making the existential conclusion in continuous EJS impossible. Therefore no legal instance admits a continuous-EJS bundle as written.</p><p>The subsequent NP-hardness argument concerns a modified definition and is logically separate from the target. It is nevertheless correct.</p><h3>Step-by-step audit</h3><h3>1. Zero-coalition argument</h3><p>For $Q=\varnothing$:</p><ul><li>$c(Q)=0$ follows from the definition of $c(Q)$.</li><li>The function $g_t=0$ satisfies $0\leq g_t\leq\mu_t$.</li><li>The implication $g_t&gt;0\Rightarrow Q\subseteq t$ is vacuous.</li><li>Its total mass satisfies</li></ul><p>$$
+  \sum_t g_t=0\geq \frac{c(Q)}b=0.
+  $$</p><p>Thus $g$ is indeed a mass coalition under the literal definition.</p><p>Continuous EJS then requires a type $t$ with $g_t&gt;0$. None exists. This failure is independent of $\pi$, so Proposition 1 is correct for every legal input.</p><p>No denominator or domain problem arises: the hypothesis that every project has positive approving mass ensures that the share expression is defined.</p><h3>2. Complexity consequence</h3><p>Since no instance has a satisfying bundle, the associated existence language is empty and hence decidable by the constant-NO algorithm.</p><p>The statement that an algorithm cannot output a valid bundle on any legal input is also correct under the natural total-search interpretation demanded by the target.</p><p>There is, however, a minor terminology issue: whether an empty search relation is called “polynomial-time solvable” or “NP-hard” depends on the precise formal convention for search problems. Under conventions requiring correctness only on instances in the relation’s domain, an empty-domain relation can be considered vacuously solvable. Under the target’s operational requirement—output a valid bundle for every legal input—the task is impossible. The prover should state which convention is being used before asserting that the answer is “neither.”</p><p>This does not affect the substantive conclusion that the literal formulation admits no solution.</p><h3>3. Corrected-definition reduction</h3><p>The added requirement $\sum_tg_t&gt;0$ eliminates the specific zero-support defect.</p><p>In the one-type construction:</p><ul><li>The sole approving mass is $1$, so</li></ul><p>$$
+  \operatorname{sh}_\mu(X,P)=c(X).
+  $$</p><ul><li>A positive coalition for $Q$ exists exactly when $c(Q)\leq B$:</li><li>Necessity follows from $g_P\leq1$ and $g_P\geq c(Q)/B$.</li><li>Sufficiency follows by taking $g_P=c(Q)/B$ when $c(Q)&gt;0$, and any rational value in $(0,1]$ when $c(Q)=0$.</li><li>Because the sole type is the only possible support type, corrected continuous EJS is exactly</li></ul><p>$$
+  c(\pi)\geq c(Q)
+  $$<br>for every feasible $Q$.</p><p>Thus Lemma 2 correctly characterizes satisfying bundles as maximum-cost feasible subsets.</p><p>The SUBSET SUM reduction is valid and polynomial in the binary encoding. An output bundle has cost $B$ exactly when the original SUBSET SUM instance is positive. Therefore a polynomial-time algorithm returning corrected continuous-EJS bundles would imply $\mathrm P=\mathrm{NP}$. The resulting hardness is weak, as stated.</p><h3>4. Citation</h3><p>The cited paper does state EJS existence, computational hardness unless $\mathrm P=\mathrm{NP}$, and gives the one-agent SUBSET SUM construction in the appendix. The attribution is accurate. See [Fairness in Participatory Budgeting via Equality of Resources](https://simonrey.fr/assets/publications/MREL23.pdf).</p><h3>5. Finite-electorate aggregation</h3><p>The scaling identity is correct:</p><p>$$
+\operatorname{sh}_\mu(X,t)
+=n\sum_{p\in X\cap t}\frac{c(p)}{a_p}.
+$$</p><p>Hence continuous shares are $n$ times finite-electorate shares, preserving comparisons.</p><p>Both coalition translations are valid:</p><ul><li>A finite nonempty coalition gives rational type masses bounded by $\mu_t$.</li><li>A positive mass coalition gives a finite coalition by taking every voter whose type lies in its support. Its normalized size is at least $\sum_tg_t$, and every selected voter approves $Q$.</li><li>In a violation, every positive-support type satisfies the same strict share inequality, so enlarging to all voters of those types preserves the violation.</li></ul><p>Thus the claimed equivalence after imposing positive coalition mass is established.</p><h3>Minimum clarification needed</h3><p>Define the intended notion of solving an empty-domain search problem. The safest conclusion is:</p><blockquote>Under the requirement that an algorithm return a valid bundle for every legal input, the literal task is infeasible because no valid output exists; its associated existence decision problem is the constant-NO problem.</blockquote><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

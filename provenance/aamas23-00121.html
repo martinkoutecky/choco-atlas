@@ -1,0 +1,261 @@
+<!doctype html><html><head><meta charset="utf-8"><title>A Map of Diverse Synthetic Stable Roommates Instances — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>A Map of Diverse Synthetic Stable Roommates Instances <span style="font-weight:normal;color:#8a7350">(aamas23-00121)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}complete}\), and hence \(\mathrm{NP\text{-}hard}\), even for equal masses and uniform-grid profiles</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 10 — class: hardness</p>
+<blockquote class="thmq">Given a (2n) × (2n −1) matrix M, deciding if there is an SR instance I with MAI = M is NP-complete.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given a finite type set \(T\), rational masses \(\mu_t\), and piecewise-constant profiles \(R_t:[0,1]\to[0,1]\) on quantile blocks induced by \(\mu\), decide whether strict type orders \(\succ_t\) over \(T\setminus\{t\}\) exist such that, whenever type \(u\) occupies quantile \(z\) in \(t\)&#x27;s order, \(R_t(z)\) equals the normalized position of \(t\) in \(u\)&#x27;s order; the equal-mass step-function case is the matrix-realizability problem of Theorem 10.</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">### Definitions
+Let \(T\) be a finite set of types with positive rational masses \(\mu_t\) summing to \(1\), and let each \(R_t:[0,1]	o[0,1]\) be a rational piecewise-constant function. For a strict order \(\succ_t\) of \(T\setminus\{t\}\), type \(u\) occupies the block \(B_t(u)=[\sum_{v\succ_t u}\mu_v/(1-\mu_t),(\sum_{v\succ_t u}\mu_v+\mu_u)/(1-\mu_t))\). Define \(u\)&#x27;s normalized position of \(t\) as \(ho_u(t)=(\sum_{v\succ_u t}\mu_v+\mu_t)/(1-\mu_u)\). The mass-profile realizability problem asks whether orders \((\succ_t)_{t\in T}\) exist such that \(R_t(z)=\rho_u(t)\) for every \(u\ne t\) and \(z\in B_t(u)\).
+
+### Target
+Is mass-profile realizability solvable in polynomial time, or is it NP-hard?
+
+### Nearest known results
+For equal masses, after rescaling entries by \(|T|-1\), this is the mutual-attraction-matrix realizability problem; it is NP-complete.
+No result for the mass-profile formulation above is verified here.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Complexity of Mass-Profile Realizability
+
+## Theorem
+
+Mass-profile realizability is \(\mathrm{NP\text{-}hard}\), even under the following restrictions:
+
+1. every type has the same mass \(\mu_t=1/|T|\);
+2. every profile \(R_t\) has breakpoints on the uniform grid
+   \[
+   0,\frac1{|T|-1},\ldots,\frac{|T|-2}{|T|-1},1;
+   \]
+3. every profile value belongs to
+   \[
+   \left\{\frac1{|T|-1},\ldots,1\right\}.
+   \]
+
+Under the standard finite encoding of rational piecewise-constant functions by rational breakpoints and values, the problem is in \(\mathrm{NP}\). Consequently, it is \(\mathrm{NP\text{-}complete}\).
+
+## Source problem
+
+Use the stated nearest known result: mutual-attraction-matrix realizability is \(\mathrm{NP\text{-}complete}\).
+
+An instance is a matrix
+\[
+A\in\{1,\ldots,n-1\}^{n\times(n-1)}.
+\]
+For a family of strict orders, let
+\[
+\operatorname{rank}_u(t)
+=
+1+\left|\{v\in T\setminus\{u\}:v\succ_u t\}\right|.
+\]
+If the agents in type \(t\)&#x27;s order are
+\[
+u_{t,1}\succ_t u_{t,2}\succ_t\cdots\succ_t u_{t,n-1},
+\]
+then their mutual-attraction matrix has entries
+\[
+A_{t,k}=\operatorname{rank}_{u_{t,k}}(t).
+\]
+The realizability question asks whether orders with these entries exist.
+
+## Polynomial-time reduction
+
+Let \(A\) be a mutual-attraction-matrix instance with \(n\) rows. Construct a mass-profile instance as follows.
+
+Set
+\[
+T=\{1,\ldots,n\}
+\qquad\text{and}\qquad
+\mu_t=\frac1n
+\]
+for every \(t\in T\).
+
+For \(z\in[0,1)\), let
+\[
+R_t(z)=\frac{A_{t,k}}{n-1}
+\quad\text{whenever}\quad
+z\in
+\left[\frac{k-1}{n-1},\frac{k}{n-1}\right),
+\]
+where \(k\in\{1,\ldots,n-1\}\). Define \(R_t(1)\) arbitrarily, for example by
+\[
+R_t(1)=\frac{A_{t,n-1}}{n-1}.
+\]
+The value at \(1\) is irrelevant because every block \(B_t(u)\) is right-open and contained in \([0,1)\).
+
+All masses, breakpoints, and values are rational and have polynomial encoding length.
+
+## Equal-mass identities
+
+Fix any family of orders and suppose that \(u\) is the \(k\)-th type in \(t\)&#x27;s order. Exactly \(k-1\) types precede \(u\), so
+\[
+\sum_{v\succ_t u}\mu_v=\frac{k-1}{n}.
+\]
+Moreover,
+\[
+1-\mu_t=1-\frac1n=\frac{n-1}{n}.
+\]
+Consequently,
+\[
+B_t(u)
+=
+\left[
+\frac{(k-1)/n}{(n-1)/n},
+\frac{k/n}{(n-1)/n}
+\right)
+=
+\left[
+\frac{k-1}{n-1},
+\frac{k}{n-1}
+\right).
+\]
+
+Now let
+\[
+\ell=\operatorname{rank}_u(t).
+\]
+There are exactly \(\ell-1\) types above \(t\) in \(u\)&#x27;s order. Therefore
+\[
+\rho_u(t)
+=
+\frac{(\ell-1)/n+1/n}{(n-1)/n}
+=
+\frac{\ell}{n-1}.
+\]
+
+Thus the blocks record positions in \(t\)&#x27;s order, while \(\rho_u(t)\) records the normalized reciprocal rank of \(t\) in \(u\)&#x27;s order.
+
+## Correctness of the reduction
+
+### Forward direction
+
+Suppose \(A\) is realizable as a mutual-attraction matrix. Choose realizing orders and let \(u\) be the \(k\)-th type in \(t\)&#x27;s order.
+
+By mutual-attraction realizability,
+\[
+A_{t,k}=\operatorname{rank}_u(t).
+\]
+For every \(z\in B_t(u)\), the construction and the equal-mass identities give
+\[
+R_t(z)
+=
+\frac{A_{t,k}}{n-1}
+=
+\frac{\operatorname{rank}_u(t)}{n-1}
+=
+\rho_u(t).
+\]
+Hence these orders realize the constructed mass profiles.
+
+### Reverse direction
+
+Conversely, suppose the constructed mass-profile instance is realizable. Let \(u\) be the \(k\)-th type in \(t\)&#x27;s realizing order. On the nonempty block \(B_t(u)\),
+\[
+R_t(z)=\frac{A_{t,k}}{n-1}.
+\]
+Mass-profile realizability and the equal-mass formula for \(\rho_u(t)\) imply
+\[
+\frac{A_{t,k}}{n-1}
+=
+R_t(z)
+=
+\rho_u(t)
+=
+\frac{\operatorname{rank}_u(t)}{n-1}.
+\]
+Multiplying by \(n-1\) yields
+\[
+A_{t,k}=\operatorname{rank}_u(t).
+\]
+This holds for every \(t\) and every position \(k\). Therefore the same orders realize \(A\) as a mutual-attraction matrix.
+
+We have proved
+\[
+A\text{ is realizable}
+\quad\Longleftrightarrow\quad
+\text{the constructed mass-profile instance is realizable}.
+\]
+
+Since the construction has \(n(n-1)\) profile pieces and uses rationals of polynomial bit length, it is a polynomial-time many-one reduction. This proves \(\mathrm{NP\text{-}hardness}\).
+
+## Membership in \(\mathrm{NP}\)
+
+Assume each rational piecewise-constant function is represented by a finite list of rational breakpoints and values.
+
+A certificate consists of one permutation of \(T\setminus\{t\}\) for every \(t\). Its total size is polynomial.
+
+Given the certificate, one can:
+
+1. compute every block endpoint by summing rational masses;
+2. compute every value \(\rho_u(t)\);
+3. scan the breakpoint representation of \(R_t\) and verify that it equals \(\rho_u(t)\) throughout \(B_t(u)\).
+
+Rational addition, comparison, and equality are polynomial-time operations in the total bit length. The verification is therefore polynomial-time, proving membership in \(\mathrm{NP}\).
+
+## Conclusion
+
+The equal-mass instances are a literal special case of the mass-profile formulation, not merely an analogy. Hence the known \(\mathrm{NP\text{-}complete}\) mutual-attraction-matrix problem transfers directly. Mass-profile realizability is therefore \(\mathrm{NP\text{-}complete}\) under the standard explicit encoding.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Polynomial-time reduction and equal-mass identities: The construction divides by n-1 without explicitly restricting the source instances to n &gt;= 2. This is harmless for the NP-hardness reduction but should be stated.</li><li><b>minor</b> — Membership in NP: The finite encoding convention for values at breakpoints is not specified. Since equality is required at every point of each block, the verifier must know which piece contains each breakpoint and how exceptional endpoint values, especially at 1, are encoded.</li></ul>
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The reduction correctly identifies equal-mass mass-profile instances with mutual-attraction-matrix instances. Both directions of the reduction are valid, and the construction is polynomial in the source-instance size. The claimed NP-hardness is established.</p><p>The NP-membership argument is sound in substance but leaves the endpoint convention for encoded piecewise-constant functions implicit. There is also a minor unaddressed edge case at \(n=1\). These are expositional gaps, not defects in the central reduction.</p><h3>Step-by-step verification</h3><h3>1. Source problem</h3><p>The prover invokes the supplied premise that mutual-attraction-matrix realizability is NP-complete and formulates its instances as matrices \(A\in\{1,\ldots,n-1\}^{n\times(n-1)}\).</p><p>The definition</p><p>\[
+\operatorname{rank}_u(t)
+=
+1+\left|\{v\in T\setminus\{u\}:v\succ_u t\}\right|
+\]</p><p>correctly gives the one-based position of \(t\) in \(u\)&#x27;s order. If \(u_{t,k}\) is the type at position \(k\) in \(t\)&#x27;s order, then requiring</p><p>\[
+A_{t,k}=\operatorname{rank}_{u_{t,k}}(t)
+\]</p><p>is exactly the source realizability condition used by the reduction.</p><p>This use of the source result is justified by the nearest-known-result premise supplied in the task. It assumes that the NP-completeness statement applies to precisely this row-and-position matrix convention; the task&#x27;s statement that the equal-mass formulation becomes that problem supports this identification.</p><h3>2. Construction</h3><p>The construction sets \(\mu_t=1/n\) and defines \(R_t\) on the \(k\)-th grid interval by</p><p>\[
+R_t(z)=\frac{A_{t,k}}{n-1}.
+\]</p><p>For \(n\geq 2\), all masses are positive and sum to \(1\). Since \(A_{t,k}\in\{1,\ldots,n-1\}\), every profile value lies in</p><p>\[
+\left\{\frac1{n-1},\ldots,1\right\}.
+\]</p><p>The profiles have exactly \(n-1\) intervals per type, so the construction has \(n(n-1)\) pieces. The denominators and numerators have polynomial bit length. Thus the construction is polynomial-time.</p><p>The value \(R_t(1)\) is irrelevant because every block is right-open. In particular, the final block ends at \(1\) but does not contain \(1\).</p><h3>3. Equal-mass block identity</h3><p>If \(u\) is at position \(k\) in \(t\)&#x27;s order, precisely \(k-1\) types precede it. Hence</p><p>\[
+\sum_{v\succ_t u}\mu_v=\frac{k-1}{n}.
+\]</p><p>Using \(1-\mu_t=(n-1)/n\), the block computation gives</p><p>\[
+B_t(u)
+=
+\left[
+\frac{k-1}{n-1},
+\frac{k}{n-1}
+\right).
+\]</p><p>This computation is correct, including the first and last positions.</p><h3>4. Equal-mass normalized-rank identity</h3><p>If \(\ell=\operatorname{rank}_u(t)\), then exactly \(\ell-1\) types precede \(t\) in \(u\)&#x27;s order. Therefore</p><p>\[
+\rho_u(t)
+=
+\frac{(\ell-1)/n+1/n}{(n-1)/n}
+=
+\frac{\ell}{n-1}.
+\]</p><p>This matches the problem&#x27;s definition, including its additional \(\mu_t\) term. The range is correct: \(1\leq\ell\leq n-1\), so \(\rho_u(t)\in\{1/(n-1),\ldots,1\}\).</p><h3>5. Forward direction</h3><p>Assuming \(A\) is realizable, take realizing orders. If \(u\) is at position \(k\) in \(t\)&#x27;s order, then</p><p>\[
+A_{t,k}=\operatorname{rank}_u(t).
+\]</p><p>The block identity identifies \(B_t(u)\) with the interval on which \(R_t\) has value \(A_{t,k}/(n-1)\), while the normalized-rank identity gives \(\rho_u(t)=\operatorname{rank}_u(t)/(n-1)\). Thus</p><p>\[
+R_t(z)=\rho_u(t)
+\]</p><p>for every \(z\in B_t(u)\). This direction is correct.</p><h3>6. Reverse direction</h3><p>Assuming the constructed profiles are realizable, let \(u\) occupy position \(k\) in \(t\)&#x27;s order. The corresponding block has length \(1/(n-1)&gt;0\) for \(n\geq2\). On that block,</p><p>\[
+R_t(z)=\frac{A_{t,k}}{n-1}.
+\]</p><p>Realizability and the normalized-rank identity give</p><p>\[
+\frac{A_{t,k}}{n-1}
+=
+\frac{\operatorname{rank}_u(t)}{n-1}.
+\]</p><p>Since \(n-1\neq0\), this implies</p><p>\[
+A_{t,k}=\operatorname{rank}_u(t).
+\]</p><p>Applying this to every row and position proves that the same orders realize \(A\). This direction is correct.</p><h3>7. NP-hardness conclusion</h3><p>The equivalence is established for every source instance with \(n\geq2\), and the construction is polynomial. Therefore the claimed polynomial-time many-one reduction and NP-hardness follow.</p><p>The proof should explicitly exclude \(n=1\), since the formulas divide by \(n-1\). This does not affect NP-hardness because nontrivial source instances have \(n\geq2\), but the domain restriction should be stated.</p><h3>8. Membership in NP</h3><p>A family of \(n\) permutations of \(n-1\) elements has polynomial encoding length. Given the permutations, all block endpoints and normalized positions are rational numbers computable with polynomially many rational operations.</p><p>Checking that a finitely represented piecewise-constant function equals a specified rational throughout a rational interval is also polynomial-time: only the finitely many encoded pieces intersecting the block need inspection. Exact rational arithmetic has polynomial bit complexity because the number of operations and the cumulative bit lengths are polynomial in the explicit input size.</p><p>The write-up does not precisely state the encoding convention at breakpoints. Since realizability requires equality at every point of each block, values at individual breakpoints matter. A verifier needs to know whether pieces are left-closed/right-open, whether endpoint values are separately encoded, and how \(R_t(1)\) is represented. Under the same half-open convention used in the reduction, the stated scan works. This is a minor specification gap rather than a substantive complexity error.</p><h3>Actionable feedback</h3><ul><li>State explicitly that the reduction is applied to source instances with \(n\geq2\), so all occurrences of \(1/(n-1)\) are defined.</li></ul><ul><li>Specify the finite encoding convention for piecewise-constant functions, including values at breakpoints and at \(1\). Then state that the verifier checks every encoded piece and any separately represented endpoint values intersecting each block.</li></ul><ul><li>If independence from the supplied nearest-known-result premise is desired, cite the precise NP-completeness theorem using the same row-and-position convention for \(A_{t,k}\). Within the present task, however, the supplied premise is sufficient.</li></ul><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,202 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Comparing Ways of Obtaining Candidate Orderings from Approval Ballots — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Comparing Ways of Obtaining Candidate Orderings from Approval Ballots <span style="font-weight:normal;color:#8a7350">(ijcai24-00305)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\text{-complete}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: hardness</p>
+<blockquote class="thmq">The VD, MF, BC, MS, and FT rules are NP- complete to compute, even for profiles in which every ballot approves at most 2 candidates. A lot of other axis rules could be defined. However, in this paper, we focus on the five rules introduced above, and leave the study of potential other rules to further research. In partic- ular, we think that greedy variants of the rules we introduced are of interest to circumvent computational hardness.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given candidates \(C\), rational masses \(\mu_A\) over nonempty approval types \(A\subseteq C\) with \(\sum_A\mu_A=1\), and a rational threshold \(q\), does there exist an axis \(\preceq\) such that \(\sum_A\mu_A\mathbf{1}[A\text{ is not an interval of }\preceq]\le q\)?</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">**Definitions.** An instance explicitly lists candidates \(C\), its nonzero rational masses \(\mu_A\) for nonempty \(A\subseteq C\), with \(\sum_A\mu_A=1\), and \(q\in\mathbb{Q}\). An axis \(\preceq\) is a linear order of \(C\); \(A\) is an interval of \(\preceq\) if \(a\preceq x\preceq b\) and \(a,b\in A\) imply \(x\in A\).
+
+**Target.** Is deciding whether there exists an axis \(\preceq\) for which \(\sum_A\mu_A\mathbf{1}[A\text{ is not an interval of }\preceq]\le q\) NP-hard, or is it solvable in polynomial time?
+
+**Nearest known results.** For finite approval profiles, the corresponding Voter Deletion decision problem is NP-complete, even when every ballot has size at most \(2\). The finite result concerns unweighted lists of ballots rather than rational masses over approval types.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Complexity Classification
+
+## Theorem
+
+The decision problem is \(\mathrm{NP}\)-complete. In particular, it is \(\mathrm{NP}\)-hard even when every approval set has size exactly \(2\) and all listed approval types have equal mass.
+
+## Membership in \(\mathrm{NP}\)
+
+A certificate is a permutation \(c_1,\ldots,c_n\) of \(C\), representing the proposed axis. Let \(\operatorname{pos}(c_i)=i\).
+
+For every listed nonempty set \(A\), define
+
+\[
+\ell_A=\min_{a\in A}\operatorname{pos}(a)
+\qquad\text{and}\qquad
+r_A=\max_{a\in A}\operatorname{pos}(a).
+\]
+
+Then \(A\) is an interval of the axis if and only if
+
+\[
+r_A-\ell_A+1=|A|.
+\]
+
+Indeed, all positions of elements of \(A\) lie between \(\ell_A\) and \(r_A\). Equality holds precisely when \(A\) occupies every position in that span.
+
+Thus one can determine all noninterval approval sets in time polynomial in the explicit input size. Their rational masses can be summed and compared with \(q\) using exact binary rational arithmetic. Even using a common denominator, its bit length is at most the sum of the input denominator bit lengths and is therefore polynomial in the input length. Hence the problem belongs to \(\mathrm{NP}\).
+
+## NP-hardness
+
+We reduce from undirected Hamiltonian Path, which is \(\mathrm{NP}\)-complete.
+
+Let \(G=(V,E)\) be an undirected simple graph with
+
+\[
+n=|V|\ge 2
+\qquad\text{and}\qquad
+m=|E|.
+\]
+
+If \(m&lt;n-1\), then \(G\) cannot contain a Hamiltonian path, because such a path uses \(n-1\) distinct edges. In this case, output any fixed no-instance, for example:
+
+- \(C=\{x,y,z\}\);
+- the three approval types \(\{x,y\},\{x,z\},\{y,z\}\), each of mass \(1/3\);
+- \(q=0\).
+
+Every order of three candidates has only two adjacent pairs, so exactly one of the three approval types is noninterval. Its violation mass is \(1/3&gt;0\), making this a no-instance.
+
+It remains to consider \(m\ge n-1\), so in particular \(m&gt;0\).
+
+### Construction
+
+Set
+
+\[
+C=V.
+\]
+
+For every edge \(e=\{u,v\}\in E\), introduce the approval type
+
+\[
+A_e=\{u,v\}
+\]
+
+with mass
+
+\[
+\mu_{A_e}=\frac{1}{m}.
+\]
+
+No other approval types are listed. These masses are positive and sum to \(1\). Set
+
+\[
+q=\frac{m-n+1}{m}.
+\]
+
+The construction is polynomial-time, and every approval type has size exactly \(2\).
+
+### Characterization of two-element intervals
+
+For distinct candidates \(u,v\), the set \(\{u,v\}\) is an interval of an axis if and only if \(u\) and \(v\) are consecutive on that axis.
+
+If they are consecutive, there is no candidate strictly between them, so the interval condition holds. Conversely, if some candidate lies strictly between them, that candidate is not in \(\{u,v\}\), violating the interval condition.
+
+### Correctness of the reduction
+
+Fix an axis \(\preceq\), and let \(a(\preceq)\) be the number of edges of \(G\) whose endpoints are consecutive on this axis.
+
+By the preceding characterization, precisely \(m-a(\preceq)\) listed approval types are noninterval. Consequently, their total mass is
+
+\[
+\frac{m-a(\preceq)}{m}.
+\]
+
+The target inequality becomes
+
+\[
+\frac{m-a(\preceq)}{m}
+\le
+\frac{m-n+1}{m},
+\]
+
+which is equivalent to
+
+\[
+a(\preceq)\ge n-1.
+\]
+
+An axis on \(n\) candidates has exactly \(n-1\) consecutive unordered pairs, so always
+
+\[
+a(\preceq)\le n-1.
+\]
+
+Therefore the inequality holds if and only if \(a(\preceq)=n-1\), meaning that every consecutive pair on the axis is an edge of \(G\). Reading the candidates in axis order then gives a Hamiltonian path in \(G\).
+
+Conversely, if \(v_1,\ldots,v_n\) is a Hamiltonian path in \(G\), use this sequence as the axis. Its \(n-1\) consecutive pairs are all edges, so \(a(\preceq)=n-1\), and the violation mass is exactly
+
+\[
+\frac{m-n+1}{m}=q.
+\]
+
+Thus
+
+\[
+G\text{ has a Hamiltonian path}
+\quad\Longleftrightarrow\quad
+\text{the constructed mass instance is a yes-instance}.
+\]
+
+This proves \(\mathrm{NP}\)-hardness.
+
+## Relation to Finite Voter Deletion
+
+The stated finite-profile hardness also transfers directly.
+
+Given a finite profile with \(N\) nonempty ballot occurrences, let \(m_A\) be the multiplicity of each distinct ballot type \(A\). Construct
+
+\[
+\mu_A=\frac{m_A}{N}
+\qquad\text{and}\qquad
+q=\frac{\min\{k,N\}}{N}.
+\]
+
+For every axis, the noninterval mass is exactly the number of noninterval voter occurrences divided by \(N\). A profile can be made interval by deleting at most \(k\) voters if and only if some axis has at most \(k\) noninterval ballot occurrences: every noninterval ballot must be deleted, while deleting exactly those ballots suffices.
+
+Duplicate ballots are therefore handled exactly by aggregation into their rational mass. Empty ballots, if allowed in the finite formulation, can be discarded because they are intervals on every axis. The case \(N=0\) is trivially a yes-instance.
+
+Hence the rational-mass representation does not remove the known finite-profile hardness.
+
+## Conclusion
+
+The problem is \(\mathrm{NP}\)-complete and therefore has no polynomial-time algorithm unless \(\mathrm{P}=\mathrm{NP}\). The hardness already holds for uniform rational masses supported only on two-candidate approval sets.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Membership in NP: The verifier is not explicitly instructed to check that the certificate lists every candidate exactly once, although this is an immediate polynomial-time check.</li><li><b>minor</b> — Relation to Finite Voter Deletion, case N=0: The formula mu_A=m_A/N is undefined when N=0. The text identifies this as a trivial yes-case but does not explicitly specify the valid fixed yes-instance that a total many-one reduction would output.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The Hamiltonian Path reduction is correct, polynomial-time, and fully resolves the target. It establishes NP-hardness even when every listed approval type has size exactly \(2\) and every type has the same mass. The membership-in-NP argument is also sound, so the stronger NP-completeness conclusion follows.</p><h3>Step-by-step audit</h3><h3>1. Membership in NP</h3><p>The proposed certificate is a permutation of \(C\). Given a valid permutation, the criterion</p><p>\[
+r_A-\ell_A+1=|A|
+\]</p><p>is equivalent to \(A\) occupying every position between its leftmost and rightmost elements. This is exactly the stated interval condition.</p><p>Verification is polynomial in the explicit representation size. Exact addition and comparison of binary-encoded rational numbers can also be performed in polynomial time. The observation that multiplying the denominators yields a common denominator whose bit length is the sum of their bit lengths is correct.</p><p>The write-up does not explicitly say that the verifier checks that the certificate is genuinely a permutation of \(C\), but this is an immediate polynomial-time check and is only a minor expositional omission.</p><h3>2. The \(m&lt;n-1\) branch</h3><p>A Hamiltonian path on \(n\) vertices uses \(n-1\) distinct graph edges, so a graph with \(m&lt;n-1\) cannot contain one.</p><p>The fixed output instance is indeed a no-instance. Every linear order of three candidates has exactly two consecutive unordered pairs. For a two-element approval set, being an interval is equivalent to its two elements being consecutive. Therefore exactly one of the three listed sets is noninterval, producing violation mass \(1/3&gt;q=0\).</p><p>This branch also preserves the promised restrictions: every approval set has size \(2\), and all masses are equal.</p><h3>3. Main construction</h3><p>For \(m\ge n-1\) and \(n\ge2\), one has \(m&gt;0\), so the masses \(1/m\) and threshold</p><p>\[
+q=\frac{m-n+1}{m}
+\]</p><p>are well-defined. The masses are positive and sum to \(1\).</p><p>Because the source graph is simple, distinct edges yield distinct two-element approval types. Thus the construction conforms to an input format listing a single mass for each approval type.</p><p>The construction and all rational encodings have polynomial size.</p><h3>4. Two-element interval characterization</h3><p>For distinct \(u,v\), the set \(\{u,v\}\) is an interval exactly when \(u\) and \(v\) are consecutive in the axis. Both directions follow directly from the definition and are correctly explained.</p><h3>5. Forward implication</h3><p>For an axis \(\preceq\), let \(a(\preceq)\) count graph edges appearing as consecutive pairs. Exactly \(m-a(\preceq)\) listed approval types are noninterval, so the violation mass is</p><p>\[
+\frac{m-a(\preceq)}{m}.
+\]</p><p>The threshold inequality is correctly rearranged to</p><p>\[
+a(\preceq)\ge n-1.
+\]</p><p>An order of \(n\) distinct candidates has exactly \(n-1\) consecutive unordered pairs, so \(a(\preceq)\le n-1\). Hence feasibility is equivalent to \(a(\preceq)=n-1\). This means every consecutive pair in the order is an edge of \(G\), which is precisely a Hamiltonian path.</p><p>No direction or quantifier is missing here.</p><h3>6. Reverse implication</h3><p>A Hamiltonian path gives an axis whose \(n-1\) consecutive pairs are graph edges. Therefore \(a(\preceq)=n-1\), and the violation mass equals \(q\). The weak inequality permits equality, so the constructed instance is a yes-instance.</p><p>Thus the many-one reduction is correct.</p><h3>7. Finite-profile transfer discussion</h3><p>The aggregation formula \(\mu_A=m_A/N\) correctly preserves, for each axis, the fraction of voter occurrences whose ballots are noninterval. Deleting precisely the noninterval occurrences leaves only interval ballots on the same axis.</p><p>There is one minor incompleteness: when \(N=0\), the displayed construction divides by \(N\), and saying that the case is “trivially a yes-instance” does not explicitly specify a valid fixed yes-instance to output. This affects only the optional direct-transfer discussion, not the Hamiltonian Path reduction or the theorem.</p><h3>Conclusion</h3><p>The central proof is valid and establishes NP-completeness. The only issues are routine verification detail and an edge-case omission in an auxiliary reduction discussion; neither affects the claimed complexity classification.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

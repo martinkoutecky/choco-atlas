@@ -1,0 +1,171 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Swap Bribery — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Swap Bribery <span style="font-weight:normal;color:#8a7350">(c01)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> polynomial-time solvable</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5.1 — class: hardness</p>
+<blockquote class="thmq">Shift bribery for Borda is NP-complete.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given candidates \(C\), a target \(p\), rational masses \(\mu_t\) over finitely many types \(t\), each with ranking \(r_t\) and shift-cost menu \(\rho_t(\ell)\), choose masses \(y_{t,\ell}\geq0\) with \(\sum_{\ell}y_{t,\ell}=\mu_t\) minimizing \(\sum_{t,\ell}\rho_t(\ell)y_{t,\ell}\), subject to \(p\) being a Borda winner after each mass \(y_{t,\ell}\) is shifted by \(\ell\) positions.</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">Given a finite candidate set \(C\), preferred candidate \(p\), voter types \(t\) with strict rankings \(r_t\), rational masses \(\mu_t \ge 0\) summing to \(1\), and nondecreasing shift-cost menus \(\rho_t(\ell)\) (with \(\ell\) allowed only up to the number of candidates above \(p\) in \(r_t\)), choose rational masses \(y_{t,\ell} \ge 0\) satisfying \(\sum_{\ell} y_{t,\ell} = \mu_t\). Mass \(y_{t,\ell}\) adopts the ranking obtained by moving \(p\) up exactly \(\ell\) positions in \(r_t\); cost is \(\sum_{t,\ell} \rho_t(\ell) y_{t,\ell}\). Borda scores are mass-weighted.
+
+Target: Is deciding whether \(p\) can be made a Borda winner within a given rational budget polynomial-time solvable, or NP-hard?
+
+Nearest known results: Finite-voter Borda shift bribery with voter-specific nondecreasing shift-cost functions is NP-complete. No continuous-side result is asserted here.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Result
+
+The continuous Borda shift-bribery problem is polynomial-time solvable. It is exactly the feasibility problem of a polynomial-size rational linear program.
+
+## 1. Notation
+
+Let $m=|C|$, and let positions be numbered from $1$ at the top to $m$ at the bottom. For each voter type $t$, define
+
+$$
+q_t=\operatorname{pos}_{r_t}(p)
+$$
+
+and the set of legal shifts
+
+$$
+L_t=\{0,1,\ldots,q_t-1\}.
+$$
+
+Let $r_{t,\ell}$ be the ranking obtained from $r_t$ by moving $p$ upward by exactly $\ell$ positions.
+
+Under Borda, a candidate in position $j$ receives $m-j$ points per unit mass. Define the fixed integer
+
+$$
+b_{t,\ell}(c)=m-\operatorname{pos}_{r_{t,\ell}}(c).
+$$
+
+Thus a mass $y_{t,\ell}$ assigned to shift $\ell$ contributes $b_{t,\ell}(c)y_{t,\ell}$ to candidate $c$.
+
+These coefficients are computable directly from the input. In particular,
+
+$$
+b_{t,\ell}(p)=m-q_t+\ell.
+$$
+
+Each of the $\ell$ candidates passed by $p$ loses exactly one Borda point per unit shifted mass, while every other candidate&#x27;s score remains unchanged.
+
+## 2. Linear-programming formulation
+
+Introduce one variable $y_{t,\ell}$ for every type $t$ and every $\ell\in L_t$. Consider the following system.
+
+Mass conservation for every type $t$:
+
+$$
+\sum_{\ell\in L_t}y_{t,\ell}=\mu_t.
+$$
+
+Nonnegativity:
+
+$$
+y_{t,\ell}\geq 0.
+$$
+
+Budget feasibility:
+
+$$
+\sum_t\sum_{\ell\in L_t}\rho_t(\ell)y_{t,\ell}\leq B.
+$$
+
+For every opponent $c\neq p$, the Borda co-winner condition is
+
+$$
+\sum_t\sum_{\ell\in L_t}
+\bigl(b_{t,\ell}(p)-b_{t,\ell}(c)\bigr)y_{t,\ell}\geq 0.
+$$
+
+Indeed, the post-bribery score of $c$ is exactly
+
+$$
+S_c(y)=\sum_t\sum_{\ell\in L_t}b_{t,\ell}(c)y_{t,\ell},
+$$
+
+so the final family of inequalities is precisely $S_p(y)\geq S_c(y)$ for every $c\neq p$.
+
+## 3. Correctness of the formulation
+
+### Forward direction
+
+Suppose there is a valid continuous shift-bribery action within budget $B$. Set $y_{t,\ell}$ equal to the mass of type $t$ receiving shift $\ell$.
+
+By the definition of a valid action, these variables are nonnegative and conserve every type&#x27;s mass. The cost constraint holds because the action costs
+
+$$
+\sum_t\sum_{\ell\in L_t}\rho_t(\ell)y_{t,\ell}.
+$$
+
+Because $p$ is a Borda winner, $S_p(y)\geq S_c(y)$ for every opponent $c$. Hence all LP constraints hold.
+
+### Reverse direction
+
+Conversely, suppose the LP has a rational feasible solution $y$. For every pair $(t,\ell)$, assign mass $y_{t,\ell}$ of type $t$ to the ranking $r_{t,\ell}$.
+
+Mass conservation makes this a valid division of every type&#x27;s population. The budget inequality ensures that its cost is at most $B$. The winner inequalities imply $S_p(y)\geq S_c(y)$ for every $c\neq p$. Therefore $p$ is a Borda winner.
+
+Thus the LP is feasible exactly when the answer to the decision problem is yes.
+
+## 4. Rationality and polynomial running time
+
+Let $\tau$ be the number of voter types. The number of variables is
+
+$$
+N=\sum_t |L_t|=\sum_t q_t\leq \tau m.
+$$
+
+Apart from nonnegativity, the LP has $\tau$ mass-conservation constraints, one budget constraint, and $m-1$ winner constraints. Its coefficients are either input rationals or integers of absolute value at most $m-1$. Consequently, its binary encoding length is polynomial in the input length.
+
+Standard rational linear-programming feasibility is decidable in polynomial time.
+
+There is also no discrepancy between real LP feasibility and the requirement that the masses be rational. The conservation equations imply $0\leq y_{t,\ell}\leq\mu_t$, so the feasible region is a bounded rational polyhedron. Every nonempty rational polytope has a rational extreme point. Hence, if the LP is feasible over the reals, it has a rational feasible solution, with polynomially bounded binary encoding length.
+
+The nondecreasing property of each menu $\rho_t$ is not needed for tractability; the same LP argument works for arbitrary explicitly represented rational costs.
+
+## 5. Why discrete NP-hardness does not transfer
+
+In finite-voter shift bribery, each voter must choose one shift integrally. This produces binary or integral assignment variables. In the present model, a type&#x27;s mass can be split among several shifts.
+
+Even if a discrete voter is represented as a type of mass $1/n$, the continuous model permits fractions of that mass to receive different shifts. It is therefore an LP relaxation of the discrete problem, not an equivalent encoding. The discrete NP-hardness consequently does not imply hardness here.
+
+## Conclusion
+
+The stated continuous Borda shift-bribery decision problem belongs to $\mathrm{P}$, via a rational LP with at most $\tau m$ variables.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly resolves the target: the continuous Borda shift-bribery problem is polynomial-time solvable by rational linear-programming feasibility. The formulation exactly captures divisible voter mass, cost, and the Borda co-winner condition.</p><h3>Step-by-step verification</h3><ul><li><b>Legal shifts and Borda coefficients</b></li></ul><p>For a type with $p$ in position $q_t$, the legal shifts are exactly $0,\ldots,q_t-1$. The coefficient<br>$$
+   b_{t,\ell}(c)=m-\operatorname{pos}_{r_{t,\ell}}(c)
+   $$<br>is the correct Borda score per unit mass. Moving $p$ upward by $\ell$ positions increases its score by $\ell$, moves each passed candidate down one position, and leaves all other candidates unchanged.</p><ul><li><b>Mass constraints</b></li></ul><p>The equations<br>$$
+   \sum_{\ell\in L_t}y_{t,\ell}=\mu_t
+   $$<br>together with nonnegativity exactly represent an arbitrary division of type $t$ among its legal shifts. Zero-mass types and the zero shift are handled correctly.</p><ul><li><b>Budget constraint</b></li></ul><p>Because costs are linear in the shifted mass, the displayed budget inequality is exactly the condition that total cost is at most $B$. Monotonicity of the menus is indeed unnecessary for this formulation.</p><ul><li><b>Winner constraints</b></li></ul><p>The score expression<br>$$
+   S_c(y)=\sum_{t,\ell}b_{t,\ell}(c)y_{t,\ell}
+   $$<br>correctly gives the final mass-weighted Borda score. Thus the inequalities<br>$$
+   \sum_{t,\ell}\bigl(b_{t,\ell}(p)-b_{t,\ell}(c)\bigr)y_{t,\ell}\geq 0
+   $$<br>are exactly $S_p(y)\geq S_c(y)$ for every opponent. This establishes that $p$ is a co-winner, which is the standard meaning of “a Borda winner.”</p><ul><li><b>Equivalence</b></li></ul><p>Both directions are valid. Every admissible bribery action defines an LP solution, and every rational LP solution defines an admissible division of each voter type with the same cost and scores. No integrality assumption is introduced.</p><ul><li><b>Polynomial size</b></li></ul><p>There are<br>$$
+   \sum_t q_t\leq \tau m
+   $$<br>variables and polynomially many constraints. All coefficients are input rationals or polynomially bounded integers, so the LP’s binary encoding length is polynomial in the explicit input length.</p><ul><li><b>Rationality</b></li></ul><p>Nonnegativity and mass conservation give $0\leq y_{t,\ell}\leq\mu_t$, making the feasible region a bounded rational polyhedron. A nonempty rational polytope has a rational vertex, and standard determinant bounds give polynomial encoding length for such a vertex. Therefore real LP feasibility and the required rational feasibility agree.</p><ul><li><b>Relation to discrete hardness</b></li></ul><p>The explanation is correct: divisibility permits a single type’s mass to use multiple shifts, whereas a discrete voter makes one integral choice. Hence the continuous formulation is an LP relaxation and is not covered by the cited discrete NP-hardness result.</p><p>No substantive or expositional defect affecting verification was found.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,151 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Combining Voting and Abstract Argumentation to Understand Online Discussions — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Combining Voting and Abstract Argumentation to Understand Online Discussions <span style="font-weight:normal;color:#8a7350">(aamas24-00025)</span></h1>
+<p class="banner">claim: resolved · adversarial review: partial</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\)-hard</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 9 — class: hardness</p>
+<blockquote class="thmq">Assuming P , NP, there is no algorithm that, given an ABSAF S = (F, N, ¯A) and given prf (F), returns an outcome for S that is optimal with respect to the Utilitarian, Egalitarian, or Harmonic rule in polynomial time with respect to m = |prf (F)|. We have now introduced several voting rules. Next, we will compare them axiomatically and in numerical simulations.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given an explicitly represented argumentation framework \(F=(\mathrm{Arg},\mathrm{Att})\), its preferred-extension catalogue \(E=\mathrm{prf}(F)\), a rational distribution \(\mu\) over nonempty approval types \(A\subseteq\mathrm{Arg}\), and \(k\), find \(\Omega\subseteq E\) with \(|\Omega|\le k\) maximizing \(U_\mu(\Omega)=\sum_A\mu_A\max_{\pi\in\Omega}|\pi\cap A|/|A|\); alternatively, decide whether an outcome core-represents every positive-mass type perfectly.</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">### Definitions
+Let \(F=(\mathrm{Arg},\mathrm{Att})\) be an argumentation framework and let \(E=\operatorname{prf}(F)\) be its explicitly enumerated catalogue of preferred extensions. An explicitly represented rational distribution \(\mu\) has finite support on nonempty approval types \(A\subseteq\mathrm{Arg}\), with \(\sum_A\mu_A=1\).
+For \(\Omega\subseteq E\), define \(U_\mu(\Omega)=\sum_A\mu_A\max_{\pi\in\Omega}|\pi\cap A|/|A|\). Given \(1\le k\le|E|\), choose \(\Omega\subseteq E\) with \( |\Omega|\le k\) maximizing \(U_\mu(\Omega)\).
+
+### Target
+Is computing a \(U_\mu\)-maximizing outcome \(\Omega\) polynomial-time solvable, or is it NP-hard?
+
+### Nearest known results
+For finite lists of voters, computing a Utilitarian-optimal outcome is intractable even when the preferred-extension catalogue is supplied explicitly: unless \(P=NP\), no algorithm runs in time polynomial in \(m=|E|\).</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Complexity of \(U_\mu\)-Maximization
+
+## Theorem
+
+Computing a \(U_\mu\)-maximizing outcome is \(\mathrm{NP}\)-hard, even when the catalogue \(E=\operatorname{prf}(F)\) is supplied explicitly and every probability has a common denominator. Consequently, it is not polynomial-time solvable unless \(\mathrm{P}=\mathrm{NP}\).
+
+Moreover, the natural threshold decision version is \(\mathrm{NP}\)-complete.
+
+## Reduction from Finite Voters
+
+We use the supplied result that computing a Utilitarian-optimal outcome is \(\mathrm{NP}\)-hard for a finite list of voters, even when \(E\) is explicitly enumerated.
+
+Consider such an instance with nonempty approval sets \(A_1,\ldots,A_n\), argumentation framework \(F\), explicitly enumerated catalogue \(E=\operatorname{prf}(F)\), and bound \(k\). Its normalized Utilitarian objective is
+
+\[
+\operatorname{Util}_V(\Omega)
+=
+\frac{1}{n}\sum_{i=1}^n
+\max_{\pi\in\Omega}\frac{|\pi\cap A_i|}{|A_i|}.
+\]
+
+Normalization by \(1/n\) does not affect the maximizing outcomes.
+
+For every distinct approval type \(A\) occurring among \(A_1,\ldots,A_n\), let
+
+\[
+c_A=\bigl|\{i:A_i=A\}\bigr|
+\]
+
+and define
+
+\[
+\mu_A=\frac{c_A}{n}.
+\]
+
+All other approval types receive mass zero.
+
+This is a valid explicitly represented rational distribution because every occurring \(A\) is nonempty and
+
+\[
+\sum_A\mu_A
+=
+\frac{1}{n}\sum_A c_A
+=
+1.
+\]
+
+The construction leaves \(F\), \(E\), and \(k\) unchanged.
+
+## Polynomial Encoding Size
+
+There are at most \(n\) distinct approval types. The multiplicities \(c_A\) can be computed by grouping identical approval sets.
+
+Each weight \(c_A/n\) has binary encoding length \(O(\log n)\). Hence the distribution can be constructed in time and space polynomial in the finite-voter input size. In particular, the reduction does not expand voters by clearing denominators.
+
+## Exact Preservation of Utilities
+
+For every feasible nonempty \(\Omega\subseteq E\),
+
+\[
+\begin{aligned}
+U_\mu(\Omega)
+&amp;=
+\sum_A\frac{c_A}{n}
+\max_{\pi\in\Omega}\frac{|\pi\cap A|}{|A|} \\
+&amp;=
+\frac{1}{n}\sum_A
+\sum_{\{i:A_i=A\}}
+\max_{\pi\in\Omega}\frac{|\pi\cap A_i|}{|A_i|} \\
+&amp;=
+\frac{1}{n}\sum_{i=1}^n
+\max_{\pi\in\Omega}\frac{|\pi\cap A_i|}{|A_i|} \\
+&amp;=
+\operatorname{Util}_V(\Omega).
+\end{aligned}
+\]
+
+Thus the reduction preserves the objective value of every feasible outcome, and therefore
+
+\[
+\operatorname*{arg\,max}_{\substack{\Omega\subseteq E\\1\leq|\Omega|\leq k}}
+U_\mu(\Omega)
+=
+\operatorname*{arg\,max}_{\substack{\Omega\subseteq E\\1\leq|\Omega|\leq k}}
+\operatorname{Util}_V(\Omega).
+\]
+
+An algorithm computing a \(U_\mu\)-maximizer would therefore compute a Utilitarian-optimal outcome for the finite-voter instance. By the supplied hardness result, this proves \(\mathrm{NP}\)-hardness.
+
+The reduction uses only empirical distributions whose weights are of the form \(c_A/n\). Hence arbitrary binary-encoded rational weights are not needed for the hardness.
+
+## Threshold Decision Version
+
+Consider the decision problem asking, for a rational threshold \(q\), whether some \(\Omega\subseteq E\) with \(1\leq|\Omega|\leq k\) satisfies \(U_\mu(\Omega)\geq q\).
+
+This problem belongs to \(\mathrm{NP}\). A certificate consists of at most \(k\) indices into the explicit catalogue \(E\). For every support type \(A\), one computes each intersection size \(|\pi\cap A|\), takes the maximum, and then sums the resulting rational quantities exactly.
+
+If the support has \(t\) types and \(\mu_A=p_A/q_A\), every summand has denominator dividing \(q_A|A|\). During exact rational addition, numerator and denominator bit lengths remain polynomial because their lengths are bounded by the sum of the input denominator lengths. Thus comparison with \(q\) is polynomial-time computable.
+
+The objective-preserving reduction above also preserves threshold questions. Therefore this decision version is \(\mathrm{NP}\)-complete.
+
+## Conclusion
+
+Explicit enumeration of the preferred-extension catalogue does not make the optimization polynomial-time solvable. The finite-voter instances embed directly as rational distributions by aggregating identical approval types, so computing a maximizing outcome remains \(\mathrm{NP}\)-hard unless \(\mathrm{P}=\mathrm{NP}\).
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Reduction from Finite Voters and the concluding NP-hardness inference: The prover says the supplied finite-voter result is NP-hardness, but the supplied statement only gives a conditional absence of an algorithm polynomial in m=|E|. That is not by itself an NP-hardness theorem, and polynomial dependence on m is not automatically the same as polynomial dependence on total input length. A precise source hardness theorem for the exact objective and encoding is required.</li><li><b>major</b> — Threshold Decision Version: The objective-preserving construction preserves threshold instances only if one starts from an NP-hard finite-voter threshold problem. The supplied premise concerns computing an optimal outcome, and optimization hardness alone does not establish NP-hardness of the natural threshold problem without an additional reduction or theorem. Thus NP-completeness is not proved.</li><li><b>minor</b> — Exact Preservation of Utilities and feasibility constraints: The prover restricts to 1&lt;=|Omega|&lt;=k, whereas the task states only |Omega|&lt;=k. Because the maximum over an empty Omega is undefined, the write-up should explicitly state that outcomes are required to be nonempty or provide the intended empty-set convention.</li><li><b>minor</b> — Threshold Decision Version, NP verification: The certificate discussion does not explicitly require distinct catalogue indices even though Omega is a set. This is routine to verify or normalize and does not affect NP membership.</li></ul>
+<div class="pre"><h3>Verification Report</h3><h3>Summary</h3><p>The reduction from finite voter lists to rational distributions is objective-preserving and, conditional on the corresponding finite-voter optimization problem being NP-hard, correctly establishes NP-hardness of computing a \(U_\mu\)-maximizing outcome.</p><p>However, two complexity claims are stronger than the supplied premise supports:</p><ul><li>The prover treats the stated conditional intractability result as an explicit NP-hardness theorem.</li><li>The claimed NP-completeness of the threshold decision problem does not follow merely from hardness of computing an optimal outcome.</li></ul><p>Thus the main reduction is genuine progress and likely captures the intended argument, but the theorem as stated is not fully established from the given premises.</p><h3>Step-by-step audit</h3><h3>1. Construction of the distribution</h3><p>For each distinct approval type \(A\), the prover defines its multiplicity \(c_A\) and sets \(\mu_A=c_A/n\).</p><p>This is correct:</p><ul><li>Every supported approval type is nonempty because every \(A_i\) is assumed nonempty.</li><li>There are at most \(n\) supported types.</li><li>The masses are nonnegative and sum to \(1\).</li><li>All masses admit the common denominator \(n\).</li></ul><p>The construction is polynomial in the ordinary explicit encoding of the voter list. Grouping identical explicitly represented sets can be done in polynomial time.</p><h3>2. Encoding-size analysis</h3><p>The statement that each weight \(c_A/n\) has encoding length \(O(\log n)\) is correct when numerator and denominator are stored in binary. Even if fractions are not reduced, the representation remains polynomial.</p><p>The prover should technically account for the storage of the approval types themselves, but these are copied from the input rather than expanded. This omission is routine and does not threaten the reduction.</p><h3>3. Equality of objective functions</h3><p>The displayed calculation proving</p><p>\[
+U_\mu(\Omega)=\frac{1}{n}\sum_{i=1}^n\max_{\pi\in\Omega}\frac{|\pi\cap A_i|}{|A_i|}
+\]</p><p>is correct for every nonempty feasible \(\Omega\). Aggregating identical voters into a probability mass preserves each outcome’s value exactly, not merely its ordering.</p><p>Consequently, the sets of maximizers coincide, provided that the finite-voter objective appearing in the cited hardness result is exactly this normalized satisfaction objective.</p><h3>4. Feasibility convention</h3><p>The original definition says \(|\Omega|\leq k\), while the prover uses \(1\leq|\Omega|\leq k\). Since \(\max_{\pi\in\varnothing}\) is undefined, the original problem implicitly needs either nonempty outcomes or a convention for \(U_\mu(\varnothing)\).</p><p>Because \(k\geq1\) and \(E\neq\varnothing\), restricting to nonempty outcomes is natural, but the prover should explicitly identify this as the interpretation of the original definition.</p><h3>5. Optimization hardness conclusion</h3><p>The reduction shows that an algorithm returning a \(U_\mu\)-maximizer would return a maximizer for the corresponding finite-voter instance.</p><p>The gap is in the cited premise. The supplied nearest result says that, unless \(P=NP\), there is no algorithm polynomial in \(m=|E|\). It does not explicitly state that the finite-voter optimization problem is NP-hard under a specified reduction notion. Conditional nonexistence of a polynomial-time algorithm is not, by itself, logically equivalent to NP-hardness.</p><p>Furthermore, “polynomial in \(m\)” is not automatically the same as polynomial in the total input length, because the explicit encodings of extensions, arguments, voters, and \(k\) also contribute to the input length.</p><p>The minimum needed clarification is a precise finite-voter hardness theorem stating that computing a maximizer for this exact objective is NP-hard under an appropriate polynomial-time reduction, including its input encoding and complexity measure. With that premise, the main NP-hardness reduction is valid.</p><h3>6. Membership of the threshold problem in \(NP\)</h3><p>The membership argument is essentially correct:</p><ul><li>A certificate contains at most \(k\) catalogue indices.</li><li>Since \(k\leq|E|\), the certificate has polynomial length.</li><li>Intersection sizes and maxima can be computed from the explicit sets.</li><li>Exact rational summation has polynomial bit complexity because the bit length of a product of input denominators is the sum of their bit lengths.</li></ul><p>The verifier should also check that the selected indices are distinct if \(\Omega\) is represented as a set, although duplicates can simply be discarded. This is a minor omitted verification detail.</p><h3>7. Hardness of the threshold problem</h3><p>The assertion that the objective-preserving reduction “also preserves threshold questions” is true as a statement about corresponding instances and thresholds. It does not establish NP-hardness unless the threshold version of the finite-voter problem is already known to be NP-hard.</p><p>Hardness of computing an optimal solution does not automatically imply NP-hardness of the natural threshold decision problem without an additional reduction or an applicable theorem relating the two problems. No such theorem is stated, and its hypotheses are not checked.</p><p>Therefore, the claimed NP-completeness of the threshold problem is unproved.</p><h3>Required repairs</h3><p>The minimum clarifications needed are:</p><ul><li>State the precise finite-voter NP-hardness result being used, including that it applies to the exact normalized objective written here and to the relevant explicit input encoding.</li><li>Either cite finite-voter threshold NP-hardness or supply a valid reduction establishing threshold hardness; objective preservation alone is insufficient from the stated optimization premise.</li><li>Explicitly resolve whether \(\Omega=\varnothing\) is infeasible or how \(U_\mu(\varnothing)\) is defined.</li></ul><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

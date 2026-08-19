@@ -1,0 +1,215 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Margin of Victory for Weighted Tournament Solutions — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Margin of Victory for Weighted Tournament Solutions <span style="font-weight:normal;color:#8a7350">(p15)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> polynomial-time solvable</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.3 — class: algorithmic</p>
+<blockquote class="thmq">Computing the MoV of a BO non-winner of an 𝑛- weighted tournament 𝑇= (𝑉,𝑤) can be done in polynomial time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given alternatives \(C\), a balanced society \(\mu\) over pairwise-comparison report types \((\{a,b\},a\succ b)\) and \((\{a,b\},b\succ a)\), and a Borda non-winner \(d\), find a minimum-total-mass feasible transfer between opposite reports within each pair stratum such that \(d\) has maximum induced Borda score.</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">Let \(C\) be a set of \(m\ge2\) alternatives and \(q=1/\binom m2\). For each unordered pair \(\{a,b\}\), the input gives a rational mass \(p_{ab}\in[0,q]\) reporting \(a\) over \(b\); the remaining mass \(q-p_{ab}\) reports \(b\) over \(a\).
+
+A transfer chooses signed rational values \(t_{ab}\) with \(0\le p_{ab}+t_{ab}\le q\), changing those two masses to \(p_{ab}+t_{ab}\) and \(q-p_{ab}-t_{ab}\). Its cost is \(\sum_{\{a,b\}}|t_{ab}|\). The Borda score of \(c\) is its total mass reported over each other alternative. Given a designated initial Borda non-winner \(d\), minimize transfer cost subject to \(d\) having maximum Borda score after the transfer.
+
+**Target.** For binary-encoded rational pairwise masses, is computing this minimum-cost transfer solvable in polynomial time, or is it NP-hard?
+
+**Nearest known results.** In the discrete counterpart with integral pairwise counts summing to a common integer for every pair, computing the minimum constructive reversal weight that makes a Borda non-winner a Borda winner is polynomial-time solvable.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Complexity of Rational-Mass Borda Transfers
+
+## Theorem
+
+The minimum-cost transfer problem is exactly solvable in polynomial time for binary-encoded rational pairwise masses.
+
+More precisely, it reduces to a rational linear program with $O(m^2)$ variables and constraints. Thus both the optimal rational cost and an optimal transfer can be computed in time polynomial in the total input bit length.
+
+## 1. Final-mass variables
+
+Let
+
+$$
+E=\binom{C}{2},\qquad M=|E|=\binom m2,\qquad q=\frac1M.
+$$
+
+For every unordered pair $e\in E$, fix an orientation $(u_e,v_e)$ consistent with the input: $p_e$ is the initial mass reporting $u_e$ over $v_e$.
+
+Introduce a variable $x_e$ for the final mass reporting $u_e$ over $v_e$. The opposite report then has mass $q-x_e$. Admissibility is exactly
+
+$$
+0\le x_e\le q.
+$$
+
+The corresponding transfer is
+
+$$
+t_e=x_e-p_e.
+$$
+
+Thus choosing admissible transfers and choosing final masses satisfying these box constraints are equivalent.
+
+## 2. Borda scores are linear
+
+For a candidate $c$, its final Borda score is
+
+$$
+S_c(x)
+=
+\sum_{e:u_e=c}x_e
++
+\sum_{e:v_e=c}(q-x_e).
+$$
+
+This is an affine-linear function of the variables $x_e$.
+
+The requirement that $d$ have maximum Borda score, allowing ties, is precisely
+
+$$
+S_d(x)\ge S_c(x)
+\qquad
+\text{for every }c\in C\setminus\{d\}.
+$$
+
+Consequently, all winner constraints are linear.
+
+## 3. Linearizing the transfer cost
+
+For every $e\in E$, introduce a variable $z_e$ subject to
+
+$$
+z_e\ge x_e-p_e,
+$$
+
+$$
+z_e\ge p_e-x_e.
+$$
+
+These inequalities imply
+
+$$
+z_e\ge |x_e-p_e|.
+$$
+
+We may additionally impose
+
+$$
+0\le z_e\le q,
+$$
+
+because both $x_e$ and $p_e$ belong to $[0,q]$, so $|x_e-p_e|\le q$.
+
+Consider the linear program
+
+$$
+\mathop{\mathrm{minimize}}\quad \sum_{e\in E}z_e
+$$
+
+subject to the box constraints, the two absolute-value inequalities for every pair, and the Borda-winner inequalities above.
+
+## 4. Exact equivalence
+
+Let $\operatorname{OPT}_{\mathrm{tr}}$ be the minimum transfer cost and $\operatorname{OPT}_{\mathrm{LP}}$ the LP optimum.
+
+Given any feasible transfer $t$, set
+
+$$
+x_e=p_e+t_e,\qquad z_e=|t_e|.
+$$
+
+The transfer bounds give $0\le x_e\le q$, and the condition that $d$ becomes a winner gives all winner inequalities. Hence this is LP-feasible with objective equal to the transfer cost. Therefore
+
+$$
+\operatorname{OPT}_{\mathrm{LP}}\le \operatorname{OPT}_{\mathrm{tr}}.
+$$
+
+Conversely, from any LP-feasible solution define
+
+$$
+t_e=x_e-p_e.
+$$
+
+The box constraints make this an admissible transfer, and the winner inequalities make $d$ a Borda winner. Moreover,
+
+$$
+\sum_{e\in E}|t_e|
+=
+\sum_{e\in E}|x_e-p_e|
+\le
+\sum_{e\in E}z_e.
+$$
+
+Thus
+
+$$
+\operatorname{OPT}_{\mathrm{tr}}\le \operatorname{OPT}_{\mathrm{LP}}.
+$$
+
+Combining the two inequalities yields
+
+$$
+\operatorname{OPT}_{\mathrm{tr}}=\operatorname{OPT}_{\mathrm{LP}}.
+$$
+
+At an optimum, every $z_e$ can in fact be chosen equal to $|x_e-p_e|$.
+
+## 5. Feasibility
+
+The LP is always feasible. Set every pair involving $d$ completely in $d$&#x27;s favor. Then
+
+$$
+S_d=(m-1)q.
+$$
+
+Every other candidate loses its comparison against $d$ and can receive at most $q$ from each of the remaining $m-2$ pairs, so
+
+$$
+S_c\le(m-2)q&lt;(m-1)q=S_d.
+$$
+
+The final masses on pairs not involving $d$ can be chosen arbitrarily within their boxes.
+
+## 6. Polynomial-time complexity
+
+There are $2M=O(m^2)$ variables. There are $O(m^2)$ box and absolute-value constraints and $m-1$ winner constraints.
+
+All coefficients are rational and have polynomial binary encoding length:
+
+- each input mass $p_e$ is supplied in binary;
+- $q=1/M$ has $O(\log m)$ bits;
+- the variable coefficients in the score inequalities belong to $\{-2,-1,0,1,2\}$;
+- all remaining constants are sums of polynomially many copies of $q$ and input rationals.
+
+Rational linear programming is exactly solvable in time polynomial in the number of variables, the number of constraints, and the total binary encoding length. Applying that theorem to this LP computes both an optimal rational solution and its exact objective value in polynomial time.
+
+## Conclusion
+
+The rational-mass problem is polynomial-time solvable. The discrete min-cost-flow machinery is unnecessary here: divisibility removes the integrality requirement, while the coupling between the two endpoints of each pair is already represented by their shared final-mass variable.
+
+In particular, the problem can be NP-hard only if $\mathrm{P}=\mathrm{NP}$.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The prover correctly resolves the target: the rational-mass transfer problem is expressible as a polynomial-size rational linear program, and the LP objective is exactly the minimum transfer cost. No integrality condition is required.</p><h3>Step-by-step audit</h3><ul><li><b>Final-mass formulation:</b> Correct. Fixing one orientation per unordered pair and using $x_e$ for its final mass gives a bijection between admissible transfers and values satisfying $0\le x_e\le q$, via $t_e=x_e-p_e$.</li></ul><ul><li><b>Borda-score formulation:</b> Correct. Each candidate’s score is affine-linear in the $x_e$. The inequalities $S_d(x)\ge S_c(x)$ for all $c\ne d$ precisely encode that $d$ is a co-winner, consistent with “having maximum Borda score.”</li></ul><ul><li><b>Absolute-value linearization:</b> Correct. The inequalities</li></ul><p>$$
+   z_e\ge x_e-p_e,\qquad z_e\ge p_e-x_e
+   $$<br>imply $z_e\ge |x_e-p_e|$. The additional bounds $0\le z_e\le q$ are valid because $x_e,p_e\in[0,q]$.</p><ul><li><b>Equivalence of optima:</b> Correct. Every feasible transfer yields an LP solution of the same cost, while every LP solution yields an admissible transfer whose cost is no greater than the LP objective. These two directions establish equality of the two optimal values. Minimization also forces $z_e=|x_e-p_e|$ at every optimum.</li></ul><ul><li><b>Feasibility:</b> Correct, including the edge case $m=2$. Placing every pair involving $d$ entirely in $d$’s favor gives $S_d=(m-1)q$, while every rival has score at most $(m-2)q$.</li></ul><ul><li><b>Polynomial size and encoding:</b> Correct. The LP has $O(m^2)$ variables and constraints. Its rational coefficients and constants have encoding length polynomial in the input length. The stated standard polynomial-time solvability theorem for rational linear programming applies, and the feasible region is nonempty and bounded, so an exact rational optimum and optimal solution can be returned with polynomially bounded encoding length.</li></ul><ul><li><b>Conclusion:</b> Correct. The formulation proves polynomial-time solvability. Under the standard meaning of polynomial-time NP-hardness, the final observation that NP-hardness would imply $\mathrm P=\mathrm{NP}$ is also valid.</li></ul><p>No substantive or expositional defects affecting verifiability were found.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

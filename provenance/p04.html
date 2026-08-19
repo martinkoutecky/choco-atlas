@@ -1,0 +1,159 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Host Community Respecting Refugee Housing — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Host Community Respecting Refugee Housing <span style="font-weight:normal;color:#8a7350">(p04)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> polynomial-time solvable</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.7 — class: hardness</p>
+<blockquote class="thmq">The ARH problem is NP-complete even if the topol- ogy is a graph of maximum degree 3 and all inhabitants approve intervals.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given finite host types \(H\), housing types \(P\), rational capacities \(b_p\), refugee mass \(\rho\), costs \(c_p\), exposures \(w_{hp}\), and host acceptance intervals \([\ell_h,u_h]\) with \(d_h=\sum_{p\in P}w_{hp}b_p&gt;0\), decide whether there is \(x\in\mathbb{R}_{\geq0}^{P}\) such that \(x_p\leq b_p\), \(\sum_{p\in P}x_p=\rho\), and \(\ell_h\leq \sum_{p\in P}w_{hp}x_p/d_h\leq u_h\) for every \(h\in H\); optionally minimize \(\sum_{p\in P}c_px_p\).</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">**Definitions.** An instance has finite sets of host types \(H\) and housing types \(P\), rational \(b_p,\rho\ge0\), \(w_{hp}\ge0\), and \(\ell_h\le u_h\), with \(\sum_p w_{hp}b_p&gt;0\) for every \(h\). A feasible housing is a real vector \(x\) satisfying \(0\le x_p\le b_p\), \(\sum_p x_p=\rho\), and \(\ell_h\le \frac{\sum_p w_{hp}x_p}{\sum_p w_{hp}b_p}\le u_h\) for every \(h\).
+
+**Target.** Is continuous interval-housing feasibility solvable in polynomial time, or is it NP-hard?
+
+**Nearest known results.** The discrete counterpart, obtained by requiring \(x_p\in\{0,1\}\) for individual empty housing vertices and using adjacency incidences as \(w_{hp}\), is NP-complete even when the topology has maximum degree three and every host approves an interval of refugee counts.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Continuous Interval-Housing Feasibility
+
+## Claim
+
+Continuous interval-housing feasibility with rational input data is solvable in polynomial time.
+
+## Linearization of the host constraints
+
+For each host type $h\in H$, define the constant
+
+$$
+D_h=\sum_{p\in P}w_{hp}b_p.
+$$
+
+By hypothesis, $D_h&gt;0$. Therefore multiplying the host constraint by $D_h$ preserves both inequality directions:
+
+$$
+\ell_h
+\le
+\frac{\sum_{p\in P}w_{hp}x_p}{D_h}
+\le
+u_h
+$$
+
+is equivalent to the pair of linear inequalities
+
+$$
+\sum_{p\in P}w_{hp}x_p\le u_hD_h
+$$
+
+and
+
+$$
+-\sum_{p\in P}w_{hp}x_p\le-\ell_hD_h.
+$$
+
+The denominator depends only on the input data, not on the variables. Thus the normalized host constraints introduce no nonlinearity.
+
+## Equivalent rational linear program
+
+The instance is feasible exactly when the following rational linear system has a solution:
+
+$$
+-x_p\le0 \qquad\text{for every }p\in P,
+$$
+
+$$
+x_p\le b_p \qquad\text{for every }p\in P,
+$$
+
+$$
+\sum_{p\in P}x_p\le\rho,
+$$
+
+$$
+-\sum_{p\in P}x_p\le-\rho,
+$$
+
+and, for every $h\in H$,
+
+$$
+\sum_{p\in P}w_{hp}x_p\le u_hD_h,
+$$
+
+$$
+-\sum_{p\in P}w_{hp}x_p\le-\ell_hD_h.
+$$
+
+The two inequalities involving $\rho$ are equivalent to the equality $\sum_p x_p=\rho$. Hence this system is equivalent to the original definition in both directions.
+
+It has $|P|$ variables and
+
+$$
+2|P|+2+2|H|
+$$
+
+linear inequalities.
+
+## Encoding-size verification
+
+Assume, as required for a standard complexity-theoretic formulation, that all numbers $b_p,\rho,w_{hp},\ell_h,u_h$ are rational numbers encoded in binary.
+
+Each $D_h$ is obtained using $|P|$ rational multiplications and additions. Products and sums of binary-encoded rationals can be computed exactly in polynomial time, and the resulting numerator and denominator have bit length polynomial in the total input length. Multiplication by $\ell_h$ or $u_h$ also increases the bit length by at most a polynomial amount.
+
+Consequently, the displayed rational linear system can be constructed in polynomial time and has encoding length polynomial in the original instance size.
+
+## Polynomial-time decision algorithm
+
+The feasibility of a system of rational linear inequalities
+
+$$
+Ax\le c
+$$
+
+is decidable in time polynomial in the numbers of rows and columns and in the binary encoding length of $A$ and $c`, for example by the rational ellipsoid method.
+
+Applying this theorem to the equivalent system above gives a polynomial-time algorithm:
+
+1. Compute each positive constant $D_h$ exactly.
+2. Construct the rational linear inequalities above.
+3. Run a polynomial-time rational linear-programming feasibility algorithm.
+4. Return feasible precisely when the linear system is feasible.
+
+This is an exact decision procedure; it does not rely on numerical approximation or on the existence of an interior point.
+
+## Conclusion
+
+The continuous formulation is a rational linear-programming feasibility problem and therefore belongs to $\mathrm{P}$. The NP-completeness of the discrete counterpart arises from the integrality restrictions $x_p\in\{0,1\}$; those restrictions are absent here.
+
+Strictly speaking, membership in $\mathrm{P}$ does not unconditionally exclude NP-hardness, since a problem in $\mathrm{P}$ could be NP-hard if $\mathrm{P}=\mathrm{NP}$. The unconditional classification established here is polynomial-time solvability.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Polynomial-time decision algorithm, statement of the rational linear-programming feasibility theorem: The expression ending with the binary encoding length of A and c has a mismatched closing backtick instead of a closing math delimiter. The intended theorem remains unambiguous.</li></ul>
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The prover correctly reduces continuous interval-housing feasibility to rational linear-program feasibility. The reduction is exact, has polynomial encoding size, and invokes the standard polynomial-time solvability of rational linear programming with the required hypotheses satisfied.</p><p>The argument establishes the claimed polynomial-time classification. The only issue is a harmless formatting typo in the statement of the linear-programming theorem.</p><h3>Step-by-step verification</h3><h3>1. Treatment of the denominators</h3><p>For each $h$, the prover defines</p><p>$$
+D_h=\sum_{p\in P}w_{hp}b_p.
+$$</p><p>This is exactly the denominator appearing in the definition. The stated hypothesis gives $D_h&gt;0$, so multiplication by $D_h$ is valid and preserves both inequality directions.</p><p>The equivalence between</p><p>$$
+\ell_h\le \frac{\sum_p w_{hp}x_p}{D_h}\le u_h
+$$</p><p>and the two displayed linear inequalities is correct. In particular, $D_h$ depends only on input data, so no nonlinear variable products are introduced.</p><h3>2. Equivalence of the linear system</h3><p>The bounds $0\le x_p\le b_p$ are correctly represented by $-x_p\le0$ and $x_p\le b_p$.</p><p>The pair</p><p>$$
+\sum_p x_p\le\rho,
+\qquad
+-\sum_p x_p\le-\rho
+$$</p><p>is exactly equivalent to $\sum_p x_p=\rho$.</p><p>The two inequalities for each host are likewise exactly equivalent to its original interval constraint. Thus every feasible housing satisfies the displayed linear system, and every solution of the displayed system is a feasible housing.</p><p>The count $2|P|+2+2|H|$ of displayed inequalities is correct.</p><h3>3. Encoding-size argument</h3><p>The prover appropriately interprets the rational inputs as binary-encoded, as required for a complexity classification.</p><p>Exact multiplication and addition of the input rationals can be performed in polynomial time. Even without cancellation, the bit length of a common denominator formed from the input denominators is bounded by the sum of their bit lengths, hence by the total input length. Therefore each $D_h$, $u_hD_h$, and $\ell_hD_h$ has polynomially bounded encoding length.</p><p>Since the input explicitly contains the $|H||P|$ weights, constructing all coefficients and right-hand sides also takes polynomial time in the total input size.</p><h3>4. Application of rational linear programming</h3><p>The invoked result—that feasibility of a binary-encoded rational system $Ax\le c$ is decidable in polynomial time—is standard. The constructed system has rational coefficients, polynomially many rows and columns, and polynomial total encoding length, so all relevant hypotheses are met.</p><p>The presence of equality constraints encoded as pairs of inequalities, possible lower-dimensional feasible regions, and lack of strict feasibility do not invalidate the rational linear-programming feasibility theorem.</p><h3>5. Conclusion and relation to the discrete problem</h3><p>It follows correctly that the continuous problem belongs to $\mathrm P$. The observation that this does not logically rule out NP-hardness unless $\mathrm P\ne\mathrm{NP}$ is accurate.</p><p>The distinction from the cited discrete problem is also correctly identified: the continuous formulation lacks the binary integrality constraints responsible for the combinatorial problem.</p><h3>Issue</h3><p>The theorem statement contains the malformed fragment <code>$A$ and $c</code>` rather than a correctly closed mathematical delimiter. This is purely typographical and does not create uncertainty about the theorem being invoked.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

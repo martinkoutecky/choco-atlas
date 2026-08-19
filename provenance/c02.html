@@ -1,0 +1,212 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Prices Matter for the Parameterized Complexity of Shift Bribery — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Prices Matter for the Parameterized Complexity of Shift Bribery <span style="font-weight:normal;color:#8a7350">(c02)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> polynomial-time solvable</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 3 — class: hardness</p>
+<blockquote class="thmq">Borda Shift Bribery parameterized by the number of aﬀected voters is W[2]-hard for each price function family that we consider.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre">Given candidates \(C\), preferred candidate \(p\), rational society masses \(\mu_t\) over finitely many types \(t=(\succ_t,\pi_t)\), budget \(B\), and reach bound \(A\), does there exist rational mass \(y_{t,j}\geq0\) with \(\sum_j y_{t,j}=\mu_t\), \(\sum_{t,j}\pi_t(j)y_{t,j}\leq B\), and \(\sum_{t,j\geq1}y_{t,j}\leq A\), such that shifting \(p\) upward by \(j\) positions in mass \(y_{t,j}\) makes \(p\) a Borda co-winner?</div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">## Definitions
+
+Let \(C\) be a finite candidate set with preferred candidate \(p\). Each type \(	au\) has rational mass \(q_	au\ge0\) (with total mass \(1\)), a ranking \(\succ_	au\), and a nondecreasing rational schedule \(\pi_	au(0),\ldots,\pi_	au(L_	au)\), where \(L_	au\) is the number of candidates ranked above \(p\) and \(\pi_	au(0)=0\).
+
+Choose nonnegative real masses \(x_{	au,\ell}\) with \(\sum_{\ell=0}^{L_	au}x_{	au,\ell}=q_	au\). Mass \(x_{	au,\ell}\) shifts \(p\) forward by \(\ell\) positions in \(\succ_	au\), preserving all other relative orders. Borda scores are the mass-weighted sums of the resulting rankings’ Borda scores.
+
+The allocation is feasible if \(\sum_{	au,\ell}x_{	au,\ell}\pi_	au(\ell)\le B\), \(\sum_{	au,\ell&gt;0}x_{	au,\ell}\le A\), and \(p\) is a Borda co-winner.
+
+## Target
+
+Is this continuous Borda Shift Bribery problem solvable in polynomial time, or is it NP-hard?
+
+## Nearest known results
+
+The discrete Borda Shift Bribery problem, parameterized by the number of affected voters, is W[2]-hard for unit, convex, sortable, arbitrary, and all-or-nothing price schedules.
+
+No result for the exact rational-mass formulation above was verified.</div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Complexity of Continuous Borda Shift Bribery
+
+## Theorem
+
+Assume that the candidate rankings, masses, price schedules, and bounds $A,B$ are given explicitly using binary-encoded rational numbers. Then Continuous Borda Shift Bribery is solvable in polynomial time.
+
+More precisely, feasibility is equivalent to feasibility of a rational linear program with
+
+$$
+\sum_{\tau}(L_\tau+1)\leq |T||C|
+$$
+
+variables. Consequently, the problem is in $\mathrm{P}$.
+
+## Construction of the linear program
+
+Let $m=|C|$. For a type $\tau$, let $r_\tau(c)\in\{1,\ldots,m\}$ denote the position of candidate $c$ in $\succ_\tau$. Because exactly $L_\tau$ candidates precede $p$,
+
+$$
+r_\tau(p)=L_\tau+1.
+$$
+
+For each $\ell\in\{0,\ldots,L_\tau\}$, denote by $\succ_{\tau,\ell}$ the ranking obtained by moving $p$ forward by $\ell$ positions while preserving the relative order of all other candidates.
+
+Let $b_{\tau,\ell}(c)$ be candidate $c$&#x27;s Borda score in this ranking. Using the convention that position $r$ receives score $m-r$, these coefficients are explicitly
+
+$$
+b_{\tau,\ell}(p)=m-(L_\tau+1)+\ell,
+$$
+
+and, for $c\neq p$,
+
+$$
+b_{\tau,\ell}(c)
+=
+m-r_\tau(c)
+-
+\mathbf{1}\!\left[
+L_\tau+1-\ell\leq r_\tau(c)\leq L_\tau
+\right].
+$$
+
+Indeed, precisely the $\ell$ candidates crossed by $p$ move backward by one position and lose one Borda point.
+
+Introduce one variable $x_{\tau,\ell}$ for every type $\tau$ and legal shift length $\ell$. Consider the following system.
+
+### Mass conservation
+
+For every type $\tau$,
+
+$$
+\sum_{\ell=0}^{L_\tau}x_{\tau,\ell}=q_\tau.
+$$
+
+### Nonnegativity
+
+For every $\tau,\ell$,
+
+$$
+x_{\tau,\ell}\geq 0.
+$$
+
+### Monetary budget
+
+$$
+\sum_\tau\sum_{\ell=0}^{L_\tau}
+\pi_\tau(\ell)x_{\tau,\ell}\leq B.
+$$
+
+### Affected-mass bound
+
+$$
+\sum_\tau\sum_{\ell=1}^{L_\tau}x_{\tau,\ell}\leq A.
+$$
+
+### Borda co-winner constraints
+
+For each opponent $c\in C\setminus\{p\}$, impose
+
+$$
+\sum_\tau\sum_{\ell=0}^{L_\tau}
+\left(b_{\tau,\ell}(p)-b_{\tau,\ell}(c)\right)x_{\tau,\ell}
+\geq 0.
+$$
+
+These are linear inequalities because every shifted ranking $\succ_{\tau,\ell}$, and hence every coefficient $b_{\tau,\ell}(c)$, is fixed before the variables are chosen.
+
+## Correctness
+
+### Feasible allocations yield feasible LP points
+
+Suppose an allocation in the sense of the problem is given.
+
+Mass conservation, nonnegativity, the monetary budget, and the affected-mass bound are exactly the first four groups of constraints above.
+
+The total post-intervention Borda score of candidate $c$ is
+
+$$
+S(c)=
+\sum_\tau\sum_{\ell=0}^{L_\tau}
+b_{\tau,\ell}(c)x_{\tau,\ell}.
+$$
+
+Thus, for every $c\neq p$, the condition that $p$ weakly beats $c$ is
+
+$$
+S(p)-S(c)
+=
+\sum_\tau\sum_{\ell=0}^{L_\tau}
+\left(b_{\tau,\ell}(p)-b_{\tau,\ell}(c)\right)x_{\tau,\ell}
+\geq 0.
+$$
+
+Therefore every feasible allocation satisfies the entire linear program.
+
+### Feasible LP points yield feasible allocations
+
+Conversely, suppose the linear program has a feasible solution. For each type $\tau$, assign mass $x_{\tau,\ell}$ to shift length $\ell$. Nonnegativity and mass conservation make this a valid division of the complete mass $q_\tau$.
+
+The two global inequalities give the required monetary and affected-mass bounds. Finally, each co-winner inequality states exactly that $S(p)\geq S(c)$ for the corresponding opponent $c$. Hence $p$ is a Borda co-winner, so the resulting allocation is feasible.
+
+The original instance is therefore feasible if and only if the constructed linear program is feasible.
+
+## Polynomial running time
+
+Let
+
+$$
+K=\sum_\tau(L_\tau+1).
+$$
+
+There are $K\leq |T|m$ variables. Apart from nonnegativity, there are:
+
+- $|T|$ mass-conservation equalities,
+- one monetary-budget inequality,
+- one affected-mass inequality, and
+- $m-1$ co-winner inequalities.
+
+All coefficients are rational. The Borda coefficients are integers of absolute value at most $m-1$, so their binary encoding requires $O(\log m)$ bits. All remaining numerical coefficients occur in the input. Constructing the full coefficient matrix takes at most $O(Km)$ arithmetic operations and produces an LP whose binary encoding length is polynomial in the input length.
+
+Feasibility of a rational linear program is decidable in polynomial time in its binary encoding length. This decides existence over the real variables specified in the problem; no integrality assumption is needed. The conclusion concerns ordinary polynomial time, not strongly polynomial time.
+
+## Why the discrete hardness does not transfer
+
+In the discrete problem, voters are indivisible: selecting which voters to affect imposes an integrality constraint. In the present formulation, even the mass belonging to one type may be divided among several shift lengths. The displayed LP is precisely the fractional relaxation of that discrete selection problem.
+
+Consequently, mapping a discrete instance to rational masses does not preserve no-instances: an infeasible integral allocation may become feasible after fractional splitting. The cited W[2]-hardness results therefore do not contradict the polynomial-time algorithm above.
+
+The monotonicity of each price schedule is not needed for the algorithm; the same proof works for any explicitly given finite rational price schedule.
+
+⟨structured verdict parsed — rendered above⟩</div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Summary</h3><p>The prover correctly resolves the target: the continuous rational-mass formulation is polynomial-time solvable via rational linear programming. The LP exactly represents all feasibility conditions, and the bidirectional correctness argument is valid.</p><h3>Step-by-step audit</h3><ul><li><b>Variables and size</b></li></ul><p>Each variable $x_{\tau,\ell}$ corresponds exactly to assigning part of type $\tau$ to shift length $\ell$. Since $0\le L_\tau\le |C|-1$, the bound</p><p>$$
+   \sum_\tau(L_\tau+1)\le |T||C|
+   $$</p><p>is correct.</p><ul><li><b>Shifted Borda scores</b></li></ul><p>Initially, $p$ has position $L_\tau+1$. Moving it forward by $\ell$ positions places it at $L_\tau+1-\ell$, increasing its Borda score by $\ell$. Thus</p><p>$$
+   b_{\tau,\ell}(p)=m-(L_\tau+1)+\ell
+   $$</p><p>is correct.</p><p>The candidates crossed by $p$ are exactly those originally in positions</p><p>$$
+   L_\tau+1-\ell,\ldots,L_\tau.
+   $$</p><p>Each moves backward by one position and loses one Borda point. The displayed formula for $b_{\tau,\ell}(c)$ is therefore correct, including the case $\ell=0$, where the indicated interval is empty.</p><ul><li><b>Mass constraints</b></li></ul><p>Nonnegativity and</p><p>$$
+   \sum_{\ell=0}^{L_\tau}x_{\tau,\ell}=q_\tau
+   $$</p><p>exactly express a complete divisible allocation of each type’s mass. This also handles types of zero mass.</p><ul><li><b>Budget constraints</b></li></ul><p>The monetary constraint is identical to the definition. The affected-mass constraint correctly counts all and only mass assigned a positive shift length.</p><ul><li><b>Co-winner constraints</b></li></ul><p>Because Borda scores are additive in voter mass, the post-shift score of candidate $c$ is correctly written as</p><p>$$
+   S(c)=\sum_{\tau,\ell}b_{\tau,\ell}(c)x_{\tau,\ell}.
+   $$</p><p>Requiring $S(p)-S(c)\ge0$ for every $c\ne p$ is exactly equivalent to $p$ being a Borda co-winner.</p><ul><li><b>Equivalence proof</b></li></ul><p>Both directions are established:</p><ul><li>Every feasible allocation directly satisfies the LP.</li><li>Every feasible LP point directly defines a valid allocation satisfying the original constraints.</li></ul><p>No integrality or reconstruction issue arises because the original variables are explicitly allowed to be arbitrary nonnegative real masses.</p><ul><li><b>Polynomial-time conclusion</b></li></ul><p>The LP has polynomially many variables and constraints. Its coefficients have polynomial binary encoding length: the Borda coefficients are small integers, while all other numerical coefficients are input rationals. The invoked standard theorem—that feasibility of a rational linear program is decidable in time polynomial in its binary encoding length—applies directly.</p><ul><li><b>Relation to discrete hardness</b></li></ul><p>The explanation is correct: indivisible-voter hardness does not transfer to a formulation allowing each type’s mass to be fractionally split among several shifts. A reduction from the discrete problem would need to enforce integrality, which this LP does not do.</p><ul><li><b>Price monotonicity</b></li></ul><p>The observation that monotonicity is unnecessary is correct. The LP requires only an explicitly given rational coefficient $\pi_\tau(\ell)$ for every allowed shift.</p><p>No unjustified steps, false claims, missing cases, or internal inconsistencies were found.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>
