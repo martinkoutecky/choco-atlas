@@ -7,6 +7,9 @@
  h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
  h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
  .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
  .katex-display { overflow-x: auto; overflow-y: hidden; }
  .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
  .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
@@ -22,128 +25,37 @@
 <h2>The anchor (named result in the paper)</h2>
 <p>Theorem 6.5 — class: hardness</p>
 
-<h2>The continuous mirror question, as graded</h2><div class="pre">Given finitely many types \(T\), masses \(\mu_t\), strengths \(a_t&gt;0\), current payoff rates \(u_t\geq0\), and ordered prizes \(p_1\geq\cdots\geq p_k&gt;0\), does there exist a mass coalition \(d\) with \(0\leq d_t\leq\mu_t\) that, against every partition of the residual mass \(\mu-d\), is guaranteed a prize \(p_j&gt; \sum_t u_t d_t\)?</div>
-<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">A coalition is a mass vector \(d\) with \(0\le d_t\le\mu_t\); its strength is \(\sum_t a_td_t\) and its current aggregate payoff is \(\sum_tu_td_t\). A fractional partition of residual mass \(\mu-d\) is a finite family of mass vectors summing coordinatewise to \(\mu-d\). Coalitions are ranked by strength and receive the ordered prizes \(p_1\ge\cdots\ge p_k\).
-
-**Target.** Given the types, masses, strengths, current payoff rates, and prizes, is deciding whether some coalition \(d\) is guaranteed—against every fractional partition of \(\mu-d\)—a prize \(p_j&gt;\sum_tu_td_t\) NP-hard or in P?
-
-**Nearest known results.** For finite-player \(k\)-prize weighted voting games, deciding whether a given outcome admits a beneficial single-coalition deviation is NP-hard. No result for the fractional-mass version above was verified.</div>
-<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Classification: Polynomial-Time Solvable
-
-## Formalization
-
-Assume the standard weighted-voting conventions:
-
-- The number of types and the prize list are explicit.
-- All $\mu_t,a_t,u_t,p_j$ are binary-encoded rationals.
-- Strength coefficients satisfy $a_t\ge 0$.
-- A residual partition is an indexed finite family.
-- Only the first $k$ ranked coalitions receive prizes.
-- “Guaranteed” includes adversarial resolution of equal-strength ties: a residual coalition tied with the deviating coalition may be ranked ahead of it.
-
-Write
-
-$$
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finitely many types \(T\), masses \(\mu_t\), strengths \(a_t&gt;0\), current payoff rates \(u_t\geq0\), and ordered prizes \(p_1\geq\cdots\geq p_k&gt;0\), does there exist a mass coalition \(d\) with \(0\leq d_t\leq\mu_t\) that, against every partition of the residual mass \(\mu-d\), is guaranteed a prize \(p_j&gt; \sum_t u_t d_t\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A coalition is a mass vector \(d\) with \(0\le d_t\le\mu_t\); its strength is \(\sum_t a_td_t\) and its current aggregate payoff is \(\sum_tu_td_t\). A fractional partition of residual mass \(\mu-d\) is a finite family of mass vectors summing coordinatewise to \(\mu-d\). Coalitions are ranked by strength and receive the ordered prizes \(p_1\ge\cdots\ge p_k\).</p><p><b>Target.</b> Given the types, masses, strengths, current payoff rates, and prizes, is deciding whether some coalition \(d\) is guaranteed—against every fractional partition of \(\mu-d\)—a prize \(p_j&gt;\sum_tu_td_t\) NP-hard or in P?</p><p><b>Nearest known results.</b> For finite-player \(k\)-prize weighted voting games, deciding whether a given outcome admits a beneficial single-coalition deviation is NP-hard. No result for the fractional-mass version above was verified.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Classification: Polynomial-Time Solvable</h3><h3>Formalization</h3><p>Assume the standard weighted-voting conventions:</p><ul><li>The number of types and the prize list are explicit.</li><li>All $\mu_t,a_t,u_t,p_j$ are binary-encoded rationals.</li><li>Strength coefficients satisfy $a_t\ge 0$.</li><li>A residual partition is an indexed finite family.</li><li>Only the first $k$ ranked coalitions receive prizes.</li><li>“Guaranteed” includes adversarial resolution of equal-strength ties: a residual coalition tied with the deviating coalition may be ranked ahead of it.</li></ul><p>Write</p><p>$$
 W=\sum_t a_t\mu_t,\qquad
 S(d)=\sum_t a_td_t,\qquad
 U(d)=\sum_tu_td_t.
-$$
-
-The principal case is $W&gt;0$.
-
-## Lemma: Exact Rank Guarantee
-
-For $j\in\{1,\ldots,k\}$, a coalition $d$ is guaranteed to be ranked among the first $j$ coalitions if and only if
-
-$$
+$$</p><p>The principal case is $W&gt;0$.</p><h3>Lemma: Exact Rank Guarantee</h3><p>For $j\in\{1,\ldots,k\}$, a coalition $d$ is guaranteed to be ranked among the first $j$ coalitions if and only if</p><p>$$
 (j+1)S(d)&gt;W.
-$$
-
-### Proof
-
-The residual mass has total strength
-
-$$
+$$</p><h3>Proof</h3><p>The residual mass has total strength</p><p>$$
 R(d)=\sum_ta_t(\mu_t-d_t)=W-S(d).
-$$
-
-Under adversarial tie-breaking, $d$ fails to be among the first $j$ precisely when some residual partition contains at least $j$ coalitions whose strengths are each at least $S(d)$.
-
-Suppose first that such coalitions exist. Because every residual coalition has nonnegative strength, their combined strength is at most the total residual strength. Consequently,
-
-$$
+$$</p><p>Under adversarial tie-breaking, $d$ fails to be among the first $j$ precisely when some residual partition contains at least $j$ coalitions whose strengths are each at least $S(d)$.</p><p>Suppose first that such coalitions exist. Because every residual coalition has nonnegative strength, their combined strength is at most the total residual strength. Consequently,</p><p>$$
 R(d)\ge jS(d).
-$$
-
-Thus, if $R(d)&lt;jS(d)$, no residual partition can place $j$ coalitions weakly ahead of $d$.
-
-Conversely, suppose
-
-$$
+$$</p><p>Thus, if $R(d)&lt;jS(d)$, no residual partition can place $j$ coalitions weakly ahead of $d$.</p><p>Conversely, suppose</p><p>$$
 R(d)\ge jS(d).
-$$
-
-Partition the residual mass into the $j$ vectors
-
-$$
+$$</p><p>Partition the residual mass into the $j$ vectors</p><p>$$
 x^1=\cdots=x^j=\frac{\mu-d}{j}.
-$$
-
-This is a valid finite fractional partition, and every part has strength
-
-$$
+$$</p><p>This is a valid finite fractional partition, and every part has strength</p><p>$$
 S(x^\ell)=\frac{R(d)}j\ge S(d).
-$$
-
-The adversarial ranking may therefore place all $j$ residual coalitions ahead of $d$. Hence $d$ is not guaranteed a top-$j$ rank.
-
-We conclude that the guarantee holds exactly when
-
-$$
+$$</p><p>The adversarial ranking may therefore place all $j$ residual coalitions ahead of $d$. Hence $d$ is not guaranteed a top-$j$ rank.</p><p>We conclude that the guarantee holds exactly when</p><p>$$
 R(d)&lt;jS(d).
-$$
-
-Substituting $R(d)=W-S(d)$ gives
-
-$$
+$$</p><p>Substituting $R(d)=W-S(d)$ gives</p><p>$$
 W-S(d)&lt;jS(d),
-$$
-
-equivalently,
-
-$$
+$$</p><p>equivalently,</p><p>$$
 (j+1)S(d)&gt;W.
-$$
-
-This proves the lemma.
-
-## Beneficial-Deviation Characterization
-
-Because $p_1\ge\cdots\ge p_k$, being guaranteed a rank at most $j$ guarantees a prize of value at least $p_j$.
-
-Therefore a beneficial guaranteed deviation exists if and only if, for some $j\in\{1,\ldots,k\}$, there is a vector $d$ satisfying
-
-$$
+$$</p><p>This proves the lemma.</p><h3>Beneficial-Deviation Characterization</h3><p>Because $p_1\ge\cdots\ge p_k$, being guaranteed a rank at most $j$ guarantees a prize of value at least $p_j$.</p><p>Therefore a beneficial guaranteed deviation exists if and only if, for some $j\in\{1,\ldots,k\}$, there is a vector $d$ satisfying</p><p>$$
 0\le d_t\le\mu_t\quad\text{for every }t,
-$$
-
-$$
+$$</p><p>$$
 (j+1)\sum_ta_td_t&gt;W,
-$$
-
-and
-
-$$
+$$</p><p>and</p><p>$$
 \sum_tu_td_t&lt;p_j.
-$$
-
-Thus the universal quantification over all residual partitions has disappeared: fractional divisibility makes total residual strength the only relevant statistic.
-
-## Polynomial-Time Algorithm
-
-For each $j\in\{1,\ldots,k\}$, solve the rational linear program
-
-$$
+$$</p><p>Thus the universal quantification over all residual partitions has disappeared: fractional divisibility makes total residual strength the only relevant statistic.</p><h3>Polynomial-Time Algorithm</h3><p>For each $j\in\{1,\ldots,k\}$, solve the rational linear program</p><p>$$
 \begin{aligned}
 \text{maximize}\quad &amp;\varepsilon\\
 \text{subject to}\quad
@@ -153,51 +65,15 @@ $$
 &amp;\varepsilon\le
 p_j-\sum_tu_td_t.
 \end{aligned}
-$$
-
-Let its optimum be $\varepsilon_j^*$.
-
-The box $\prod_t[0,\mu_t]$ is compact, so the two strict inequalities are simultaneously satisfiable exactly when
-
-$$
+$$</p><p>Let its optimum be $\varepsilon_j^*$.</p><p>The box $\prod_t[0,\mu_t]$ is compact, so the two strict inequalities are simultaneously satisfiable exactly when</p><p>$$
 \varepsilon_j^*&gt;0.
-$$
-
-Hence the answer is yes if and only if $\varepsilon_j^*&gt;0$ for at least one $j$.
-
-There are $k$ linear programs, each with $|T|+1$ variables and $O(|T|)$ constraints. Rational linear programming and exact comparison of its rational optimum with zero are polynomial-time operations in the binary input length. The entire decision problem is therefore in deterministic polynomial time.
-
-## Boundary and Degenerate Cases
-
-The strict strength inequality is necessary. If
-
-$$
+$$</p><p>Hence the answer is yes if and only if $\varepsilon_j^*&gt;0$ for at least one $j$.</p><p>There are $k$ linear programs, each with $|T|+1$ variables and $O(|T|)$ constraints. Rational linear programming and exact comparison of its rational optimum with zero are polynomial-time operations in the binary input length. The entire decision problem is therefore in deterministic polynomial time.</p><h3>Boundary and Degenerate Cases</h3><p>The strict strength inequality is necessary. If</p><p>$$
 (j+1)S(d)=W,
-$$
-
-then the residual can be divided into $j$ coalitions of strength exactly $S(d)$, all of which may be placed ahead of $d$.
-
-If ties are instead always resolved in favor of the deviating coalition, the rank condition becomes
-
-$$
+$$</p><p>then the residual can be divided into $j$ coalitions of strength exactly $S(d)$, all of which may be placed ahead of $d$.</p><p>If ties are instead always resolved in favor of the deviating coalition, the rank condition becomes</p><p>$$
 (j+1)S(d)\ge W.
-$$
-
-The problem remains polynomial-time solvable: impose this weak inequality and maximize only the payoff slack $p_j-U(d)$. Thus the complexity classification is unchanged under either standard uniform tie convention, although equality instances can have different answers.
-
-If $W=0$ and empty coalitions are not ranked, then every coalition has strength zero. Any $d\ne\mu$ can be defeated by splitting its nonzero residual mass into $k$ tied coalitions. Only $d=\mu$ can be guaranteed first place, so the answer is yes exactly when
-
-$$
+$$</p><p>The problem remains polynomial-time solvable: impose this weak inequality and maximize only the payoff slack $p_j-U(d)$. Thus the complexity classification is unchanged under either standard uniform tie convention, although equality instances can have different answers.</p><p>If $W=0$ and empty coalitions are not ranked, then every coalition has strength zero. Any $d\ne\mu$ can be defeated by splitting its nonzero residual mass into $k$ tied coalitions. Only $d=\mu$ can be guaranteed first place, so the answer is yes exactly when</p><p>$$
 p_1&gt;\sum_tu_t\mu_t.
-$$
-
-This case is decidable directly. If zero-mass coalitions may themselves be ranked, the model degenerates because arbitrarily many tied zero coalitions can be appended; that convention is normally excluded and is also trivially decidable.
-
-## Conclusion
-
-Under the natural binary-rational encoding and pessimistic interpretation of “guaranteed,” the fractional-mass problem is polynomial-time solvable. The finite-player NP-hardness does not transfer: its indivisible subset-selection obstruction is eliminated by the ability to split every residual type proportionally.
-
-⟨structured verdict parsed — rendered above⟩</div>
+$$</p><p>This case is decidable directly. If zero-mass coalitions may themselves be ranked, the model degenerates because arbitrarily many tied zero coalitions can be appended; that convention is normally excluded and is also trivially decidable.</p><h3>Conclusion</h3><p>Under the natural binary-rational encoding and pessimistic interpretation of “guaranteed,” the fractional-mass problem is polynomial-time solvable. The finite-player NP-hardness does not transfer: its indivisible subset-selection obstruction is eliminated by the ability to split every residual type proportionally.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
 <h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
 <ul><li><b>major</b> — Formalization and Exact Rank Guarantee lemma: The proof assumes a_t &gt;= 0, but USER_TASK does not state this. Nonnegativity is essential: with signed coefficients, selected strong residual parts can be offset by a negative-strength remainder, so R(d) &gt;= jS(d) is not necessary for failure of the rank guarantee.</li><li><b>major</b> — Formalization of ranking and conclusion: USER_TASK does not define tie-breaking. The output proves conditional results for two uniform conventions but therefore does not supply a single answer to the problem as written, especially in zero-strength instances.</li><li><b>minor</b> — Boundary and Degenerate Cases: When zero-mass partition members are permitted, the output says only that the case is trivially decidable and does not state the exact decision criterion.</li><li><b>minor</b> — Boundary and Degenerate Cases: empty coalitions not ranked: The criterion using d = mu omits the case mu = 0. Then d is itself empty and cannot receive a prize under the stated non-ranking convention.</li></ul>
 <div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover establishes a sound polynomial-time characterization for the principal case under its added assumptions: binary-rational data, $a_t\ge 0$, indexed fractional partitions, and adversarial tie-breaking.</p><p>It does not fully resolve <code>USER_TASK</code> as written because several of those assumptions are absent from the problem statement and materially affect the argument. In particular, the exact-rank lemma is false if negative strength coefficients are permitted. The treatment of zero-strength instances also depends on conventions that the task does not specify.</p><h3>Step-by-step audit</h3><h3>1. Added formalization assumptions</h3><p>The prover assumes:</p><ul><li>$a_t\ge 0$;</li><li>binary-rational encoding;</li><li>adversarial resolution of ties;</li><li>an indexed notion of partition;</li><li>only the first $k$ coalitions receive prizes.</li></ul><p>The encoding assumption is necessary to formulate a classical complexity result, but it should be identified as a condition under which the answer is obtained.</p><p>More seriously, $a_t\ge0$ is essential to the proof and is not stated in <code>USER_TASK</code>. The proof uses it when concluding that the strength of selected residual parts cannot exceed total residual strength.</p><p>Without nonnegativity, the rank lemma is false. For example, let $j=1$, $a=(1,-1)$, $\mu=(3,2)$, and $d=(1,0)$. Then</p><p>$$

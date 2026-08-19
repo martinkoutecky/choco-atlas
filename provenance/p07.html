@@ -7,6 +7,9 @@
  h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
  h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
  .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
  .katex-display { overflow-x: auto; overflow-y: hidden; }
  .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
  .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
@@ -22,434 +25,89 @@
 <h2>The anchor (named result in the paper)</h2>
 <p>Theorem 4.3 — class: algorithmic</p>
 <blockquote class="thmq">1-Euclid-Reg-SMT can be solved in polynomial time when preference profile is complete.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
-<h2>The continuous mirror question, as graded</h2><div class="pre">Given finite male coordinate types \(i\in I\) with masses \(p_i\) at \(x_i\in\mathbb R\), female coordinate types \(j\in J\) with masses \(q_j\) at \(y_j\in\mathbb R\), and \(\rho\in[0,1]\), does a stable transport \(z_{ij}\geq0\) with marginals \(p,q\) exist that assigns mass only to pairs whose strict-distance population rank is at most \(\rho\) for both endpoints?</div>
-<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre">**Definitions.** Input rational coordinates \(x_1,\dots,x_m\) for male types and \(y_1,\dots,y_n\) for female types, rational masses \(p_i,q_j&gt;0\) of total mass \(1\), and rational \(ho\in[0,1]\). A transport is \(f\ge0\) with row sums \(p_i\) and column sums \(q_j\). Types strictly prefer smaller distance and are indifferent at equal distance.
-A transport is stable if there are no \(i,j,i&#x27;,j&#x27;\) with \(f_{ij&#x27;}&gt;0,f_{i&#x27;j}&gt;0\), \(|x_i-y_j|&lt;|x_i-y_{j&#x27;}|\), and \(|x_i-y_j|&lt;|x_{i&#x27;}-y_j|\). Define \(r^F_i(j)=\sum_{h:|x_i-y_h|&lt;|x_i-y_j|}q_h\) and \(r^M_j(i)=\sum_{h:|x_i-y_j|&lt;|x_h-y_j|}p_h\).
-**Target.** Is it polynomial-time decidable, or NP-hard, whether there is a stable transport \(f\) such that every \(f_{ij}&gt;0\) satisfies \(r^F_i(j)\leho\) and \(r^M_j(i)\leho\)?
-**Known results.** For unit-mass agents with complete distance-induced preferences on a line, the discrete regret version is solvable in polynomial time. No result is assumed for this exact finite-type mass-transport formulation.</div>
-<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"># Stable Rational-Mass Transport on a Line
-
-## 1. Status
-
-The exact complexity classification remains unresolved here. I prove:
-
-1. the problem belongs to NP;
-2. stability has an exact characterization by worst supported distances;
-3. the rational-mass problem is exactly equivalent to a high-multiplicity unit-agent problem, yielding a pseudo-polynomial algorithm;
-4. the problem is polynomial-time solvable when $\rho=0$, when $\rho=1$, or when no type has a distance tie.
-
-Thus any remaining hardness must exploit distance ties together with binary-encoded masses.
-
-## 2. Acceptable edges
-
-Write
-
-$$
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite male coordinate types \(i\in I\) with masses \(p_i\) at \(x_i\in\mathbb R\), female coordinate types \(j\in J\) with masses \(q_j\) at \(y_j\in\mathbb R\), and \(\rho\in[0,1]\), does a stable transport \(z_{ij}\geq0\) with marginals \(p,q\) exist that assigns mass only to pairs whose strict-distance population rank is at most \(\rho\) for both endpoints?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> Input rational coordinates \(x_1,\dots,x_m\) for male types and \(y_1,\dots,y_n\) for female types, rational masses \(p_i,q_j&gt;0\) of total mass \(1\), and rational \(ho\in[0,1]\). A transport is \(f\ge0\) with row sums \(p_i\) and column sums \(q_j\). Types strictly prefer smaller distance and are indifferent at equal distance.<br>A transport is stable if there are no \(i,j,i&#x27;,j&#x27;\) with \(f_{ij&#x27;}&gt;0,f_{i&#x27;j}&gt;0\), \(|x_i-y_j|&lt;|x_i-y_{j&#x27;}|\), and \(|x_i-y_j|&lt;|x_{i&#x27;}-y_j|\). Define \(r^F_i(j)=\sum_{h:|x_i-y_h|&lt;|x_i-y_j|}q_h\) and \(r^M_j(i)=\sum_{h:|x_i-y_j|&lt;|x_h-y_j|}p_h\).<br><b>Target.</b> Is it polynomial-time decidable, or NP-hard, whether there is a stable transport \(f\) such that every \(f_{ij}&gt;0\) satisfies \(r^F_i(j)\leho\) and \(r^M_j(i)\leho\)?<br><b>Known results.</b> For unit-mass agents with complete distance-induced preferences on a line, the discrete regret version is solvable in polynomial time. No result is assumed for this exact finite-type mass-transport formulation.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Stable Rational-Mass Transport on a Line</h3><h3>1. Status</h3><p>The exact complexity classification remains unresolved here. I prove:</p><ul><li>the problem belongs to NP;</li><li>stability has an exact characterization by worst supported distances;</li><li>the rational-mass problem is exactly equivalent to a high-multiplicity unit-agent problem, yielding a pseudo-polynomial algorithm;</li><li>the problem is polynomial-time solvable when $\rho=0$, when $\rho=1$, or when no type has a distance tie.</li></ul><p>Thus any remaining hardness must exploit distance ties together with binary-encoded masses.</p><h3>2. Acceptable edges</h3><p>Write</p><p>$$
 d_{ij}=|x_i-y_j|.
-$$
-
-Define the acceptable-edge set
-
-$$
+$$</p><p>Define the acceptable-edge set</p><p>$$
 A_\rho=\{(i,j):r_i^F(j)\le \rho\text{ and }r_j^M(i)\le \rho\}.
-$$
-
-For fixed $i$, the function $r_i^F(j)$ is nondecreasing with $d_{ij}$: if $d_{ij}&lt;d_{ik}$, every female type strictly closer than $j$ is also strictly closer than $k$. The analogous statement holds on the female side.
-
-### Lemma 2.1: Disallowed edges cannot block an acceptable transport
-
-Suppose every positive entry of $f$ belongs to $A_\rho$. If $(i,j)\notin A_\rho$, then $(i,j)$ cannot be part of a blocking configuration for $f$.
-
-#### Proof
-
-Suppose first that $r_i^F(j)&gt;\rho$. For every $j&#x27;$ with $f_{ij&#x27;}&gt;0$,
-
-$$
+$$</p><p>For fixed $i$, the function $r_i^F(j)$ is nondecreasing with $d_{ij}$: if $d_{ij}&lt;d_{ik}$, every female type strictly closer than $j$ is also strictly closer than $k$. The analogous statement holds on the female side.</p><h3>Lemma 2.1: Disallowed edges cannot block an acceptable transport</h3><p>Suppose every positive entry of $f$ belongs to $A_\rho$. If $(i,j)\notin A_\rho$, then $(i,j)$ cannot be part of a blocking configuration for $f$.</p><h3>Proof</h3><p>Suppose first that $r_i^F(j)&gt;\rho$. For every $j&#x27;$ with $f_{ij&#x27;}&gt;0$,</p><p>$$
 r_i^F(j&#x27;)\le \rho&lt;r_i^F(j).
-$$
-
-If $d_{ij}&lt;d_{ij&#x27;}$, monotonicity would give
-
-$$
+$$</p><p>If $d_{ij}&lt;d_{ij&#x27;}$, monotonicity would give</p><p>$$
 r_i^F(j)\le r_i^F(j&#x27;),
-$$
-
-a contradiction. Hence $i$ does not strictly prefer $j$ to any partner in its support.
-
-If instead $r_j^M(i)&gt;\rho$, the symmetric argument shows that $j$ does not strictly prefer $i$ to any positively assigned male type. In either case $(i,j)$ cannot block. $\square$
-
-Consequently, the target problem is equivalently the existence of a weakly stable, quota-filling allocation in the incomplete graph $A_\rho$, although the special geometric structure of $A_\rho$ must be retained.
-
-## 3. Exact worst-distance characterization
-
-For a transport $f$, define
-
-$$
+$$</p><p>a contradiction. Hence $i$ does not strictly prefer $j$ to any partner in its support.</p><p>If instead $r_j^M(i)&gt;\rho$, the symmetric argument shows that $j$ does not strictly prefer $i$ to any positively assigned male type. In either case $(i,j)$ cannot block. $\square$</p><p>Consequently, the target problem is equivalently the existence of a weakly stable, quota-filling allocation in the incomplete graph $A_\rho$, although the special geometric structure of $A_\rho$ must be retained.</p><h3>3. Exact worst-distance characterization</h3><p>For a transport $f$, define</p><p>$$
 R_i(f)=\max\{d_{ij}:f_{ij}&gt;0\},
-$$
-
-and
-
-$$
+$$</p><p>and</p><p>$$
 C_j(f)=\max\{d_{ij}:f_{ij}&gt;0\}.
-$$
-
-These maxima exist because all margins are positive.
-
-### Lemma 3.1: Stability is determined by the worst distances
-
-A transport $f$ is stable if and only if
-
-$$
+$$</p><p>These maxima exist because all margins are positive.</p><h3>Lemma 3.1: Stability is determined by the worst distances</h3><p>A transport $f$ is stable if and only if</p><p>$$
 d_{ij}\ge \min\{R_i(f),C_j(f)\}
-$$
-
-for every $i,j$.
-
-#### Proof
-
-If $f$ is unstable, there are $j&#x27;,i&#x27;$ with $f_{ij&#x27;}&gt;0$, $f_{i&#x27;j}&gt;0$, and
-
-$$
+$$</p><p>for every $i,j$.</p><h3>Proof</h3><p>If $f$ is unstable, there are $j&#x27;,i&#x27;$ with $f_{ij&#x27;}&gt;0$, $f_{i&#x27;j}&gt;0$, and</p><p>$$
 d_{ij}&lt;d_{ij&#x27;},\qquad d_{ij}&lt;d_{i&#x27;j}.
-$$
-
-Therefore
-
-$$
+$$</p><p>Therefore</p><p>$$
 d_{ij}&lt;R_i(f),\qquad d_{ij}&lt;C_j(f),
-$$
-
-so $d_{ij}&lt;\min\{R_i(f),C_j(f)\}$.
-
-Conversely, suppose
-
-$$
+$$</p><p>so $d_{ij}&lt;\min\{R_i(f),C_j(f)\}$.</p><p>Conversely, suppose</p><p>$$
 d_{ij}&lt;R_i(f),\qquad d_{ij}&lt;C_j(f).
-$$
-
-Choose $j&#x27;$ and $i&#x27;$ attaining the respective maxima. Then
-
-$$
+$$</p><p>Choose $j&#x27;$ and $i&#x27;$ attaining the respective maxima. Then</p><p>$$
 f_{ij&#x27;}&gt;0,\qquad f_{i&#x27;j}&gt;0,
-$$
-
-and
-
-$$
+$$</p><p>and</p><p>$$
 d_{ij}&lt;d_{ij&#x27;},\qquad d_{ij}&lt;d_{i&#x27;j}.
-$$
-
-Thus $(i,j,i&#x27;,j&#x27;)$ is a blocking configuration. $\square$
-
-This exposes the nonconvex part of the problem: for each pair $(i,j)$, at least one of the two worst-distance thresholds must not exceed $d_{ij}$.
-
-### Finite threshold formulation
-
-Define the largest individually admissible distances
-
-$$
+$$</p><p>Thus $(i,j,i&#x27;,j&#x27;)$ is a blocking configuration. $\square$</p><p>This exposes the nonconvex part of the problem: for each pair $(i,j)$, at least one of the two worst-distance thresholds must not exceed $d_{ij}$.</p><h3>Finite threshold formulation</h3><p>Define the largest individually admissible distances</p><p>$$
 \alpha_i=\max\{d_{ij}:r_i^F(j)\le\rho\},
-$$
-
-and
-
-$$
+$$</p><p>and</p><p>$$
 \beta_j=\max\{d_{ij}:r_j^M(i)\le\rho\}.
-$$
-
-The sets are nonempty because every nearest type has strict-better mass zero. By monotonicity,
-
-$$
+$$</p><p>The sets are nonempty because every nearest type has strict-better mass zero. By monotonicity,</p><p>$$
 r_i^F(j)\le\rho\quad\Longleftrightarrow\quad d_{ij}\le\alpha_i,
-$$
-
-and analogously on the female side.
-
-### Proposition 3.2: Exact threshold feasibility criterion
-
-A target transport exists if and only if there are thresholds $T_i,U_j$, chosen from incident distances, such that:
-
-$$
+$$</p><p>and analogously on the female side.</p><h3>Proposition 3.2: Exact threshold feasibility criterion</h3><p>A target transport exists if and only if there are thresholds $T_i,U_j$, chosen from incident distances, such that:</p><p>$$
 T_i\le\alpha_i,\qquad U_j\le\beta_j;
-$$
-
-$$
+$$</p><p>$$
 d_{ij}\ge\min\{T_i,U_j\}\quad\text{for every }i,j;
-$$
-
-and the transportation problem with margins $p_i,q_j$ is feasible using only edges satisfying
-
-$$
+$$</p><p>and the transportation problem with margins $p_i,q_j$ is feasible using only edges satisfying</p><p>$$
 d_{ij}\le T_i\quad\text{and}\quad d_{ij}\le U_j.
-$$
-
-#### Proof
-
-Given a target transport, take
-
-$$
+$$</p><h3>Proof</h3><p>Given a target transport, take</p><p>$$
 T_i=R_i(f),\qquad U_j=C_j(f).
-$$
-
-The rank restrictions give the first condition, Lemma 3.1 gives the second, and the support of $f$ gives the third.
-
-Conversely, let $f$ be a feasible transport on the specified edges. Its actual worst distances satisfy
-
-$$
+$$</p><p>The rank restrictions give the first condition, Lemma 3.1 gives the second, and the support of $f$ gives the third.</p><p>Conversely, let $f$ be a feasible transport on the specified edges. Its actual worst distances satisfy</p><p>$$
 R_i(f)\le T_i,\qquad C_j(f)\le U_j.
-$$
-
-If $f$ were unstable, Lemma 3.1 would give some $i,j$ with
-
-$$
+$$</p><p>If $f$ were unstable, Lemma 3.1 would give some $i,j$ with</p><p>$$
 d_{ij}&lt;R_i(f)\le T_i,\qquad d_{ij}&lt;C_j(f)\le U_j,
-$$
-
-contradicting $d_{ij}\ge\min\{T_i,U_j\}$. The cutoff inequalities imply all support edges meet both rank bounds. $\square$
-
-For fixed thresholds, the remaining feasibility test is a rational max-flow problem. The unresolved difficulty is selecting the thresholds without enumerating exponentially many profiles.
-
-## 4. Membership in NP
-
-### Theorem 4.1
-
-The target decision problem belongs to NP.
-
-#### Proof
-
-A certificate is a set $S\subseteq A_\rho$ of type-pair edges, intended to contain the positive support.
-
-The verifier performs the following polynomial-time checks.
-
-1. Verify $S\subseteq A_\rho$ using exact rational arithmetic.
-2. Check whether the transportation problem with margins $p_i,q_j$ and edges restricted to $S$ is feasible. This is a rational max-flow problem.
-3. Define
-
-$$
+$$</p><p>contradicting $d_{ij}\ge\min\{T_i,U_j\}$. The cutoff inequalities imply all support edges meet both rank bounds. $\square$</p><p>For fixed thresholds, the remaining feasibility test is a rational max-flow problem. The unresolved difficulty is selecting the thresholds without enumerating exponentially many profiles.</p><h3>4. Membership in NP</h3><h3>Theorem 4.1</h3><p>The target decision problem belongs to NP.</p><h3>Proof</h3><p>A certificate is a set $S\subseteq A_\rho$ of type-pair edges, intended to contain the positive support.</p><p>The verifier performs the following polynomial-time checks.</p><ul><li>Verify $S\subseteq A_\rho$ using exact rational arithmetic.</li><li>Check whether the transportation problem with margins $p_i,q_j$ and edges restricted to $S$ is feasible. This is a rational max-flow problem.</li><li>Define</li></ul><p>$$
 R_i(S)=\max\{d_{ij}:(i,j)\in S\},
-$$
-
-and
-
-$$
+$$</p><p>and</p><p>$$
 C_j(S)=\max\{d_{ij}:(i,j)\in S\},
-$$
-
-and verify
-
-$$
+$$</p><p>and verify</p><p>$$
 d_{ij}\ge\min\{R_i(S),C_j(S)\}
-$$
-
-for every $i,j$.
-
-If these checks pass, take any feasible rational flow on $S$. Its actual support is a subset of $S$, so its actual worst distances do not exceed $R_i(S),C_j(S)$. The proof of Proposition 3.2 shows that it is stable and meets the rank bounds.
-
-Conversely, if a target transport exists, its positive support is a valid certificate. Although the original transport might initially be represented by arbitrary real values, the transportation polytope on its support has rational data and hence contains a rational feasible point of polynomial encoding length.
-
-Thus there is a polynomially verifiable certificate. $\square$
-
-Consequently, an NP-hardness result would establish NP-completeness.
-
-## 5. Exact clone equivalence and a pseudo-polynomial algorithm
-
-Let $D$ be a common multiple of the denominators of all $p_i$ and $q_j$. Replace male type $i$ by
-
-$$
+$$</p><p>for every $i,j$.</p><p>If these checks pass, take any feasible rational flow on $S$. Its actual support is a subset of $S$, so its actual worst distances do not exceed $R_i(S),C_j(S)$. The proof of Proposition 3.2 shows that it is stable and meets the rank bounds.</p><p>Conversely, if a target transport exists, its positive support is a valid certificate. Although the original transport might initially be represented by arbitrary real values, the transportation polytope on its support has rational data and hence contains a rational feasible point of polynomial encoding length.</p><p>Thus there is a polynomially verifiable certificate. $\square$</p><p>Consequently, an NP-hardness result would establish NP-completeness.</p><h3>5. Exact clone equivalence and a pseudo-polynomial algorithm</h3><p>Let $D$ be a common multiple of the denominators of all $p_i$ and $q_j$. Replace male type $i$ by</p><p>$$
 P_i=Dp_i
-$$
-
-unit male agents at $x_i$, and replace female type $j$ by
-
-$$
+$$</p><p>unit male agents at $x_i$, and replace female type $j$ by</p><p>$$
 Q_j=Dq_j
-$$
-
-unit female agents at $y_j$.
-
-For a clone of male type $i$, the number of female clones strictly closer than female type $j$ is exactly
-
-$$
+$$</p><p>unit female agents at $y_j$.</p><p>For a clone of male type $i$, the number of female clones strictly closer than female type $j$ is exactly</p><p>$$
 D r_i^F(j).
-$$
-
-Hence the mass inequality $r_i^F(j)\le\rho$ is equivalent to
-
-$$
+$$</p><p>Hence the mass inequality $r_i^F(j)\le\rho$ is equivalent to</p><p>$$
 D r_i^F(j)\le \lfloor D\rho\rfloor.
-$$
-
-The same holds on the female side.
-
-### Proposition 5.1: Clone equivalence
-
-A target transport exists if and only if the clone instance has a perfect weakly stable matching in which every matched clone has at most $\lfloor D\rho\rfloor$ strictly preferred agents on the opposite side.
-
-#### Proof
-
-Suppose first that a suitable clone matching exists. Let $F_{ij}$ be the number of matched clone pairs of types $i,j$ and set
-
-$$
+$$</p><p>The same holds on the female side.</p><h3>Proposition 5.1: Clone equivalence</h3><p>A target transport exists if and only if the clone instance has a perfect weakly stable matching in which every matched clone has at most $\lfloor D\rho\rfloor$ strictly preferred agents on the opposite side.</p><h3>Proof</h3><p>Suppose first that a suitable clone matching exists. Let $F_{ij}$ be the number of matched clone pairs of types $i,j$ and set</p><p>$$
 f_{ij}=\frac{F_{ij}}D.
-$$
-
-The clone counts give the required margins and rank bounds. If the transport had a blocking configuration, choosing clones from the two positive matched type-pairs would give a blocking pair in the clone matching. Thus the transport is stable.
-
-Conversely, suppose a target transport exists and let $S$ be its positive support. After multiplying margins by $D$, the transportation problem on $S$ has integral supplies and demands. By integrality of bipartite network flow, it has an integral feasible flow $F_{ij}$.
-
-Pair the clones according to $F$. Every used type-pair lies in $S$. A blocking clone pair would therefore induce a blocking configuration between two edges of $S$, contradicting stability of the original transport. The rank bounds translate exactly as above. $\square$
-
-The known polynomial algorithm for unit-agent one-dimensional Regret-SMT therefore gives an algorithm polynomial in the expanded population
-
-$$
+$$</p><p>The clone counts give the required margins and rank bounds. If the transport had a blocking configuration, choosing clones from the two positive matched type-pairs would give a blocking pair in the clone matching. Thus the transport is stable.</p><p>Conversely, suppose a target transport exists and let $S$ be its positive support. After multiplying margins by $D$, the transportation problem on $S$ has integral supplies and demands. By integrality of bipartite network flow, it has an integral feasible flow $F_{ij}$.</p><p>Pair the clones according to $F$. Every used type-pair lies in $S$. A blocking clone pair would therefore induce a blocking configuration between two edges of $S$, contradicting stability of the original transport. The rank bounds translate exactly as above. $\square$</p><p>The known polynomial algorithm for unit-agent one-dimensional Regret-SMT therefore gives an algorithm polynomial in the expanded population</p><p>$$
 N=D.
-$$
-
-This is only pseudo-polynomial for the rational-mass input: $D$ can be exponentially large in the binary encoding length of the denominators. Thus the known discrete result does not by itself establish polynomial-time solvability of the compressed problem. The relevant discrete result is stated in [Wen, Zhang, and Guo, “Stable Marriage in Euclidean Space”](https://www.southampton.ac.uk/~eg/AAMAS2023/pdfs/p994.pdf).
-
-## 6. Polynomially solvable cases
-
-### 6.1 The case $\rho=0$
-
-Here $(i,j)$ is acceptable on the male side precisely when no female type is strictly closer to $i$ than $j$. Thus every acceptable support partner of $i$ is a nearest female type. The same holds symmetrically.
-
-### Theorem 6.1
-
-For $\rho=0$, the answer is decidable in polynomial time by one max-flow computation on $A_0$.
-
-#### Proof
-
-If a feasible transport exists on $A_0$, consider any positive edge $(i,j&#x27;)$. Since $r_i^F(j&#x27;)=0$, there cannot be a female type $j$ with
-
-$$
+$$</p><p>This is only pseudo-polynomial for the rational-mass input: $D$ can be exponentially large in the binary encoding length of the denominators. Thus the known discrete result does not by itself establish polynomial-time solvability of the compressed problem. The relevant discrete result is stated in [Wen, Zhang, and Guo, “Stable Marriage in Euclidean Space”](https://www.southampton.ac.uk/~eg/AAMAS2023/pdfs/p994.pdf).</p><h3>6. Polynomially solvable cases</h3><h3>6.1 The case $\rho=0$</h3><p>Here $(i,j)$ is acceptable on the male side precisely when no female type is strictly closer to $i$ than $j$. Thus every acceptable support partner of $i$ is a nearest female type. The same holds symmetrically.</p><h3>Theorem 6.1</h3><p>For $\rho=0$, the answer is decidable in polynomial time by one max-flow computation on $A_0$.</p><h3>Proof</h3><p>If a feasible transport exists on $A_0$, consider any positive edge $(i,j&#x27;)$. Since $r_i^F(j&#x27;)=0$, there cannot be a female type $j$ with</p><p>$$
 d_{ij}&lt;d_{ij&#x27;}.
-$$
-
-Therefore $i$ cannot strictly prefer any candidate to a positive support partner. No blocking configuration is possible, so every feasible transport on $A_0$ is stable.
-
-Conversely, every target transport must be supported on $A_0$. Hence existence is exactly ordinary transportation feasibility on $A_0$. $\square$
-
-### 6.2 The case $\rho=1$
-
-For every $i,j$,
-
-$$
+$$</p><p>Therefore $i$ cannot strictly prefer any candidate to a positive support partner. No blocking configuration is possible, so every feasible transport on $A_0$ is stable.</p><p>Conversely, every target transport must be supported on $A_0$. Hence existence is exactly ordinary transportation feasibility on $A_0$. $\square$</p><h3>6.2 The case $\rho=1$</h3><p>For every $i,j$,</p><p>$$
 r_i^F(j)\le 1-q_j&lt;1,
-$$
-
-and
-
-$$
+$$</p><p>and</p><p>$$
 r_j^M(i)\le 1-p_i&lt;1.
-$$
-
-Thus every edge meets the rank bounds.
-
-### Theorem 6.2
-
-For $\rho=1$, every instance is a yes-instance.
-
-#### Proof
-
-Expand the rational masses into finitely many clones as in Section 5. Break all distance ties arbitrarily and apply Gale–Shapley to obtain a perfect stable matching for the refined strict preferences.
-
-The matching remains weakly stable for the original distance preferences: a pair that strictly blocks under the original preferences would also strictly block under every refinement of the ties. Aggregating the clone matching gives a stable transport. Since all edges satisfy the rank bounds, it is a target transport. $\square$
-
-### 6.3 Instances without distance ties
-
-Assume that every type has strict preferences:
-
-$$
+$$</p><p>Thus every edge meets the rank bounds.</p><h3>Theorem 6.2</h3><p>For $\rho=1$, every instance is a yes-instance.</p><h3>Proof</h3><p>Expand the rational masses into finitely many clones as in Section 5. Break all distance ties arbitrarily and apply Gale–Shapley to obtain a perfect stable matching for the refined strict preferences.</p><p>The matching remains weakly stable for the original distance preferences: a pair that strictly blocks under the original preferences would also strictly block under every refinement of the ties. Aggregating the clone matching gives a stable transport. Since all edges satisfy the rank bounds, it is a target transport. $\square$</p><h3>6.3 Instances without distance ties</h3><p>Assume that every type has strict preferences:</p><p>$$
 d_{ij}\ne d_{ik}\quad\text{whenever }j\ne k,
-$$
-
-and
-
-$$
+$$</p><p>and</p><p>$$
 d_{ij}\ne d_{hj}\quad\text{whenever }i\ne h.
-$$
-
-Globally equal distances on vertex-disjoint edges are allowed.
-
-Consider the following greedy algorithm. Maintain residual masses $a_i,b_j$, initially $p_i,q_j$. Repeatedly:
-
-1. choose an active pair $(i,j)$ of minimum distance;
-2. set
-
-$$
+$$</p><p>Globally equal distances on vertex-disjoint edges are allowed.</p><p>Consider the following greedy algorithm. Maintain residual masses $a_i,b_j$, initially $p_i,q_j$. Repeatedly:</p><ul><li>choose an active pair $(i,j)$ of minimum distance;</li><li>set</li></ul><p>$$
 \delta=\min\{a_i,b_j\};
-$$
-
-3. add $\delta$ to $f_{ij}$ and subtract it from $a_i,b_j$;
-4. delete every type whose residual mass becomes zero.
-
-There are at most $m+n-1$ iterations.
-
-### Lemma 6.3: The greedy transport is stable
-
-#### Proof
-
-The distances of the successively selected edges are nondecreasing, since active vertices and their incident edges are only deleted.
-
-Suppose the output were unstable. By Lemma 3.1, there would be $i,j$ such that
-
-$$
+$$</p><ul><li>add $\delta$ to $f_{ij}$ and subtract it from $a_i,b_j$;</li><li>delete every type whose residual mass becomes zero.</li></ul><p>There are at most $m+n-1$ iterations.</p><h3>Lemma 6.3: The greedy transport is stable</h3><h3>Proof</h3><p>The distances of the successively selected edges are nondecreasing, since active vertices and their incident edges are only deleted.</p><p>Suppose the output were unstable. By Lemma 3.1, there would be $i,j$ such that</p><p>$$
 d_{ij}&lt;R_i(f),\qquad d_{ij}&lt;C_j(f).
-$$
-
-Consider the iteration at which the first of $i,j$ is exhausted. Immediately before that iteration both are active, so $(i,j)$ is an active edge. The selected edge therefore has distance at most $d_{ij}$. All earlier selected edges also have distance at most $d_{ij}$. Consequently every edge carrying mass incident to the type exhausted at this iteration has distance at most $d_{ij}$, contradicting that its worst supported distance is strictly larger than $d_{ij}$. $\square$
-
-### Lemma 6.4: The greedy transport is the unique stable transport
-
-#### Proof
-
-At any residual stage, let $(i,j)$ be a minimum-distance active pair and let
-
-$$
+$$</p><p>Consider the iteration at which the first of $i,j$ is exhausted. Immediately before that iteration both are active, so $(i,j)$ is an active edge. The selected edge therefore has distance at most $d_{ij}$. All earlier selected edges also have distance at most $d_{ij}$. Consequently every edge carrying mass incident to the type exhausted at this iteration has distance at most $d_{ij}$, contradicting that its worst supported distance is strictly larger than $d_{ij}$. $\square$</p><h3>Lemma 6.4: The greedy transport is the unique stable transport</h3><h3>Proof</h3><p>At any residual stage, let $(i,j)$ be a minimum-distance active pair and let</p><p>$$
 \delta=\min\{a_i,b_j\}.
-$$
-
-Because preferences at each endpoint are strict, every other active edge incident to $i$ or $j$ is strictly longer than $(i,j)$.
-
-Let $g$ be any stable residual transport. If $g_{ij}&lt;\delta$, then both residual quantities
-
-$$
+$$</p><p>Because preferences at each endpoint are strict, every other active edge incident to $i$ or $j$ is strictly longer than $(i,j)$.</p><p>Let $g$ be any stable residual transport. If $g_{ij}&lt;\delta$, then both residual quantities</p><p>$$
 a_i-g_{ij}&gt;0,\qquad b_j-g_{ij}&gt;0
-$$
-
-are positive. Hence $i$ sends positive mass to some $j&#x27;\ne j$, and $j$ receives positive mass from some $i&#x27;\ne i$. Minimality and strictness give
-
-$$
+$$</p><p>are positive. Hence $i$ sends positive mass to some $j&#x27;\ne j$, and $j$ receives positive mass from some $i&#x27;\ne i$. Minimality and strictness give</p><p>$$
 d_{ij}&lt;d_{ij&#x27;},\qquad d_{ij}&lt;d_{i&#x27;j},
-$$
-
-which is a blocking configuration. Therefore $g_{ij}=\delta$.
-
-Thus every stable transport contains the greedy assignment made at the first iteration. Removing the exhausted type and subtracting $\delta$ from the other margin preserves stability of the remaining transport. Induction proves that every stable transport agrees with every greedy step. $\square$
-
-### Theorem 6.5
-
-On instances without distance ties, the target problem is polynomial-time decidable.
-
-#### Proof
-
-Compute the unique stable transport by the greedy algorithm. Then inspect every positive entry and test its two rank inequalities. A target transport exists exactly when this unique stable transport passes all tests.
-
-The algorithm uses at most $m+n-1$ greedy iterations and polynomially many exact comparisons and rational additions, so its running time is polynomial in the input bit length. $\square$
-
-## 7. Remaining open point
-
-The unresolved case is therefore sharply localized:
-
-- $\rho$ lies strictly between $0$ and $1$;
-- genuine distance ties occur;
-- different resolutions of those ties can produce different stable supports;
-- masses are binary-encoded, so expanding them into unit clones is not polynomial.
-
-The threshold criterion in Proposition 3.2 gives a polynomial verifier but still leaves an exponential threshold-selection problem. A complete result would require either a compressed algorithm exploiting the one-dimensional tie structure or an NP-hardness reduction realizable by symmetric one-dimensional distances and the mass-defined prefix constraints.
-
-⟨structured verdict parsed — rendered above⟩</div>
+$$</p><p>which is a blocking configuration. Therefore $g_{ij}=\delta$.</p><p>Thus every stable transport contains the greedy assignment made at the first iteration. Removing the exhausted type and subtracting $\delta$ from the other margin preserves stability of the remaining transport. Induction proves that every stable transport agrees with every greedy step. $\square$</p><h3>Theorem 6.5</h3><p>On instances without distance ties, the target problem is polynomial-time decidable.</p><h3>Proof</h3><p>Compute the unique stable transport by the greedy algorithm. Then inspect every positive entry and test its two rank inequalities. A target transport exists exactly when this unique stable transport passes all tests.</p><p>The algorithm uses at most $m+n-1$ greedy iterations and polynomially many exact comparisons and rational additions, so its running time is polynomial in the input bit length. $\square$</p><h3>7. Remaining open point</h3><p>The unresolved case is therefore sharply localized:</p><ul><li>$\rho$ lies strictly between $0$ and $1$;</li><li>genuine distance ties occur;</li><li>different resolutions of those ties can produce different stable supports;</li><li>masses are binary-encoded, so expanding them into unit clones is not polynomial.</li></ul><p>The threshold criterion in Proposition 3.2 gives a polynomial verifier but still leaves an exponential threshold-selection problem. A complete result would require either a compressed algorithm exploiting the one-dimensional tie structure or an NP-hardness reduction realizable by symmetric one-dimensional distances and the mass-defined prefix constraints.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
 <h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
 <ul><li><b>major</b> — Sections 1 and 7: The assigned complexity dichotomy is not resolved: no polynomial-time algorithm for the general binary-encoded tied instance and no NP-hardness reduction is provided.</li><li><b>minor</b> — Section 5, pseudo-polynomial algorithm claim: Polynomial dependence on the common denominator D is established, but calling this pseudo-polynomial for the rational input requires qualification because D can be exponentially large even relative to the unary sizes of many individually small denominators.</li><li><b>minor</b> — Section 5, invocation of one-dimensional Regret-SMT: The write-up does not state the cited theorem&#x27;s rank-position convention or translate the bound on strictly preferred clones into its regret threshold, including any necessary off-by-one adjustment.</li><li><b>minor</b> — Theorem 4.1: The certificate verifier takes maxima over incident edges without explicitly noting that the preceding feasible-flow check and positive margins guarantee every row and column is incident with S.</li><li><b>minor</b> — Lemma 6.4: The residual induction omits the routine justification that restricting a stable transport after removing one or both exhausted endpoints preserves stability on the residual instance.</li></ul>
 <div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover does not answer the target complexity question: it proves neither a polynomial-time algorithm for the general problem nor NP-hardness. Its stated status is therefore accurately partial.</p><p>Most intermediate mathematical results are correct and useful. In particular, the worst-distance characterization, NP membership, clone equivalence, and the algorithms for $\rho=0$, $\rho=1$, and strict type preferences are substantively sound. No counterexample was found to these results.</p><h3>Step-by-step audit</h3><h3>1. Acceptable edges and Lemma 2.1</h3><p>The monotonicity statement is correct, including in the presence of ties. If $d_{ij}&lt;d_{ik}$, every type strictly closer than $j$ is strictly closer than $k$, so $r_i^F(j)\le r_i^F(k)$.</p><p>Lemma 2.1 then follows correctly. If an edge violates one endpoint’s rank bound, that endpoint cannot strictly prefer the edge to any acceptable supported edge.</p><p>The informal conclusion concerning an “incomplete graph” is correct provided “weak stability” means that only mutually acceptable edges may block. That convention should be stated explicitly, but the later formal arguments do not depend on this terminology.</p><h3>2. Lemma 3.1</h3><p>The characterization</p><p>$$
