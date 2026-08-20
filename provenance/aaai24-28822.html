@@ -1,0 +1,169 @@
+<!doctype html><html><head><meta charset="utf-8"><title>The Complexity of Fair Division of Indivisible Items with Externalities — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>The Complexity of Fair Division of Indivisible Items with Externalities <span style="font-weight:normal;color:#8a7350">(aaai24-28822)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4 — class: algorithmic</p>
+<blockquote class="thmq">The ϕ-FAIR DIVISION WITH EXTERNALITIES problem, where ϕ ∈{EF, EF1, EFX}, is fixed-parameter tractable when parameterized by the number of different item types Υ and the number of agents |N| combined.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite agent types \(R\), item types \(A\), rational agent masses \(\mu\), rational per-capita supplies \(\beta\), and rational typed additive externality values distinguishing self from recipient types, decide whether there exists a finite-support allocation law \(\lambda_{r,B}\) over integer bundles satisfying the supply constraints and the paper&#x27;s EFX swap-bundle condition for every positive-mass type/bundle pair; study this problem parameterized by \(|R|+|A|\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> Let \(R\) be a finite set of agent types, \(A=\{1,2,3\}\), rational masses \(\mu_r\), supplies \(\sigma_a\), and values \(v_r(s,a)\), where a type-\(r\) agent values a type-\(a\) item assigned to type \(s\) by \(v_r(s,a)\). Assume \(v_r(r,a)\ge v_r(s,a)\) for all \(r,s,a\). A configuration is \(x_{r,\mathbf b}\in\mathbb Q_{\ge0}\) of finite support, with \(\sum_{\mathbf b}x_{r,\mathbf b}=\mu_r\) and \(\sum_{r,\mathbf b}x_{r,\mathbf b}b_a=\sigma_a\).</p><p>For bundles \(\mathbf b,\mathbf c\), let \(D_{r,s}(\mathbf b,\mathbf c)=\sum_a(c_a-b_a)(v_r(r,a)-v_r(s,a))\). The configuration is EFX if, whenever \(x_{r,\mathbf b},x_{s,\mathbf c}&gt;0\) and \(D_{r,s}(\mathbf b,\mathbf c)&gt;0\), every removal of one present item from either \(\mathbf b\) or \(\mathbf c\) that strictly lowers \(D_{r,s}\) lowers it to at most \(0\).</p><p><b>Target.</b> Is deciding whether such a rational finite-support EFX configuration exists NP-hard, or solvable in polynomial time?</p><p><b>Nearest known results.</b> For finite agents and indivisible items with additive externalities, deciding EFX existence is NP-complete even with three item types, at most six valuation values, and no weak chores. No result is stated here for exactly the distributional problem above.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Partial classification of distributional EFX existence</h3><h3>1. Interpretation and status</h3><p>Assume that bundles are integral vectors \(\mathbf b\in\mathbb Z_{\ge 0}^{3}\). Without this assumption, if rational bundles are permitted, the problem is trivial: for \(M=\sum_r\mu_r&gt;0\), assign every type the single bundle \(\mathbf q=\boldsymbol\sigma/M\). Then every comparison has \(D_{r,s}(\mathbf q,\mathbf q)=0\), so the configuration is EFX.</p><p>Under the intended integral-bundle interpretation, I do not obtain a complete polynomial-time algorithm or an NP-hardness proof. I prove below:</p><ul><li>an exact threshold reformulation of EFX;</li><li>a support bound of four bundles per type;</li><li>an exact finite-clone characterization explaining why the cited finite-agent hardness does not transfer directly;</li><li>membership in \(\mathrm{NP}\) under a natural strict-observability condition;</li><li>polynomial-time solvability for a nontrivial class of valuation gaps.</li></ul><p>These results leave one specific support-selection problem unresolved.</p><h3>2. Simplifying the EFX condition</h3><p>For \(r,s\in R\), define the nonnegative gap vector</p><p>\[
+\mathbf w^{rs}=\bigl(w^{rs}_a\bigr)_{a\in A},
+\qquad
+w^{rs}_a=v_r(r,a)-v_r(s,a)\ge 0.
+\]</p><p>For an integral bundle \(\mathbf c\), define</p><p>\[
+h_{rs}(\mathbf c)=
+\begin{cases}
+\min\{w^{rs}_a:c_a&gt;0,\ w^{rs}_a&gt;0\},&amp;\text{if this set is nonempty},\\
+0,&amp;\text{otherwise}.
+\end{cases}
+\]</p><h3>Lemma 1</h3><p>A supported pair \((r,\mathbf b),(s,\mathbf c)\) satisfies the stated EFX requirement for envy from \(r\) toward \(s\) if and only if</p><p>\[
+\mathbf w^{rs}\mathbin{\cdot}(\mathbf c-\mathbf b)\le h_{rs}(\mathbf c).
+\]</p><h3>Proof</h3><p>Removing an item of type \(a\) from \(\mathbf b\) changes the envy difference to</p><p>\[
+D_{r,s}(\mathbf b-\mathbf e_a,\mathbf c)
+=
+D_{r,s}(\mathbf b,\mathbf c)+w^{rs}_a.
+\]</p><p>Because \(w^{rs}_a\ge 0\), such a removal never strictly lowers \(D_{r,s}\).</p><p>Removing a present item of type \(a\) from \(\mathbf c\) changes the difference to</p><p>\[
+D_{r,s}(\mathbf b,\mathbf c-\mathbf e_a)
+=
+D_{r,s}(\mathbf b,\mathbf c)-w^{rs}_a.
+\]</p><p>This strictly lowers the difference exactly when \(w^{rs}_a&gt;0\). If \(D_{r,s}(\mathbf b,\mathbf c)&gt;0\), EFX therefore requires</p><p>\[
+D_{r,s}(\mathbf b,\mathbf c)-w^{rs}_a\le 0
+\]</p><p>for every \(a\) with \(c_a&gt;0\) and \(w^{rs}_a&gt;0\). This is equivalent to</p><p>\[
+D_{r,s}(\mathbf b,\mathbf c)\le h_{rs}(\mathbf c).
+\]</p><p>If no such item is present in \(\mathbf c\), then \(\mathbf w^{rs}\cdot\mathbf c=0\), and hence</p><p>\[
+D_{r,s}(\mathbf b,\mathbf c)
+=
+-\mathbf w^{rs}\cdot\mathbf b\le 0.
+\]</p><p>Thus the same inequality, with \(h_{rs}(\mathbf c)=0\), remains valid. ∎</p><h3>3. Exact threshold formulation</h3><p>Let \(B_r\) denote the support of type \(r\). Lemma 1 gives</p><p>\[
+\max_{\mathbf c\in B_s}
+\bigl(\mathbf w^{rs}\cdot\mathbf c-h_{rs}(\mathbf c)\bigr)
+\le
+\min_{\mathbf b\in B_r}\mathbf w^{rs}\cdot\mathbf b.
+\]</p><p>Consequently, EFX is equivalent to the existence, for every ordered pair \(r\ne s\), of a rational threshold \(\theta_{rs}\) satisfying</p><p>\[
+\mathbf w^{rs}\cdot\mathbf b\ge\theta_{rs}
+\quad\text{for every }\mathbf b\in B_r,
+\]</p><p>and</p><p>\[
+\mathbf w^{rs}\cdot\mathbf c-h_{rs}(\mathbf c)\le\theta_{rs}
+\quad\text{for every }\mathbf c\in B_s.
+\]</p><p>For a threshold vector \(\boldsymbol\theta\), define</p><p>\[
+C_r(\boldsymbol\theta)=
+\left\{
+\mathbf b\in\mathbb Z_{\ge0}^{3}:
+\begin{array}{l}
+\mathbf w^{rs}\cdot\mathbf b\ge\theta_{rs}\text{ for every }s\ne r,\\
+\mathbf w^{sr}\cdot\mathbf b-h_{sr}(\mathbf b)\le\theta_{sr}
+\text{ for every }s\ne r
+\end{array}
+\right\}.
+\]</p><h3>Proposition 2</h3><p>An EFX configuration exists if and only if there are rational thresholds \(\boldsymbol\theta\) and rational vectors</p><p>\[
+\mathbf y_r\in\operatorname{conv}\bigl(C_r(\boldsymbol\theta)\bigr)
+\]</p><p>such that</p><p>\[
+\sum_{r\in R}\mu_r\mathbf y_r=\boldsymbol\sigma.
+\]</p><h3>Proof</h3><p>Given an EFX configuration, choose</p><p>\[
+\theta_{rs}
+=
+\max_{\mathbf c\in B_s}
+\bigl(\mathbf w^{rs}\cdot\mathbf c-h_{rs}(\mathbf c)\bigr).
+\]</p><p>Lemma 1 shows that every \(\mathbf b\in B_r\) satisfies the required lower bound. Thus \(B_r\subseteq C_r(\boldsymbol\theta)\). Taking</p><p>\[
+\mathbf y_r=\frac1{\mu_r}\sum_{\mathbf b}x_{r,\mathbf b}\mathbf b
+\]</p><p>gives the desired convex-hull and supply conditions.</p><p>Conversely, choose rational finite convex representations of the \(\mathbf y_r\) using points of \(C_r(\boldsymbol\theta)\). For \(\mathbf b\in C_r(\boldsymbol\theta)\) and \(\mathbf c\in C_s(\boldsymbol\theta)\),</p><p>\[
+\mathbf w^{rs}\cdot\mathbf c-h_{rs}(\mathbf c)
+\le\theta_{rs}
+\le\mathbf w^{rs}\cdot\mathbf b.
+\]</p><p>Hence Lemma 1 applies to every supported pair. Scaling the convex coefficients by \(\mu_r\) produces an EFX configuration satisfying the supply equations. ∎</p><p>This is an exact configuration formulation. Its unresolved part is the simultaneous choice of \(\boldsymbol\theta\): the sets \(C_r(\boldsymbol\theta)\) change discontinuously when an integer bundle enters or leaves them.</p><h3>4. A four-bundle support theorem</h3><h3>Proposition 3</h3><p>If an EFX configuration exists, then one exists in which every positive-mass type supports at most four bundles.</p><h3>Proof</h3><p>Fix a feasible configuration and a type \(r\) with \(\mu_r&gt;0\). Its mean bundle</p><p>\[
+\mathbf y_r=\frac1{\mu_r}\sum_{\mathbf b}x_{r,\mathbf b}\mathbf b
+\]</p><p>belongs to the convex hull of \(B_r\subseteq\mathbb R^3\). By Carathéodory’s theorem, \(\mathbf y_r\) is a convex combination of at most four points of \(B_r\).</p><p>The selected points and \(\mathbf y_r\) are rational. A basic feasible solution of the corresponding rational system gives rational convex coefficients. Replace the distribution of type \(r\) by this combination.</p><p>This preserves \(\mu_r\mathbf y_r\), and therefore preserves all supply equations. It only deletes support points, so it cannot introduce a new unsupported-pair EFX violation. Applying this independently to all types proves the claim. ∎</p><p>Thus support size itself is not the obstruction to membership in \(\mathrm{NP}\). The remaining certificate issue is whether bundle coordinates and rational masses always have polynomial encoding length.</p><h3>5. Exact correspondence with replicated finite instances</h3><p>Clear denominators in the masses, supplies, and configuration variables.</p><h3>Proposition 4</h3><p>A rational finite-support EFX configuration exists if and only if there is a positive integer \(N\) such that the following finite replicated instance has an EFX allocation:</p><ul><li>\(N\mu_r\) agents of each type \(r\);</li><li>\(N\sigma_a\) copies of each item type \(a\);</li><li>type-level externalities given by the same values \(v_r(s,a)\).</li></ul><h3>Proof</h3><p>Given a rational configuration, choose \(N\) so that every \(N\mu_r\), \(N\sigma_a\), and \(Nx_{r,\mathbf b}\) is integral. Create \(N\mu_r\) clones of type \(r\), assigning bundle \(\mathbf b\) to exactly \(Nx_{r,\mathbf b}\) of them.</p><p>Pairs of distinct types satisfy EFX because their bundles occur in the configuration support. For two clones of the same type \(r\), the relevant gap vector is \(\mathbf w^{rr}=\mathbf0\), so their envy difference is zero.</p><p>Conversely, aggregate any EFX allocation of the replicated instance by setting</p><p>\[
+x_{r,\mathbf b}
+=
+\frac{\#\{\text{type-\(r\) clones receiving }\mathbf b\}}{N}.
+\]</p><p>The mass and supply equations follow by counting, and every supported pair is realized by a pair of clones. ∎</p><p>The cited finite-agent hardness theorem concerns existence at one fixed population and supply vector [Deligkas–Eiben–Korchemna–Schierreich](https://arxiv.org/abs/2308.08869). Proposition 4 shows that the present problem instead asks whether an EFX allocation exists at *some common replication scale* \(N\). Hence the finite theorem alone does not prove NP-hardness here: type splitting is exactly the possibility of using different bundles for different clones at a larger scale.</p><h3>6. Membership in \(\mathrm{NP}\) under strict observability</h3><p>Assume all zero-mass types have been deleted. Let</p><p>\[
+S=\sum_{a\in A}\sigma_a.
+\]</p><p>Consider the following condition:</p><blockquote>For every \(r\in R\), there exists \(s(r)\ne r\) such that \(w^{s(r)r}_a&gt;0\) for all \(a\in A\).</blockquote><p>Define</p><p>\[
+\delta_r=\min_a w^{s(r)r}_a,
+\qquad
+W_r=\max_a w^{s(r)r}_a.
+\]</p><h3>Proposition 5</h3><p>Under strict observability, the decision problem belongs to \(\mathrm{NP}\).</p><h3>Proof</h3><p>Let \(\mathbf b\) be any supported bundle of type \(r\), and let \(\mathbf c\) be any supported bundle of type \(s=s(r)\). Applying Lemma 1 to envy from \(s\) toward \(r\) gives</p><p>\[
+\mathbf w^{sr}\cdot(\mathbf b-\mathbf c)
+\le h_{sr}(\mathbf b)\le W_r.
+\]</p><p>Since every coordinate of \(\mathbf w^{sr}\) lies between \(\delta_r\) and \(W_r\),</p><p>\[
+\delta_r\lVert\mathbf b\rVert_1
+\le
+W_r\lVert\mathbf c\rVert_1+W_r.
+\]</p><p>Average this inequality over the type-\(s\) distribution. The average total number of items held by type \(s\) is at most \(S/\mu_s\). Therefore every supported \(\mathbf b\) of type \(r\) satisfies</p><p>\[
+\lVert\mathbf b\rVert_1
+\le
+\frac{W_r}{\delta_r}
+\left(\frac{S}{\mu_s}+1\right).
+\]</p><p>The binary encoding length of this bound is polynomial in the input length. Proposition 3 now gives at most four polynomial-bit bundles per type.</p><p>After fixing these bundles, the masses satisfy a rational linear system consisting of the type-mass and supply equations. If it is feasible, it has a basic feasible solution whose numerators and denominators have polynomial bit length by the standard determinant bound for rational linear systems. Taking such a solution can only delete support points and therefore preserves EFX.</p><p>Thus a polynomial-size certificate consists of at most four bundles per type and their rational masses; all conditions are verifiable in polynomial time. ∎</p><p>This does not establish membership in \(\mathrm{NP}\) for completely arbitrary zero patterns in the valuation gaps.</p><h3>7. A polynomial-time solvable valuation class</h3><p>Suppose that for every ordered pair \(r,s\),</p><p>\[
+\mathbf w^{rs}=\lambda_{rs}(1,1,1)
+\]</p><p>for some rational \(\lambda_{rs}\ge0\). Thus an agent’s loss from giving an item to type \(s\) rather than keeping it depends on \(r,s\), but not on the item type.</p><h3>Proposition 6</h3><p>Under this condition, an EFX configuration always exists and can be computed in polynomial time.</p><h3>Proof</h3><p>Let</p><p>\[
+M=\sum_r\mu_r,
+\qquad
+\mathbf q=\frac{\boldsymbol\sigma}{M},
+\qquad
+t=\lVert\mathbf q\rVert_1,
+\qquad
+k=\lfloor t\rfloor.
+\]</p><p>Consider the integral bundles whose total cardinality is either \(k\) or \(k+1\). Their convex hull is</p><p>\[
+P_k=
+\{\mathbf z\in\mathbb R_{\ge0}^{3}:k\le\lVert\mathbf z\rVert_1\le k+1\}.
+\]</p><p>Indeed, the vertices of this polytope are integral: they are \(k\mathbf e_a\) and \((k+1)\mathbf e_a\), with the evident modification when \(k=0\). Since \(\mathbf q\in P_k\), it has a rational convex decomposition into such integral bundles.</p><p>Use this same bundle distribution for every agent type. Then the total mean supply is \(M\mathbf q=\boldsymbol\sigma\).</p><p>For any two supported bundles \(\mathbf b,\mathbf c\),</p><p>\[
+\lVert\mathbf c\rVert_1-\lVert\mathbf b\rVert_1\le1.
+\]</p><p>If \(\lambda_{rs}=0\), the envy difference is zero. If \(\lambda_{rs}&gt;0\), then</p><p>\[
+D_{r,s}(\mathbf b,\mathbf c)
+=
+\lambda_{rs}
+\bigl(\lVert\mathbf c\rVert_1-\lVert\mathbf b\rVert_1\bigr)
+\le\lambda_{rs}.
+\]</p><p>Whenever \(\mathbf c\ne\mathbf0\), one has \(h_{rs}(\mathbf c)=\lambda_{rs}\); when \(\mathbf c=\mathbf0\), the envy difference is nonpositive. Lemma 1 therefore proves EFX. ∎</p><p>A still simpler always-YES case occurs when \(\boldsymbol\sigma/M\in\mathbb Z_{\ge0}^{3}\): assigning this identical bundle to every type is envy-free.</p><h3>8. Remaining obstruction</h3><p>The general target is not settled by the preceding results. Proposition 2 reduces it exactly to finding thresholds \(\boldsymbol\theta\) such that</p><p>\[
+\boldsymbol\sigma
+\in
+\sum_{r\in R}
+\mu_r\operatorname{conv}\bigl(C_r(\boldsymbol\theta)\bigr).
+\]</p><p>For fixed thresholds, each \(C_r(\boldsymbol\theta)\) is a union of at most eight fixed-support-pattern integer polyhedra in dimension three. The unresolved difficulty is that changing \(\boldsymbol\theta\) changes which integer bundles may have positive mass, and positive mass activates all cross-support EFX constraints.</p><p>Therefore either of the following would settle the target:</p><ul><li>a polynomial-time method for simultaneous threshold selection and membership in the above Minkowski sum; or</li><li>a scale-robust NP-hardness reduction whose NO instances remain infeasible for every replication factor \(N\).</li></ul><p>The known finite-agent reduction supplies neither fact directly.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 1 and 8: The output provides neither a polynomial-time algorithm nor an NP-hardness proof for the unrestricted integral-bundle problem, so it does not resolve the target complexity classification.</li><li><b>minor</b> — Proposition 2: The claimed equivalence is false when zero-mass types are retained: such types impose artificial threshold constraints despite having empty support. The proposition must first delete all zero-mass types.</li><li><b>minor</b> — Proposition 2, converse: The existence of rational convex coefficients is asserted without explaining why a rational point in the convex hull of integer points admits a rational finite representation.</li><li><b>minor</b> — Proposition 6: The unconditional phrase &#x27;always exists&#x27; omits the case where total mass is zero; positive supply with zero total mass is infeasible.</li><li><b>minor</b> — Proposition 6: Polynomial-time computability is claimed without explicitly giving or citing a polynomial-time method for obtaining the rational convex decomposition.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The output contains several correct structural results, but it expressly does not answer the target complexity question for the general integral-bundle problem. The appropriate status is therefore <b>partial</b>.</p><p>The threshold lemma, support reduction, replication characterization, conditional NP-membership result, and tractable valuation subclass are substantively sound after minor qualifications. The main concrete defect is that Proposition 2 is false as stated when zero-mass types are retained.</p><h3>Scope and interpretation</h3><p>The problem statement does not explicitly declare the domain of bundles. The prover reasonably distinguishes:</p><ul><li>Rational bundles: when \(M=\sum_r\mu_r&gt;0\), the identical bundle \(\boldsymbol\sigma/M\) indeed gives \(D_{r,s}=0\) for every comparison. This is a polynomial-time trivial case.</li><li>Integral bundles: the remaining analysis assumes \(\mathbf b\in\mathbb Z_{\ge 0}^3\), as suggested by the language of individual items and removal.</li></ul><p>The degenerate case \(M=0\) is not handled in the introductory discussion. It must be separated according to whether all supplies vanish.</p><h3>Step-by-step audit</h3><h3>1. Lemma 1</h3><p>This lemma is correct.</p><p>Removing an item from \(\mathbf b\) changes the difference by \(+w^{rs}_a\), so it cannot strictly lower the difference because \(w^{rs}_a\ge 0\). Removing a present item of type \(a\) from \(\mathbf c\) changes it by \(-w^{rs}_a\). Consequently, when the difference is positive, the strongest requirement is exactly</p><p>\[
+D_{r,s}(\mathbf b,\mathbf c)\le
+\min\{w^{rs}_a:c_a&gt;0,\ w^{rs}_a&gt;0\}.
+\]</p><p>When the minimum is over the empty set, \(\mathbf w^{rs}\cdot\mathbf c=0\), giving \(D_{r,s}\le0\). No missing case remains.</p><h3>2. Proposition 2</h3><p>The threshold equivalence is correct when all types under consideration have positive mass. It is not correct as stated for arbitrary zero-mass types.</p><p>A concrete failure can be embedded in the first of the three item coordinates. Take types \(z,p_1,p_2\) with masses \(0,1,1\), supported bundles \(\mathbf0\) for \(p_1\) and \(100\mathbf e_1\) for \(p_2\), and supply \(100\mathbf e_1\). Let the mutual gaps between \(p_1\) and \(p_2\) be zero, while</p><p>\[
+\mathbf w^{p_1z}
+=\mathbf w^{p_2z}
+=\mathbf w^{zp_1}
+=\mathbf w^{zp_2}
+=\mathbf e_1.
+\]</p><p>This is an EFX configuration because the zero-mass type has no supported bundle and the two positive types have zero mutual gap.</p><p>In the claimed threshold formulation:</p><ul><li>The supported bundle \(\mathbf0\) of \(p_1\) forces \(\theta_{p_1z}\le0\). The corresponding incoming constraint on a bundle \(\mathbf b\in C_z\) gives \(b_1\le1\).</li><li>The supported bundle \(100\mathbf e_1\) of \(p_2\) forces \(\theta_{zp_2}\ge99\). The outgoing constraint on \(\mathbf b\in C_z\) gives \(b_1\ge99\).</li></ul><p>Thus \(C_z(\boldsymbol\theta)=\varnothing\), contradicting Proposition 2’s requirement that a vector \(\mathbf y_z\) belong to its convex hull.</p><p>Deleting all zero-mass types before stating Proposition 2 repairs this edge case. The proof also divides by \(\mu_r\), so positivity is already implicitly required.</p><p>In the converse direction, the assertion that a rational point in the convex hull has a rational finite convex representation needs a short rational-linear-algebra justification. It is true, but not established in the text.</p><h3>3. Proposition 3</h3><p>The four-bundle support theorem is correct for positive-mass types.</p><p>Carathéodory’s theorem applies in \(\mathbb R^3\), and the convex coefficients can be chosen rational because the selected bundles and the mean are rational. Replacing a distribution only by points already in its support cannot create new pairwise EFX constraints.</p><h3>4. Proposition 4</h3><p>The replication correspondence is correct under the natural clone interpretation</p><p>\[
+V_i(j,a)=v_r(s,a)
+\]</p><p>when clone \(i\) has type \(r\) and clone \(j\) has type \(s\).</p><p>Clearing denominators converts rational masses into clone counts, and aggregation gives the converse. Comparisons between clones of the same type have zero gap.</p><p>The cited paper’s EFX definition is indeed based on bundle swaps and removals that strictly reduce envy, and its Theorem 3.2 gives NP-completeness with six values, three item types, and no weak chores. Thus the output correctly explains why hardness at one fixed scale does not by itself prove hardness when some replication scale may be chosen. See the [paper’s definitions and theorem](https://arxiv.org/html/2308.08869v2).</p><h3>5. Proposition 5</h3><p>The conditional NP-membership argument is correct.</p><p>Strict positivity of every coordinate of \(\mathbf w^{s(r)r}\) gives</p><p>\[
+\delta_r\lVert\mathbf b\rVert_1
+\le W_r\lVert\mathbf c\rVert_1+W_r.
+\]</p><p>Averaging over type \(s(r)\) and using the global supply gives the asserted bound. Its binary encoding length is polynomial in the rational input length. Proposition 3 then bounds support size, and standard determinant bounds give polynomial-size rational masses.</p><p>This proposition does not establish NP membership for the unrestricted problem, as the output correctly acknowledges.</p><h3>6. Proposition 6</h3><p>For \(M&gt;0\) and nonnegative supplies, the construction is correct.</p><p>The polytope</p><p>\[
+\{\mathbf z\ge0:k\le\lVert\mathbf z\rVert_1\le k+1\}
+\]</p><p>has the stated integral vertices, with the additional origin interpretation when \(k=0\). All supported bundles therefore have cardinalities differing by at most one, which verifies Lemma 1 for uniform gap vectors.</p><p>Two qualifications are missing:</p><ul><li>“Always exists” is false without \(M&gt;0\). For example, if every mass is zero but \(\sigma_1=1\), no configuration exists.</li><li>Polynomial-time computability is plausible and routine because there are at most six relevant vertices, but an explicit rational decomposition procedure or a reference to rational linear programming is omitted.</li></ul><h3>7. Remaining obstruction</h3><p>The observation that fixed \(C_r(\boldsymbol\theta)\) is a union over at most eight coordinate-support patterns is correct: after fixing which coordinates are positive, \(h_{sr}\) is a fixed rational constant and the remaining conditions are linear integer constraints.</p><p>However, this reformulation does not supply either a polynomial-time threshold-selection procedure or a scale-robust hardness reduction. Hence it does not settle the requested dichotomy.</p><h3>Required clarification and repair</h3><p>The minimum repairs to make the established partial results verifiable are:</p><ul><li>State globally that zero-mass types are deleted before Proposition 2.</li><li>State the \(M=0\) feasibility cases separately in the rational-bundle discussion and Proposition 6.</li><li>Justify rational convex representations in Proposition 2.</li><li>Briefly specify how the decomposition in Proposition 6 is computed.</li><li>Retain the explicit conclusion that the unrestricted integral-bundle complexity remains unresolved.</li></ul><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

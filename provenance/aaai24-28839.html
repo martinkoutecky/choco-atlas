@@ -1,0 +1,123 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Maximizing Nash Social Welfare under Two-Sided Preferences — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Maximizing Nash Social Welfare under Two-Sided Preferences <span style="font-weight:normal;color:#8a7350">(aaai24-28839)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{polynomial\text{-}time\ solvable}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: hardness</p>
+<blockquote class="thmq">Computing a Nash optimal matching is NP-complete even when each firm has capacity 2, all valuations are in {0, 1, 2}, and each agent has degree at most 3.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite worker types \(i\) with rational masses \(\mu_i\) and finite firm types \(j\) with rational masses \(\nu_j\), capacity 2, and two-sided valuation matrices (restricted to \(\{0,1,2\}\) and type-degree at most 3), choose masses \(y_{j,b}\) of firm type \(j\) receiving each integral worker-type bundle \(b\) with \(|b| \le 2\), satisfying \(\sum_b y_{j,b} = \nu_j\) and \(\sum_{j,b} b_i y_{j,b} = \mu_i\), to maximize the normalized sum of worker and firm log utilities, excluding zero-utility assignments.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> An instance has finite worker types \(A\), firm types \(B\), rational type masses \(M_W\mu_a\) and \(M_F
+u_b\), valuations \(v^W_{ab},v^F_{ba}\in\{0,1,2\}\), and capacity \(2\) per firm. Each type positively values at most three counterpart types.<br>For each \(b\), let \(\mathcal S\) be the multisets of worker types of cardinality at most \(2\). Choose \(y_{b,S}\ge0\), set \(x_{ab}=\sum_{S\in\mathcal S}n_a(S)y_{b,S}\), and require \(\sum_Sy_{b,S}=M_F\nu_b\) and \(\sum_{b,S}n_a(S)y_{b,S}=M_W\mu_a\).<br>The objective is to maximize \(L=\sum_{a,b}x_{ab}\log v^W_{ab}+\sum_{b,S}y_{b,S}\log\!\left(\sum_an_a(S)v^F_{ba}\right)\), with zero-valued terms infeasible whenever assigned positive mass.</p><p><b>Target.</b> Is this continuous maximum-Nash-welfare problem solvable in polynomial time, or is it NP-hard?</p><p><b>Nearest known results.</b> For the discrete problem with individual workers and firms, computing a Nash-optimal many-to-one matching is NP-complete even with capacity \(2\), valuations in \(\{0,1,2\}\), and at most three positively valued counterparts per agent.<br>No verified result for exactly the mass-formulated problem above is used here.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Classification</h3><h3>Theorem</h3><p>Under the standard binary Turing model for the rational masses, the stated continuous maximum-Nash-welfare problem is polynomial-time solvable.</p><p>More precisely, one can return either:</p><ul><li>a proof that no feasible positive-utility assignment exists; or</li><li>an exact rational optimal configuration vector \(y^*\), together with the exact symbolic optimum \(L^*=P^*\log 2+Q^*\log 3\), where \(P^*,Q^*\in\mathbb Q\).</li></ul><p>The sparsity assumption that every type positively values at most three counterpart types is not needed for this result.</p><h3>1. Removing zero-utility configurations</h3><p>Write \(r_a=M_W\mu_a\) and \(f_b=M_F\nu_b\). For each firm type \(b\), call a multiset \(S\) admissible if:</p><ul><li>\(v^W_{ab}&gt;0\) for every worker type occurring in \(S\); and</li><li>\(U_{b,S}:=\sum_a n_a(S)v^F_{ba}&gt;0\).</li></ul><p>Any nonadmissible configuration must have \(y_{b,S}=0\). Thus it may be deleted. This is exactly the zero-value convention in the question. If the intended convention additionally forbids assigning a worker with \(v^F_{ba}=0\) inside an otherwise positive firm bundle, deleting those configurations as well does not affect the argument.</p><p>For an admissible configuration, substitute</p><p>\[
+x_{ab}=\sum_S n_a(S)y_{b,S}.
+\]</p><p>Interchanging the finite sums gives</p><p>\[
+L=\sum_{b,S}c_{b,S}y_{b,S},
+\]</p><p>where</p><p>\[
+c_{b,S}
+=
+\sum_a n_a(S)\log v^W_{ab}
++
+\log U_{b,S}.
+\]</p><p>Consequently, the apparently logarithmic optimization problem is a linear optimization problem over the configuration variables.</p><h3>2. The configuration formulation has polynomial size</h3><p>The number of worker-type multisets of cardinality at most \(2\) is</p><p>\[
+1+|A|+\frac{|A|(|A|+1)}2.
+\]</p><p>Hence the number of variables is \(O(|B||A|^2)\), which is polynomial in the explicit input length.</p><p>After deleting inadmissible configurations, the feasible region is</p><p>\[
+\mathcal P=
+\left\{
+y\geq 0:
+\sum_S y_{b,S}=f_b\ \text{for every }b,\quad
+\sum_{b,S}n_a(S)y_{b,S}=r_a\ \text{for every }a
+\right\}.
+\]</p><p>Its constraint matrix has entries only in \(\{0,1,2\}\). It is bounded because</p><p>\[
+0\leq y_{b,S}\leq f_b
+\]</p><p>for every variable. Feasibility is therefore decidable by an ordinary rational linear program in polynomial time.</p><h3>3. Only two fixed logarithms occur</h3><p>For every admissible configuration, each positive worker valuation is \(1\) or \(2\), while</p><p>\[
+U_{b,S}\in\{1,2,3,4\}.
+\]</p><p>Define</p><p>\[
+p_{b,S}
+=
+\sum_a n_a(S)\mathbf 1[v^W_{ab}=2]
++\mathbf 1[U_{b,S}=2]
++2\mathbf 1[U_{b,S}=4]
+\]</p><p>and</p><p>\[
+q_{b,S}=\mathbf 1[U_{b,S}=3].
+\]</p><p>Then \(p_{b,S}\in\{0,1,2,3,4\}\), \(q_{b,S}\in\{0,1\}\), and</p><p>\[
+c_{b,S}=p_{b,S}\log 2+q_{b,S}\log 3.
+\]</p><p>Put</p><p>\[
+P(y)=\sum_{b,S}p_{b,S}y_{b,S},
+\qquad
+Q(y)=\sum_{b,S}q_{b,S}y_{b,S},
+\qquad
+\rho=\frac{\log 3}{\log 2}.
+\]</p><p>Since \(\log 2&gt;0\), maximizing \(L\) is equivalent to maximizing</p><p>\[
+P(y)+\rho Q(y).
+\]</p><p>The number \(\rho\) is irrational: if \(\rho=m/n\in\mathbb Q\), then \(2^m=3^n\) after clearing signs and denominators, contradicting unique prime factorization.</p><h3>4. Polynomial bit bounds for all vertices</h3><p>Let \(N\) denote the binary input length. Every vertex of \(\mathcal P\) has polynomial encoding length.</p><p>Indeed, if a vertex has \(s\) positive components, their columns in the equality-constraint matrix must be linearly independent. Otherwise, a nonzero kernel direction supported on those positive components would permit sufficiently small perturbations in both directions, contradicting extremality. Thus \(s\leq |A|+|B|\).</p><p>Choose \(s\) independent rows and let \(G\) be the resulting nonsingular \(s\times s\) submatrix. Its entries lie in \(\{0,1,2\}\). The positive vertex coordinates solve \(Gz=d\), where \(d\) is a subvector of the rational mass vector. Cramer&#x27;s rule and Hadamard&#x27;s inequality give</p><p>\[
+|\det G|\leq (2\sqrt{s})^s.
+\]</p><p>After clearing the denominators of \(d\), the same bound applied to the replaced-column determinants shows that every numerator and denominator in \(z\) has bit length polynomial in \(N\).</p><p>It follows that there is an explicitly computable polynomial \(K(N)\) such that, for every pair of vertices \(y,z\), both \(P(y)-P(z)\) and \(Q(y)-Q(z)\) are rationals whose numerators and denominators have at most \(K(N)\) bits.</p><h3>5. Exact treatment of the irrational objective</h3><p>A numerical approximation to \(\rho\) is not by itself sufficient: one must prove that the chosen precision preserves the ordering of all vertices.</p><p>We use the following fixed-base consequence of an effective lower bound for linear forms in logarithms.</p><p><b>Two-logarithm separation lemma.</b> There is an effectively computable constant \(C_0&gt;0\), depending only on \(2\) and \(3\), such that for all integers \(u,v\), not both zero, with \(H=\max\{3,|u|,|v|\}\),</p><p>\[
+|u\log 2+v\log 3|&gt;H^{-C_0}.
+\]</p><p>This is a direct specialization of the explicit bounds for homogeneous rational linear forms in logarithms of algebraic numbers; the relevant hypotheses hold because \(2\) and \(3\) are algebraic and multiplicatively independent. See [Matveev’s explicit lower-bound theorem](https://www.mathnet.ru/eng/im190).</p><p>Now consider two vertices \(y,z\), and set</p><p>\[
+\Delta_P=P(y)-P(z),
+\qquad
+\Delta_Q=Q(y)-Q(z).
+\]</p><p>If \((\Delta_P,\Delta_Q)\neq(0,0)\), clear their denominators to obtain integers \(u,v\), of \(O(K(N))\) bits, and a positive integer \(D\), also of \(O(K(N))\) bits, such that</p><p>\[
+\Delta_P+\rho\Delta_Q
+=
+\frac{u\log 2+v\log 3}{D\log 2}.
+\]</p><p>The numerator is nonzero by multiplicative independence. The separation lemma therefore yields a computable constant \(C_1\) such that</p><p>\[
+|\Delta_P+\rho\Delta_Q|&gt;2^{-C_1K(N)}.
+\]</p><p>Thus distinct vertex objective values have an inverse-exponential gap whose exponent is polynomial in the input length.</p><p>Furthermore,</p><p>\[
+0\leq Q(y)\leq \sum_b f_b
+\]</p><p>for every feasible \(y\). Let \(R\) be an easily computed binary bound satisfying</p><p>\[
+|Q(y)-Q(z)|\leq R
+\]</p><p>for all feasible \(y,z\). The bit length of \(R\) is polynomial in \(N\).</p><p>Choose a rational number \(\widehat\rho\) satisfying</p><p>\[
+|\widehat\rho-\rho|
+&lt;
+\frac{2^{-C_1K(N)}}{2R}.
+\]</p><p>Such an approximation has polynomially many bits and is computable in polynomial time. For example, rational upper and lower bounds for \(\log 2\) and \(\log 3\) can be computed using the geometrically convergent series</p><p>\[
+\log z
+=
+2\sum_{j\geq 0}
+\frac{1}{2j+1}
+\left(\frac{z-1}{z+1}\right)^{2j+1}.
+\]</p><p>For any pair of vertices with different true objective values,</p><p>\[
+\left|
+(\Delta_P+\widehat\rho\Delta_Q)
+-
+(\Delta_P+\rho\Delta_Q)
+\right|
+&lt;
+\frac12|\Delta_P+\rho\Delta_Q|.
+\]</p><p>Therefore \(P+\widehat\rho Q\) and \(P+\rho Q\) order every pair of vertices in exactly the same way. If two vertices tie under the true objective, irrationality of \(\rho\) implies \(\Delta_P=\Delta_Q=0\), so they also tie under the approximating objective.</p><h3>6. Polynomial-time algorithm</h3><p>The complete algorithm is:</p><ul><li>Enumerate all multisets \(S\) of worker types of cardinality at most \(2\).</li><li>Delete inadmissible configurations.</li><li>Test feasibility of \(\mathcal P\) by rational linear programming.</li><li>Compute the polynomial vertex bit bound \(K(N)\).</li><li>Compute \(\widehat\rho\) to the precision established above.</li><li>Solve the rational linear program</li></ul><p>\[
+   \max_{y\in\mathcal P}
+   \sum_{b,S}
+   \bigl(p_{b,S}+\widehat\rho q_{b,S}\bigr)y_{b,S}.
+   \]</p><ul><li>Return an optimal basic feasible solution \(y^*\), reconstruct \(x^*\), and report the exact symbolic value</li></ul><p>\[
+   L^*=P(y^*)\log 2+Q(y^*)\log 3.
+   \]</p><p>All coefficients in Step \(6\) have polynomial encoding length. Exact rational linear programming therefore runs in polynomial time.</p><p>Because every nonempty bounded polytope has an optimal vertex for a linear objective, and because the rational approximate objective has exactly the same vertex ordering as the true objective, the returned solution is exactly optimal for the original logarithmic objective.</p><h3>7. Why the discrete hardness does not transfer</h3><p>The discrete problem requires each individual firm to select one integral bundle. In the mass formulation, \(y_{b,S}\) may split a firm type continuously among several configurations. This is precisely a configuration-LP relaxation of the individual allocation requirement, and its constraint matrix need not force integral vertices.</p><p>Consequently, even replacing every individual by a separate type does not reproduce the discrete problem: the corresponding unit mass may still be divided fractionally. The discrete NP-completeness result therefore does not contradict the polynomial-time algorithm above.</p><h3>Conclusion</h3><p>The stated continuous mass-formulated maximum-Nash-welfare problem is exactly polynomial-time solvable. The decisive features are the fixed capacity \(2\), which makes the configuration set polynomial, and the fact that every objective coefficient is a fixed rational linear combination of \(\log 2\) and \(\log 3\). Effective separation for these two logarithms completes the exact bit-complexity argument.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 4, Cramer&#x27;s-rule and Hadamard argument: After denominators are cleared, the replaced column can contain large mass entries, so the displayed determinant bound does not apply unchanged; an explicit bound in terms of the mass bit lengths and a concrete computable polynomial K(N) are needed.</li><li><b>minor</b> — Section 5, application of Matveev&#x27;s theorem: The exact cited theorem or corollary and its independence/Kummer hypotheses are not stated and checked explicitly for 2 and 3, although the specialized separation lemma used by the proof is valid.</li><li><b>minor</b> — Section 5, definition of R: R must be chosen strictly positive before dividing by 2R; this is not stated and matters in degenerate instances with Q identically zero.</li><li><b>minor</b> — Section 5, computation of the rational approximation to rho: The series is given without an explicit truncation remainder or certified interval calculation for the ratio log 3/log 2; these routine details are needed to verify the claimed precision and runtime.</li><li><b>minor</b> — The theorem statement and Step 3 of the algorithm: The output promises a proof of infeasibility, but the algorithm only says to test feasibility; it should specify the rational infeasibility certificate that is returned.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover’s central classification is correct in substance: the continuous mass formulation reduces to a polynomial-size rational polytope with a linear objective whose coefficients lie in the fixed span of \(\log 2\) and \(\log 3\). The vertex-separation argument then permits replacement of the irrational coefficient by a polynomial-bit rational approximation without changing the optimal vertex.</p><p>No false central step or counterexample was found. Several details need tightening before the write-up is fully rigorous.</p><h3>Step-by-step audit</h3><h3>1. Elimination of zero-utility configurations</h3><p>This step is correct.</p><ul><li>If \(v^W_{ab}=0\) for a worker occurring in \(S\), then \(y_{b,S}&gt;0\) would imply \(x_{ab}&gt;0\), violating the zero-value convention.</li><li>If \(U_{b,S}=0\), then positive \(y_{b,S}\) is likewise infeasible.</li><li>Substituting \(x_{ab}=\sum_S n_a(S)y_{b,S}\) and interchanging finite sums correctly gives the linear objective \(\sum_{b,S}c_{b,S}y_{b,S}\).</li><li>The comment about a possible stronger convention is extraneous but does not enter the proof.</li></ul><h3>2. Polynomial-size configuration LP</h3><p>This step is correct.</p><p>The number of multisets of size at most \(2\) is exactly \(1+|A|+|A|(|A|+1)/2\). Thus there are polynomially many variables. The constraints are rational equalities with coefficients in \(\{0,1,2\}\), and \(0\le y_{b,S}\le f_b\) follows from nonnegativity and \(\sum_Sy_{b,S}=f_b\). Standard rational LP feasibility is therefore polynomial-time decidable.</p><h3>3. Reduction to two logarithms</h3><p>The coefficient calculation is correct.</p><p>Because an admissible bundle contains at most two workers and every valuation belongs to \(\{0,1,2\}\), one has \(U_{b,S}\in\{1,2,3,4\}\). The definitions of \(p_{b,S}\) and \(q_{b,S}\) correctly encode every coefficient as \(p_{b,S}\log 2+q_{b,S}\log 3\). The stated ranges for \(p_{b,S}\) and \(q_{b,S}\) are also correct.</p><p>The proof that \(\rho=\log 3/\log 2\) is irrational is valid.</p><h3>4. Vertex bit bounds</h3><p>The support-independence argument is correct: a linear dependence among columns indexed by positive coordinates would yield a two-sided feasible perturbation and contradict extremality.</p><p>There is, however, a minor gap in the determinant estimate. After clearing denominators in the mass vector, a replaced-column determinant no longer has all entries bounded by \(2\), so the displayed Hadamard bound cannot literally be reused unchanged. The required conclusion—polynomial numerator and denominator lengths—still follows routinely from the input bit bounds, but the write-up should explicitly bound the cleared right-hand-side entries and then the corresponding replaced-column determinants. It should also exhibit or define the claimed computable polynomial \(K(N)\).</p><h3>5. Separation of irrational objective values</h3><p>The stated two-logarithm separation lemma has the right strength. The cited Matveev result gives a lower bound polynomial in the coefficient height when the algebraic logarithms are fixed, which yields the claimed inverse-exponential gap. The cited paper does concern bounds of this form ([Matveev’s paper](https://www.mathnet.ru/eng/im190)).</p><p>For strict verifiability, the citation should identify the precise theorem or corollary and explicitly check its applicable independence/Kummer hypotheses for \(2\) and \(3\). The current assertion that the “relevant hypotheses hold” is too compressed, although the specialized separation statement itself is valid.</p><p>The denominator-clearing calculation and the deduction of a bound \(2^{-C_1K(N)}\) are otherwise correct. Irrationality correctly implies that a true tie between two vertices requires both \(\Delta_P=0\) and \(\Delta_Q=0\).</p><p>The perturbation estimate using \(\widehat\rho\) is correct provided \(R\) is chosen strictly positive. The text only calls \(R\) a bound; it should explicitly choose a positive bound to avoid division by zero in degenerate instances where \(Q\equiv0\).</p><p>The logarithm series converges geometrically for \(z=2,3\), but the write-up omits an explicit truncation-error bound and the interval calculation needed to turn bounds on \(\log 2\) and \(\log 3\) into a certified bound on their ratio. This is a routine computational detail, not a substantive mathematical gap.</p><h3>6. Polynomial-time algorithm and exact optimality</h3><p>Given the preceding separation bound, the rational LP in Step 6 has polynomial-bit coefficients and exactly the same ordering on vertices as the true objective. Since the polytope is bounded, an optimal vertex exists. Returning an optimal basic feasible solution therefore gives an exact optimum for the original objective.</p><p>The theorem initially promises “a proof” of infeasibility, whereas the algorithm merely says to test feasibility. If a certificate is part of the output specification, the prover should state that a rational Farkas certificate is returned and note its polynomial encoding bound. This omission does not affect the complexity classification.</p><h3>7. Relation to discrete hardness</h3><p>This explanation is correct. Unit type mass remains divisible in the continuous formulation, so replacing individuals by distinct types does not impose integrality. Consequently, the cited discrete hardness result does not transfer directly.</p><h3>Final adjudication</h3><p>The polynomial-time classification is established in substance. The remaining issues concern explicit bit-bound bookkeeping, precise certification of the logarithmic-separation theorem’s hypotheses, certified approximation details, and the promised infeasibility certificate. All are routine expositional repairs and do not require a new algorithm or new mathematical idea.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

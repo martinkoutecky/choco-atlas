@@ -1,0 +1,91 @@
+<!doctype html><html><head><meta charset="utf-8"><title>The Degree of (Extended) Justified Representation and Its Optimization — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>The Degree of (Extended) Justified Representation and Its Optimization <span style="font-weight:normal;color:#8a7350">(aamas25-00227)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}hard}\) under the standard sparse explicit-support encoding; \(\mathrm{polynomial\text{-}time\ solvable}\) if the input explicitly contains all \(2^{|C|}\) masses including zeros.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4 — class: hardness</p>
+<blockquote class="thmq">It is NP-hard to approximate MDJR and MDEJR within a factor of  1 𝑘 1−𝜖 for any 𝜖&gt; 0. We will simultaneously prove these theorems by constructing a hard ballot instance that is used for all of them. We will make sure the instance we constructed has no ℓ-cohesive group with ℓ&gt; 1. Notice that the JR degree and the EJR degree for any committee are always the same for instances with only 1-cohesive groups.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), committee size \(k\), an explicit finite support \(T\subseteq 2^C\), and rational masses \(\mu_A\ge 0\) summing to \(1\), with some candidate supported by mass at least \(1/k\), choose \(W\in\binom{C}{k}\) maximizing \(\operatorname{jrdeg}_\infty(\mu,W)=\min_{c:\sum_{A\ni c}\mu_A\ge 1/k}\max\{0,1/k-\sum_{A\ni c,\,A\cap W=\varnothing}\mu_A\}\); determine whether a polynomial-time algorithm can guarantee \(\operatorname{jrdeg}_\infty(\mu,W)\ge (1/k)^{1-\varepsilon}\operatorname{OPT}_\infty(\mu)\), where \(\operatorname{OPT}_\infty(\mu)=\max_{W&#x27;\in\binom{C}{k}}\operatorname{jrdeg}_\infty(\mu,W&#x27;)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> The input explicitly lists rational masses \(\mu_A\ge 0\) for approval types \(A\subseteq C\), with \(\sum_A\mu_A=1\), and an integer \(k\). For a size-\(k\) committee \(W\), let \(\delta_{\mathrm{EJR}}(W)\) be the infimum, over \(\ell\in[k]\), \(L\subseteq C\) with \(|L|=\ell\), and \(0\le g_A\le\mu_A\) supported on \(A\supseteq L\) with \(\sum_A g_A\ge\ell/k\), of \(\sum_A g_A\mathbf{1}[|A\cap W|\ge\ell]\). Assume at least one such triple exists.</p><p><b>Target.</b> Is maximizing \(\delta_{\mathrm{EJR}}(W)\) over \(W\subseteq C\) with \(|W|=k\) solvable in polynomial time, or is it NP-hard?</p><p><b>Nearest known results.</b> For finite approval profiles, maximizing the corresponding EJR degree (MDEJR) is NP-hard to approximate within \((1/k)^{1-\varepsilon}\) for every \(\varepsilon&gt;0\). The same theorem establishes this for the JR-only version, where \(\ell=1\).</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Encoding-Sensitive Classification</h3><p>The answer depends on what “explicitly lists” means:</p><ul><li>Under the standard sparse encoding, where only positive-mass approval types are listed and all omitted types have mass \(0\), maximizing \(\delta_{\mathrm{EJR}}\) is \(\mathrm{NP\text{-}hard}\).</li><li>If the input contains a separate entry for every one of the \(2^{|C|}\) approval types, including zero-mass types, the problem is polynomial-time solvable in the resulting input length.</li></ul><p>The first interpretation is the usual weighted-profile encoding. The hardness proof below is direct and already holds when every positive-mass approval type has size \(2\) and the only feasible value of \(\ell\) is \(1\).</p><h3>1. Eliminating the fractional coalition variables</h3><p>Fix a committee \(W\), an integer \(\ell\), and \(L\subseteq C\) with \(|L|=\ell\). Define</p><p>\[
+s_L:=\sum_{A\supseteq L}\mu_A
+\]</p><p>and</p><p>\[
+b_{L,W}:=\sum_{\substack{A\supseteq L\\ |A\cap W|&lt;\ell}}\mu_A.
+\]</p><p>Thus \(s_L\) is the total mass eligible for the pair \((\ell,L)\), while \(b_{L,W}\) is the eligible mass not receiving at least \(\ell\) approved committee members.</p><h3>Lemma</h3><p>If \(s_L\ge \ell/k\), then the minimum over the variables \(g_A\) associated with this fixed pair \((\ell,L)\) equals</p><p>\[
+\max\left\{0,\frac{\ell}{k}-b_{L,W}\right\}.
+\]</p><h3>Proof</h3><p>For every feasible \(g\), at most \(b_{L,W}\) mass can be chosen from types satisfying \(|A\cap W|&lt;\ell\). Since the total chosen mass is at least \(\ell/k\), the mass chosen from types satisfying \(|A\cap W|\ge\ell\) is at least</p><p>\[
+\max\left\{0,\frac{\ell}{k}-b_{L,W}\right\}.
+\]</p><p>This proves the lower bound.</p><p>For attainability, first suppose \(b_{L,W}\ge\ell/k\). Because the variables \(g_A\) are fractional, one can choose exactly \(\ell/k\) mass from the bad types, obtaining objective value \(0\).</p><p>Now suppose \(b_{L,W}&lt;\ell/k\). Choose all bad mass and then choose exactly \(\ell/k-b_{L,W}\) mass from good types. This is possible because</p><p>\[
+s_L-b_{L,W}\ge \frac{\ell}{k}-b_{L,W}.
+\]</p><p>The resulting objective value is exactly \(\ell/k-b_{L,W}\). This proves the lemma. \(\square\)</p><p>Consequently,</p><p>\[
+\delta_{\mathrm{EJR}}(W)
+=
+\min_{\substack{1\le\ell\le k,\ |L|=\ell\\ s_L\ge\ell/k}}
+\max\left\{0,\frac{\ell}{k}-b_{L,W}\right\}.
+\]</p><p>In particular, the fractional nature of \(g_A\) is fully accounted for by this closed formula.</p><h3>2. Source problem</h3><p>We use the following standard \(\mathrm{NP\text{-}complete}\) problem:</p><blockquote>Given a simple \(3\)-regular graph \(G=(V,E)\) and an integer \(k\), decide whether \(G\) has a vertex cover of size at most \(k\).</blockquote><p>We may restrict to instances satisfying \(n/2\le k\le n\), where \(n:=|V|\). Indeed, if \(S\) is an independent set in a \(3\)-regular graph, all \(3|S|\) edges incident with \(S\) lead to \(V\setminus S\), which has total degree \(3|V\setminus S|\). Hence \(|S|\le|V\setminus S|\). The complement of every vertex cover is independent, so every vertex cover has size at least \(n/2\). Instances with \(k&lt;n/2\) are therefore automatically negative.</p><h3>3. Construction</h3><p>Let \(G=(V,E)\) be a simple \(3\)-regular graph, let \(n:=|V|\), and let \(m:=|E|=3n/2\). Define the approval instance as follows:</p><ul><li>The candidate set is \(C:=V\).</li><li>The required committee size is the vertex-cover bound \(k\).</li><li>For every edge \(e=\{u,v\}\in E\), introduce the approval type \(A_e:=\{u,v\}\) with mass \(\mu_{A_e}:=1/m\).</li><li>Every other approval type has mass \(0\).</li></ul><p>The positive masses sum to \(m\cdot(1/m)=1\), and the construction has \(m\) positive-mass approval types, so it is polynomial under sparse explicit-support encoding.</p><h3>4. Only the \(\ell=1\) constraints are feasible</h3><p>For each vertex \(v\), its approving mass is</p><p>\[
+s_{\{v\}}=\frac{\deg(v)}{m}=\frac{3}{3n/2}=\frac{2}{n}.
+\]</p><p>Since \(k\ge n/2\), we have \(1/k\le2/n\). Thus every pair \((1,\{v\})\) is feasible. In particular, the promise that at least one triple exists is satisfied.</p><p>For \(\ell=2\), a set \(L\) has positive approving mass only if \(L\) is an edge. Because the graph is simple, in that case</p><p>\[
+s_L=\frac{1}{m}=\frac{2}{3n}.
+\]</p><p>But \(k\le n\), and therefore</p><p>\[
+\frac{2}{k}\ge\frac{2}{n}&gt;\frac{2}{3n}=s_L.
+\]</p><p>Hence no pair with \(\ell=2\) is feasible. For \(\ell\ge3\), no positive-mass approval type contains \(L\), so \(s_L=0&lt;\ell/k\).</p><p>Therefore the full EJR-degree objective coincides with its \(\ell=1\), JR-only part on these instances.</p><h3>5. Committees of optimal value are exactly vertex covers</h3><p>For \(v\in V\), let \(r_W(v)\) denote the number of edges incident with \(v\) that are disjoint from \(W\). For \(L=\{v\}\), the bad eligible mass is</p><p>\[
+b_{\{v\},W}=\frac{r_W(v)}{m}.
+\]</p><p>The lemma therefore gives</p><p>\[
+\delta_{\mathrm{EJR}}(W)
+=
+\min_{v\in V}
+\max\left\{0,\frac{1}{k}-\frac{r_W(v)}{m}\right\}.
+\]</p><p>It follows immediately that \(\delta_{\mathrm{EJR}}(W)\le1/k\).</p><p>If \(W\) is a vertex cover, every edge intersects \(W\), so \(r_W(v)=0\) for every \(v\). Hence</p><p>\[
+\delta_{\mathrm{EJR}}(W)=\frac{1}{k}.
+\]</p><p>Conversely, suppose \(W\) is not a vertex cover. There is then an uncovered edge \(e=\{u,v\}\) with \(e\cap W=\varnothing\). Consequently \(r_W(u)\ge1\), and thus</p><p>\[
+\max\left\{0,\frac{1}{k}-\frac{r_W(u)}{m}\right\}&lt;\frac{1}{k}.
+\]</p><p>Therefore \(\delta_{\mathrm{EJR}}(W)&lt;1/k\).</p><p>We have proved the exact equivalence</p><p>\[
+\delta_{\mathrm{EJR}}(W)=\frac{1}{k}
+\quad\Longleftrightarrow\quad
+W\text{ is a vertex cover}.
+\]</p><p>A vertex cover of size at most \(k\) can be enlarged to one of size exactly \(k\), because \(k\le n\). Thus</p><p>\[
+G\text{ has a vertex cover of size at most }k
+\quad\Longleftrightarrow\quad
+\max_{|W|=k}\delta_{\mathrm{EJR}}(W)=\frac{1}{k}.
+\]</p><p>This is a polynomial-time reduction. Hence maximizing \(\delta_{\mathrm{EJR}}\) is \(\mathrm{NP\text{-}hard}\) under sparse explicit-support encoding. The reduction also shows hardness for the JR-only version directly, without needing to transfer the finite-profile approximation theorem through a fractional-coalition relaxation.</p><h3>6. The dense full-table interpretation</h3><p>Suppose instead that the input contains all \(T:=2^{|C|}\) values \(\mu_A\), including zero entries. Let \(N\) be the input length, so \(N\ge T\).</p><p>There are at most \(T\) committees and at most \(T\) possible sets \(L\). For each pair \((W,L)\), the quantities \(s_L\) and \(b_{L,W}\) can be computed by scanning the \(T\) approval types. The formula from Section 1 therefore yields an exact exhaustive algorithm using at most \(O(T^3)\) rational arithmetic operations. Since \(T\le N\), this is polynomial in the dense input length. Exact rational sums and comparisons also have polynomial bit complexity.</p><p>Thus the finite-profile hardness result cannot be transferred to the dense encoding: producing all \(2^{|C|}\) entries would itself be an exponential expansion.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 2, restriction to instances satisfying n/2 &lt;= k &lt;= n: The lower restriction is justified, but the write-up does not explicitly explain the preprocessing or fixed-instance mapping needed to discard the automatically positive cases k &gt; n when formulating a many-one reduction from the stated source problem.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly derives the closed form for the fractional coalition optimization and gives a valid reduction from Vertex Cover on simple \(3\)-regular graphs. The reduction establishes NP-hardness under sparse support encoding, while exhaustive enumeration is polynomial in the length of a dense \(2^{|C|}\)-entry encoding.</p><p>There is one minor formal omission in restricting the source instances to \(n/2\le k\le n\). It is routine to resolve and does not affect the substance of the classification.</p><h3>Step-by-step audit</h3><h3>1. Elimination of the variables \(g_A\)</h3><p>For fixed \((\ell,L,W)\), the eligible types divide into:</p><ul><li>bad types, with total capacity \(b_{L,W}\), and</li><li>good types, with total capacity \(s_L-b_{L,W}\).</li></ul><p>Every feasible selection has total mass at least \(\ell/k\). Since at most \(b_{L,W}\) can come from bad types, its good mass is at least<br>\[
+\max\left\{0,\frac{\ell}{k}-b_{L,W}\right\}.
+\]</p><p>Both attainability cases are correct:</p><ul><li>If \(b_{L,W}\ge\ell/k\), the continuous variables permit selecting exactly \(\ell/k\) from bad types.</li><li>If \(b_{L,W}&lt;\ell/k\), feasibility \(s_L\ge\ell/k\) implies enough good capacity remains to select exactly \(\ell/k-b_{L,W}\).</li></ul><p>Thus the displayed formula for \(\delta_{\mathrm{EJR}}(W)\) is correct. Replacing the infimum by a minimum is justified by the explicit attainability argument and the finiteness of the choices of \(\ell\) and \(L\).</p><h3>2. Source problem and parameter range</h3><p>The cited source problem—Vertex Cover on simple \(3\)-regular graphs—is a standard NP-complete problem.</p><p>The independent-set calculation is correct: if \(S\) is independent, its \(3|S|\) incident edges all cross to \(V\setminus S\), whose total degree is \(3|V\setminus S|\). Hence \(|S|\le|V\setminus S|\), so every vertex cover has size at least \(n/2\).</p><p>The statement that one may restrict to \(k\le n\) is not explicitly justified. Instances with \(k&gt;n\) are automatically positive, so a formal many-one reduction to the restricted source language needs to specify how such trivial instances are normalized. This is a routine preprocessing detail and is only a minor gap.</p><h3>3. Construction</h3><p>The construction is polynomial under sparse support encoding:</p><ul><li>\(C=V\);</li><li>one distinct approval type \(\{u,v\}\) per edge, using simplicity of \(G\);</li><li>each mass is \(1/m\);</li><li>the masses sum to \(1\);</li><li>\(m=3n/2\).</li></ul><p>The rational masses have polynomial encoding length.</p><h3>4. Feasible values of \(\ell\)</h3><p>For every vertex \(v\),<br>\[
+s_{\{v\}}=\frac{3}{m}=\frac{2}{n}.
+\]<br>Because \(k\ge n/2\), this is at least \(1/k\), so all singleton constraints are feasible.</p><p>For \(\ell=2\), only edge sets \(L\) have positive mass, and then<br>\[
+s_L=\frac1m=\frac{2}{3n}&lt;\frac2n\le\frac2k.
+\]<br>Thus no such pair is feasible.</p><p>For \(\ell\ge3\), every approval type has size \(2\), so \(s_L=0&lt;\ell/k\). Therefore only \(\ell=1\) contributes. All inequalities and quantifiers here are correct.</p><h3>5. Vertex-cover equivalence</h3><p>For \(L=\{v\}\), the bad eligible types are exactly uncovered edges incident with \(v\), so<br>\[
+b_{\{v\},W}=\frac{r_W(v)}m.
+\]<br>The resulting formula for \(\delta_{\mathrm{EJR}}(W)\) is correct.</p><p>If \(W\) is a vertex cover, every \(r_W(v)=0\), yielding value \(1/k\). If \(W\) is not a vertex cover, an uncovered edge has an endpoint \(u\) with \(r_W(u)\ge1\), and the corresponding term is strictly below \(1/k\). Hence<br>\[
+\delta_{\mathrm{EJR}}(W)=\frac1k
+\quad\Longleftrightarrow\quad
+W\text{ is a vertex cover}.
+\]</p><p>Enlarging a cover of size at most \(k\) to size exactly \(k\) is valid when \(k\le n\), since supersets of vertex covers remain vertex covers. The reduction therefore establishes sparse-encoding NP-hardness.</p><h3>6. Dense full-table encoding</h3><p>With \(T=2^{|C|}\) explicitly represented entries, there are at most \(T\) committees and \(T\) possible sets \(L\). Scanning all \(T\) approval types for every pair gives \(O(T^3)\) rational arithmetic operations. Since \(T\le N\), this is polynomial in the dense input length.</p><p>The claim about polynomial bit complexity is also sound: the bit lengths of exact sums of explicitly supplied rationals remain polynomial in the total input bit length. Costs for manipulating candidate subsets introduce additional polynomial factors but do not affect the conclusion.</p><h3>Actionable feedback</h3><p>State explicitly how source instances with \(k&gt;n\) are handled when claiming restriction to \(n/2\le k\le n\). A one-line description of the normalization to a fixed admissible positive instance, or an explicit citation of the bounded-\(k\) formulation of cubic Vertex Cover, would make the reduction fully formal.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

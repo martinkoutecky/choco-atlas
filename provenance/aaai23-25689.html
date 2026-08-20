@@ -1,0 +1,95 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Topological Distance Games — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Topological Distance Games <span style="font-weight:normal;color:#8a7350">(aaai23-25689)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> polynomial-time solvable</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.2 — class: algorithmic</p>
+<blockquote class="thmq">For any distance factor function, if the friend- ship graph is acyclic and utilities are non-negative, then a jump stable assignment exists and can be computed in poly- nomial time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational masses over complete utility types, capacitated topology locations with a specified aggregate distance kernel, and a nonnegative acyclic utility matrix, decide whether there exists a feasible mass assignment \(x\) such that every type occupying a location weakly prefers it to every location with residual capacity.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><h3>Definitions</h3><p>An instance consists of finite \(T\), rational masses \(\mu_t\ge 0\) with \(\sum_{t\in T}\mu_t=1\), rational utilities \(u(t,t&#x27;)\), a finite undirected graph \(G=(V,E)\), and rational capacities \(\kappa_v\) with \(\sum_{v\in V}\kappa_v&gt;1\). A feasible allocation has \(x_{t,v}\ge0\), \(\sum_v x_{t,v}=\mu_t\), and \(\sum_t x_{t,v}\le\kappa_v\). Let \(ar f_G(v,v)=1\), \(ar f_G(v,z)=1/d_G(v,z)\) for distinct vertices in one component, and \(ar f_G(v,z)=0\) across components. Define \(U_t(v;x)=\sum_{t&#x27;\in T}\sum_{z\in V}ar f_G(v,z)u(t,t&#x27;)x_{t&#x27;,z}\). An allocation is jump stable if, whenever \(x_{t,v}&gt;0\) and \(\sum_t x_{t,w}&lt;\kappa_w\), \(U_t(v;x)\ge U_t(w;x)\).</p><h3>Target</h3><p>Is deciding whether a jump-stable feasible allocation exists in this continuous reciprocal-distance model in \(\mathrm{P}\), or is it \(\mathrm{NP}\)-hard?</p><h3>Nearest known results</h3><p>For finite-agent topological distance games with reciprocal distance factors, deciding whether a jump-stable assignment exists is \(\mathrm{NP}\)-complete, even when the topology has a constant number of connected components and \(\lvert V\rvert=\Theta(n)\).</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Classification</h3><p>The problem is polynomial-time solvable. In fact, under the standard assumption that every capacity is nonnegative, every promised instance admits a jump-stable feasible allocation.</p><p>Thus the finite-agent NP-hardness does not survive the continuous relaxation.</p><h3>Theorem</h3><p>Let \(T\) and \(V\) be finite, let \(\mu_t\ge 0\) with \(\sum_t\mu_t=1\), and suppose \(\kappa_v\ge 0\) for every \(v\), with \(\sum_v\kappa_v&gt;1\). For arbitrary utilities \(u(t,t&#x27;)\), there exists a jump-stable feasible allocation.</p><h3>Step 1: Penalized population equilibria</h3><p>For an allocation \(x\) satisfying only the type-mass constraints, define the load</p><p>\[
+y_v(x)=\sum_{t\in T}x_{t,v}.
+\]</p><p>Let</p><p>\[
+X_t=\left\{a\in\mathbb R_{\ge 0}^{V}:\sum_{v\in V}a_v=\mu_t\right\},
+\qquad
+X=\prod_{t\in T}X_t.
+\]</p><p>The set \(X\) is nonempty, compact, and convex.</p><p>For every positive integer \(n\), define the overload penalty</p><p>\[
+p_v^{(n)}(x)=n\max\{0,y_v(x)-\kappa_v\}
+\]</p><p>and the penalized payoff</p><p>\[
+q_t^{(n)}(v;x)=U_t(v;x)-p_v^{(n)}(x).
+\]</p><p>For fixed \(x\), let</p><p>\[
+A_t^{(n)}(x)=\mathop{\rm argmax}_{v\in V}q_t^{(n)}(v;x)
+\]</p><p>and let \(B_t^{(n)}(x)\) consist of all vectors in \(X_t\) supported on \(A_t^{(n)}(x)\).</p><p>Each \(B_t^{(n)}(x)\) is nonempty, compact, and convex. Moreover, the correspondence \(B_t^{(n)}\) has closed graph: if \(x^k\to x\), \(a^k\to a\), and \(a^k\in B_t^{(n)}(x^k)\), then whenever \(a_v&gt;0\), one has \(a_v^k&gt;0\) eventually. Hence \(v\) maximizes \(q_t^{(n)}(\cdot;x^k)\) eventually, and continuity of \(q_t^{(n)}\) implies that \(v\) maximizes \(q_t^{(n)}(\cdot;x)\). Thus \(a\in B_t^{(n)}(x)\).</p><p>Consequently, \(B^{(n)}(x)=\prod_t B_t^{(n)}(x)\) is an upper-hemicontinuous correspondence from \(X\) to nonempty compact convex subsets of \(X\). Kakutani’s fixed-point theorem therefore gives some \(x^{(n)}\in X\) such that \(x^{(n)}\in B^{(n)}(x^{(n)})\).</p><p>In particular,</p><p>\[
+x_{t,v}^{(n)}&gt;0
+\quad\Longrightarrow\quad
+q_t^{(n)}(v;x^{(n)})\ge q_t^{(n)}(w;x^{(n)})
+\]</p><p>for every \(w\in V\).</p><h3>Step 2: Overloads vanish</h3><p>Let</p><p>\[
+M=\max_{t,t&#x27;\in T}|u(t,t&#x27;)|.
+\]</p><p>Since \(0\le \bar f_G(v,z)\le 1\) and the total mass is \(1\),</p><p>\[
+|U_t(v;x)|\le
+\sum_{t&#x27;,z}|u(t,t&#x27;)|x_{t&#x27;,z}
+\le M
+\]</p><p>for every \(t,v,x\in X\).</p><p>Fix \(n\). Because \(\sum_v y_v(x^{(n)})=1&lt;\sum_v\kappa_v\), there is at least one vertex \(w_n\) such that</p><p>\[
+y_{w_n}(x^{(n)})&lt;\kappa_{w_n}.
+\]</p><p>Thus \(p_{w_n}^{(n)}(x^{(n)})=0\).</p><p>Suppose \(y_v(x^{(n)})&gt;\kappa_v\). Since \(\kappa_v\ge0\), this implies \(y_v(x^{(n)})&gt;0\), so some type \(t\) satisfies \(x_{t,v}^{(n)}&gt;0\). The fixed-point inequality comparing \(v\) with \(w_n\) gives</p><p>\[
+U_t(v;x^{(n)})-n\bigl(y_v(x^{(n)})-\kappa_v\bigr)
+\ge U_t(w_n;x^{(n)}).
+\]</p><p>Therefore</p><p>\[
+n\bigl(y_v(x^{(n)})-\kappa_v\bigr)
+\le U_t(v;x^{(n)})-U_t(w_n;x^{(n)})
+\le 2M.
+\]</p><p>Consequently, for every \(v\),</p><p>\[
+y_v(x^{(n)})\le \kappa_v+\frac{2M}{n}.
+\]</p><h3>Step 3: Passage to a feasible limit</h3><p>Compactness of \(X\) yields a subsequence, still denoted \(x^{(n)}\), converging to some \(x^*\in X\).</p><p>Passing to the limit in the preceding load bound gives</p><p>\[
+y_v(x^*)\le\kappa_v
+\]</p><p>for every \(v\). Hence \(x^*\) is feasible.</p><h3>Step 4: Jump stability of the limit</h3><p>Let \(t\in T\) and \(v,w\in V\) satisfy</p><p>\[
+x^*_{t,v}&gt;0
+\qquad\text{and}\qquad
+y_w(x^*)&lt;\kappa_w.
+\]</p><p>Because both inequalities are strict, for all sufficiently large \(n\),</p><p>\[
+x_{t,v}^{(n)}&gt;0
+\qquad\text{and}\qquad
+y_w(x^{(n)})&lt;\kappa_w.
+\]</p><p>Thus \(p_w^{(n)}(x^{(n)})=0\). The penalized equilibrium inequality gives</p><p>\[
+U_t(v;x^{(n)})-p_v^{(n)}(x^{(n)})
+\ge U_t(w;x^{(n)}).
+\]</p><p>Since \(p_v^{(n)}(x^{(n)})\ge0\), it follows that</p><p>\[
+U_t(v;x^{(n)})\ge U_t(w;x^{(n)}).
+\]</p><p>The functions \(U_t(v;\cdot)\) are linear and therefore continuous. Passing to the limit yields</p><p>\[
+U_t(v;x^*)\ge U_t(w;x^*).
+\]</p><p>This is precisely jump stability.</p><h3>Complexity Consequence</h3><p>If capacities are understood, as usual, to be nonnegative, the decision algorithm simply returns “yes” on every promised instance.</p><p>Under the literal statement, which does not explicitly require \(\kappa_v\ge0\), the algorithm is:</p><ul><li>If some \(\kappa_v&lt;0\), return “no”, because \(0\le\sum_t x_{t,v}\le\kappa_v&lt;0\) is impossible.</li><li>Otherwise return “yes” by the theorem above.</li></ul><p>This requires only a polynomial-time scan of the rational capacities.</p><p>The finite-agent hardness reduction therefore cannot transfer directly: divisibility and total spare capacity guarantee existence through the limiting penalized equilibrium argument.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The prover fully resolves the decision problem. The existence theorem is correct, the limiting argument is rigorous, and the treatment of potentially negative capacities covers the literal input definition. Consequently, the decision problem is in \(\mathrm{P}\): return “no” exactly when some capacity is negative, and “yes” otherwise.</p><h3>Step-by-step verification</h3><h3>1. Penalized fixed points</h3><p>The set \(X=\prod_t X_t\) is correctly identified as nonempty, compact, and convex. This remains valid for types with \(\mu_t=0\), in which case \(X_t\) is a singleton.</p><p>The penalized payoffs \(q_t^{(n)}(v;x)\) are continuous in \(x\). Since \(V\) is finite, every argmax set \(A_t^{(n)}(x)\) is nonempty. The set of allocations in \(X_t\) supported on this argmax is nonempty, compact, and convex.</p><p>The closed-graph argument is valid: if \(a_v&gt;0\) and \(a^k\to a\), then \(a_v^k&gt;0\) for all sufficiently large \(k\). Thus \(v\) is an argmax along the tail, and continuity preserves the corresponding weak inequalities in the limit.</p><p>On the compact domain \(X\), the resulting correspondence satisfies Kakutani’s hypotheses. The fixed point \(x^{(n)}\) therefore exists and has the asserted support-on-maximizers property.</p><h3>2. Uniform payoff bound and vanishing overload</h3><p>The estimate \(\lvert U_t(v;x)\rvert\le M\) is correct because \(0\le\bar f_G(v,z)\le1\) and the total allocated mass is \(1\).</p><p>The existence of a vertex \(w_n\) with \(y_{w_n}(x^{(n)})&lt;\kappa_{w_n}\) follows from</p><p>\[
+\sum_v y_v(x^{(n)})=1&lt;\sum_v\kappa_v.
+\]</p><p>If every vertex instead satisfied \(y_v\ge\kappa_v\), summing would contradict this strict inequality.</p><p>For an overloaded vertex \(v\), nonnegative capacity ensures \(y_v&gt;0\), so some type is assigned positive mass there. Comparing that vertex with \(w_n\) in the fixed-point inequality correctly yields</p><p>\[
+n\bigl(y_v-\kappa_v\bigr)\le 2M.
+\]</p><p>Thus \(y_v(x^{(n)})\le\kappa_v+2M/n\) for every vertex.</p><h3>3. Feasible limiting allocation</h3><p>Compactness supplies a convergent subsequence. Since its integer indices tend to infinity, the overload error \(2M/n\) tends to zero. Continuity of each load gives \(y_v(x^*)\le\kappa_v\). The type-mass constraints are retained because \(x^*\in X\). Hence \(x^*\) is feasible.</p><h3>4. Jump stability</h3><p>If \(x^*_{t,v}&gt;0\) and \(y_w(x^*)&lt;\kappa_w\), convergence and strictness imply the same two inequalities for all sufficiently large subsequence indices. Therefore the destination penalty is zero.</p><p>The penalized equilibrium inequality then gives</p><p>\[
+U_t(v;x^{(n)})-p_v^{(n)}(x^{(n)})\ge U_t(w;x^{(n)}).
+\]</p><p>Because \(p_v^{(n)}\ge0\), the claimed unpenalized inequality follows. Continuity of \(U_t\) permits passage to the limit, producing exactly the required jump-stability condition.</p><h3>5. Literal capacity convention and complexity</h3><p>If some \(\kappa_v&lt;0\), feasibility is impossible because the nonnegative load at \(v\) cannot be at most a negative number. If all capacities are nonnegative, the theorem guarantees existence. Checking the signs of the rational capacities is polynomial time.</p><p>No construction of the equilibrium is required for the stated decision problem, so the nonconstructive use of Kakutani does not undermine the complexity classification.</p><h3>Issues</h3><p>No mathematical or logical defects were found.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

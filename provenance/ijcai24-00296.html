@@ -1,0 +1,76 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Evaluation of Project Performance in Participatory Budgeting — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Evaluation of Project Performance in Participatory Budgeting <span style="font-weight:normal;color:#8a7350">(ijcai24-00296)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{P}\), via rational linear programming</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.5 — class: hardness</p>
+<blockquote class="thmq">For PH, the problem of deciding if pessimist-addE(p) is at least a given value ℓis coNP- complete, even if all projects have unit cost. Fortunately, for PHRAGM´EN and EQUAL-SHARES we can compute the pessimist measure using an FPT algorithm pa- rameterized by the number of originally funded projects. Un- like many FPT algorithms, this one is indeed practical and we use it in our experiments (using Gurobi).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given projects \(P\), budget \(B\), costs \(c\), tie order \(\prec\), losing target \(p\), explicit approval-set types \(\mathcal A\subseteq 2^P\), and rational society distribution \(\mu\), choose \(x_A\in[0,\mu_A]\) for each \(A\not\ni p\), transferring mass from \(A\) to \(A\cup\{p\}\). Compute \(Q(\mu,p)=\sup\{\sum_{A\not\ni p}x_A:p\notin\operatorname{PH}_\infty(\mu_x)\}\), or decide whether \(Q(\mu,p)\ge\alpha\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given a finite project set \(P\), explicitly listed nonzero rational masses \(\mu_A\ge 0\) for approval types \(A\subseteq P\), with \(\sum_A\mu_A=1\), unit project costs, budget \(B=1\), and tie-breaking order \(\prec\), AV funds the first project in nonincreasing approval score \(s(q)=\sum_{A
+i q}\mu_A\), breaking ties by \(\prec\).</p><p>For a currently losing project \(p\), a change chooses \(z_A\in[0,\mu_A]\) for each \(A\supsetneq\{p\}\), replaces mass \(z_A\) of type \(A\) by type \(\{p\}\), and has cost \(\sum_A z_A\).</p><p><b>Target.</b> Given rational \(r\), is deciding whether a change of cost at most \(r\) makes AV fund \(p\) NP-hard or solvable in polynomial time?</p><p><b>Nearest known results.</b> For finite electorates, deciding whether changing at most \(\ell\) voters who approve \(p\) to approve only \(p\) makes \(p\) win is NP-complete, even with \(B=1\) and unit-cost projects. No result for the exact rational-mass version above was verified.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Polynomial-Time Solvability</h3><h3>Theorem</h3><p>The decision problem is solvable in polynomial time by rational linear programming.</p><p>Throughout, write \(q\prec p\) when \(q\) has tie-breaking priority over \(p\). Thus, if \(q\prec p\) and \(q\) ties \(p\), then \(q\) is funded instead of \(p\).</p><h3>1. Effect of a change on approval scores</h3><p>Let</p><p>\[
+\mathcal T_p=\{A\subseteq P:\mu_A&gt;0\text{ and }\{p\}\subsetneq A\}.
+\]</p><p>For \(A\in\mathcal T_p\), moving mass \(z_A\) from \(A\) to \(\{p\}\) does not change the score of \(p\): the moved mass approves \(p\) both before and after the change. Hence</p><p>\[
+s_z(p)=s(p).
+\]</p><p>For every \(q\ne p\), define its score reduction by</p><p>\[
+D_q(z)=\sum_{\substack{A\in\mathcal T_p\\q\in A}}z_A.
+\]</p><p>The resulting score of \(q\) is therefore</p><p>\[
+s_z(q)=s(q)-D_q(z).
+\]</p><p>All these expressions are linear in the variables \(z_A\).</p><h3>2. Exact winning conditions</h3><p>Partition the other projects into</p><p>\[
+E=\{q\in P\setminus\{p\}:q\prec p\}
+\]</p><p>and</p><p>\[
+L=P\setminus(E\cup\{p\}).
+\]</p><p>For \(q\in E\), a tie is insufficient for \(p\), so \(p\) must satisfy</p><p>\[
+s_z(q)&lt;s(p).
+\]</p><p>Equivalently,</p><p>\[
+D_q(z)&gt;s(q)-s(p).
+\]</p><p>For \(q\in L\), \(p\) wins a tie, so the required condition is</p><p>\[
+s_z(q)\le s(p),
+\]</p><p>equivalently,</p><p>\[
+D_q(z)\ge s(q)-s(p).
+\]</p><p>Thus a change makes \(p\) win exactly when it satisfies these inequalities together with</p><p>\[
+0\le z_A\le\mu_A
+\]</p><p>for every \(A\in\mathcal T_p\), and</p><p>\[
+\sum_{A\in\mathcal T_p}z_A\le r.
+\]</p><p>Negative right-hand sides cause no difficulty because every \(D_q(z)\) is nonnegative.</p><h3>3. Handling the strict inequalities</h3><p>Suppose first that \(E\ne\varnothing\). Introduce a common slack variable \(\delta\) and solve the rational linear program maximizing \(\delta\) subject to:</p><ul><li>\(0\le z_A\le\mu_A\) for every \(A\in\mathcal T_p\);</li><li>\(\sum_{A\in\mathcal T_p}z_A\le r\);</li><li>\(D_q(z)\ge s(q)-s(p)+\delta\) for every \(q\in E\);</li><li>\(D_q(z)\ge s(q)-s(p)\) for every \(q\in L\);</li><li>\(0\le\delta\le 2\).</li></ul><p>The upper bound \(2\) is harmless: scores and score reductions lie in \([0,1]\), so every possible strict slack is at most \(2\).</p><p>Let the optimum be \(\delta^\star\), with an infeasible program interpreted as rejection.</p><h3>Lemma</h3><p>There exists a change of cost at most \(r\) making \(p\) win if and only if the linear program is feasible and \(\delta^\star&gt;0\).</p><h3>Proof</h3><p>Assume first that \(z\) makes \(p\) win. For every \(q\in E\),</p><p>\[
+D_q(z)-\bigl(s(q)-s(p)\bigr)&gt;0.
+\]</p><p>Because \(E\) is finite, the minimum</p><p>\[
+\delta_0=\min_{q\in E}\left(D_q(z)-s(q)+s(p)\right)
+\]</p><p>is strictly positive. Therefore \((z,\delta_0)\) is feasible for the linear program. Consequently \(\delta^\star\ge\delta_0&gt;0\).</p><p>Conversely, suppose the program has a feasible solution with \(\delta&gt;0\). For every \(q\in E\),</p><p>\[
+D_q(z)\ge s(q)-s(p)+\delta&gt;s(q)-s(p),
+\]</p><p>so \(s_z(q)&lt;s(p)\). For every \(q\in L\), the non-strict constraints give \(s_z(q)\le s(p)\). Hence no project has higher priority than \(p\) among projects attaining the maximum score, and AV funds \(p\). The cost and mass bounds are also satisfied. This proves the equivalence. \(\square\)</p><p>If \(E=\varnothing\), no strict inequality is needed. It suffices to test feasibility of the same system without \(\delta\) and without the constraints indexed by \(E\).</p><h3>4. Running time</h3><p>Let \(t\) be the number of explicitly listed positive-mass types and let \(m=|P|\). The linear program has at most \(t+1\) variables and \(O(t+m)\) constraints.</p><p>Its coefficients consist of:</p><ul><li>incidence coefficients in \(\{0,1\}\);</li><li>the input rationals \(\mu_A\) and \(r\);</li><li>scores \(s(q)\), each obtained by adding explicitly listed rational masses.</li></ul><p>The binary encoding length of every computed score is polynomial in the total input length. Therefore the constructed linear program has polynomial encoding length.</p><p>Rational linear-program feasibility and optimization, including exact comparison of the rational optimum with \(0\), are solvable in time polynomial in the number of variables, number of constraints, and coefficient encoding length. All hypotheses of that result are satisfied here.</p><h3>5. Conclusion</h3><p>The rational-mass problem belongs to \(\mathrm P\). The finite-electorate NP-hardness does not transfer because changing an individual voter is an indivisible decision, whereas the present variables \(z_A\) allow arbitrary fractional portions of every type mass. This removes the relevant integrality constraint and leaves a linear program.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Summary</h3><p>The prover correctly classifies the rational-mass problem as polynomial-time solvable. The proposed linear program exactly represents all permissible changes and the conditions under which AV selects \(p\). The treatment of strict tie-breaking inequalities through maximizing a common slack variable is valid.</p><h3>Step-by-step audit</h3><ul><li><b>Score changes.</b> Moving mass from a type \(A\supsetneq\{p\}\) to \(\{p\}\) preserves \(p\)&#x27;s score because both types approve \(p\). For every \(q\ne p\), the reduction</li></ul><p>\[
+   D_q(z)=\sum_{A\in\mathcal T_p:q\in A}z_A
+   \]<br>correctly counts exactly the moved mass that previously approved \(q\). Thus \(s_z(q)=s(q)-D_q(z)\) is correct.</p><ul><li><b>Tie-breaking conditions.</b> For \(q\prec p\), \(p\) must have a strictly greater score, yielding</li></ul><p>\[
+   D_q(z)&gt;s(q)-s(p).
+   \]<br>For projects after \(p\), equality is sufficient, yielding<br>\[
+   D_q(z)\ge s(q)-s(p).
+   \]<br>These conditions cover every competing project and are necessary and sufficient because \(B=1\) and all projects have unit cost.</p><ul><li><b>Feasible-change constraints.</b> The bounds \(0\le z_A\le\mu_A\) correctly enforce available mass, while \(\sum_Az_A\le r\) exactly enforces the stated cost limit.</li></ul><ul><li><b>Strict inequalities.</b> Replacing all strict constraints by a common positive slack \(\delta\) is valid. If a winning change exists, finiteness of \(E\) ensures that the minimum strict margin is positive. Conversely, any feasible solution with \(\delta&gt;0\) satisfies every required strict comparison. The artificial bound \(\delta\le2\) does not exclude a witness because all relevant margins are at most \(2\).</li></ul><ul><li><b>Case \(E=\varnothing\).</b> When no project has tie-breaking priority over \(p\), all winning constraints are non-strict, so ordinary LP feasibility suffices.</li></ul><ul><li><b>Complexity.</b> The LP has polynomially many variables and constraints relative to the explicitly listed types and projects. Its rational coefficients and computed scores have polynomial encoding length. Standard exact rational linear programming permits polynomial-time feasibility, optimization, and comparison of the rational optimum with \(0\).</li></ul><p>No unjustified step, missing edge case, or internal inconsistency affects the conclusion.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

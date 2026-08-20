@@ -1,0 +1,81 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Preserving Consistency in Multi-Issue Liquid Democracy — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Preserving Consistency in Multi-Issue Liquid Democracy <span style="font-weight:normal;color:#8a7350">(ijcai22-00029)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}hard}\), indeed \(\mathrm{NP\text{-}complete}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 2 — class: hardness</p>
+<blockquote class="thmq">MINIMALVOTECHANGE is NP-complete.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite set of complete voter types \(\Theta\), rational masses \(\mu_\theta\), acyclic type-level delegations, direct votes \(\widehat b_\theta\), canonical votes \(g_\theta\), and a consistency family \(\Gamma\subseteq\{0,1\}^m\) with polynomial-time partial-completion testing, decide whether there are variables \(q_{\theta,x}\ge 0\) for \(x\in\Gamma\) satisfying \(\sum_{x\supseteq\widehat b_\theta}q_{\theta,x}=\mu_\theta\) for every \(\theta\), with total changed mass \(\sum_{\theta,x}q_{\theta,x}|\{j:\theta\text{ delegates on }j,\ x_j\ne g_{\theta j}\}|\) at most a rational threshold \(K\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> An instance has complete voter types Θ, rational masses μ_θ, and \(m\) binary issues. For each type \(θ\) and issue \(j\), it either casts the direct vote \(ˆb_{θ j}\in\{0,1\}\) or delegates to another type; delegation graphs are acyclic separately on each issue. The canonical vote \(g_{θ j}\) is the direct vote at the end of \(θ\)&#x27;s delegation chain on issue \(j\).</p><p>A consistency family is \(Γ\subseteq\{0,1\}^m\), represented so that testing whether a partial assignment has a completion in \(Γ\) is polynomial-time. A mass assignment chooses \(q_{θ,x}\geq0\) for each \(x\inΓ\), with \(∑_{x\supseteqˆb_θ}q_{θ,x}=μ_θ\). Its changed mass is \(∑_{θ,x}q_{θ,x}|\{j:θ\text{ delegates on }j,\ x_j\ne g_{θ j}\}|\).</p><p><b>Target.</b> Is deciding whether such a mass assignment of changed mass at most a rational threshold \(K\) exists solvable in polynomial time, or is it NP-hard?</p><p><b>Nearest known results.</b> For finite individual voters, the corresponding MINIMALVOTECHANGE problem is NP-complete. Its NP-hardness holds with consistency constraints whose feasible ballots encode independent sets.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity classification</h3><p>The problem is \(\mathrm{NP\text{-}hard}\). In fact, under the stated representation assumption for \(\Gamma\), it is \(\mathrm{NP\text{-}complete}\), even when all masses are equal and positive and every delegation chain has length at most one.</p><h3>1. Deterministic-support lemma</h3><p>For a type \(\theta\), define</p><p>\[
+A_\theta=\{x\in\Gamma:x\supseteq\hat b_\theta\}
+\]</p><p>and</p><p>\[
+c_\theta(x)=\left|\{j:\theta\text{ delegates on }j,\ x_j\neq g_{\theta j}\}\right|.
+\]</p><p>Assume \(\mu_\theta&gt;0\). In any feasible mass assignment, mass assigned to ballots outside \(A_\theta\) can be deleted: such mass does not contribute to the equality</p><p>\[
+\sum_{x\in A_\theta}q_{\theta,x}=\mu_\theta,
+\]</p><p>and its contribution to changed mass is nonnegative.</p><p>Consequently, \(q_{\theta,x}/\mu_\theta\), for \(x\in A_\theta\), is a probability distribution. Therefore</p><p>\[
+\sum_{x\in A_\theta}q_{\theta,x}c_\theta(x)
+\geq
+\mu_\theta\min_{x\in A_\theta}c_\theta(x).
+\]</p><p>Equality is attained by putting all mass \(\mu_\theta\) on a minimizing ballot. Thus, provided every positive-mass type has a feasible completion, the optimum is exactly</p><p>\[
+\sum_{\theta}\mu_\theta
+\min_{x\in A_\theta}c_\theta(x).
+\]</p><p>Hence fractional splitting does not improve the objective. Nevertheless, finding the minimum-cost completion can be hard even when testing existence of an arbitrary completion is easy.</p><h3>2. Reduction from Independent Set</h3><p>Take an instance consisting of a simple undirected graph \(G=(V,E)\), with \(V=\{1,\ldots,n\}\), and an integer \(k\) satisfying \(1\leq k\leq n\). The question is whether \(G\) has an independent set of cardinality at least \(k\).</p><p>Create one issue for every vertex. Define</p><p>\[
+\Gamma_G=
+\left\{
+x\in\{0,1\}^n:
+x_u+x_v\leq 1\text{ for every }\{u,v\}\in E
+\right\}.
+\]</p><p>Thus, ballots in \(\Gamma_G\) are precisely characteristic vectors of independent sets.</p><h3>Polynomial-time completion testing</h3><p>Let \(p\) be any partial assignment, and let</p><p>\[
+U_p=\{v:p(v)=1\}.
+\]</p><p>If \(U_p\) contains both endpoints of an edge, no extension in \(\Gamma_G\) exists. Conversely, if \(U_p\) is independent, assigning \(0\) to every unassigned coordinate produces an extension in \(\Gamma_G\). Therefore partial-assignment completion is testable in time polynomial in \(|V|+|E|\).</p><h3>3. Voter types and delegations</h3><p>Introduce the following \(n+2\) types:</p><ul><li>one central type \(a\);</li><li>one zero type \(z\);</li><li>one helper type \(h_v\) for every \(v\in V\).</li></ul><p>Give every type the same mass</p><p>\[
+\mu=\frac{1}{n+2}.
+\]</p><p>Thus all masses are positive and their sum is \(1\).</p><p>The voting and delegation behavior is as follows.</p><ul><li>Type \(z\) votes directly \(0\) on every issue.</li><li>Type \(h_v\) votes directly \(1\) on issue \(v\), and delegates every issue \(u\neq v\) to \(z\).</li><li>Type \(a\) delegates issue \(v\) to \(h_v\).</li></ul><p>For a fixed issue \(v\), the only relevant delegation edges are \(a\to h_v\) and \(h_u\to z\) for \(u\neq v\). Hence every issue-specific delegation graph is acyclic, and every delegation chain has length at most one.</p><p>The canonical votes are:</p><ul><li>\(g_{a,v}=1\) for every \(v\);</li><li>for \(h_v\), every delegated issue has canonical vote \(0\);</li><li>\(z\) delegates no issues.</li></ul><p>Set the threshold to</p><p>\[
+K=\mu(n-k)=\frac{n-k}{n+2}.
+\]</p><p>The construction has polynomial size.</p><h3>4. Correctness of the reduction</h3><h3>Forward implication</h3><p>Suppose \(G\) has an independent set \(S\) with \(|S|\geq k\). Assign:</p><ul><li>all mass of \(a\) to the characteristic vector \(\chi^S\);</li><li>all mass of \(h_v\) to the singleton vector \(e_v\);</li><li>all mass of \(z\) to the all-zero vector.</li></ul><p>Each assigned ballot belongs to \(\Gamma_G\). It also extends the corresponding direct votes.</p><p>For \(h_v\), the ballot \(e_v\) agrees with its canonical vote \(0\) on every delegated issue. Thus every helper has zero changed mass. Type \(z\) delegates nowhere and also has zero changed mass.</p><p>For \(a\), every issue is delegated and its canonical ballot is the all-one vector. Its changed mass is therefore</p><p>\[
+\mu\left|\{v:\chi^S_v\neq 1\}\right|
+=\mu(n-|S|)
+\leq\mu(n-k)
+=K.
+\]</p><p>Hence the constructed mass-assignment instance is a yes-instance.</p><h3>Reverse implication</h3><p>Suppose there is a mass assignment of changed mass at most \(K\). Since the central type \(a\) has no direct votes, its mass constraint is</p><p>\[
+\sum_{x\in\Gamma_G}q_{a,x}=\mu.
+\]</p><p>Every \(x\in\Gamma_G\) represents an independent set, and the cost of assigning central mass to \(x\) is \(n-|x|\).</p><p>Assume for contradiction that \(G\) has no independent set of size at least \(k\). Then every \(x\in\Gamma_G\) satisfies \(|x|\leq k-1\), so</p><p>\[
+n-|x|\geq n-k+1.
+\]</p><p>Consequently, the changed mass contributed by \(a\) alone is at least</p><p>\[
+\sum_{x\in\Gamma_G}q_{a,x}(n-|x|)
+\geq
+\mu(n-k+1)
+&gt;
+\mu(n-k)
+=
+K.
+\]</p><p>All other contributions are nonnegative, contradicting the assumed threshold. Therefore \(G\) contains an independent set of cardinality at least \(k\).</p><p>This proves \(\mathrm{NP\text{-}hardness}\).</p><h3>5. Membership in \(\mathrm{NP}\)</h3><p>By the deterministic-support lemma, every yes-instance has a solution placing all positive mass of each type on a single ballot \(x_\theta\in\Gamma\) extending \(\hat b_\theta\).</p><p>A certificate therefore consists of one \(m\)-bit ballot for every positive-mass type. Verification proceeds by:</p><ul><li>testing \(x_\theta\in\Gamma\) using the given completion tester on the complete assignment \(x_\theta\);</li><li>checking that \(x_\theta\supseteq\hat b_\theta\);</li><li>computing the canonical votes from the acyclic delegation graphs;</li><li>computing \(\sum_\theta\mu_\theta c_\theta(x_\theta)\) using exact rational arithmetic and comparing it with \(K\).</li></ul><p>All these operations take polynomial time. Thus the problem belongs to \(\mathrm{NP}\).</p><h3>Conclusion</h3><p>The mass-assignment problem is \(\mathrm{NP\text{-}complete}\). Divisibility of masses does not remove the hardness because the objective and constraints are type-separable and linear: fractional mixtures cannot outperform the cheapest feasible ballot for a type. The hardness already arises from finding a feasible ballot nearest to the canonical ballot.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Summary</h3><p>The prover correctly establishes that the decision problem is NP-complete under the stated representation assumption for \(\Gamma\). The reduction is polynomial, respects the delegation restrictions, and remains valid despite fractional mass assignments.</p><h3>Step-by-step audit</h3><h3>1. Deterministic-support lemma</h3><p>For each type \(\theta\), only ballots in \(A_\theta\) contribute to the required equality. Any mass placed outside \(A_\theta\) can therefore be set to zero without violating feasibility, and doing so cannot increase the nonnegative objective.</p><p>After this deletion, the normalized coefficients \(q_{\theta,x}/\mu_\theta\) form a probability distribution when \(\mu_\theta&gt;0\). The weighted-average inequality is valid, and concentrating all mass on a minimum-cost feasible ballot attains equality.</p><p>The resulting decomposition of the optimum by type is correct. Zero-mass types cause no difficulty because assigning them zero mass is feasible.</p><h3>2. Construction of \(\Gamma_G\)</h3><p>The family \(\Gamma_G\) is exactly the set of characteristic vectors of independent sets. The completion test is correct:</p><ul><li>If the coordinates already assigned \(1\) contain an edge, no completion is possible.</li><li>If they form an independent set, setting every unassigned coordinate to \(0\) gives a valid completion.</li></ul><p>This establishes the required polynomial-time partial-completion property.</p><h3>3. Types and delegation graphs</h3><p>The construction uses \(n+2\) types with equal positive rational mass.</p><p>For each issue \(v\):</p><ul><li>Type \(a\) delegates to \(h_v\), which votes directly \(1\) on that issue.</li><li>Every \(h_u\) with \(u\neq v\) delegates that issue directly to \(z\).</li><li>Type \(z\) votes directly.</li></ul><p>Thus all issue-specific delegation graphs are acyclic, and every delegation chain has one edge at most. The stated canonical votes follow correctly.</p><h3>4. Forward implication</h3><p>Given an independent set \(S\) of size at least \(k\):</p><ul><li>\(\chi^S\), every singleton vector \(e_v\), and the zero vector belong to \(\Gamma_G\).</li><li>These ballots satisfy the respective direct-vote constraints.</li><li>Helpers and \(z\) contribute zero changed mass.</li><li>Type \(a\) contributes exactly \(\mu(n-|S|)\), which is at most \(K=\mu(n-k)\).</li></ul><p>The forward implication is correct.</p><h3>5. Reverse implication</h3><p>Because \(a\) has no direct votes, all ballots in \(\Gamma_G\) are eligible for its required mass. If no independent set has size at least \(k\), every eligible ballot has at most \(k-1\) ones and hence costs at least \(n-k+1\) for type \(a\).</p><p>Therefore \(a\)&#x27;s contribution alone is at least \(\mu(n-k+1)&gt;K\), contradicting the assumed feasible threshold. Fractional splitting cannot evade this bound because it applies pointwise to every ballot in the support.</p><p>The reverse implication is correct.</p><h3>6. Polynomial size and source problem</h3><p>The construction has polynomially many types, issues, delegation edges, and graph constraints. Independent Set remains NP-hard under the harmless restriction \(1\leq k\leq n\).</p><h3>7. Membership in NP</h3><p>The deterministic-support lemma guarantees that every yes-instance has a certificate containing one ballot per positive-mass type. Membership in \(\Gamma\) can be checked by applying the assumed partial-completion test to the complete assignment. Direct-vote consistency, canonical votes, objective cost, and the rational threshold comparison are all polynomial-time computations.</p><p>Thus membership in NP is established.</p><h3>Final assessment</h3><p>No false statements, missing hypotheses, unjustified nontrivial steps, or relevant edge-case failures were found. The claimed NP-completeness result follows rigorously.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

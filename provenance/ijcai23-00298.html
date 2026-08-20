@@ -1,0 +1,75 @@
+<!doctype html><html><head><meta charset="utf-8"><title>An Experimental Comparison of Multiwinner Voting Rules on Approval Elections — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>An Experimental Comparison of Multiwinner Voting Rules on Approval Elections <span style="font-weight:normal;color:#8a7350">(ijcai23-00298)</span></h1>
+<p class="banner">claim: resolved · adversarial review: partial</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}complete}\) for both \(d_H\) and \(d_J\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2 — class: algorithmic</p>
+<blockquote class="thmq">For a given candidate pseudodistance function d(x, y), which is a function of A(x) and A(y) only, FAR- THEST COMMITTEES under d is FPT w.r.t. n + k.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), approval types \(T=\{A_1,\ldots,A_\tau\}\) with rational masses \(\mu_i\) summing to \(1\), committee size \(k\), threshold \(q\), and \(d_\mu\) equal to normalized Hamming or Jaccard distance, decide whether integral size-\(k\) committees \(X,Y\subseteq C\) satisfy \(D_\mu(X,Y)=\min_{\pi:X\to Y\text{ bijective}}\sum_{c\in X}d_\mu(c,\pi(c))\ge q\), or optimize \(D_\mu(X,Y)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><h3>Definitions</h3><p>The input lists candidates \(C\), \(k\), rational masses \(\mu(S)\) for approval types \(S\subseteq C\) with \(\sum_S\mu(S)=1\), and \(B\). Let \(A(c)=\{S:c\in S\}\). Define \(d_H(c,d)=\sum_{S\in A(c)	riangle A(d)}\mu(S)\) and \(d_J(c,d)=\frac{\sum_{S\in A(c)	riangle A(d)}\mu(S)}{\sum_{S\in A(c)\cup A(d)}\mu(S)}\), with \(d_J(c,d)=0\) if the denominator is \(0\).<br>For integral \(k\)-committees \(X,Y\subseteq C\), let \(D_d(X,Y)=\min_{\pi:X	o Y	ext{ bijective}}\sum_{x\in X}d(x,\pi(x))\).</p><h3>Target</h3><p>For each \(d\in\{d_H,d_J\}\), is deciding whether there are integral \(k\)-committees \(X,Y\) with \(D_d(X,Y)\ge B\) in \(\mathrm{P}\), or is it NP-hard?</p><h3>Nearest known results</h3><p>For finite approval elections with unit-weight voters, the corresponding Farthest Committees problem is NP-hard for both Hamming and Jaccard distance; it is also W[1]-hard parameterized by \(k\).</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Classification</h3><p>For both \(d_H\) and \(d_J\), the decision problem is \(\mathrm{NP}\)-complete, and therefore \(\mathrm{NP}\)-hard.</p><h3>Encoding convention</h3><p>The proof uses the standard explicit-support encoding: every approval type \(S\) with positive mass is listed together with its rational mass \(\mu(S)\); zero-mass types may be omitted. This is the natural meaning of a type-mass input and permits at most as many listed types as there were voters in the finite election.</p><h3>Finite source problem</h3><p>Use the stated known result that Farthest Committees is \(\mathrm{NP}\)-hard for finite approval elections with unit-weight voters, for both Hamming and Jaccard candidate distances.</p><p>Let such a finite instance consist of candidates \(C\), voters \(V\), committee size \(k\), and threshold \(b\). Write \(n=|V|\), where \(n\geq 1\). Each voter \(v\) has an approval set \(S_v\subseteq C\).</p><p>For candidates \(c,d\in C\), define</p><p>\[
+h_V(c,d)=|\{v\in V: |\{c,d\}\cap S_v|=1\}|
+\]</p><p>and</p><p>\[
+u_V(c,d)=|\{v\in V: c\in S_v\text{ or }d\in S_v\}|.
+\]</p><p>Thus the finite Hamming distance is \(h_V(c,d)\), while the finite Jaccard distance is \(h_V(c,d)/u_V(c,d)\) when \(u_V(c,d)&gt;0\), and is \(0\) otherwise.</p><h3>Construction of the type-mass instance</h3><p>For every approval type \(S\subseteq C\), let</p><p>\[
+n_S=|\{v\in V:S_v=S\}|.
+\]</p><p>Include every type with \(n_S&gt;0\), and set</p><p>\[
+\mu(S)=\frac{n_S}{n}.
+\]</p><p>Then</p><p>\[
+\sum_{S\subseteq C}\mu(S)=\frac{1}{n}\sum_{S\subseteq C}n_S=1.
+\]</p><p>The number of positive-mass types is at most \(n\). Each mass has numerator and denominator of at most \(O(\log n)\) bits, so the construction is polynomial-time.</p><h3>Preservation of Hamming distances</h3><p>For candidates \(c,d\),</p><p>\[
+d_H(c,d)
+=\sum_{S:|\{c,d\}\cap S|=1}\mu(S)
+=\frac{1}{n}\sum_{S:|\{c,d\}\cap S|=1}n_S
+=\frac{h_V(c,d)}{n}.
+\]</p><p>Consequently, for every pair of \(k\)-committees \(X,Y\) and every bijection \(\pi:X\to Y\),</p><p>\[
+\sum_{x\in X}d_H(x,\pi(x))
+=\frac{1}{n}\sum_{x\in X}h_V(x,\pi(x)).
+\]</p><p>Since multiplication by the positive constant \(1/n\) preserves minimizers and minima,</p><p>\[
+D_{d_H}(X,Y)=\frac{1}{n}D_{h_V}(X,Y).
+\]</p><p>Therefore set the new threshold to \(B=b/n\). Then</p><p>\[
+D_{d_H}(X,Y)\geq B
+\quad\Longleftrightarrow\quad
+D_{h_V}(X,Y)\geq b.
+\]</p><p>If the finite source theorem instead normalizes Hamming distance by \(n\), the candidate distances already coincide and one simply sets \(B=b\).</p><h3>Preservation of Jaccard distances</h3><p>The numerator of the continuous Jaccard distance is</p><p>\[
+\sum_{S:|\{c,d\}\cap S|=1}\mu(S)=\frac{h_V(c,d)}{n}.
+\]</p><p>Its denominator is</p><p>\[
+\sum_{S:c\in S\text{ or }d\in S}\mu(S)=\frac{u_V(c,d)}{n}.
+\]</p><p>If \(u_V(c,d)&gt;0\), cancellation gives</p><p>\[
+d_J(c,d)
+=\frac{h_V(c,d)/n}{u_V(c,d)/n}
+=\frac{h_V(c,d)}{u_V(c,d)}.
+\]</p><p>If \(u_V(c,d)=0\), both the finite and continuous conventions assign distance \(0\). Hence every candidate-pair distance is preserved exactly. It follows that, for all \(X,Y\),</p><p>\[
+D_{d_J}(X,Y)=D_{J,V}(X,Y).
+\]</p><p>Thus the threshold remains \(B=b\), and the finite instance is a yes-instance exactly when the constructed type-mass instance is a yes-instance.</p><p>This proves \(\mathrm{NP}\)-hardness for both distances. The reduction also leaves \(k\) unchanged, so the stated finite \(\mathrm{W[1]}\)-hardness parameterized by \(k\) transfers as well.</p><h3>Membership in \(\mathrm{NP}\)</h3><p>A certificate consists of two subsets \(X,Y\subseteq C\), each of cardinality \(k\).</p><p>Given this certificate, all \(k^2\) candidate-pair distances can be computed exactly in polynomial time by summing the explicitly listed rational masses. The resulting rational numbers have polynomial bit length.</p><p>The quantity \(D_d(X,Y)\) is the cost of a minimum-weight perfect matching in the complete bipartite graph with sides \(X\) and \(Y\) and edge costs \(d(x,y)\). Minimum-weight bipartite perfect matching is polynomial-time solvable. Exact rational comparison causes no difficulty: multiplying all edge costs and \(B\) by the product of their denominators produces equivalent integer weights whose total bit length remains polynomial in the input size.</p><p>Therefore a verifier can decide in polynomial time whether \(D_d(X,Y)\geq B\). The problem belongs to \(\mathrm{NP}\).</p><h3>Conclusion</h3><p>For each \(d\in\{d_H,d_J\}\), the rational type-mass formulation is \(\mathrm{NP}\)-complete. Normalizing a finite electorate into total mass \(1\) only scales Hamming distances uniformly and leaves Jaccard distances unchanged; it does not remove the combinatorial hardness of selecting the two integral committees.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Encoding convention and the unconditional Classification/Conclusion: The proof establishes NP-completeness only under an assumed sparse positive-support encoding that is not explicitly fixed by USER_TASK. If all 2^{|C|} type masses must be listed, the reduction would require exponentially many zero-mass entries and is not a polynomial-time reduction.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The reduction and NP-membership argument are correct for the explicitly assumed sparse, positive-support encoding. However, the USER_TASK does not explicitly specify whether zero-mass types may be omitted. Consequently, the prover establishes only a conditional classification and does not unambiguously resolve the problem as stated.</p><h3>Step-by-step audit</h3><ul><li><b>Use of the finite source problem:</b> Valid. The USER_TASK supplies NP-hardness of the corresponding finite problem for both distances, so the prover may use it without reproving it.</li></ul><ul><li><b>Conversion of voters into masses:</b> Correct under positive-support encoding. Setting \(\mu(S)=n_S/n\) produces nonnegative rational masses summing to \(1\), with at most \(n\) listed positive-mass types and polynomial-size rational representations.</li></ul><ul><li><b>Hamming-distance preservation:</b> Correct. Every disagreeing voter contributes mass \(1/n\), giving</li></ul><p>\[
+   d_H(c,d)=h_V(c,d)/n.
+   \]<br>Uniform scaling commutes with minimization over bijections, so the threshold transformation \(B=b/n\) is valid. The separate comment concerning a normalized finite convention is also correct.</p><ul><li><b>Jaccard-distance preservation:</b> Correct. Both numerator and denominator are scaled by \(1/n\), which cancels when the denominator is positive. When it is zero, both conventions assign distance \(0\). Hence all candidate-pair distances and committee distances are preserved exactly.</li></ul><ul><li><b>Transfer of parameterized hardness:</b> Correct under the same encoding convention. The construction is polynomial-time and leaves \(k\) unchanged.</li></ul><ul><li><b>Membership in NP:</b> Correct in substance. Given \(X,Y\), candidate distances are exactly computable with polynomial-bit rational arithmetic, and \(D_d(X,Y)\) is obtainable by polynomial-time minimum-weight bipartite perfect matching. Taking a common denominator has polynomial bit length because the bit length of a product is additive across polynomially many polynomial-bit denominators.</li></ul><ul><li><b>Encoding dependency:</b> This is the blocking issue. The prover introduces the assumption that only positive-mass types are listed, but the USER_TASK merely says that the input lists masses \(\mu(S)\) for types \(S\subseteq C\). If the intended representation requires entries for all \(2^{|C|}\) types, the proposed reduction is not polynomial-time: it would have to output exponentially many zero-mass entries. Calling sparse support “the natural meaning” does not establish that this is the encoding required by the task.</li></ul><p>The minimum clarification needed is an explicit statement in the USER_TASK that the input lists only the support of \(\mu\), with omitted types understood to have mass \(0\). Under that clarification, the proof is complete. Without it, the unconditional classification is not established.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,85 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Diversity, Agreement, and Polarization in Elections — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Diversity, Agreement, and Polarization in Elections <span style="font-weight:normal;color:#8a7350">(ijcai23-00299)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}complete}\), and therefore \(\mathrm{NP\text{-}hard}\); polynomial-time solvability would imply \(\mathrm{P}=\mathrm{NP}\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: hardness</p>
+<blockquote class="thmq">k-KEMENY AMONG VOTES is NP-complete and W[2]-hard when parameterized by k.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), a finite set of ranking types \(T\subseteq S_C\), rational masses \(\mu_t&gt;0\) summing to \(1\), an integer \(k\), and rational threshold \(B\), decide whether there exists \(\Lambda\subseteq T\) with \(|\Lambda|\le k\) such that \(\sum_{t\in T}\mu_t\min_{\lambda\in\Lambda}\operatorname{swap}(t,\lambda)\le B\); the optimization version minimizes this quantity.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><h3>Definitions</h3><p>Let \(C\) be a finite candidate set and \(S\) a finite set of linear orders over \(C\). Let \(\mu_t&gt;0\) be binary-encoded rationals with \(\sum_{t\in S}\mu_t=1\), and let \(\operatorname{swap}(t,\lambda)\) denote Kendall&#x27;s \(	au\) distance between rankings \(t\) and \(\lambda\).</p><p>Given a positive integer \(k\) and rational \(B\), decide whether some \(\Lambda\subseteq S\) with \(|\Lambda|\le k\) satisfies \(\sum_{t\in S}\mu_t\min_{\lambda\in\Lambda}\operatorname{swap}(t,\lambda)\le B\); on yes-instances, output such a \(\Lambda\).</p><h3>Target</h3><p>Is this rational-mass version of \(k\)-Kemeny Among Votes solvable in polynomial time, or is it NP-hard?</p><h3>Nearest known results</h3><p>For finite elections with unit-weight voters and centers restricted to rankings appearing among the votes, the decision problem is NP-complete and \(W[2]\)-hard when parameterized by \(k\).</p><p>That result concerns the unweighted finite-list formulation rather than arbitrary rational masses.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity of Rational-Mass \(k\)-Kemeny Among Votes</h3><h3>Theorem</h3><p>The decision version of rational-mass \(k\)-Kemeny Among Votes is \(\mathrm{NP}\)-complete. This holds even when every mass is obtained by normalizing an integer voter multiplicity. Consequently, a polynomial-time algorithm that also outputs a feasible center set on yes-instances exists if and only if \(\mathrm{P}=\mathrm{NP}\).</p><p>Moreover, the stated \(\mathrm{W}[2]\)-hardness parameterized by \(k\) transfers to the rational-mass formulation.</p><h3>1. Membership in \(\mathrm{NP}\)</h3><p>Let \(m=|C|\). A certificate is a subset \(\Lambda\subseteq S\), represented by indices of rankings in \(S\), satisfying \(|\Lambda|\leq k\).</p><p>For each \(t\in S\) and \(\lambda\in\Lambda\), the Kendall distance \(\operatorname{swap}(t,\lambda)\) can be computed in polynomial time, for example by counting inversions after expressing \(\lambda\) in the order induced by \(t\). Every such distance is an integer between \(0\) and \(\binom{m}{2}\).</p><p>Thus one can compute</p><p>\[
+d_t=\min_{\lambda\in\Lambda}\operatorname{swap}(t,\lambda)
+\]</p><p>for every \(t\in S\), and then compare exactly</p><p>\[
+\sum_{t\in S}\mu_t d_t
+\]</p><p>with \(B\).</p><p>Write \(\mu_t=p_t/q_t\) and \(B=a/b\), with positive denominators. Clearing denominators produces an integer comparison. The product of all denominators has bit length at most the sum of their input bit lengths, so this exact comparison requires only polynomially many bit operations. Hence the decision problem belongs to \(\mathrm{NP}\).</p><h3>2. Reduction from the unit-weight problem</h3><p>Use the stated known \(\mathrm{NP}\)-complete problem:</p><ul><li>the candidates are \(C\);</li><li>the unit-weight election is a list \(V=(v_1,\ldots,v_n)\) of linear orders;</li><li>centers must be rankings occurring in \(V\);</li><li>the question is whether some set of at most \(k\) centers has total Kendall cost at most an integer threshold \(D\).</li></ul><p>Let</p><p>\[
+S=\{t:t\text{ occurs among }v_1,\ldots,v_n\}.
+\]</p><p>For every \(t\in S\), let</p><p>\[
+a_t=\bigl|\{i:v_i=t\}\bigr|
+\]</p><p>be its multiplicity. Construct the rational-mass instance by setting</p><p>\[
+\mu_t=\frac{a_t}{n}
+\qquad\text{and}\qquad
+B=\frac{D}{n}.
+\]</p><p>These masses are positive and satisfy</p><p>\[
+\sum_{t\in S}\mu_t
+=
+\frac{1}{n}\sum_{t\in S}a_t
+=
+1.
+\]</p><p>The construction is polynomial-time: each \(a_t\leq n\), so every mass has encoding length \(O(\log n)\), before or after reducing the fraction.</p><h3>3. Preservation of feasible center sets and costs</h3><p>The allowable center rankings in both instances are exactly the distinct rankings occurring in \(V\), namely \(S\).</p><p>If the unit-weight formulation treats centers as voter occurrences, choosing two occurrences with the same ranking never improves the objective. Duplicate centers can therefore be deleted without increasing cost or cardinality. Hence it is equivalent to choose a subset of \(S\).</p><p>For every \(\Lambda\subseteq S\),</p><p>\[
+\begin{aligned}
+\sum_{t\in S}\mu_t
+\min_{\lambda\in\Lambda}\operatorname{swap}(t,\lambda)
+&amp;=
+\sum_{t\in S}\frac{a_t}{n}
+\min_{\lambda\in\Lambda}\operatorname{swap}(t,\lambda)\\
+&amp;=
+\frac{1}{n}
+\sum_{i=1}^{n}
+\min_{\lambda\in\Lambda}\operatorname{swap}(v_i,\lambda).
+\end{aligned}
+\]</p><p>Consequently,</p><p>\[
+\sum_{i=1}^{n}
+\min_{\lambda\in\Lambda}\operatorname{swap}(v_i,\lambda)
+\leq D
+\]</p><p>holds if and only if</p><p>\[
+\sum_{t\in S}\mu_t
+\min_{\lambda\in\Lambda}\operatorname{swap}(t,\lambda)
+\leq B.
+\]</p><p>The reduction therefore preserves yes-instances and no-instances exactly. It also leaves \(k\) unchanged.</p><h3>4. Consequences</h3><p>The reduction proves \(\mathrm{NP}\)-hardness, while membership in \(\mathrm{NP}\) proves \(\mathrm{NP}\)-completeness.</p><p>The requirement to output \(\Lambda\) on yes-instances does not weaken this conclusion: any polynomial-time algorithm satisfying that requirement would, in particular, decide the \(\mathrm{NP}\)-complete decision problem. Conversely, if \(\mathrm{P}=\mathrm{NP}\), standard polynomial-witness search using the polynomial-time verifier yields such a center set.</p><p>Because the reduction preserves \(k\), the stated \(\mathrm{W}[2]\)-hardness parameterized by \(k\) transfers as well.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Sections 1 and 3, where the prover quantifies over all subsets satisfying |Lambda| &lt;= k: The expression min over lambda in Lambda is undefined when Lambda is empty. The write-up should require a nonempty center set or explicitly define the empty-set cost as positive infinity.</li></ul>
+<div class="pre"><h3>Verification Report</h3><h3>Summary</h3><p>The prover correctly reduces the known unit-weight finite-list problem to the rational-mass formulation by consolidating duplicate rankings and assigning each distinct ranking its normalized multiplicity. The objective is preserved exactly up to the factor \(1/n\), the admissible centers remain the same, and \(k\) is unchanged.</p><p>The argument establishes NP-hardness and membership in NP. It also correctly transfers the stated parameterized hardness. No major mathematical gap or false statement was found.</p><h3>Step-by-step audit</h3><h3>1. Membership in NP</h3><p>The proposed certificate, a subset \(\Lambda\subseteq S\) represented by indices, has polynomial encoding length because it contains at most \(|S|\) indices, regardless of the binary encoding of \(k\).</p><p>Computing Kendall distance by inversion counting is polynomial in \(|C|\). Taking the minimum over the proposed centers and evaluating the weighted sum are therefore polynomial-time operations.</p><p>The exact-arithmetic argument is valid. If all rational inputs are placed over the product of their denominators, that product has bit length equal to the sum of the denominator bit lengths, hence polynomial in the input size. The resulting integer arithmetic also involves only polynomial-bit-length integers.</p><p>There is one minor definitional omission: the prover does not specify how \(\min_{\lambda\in\Lambda}\) is interpreted when \(\Lambda=\varnothing\). Since the task permits \(|\Lambda|\leq k\), the empty subset is syntactically allowed even though its objective is undefined. The verifier should either require \(1\leq|\Lambda|\leq k\) or explicitly adopt the convention that the minimum over the empty set is \(+\infty\). This does not affect the reduction or complexity conclusion.</p><h3>2. Construction of the reduction</h3><p>For each distinct ranking \(t\), the multiplicity \(a_t\) is a positive integer and</p><p>\[
+\sum_{t\in S}a_t=n.
+\]</p><p>Thus \(\mu_t=a_t/n\) is positive and the masses sum to \(1\), exactly satisfying the rational-mass input conditions.</p><p>The threshold transformation \(B=D/n\) is correct. All generated rational numbers have polynomial encoding length, and grouping identical rankings can be performed in polynomial time by comparing their finite encodings.</p><h3>3. Admissible center sets</h3><p>Both formulations permit exactly rankings that occur among the original votes. Replacing occurrences by their distinct rankings does not change the available ranking values.</p><p>The observation about duplicate centers is correct: selecting the same ranking more than once does not change any minimum distance. Removing duplicate occurrences cannot increase either the cost or the number of centers.</p><h3>4. Objective preservation</h3><p>For every nonempty \(\Lambda\subseteq S\), grouping voter occurrences according to their ranking gives</p><p>\[
+\sum_{t\in S}\frac{a_t}{n}
+\min_{\lambda\in\Lambda}\operatorname{swap}(t,\lambda)
+=
+\frac{1}{n}\sum_{i=1}^n
+\min_{\lambda\in\Lambda}\operatorname{swap}(v_i,\lambda).
+\]</p><p>Therefore comparison with \(B=D/n\) is exactly equivalent to comparison of the original total cost with \(D\). This proves both directions of the reduction without approximation or rounding.</p><h3>5. Complexity consequences</h3><p>The combination of NP-hardness and membership in NP establishes NP-completeness.</p><p>The claim concerning witness output is also correct. A polynomial-time algorithm that decides the problem and outputs a center set on yes-instances would decide an NP-complete language. Conversely, under \(\mathrm{P}=\mathrm{NP}\), the associated polynomially balanced NP witness relation can be searched in polynomial time by the standard prefix-extension method.</p><p>Because the reduction is polynomial-time and maps \(k\) to the same value \(k\), it is also a valid parameterized reduction. Hence the stated \(\mathrm{W}[2]\)-hardness transfers.</p><h3>Minimum clarification required</h3><p>Specify that feasible center sets must be nonempty, or define the objective value for \(\Lambda=\varnothing\) as \(+\infty\). No new mathematical argument is otherwise needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

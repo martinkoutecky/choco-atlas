@@ -1,0 +1,82 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Selecting Interlacing Committees — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Selecting Interlacing Committees <span style="font-weight:normal;color:#8a7350">(aamas25-00076)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}complete}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 4.4 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), committee size \(k\), a supplied candidate order, and rational masses \(\mu_t\) on approval types \(I_t\subseteq C\), each an interval, choose \(W\subseteq C\) with \(|W|=k\) maximizing \(Pairs_\infty(\mu,W)=\sum_{t,u}\mu_t\mu_u\mathbf{1}[I_t\cap I_u\cap W\neq\varnothing]\); equivalently, decide whether this value is at least a rational threshold \(q\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given a finite candidate set \(C\), an integer \(k\), and approval types \((A_t,\mu_t)\) with \(A_t\subseteq C\), \(\mu_t\in\mathbb{Q}_{\ge 0}\), and \(\sum_t\mu_t=1\), form the graph on positive-mass types in which \(s,t\) are adjacent when \(A_s\cap A_t\cap W
+e\varnothing\). A \(W\)-connected component has mass equal to the sum of its types&#x27; masses, and \(\mathrm{Cons}_\infty(W,\mu)\) is the sum of squared component masses.</p><p>Target: Is deciding whether there exists \(W\subseteq C\) with \(|W|=k\) and \(\mathrm{Cons}_\infty(W,\mu)=1\) solvable in polynomial time, or is it NP-hard?</p><p>Known discrete result: for a finite list of voters, deciding whether a size-\(k\) committee connects all voters is NP-complete.<br>Continuous side: no result for this exact finite approval-type distribution problem is stated in the supplied source.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity Classification</h3><h3>Theorem</h3><p>The decision problem is \( \mathrm{NP\text{-}complete} \). In particular, it is \( \mathrm{NP\text{-}hard} \) even when every approval type has the same positive mass.</p><h3>Lemma: Consistency One Is Equivalent to Connectivity</h3><p>Fix a committee \(W\). Let the connected components of the graph on positive-mass types be \(K_1,\ldots,K_q\), and define their masses by</p><p>\[
+x_i=\sum_{t\in K_i}\mu_t.
+\]</p><p>Every \(x_i\) is strictly positive, and, because zero-mass types are excluded and the total type mass is \(1\),</p><p>\[
+\sum_{i=1}^{q}x_i=1.
+\]</p><p>Consequently,</p><p>\[
+1-\mathrm{Cons}_\infty(W,\mu)
+=
+\left(\sum_{i=1}^{q}x_i\right)^2-\sum_{i=1}^{q}x_i^2
+=
+2\sum_{1\leq i&lt;j\leq q}x_ix_j.
+\]</p><p>If \(q=1\), the right-hand side is \(0\), so \(\mathrm{Cons}_\infty(W,\mu)=1\).</p><p>If \(q\geq 2\), at least one product \(x_ix_j\) is strictly positive. Hence</p><p>\[
+\mathrm{Cons}_\infty(W,\mu)&lt;1.
+\]</p><p>Thus</p><p>\[
+\mathrm{Cons}_\infty(W,\mu)=1
+\quad\Longleftrightarrow\quad
+\text{the positive-mass type graph induced by \(W\) is connected.}
+\]</p><h3>Membership in \( \mathrm{NP} \)</h3><p>A certificate is a subset \(W\subseteq C\) of size \(k\).</p><p>The verifier checks \(|W|=k\), constructs the graph whose vertices are the positive-mass types, and adds an edge between \(s\) and \(t\) exactly when</p><p>\[
+A_s\cap A_t\cap W\neq\varnothing.
+\]</p><p>These intersections and graph connectivity can be tested in polynomial time. By the lemma, the graph is connected exactly when \(\mathrm{Cons}_\infty(W,\mu)=1\). Therefore the problem belongs to \( \mathrm{NP} \).</p><h3>Reduction from the Discrete Problem</h3><p>Consider an instance of the supplied \( \mathrm{NP\text{-}complete} \) discrete problem. It consists of candidates \(C\), approval sets</p><p>\[
+B_1,\ldots,B_n\subseteq C,
+\]</p><p>and a target committee size \(k\). The question is whether some size-\(k\) committee connects all \(n\) voters.</p><p>Construct a continuous instance with one indexed type for each voter:</p><p>\[
+A_i=B_i,
+\qquad
+\mu_i=\frac{1}{n}
+\quad\text{for every \(i\in\{1,\ldots,n\}\).}
+\]</p><p>All masses are positive and satisfy</p><p>\[
+\sum_{i=1}^{n}\mu_i=1.
+\]</p><p>For every committee \(W\subseteq C\) and every pair \(i,j\),</p><p>\[
+A_i\cap A_j\cap W\neq\varnothing
+\quad\Longleftrightarrow\quad
+B_i\cap B_j\cap W\neq\varnothing.
+\]</p><p>Therefore the graph on continuous types is exactly the graph on voters in the discrete instance. It follows that</p><p>\[
+W\text{ connects all discrete voters}
+\quad\Longleftrightarrow\quad
+\mathrm{Cons}_\infty(W,\mu)=1.
+\]</p><p>The reduction preserves \(C\) and \(k\). Each mass \(1/n\) has encoding length \(O(\log n)\), so the construction is polynomial-time.</p><p>Hence the continuous problem is \( \mathrm{NP\text{-}hard} \), already under equal masses. Together with membership in \( \mathrm{NP} \), it is \( \mathrm{NP\text{-}complete} \).</p><h3>Remark on Requiring Distinct Approval Types</h3><p>If “types” are required to have pairwise distinct approval sets, equal discrete ballots can instead be aggregated. For each distinct approval set \(D_j\), let \(m_j\) be its multiplicity and assign it mass \(m_j/n\).</p><p>When there are at least two distinct approval sets, the voter graph is connected if and only if the aggregated type graph is connected:</p><ul><li>Connectivity of the voter graph implies connectivity after contracting equal-ballot classes.</li><li>Conversely, if the aggregated graph is connected, every type has a neighbor. Thus \(D_j\cap W\neq\varnothing\) for every type \(j\), so all voters within each equal-ballot class form a clique. Every edge between aggregated types lifts to all corresponding voter pairs, and a spanning tree of the aggregated graph therefore lifts to a connected voter graph.</li></ul><p>The case of only one distinct approval set is directly decidable and can be mapped to a fixed yes-instance or no-instance. Thus the hardness conclusion remains valid under the distinct-type convention as well.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Reduction from the Discrete Problem: The assignment \(\mu_i=1/n\) assumes without stating that the source instance has at least one voter; the write-up must either restrict the cited NP-hard source problem to \(n\geq1\) or handle \(n=0\) separately.</li><li><b>minor</b> — Remark on Requiring Distinct Approval Types: For the exceptional case with only one distinct approval set, the claimed many-one reduction is not fully specified: the exact yes/no criterion and valid fixed target instances are omitted.</li></ul>
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The reduction correctly transfers the supplied discrete connectivity problem to the finite approval-type distribution problem. The connectivity lemma, NP-membership argument, and reduction are sound. Only minor edge-case and presentation clarifications are missing.</p><h3>Step-by-step verification</h3><h3>1. Equivalence between consistency one and connectivity</h3><p>For connected-component masses \(x_1,\ldots,x_q\), the prover correctly establishes:</p><p>\[
+\sum_{i=1}^q x_i=1
+\]</p><p>and</p><p>\[
+1-\mathrm{Cons}_\infty(W,\mu)
+=2\sum_{1\leq i&lt;j\leq q}x_ix_j.
+\]</p><p>Each component contains a positive-mass type, so every \(x_i&gt;0\). Therefore:</p><ul><li>If \(q=1\), then \(\mathrm{Cons}_\infty(W,\mu)=1\).</li><li>If \(q\geq2\), at least one cross-product is positive, so \(\mathrm{Cons}_\infty(W,\mu)&lt;1\).</li></ul><p>This proves the claimed equivalence. Since the total mass is \(1\), the positive-mass graph is nonempty, so no empty-graph convention is needed.</p><h3>2. Membership in NP</h3><p>A committee \(W\) is a polynomial-size certificate. Under the natural explicit encoding of candidates and approval sets, the verifier can construct the type graph and test its connectivity in polynomial time. By the preceding equivalence, this suffices to verify \(\mathrm{Cons}_\infty(W,\mu)=1\) without performing potentially delicate rational arithmetic.</p><p>This part is correct.</p><h3>3. Reduction from the discrete problem</h3><p>Assigning</p><p>\[
+A_i=B_i,\qquad \mu_i=\frac1n
+\]</p><p>preserves every graph adjacency because the two edge predicates are literally identical. Hence a committee connects all discrete voters exactly when the resulting positive-mass type graph is connected, and therefore exactly when its consistency is \(1\).</p><p>The rational number \(1/n\) has polynomial encoding length, and the construction has polynomial size. Thus the reduction proves NP-hardness, including under equal masses.</p><p>There is one minor edge case: the construction uses \(1/n\) without explicitly assuming \(n\geq1\). The supplied description says “a finite list of voters” but does not expressly exclude an empty list. The prover should state that the source NP-hardness is restricted to nonempty voter instances or separately dispose of \(n=0\). This is routine and does not affect the substantive reduction.</p><h3>4. Distinct-type convention</h3><p>The main task does not require pairwise distinct approval sets, so this remark is not necessary for the principal conclusion.</p><p>Its equivalence argument is substantively sound when there are at least two distinct approval sets. In that situation, connectivity of the aggregated graph forces every aggregated vertex to have a neighbor, which ensures each corresponding approval set meets \(W\); duplicate voters of that type consequently form a clique.</p><p>For the one-distinct-type case, however, the write-up merely says that the instance can be mapped to a fixed yes-instance or no-instance. A formally specified many-one reduction should state the exact decision criterion for this exceptional case and identify valid fixed target instances. This is an omitted routine specification, not a mathematical obstruction.</p><h3>Conclusion</h3><p>The prover correctly establishes that the problem is NP-complete. The omissions concern only easily isolated boundary cases and the optional distinct-type refinement; no central inference is false or unsupported.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

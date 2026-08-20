@@ -1,0 +1,111 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Eliminating Majority Illusion — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Eliminating Majority Illusion <span style="font-weight:normal;color:#8a7350">(aamas25-00089)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable by rational linear programming; therefore not \(\mathsf{NP}\)-hard unless \(\mathsf{P}=\mathsf{NP}\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: hardness</p>
+<blockquote class="thmq">EI is NP-hard, as well as W[2]-hard when parame- terised by the solution size, even if the input graph is bipartite and has bounded diameters.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite type set \(T\), rational society masses \( \mu_t \), initial labels \(b_t \in \{0,1\}\), a rational row-stochastic interaction matrix \(A=(a_{ut})\), and a budget \(K\), decide whether there exist \(p_t \in [0,1]\) such that \( \sum_t a_{ut}p_t \le \frac{1}{2} \) for every \(u\), and \( \sum_t \mu_t |p_t-b_t| \le K \), with \( \sum_t \mu_t b_t &lt; \frac{1}{2} \).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b><br>Let \(T\) be finite, \(\mu\in\mathbb{Q}_{\ge 0}^{T}\) satisfy \(\sum_{t\in T}\mu_t=1\), let \(f_t\in\{0,1\}\) satisfy \(\sum_{t\in T}\mu_t f_t&lt;1/2\), and let \(W\in\mathbb{Q}_{\ge 0}^{T	imes T}\) be symmetric. Choose \(y_{t,0},y_{t,1}\ge0\) with \(y_{t,0}+y_{t,1}=\mu_t\).<br>A choice is feasible when \(\sum_{u\in T}W_{tu}y_{u,1}\le\sum_{u\in T}W_{tu}y_{u,0}\) for every \(t\in T\), and has cost \(\sum_{t:f_t=0}y_{t,1}+\sum_{t:f_t=1}y_{t,0}\). Its decision form additionally asks whether cost is at most a rational bound \(B\).</p><p><b>Target.</b><br>Is this rational-mass Eliminating Majority Illusion problem NP-hard, or does it admit a polynomial-time algorithm?</p><p><b>Nearest known results.</b><br>The corresponding finite-agent problem with indivisible agents and an adjacency-matrix contact structure is NP-hard, and is \(W[2]\)-hard parameterized by the number of relabelled agents, even on bipartite graphs of bounded diameter.<br>That discrete hardness result does not address divisible type masses.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Theorem</h3><p>The rational-mass Eliminating Majority Illusion decision problem is polynomial-time solvable under the standard binary encoding of rational numbers. More precisely, it reduces directly to rational linear-program feasibility.</p><p>Consequently, it is not \(\mathsf{NP}\)-hard under polynomial-time many-one reductions unless \(\mathsf{P}=\mathsf{NP}\).</p><h3>1. Elimination of redundant variables</h3><p>For every \(t\in T\), define</p><p>\[
+x_t:=y_{t,1}.
+\]</p><p>The equality \(y_{t,0}+y_{t,1}=\mu_t\) then forces</p><p>\[
+y_{t,0}=\mu_t-x_t.
+\]</p><p>Thus nonnegativity of \(y_{t,0}\) and \(y_{t,1}\) is equivalent to</p><p>\[
+0\leq x_t\leq \mu_t.
+\]</p><p>This correspondence between choices \((y_{t,0},y_{t,1})_{t\in T}\) and vectors \(x\) satisfying these box constraints is bijective.</p><h3>2. Feasibility constraints are linear</h3><p>For each \(t\in T\), the majority constraint becomes</p><p>\[
+\sum_{u\in T}W_{tu}x_u
+\leq
+\sum_{u\in T}W_{tu}(\mu_u-x_u).
+\]</p><p>Moving the terms involving \(x\) to the left gives the equivalent inequality</p><p>\[
+2\sum_{u\in T}W_{tu}x_u
+\leq
+\sum_{u\in T}W_{tu}\mu_u.
+\]</p><p>Define the rational constant</p><p>\[
+b_t:=\sum_{u\in T}W_{tu}\mu_u.
+\]</p><p>The feasibility conditions are therefore exactly</p><p>\[
+0\leq x_t\leq\mu_t
+\quad\text{for every }t\in T,
+\]</p><p>together with</p><p>\[
+2\sum_{u\in T}W_{tu}x_u\leq b_t
+\quad\text{for every }t\in T.
+\]</p><h3>3. The cost is linear</h3><p>Let</p><p>\[
+F:=\{t\in T:f_t=1\},
+\qquad
+p:=\sum_{t\in F}\mu_t.
+\]</p><p>The hypothesis states that \(p&lt;1/2\). For the vector \(x\), the cost is</p><p>\[
+\begin{aligned}
+C(x)
+&amp;=
+\sum_{t:f_t=0}x_t
++
+\sum_{t:f_t=1}(\mu_t-x_t)\\
+&amp;=
+p+\sum_{t\in T}(1-2f_t)x_t.
+\end{aligned}
+\]</p><p>Hence the bound \(C(x)\leq B\) is precisely the linear inequality</p><p>\[
+\sum_{t\in T}(1-2f_t)x_t\leq B-p.
+\]</p><p>The decision problem is thus equivalent to feasibility of the following rational linear system:</p><p>\[
+0\leq x_t\leq\mu_t
+\quad\text{for every }t\in T,
+\]</p><p>\[
+2\sum_{u\in T}W_{tu}x_u\leq b_t
+\quad\text{for every }t\in T,
+\]</p><p>and</p><p>\[
+\sum_{t\in T}(1-2f_t)x_t\leq B-p.
+\]</p><h3>4. Correctness of the reduction</h3><p>Suppose the original instance admits a choice of cost at most \(B\). Setting \(x_t=y_{t,1}\) gives the box constraints, the transformed majority inequalities, and the transformed cost inequality. Hence the linear system is feasible.</p><p>Conversely, suppose \(x\) satisfies the displayed linear system. Define</p><p>\[
+y_{t,1}:=x_t,
+\qquad
+y_{t,0}:=\mu_t-x_t.
+\]</p><p>The box constraints imply that these values are nonnegative and sum to \(\mu_t\). Reversing the algebra in Sections 2 and 3 shows that all original majority constraints hold and that the cost is at most \(B\). Thus the original instance is feasible.</p><p>Therefore the reduction is exact in both directions.</p><h3>5. Polynomial bit complexity</h3><p>Let \(L\) denote the binary encoding length of the input. The constructed linear program has \(|T|\) variables and at most \(3|T|+1\) inequalities.</p><p>All coefficients are rational. Each \(b_t\) is a sum of \(|T|\) products of input rationals, while \(p\) is a sum of input rationals. Exact rational multiplication and addition produce numerators and denominators whose bit lengths are polynomial in \(L\). Thus the entire transformed linear program has encoding length polynomial in \(L\).</p><p>Feasibility of an explicitly encoded rational linear program can be decided in time polynomial in its number of variables, number of inequalities, and coefficient bit length, for example by the ellipsoid method. Applying that theorem to the constructed system gives a polynomial-time decision algorithm. It also yields an exact rational feasible solution whenever one exists.</p><p>Importantly, this runtime is polynomial in the binary encoding length of the masses and does not expand the masses into a population whose size is a common denominator.</p><h3>6. Additional structural simplification</h3><p>Nonnegativity of \(W\) gives a more specific packing formulation. Given any feasible \(x\), define</p><p>\[
+x&#x27;_t=
+\begin{cases}
+x_t,&amp;f_t=1,\\
+0,&amp;f_t=0.
+\end{cases}
+\]</p><p>Because \(W_{tu}\geq0\), replacing \(x\) by \(x&#x27;\) can only decrease every left-hand side \(2\sum_u W_{tu}x_u\). It therefore preserves feasibility. It also decreases the cost by exactly \(\sum_{t:f_t=0}x_t\).</p><p>Consequently, some optimal solution satisfies \(x_t=0\) whenever \(f_t=0\). The optimization problem can equivalently be written as</p><p>\[
+\max \sum_{t\in F}x_t
+\]</p><p>subject to</p><p>\[
+0\leq x_t\leq\mu_t
+\quad\text{for }t\in F,
+\]</p><p>and</p><p>\[
+2\sum_{u\in F}W_{tu}x_u
+\leq
+\sum_{u\in T}W_{tu}\mu_u
+\quad\text{for every }t\in T.
+\]</p><p>If the optimum of this packing linear program is \(M\), then the minimum relabelling cost is exactly \(p-M\).</p><p>This also explains why the known indivisible-agent hardness does not transfer: the indivisible problem contains binary relabelling decisions, whereas the rational-mass formulation permits every \(x_t\) in the full interval \([0,\mu_t]\), leaving an ordinary linear program.</p><h3>Conclusion</h3><p>The rational-mass problem admits an exact polynomial-time algorithm. Symmetry of \(W\), normalization \(\sum_t\mu_t=1\), and the hypothesis \(p&lt;1/2\) are not needed for polynomial-time solvability; they concern the intended majority-illusion interpretation. Nonnegativity of \(W\) is needed only for the additional packing simplification, not for the basic linear-program reduction.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly resolves the target. The rational-mass decision problem is exactly representable as feasibility of a polynomial-size rational linear program, so it is solvable in polynomial time under binary encoding.</p><p>No unjustified nontrivial step, false assertion, missing hypothesis, or relevant edge-case failure was found.</p><h3>Step-by-step audit</h3><ul><li><b>Variable elimination</b></li></ul><p>Setting \(x_t=y_{t,1}\) forces \(y_{t,0}=\mu_t-x_t\). The original nonnegativity conditions are equivalent to \(0\le x_t\le\mu_t\). The claimed bijection is exact, including when \(\mu_t=0\).</p><ul><li><b>Majority constraints</b></li></ul><p>Substitution gives</p><p>\[
+   \sum_u W_{tu}x_u\le \sum_u W_{tu}(\mu_u-x_u),
+   \]</p><p>which is algebraically equivalent to</p><p>\[
+   2\sum_u W_{tu}x_u\le\sum_u W_{tu}\mu_u.
+   \]</p><p>This transformation is reversible and does not rely on dividing by possibly zero quantities.</p><ul><li><b>Cost transformation</b></li></ul><p>With \(F=\{t:f_t=1\}\) and \(p=\sum_{t\in F}\mu_t\), the calculation</p><p>\[
+   C(x)=p+\sum_t(1-2f_t)x_t
+   \]</p><p>is correct: the coefficient is \(1\) when \(f_t=0\) and \(-1\) when \(f_t=1\). Therefore \(C(x)\le B\) is exactly the stated linear inequality.</p><ul><li><b>Equivalence of instances</b></li></ul><p>Both directions of the reduction follow directly from the bijective substitution. The box, majority, and cost constraints are all preserved exactly. Thus there is no relaxation or integrality assumption hidden in the LP formulation.</p><ul><li><b>Polynomial encoding size</b></li></ul><p>The LP has \(|T|\) variables and \(3|T|+1\) scalar inequalities when each two-sided box constraint is counted as two inequalities. Sums and products of explicitly encoded rationals have polynomially bounded output bit length relative to the total input length. Consequently, the constructed LP has polynomial encoding length and can be constructed in polynomial time.</p><ul><li><b>Use of rational linear programming</b></li></ul><p>Polynomial-time feasibility of explicitly encoded rational linear systems is a standard theorem. The presented system satisfies its hypotheses. Hence the claimed polynomial-time decision algorithm follows.</p><ul><li><b>Packing simplification</b></li></ul><p>Setting \(x_t=0\) for \(f_t=0\) preserves the box constraints. Since \(W\ge0\), it weakly decreases every majority-constraint left-hand side. It decreases the cost by exactly \(\sum_{t:f_t=0}x_t\). Therefore an optimum can be chosen with those coordinates zero, and minimizing cost is equivalent to maximizing \(\sum_{t\in F}x_t\). The identity \(p-M\) for the minimum cost is correct.</p><ul><li><b>Complexity conclusion</b></li></ul><p>Since the decision problem lies in \(\mathsf P\), it cannot be \(\mathsf{NP}\)-hard under polynomial-time many-one reductions unless \(\mathsf P=\mathsf{NP}\). The observations about which original assumptions are unnecessary for the basic LP reduction are also correct.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

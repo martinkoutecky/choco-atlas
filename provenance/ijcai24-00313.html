@@ -1,0 +1,121 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Fair Distribution of Delivery Orders — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Fair Distribution of Delivery Orders <span style="font-weight:normal;color:#8a7350">(ijcai24-00313)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> polynomial-time solvable</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5 — class: algorithmic</p>
+<blockquote class="thmq">There exists an XP algorithm parameterized by n, that given a delivery instance I = ⟨[n], G, h⟩, computes an MMS and PO allocation, and decides whether there exist MMS and SO, EF1 and PO, and EF1 and SO allocations.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a rooted unweighted tree \(G=(V,E)\) with hub \(h\), \(n\) couriers, and a rational distribution \(\mu\in\mathbb{Q}^{T}_{\ge 0}\) over \(T=V\setminus\{h\}\), where \(x_{it}\ge 0\) and \(\sum_i x_{it}=\mu_t\), compute a feasible mass allocation that is MMS and Pareto optimal under \(c_i(x)=\sum_{e\in E}\mathbf{1}[\sum_{t\in D_e}x_{it}&gt;0]\), with \(M_\infty=\min_y\max_i c_i(y)\), requiring \(c_i(x)\le M_\infty\) for all \(i\) and no feasible \(y\) with \(c_i(y)\le c_i(x)\) for every \(i\), strictly for one.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> Let \(G=(V,E)\) be a rooted unweighted tree with hub \(h\). For \(S\subseteq V\setminus\{h\}\), let \(G|S\) be the minimal connected subgraph containing \(S\cup\{h\}\), and set \(c(S)=|E(G|S)|\).<br>Given rational demands \(d_v\in[0,1]\), a distribution \(\lambda\) over bundles satisfies \(\lambda_S\ge0\), \(\sum_S\lambda_S=1\), and \(\sum_{S\ni v}\lambda_S=d_v\) for every \(v\ne h\).</p><p><b>Target.</b> Is computing the least integer \(B\) for which such a distribution exists with \(\lambda_S&gt;0\Rightarrow c(S)\le B\) polynomial-time solvable, or is it NP-hard?</p><p><b>Nearest known results.</b> For a finite set of agents partitioning the delivery vertices, computing an MMS allocation on unweighted trees is NP-hard.<br>No verified result for the distribution-over-bundles formulation above is supplied.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Polynomial-Time Solvability</h3><h3>1. Main theorem</h3><p>Let \(m=|V\setminus\{h\}|=|E|\). The least integer \(B\) for which the required distribution exists is computable in time polynomial in \(|V|\) and in the binary encoding length of the rational demands.</p><p>Thus the distribution-over-bundles problem is polynomial-time solvable. The supplied NP-hardness result for finite MMS allocations does not transfer to this convexified formulation.</p><h3>2. Threshold feasibility as convex-hull membership</h3><p>Fix an integer \(B\in\{0,\ldots,m\}\). Define</p><p>\[
+X_B=\left\{\chi^S\in\{0,1\}^{V\setminus\{h\}}:c(S)\leq B\right\}
+\]</p><p>and let \(P_B=\operatorname{conv}(X_B)\).</p><h3>Lemma 1</h3><p>There exists a distribution supported on bundles of cost at most \(B\) with marginals \(d\) if and only if \(d\in P_B\).</p><h3>Proof</h3><p>If such a distribution exists, then</p><p>\[
+d=\sum_{S:c(S)\leq B}\lambda_S\chi^S,
+\qquad
+\lambda_S\geq0,
+\qquad
+\sum_S\lambda_S=1.
+\]</p><p>Hence \(d\) is a convex combination of points in \(X_B\).</p><p>Conversely, any representation of \(d\) as a convex combination of points in \(X_B\) gives coefficients \(\lambda_S\) satisfying the normalization, nonnegativity, support, and marginal conditions. ∎</p><p>It therefore suffices to decide exact membership in \(P_B\).</p><h3>3. A separation formulation</h3><p>Because \(P_B\) is a compact polytope, the strict separating-hyperplane theorem gives the following characterization.</p><h3>Lemma 2</h3><p>The point \(d\) does not belong to \(P_B\) if and only if there exists \(w\in\mathbb{R}^{V\setminus\{h\}}\) such that</p><p>\[
+(d-x)\mathbin{\cdot}w\geq1
+\quad\text{for every }x\in X_B.
+\]</p><h3>Proof</h3><p>Suppose first that such a \(w\) exists. If \(d=\sum_x\lambda_xx\) were in \(P_B\), then</p><p>\[
+0
+=
+\left(d-\sum_x\lambda_xx\right)\mathbin{\cdot}w
+=
+\sum_x\lambda_x(d-x)\mathbin{\cdot}w
+\geq
+\sum_x\lambda_x
+=
+1,
+\]</p><p>a contradiction.</p><p>Conversely, suppose \(d\notin P_B\). Strict separation gives some \(w_0\) satisfying</p><p>\[
+\delta
+=
+w_0\mathbin{\cdot}d-\max_{x\in X_B}w_0\mathbin{\cdot}x
+&gt;
+0.
+\]</p><p>Setting \(w=w_0/\delta\) gives \((d-x)\mathbin{\cdot}w\geq1\) for every \(x\in X_B\). ∎</p><p>Let \(Q_B\) denote the system in Lemma 2. Given a candidate \(w\), its most violated constraint is obtained by solving</p><p>\[
+\max_{x\in X_B}w\mathbin{\cdot}x.
+\]</p><p>Indeed, if \(x^*\) is a maximizer, then</p><p>\[
+\min_{x\in X_B}(d-x)\mathbin{\cdot}w
+=
+d\mathbin{\cdot}w-w\mathbin{\cdot}x^*.
+\]</p><p>Thus linear optimization over \(X_B\) supplies a separation oracle for \(Q_B\).</p><h3>4. Linear optimization over feasible bundles</h3><p>Fix arbitrary rational weights \(w_v\), which may be positive or negative. Put</p><p>\[
+p_v=\max\{w_v,0\}
+\]</p><p>for \(v\neq h\), and put \(p_h=0\).</p><p>A rooted subtree means a connected subgraph \(H\) of \(G\) containing \(h\).</p><h3>Lemma 3</h3><p>For every \(B\),</p><p>\[
+\max_{S:c(S)\leq B}\sum_{v\in S}w_v
+=
+\max_{\substack{H\text{ rooted subtree}\\ |E(H)|\leq B}}
+\sum_{v\in V(H)\setminus\{h\}}p_v.
+\]</p><h3>Proof</h3><p>Take any feasible bundle \(S\), and let \(H=G|S\). Then \(H\) is a rooted subtree with at most \(B\) edges. Moreover,</p><p>\[
+\sum_{v\in S}w_v
+\leq
+\sum_{v\in S}p_v
+\leq
+\sum_{v\in V(H)\setminus\{h\}}p_v.
+\]</p><p>This proves that the left-hand optimum is at most the right-hand optimum.</p><p>Conversely, take any rooted subtree \(H\) with at most \(B\) edges and define</p><p>\[
+S_H=\{v\in V(H)\setminus\{h\}:w_v&gt;0\}.
+\]</p><p>The minimal rooted subtree connecting \(S_H\) is contained in \(H\), so \(c(S_H)\leq|E(H)|\leq B\). Furthermore,</p><p>\[
+\sum_{v\in S_H}w_v
+=
+\sum_{v\in V(H)\setminus\{h\}}p_v.
+\]</p><p>Thus every value on the right is attained by a feasible bundle on the left. ∎</p><h3>Dynamic program</h3><p>For a vertex \(v\), let \(G_v\) be the descendant subtree rooted at \(v\). Define \(D_v(k)\) to be the maximum total prize of a connected subtree of \(G_v\) that contains \(v\) and uses exactly \(k\) edges. Infeasible states have value \(-\infty\).</p><p>Suppose that \(v\) has children \(u_1,\ldots,u_t\). Initialize</p><p>\[
+A_0(0)=p_v,
+\qquad
+A_0(k)=-\infty\text{ for }k&gt;0.
+\]</p><p>After processing children \(u_1,\ldots,u_i\), use the recurrence</p><p>\[
+A_i(k)
+=
+\max\left\{
+A_{i-1}(k),
+\max_{0\leq q\leq k-1}
+\left(
+A_{i-1}(k-1-q)+D_{u_i}(q)
+\right)
+\right\}.
+\]</p><p>The first alternative omits the subtree rooted at \(u_i\). The second includes the edge \(vu_i\), using one edge for \(vu_i\) and \(q\) edges below \(u_i\). After all children have been processed, set \(D_v(k)=A_t(k)\).</p><p>Every connected subtree containing \(v\) decomposes uniquely according to these child choices, so induction on the descendant subtree proves the recurrence. The desired optimum is</p><p>\[
+\max_{0\leq k\leq B}D_h(k).
+\]</p><p>Storing the maximizing choices permits reconstruction of an optimal subtree and hence, by Lemma 3, an optimal bundle \(S_H\).</p><p>There are \(|E|=m\) child-merging operations. Each takes \(O(B^2)\) exact rational operations. Thus the oracle runs in</p><p>\[
+O(|V|B^2)
+\]</p><p>arithmetic operations, and therefore in polynomial time because \(B\leq m\). The bit lengths remain polynomial because every finite DP value is a sum of at most \(|V|\) input prizes.</p><h3>5. Exact feasibility and bit complexity</h3><p>The system \(Q_B\) has exponentially many inequalities, but the preceding dynamic program is an exact polynomial-time separation oracle.</p><p>For completeness, the ellipsoid method can be applied with polynomially bounded coordinates. Write \(d_i=a_i/q_i\) and let \(Q=\prod_iq_i\). Its binary encoding length is at most the total encoding length of the demands. Multiplying every constraint of \(Q_B\) by \(Q\) gives integer coefficients of absolute value at most \(Q\) and right-hand side \(Q\).</p><p>If \(Q_B\) is feasible, minimize \(z\) subject to its constraints and \(-z\leq w_i\leq z\). This linear program has an optimal basic feasible solution. By Cramer&#x27;s rule, one may choose such a solution with</p><p>\[
+|w_i|\leq (m+1)!\,Q^{m+1}.
+\]</p><p>Consequently, a bounding box for the ellipsoid method has polynomial binary encoding length. Standard exact rational ellipsoid feasibility, using the dynamic program as its separation oracle, therefore decides whether \(Q_B\) is feasible in polynomial time.</p><p>By Lemma 2:</p><ul><li>if \(Q_B\) is feasible, then no required distribution exists at threshold \(B\);</li><li>if \(Q_B\) is infeasible, then \(d\in P_B\), and the required distribution exists.</li></ul><h3>6. Computing the minimum threshold</h3><p>The families are nested:</p><p>\[
+X_B\subseteq X_{B+1},
+\qquad
+P_B\subseteq P_{B+1}.
+\]</p><p>Hence threshold feasibility is monotone in \(B\).</p><p>Moreover, \(B=m\) is always feasible: every bundle uses at most all \(m\) tree edges, so \(X_m=\{0,1\}^{V\setminus\{h\}}\) and \(P_m=[0,1]^{V\setminus\{h\}}\), which contains \(d\).</p><p>Binary search over \(B\in\{0,\ldots,m\}\), using the exact threshold-feasibility algorithm above, returns the least feasible \(B\) in polynomial time.</p><h3>7. Relation to finite MMS hardness</h3><p>A finite MMS allocation must choose a single integral partition among the agents, coupling all bundles simultaneously. Here the variables \(\lambda_S\) form an arbitrary convex combination of integral bundles, and only their vertex marginals are prescribed. This removes the discrete partition-selection obstruction.</p><p>Although the convex-hull description has exponentially many bundle configurations, its pricing problem on an unweighted tree is precisely the polynomial dynamic program above. Therefore the known finite-agent MMS hardness does not imply hardness of the present formulation.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 5, assertion that the auxiliary linear program has an optimal basic feasible solution: Optimal attainment and the existence of an optimal vertex are asserted without justification; this fact is needed for the Cramer-rule witness bound.</li><li><b>minor</b> — Section 5, invocation of standard exact rational ellipsoid feasibility: The invoked theorem is not stated precisely, and the write-up does not explicitly verify that it decides emptiness for possibly lower-dimensional rational polyhedra using the supplied exact strong separation oracle and polynomial coefficient bounds.</li></ul>
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The prover’s central argument is mathematically sound: threshold feasibility is correctly reduced to convex-hull membership, nonmembership is correctly expressed by a normalized separating hyperplane, and the resulting separation problem is solved by a polynomial-time tree dynamic program. No false central step or counterexample was found.</p><p>The only deficiencies concern the precision of the exact ellipsoid-method justification in Section 5. These are expositional gaps around a standard result, not defects in the underlying reduction.</p><h3>Step-by-step audit</h3><h3>1. Convex-hull formulation</h3><p>Lemma 1 is correct.</p><p>A distribution supported on bundles satisfying \(c(S)\leq B\) is exactly a convex combination of their incidence vectors. Conversely, every such convex combination provides nonnegative coefficients summing to one and having the prescribed marginals.</p><p>There are finitely many bundles, so no measure-theoretic or infinite-support issue arises.</p><h3>2. Normalized separating system</h3><p>Lemma 2 is correct.</p><p>If \(d\notin P_B\), strict separation applies because \(P_B\) is a nonempty compact convex polytope. It yields a positive separation gap</p><p>\[
+\delta=w_0\mathbin{\cdot}d-\max_{x\in X_B}w_0\mathbin{\cdot}x&gt;0.
+\]</p><p>Scaling by \(1/\delta\) produces the asserted inequalities. The reverse implication follows correctly by averaging the inequalities over a hypothetical convex representation of \(d\).</p><p>The signs and normalization are consistent.</p><h3>3. Separation oracle for \(Q_B\)</h3><p>For fixed \(w\), the least left-hand side among the inequalities defining \(Q_B\) is</p><p>\[
+d\mathbin{\cdot}w-\max_{x\in X_B}w\mathbin{\cdot}x.
+\]</p><p>Thus maximizing \(w\mathbin{\cdot}x\) identifies a violated constraint whenever one exists. This correctly gives an exact strong separation oracle once the maximization problem is solved exactly.</p><h3>4. Reduction to a prize-collecting rooted subtree</h3><p>Lemma 3 is correct, including for negative and zero weights.</p><p>For a feasible bundle \(S\), its connecting subtree \(G|S\) may contain additional vertices. Replacing each weight by its positive part can only increase the objective, giving the first inequality.</p><p>Conversely, for a rooted subtree \(H\), selecting precisely its positive-weight vertices produces a bundle whose connecting subtree is contained in \(H\). Zero-weight vertices can be omitted without affecting the equality because their positive parts are zero. Hence every value on the subtree side is realized by a feasible bundle.</p><h3>5. Dynamic program</h3><p>The dynamic-programming state and recurrence correctly enumerate connected descendant subtrees containing the current root.</p><p>When child \(u_i\) is included, one edge is spent on \(vu_i\), and the selected portion below \(u_i\) must be a connected subtree containing \(u_i\). The index relation</p><p>\[
+(k-1-q)+1+q=k
+\]</p><p>is correct. Omitting the child is represented by the first alternative.</p><p>The initialization also handles leaves and \(B=0\). At the hub, maximizing over \(0\leq k\leq B\) correctly permits subtrees using fewer than \(B\) edges.</p><p>There are \(O(|V|)\) child merges, each taking \(O(B^2)\) comparisons and additions. Since \(B\leq |E|\), the arithmetic running time is polynomial. Every DP entry is a sum of at most \(|V|\) oracle-input weights, so its encoding length remains polynomial in the encoding length of those weights and in \(|V|\).</p><h3>6. Coordinate bound</h3><p>Clearing denominators with \(Q=\prod_iq_i\) does yield integral inequality coefficients of magnitude at most \(Q\), with right-hand side \(Q\). The binary length of \(Q\) is at most the sum of the denominator encoding lengths.</p><p>The displayed Cramer bound is compatible with an \((m+1)\)-variable active subsystem whose entries and right-hand sides have magnitude at most \(Q\).</p><p>There is, however, an omitted justification for the statement that the auxiliary linear program has an optimal basic feasible solution. Since this fact is used to obtain the bounded witness, the write-up should explicitly justify attainment and the existence of an optimal vertex or cite a theorem whose hypotheses apply to this particular polyhedron. This is a routine linear-programming clarification rather than new mathematics.</p><h3>7. Exact ellipsoid feasibility</h3><p>The sentence invoking “standard exact rational ellipsoid feasibility” is insufficiently precise under the requested verification standard.</p><p>An ordinary approximate ellipsoid-feasibility statement does not by itself decide whether a possibly lower-dimensional rational polyhedron is empty. The prover needs to identify the exact rational-polyhedron feasibility theorem being invoked and state that it applies to possibly lower-dimensional feasible regions given:</p><ul><li>polynomial dimension;</li><li>polynomial facet or coefficient complexity;</li><li>a polynomial-radius bounding box containing a feasible point whenever one exists; and</li><li>an exact polynomial-time strong separation oracle whose query and output bit lengths remain polynomial.</li></ul><p>The preceding argument appears to supply these ingredients, so this is a minor citation/hypothesis-verification gap rather than a major logical gap.</p><h3>8. Minimum threshold</h3><p>The nesting \(X_B\subseteq X_{B+1}\) and consequently \(P_B\subseteq P_{B+1}\) is correct.</p><p>For \(B=m\), every bundle has cost at most \(m\), so \(X_m\) is the full Boolean cube and \(P_m=[0,1]^m\), which contains the demand vector. Binary search therefore returns the least feasible threshold in polynomially many oracle calls.</p><h3>9. MMS comparison</h3><p>The comments about MMS hardness are explanatory and are not used in the proof. The prover correctly does not infer hardness from the cited finite-allocation result.</p><h3>Minimum clarification required</h3><p>The prover should precisely cite or state the exact ellipsoid-feasibility theorem used in Section 5 and verify that it handles lower-dimensional rational polyhedra. It should also briefly justify why the auxiliary \(z\)-minimization LP attains its optimum at a basic feasible solution.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

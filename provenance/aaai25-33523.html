@@ -1,0 +1,103 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Strategyproof Matching of Roommates and Rooms — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Strategyproof Matching of Roommates and Rooms <span style="font-weight:normal;color:#8a7350">(aaai25-33523)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{P}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.6 — class: hardness</p>
+<blockquote class="thmq">Finding a maximum SW roommate matching is APX-hard under binary Leontief utilities. In particular, the instance creates a setting where all triples have utility at most 1. That is a maximum welfare matching would essentially be a maximal matching of Ls with max- imum size. This is an important difference from the reduc- tion in (Chan et al. 2016) which proves NP-hardness with mixtures of Ls and Ts.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finitely many complete agent types with masses summing to 2 and finitely many complete room types with masses summing to 1, binary type-to-type compatibility and type-to-room valuations, compute or approximate the maximum utilitarian welfare achievable by assigning room mass to unordered pairs of agent types subject to all mass-balance constraints.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given finite resident types \(T\) and room types \(R\), rational masses \(\mu_t\ge0\) and supplies \(\lambda_r\ge0\) with \(\sum_{t\in T}\mu_t=1\) and \(\sum_{r\in R}\lambda_r=	frac12\), let \(v_t(t&#x27;)\in\{0,1\}\) be symmetric and let \(\widehat v_t(r)\in\{0,1\}\). Set \(u_t(t&#x27;,r)=\min\{v_t(t&#x27;),\widehat v_t(r)\}\).</p><p>An allocation has variables \(x_{\{t,t&#x27;\},r}\ge0\). It satisfies \(\sum_r\left(2x_{\{t,t\},r}+\sum_{t&#x27;
+e t}x_{\{t,t&#x27;\},r}ight)=\mu_t\) for every \(t\), and \(\sum_{\{t,t&#x27;\}}x_{\{t,t&#x27;\},r}=\lambda_r\) for every \(r\). Its welfare is \(\sum_{r,t}2x_{\{t,t\},r}u_t(t,r)+\sum_{r,\{t,t&#x27;\}:t
+e t&#x27;}x_{\{t,t&#x27;\},r}igl(u_t(t&#x27;,r)+u_{t&#x27;}(t,r)igr)\).</p><p>Is deciding whether an allocation of welfare at least \(K\) exists, equivalently maximizing this welfare, in \(\mathrm{P}\) or \(\mathrm{NP}\)-hard?</p><p>For finite individual agents, maximum-welfare roommate-and-room matching under binary symmetric Leontief utilities is APX-hard (and hence NP-hard).<br>No verified prior result was identified for exactly the mass-allocation formulation above.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity of the Mass-Allocation Problem</h3><h3>Theorem</h3><p>Under the standard binary encoding of the rational numbers \(\mu_t\), \(\lambda_r\), and \(K\), the welfare-threshold problem is polynomial-time solvable. Consequently, maximum welfare can also be computed in polynomial time by rational linear programming.</p><h3>Proof</h3><p>Let \(n=|T|\) and \(m=|R|\). For every unordered pair \(\{t,t&#x27;\}\), including the case \(t=t&#x27;\), and every \(r\in R\), introduce the variable \(x_{\{t,t&#x27;\},r}\).</p><p>There are exactly</p><p>\[
+m\binom{n+1}{2}
+\]</p><p>variables, which is polynomial in the explicit input size.</p><p>For each variable, define its welfare coefficient by</p><p>\[
+c_{\{t,t\},r}=2u_t(t,r)
+\]</p><p>and, when \(t\neq t&#x27;\), by</p><p>\[
+c_{\{t,t&#x27;\},r}
+=
+u_t(t&#x27;,r)+u_{t&#x27;}(t,r).
+\]</p><p>Because</p><p>\[
+u_t(t&#x27;,r)=\min\{v_t(t&#x27;),\widehat v_t(r)\},
+\]</p><p>every coefficient \(c_{\{t,t&#x27;\},r}\) belongs to \(\{0,1,2\}\) and is computable directly from the input.</p><p>The existence of an allocation of welfare at least \(K\) is therefore exactly the feasibility of the following rational linear system:</p><p>\[
+x_{\{t,t&#x27;\},r}\geq 0
+\]</p><p>for all \(\{t,t&#x27;\}\) and \(r\),</p><p>\[
+\sum_{r\in R}
+\left(
+2x_{\{t,t\},r}
++
+\sum_{t&#x27;\neq t}x_{\{t,t&#x27;\},r}
+\right)
+=
+\mu_t
+\]</p><p>for every \(t\in T\),</p><p>\[
+\sum_{\{t,t&#x27;\}}x_{\{t,t&#x27;\},r}
+=
+\lambda_r
+\]</p><p>for every \(r\in R\), and</p><p>\[
+\sum_{r\in R}\sum_{\{t,t&#x27;\}}c_{\{t,t&#x27;\},r}x_{\{t,t&#x27;\},r}
+\geq K.
+\]</p><p>This system has \(n+m\) equality constraints, one welfare inequality, and \(m\binom{n+1}{2}\) nonnegativity constraints. Its coefficients belong to \(\{0,1,2\}\), apart from the rational right-hand sides supplied in the input. Thus its encoding length is polynomial in the encoding length of the original instance.</p><p>Feasibility of a rational linear program is decidable in polynomial time in the Turing bit model. Hence the welfare-threshold problem belongs to \(\mathrm{P}\).</p><p>Similarly, maximum welfare is the rational linear program</p><p>\[
+\max
+\sum_{r\in R}\sum_{\{t,t&#x27;\}}
+c_{\{t,t&#x27;\},r}x_{\{t,t&#x27;\},r}
+\]</p><p>subject to the resident-mass and room-supply constraints above. Rational linear programming computes an optimal solution and its exact rational objective value in polynomial time.</p><h3>Feasibility and attainment</h3><p>The feasible region is always nonempty under the stated mass-balance assumptions. Indeed, set</p><p>\[
+x_{\{t,t\},r}=\mu_t\lambda_r
+\]</p><p>and set all cross-type variables to zero. Then, for every \(t\),</p><p>\[
+\sum_{r\in R}2x_{\{t,t\},r}
+=
+2\mu_t\sum_{r\in R}\lambda_r
+=
+\mu_t,
+\]</p><p>while, for every \(r\),</p><p>\[
+\sum_{t\in T}x_{\{t,t\},r}
+=
+\lambda_r\sum_{t\in T}\mu_t
+=
+\lambda_r.
+\]</p><p>Moreover, every variable satisfies \(0\leq x_{\{t,t&#x27;\},r}\leq\lambda_r\). Thus the feasible region is compact, and the linear welfare objective attains its maximum.</p><h3>Why the finite-agent hardness does not transfer</h3><p>The finite-agent problem imposes indivisible matching decisions. In the mass formulation, every resident type can be divided among arbitrarily many roommate-type and room-type combinations. The variables are genuinely continuous, and no integrality or support restriction is imposed.</p><p>Accordingly, the displayed formulation is a fractional relaxation of the corresponding finite matching problem. APX-hardness of the indivisible problem does not imply hardness of this continuous linear program.</p><p>Therefore the stated mass-allocation problem is in \(\mathrm{P}\). It could be NP-hard under polynomial-time reductions only if \(\mathrm{P}=\mathrm{NP}\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly identifies the mass-allocation problem as a rational linear program of polynomial size. The argument establishes both polynomial-time threshold feasibility and polynomial-time exact welfare maximization under the standard explicit binary encoding. No substantive gap was found.</p><h3>Step-by-step verification</h3><ul><li><b>Variables and formulation</b></li></ul><p>The allocation variables are exactly those specified in the task: one nonnegative variable \(x_{\{t,t&#x27;\},r}\) for every unordered resident-type pair, including repeated pairs, and every room type.</p><p>The count</p><p>\[
+   |R|\binom{|T|+1}{2}
+   \]</p><p>is correct. It is polynomial when \(T\), \(R\), and the valuation tables are explicitly represented.</p><ul><li><b>Objective coefficients</b></li></ul><p>For a same-type pair, the coefficient \(2u_t(t,r)\) matches the welfare definition. For a cross-type pair, the coefficient</p><p>\[
+   u_t(t&#x27;,r)+u_{t&#x27;}(t,r)
+   \]</p><p>also matches the stated welfare expression.</p><p>Since each utility is the minimum of two binary values, every utility lies in \(\{0,1\}\), so the objective coefficients indeed lie in \(\{0,1,2\}\).</p><ul><li><b>Resident-mass constraints</b></li></ul><p>The displayed constraints</p><p>\[
+   \sum_{r\in R}\left(2x_{\{t,t\},r}+\sum_{t&#x27;\neq t}x_{\{t,t&#x27;\},r}\right)=\mu_t
+   \]</p><p>reproduce the task’s resident-mass constraints exactly. There is no double-counting error: a same-type pair consumes two units of type-\(t\) mass, while a cross-type pair consumes one unit of each participating type.</p><ul><li><b>Room-supply constraints</b></li></ul><p>The equations</p><p>\[
+   \sum_{\{t,t&#x27;\}}x_{\{t,t&#x27;\},r}=\lambda_r
+   \]</p><p>agree exactly with the required room-type supplies.</p><ul><li><b>Threshold equivalence</b></li></ul><p>Adding the inequality</p><p>\[
+   \sum_{r\in R}\sum_{\{t,t&#x27;\}}c_{\{t,t&#x27;\},r}x_{\{t,t&#x27;\},r}\geq K
+   \]</p><p>is precisely equivalent to requiring welfare at least \(K\). Thus the decision problem is exactly rational linear-program feasibility, not merely a relaxation of the stated mass problem.</p><ul><li><b>Encoding-size argument</b></li></ul><p>The system has polynomially many variables and constraints. Its matrix and objective coefficients have constant bit length, while \(\mu_t\), \(\lambda_r\), and \(K\) retain their input bit lengths. Therefore the resulting rational linear program has polynomial encoding length.</p><ul><li><b>Polynomial-time conclusion</b></li></ul><p>The invocation of polynomial-time rational linear programming is valid. Rational LP feasibility and optimization are polynomial-time solvable in the Turing bit model, so both the threshold problem and exact maximum-welfare computation are in \(\mathrm{P}\).</p><ul><li><b>Nonemptiness construction</b></li></ul><p>The proposed allocation</p><p>\[
+   x_{\{t,t\},r}=\mu_t\lambda_r
+   \]</p><p>with all cross-type variables zero satisfies the resident constraints because</p><p>\[
+   2\mu_t\sum_r\lambda_r=\mu_t,
+   \]</p><p>and satisfies each room constraint because</p><p>\[
+   \lambda_r\sum_t\mu_t=\lambda_r.
+   \]</p><p>This construction remains valid when some masses or supplies are zero.</p><ul><li><b>Compactness and attainment</b></li></ul><p>From nonnegativity and the room equation, every variable associated with room type \(r\) is at most \(\lambda_r\). Hence the feasible set is closed and bounded in finite-dimensional space, so it is compact. The linear objective therefore attains its maximum.</p><ul><li><b>Relationship to finite-agent hardness</b></li></ul><p>The explanation is correct: the mass model permits arbitrary fractional division and imposes no integrality condition. Hardness of the indivisible finite-agent problem does not establish hardness of this continuous LP.</p><h3>Issues</h3><p>No major or minor mathematical issues were identified.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,59 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Gerrymandering Planar Graphs — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Gerrymandering Planar Graphs <span style="font-weight:normal;color:#8a7350">(aamas24-00057)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\text{-complete}\), and hence \(\mathrm{NP}\text{-hard}\), even for uniform masses \(\mu_v=1/|V|\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.3 — class: hardness</p>
+<blockquote class="thmq">For planar graphs, finding a partition with one winning district is NP-hard.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a planar graph \(G=(V,E)\), candidates \(C\), target \(b\in C\), approval map \(a:V\to C\), integer \(k\), and rational masses \(\mu_v&gt;0\) with \(\sum_{v\in V}\mu_v=1\), does there exist a partition \(V=D_1\mathbin{\dot\cup}\cdots\mathbin{\dot\cup}D_k\) into nonempty connected districts such that for some \(D_i\), \(\sum_{v\in D_i:a(v)=b}\mu_v&gt;\sum_{v\in D_i:a(v)=c}\mu_v\) for every \(c\in C\setminus\{b\}\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> An instance consists of a planar graph \(G=(V,E)\), candidates \(C\), a target \(b\in C\), an approval map \(a:V	o C\), an integer \(k\), and rational masses \(\mu_v&gt;0\) with \(\sum_{v\in V}\mu_v=1\). A district \(D\subseteq V\) is connected when \(G[D]\) is connected; \(b\) wins \(D\) when \(\sum_{v\in D:a(v)=b}\mu_v&gt;\sum_{v\in D:a(v)=c}\mu_v\) for every \(c\in C\setminus\{b\}\).</p><p><b>Target.</b> Is deciding whether \(V\) admits a partition into \(k\) nonempty connected districts with at least one district won by \(b\) solvable in polynomial time, or NP-hard?</p><p><b>Nearest known results.</b> For unweighted planar graphs with an unrestricted number of candidates, deciding whether a partition with one winning district exists is NP-hard. The rational-mass formulation above permits arbitrary positive rational vertex masses summing to \(1\).</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity Classification</h3><h3>Theorem</h3><p>Under the stated known NP-hardness result, the rational-mass problem is \( \mathrm{NP} \)-complete. In particular, it is \( \mathrm{NP} \)-hard even when every vertex has the same mass.</p><h3>Proof of NP-hardness</h3><p>Consider the known unweighted problem from the prompt. An instance consists of a planar graph \(G=(V,E)\), candidates \(C\), a target candidate \(b\), an approval map \(a:V\to C\), and an integer \(k\). Candidate \(b\) wins a district \(D\) precisely when</p><p>\[
+\left|\{v\in D:a(v)=b\}\right|
+&gt;
+\left|\{v\in D:a(v)=c\}\right|
+\]</p><p>for every \(c\in C\setminus\{b\}\). By hypothesis, deciding whether there is a partition into \(k\) nonempty connected districts having at least one such district is NP-hard, even when \(G\) is planar.</p><p>Let \(n=|V|\). The existence of positive masses summing to \(1\) implies that relevant instances have \(n\geq 1\). Construct an instance of the rational-mass problem by retaining \(G,C,b,a,k\) and assigning</p><p>\[
+\mu_v=\frac{1}{n}
+\]</p><p>to every \(v\in V\). These masses are positive and satisfy</p><p>\[
+\sum_{v\in V}\mu_v=n\cdot\frac1n=1.
+\]</p><p>For any district \(D\subseteq V\) and candidate \(c\in C\),</p><p>\[
+\sum_{v\in D:a(v)=c}\mu_v
+=
+\frac{\left|\{v\in D:a(v)=c\}\right|}{n}.
+\]</p><p>Because multiplication by the positive number \(n\) preserves strict inequalities, for every \(c\neq b\),</p><p>\[
+\sum_{v\in D:a(v)=b}\mu_v
+&gt;
+\sum_{v\in D:a(v)=c}\mu_v
+\]</p><p>holds if and only if</p><p>\[
+\left|\{v\in D:a(v)=b\}\right|
+&gt;
+\left|\{v\in D:a(v)=c\}\right|.
+\]</p><p>Thus \(b\) wins exactly the same subsets \(D\) in the unweighted instance and in the rational-mass instance. Connectivity, nonemptiness, the graph, and the required number \(k\) of districts are unchanged. Consequently, the original instance is a yes-instance if and only if the constructed rational-mass instance is a yes-instance.</p><p>Each mass \(1/n\) has binary encoding length \(O(\log n)\), so the construction has polynomial size and is computable in polynomial time. It also preserves planarity. This proves NP-hardness.</p><h3>Membership in \( \mathrm{NP} \)</h3><p>A certificate assigns each vertex one of the \(k\) district labels.</p><p>It can be verified in polynomial time that:</p><ul><li>every district label is used;</li><li>vertices with each label induce a connected subgraph, using graph search;</li><li>for at least one district, the rational mass of \(b\)&#x27;s supporters is strictly greater than that of every other candidate.</li></ul><p>Sums and comparisons of binary-encoded rational numbers can be performed using integer arithmetic whose bit complexity is polynomial in the input length. Hence the problem belongs to \( \mathrm{NP} \).</p><p>Combining membership in \( \mathrm{NP} \) with the reduction above proves \( \mathrm{NP} \)-completeness. Therefore it is not polynomial-time solvable unless \( \mathrm{P}=\mathrm{NP} \).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly reduces the stated unweighted planar problem to the rational-mass problem by assigning every vertex mass \(1/n\). The reduction preserves exactly which districts are won by \(b\), as well as connectivity, nonemptiness, the number of districts, and planarity.</p><p>The membership-in-\(\mathrm{NP}\) argument is also correct. Therefore, accepting the nearest known NP-hardness result supplied in the task, the prover establishes \(\mathrm{NP}\)-completeness and hence fully answers the requested polynomial-time-versus-\(\mathrm{NP}\)-hard classification.</p><h3>Step-by-step verification</h3><ul><li><b>Source problem.</b> The prover uses precisely the unweighted planar problem identified as NP-hard in the prompt, with the same graph, candidates, target, approval map, and district requirement.</li></ul><ul><li><b>Mass construction.</b> Setting \(\mu_v=1/n\) is valid for \(n=|V|\geq 1\). Every mass is positive and their sum is \(1\).</li></ul><ul><li><b>Preservation of winning districts.</b> For every district \(D\) and candidate \(c\), the rational mass of \(c\)&#x27;s supporters is their count divided by \(n\). Since \(n&gt;0\), the strict rational-mass comparison is equivalent to the corresponding strict count comparison. This verifies the claimed equivalence for every candidate \(c\neq b\).</li></ul><ul><li><b>Preservation of feasible partitions.</b> The construction does not change the graph, vertex set, or \(k\). Thus nonemptiness, induced connectivity, and the requirement of exactly \(k\) districts are preserved.</li></ul><ul><li><b>Polynomial reduction size.</b> The rational number \(1/n\) has \(O(\log n)\) binary encoding length. Listing it for all \(n\) vertices produces polynomial output size, and planarity is unchanged.</li></ul><ul><li><b>Certificate verification.</b> A labeling of the vertices identifies a proposed partition. Checking that all \(k\) labels occur and that every labeled vertex set induces a connected subgraph is polynomial-time. If \(k&gt;n\), the instance can immediately be rejected.</li></ul><ul><li><b>Rational arithmetic.</b> Exact sums and strict comparisons of binary-encoded rationals have polynomial bit complexity relative to the total input length. Iterating over the explicitly represented candidates is also polynomial.</li></ul><ul><li><b>Conclusion.</b> The reduction proves \(\mathrm{NP}\)-hardness, and the certificate argument proves membership in \(\mathrm{NP}\). The claimed \(\mathrm{NP}\)-completeness therefore follows.</li></ul><h3>Issues</h3><p>No substantive or expositional issue affecting verifiability was found.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

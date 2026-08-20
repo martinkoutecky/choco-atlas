@@ -1,0 +1,125 @@
+<!doctype html><html><head><meta charset="utf-8"><title>EFX Feasible Scheduling for Time-dependent Resources — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>EFX Feasible Scheduling for Time-dependent Resources <span style="font-weight:normal;color:#8a7350">(ijcai25-00426)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\text{-hard}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5 — class: algorithmic</p>
+<blockquote class="thmq">Given an arbitrary instance I of FISP with &lt;Binary, Unit&gt;, a non-wasteful MaxNSW schedule which is both EFX and PO can be found in polynomial time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational machine-type masses \(\mu_t\), repeated unit-job-template supplies \(\lambda_k\), binary values \(v_t(k)\), and complete machine availability data, let \(\mathcal S_t\) be the integral feasible schedules for one type-\(t\) machine and \(a_{\sigma k}\) the number of template-\(k\) jobs used by schedule \(\sigma\). Find \(x_{t,\sigma}\ge0\) satisfying \(\sum_{\sigma\in\mathcal S_t}x_{t,\sigma}=\mu_t\) and \(\sum_{t,\sigma}a_{\sigma k}x_{t,\sigma}\le\lambda_k\), maximizing continuous Nash welfare \(\sum_{t,\sigma}x_{t,\sigma}\log U_t(\sigma)\) when utilities are positive, with zero cases handled as in the paper, such that for every positive-support \((t,\sigma)\), \((t&#x27;,\rho)\), and job occurrence \(e\in\rho\), \(U_t(\sigma)\ge U_t(\rho\setminus\{e\})\), and the allocation is Pareto optimal under feasible measure-preserving reassignment.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>For each job class \(q\in Q\), a copy has release time \(r_q\), deadline \(d_q\), and processing time \(p_q\). Let \(\mathcal B\subseteq\mathbb Z_{\ge0}^{Q}\) be the set of multiplicity vectors whose corresponding job copies can be scheduled non-preemptively on one machine, with no overlaps, each wholly within its release-deadline interval. Define \(v_a(b)=\sum_{q\in Q}v_{a,q}b_q\).</p><p>A mass schedule consists of \(x_{a,b}\ge0\) for \(a\in A,b\in\mathcal B\), and charity masses \(y_q\ge0\), with \(\sum_{b\in\mathcal B}x_{a,b}=\mu_a\) and \(\sum_{a\in A,b\in\mathcal B}b_qx_{a,b}+y_q=eta_q\). It is WIO if, whenever \(x_{a,b}&gt;0\), \(v_a(b)\ge R_a(y)\), where \(R_a(y)=\max\{v_a(b&#x27;):b&#x27;\in\mathcal B,\ b&#x27;_q&gt;0\Rightarrow y_q&gt;0\}\).</p><p><b>Target.</b> Is computing such a WIO mass schedule polynomial-time solvable, or NP-hard?</p><p><b>Nearest known results.</b> For the discrete fair interval scheduling problem, computing a WIO schedule is NP-hard. No result for the above mass-distribution formulation is established here.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity model</h3><p>Use the standard high-multiplicity encoding:</p><ul><li>The sets \(A\) and \(Q\) and all parameters are given explicitly in binary.</li><li>Processing times are positive integers.</li><li>The configuration set \(\mathcal B\) is represented implicitly by the release times, deadlines, and processing times.</li><li>A solution lists its finitely many positive rational variables \(x_{a,b}\), together with \(y\).</li></ul><p>Under this encoding, computing an exact WIO mass schedule is \(\mathrm{NP}\)-hard.</p><h3>Existence of WIO schedules</h3><p>First, WIO schedules always exist when \(\mathcal B\) is finite.</p><p>Consider the linear optimization problem of maximizing total allocated value</p><p>\[
+\sum_{a\in A}\sum_{b\in\mathcal B}v_a(b)x_{a,b}
+\]</p><p>over all mass schedules. Its feasible region is nonempty because the zero configuration belongs to \(\mathcal B\): one may set \(x_{a,0}=\mu_a\) and \(y_q=\beta_q\). It is compact because \(\mathcal B\) is finite, so an optimum exists.</p><p>Let \((x,y)\) be an optimum. Suppose it is not WIO. Then for some \(a\) and \(b\) with \(x_{a,b}&gt;0\), there is a configuration \(b&#x27;\in\mathcal B\) such that</p><p>\[
+b&#x27;_q&gt;0\Longrightarrow y_q&gt;0
+\]</p><p>and</p><p>\[
+v_a(b&#x27;)&gt;v_a(b).
+\]</p><p>Choose \(\varepsilon&gt;0\) sufficiently small that \(\varepsilon\le x_{a,b}\) and</p><p>\[
+\varepsilon(b&#x27;_q-b_q)\le y_q
+\]</p><p>for every \(q\) with \(b&#x27;_q&gt;b_q\). Such an \(\varepsilon\) exists because every such \(q\) satisfies \(b&#x27;_q&gt;0\), hence \(y_q&gt;0\).</p><p>Move mass \(\varepsilon\) from \(b\) to \(b&#x27;\), and replace</p><p>\[
+y_q\quad\text{by}\quad y_q+\varepsilon(b_q-b&#x27;_q).
+\]</p><p>All mass and supply equalities remain valid, and the choice of \(\varepsilon\) keeps every charity mass nonnegative. Total allocated value increases by</p><p>\[
+\varepsilon\bigl(v_a(b&#x27;)-v_a(b)\bigr)&gt;0,
+\]</p><p>contradicting optimality. Thus every welfare-maximizing mass schedule is WIO.</p><p>This establishes existence, but does not provide a polynomial-time algorithm because optimizing over the implicit configuration set can be hard.</p><h3>An NP-hard exact packing problem</h3><p>We first give a self-contained reduction from \(\mathrm{SUBSET\ SUM}\).</p><p>Let \(a_1,\ldots,a_n\) be positive integers and let \(B\) satisfy</p><p>\[
+1\le B\le\sum_{i=1}^n a_i.
+\]</p><p>Set</p><p>\[
+M=\max_i a_i,\qquad L=nM+1.
+\]</p><p>For every \(i\), define two positive integers</p><p>\[
+s_{i,0}=L^i+L^{n+1},
+\qquad
+s_{i,1}=a_i+L^i+L^{n+1},
+\]</p><p>and define the target</p><p>\[
+T=B+\sum_{i=1}^n L^i+nL^{n+1}.
+\]</p><p>We claim that</p><p>\[
+\sum_{i\in S}a_i=B
+\]</p><p>for some subset \(S\subseteq\{1,\ldots,n\}\) if and only if there are nonnegative integers \(z_{i,0},z_{i,1}\) satisfying</p><p>\[
+\sum_{i=1}^n\sum_{\epsilon\in\{0,1\}}
+z_{i,\epsilon}s_{i,\epsilon}=T.
+\]</p><p>For the forward implication, choose exactly one number for each \(i\): choose \(s_{i,1}\) when \(i\in S\), and \(s_{i,0}\) otherwise. Their sum is exactly \(T\).</p><p>Conversely, suppose such nonnegative integers \(z_{i,\epsilon}\) exist. Put</p><p>\[
+N=\sum_{i,\epsilon}z_{i,\epsilon}.
+\]</p><p>The part of \(T\) below the \(L^{n+1}\) digit is</p><p>\[
+B+\sum_{i=1}^nL^i&lt;L^{n+1}.
+\]</p><p>Consequently,</p><p>\[
+T&lt;(n+1)L^{n+1}.
+\]</p><p>Every \(s_{i,\epsilon}\) is at least \(L^{n+1}\), so \(N\le n&lt;L\).</p><p>Define</p><p>\[
+c_i=z_{i,0}+z_{i,1},
+\qquad
+u=\sum_{i=1}^n a_i z_{i,1}.
+\]</p><p>Because \(c_i\le N&lt;L\) and</p><p>\[
+u\le MN\le Mn&lt;L,
+\]</p><p>the expression</p><p>\[
+u+\sum_{i=1}^n c_iL^i+NL^{n+1}
+\]</p><p>has no carries in base \(L\). Uniqueness of base-\(L\) representation, compared with the definition of \(T\), therefore gives</p><p>\[
+c_i=1\quad\text{for every }i,
+\qquad
+u=B.
+\]</p><p>Thus exactly one of \(z_{i,0}\) and \(z_{i,1}\) equals \(1\) for each \(i\). The set</p><p>\[
+S=\{i:z_{i,1}=1\}
+\]</p><p>then satisfies \(\sum_{i\in S}a_i=B\).</p><p>The constructed integers have \(O(n\log L)\) bits, so this is a polynomial-time reduction. Hence exact unbounded packing—deciding whether nonnegative multiplicities of given sizes can sum exactly to a target—is \(\mathrm{NP}\)-hard.</p><h3>Reduction to WIO mass scheduling</h3><p>Take the exact packing instance with item sizes \(s_q\) and target \(T\). Construct a WIO instance as follows:</p><ul><li>There is one agent class \(A=\{a\}\), with \(\mu_a=1\).</li><li>Each job class has</li></ul><p>\[
+  r_q=0,\qquad d_q=T,\qquad p_q=s_q.
+  \]</p><ul><li>Set</li></ul><p>\[
+  v_{a,q}=s_q=p_q.
+  \]</p><ul><li>Set every supply to</li></ul><p>\[
+  \beta_q=T+1.
+  \]</p><p>Because all jobs have the common window \([0,T]\), a multiplicity vector is feasible exactly when</p><p>\[
+\mathcal B
+=
+\left\{
+b\in\mathbb Z_{\ge0}^{Q}:
+\sum_{q\in Q}s_qb_q\le T
+\right\}.
+\]</p><p>Necessity follows because all jobs must occupy disjoint subintervals of an interval of length \(T\). Conversely, whenever the total processing time is at most \(T\), the copies can be placed consecutively starting at time \(0\).</p><p>Now consider any mass schedule for this instance. Every \(b\in\mathcal B\) satisfies \(b_q\le T\), because \(s_q\ge1\). Therefore</p><p>\[
+\sum_{b\in\mathcal B}b_qx_{a,b}
+\le
+T\sum_{b\in\mathcal B}x_{a,b}
+=T.
+\]</p><p>It follows from the supply equality that</p><p>\[
+y_q
+=
+T+1-\sum_{b\in\mathcal B}b_qx_{a,b}
+\ge1.
+\]</p><p>Thus every charity coordinate is strictly positive in every mass schedule. Consequently,</p><p>\[
+R_a(y)
+=
+\max_{b&#x27;\in\mathcal B}v_a(b&#x27;)
+=
+\max_{b&#x27;\in\mathcal B}\sum_qs_qb&#x27;_q.
+\]</p><p>If the schedule is WIO and \(x_{a,b}&gt;0\), then</p><p>\[
+v_a(b)\ge R_a(y).
+\]</p><p>The reverse inequality holds by the definition of \(R_a(y)\). Hence every positively supported configuration satisfies</p><p>\[
+v_a(b)=R_a(y);
+\]</p><p>that is, every such configuration is an optimal unbounded packing of capacity \(T\).</p><p>A WIO schedule exists: choose any maximizing configuration \(b^\star\), set \(x_{a,b^\star}=1\), and set \(y_q=T+1-b^\star_q\).</p><h3>Extracting the answer</h3><p>Suppose a polynomial-time algorithm computed an exact WIO mass schedule. Since</p><p>\[
+\sum_bx_{a,b}=1,
+\]</p><p>its output contains at least one configuration \(b\) with \(x_{a,b}&gt;0\). By the preceding argument, its value is the optimum packing value.</p><p>The original exact packing instance is feasible if and only if</p><p>\[
+v_a(b)=T.
+\]</p><p>Thus one call to a WIO-schedule algorithm would solve \(\mathrm{SUBSET\ SUM}\) in polynomial time.</p><p>Therefore computing a WIO mass schedule is \(\mathrm{NP}\)-hard, already with one agent class, common release time and deadline, positive integer data, and \(v_{a,q}=p_q\). The reduction establishes weak \(\mathrm{NP}\)-hardness; no claim of strong \(\mathrm{NP}\)-hardness or membership in \(\mathrm{NP}\) is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — An NP-hard exact packing problem, opening restriction on the SUBSET SUM instance: The reduction assumes 1 &lt;= B &lt;= sum_i a_i without explicitly stating or justifying that SUBSET SUM restricted to this range is NP-hard. The omitted justification is routine preprocessing of trivial out-of-range instances, but it should be included for a fully self-contained reduction.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly establishes weak \(\mathrm{NP}\)-hardness under the explicitly stated high-multiplicity binary encoding. The reduction is logically sound, and the extraction argument genuinely converts any exact WIO schedule into the answer to the source packing instance.</p><p>There is one minor source-problem qualification gap: the proof assumes \(1\le B\le\sum_i a_i\) without explicitly identifying this restricted version of \(\mathrm{SUBSET\ SUM}\) as NP-hard or explaining the trivial preprocessing for excluded instances.</p><h3>Step-by-step audit</h3><h3>1. Complexity model</h3><p>The prover specifies that configurations are implicit and that an exact solution explicitly lists its positive rational support. Under that model, extracting a positive-support configuration is legitimate: since \(\sum_b x_{a,b}=1\), at least one listed coefficient is positive.</p><p>The proof gives a polynomial-time oracle reduction from \(\mathrm{SUBSET\ SUM}\) to the schedule-computation problem. This is sufficient for the claimed computational \(\mathrm{NP}\)-hardness; membership in \(\mathrm{NP}\) is neither claimed nor required.</p><h3>2. Existence argument</h3><p>The zero configuration is feasible, and setting \(x_{a,0}=\mu_a\) and \(y_q=\beta_q\) gives a mass schedule provided, as implicit in the formulation, that the supplies \(\beta_q\) are nonnegative.</p><p>For finite \(\mathcal B\), the feasible region is bounded: each \(x_{a,b}\) lies in a finite simplex, and the supply equalities bound and determine the charity coordinates. Thus the welfare maximum exists.</p><p>The exchange argument is correct. If \(b&#x27;_q&gt;b_q\), then \(b&#x27;_q&gt;0\), so the eligibility condition gives \(y_q&gt;0\). A sufficiently small common \(\varepsilon&gt;0\) therefore preserves all nonnegativity constraints. The supply equalities are preserved because the allocation change \(\varepsilon(b&#x27;_q-b_q)\) is exactly offset in \(y_q\). The objective increases strictly, contradicting optimality.</p><p>Hence the claimed existence of WIO schedules follows.</p><h3>3. Reduction to exact unbounded packing</h3><p>The forward direction correctly selects one of \(s_{i,0}\) and \(s_{i,1}\) for every index.</p><p>For the reverse direction:</p><ul><li>Since \(B\le\sum_i a_i\le nM&lt;L\), the constant digit \(B\) is less than \(L\).</li><li>The stated bound \(B+\sum_{i=1}^nL^i&lt;L^{n+1}\) is valid.</li><li>Therefore \(T&lt;(n+1)L^{n+1}\).</li><li>Every selected item contributes at least \(L^{n+1}\), so the total number \(N\) of selected items satisfies \(N\le n&lt;L\).</li><li>Consequently \(c_i\le N&lt;L\), \(u\le MN\le Mn&lt;L\), and \(N&lt;L\).</li></ul><p>Thus all displayed coefficients are valid base-\(L\) digits, with no carries. Uniqueness of base-\(L\) expansion then forces \(c_i=1\) for every \(i\) and \(u=B\). This correctly recovers a subset summing to \(B\).</p><p>The constructed numbers have polynomial binary length because \(L^i\) has \(O(i\log L)\) bits.</p><p>The only qualification omitted is why restricting the source instances to \(1\le B\le\sum_i a_i\) preserves \(\mathrm{NP}\)-hardness. This is routine but should be stated.</p><h3>4. Scheduling construction</h3><p>With common window \([0,T]\), a multiplicity vector is schedulable exactly when its total processing time is at most \(T\). Necessity follows from disjointness, and sufficiency follows by scheduling the copies consecutively.</p><p>For every feasible configuration, \(b_q\le T\), since \(s_q\ge1\). Hence, using nonnegativity and \(\sum_bx_{a,b}=1\),</p><p>\[
+\sum_b b_qx_{a,b}\le T.
+\]</p><p>It follows that \(y_q\ge1\) for every class and every mass schedule. Therefore every feasible configuration is eligible in the definition of \(R_a(y)\), and \(R_a(y)\) equals the maximum packing value.</p><p>The WIO condition then forces every positive-support configuration to attain that maximum. The explicitly constructed schedule supported on a maximizing configuration satisfies all mass, supply, and WIO requirements.</p><h3>5. Extraction</h3><p>Any exact WIO output contains a positive-support configuration. Its value equals the optimum unbounded-packing value. Because every feasible packing has value at most \(T\), the exact-packing instance is feasible precisely when the extracted value equals \(T\).</p><p>All relevant integers and configurations have polynomial binary representation. Thus a polynomial-time WIO computation algorithm would decide the source problem in polynomial time.</p><h3>Minimum clarification required</h3><p>State either that positive \(\mathrm{SUBSET\ SUM}\) remains \(\mathrm{NP}\)-hard under the promise \(1\le B\le\sum_i a_i\), or explicitly map excluded trivial instances to fixed yes/no instances satisfying that range.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

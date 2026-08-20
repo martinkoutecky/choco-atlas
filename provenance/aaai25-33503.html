@@ -1,0 +1,114 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Balanced and Fair Partitioning of Friends — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Balanced and Fair Partitioning of Friends <span style="font-weight:normal;color:#8a7350">(aaai25-33503)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> polynomial-time solvable</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 9 — class: algorithmic</p>
+<blockquote class="thmq">If G is a forest and k ∈N, there always exists a k-partition that is MMS and EFX, even if the utility functions are monotone. Moreover, if the utilities are additive, we can find such a partition in linear time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite forest templates \(F_q=(V_q,E_q)\), rational component masses \(\lambda_q\), an integer \(k\), and monotone or additive local utilities \(u_{q,v}\), let \(Z=\sum_q \lambda_q|V_q|\). Decide whether there are nonnegative masses \(y_{q,\chi}\) over \(k\)-colourings \(\chi\) of each template such that \(\sum_\chi y_{q,\chi}=\lambda_q\), every group has mass \(Z/k\), and every positive-mass colouring satisfies the limiting EFX inequalities \(u_{q,v}(\chi^{-1}(\chi(v))) \ge u_{q,v}(\chi^{-1}(j) \setminus \{c\})\) for every local agent \(v\), group \(j\), and friend \(c\) in \(\chi^{-1}(j)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><h3>Definitions</h3><p>An instance has a finite type set \(T\), masses \(\mu_u\in\mathbb{Q}_{\ge 0}\), a symmetric kernel \(w:T	imes T	o\mathbb{Q}_{\ge 0}\), an integer \(k\), a focal type \(t\) with \(\mu_t&gt;0\), and \(\sigma\in\mathbb{Q}\).<br>A balanced mass assignment is \(x_{ug}\ge0\) satisfying \(\sum_{g\in[k]}x_{ug}=\mu_u\) and \(\sum_{u\in T}x_{ug}=1/k\).  Type \(t\)&#x27;s utility from group \(g\) is \(U_t(g)=\sum_{u\in T}w_{tu}x_{ug}\).</p><h3>Target</h3><p>Is deciding whether a balanced mass assignment with \(\min_{g\in[k]}U_t(g)\ge\sigma\) exists solvable in polynomial time, or is it NP-hard?</p><h3>Nearest known results</h3><p>For indivisible agents, deciding whether one agent&#x27;s MMS-share is at least a threshold is NP-complete, even for \(k=2\) and symmetric utilities.<br>That result concerns balanced partitions of individual agents, rather than the mass assignments defined above.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Theorem</h3><p>Assume \(k\ge 1\). Define</p><p>\[
+M:=\sum_{u\in T}\mu_u
+\qquad\text{and}\qquad
+W:=\sum_{u\in T}w_{tu}\mu_u.
+\]</p><p>A balanced mass assignment satisfying \(\min_{g\in[k]}U_t(g)\ge \sigma\) exists if and only if</p><p>\[
+M=1
+\qquad\text{and}\qquad
+\frac{W}{k}\ge \sigma.
+\]</p><p>Consequently, the decision problem is polynomial-time solvable.</p><h3>Proof</h3><h3>Necessary total-mass condition</h3><p>Suppose \(x\) is a balanced mass assignment. Summing the type constraints over \(u\in T\) gives</p><p>\[
+\sum_{u\in T}\sum_{g\in[k]}x_{ug}
+=
+\sum_{u\in T}\mu_u
+=
+M.
+\]</p><p>Summing the group-balance constraints over \(g\in[k]\) gives</p><p>\[
+\sum_{g\in[k]}\sum_{u\in T}x_{ug}
+=
+\sum_{g\in[k]}\frac1k
+=
+1.
+\]</p><p>The two left-hand sides are equal, so necessarily \(M=1\).</p><h3>Upper bound on the minimum utility</h3><p>For every balanced mass assignment,</p><p>\[
+\begin{aligned}
+\sum_{g\in[k]}U_t(g)
+&amp;=
+\sum_{g\in[k]}\sum_{u\in T}w_{tu}x_{ug} \\
+&amp;=
+\sum_{u\in T}w_{tu}\sum_{g\in[k]}x_{ug} \\
+&amp;=
+\sum_{u\in T}w_{tu}\mu_u \\
+&amp;=W.
+\end{aligned}
+\]</p><p>The minimum of \(k\) numbers cannot exceed their arithmetic mean. Hence</p><p>\[
+\min_{g\in[k]}U_t(g)
+\le
+\frac1k\sum_{g\in[k]}U_t(g)
+=
+\frac{W}{k}.
+\]</p><p>Therefore, if \(\min_g U_t(g)\ge\sigma\), then necessarily \(W/k\ge\sigma\).</p><h3>Achievability</h3><p>Now suppose \(M=1\). For every \(u\in T\) and \(g\in[k]\), set</p><p>\[
+x_{ug}:=\frac{\mu_u}{k}.
+\]</p><p>These values are nonnegative. For each type \(u\),</p><p>\[
+\sum_{g\in[k]}x_{ug}
+=
+k\frac{\mu_u}{k}
+=
+\mu_u.
+\]</p><p>For each group \(g\),</p><p>\[
+\sum_{u\in T}x_{ug}
+=
+\frac1k\sum_{u\in T}\mu_u
+=
+\frac{M}{k}
+=
+\frac1k.
+\]</p><p>Thus \(x\) is balanced. Moreover, every group gives the focal type exactly the same utility:</p><p>\[
+U_t(g)
+=
+\sum_{u\in T}w_{tu}\frac{\mu_u}{k}
+=
+\frac{W}{k}.
+\]</p><p>Consequently, if \(W/k\ge\sigma\), this assignment satisfies</p><p>\[
+\min_{g\in[k]}U_t(g)=\frac{W}{k}\ge\sigma.
+\]</p><p>This proves the stated equivalence.</p><h3>Complexity</h3><p>The algorithm computes the two rational quantities \(M\) and \(W\), then tests</p><p>\[
+M=1
+\qquad\text{and}\qquad
+W\ge k\sigma.
+\]</p><p>Exact addition, multiplication, and comparison of binary-encoded rational numbers take polynomial time in the total input length. This remains true even if \(k\) is binary encoded: the algorithm does not enumerate the \(k\) groups.</p><p>The symmetry of \(w\) and the condition \(\mu_t&gt;0\) are not needed for the characterization. Divisibility is decisive: uniformly splitting every type among all groups simultaneously attains the averaging upper bound.</p><p>Thus the problem belongs to \(\mathrm P\). In particular, it cannot be NP-hard under polynomial-time many-one reductions unless \(\mathrm P=\mathrm{NP}\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Theorem statement: &quot;Assume \(k\ge 1\).&quot;: The original instance definition says only that k is an integer, while the proof restricts to positive k. Positivity is naturally implicit because [k] is a group index set and 1/k occurs in the definition, but the valid input domain should be stated explicitly.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly characterizes feasibility for every positive integer \(k\). The averaging upper bound is valid, and the uniformly divided assignment \(x_{ug}=\mu_u/k\) attains it while satisfying all balance constraints exactly when total mass is \(1\).</p><p>The only issue is a minor domain clarification: the original instance description calls \(k\) an integer without explicitly stating \(k\ge 1\), while the prover assumes this. Since both \([k]\) and \(1/k\) presuppose a positive group count, this is almost certainly intended, but it should be stated explicitly.</p><h3>Step-by-step verification</h3><ul><li><b>Total-mass necessity.</b></li></ul><p>Summing the type constraints yields total assigned mass \(M\). Summing the group constraints yields total assigned mass \(k(1/k)=1\). These are the same finite double sum, so \(M=1\) is necessary. This is correct.</p><ul><li><b>Total utility identity.</b></li></ul><p>The calculation<br>\[
+   \sum_{g\in[k]}U_t(g)
+   =
+   \sum_{u\in T}w_{tu}\mu_u
+   =
+   W
+   \]<br>follows directly by exchanging finite sums and applying \(\sum_g x_{ug}=\mu_u\). This is correct.</p><ul><li><b>Averaging upper bound.</b></li></ul><p>For \(k\ge 1\), the minimum of the \(k\) group utilities is at most their average. Hence<br>\[
+   \min_g U_t(g)\le W/k.
+   \]<br>Therefore \(W/k\ge\sigma\) is necessary. This remains valid when \(\sigma\) is negative.</p><ul><li><b>Construction.</b></li></ul><p>Under \(M=1\), setting \(x_{ug}=\mu_u/k\) gives nonnegative rational values, satisfies every type constraint, and gives each group total mass \(M/k=1/k\). Thus it is balanced.</p><ul><li><b>Utility achieved by the construction.</b></li></ul><p>Each group obtains utility<br>\[
+   U_t(g)=\sum_u w_{tu}\mu_u/k=W/k.
+   \]<br>Therefore the threshold is met exactly when \(W/k\ge\sigma\). This proves sufficiency and matches the necessary conditions.</p><ul><li><b>Complexity claim.</b></li></ul><p>Computing \(M\) and \(W\) requires polynomially many exact rational additions and multiplications. The bit lengths of intermediate numerators and denominators remain polynomial in the total binary input length. Comparing \(W\) with \(k\sigma\) is polynomial-time even when \(k\) is binary encoded. Since only the decision answer is required, the algorithm need not explicitly output \(k\) group columns. The complexity conclusion is correct.</p><ul><li><b>Unused assumptions.</b></li></ul><p>The observation that symmetry of \(w\) and positivity of \(\mu_t\) are unnecessary for this characterization is correct.</p><h3>Minimum clarification required</h3><p>State explicitly that valid instances require \(k\in\mathbb{Z}_{\ge 1}\), or explain that this is implicit in the notation \([k]\) and the constraint \(1/k\). No mathematical repair beyond this domain clarification is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

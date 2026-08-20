@@ -1,0 +1,66 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Individual Representation in Approval-Based Committee Voting — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Individual Representation in Approval-Based Committee Voting <span style="font-weight:normal;color:#8a7350">(aaai22-20418)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}hard}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5 — class: hardness</p>
+<blockquote class="thmq">It is NP-hard to decide whether an ABC elec- tion admits an IR committee or a semi-strong JR committee.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), committee size \(k\), and a rational finite-support distribution \(\mu\) over approval types \(A\subseteq C\), define \(\nu_\mu(S)=\sum_{A\supseteq S}\mu_A\) and \(f_\mu(A)=\max\{|S|:S\subseteq A,\ \nu_\mu(S)\ge |S|/k\}\). Decide whether there exists a committee \(W\subseteq C\) with \(|W|\le k\) such that \(|W\cap A|\ge f_\mu(A)\) for every positive-mass type \(A\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><h3>Definitions</h3><p>An instance consists of a finite candidate set \(C\), \(k\in\{1,\ldots,|C|\}\), and a finite list of approval types \(A\subseteq C\) with positive binary-encoded rational masses \(\mu_A\) summing to \(1\).<br>For \(S\subseteq C\), let \(
+u_\mu(S)=\sum_{A\supseteq S}\mu_A\), and for each listed type \(A\) let \(f_\mu(A)=\max\{\,|S|:S\subseteq A,\ 
+u_\mu(S)\ge |S|/k\,\}\). An IR committee is \(W\subseteq C\) with \(|W|\le k\) and \(|W\cap A|\ge f_\mu(A)\) for every listed type \(A\).</p><h3>Target</h3><p>Is deciding whether an IR committee exists for such a rational finite-support distribution solvable in polynomial time, or is it NP-hard?</p><h3>Nearest known results</h3><p>For finite approval-voter profiles, deciding whether an IR committee exists is NP-hard.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity of IR-Committee Existence</h3><h3>Claim</h3><p>Deciding whether an IR committee exists for a rational finite-support distribution is \(\mathrm{NP\text{-}hard}\). Consequently, it is not polynomial-time solvable unless \(\mathrm{P}=\mathrm{NP}\).</p><h3>1. Finite profiles as rational distributions</h3><p>Consider a finite approval-voter profile with voter set \(N\), where \(n=|N|\), candidate set \(C\), target size \(k\), and approval set \(A_i\subseteq C\) for each voter \(i\in N\).</p><p>For \(S\subseteq C\), define \(N(S)=\{i\in N:S\subseteq A_i\}\). The standard finite-profile IR demand of voter \(i\) is</p><p>\[
+f_i=\max\bigl\{|S|:S\subseteq A_i,\ |N(S)|\ge |S|n/k\bigr\}.
+\]</p><p>This is equivalent to the usual definition through cohesive voter groups: a qualifying \(S\) makes \(N(S)\) an \(|S|\)-cohesive group containing \(i\), while any cohesive group containing \(i\) supplies a set \(S\) of commonly approved candidates satisfying the displayed inequality.</p><p>For every distinct approval set \(B\) occurring in the profile, let \(n_B=|\{i\in N:A_i=B\}|\), and construct the distribution</p><p>\[
+\mu_B=\frac{n_B}{n}.
+\]</p><p>These masses are positive and sum to \(1\).</p><h3>2. Exact preservation of demands</h3><p>For every \(S\subseteq C\),</p><p>\[
+u_\mu(S)
+ =\sum_{B\supseteq S}\mu_B
+ =\frac{1}{n}\sum_{B\supseteq S}n_B
+ =\frac{|N(S)|}{n}.
+\]</p><p>Consequently,</p><p>\[
+u_\mu(S)\ge \frac{|S|}{k}
+\quad\Longleftrightarrow\quad
+|N(S)|\ge \frac{|S|n}{k}.
+\]</p><p>Thus, for every voter \(i\) with approval set \(A_i=B\),</p><p>\[
+f_\mu(B)=f_i.
+\]</p><p>Repeated voters cause no difficulty: all voters with the same approval set have the same demand and are represented by the single type \(B\) with aggregated mass \(n_B/n\).</p><p>It follows that a committee \(W\subseteq C\) satisfies</p><p>\[
+|W\cap B|\ge f_\mu(B)
+\]</p><p>for every listed distributional type \(B\) if and only if it satisfies</p><p>\[
+|W\cap A_i|\ge f_i
+\]</p><p>for every voter \(i\). The size constraint \(|W|\le k\) is unchanged. Even if the finite-profile formulation requires \(|W|=k\), the distinction is immaterial: any qualifying committee of size below \(k\) can be extended to size \(k\), and adding candidates cannot violate an IR inequality.</p><h3>3. Polynomial encoding</h3><p>The transformation is polynomial-time:</p><ul><li>there are at most \(n\) distinct approval types;</li><li>the multiplicities \(n_B\) are computable by grouping equal ballots;</li><li>every mass \(n_B/n\) has binary encoding length \(O(\log n)\);</li><li>\(C\) and \(k\) remain unchanged.</li></ul><p>Hence this is a polynomial-time many-one reduction from finite-profile IR existence to rational finite-support IR existence.</p><p>The former problem is \(\mathrm{NP\text{-}hard}\) by [Brill, Israel, Micha, and Peters, Theorem 6](https://ojs.aaai.org/index.php/AAAI/article/download/20418/20177). Therefore the distributional problem is also \(\mathrm{NP\text{-}hard}\).</p><p>Notice that expanding an arbitrary rational distribution into a voter profile might require exponentially many voters. That inverse transformation is unnecessary: the hardness reduction proceeds from an explicitly listed profile to masses whose common denominator is merely \(n\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 3, citation supporting finite-profile IR-existence hardness: The theorem number is incorrect. The cited paper&#x27;s Theorem 5 proves NP-hardness of IR-committee existence; Theorem 6 concerns deciding whether a specified voter&#x27;s demand satisfies f_i &gt;= j. Correcting the theorem number makes the cited support precise.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Verdict</h3><p>The reduction is mathematically sound and establishes NP-hardness. The only substantive defect is an incorrect theorem number in the citation: IR-committee existence is covered by Theorem 5, whereas Theorem 6 concerns computing whether a particular demand \(f_i\) exceeds a threshold.</p><h3>Step-by-step audit</h3><ul><li><b>Construction of the distribution.</b></li></ul><p>Aggregating all voters with approval set \(B\) into mass \(\mu_B=n_B/n\) is valid. Every mass is positive, the masses sum to \(1\), and only distinct types are listed.</p><ul><li><b>Preservation of support values.</b></li></ul><p>The equality<br>\[
+   u_\mu(S)=\sum_{B\supseteq S}\frac{n_B}{n}=\frac{|N(S)|}{n}
+   \]<br>is correct for every \(S\subseteq C\).</p><ul><li><b>Preservation of feasibility thresholds.</b></li></ul><p>From the preceding equality,<br>\[
+   u_\mu(S)\geq \frac{|S|}{k}
+   \]<br>is equivalent to<br>\[
+   |N(S)|\geq \frac{|S|n}{k}.
+   \]<br>This equivalence is exact, including when \(|S|n/k\) is nonintegral.</p><ul><li><b>Preservation of individual demands.</b></li></ul><p>For every voter whose approval set is \(B\), the maximizations defining \(f_i\) and \(f_\mu(B)\) range over the same subsets and apply equivalent threshold conditions. Therefore \(f_\mu(B)=f_i\). Duplicate voters indeed have identical demands.</p><ul><li><b>Preservation of committees.</b></li></ul><p>Requiring \(|W\cap B|\geq f_\mu(B)\) for every distinct type is equivalent to requiring \(|W\cap A_i|\geq f_i\) for every voter. The size condition is preserved.</p><ul><li><b>Committee-size convention.</b></li></ul><p>The extension argument from \(|W|&lt;k\) to \(|W|=k\) is correct because the instance assumes \(k\leq |C|\), so enough candidates exist, and adding candidates cannot decrease any intersection \(|W\cap A_i|\). The cited paper itself defines IR using size at most \(k\), so this observation is not needed for that source.</p><ul><li><b>Polynomial encoding.</b></li></ul><p>There are at most \(n\) output types. Grouping explicit ballots is polynomial-time, and both numerator \(n_B\) and denominator \(n\) require \(O(\log n)\) bits. Thus the transformation is a polynomial-time many-one reduction.</p><ul><li><b>Hardness premise.</b></li></ul><p>The cited paper does establish that deciding whether an approval-based committee election admits an IR committee is NP-hard, but this is [Theorem 5 of the paper](https://ojs.aaai.org/index.php/AAAI/article/download/20418/20177), not Theorem 6. Theorem 6 instead states NP-completeness of deciding whether \(f_i\geq j\). Since the USER_TASK already supplies finite-profile IR-existence hardness as a nearest known result, this citation error does not undermine the reduction’s conclusion.</p><h3>Actionable feedback</h3><p>Replace “Brill, Israel, Micha, and Peters, Theorem 6” with “Brill, Israel, Micha, and Peters, Theorem 5.” No new mathematical argument is required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

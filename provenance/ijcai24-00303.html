@@ -1,0 +1,134 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Popular and Dominant Matchings with Uncertain and Multimodal Preferences — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Popular and Dominant Matchings with Uncertain and Multimodal Preferences <span style="font-weight:normal;color:#8a7350">(ijcai24-00303)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\text{-hard}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 10 — class: algorithmic</p>
+<blockquote class="thmq">HA-POPULAR-MULTILAYER and HA- POPULAR-UNCERTAIN are solvable in polynomial time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite applicant types \(T\), houses \(B\), rational masses \(\mu_t\) with \(\sum_{t\in T}\mu_t=1\), rational capacities \(\kappa_b\), common acceptability edges, and \(\ell\) strict preference profiles \(\succ_t^i\), does there exist a measurable assignment, including a last-resort house, with type-to-house masses \(x_{t,b}\) such that every type mass is assigned, house capacities are respected, and the assignment is popular against every competing assignment in every layer, using the mass-weighted vote margin \(\Delta_i(M,N)\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> Let \(U,V\) be finite type sets with rational masses \(\mu^U_i,\mu^V_j\), acceptable pairs \(E\subseteq U	imes V\), and two strict preference profiles \(L^1,L^2\), with every acceptable partner preferred to being unmatched. A feasible mass matching has masses \(x_{ij}\geq0\) on \(E\), with row and column sums at most the respective type masses; residual mass is matched to \(ot\).</p><p>For a rival, let \(p_{ijk}\) be mass of \(U\)-type \(i\) assigned \(j\) by \(x\) and \(k\) by the rival, and let \(q_{ji\ell}\) be mass of \(V\)-type \(j\) assigned \(i\) by \(x\) and \(\ell\) by the rival. Require their \(x\)-marginals to equal \(x\), and their rival marginals to agree on every \((i,j)\in E\). Define \(\Delta_\lambda(x;p,q)\) as the sum of these masses times the corresponding \(L^\lambda\)-vote in favour of the assignment under \(x\), versus the rival assignment.</p><p><b>Target.</b> Is deciding whether there exists a feasible \(x\) such that \(\Delta_\lambda(x;p,q)\geq0\) for every jointly consistent comparison flow pair \(p,q\) and every \(\lambda\in\{1,2\}\) solvable in polynomial time, or is it NP-hard?</p><p><b>Nearest known results.</b> With unit masses, deciding whether a two-sided matching is popular in every one of two strict preference profiles is NP-complete, even when the number of layers is the fixed constant \(2\).<br>No verified result is stated here for the exact rational mass-flow formulation above.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity of the rational mass-flow formulation</h3><h3>Result</h3><p>The stated decision problem is \(\mathrm{NP}\text{-hard}\), even when every type has unit mass.</p><p>The essential point is that fractional mass splitting does not create additional yes-instances on the unit-mass subfamily. Every fractional incumbent decomposes into integral matchings, and the comparison-flow adversary can challenge each component of that decomposition separately.</p><h3>1. Discrete margins</h3><p>Include \(\bot\) among the possible assignments. For a matching \(M\), let \(M(a)\) denote the partner of vertex \(a\), or \(\bot\) if \(a\) is unmatched.</p><p>For profile \(L^\lambda\), define the vote</p><p>\[
+v^\lambda_a(b,c)=
+\begin{cases}
+1,&amp; b\succ^\lambda_a c,\\
+-1,&amp; c\succ^\lambda_a b,\\
+0,&amp; b=c.
+\end{cases}
+\]</p><p>For two integral matchings \(M,N\), their discrete popularity margin in favour of \(M\) is</p><p>\[
+\Phi_\lambda(M,N)
+=
+\sum_{i\in U}v^\lambda_i(M(i),N(i))
++
+\sum_{j\in V}v^\lambda_j(M(j),N(j)).
+\]</p><p>Thus \(M\) is popular in layer \(\lambda\) precisely when</p><p>\[
+\Phi_\lambda(M,N)\geq 0
+\]</p><p>for every integral matching \(N\).</p><h3>2. Decomposition of a unit-mass assignment</h3><p>Assume temporarily that</p><p>\[
+\mu_i^U=\mu_j^V=1
+\]</p><p>for all \(i\in U\) and \(j\in V\). The feasible edge-mass vectors form the bipartite matching polytope</p><p>\[
+P(G)=
+\left\{
+x\in\mathbb{R}_{\geq 0}^{E}:
+\sum_{j:ij\in E}x_{ij}\leq 1\ \forall i\in U,\quad
+\sum_{i:ij\in E}x_{ij}\leq 1\ \forall j\in V
+\right\}.
+\]</p><p>The vertex-edge incidence matrix of a bipartite graph is totally unimodular: multiplying all rows indexed by \(V\) by \(-1\) produces an oriented node-edge incidence matrix. Since the right-hand sides are integral, every vertex of \(P(G)\) is integral. Its integral points are exactly the incidence vectors of matchings.</p><p>Consequently, every \(x\in P(G)\) has a finite decomposition</p><p>\[
+x=\sum_{r=1}^{t}\alpha_r\chi^{M_r},
+\qquad
+\alpha_r&gt;0,\qquad
+\sum_{r=1}^{t}\alpha_r=1,
+\]</p><p>where every \(M_r\) is an integral matching. The unmatched coordinates satisfy the same decomposition because</p><p>\[
+x_{i\bot}=1-\sum_jx_{ij}
+=\sum_r\alpha_r\mathbf{1}[M_r(i)=\bot],
+\]</p><p>and analogously on the \(V\)-side.</p><h3>3. Integral incumbents and arbitrary comparison flows</h3><h3>Lemma 1</h3><p>Let \(M\) be an integral matching and let \(x=\chi^M\). Then \(x\) satisfies all comparison-flow inequalities in layer \(\lambda\) if and only if \(M\) is discretely popular in layer \(\lambda\).</p><h3>Proof</h3><p>First suppose \(x\) satisfies all comparison-flow inequalities. Given any integral rival \(N\), define the deterministic flows that place the entire mass of each vertex on the pair of assignments \((M(a),N(a))\). These flows are jointly consistent because \(N\) is a matching, and their mass-flow margin is exactly</p><p>\[
+\Delta_\lambda(x;p,q)=\Phi_\lambda(M,N).
+\]</p><p>Hence \(\Phi_\lambda(M,N)\geq0\) for every \(N\), so \(M\) is popular.</p><p>Conversely, suppose \(M\) is popular and consider an arbitrary jointly consistent flow pair \(p,q\). Since the incumbent assignment is integral, all current-assignment mass of \(i\) occurs at \(M(i)\), and similarly for every \(j\in V\). Let \(y_{ij}\) be the common rival marginal on edge \(ij\). Joint consistency and nonnegative unmatched rival mass imply</p><p>\[
+y\in P(G).
+\]</p><p>By integrality of the bipartite matching polytope,</p><p>\[
+y=\sum_{s=1}^{m}\beta_s\chi^{N_s}
+\]</p><p>for integral matchings \(N_s\), with \(\beta_s\geq0\) and \(\sum_s\beta_s=1\). Because \(M\) is fixed and the vote expression is linear in the rival marginals,</p><p>\[
+\Delta_\lambda(x;p,q)
+=
+\sum_{s=1}^{m}\beta_s\Phi_\lambda(M,N_s).
+\]</p><p>Every summand is nonnegative by popularity of \(M\). Therefore \(\Delta_\lambda(x;p,q)\geq0\). This proves the lemma. \(\square\)</p><h3>4. Comparison flows can isolate a decomposition component</h3><h3>Lemma 2</h3><p>Let \(x\in P(G)\) satisfy every comparison-flow inequality in layer \(\lambda\). In any decomposition</p><p>\[
+x=\sum_{r=1}^{t}\alpha_r\chi^{M_r},
+\qquad \alpha_r&gt;0,
+\]</p><p>every matching \(M_r\) is discretely popular in layer \(\lambda\).</p><h3>Proof</h3><p>Fix a component \(M_r\) and an arbitrary integral rival matching \(N\). Assign a rival \(N_s\) to every decomposition component by setting</p><p>\[
+N_r=N,\qquad N_s=M_s\quad\text{for }s\neq r.
+\]</p><p>Define comparison flows cohortwise. On the \(U\)-side, set</p><p>\[
+p_{ijk}
+=
+\sum_{s=1}^{t}
+\alpha_s
+\mathbf{1}[M_s(i)=j]
+\mathbf{1}[N_s(i)=k].
+\]</p><p>Define the analogous \(V\)-side flows by</p><p>\[
+q_{ji\ell}
+=
+\sum_{s=1}^{t}
+\alpha_s
+\mathbf{1}[M_s(j)=i]
+\mathbf{1}[N_s(j)=\ell].
+\]</p><p>Their incumbent marginals equal \(x\). Their rival marginals agree on every edge because each \(N_s\) is itself a matching. Thus \(p,q\) are jointly consistent.</p><p>Substituting these flows into the definition of the margin and exchanging finite sums gives</p><p>\[
+\Delta_\lambda(x;p,q)
+=
+\sum_{s=1}^{t}\alpha_s\Phi_\lambda(M_s,N_s).
+\]</p><p>For \(s\neq r\), one has \(N_s=M_s\), and hence</p><p>\[
+\Phi_\lambda(M_s,N_s)=0.
+\]</p><p>Therefore</p><p>\[
+\Delta_\lambda(x;p,q)
+=
+\alpha_r\Phi_\lambda(M_r,N).
+\]</p><p>The universal comparison-flow condition gives</p><p>\[
+\alpha_r\Phi_\lambda(M_r,N)\geq0.
+\]</p><p>Since \(\alpha_r&gt;0\),</p><p>\[
+\Phi_\lambda(M_r,N)\geq0.
+\]</p><p>As \(N\) was arbitrary, \(M_r\) is popular in layer \(\lambda\). \(\square\)</p><p>Applying the lemma separately to \(\lambda=1\) and \(\lambda=2\) shows that every component \(M_r\) is popular in both profiles.</p><h3>5. Reduction from two-layer popular matching</h3><p>Take an instance of the supplied \(\mathrm{NP}\)-complete problem of deciding whether there is an integral two-sided matching popular in both of two strict preference profiles.</p><p>Construct the mass-flow instance as follows:</p><ul><li>create one type for every original vertex;</li><li>give every type mass \(1\);</li><li>retain the same acceptable edge set;</li><li>retain both strict preference profiles.</li></ul><p>This construction is polynomial-time.</p><p>If the discrete instance has a matching \(M\) popular in both profiles, Lemma 1 shows that \(x=\chi^M\) satisfies every comparison-flow inequality in both layers.</p><p>Conversely, suppose the mass-flow instance admits some feasible \(x\) satisfying all comparison-flow inequalities in both layers. Decompose \(x\) into integral matchings. By Lemma 2, every positive-weight matching in this decomposition is popular in both layers. Hence the original discrete instance is a yes-instance.</p><p>Thus the discrete instance is a yes-instance if and only if the constructed rational mass-flow instance is a yes-instance.</p><h3>Conclusion</h3><p>The rational mass-flow problem is \(\mathrm{NP}\text{-hard}\), already under the restriction that all masses equal \(1\). Therefore it is not polynomial-time solvable unless \(\mathrm{P}=\mathrm{NP}\).</p><p>This argument establishes hardness but does not establish membership of the unrestricted rational-mass problem in \(\mathrm{NP}\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly establishes that the rational mass-flow decision problem is NP-hard, already for unit masses. The reduction is polynomial-time, and both directions of the equivalence are justified. No substantive gap or false statement was found.</p><p>The argument appropriately does not claim membership in NP.</p><h3>Step-by-step audit</h3><h3>1. Discrete formulation</h3><p>The definition of</p><p>\[
+\Phi_\lambda(M,N)
+=
+\sum_{i\in U}v^\lambda_i(M(i),N(i))
++
+\sum_{j\in V}v^\lambda_j(M(j),N(j))
+\]</p><p>correctly represents the popularity margin of an integral matching \(M\) against \(N\), including unmatched assignments through \(\bot\).</p><p>The characterization of discrete popularity by \(\Phi_\lambda(M,N)\geq 0\) for every integral matching \(N\) matches the supplied source problem.</p><h3>2. Matching-polytope decomposition</h3><p>For unit masses, the feasible set is exactly the fractional bipartite matching polytope with degree inequalities.</p><p>The total-unimodularity argument is correct: after negating one bipartition’s rows, the vertex-edge incidence matrix becomes an oriented incidence matrix. With integral right-hand sides, the polytope has integral vertices.</p><p>Its integral points are precisely incidence vectors of matchings. Since the polytope is bounded, every feasible \(x\) is a finite convex combination of these vertices.</p><p>The calculation for unmatched mass is correct:</p><p>\[
+1-\sum_j x_{ij}
+=
+\sum_r\alpha_r\mathbf 1[M_r(i)=\bot].
+\]</p><p>The analogous statement holds on the \(V\)-side.</p><h3>3. Lemma 1: integral incumbent</h3><p>The forward implication is correct. For every integral rival \(N\), the deterministic flows induced by the pair \((M,N)\) have the prescribed incumbent marginals, and the rival edge marginals agree because \(N\) is a matching. Their mass-flow margin equals \(\Phi_\lambda(M,N)\).</p><p>For the converse, integrality of the incumbent forces every comparison-flow unit associated with a vertex to have current assignment \(M(a)\). Consequently, the margin depends linearly only on the rival marginal assignment.</p><p>The common rival edge marginals form a vector \(y\in P(G)\): edge masses are nonnegative, while the remaining rival mass may be assigned to \(\bot\), giving the required degree inequalities. Decomposing \(y\) into integral matchings also decomposes its unmatched residuals.</p><p>It then follows correctly that</p><p>\[
+\Delta_\lambda(x;p,q)
+=
+\sum_s\beta_s\Phi_\lambda(M,N_s).
+\]</p><p>Thus discrete popularity of \(M\) is equivalent to satisfaction of all comparison-flow inequalities for \(x=\chi^M\).</p><h3>4. Lemma 2: isolating a decomposition component</h3><p>This is the central step, and it is valid under the comparison-flow definition in the task.</p><p>For a fixed component \(M_r\) and rival \(N\), the prover assigns rival \(N\) to cohort \(r\) and assigns \(M_s\) to every other cohort \(s\). The resulting flows have incumbent marginals \(x\).</p><p>Their rival marginals are jointly consistent because every cohort’s rival \(N_s\) is itself an integral matching. No additional consistency between the latent cohort decompositions on the two sides is required beyond the stated rival edge-marginal agreement, which the construction satisfies.</p><p>Linearity gives</p><p>\[
+\Delta_\lambda(x;p,q)
+=
+\sum_s\alpha_s\Phi_\lambda(M_s,N_s)
+=
+\alpha_r\Phi_\lambda(M_r,N).
+\]</p><p>Since \(\alpha_r&gt;0\), the universal flow inequality implies \(\Phi_\lambda(M_r,N)\geq0\). As \(N\) is arbitrary, \(M_r\) is popular in that layer.</p><p>Applying the same lemma to both layers using the same decomposition correctly shows that every positive-weight component is popular in both profiles.</p><h3>5. Reduction and conclusion</h3><p>The construction preserves vertices, acceptable edges, strict preferences, and assigns unit mass to every type. It is plainly polynomial-time.</p><p>Both directions hold:</p><ul><li>A matching popular in both discrete profiles yields an integral mass assignment satisfying all comparison-flow inequalities by Lemma 1.</li><li>Any feasible mass assignment satisfying both layers decomposes into integral matchings, each popular in both layers by Lemma 2. In particular, at least one such matching exists.</li></ul><p>Therefore the source instance is a yes-instance exactly when the constructed mass-flow instance is a yes-instance.</p><p>The conclusion of NP-hardness follows. The prover correctly distinguishes this from NP-completeness and explicitly leaves membership of the unrestricted rational-mass problem open.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

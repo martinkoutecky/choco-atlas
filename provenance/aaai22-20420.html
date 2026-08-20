@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8"><title>A Little Charity Guarantees Fair Connected Graph Partitioning — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>A Little Charity Guarantees Fair Connected Graph Partitioning <span style="font-weight:normal;color:#8a7350">(aaai22-20420)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathsf{NP}\)-complete under standard binary encoding of integer or rational masses; in particular, \(\mathsf{NP}\)-hard even when every mass equals \(1\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 13 — class: hardness</p>
+<blockquote class="thmq">Checking whether a balanced connected pseudo n-partition (with at most n −1 exclusions) exists is NP-complete. The second result considers exact as well as approximate balancedness when no exclusions are allowed.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a connected graph \(G=(V,E)\), \(n\ge2\), and a rational population distribution \(\mu\in\mathbb{Q}_{&gt;0}^{V}\) with \(\sum_{v\in V}\mu_v=1\), does there exist a connected pseudo \(n\)-partition \((V_1,\ldots,V_n,R)\) with \(|R|\le n-1\) and \(\max_i\sum_{v\in V_i}\mu_v\le\min_i\sum_{v\in V_i}\mu_v\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> For \(X\subseteq V\), let \(\mu(X)=\sum_{v\in X}\mu_v\). A connected pseudo \(n\)-partition is a partition \(V=V_1\mathbin{\dot\cup}\cdots\mathbin{\dot\cup}V_n\mathbin{\dot\cup}R\) with \(\lvert R\rvert\le n-1\), such that for every \(i\) there is \(R_i\subseteq R\) for which \(G[V_i\cup R_i]\) is connected.</p><p><b>Target.</b> Is deciding whether there exists such a partition with<br>\(\max_i\mu(V_i)\le\min_i\mu(V_i)\) in \(\mathsf{P}\), or is it \(\mathsf{NP}\)-hard?</p><p><b>Nearest known results.</b> The unweighted special case, in which every vertex has the same mass, is \(\mathsf{NP}\)-complete: deciding whether a balanced connected pseudo \(n\)-partition with at most \(n-1\) excluded vertices exists.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Classification</h3><p>The weighted problem is \(\mathsf{NP}\)-hard, even when every vertex has mass \(1\). Under the standard binary encoding of integer or rational masses, it is in \(\mathsf{NP}\), and hence is \(\mathsf{NP}\)-complete.</p><h3>Source problem</h3><p>Consider the following unweighted problem:</p><p>Given \(G=(V,E)\) and \(n\), decide whether there is a connected pseudo \(n\)-partition<br>\[
+V=V_1\mathbin{\dot\cup}\cdots\mathbin{\dot\cup}V_n\mathbin{\dot\cup}R
+\]<br>with \(\lvert R\rvert\le n-1\) and<br>\[
+\max_{i\in[n]}\lvert V_i\rvert\le \min_{i\in[n]}\lvert V_i\rvert.
+\]</p><p>Because the maximum of finitely many numbers is always at least their minimum, the last inequality is equivalent to<br>\[
+\lvert V_1\rvert=\cdots=\lvert V_n\rvert.
+\]</p><p>This is precisely the balanced connected pseudo-partition problem stated as \(\mathsf{NP}\)-complete in Theorem \(13\) of [A Little Charity Guarantees Fair Connected Graph Partitioning](https://ojs.aaai.org/index.php/AAAI/article/download/20420/20179). The paper defines balancedness as \(1\)-balancedness, namely equality of the largest and smallest part sizes.</p><h3>Polynomial reduction</h3><p>Let \((G,n)\) be an instance of the unweighted problem. Construct an instance of the weighted problem on the same graph and with the same value of \(n\), assigning<br>\[
+\mu_v=1
+\]<br>to every \(v\in V\).</p><p>This transformation is computable in polynomial time. Moreover, for every \(X\subseteq V\),<br>\[
+\mu(X)=\sum_{v\in X}1=\lvert X\rvert.
+\]</p><p>Consequently, for every structurally feasible pseudo \(n\)-partition,<br>\[
+\max_{i\in[n]}\mu(V_i)\le\min_{i\in[n]}\mu(V_i)
+\]<br>holds if and only if<br>\[
+\max_{i\in[n]}\lvert V_i\rvert\le\min_{i\in[n]}\lvert V_i\rvert.
+\]</p><p>The reduction does not modify \(G\), \(R\), or the connector condition. Thus the same sets \(R_i\subseteq R\) certify connectivity in both instances. Therefore,<br>\[
+(G,n)\text{ is a yes-instance of the unweighted problem}
+\]<br>if and only if<br>\[
+(G,n,(\mu_v)_{v\in V})\text{ is a yes-instance of the weighted problem}.
+\]</p><p>This is a polynomial-time many-one reduction from an \(\mathsf{NP}\)-complete problem. Hence the target problem is \(\mathsf{NP}\)-hard, already for unit masses.</p><h3>Membership in \(\mathsf{NP}\)</h3><p>Assume masses are nonnegative integers or rationals given in binary. A certificate consists of the sets \(V_1,\ldots,V_n,R\) and, for each \(i\), a set \(R_i\subseteq R\).</p><p>In polynomial time one can:</p><ul><li>Verify that \(V_1,\ldots,V_n,R\) form the required partition and that \(\lvert R\rvert\le n-1\).</li><li>Verify \(R_i\subseteq R\) for every \(i\).</li><li>Test connectivity of each induced graph \(G[V_i\cup R_i]\) by graph search.</li><li>Compute each rational sum \(\mu(V_i)\) exactly and compare the resulting values.</li></ul><p>Thus the problem belongs to \(\mathsf{NP}\). Combined with the reduction, it is \(\mathsf{NP}\)-complete under the standard finite encoding of masses.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly establishes that the weighted problem is \(\mathsf{NP}\)-hard, even with unit masses. Under the explicitly stated binary encoding of integer or rational masses, the additional claim of \(\mathsf{NP}\)-completeness is also correct.</p><h3>Step-by-step audit</h3><ul><li><b>Source problem</b></li></ul><p>The cited Theorem 13 indeed states that deciding the existence of a balanced connected pseudo \(n\)-partition with at most \(n-1\) excluded vertices is \(\mathsf{NP}\)-complete. The paper’s connector condition also matches the condition in the task: for every \(i\), some \(R_i\subseteq R\) makes \(G[V_i\cup R_i]\) connected. [A Little Charity Guarantees Fair Connected Graph Partitioning](https://ojs.aaai.org/index.php/AAAI/article/download/20420/20179)</p><ul><li><b>Interpretation of balancedness</b></li></ul><p>For a nonempty finite family \((|V_i|)_{i\in[n]}\), one always has<br>\[
+   \max_i |V_i|\geq \min_i |V_i|.
+   \]<br>Therefore the reverse inequality used in the decision condition holds exactly when all part sizes are equal. This correctly matches the cited notion of exact balancedness.</p><ul><li><b>Reduction</b></li></ul><p>Assigning \(\mu_v=1\) for every vertex is a polynomial-time transformation. For every \(X\subseteq V\),<br>\[
+   \mu(X)=|X|.
+   \]<br>Hence the weighted equality condition is equivalent to the unweighted balancedness condition for every candidate partition.</p><p>The graph, the number of parts, the excluded set, and all connector witnesses remain unchanged. Thus the reduction preserves both yes-instances and no-instances. This is a valid polynomial-time many-one reduction.</p><ul><li><b>Hardness conclusion</b></li></ul><p>Since the source problem is \(\mathsf{NP}\)-complete, the reduction proves \(\mathsf{NP}\)-hardness. The hardness holds on the restricted class of instances having only unit masses, so it also holds for the general weighted problem.</p><ul><li><b>Membership in \(\mathsf{NP}\)</b></li></ul><p>Under binary-encoded integer or rational masses, the proposed certificate is sufficient. Partition validity, the exclusion bound, connector containment, and induced-subgraph connectivity are all polynomial-time checkable.</p><p>Exact sums of binary rationals have polynomially bounded representation length relative to the total input length, so their comparison is polynomial-time computable. The certificate size is also polynomial on potentially feasible instances, since connected parts are nonempty and hence \(n\leq |V|\).</p><ul><li><b>Encoding scope</b></li></ul><p>The prover correctly qualifies the \(\mathsf{NP}\)-membership and \(\mathsf{NP}\)-completeness assertions by requiring a standard finite encoding. The \(\mathsf{NP}\)-hardness conclusion itself does not depend on a broader encoding convention because it already holds for the exactly representable mass \(1\).</p><h3>Issues</h3><p>No mathematical, logical, or scope defects were found.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

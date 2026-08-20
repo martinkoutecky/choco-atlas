@@ -1,0 +1,187 @@
+<!doctype html><html><head><meta charset="utf-8"><title>The Complexity of Subelection Isomorphism Problems — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>The Complexity of Subelection Isomorphism Problems <span style="font-weight:normal;color:#8a7350">(aaai22-20430)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}complete}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: hardness</p>
+<blockquote class="thmq">SUBELECTION ISOMORPHISM is NP-com- plete and W[1]-hard with respect to the size of the smaller election.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite candidate sets \(A,B\) with \(|A|\le |B|\), rational distributions \(\mu\) and \(\nu\) over complete rankings of \(A\) and \(B\), and rational \(\lambda\in(0,1]\), does there exist \(S\subseteq B\) with \(|S|=|A|\), a bijection \(\sigma:A\to S\), and masses \(0\le x_\rho\le\nu_\rho\) such that \(\sum_\rho x_\rho=\lambda\) and, for every ranking \(\pi\) of \(A\), \(\sum_{\rho:\,\sigma^{-1}(\rho|_S)=\pi}x_\rho=\lambda\mu_\pi\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><h3>Definitions</h3><p>An instance explicitly lists the positive rational masses of distributions \(\mu\) on complete rankings of \(A\) and \(\nu\) on complete rankings of \(B\), together with rational \(\lambda\in(0,1]\); both distributions have total mass \(1\).<br>For a ranking \(\rho\) of \(B\) and \(S\subseteq B\), \(\rho|_S\) is its restriction to \(S\). For a bijection \(\sigma:A\to S\), \(\sigma^{-1}(\rho|_S)\) is the ranking of \(A\) obtained by replacing each \(s\in S\) with \(\sigma^{-1}(s)\).<br>Continuous Subelection Isomorphism asks whether there are \(S\subseteq B\) with \(|S|=|A|\), a bijection \(\sigma:A\to S\), and \(0\le x_\rho\le\nu_\rho\) such that \(\sum_\rho x_\rho=\lambda\) and \(\sum_{\rho:\,\sigma^{-1}(\rho|_S)=\pi}x_\rho=\lambda\mu_\pi\) for every ranking \(\pi\) of \(A\).</p><h3>Target</h3><p>Is Continuous Subelection Isomorphism solvable in polynomial time, or is it NP-hard?</p><h3>Nearest known results</h3><p>For finite ordinal elections, Subelection Isomorphism is NP-complete and \(\mathrm{W}[1]\)-hard parameterized by the size of the smaller election.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity of Continuous Subelection Isomorphism</h3><h3>Theorem</h3><p>Continuous Subelection Isomorphism is \(\mathrm{NP}\)-complete. It remains \(\mathrm{NP}\)-hard under all of the following restrictions:</p><ul><li>\(\lambda=1\);</li><li>each distribution has exactly two rankings in its support;</li><li>the two masses are \(1/3\) and \(2/3\).</li></ul><p>Thus the continuous choice of the variables \(x_\rho\) does not make the problem polynomial-time solvable unless \(\mathrm{P}=\mathrm{NP}\).</p><h3>1. Feasibility for a fixed candidate injection</h3><p>A choice of \(S\subseteq B\) and a bijection \(\sigma:A\to S\) is equivalently an injection \(\sigma:A\hookrightarrow B\), with \(S=\sigma(A)\).</p><p>For such an injection and a ranking \(\pi\) of \(A\), define its available capacity by</p><p>\[
+c_\sigma(\pi)
+=
+\sum_{\rho:\,\sigma^{-1}(\rho|_{\sigma(A)})=\pi}\nu_\rho.
+\]</p><h3>Lemma 1</h3><p>For a fixed injection \(\sigma:A\hookrightarrow B\), suitable variables \(x_\rho\) exist if and only if</p><p>\[
+c_\sigma(\pi)\geq \lambda\mu_\pi
+\]</p><p>for every ranking \(\pi\) in the support of \(\mu\).</p><h3>Proof</h3><p>Suppose first that feasible variables \(x_\rho\) exist. For every \(\pi\),</p><p>\[
+\lambda\mu_\pi
+=
+\sum_{\rho:\,\sigma^{-1}(\rho|_{\sigma(A)})=\pi}x_\rho
+\leq
+\sum_{\rho:\,\sigma^{-1}(\rho|_{\sigma(A)})=\pi}\nu_\rho
+=
+c_\sigma(\pi).
+\]</p><p>This proves necessity.</p><p>Conversely, suppose the displayed inequalities hold. For each \(\pi\) in the support of \(\mu\), consider the fiber</p><p>\[
+F_\pi
+=
+\{\rho:\sigma^{-1}(\rho|_{\sigma(A)})=\pi\}.
+\]</p><p>The fibers are pairwise disjoint. Their total available mass satisfies</p><p>\[
+\sum_{\rho\in F_\pi}\nu_\rho
+=
+c_\sigma(\pi)
+\geq
+\lambda\mu_\pi.
+\]</p><p>Therefore one can choose, independently inside each fiber, numbers \(0\leq x_\rho\leq\nu_\rho\) whose sum is exactly \(\lambda\mu_\pi\). For example, process the rankings of \(F_\pi\) in any order and take as much remaining required mass as possible from each ranking. Set \(x_\rho=0\) on fibers corresponding to rankings outside the support of \(\mu\).</p><p>Then all required fiber equalities hold, and</p><p>\[
+\sum_\rho x_\rho
+=
+\sum_\pi\lambda\mu_\pi
+=
+\lambda,
+\]</p><p>because \(\mu\) has total mass \(1\). Hence the constructed variables are feasible. \(\square\)</p><h3>Corollary 2</h3><p>When \(\lambda=1\), feasibility for \(\sigma\) is equivalent to exact equality between \(\mu\) and the distribution obtained by restricting every ranking in \(\nu\) to \(\sigma(A)\) and relabeling through \(\sigma^{-1}\).</p><p>Indeed, if \(x_\rho\leq\nu_\rho\) and</p><p>\[
+\sum_\rho x_\rho=1=\sum_\rho\nu_\rho,
+\]</p><p>then</p><p>\[
+\sum_\rho(\nu_\rho-x_\rho)=0.
+\]</p><p>Every summand is nonnegative, so \(x_\rho=\nu_\rho\) for every \(\rho\).</p><h3>2. Membership in \(\mathrm{NP}\)</h3><p>A certificate is an injection \(\sigma:A\hookrightarrow B\). Its encoding has polynomial length.</p><p>For each explicitly listed ranking \(\rho\) in the support of \(\nu\), one can compute the induced ranking</p><p>\[
+\sigma^{-1}(\rho|_{\sigma(A)})
+\]</p><p>in polynomial time and add \(\nu_\rho\) to the corresponding capacity. Lemma 1 then reduces verification to exact comparisons of rational numbers.</p><p>Adding and comparing polynomially many binary-encoded rationals takes polynomial time: the numerator and denominator bit lengths grow at most linearly in the total input bit length. Hence Continuous Subelection Isomorphism belongs to \(\mathrm{NP}\).</p><h3>3. The source problem</h3><p>We reduce from Permutation Pattern Matching.</p><p>An instance consists of a pattern permutation</p><p>\[
+P=(p_1,\ldots,p_k)
+\]</p><p>of \(\{1,\ldots,k\}\) and a text permutation</p><p>\[
+T=(t_1,\ldots,t_n)
+\]</p><p>of \(\{1,\ldots,n\}\), where \(k\leq n\). The question is whether there are indices</p><p>\[
+1\leq i_1&lt;\cdots&lt;i_k\leq n
+\]</p><p>such that, for every \(r,s\in\{1,\ldots,k\}\),</p><p>\[
+p_r&lt;p_s
+\quad\Longleftrightarrow\quad
+t_{i_r}&lt;t_{i_s}.
+\]</p><p>Permutation Pattern Matching is \(\mathrm{NP}\)-complete by Bose, Buss, and Lubiw, [“Pattern matching for permutations”](https://www.sciencedirect.com/science/article/pii/S0020019097002093).</p><h3>4. Construction of the election instance</h3><p>First suppose that neither \(P\) nor \(T\) is the identity permutation.</p><p>Let</p><p>\[
+A=\{a_1,\ldots,a_k\},
+\qquad
+B=\{b_1,\ldots,b_n\}.
+\]</p><p>Define two rankings of \(A\). The position ranking is</p><p>\[
+\alpha^{\mathrm{pos}}
+=
+a_1\succ a_2\succ\cdots\succ a_k.
+\]</p><p>The value ranking orders the candidates by increasing value of the corresponding pattern entry:</p><p>\[
+\alpha^{\mathrm{val}}
+=
+a_{P^{-1}(1)}
+\succ
+a_{P^{-1}(2)}
+\succ\cdots\succ
+a_{P^{-1}(k)}.
+\]</p><p>Equivalently, \(a_r\) precedes \(a_s\) in \(\alpha^{\mathrm{val}}\) exactly when \(p_r&lt;p_s\).</p><p>Similarly, define rankings of \(B\) by</p><p>\[
+\beta^{\mathrm{pos}}
+=
+b_1\succ b_2\succ\cdots\succ b_n
+\]</p><p>and</p><p>\[
+\beta^{\mathrm{val}}
+=
+b_{T^{-1}(1)}
+\succ
+b_{T^{-1}(2)}
+\succ\cdots\succ
+b_{T^{-1}(n)}.
+\]</p><p>Thus \(b_i\) precedes \(b_j\) in \(\beta^{\mathrm{val}}\) exactly when \(t_i&lt;t_j\).</p><p>Set</p><p>\[
+\mu_{\alpha^{\mathrm{pos}}}=\frac13,
+\qquad
+\mu_{\alpha^{\mathrm{val}}}=\frac23,
+\]</p><p>and</p><p>\[
+\nu_{\beta^{\mathrm{pos}}}=\frac13,
+\qquad
+\nu_{\beta^{\mathrm{val}}}=\frac23.
+\]</p><p>Finally, set \(\lambda=1\).</p><p>Because \(P\) and \(T\) are not identity permutations, the two rankings in each distribution are distinct. The construction has polynomial size.</p><h3>5. Correctness of the reduction</h3><h3>Lemma 3</h3><p>The permutation \(P\) occurs in \(T\) if and only if the constructed Continuous Subelection Isomorphism instance is feasible.</p><h3>Proof: forward implication</h3><p>Suppose there are indices</p><p>\[
+i_1&lt;\cdots&lt;i_k
+\]</p><p>witnessing an occurrence of \(P\) in \(T\). Define</p><p>\[
+\sigma(a_r)=b_{i_r}.
+\]</p><p>Since the indices are strictly increasing, restricting \(\beta^{\mathrm{pos}}\) to \(\sigma(A)\) gives</p><p>\[
+b_{i_1}\succ\cdots\succ b_{i_k}.
+\]</p><p>Consequently,</p><p>\[
+\sigma^{-1}(\beta^{\mathrm{pos}}|_{\sigma(A)})
+=
+\alpha^{\mathrm{pos}}.
+\]</p><p>For every \(r,s\), the occurrence condition gives</p><p>\[
+a_r\text{ precedes }a_s\text{ in }\alpha^{\mathrm{val}}
+\]</p><p>if and only if</p><p>\[
+p_r&lt;p_s
+\]</p><p>if and only if</p><p>\[
+t_{i_r}&lt;t_{i_s},
+\]</p><p>if and only if</p><p>\[
+b_{i_r}\text{ precedes }b_{i_s}\text{ in }\beta^{\mathrm{val}}.
+\]</p><p>Hence</p><p>\[
+\sigma^{-1}(\beta^{\mathrm{val}}|_{\sigma(A)})
+=
+\alpha^{\mathrm{val}}.
+\]</p><p>Taking \(x_\rho=\nu_\rho\) therefore produces exactly the target distribution \(\mu\), so the election instance is feasible.</p><h3>Proof: reverse implication</h3><p>Suppose the election instance is feasible. Since \(\lambda=1\), Corollary 2 gives</p><p>\[
+x_{\beta^{\mathrm{pos}}}=\frac13,
+\qquad
+x_{\beta^{\mathrm{val}}}=\frac23.
+\]</p><p>Write</p><p>\[
+\gamma^{\mathrm{pos}}
+=
+\sigma^{-1}(\beta^{\mathrm{pos}}|_{\sigma(A)})
+\]</p><p>and</p><p>\[
+\gamma^{\mathrm{val}}
+=
+\sigma^{-1}(\beta^{\mathrm{val}}|_{\sigma(A)}).
+\]</p><p>Equality with the target distribution says</p><p>\[
+\frac13\delta_{\gamma^{\mathrm{pos}}}
++
+\frac23\delta_{\gamma^{\mathrm{val}}}
+=
+\frac13\delta_{\alpha^{\mathrm{pos}}}
++
+\frac23\delta_{\alpha^{\mathrm{val}}},
+\]</p><p>where \(\delta_\gamma\) denotes a unit mass at ranking \(\gamma\).</p><p>Because \(\alpha^{\mathrm{pos}}\neq\alpha^{\mathrm{val}}\), the right-hand side assigns mass exactly \(2/3\) to \(\alpha^{\mathrm{val}}\). On the left, mass \(2/3\) at a ranking is possible only when</p><p>\[
+\gamma^{\mathrm{val}}=\alpha^{\mathrm{val}}
+\quad\text{and}\quad
+\gamma^{\mathrm{pos}}\neq\alpha^{\mathrm{val}}.
+\]</p><p>The remaining mass \(1/3\) must then be at \(\alpha^{\mathrm{pos}}\). Therefore</p><p>\[
+\gamma^{\mathrm{pos}}=\alpha^{\mathrm{pos}},
+\qquad
+\gamma^{\mathrm{val}}=\alpha^{\mathrm{val}}.
+\]</p><p>Write</p><p>\[
+\sigma(a_r)=b_{i_r}.
+\]</p><p>Equality of the position rankings implies</p><p>\[
+i_1&lt;\cdots&lt;i_k.
+\]</p><p>Equality of the value rankings implies, for all \(r,s\),</p><p>\[
+p_r&lt;p_s
+\quad\Longleftrightarrow\quad
+t_{i_r}&lt;t_{i_s}.
+\]</p><p>Thus \(i_1,\ldots,i_k\) witness an occurrence of \(P\) in \(T\). \(\square\)</p><h3>6. Identity-permutation cases</h3><p>The preceding construction assumes both permutations are nonidentity so that both distributions have two distinct support rankings. The exceptional cases can be handled in polynomial time while preserving the many-one reduction.</p><p>If \(P\) is the identity permutation, then \(P\) occurs in \(T\) exactly when \(T\) has an increasing subsequence of length \(k\). This can be decided, for example, by the recurrence</p><p>\[
+L_j
+=
+1+\max\{L_i:i&lt;j\text{ and }t_i&lt;t_j\},
+\]</p><p>with the maximum over the empty set taken as \(0\). The answer is yes exactly when \(\max_jL_j\geq k\).</p><p>If \(P\) is nonidentity and \(T\) is identity, the answer is no, because every subsequence of \(T\) is increasing.</p><p>After deciding either exceptional case, output a fixed yes-instance or fixed no-instance. These can also be chosen with \(\lambda=1\), exactly two rankings per distribution, and masses \(1/3\) and \(2/3\):</p><ul><li>For the fixed yes-instance, use three candidates on each side and use the rankings \(123\) and \(213\), with masses \(1/3\) and \(2/3\), in both distributions.</li></ul><ul><li>For the fixed no-instance, let \(\mu\) assign masses \(1/3\) and \(2/3\) to \(123\) and \(213\), respectively, while \(\nu\) assigns those masses to \(123\) and \(321\), respectively. Equality of the \(1/3\)-mass rankings forces the unique order-preserving bijection, under which \(321\) does not become \(213\); hence the instance is infeasible.</li></ul><p>Thus the reduction is defined on every Permutation Pattern Matching instance and preserves the answer.</p><h3>7. Conclusion</h3><p>The reduction proves \(\mathrm{NP}\)-hardness even at \(\lambda=1\) with two constant-weight support rankings in each distribution. Together with membership in \(\mathrm{NP}\), this establishes that Continuous Subelection Isomorphism is \(\mathrm{NP}\)-complete.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The prover correctly establishes that Continuous Subelection Isomorphism is \(\mathrm{NP}\)-complete, including the claimed restricted hardness. The capacity characterization, membership argument, reduction from Permutation Pattern Matching, both directions of the reduction, and exceptional identity cases are all valid.</p><p>No substantive gaps or false statements were found.</p><h3>Step-by-step verification</h3><h3>1. Fixed-injection feasibility</h3><p>Lemma 1 is correct.</p><p>For a fixed injection \(\sigma\), every ranking of \(B\) belongs to exactly one fiber \(F_\pi\), determined by its restricted and relabeled ranking. Thus the fibers are disjoint.</p><p>Necessity follows directly from \(x_\rho\leq\nu_\rho\). For sufficiency, the capacity inequality for each supported \(\pi\) permits selecting exactly \(\lambda\mu_\pi\) mass within its fiber. Because the fibers are disjoint, these selections do not interfere. Setting all other variables to zero satisfies the equations for unsupported rankings as well. Finally,</p><p>\[
+\sum_\rho x_\rho=\lambda\sum_\pi\mu_\pi=\lambda.
+\]</p><p>No assumption about integrality or indivisibility of masses is being made.</p><h3>2. The case \(\lambda=1\)</h3><p>Corollary 2 is correct. Since every difference \(\nu_\rho-x_\rho\) is nonnegative and their finite sum is zero, each difference is zero. Hence \(x_\rho=\nu_\rho\) for every ranking. Feasibility therefore reduces to equality of the target distribution and the restricted, relabeled source distribution.</p><h3>3. Membership in \(\mathrm{NP}\)</h3><p>The injection is a polynomial-size certificate. Restricting each explicitly listed source ranking, relabeling it, accumulating rational capacities, and comparing those capacities with \(\lambda\mu_\pi\) can all be performed in polynomial time.</p><p>The rational-arithmetic claim is also valid: even if denominators are multiplied rather than reduced optimally, their total bit length is bounded by the sum of the input denominator lengths, hence polynomial in the explicit input size.</p><h3>4. Source problem</h3><p>The stated definition of Permutation Pattern Matching agrees with the cited source problem. Bose, Buss, and Lubiw do prove the general problem \(\mathrm{NP}\)-complete, as confirmed by the [publisher’s abstract](https://www.sciencedirect.com/science/article/pii/S0020019097002093).</p><h3>5. Main construction</h3><p>When \(P\) is nonidentity, \(\alpha^{\mathrm{pos}}\) and \(\alpha^{\mathrm{val}}\) are distinct. Likewise, when \(T\) is nonidentity, the two source rankings are distinct. Therefore both distributions have exactly two support rankings with the claimed masses.</p><p>The construction is polynomial in the permutation input sizes.</p><h3>6. Forward implication</h3><p>Given an occurrence at indices \(i_1&lt;\cdots&lt;i_k\), the injection \(\sigma(a_r)=b_{i_r}\) sends the restricted position ranking to \(\alpha^{\mathrm{pos}}\).</p><p>The pattern-occurrence condition gives exactly the pairwise comparisons needed for the restricted value ranking to become \(\alpha^{\mathrm{val}}\). Since \(\lambda=1\), taking \(x_\rho=\nu_\rho\) produces \(\mu\). This implication is complete.</p><h3>7. Reverse implication</h3><p>Because \(\lambda=1\), both source atoms retain their full masses. The target atoms are distinct and have unequal masses \(1/3\) and \(2/3\).</p><p>The equality of atomic distributions forces the \(2/3\)-weighted value ranking to map to \(\alpha^{\mathrm{val}}\) and the \(1/3\)-weighted position ranking to map to \(\alpha^{\mathrm{pos}}\). A collision of the two induced source rankings would create a mass-\(1\) atom and therefore cannot satisfy the target distribution.</p><p>Writing \(\sigma(a_r)=b_{i_r}\), equality of position rankings gives \(i_1&lt;\cdots&lt;i_k\), while equality of value rankings gives</p><p>\[
+p_r&lt;p_s\quad\Longleftrightarrow\quad t_{i_r}&lt;t_{i_s}
+\]</p><p>for every \(r,s\). These indices are therefore a valid pattern occurrence.</p><h3>8. Exceptional cases</h3><p>The cases are exhaustive:</p><ul><li>If \(P\) is identity, occurrence is equivalent to an increasing subsequence of length \(k\), which the displayed dynamic program decides in polynomial time.</li><li>If \(P\) is nonidentity and \(T\) is identity, no occurrence exists.</li></ul><p>Using polynomial-time preprocessing on these easy subfamilies and returning fixed yes- or no-instances is legitimate in a polynomial-time many-one reduction.</p><p>The fixed yes-instance is plainly feasible. In the fixed no-instance, the unequal weights force ranking \(123\) to correspond to \(123\). This uniquely fixes the bijection by rank position, under which the reverse ranking \(321\) remains \(321\), not \(213\). Hence the fixed no-instance is indeed infeasible.</p><h3>Conclusion</h3><p>The proof establishes both membership in \(\mathrm{NP}\) and \(\mathrm{NP}\)-hardness under all stated restrictions. It fully resolves the target question.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

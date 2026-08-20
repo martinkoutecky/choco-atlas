@@ -1,0 +1,138 @@
+<!doctype html><html><head><meta charset="utf-8"><title>On Improving Resource Allocations by Sharing — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>On Improving Resource Allocations by Sharing <span style="font-weight:normal;color:#8a7350">(aaai22-20416)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\)-hard for every fixed \(b\ge 2\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2 — class: hardness</p>
+<blockquote class="thmq">b-EWSA is NP-hard for any constant b ≥2.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite agent types Θ with rational masses μ\(_\theta\), finite resource classes \(R\) with rational masses ρ\(_{\theta r}\) of repeated indivisible copies initially owned by type θ, additive utilities \(u_\theta(r)\), a typed relation ℐ specifying allowable owner-recipient pairs, fixed \(b\ge2\), and rational threshold \(q\), decide whether a mass distribution over legal sharing configurations exists in which initial ownership is preserved, each copy is shared with at most one neighbor while its owner keeps access, each agent has at most \(b\) sharing incidences, and \uoperatorname*{ess\,inf}\(_a\) \(u_{\operatorname{type}(a)}(B_a)\ge q\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><h3>Definitions</h3><p>Let \(\Theta\) be finite agent types with rational masses \(\mu_\theta\), and let \(R\) be finite resource classes.  Type \(\theta\) initially owns mass \(\rho_{\theta r}\) of indivisible copies of class \(r\), and has additive utility \(u_\theta(r)\).<br>A typed relation \(\mathcal I\subseteq\Theta\times\Theta\) permits a copy owned by type \(\theta\) to be shared with a recipient of type \(\phi\) only when \( (\theta,\phi)\in\mathcal I\).  A legal configuration preserves ownership; each copy is shared with at most one recipient while its owner retains access; and each agent has at most \(b\) sharing incidences.<br>For an agent \(a\), let \(B_a\) be its access bundle after sharing.  A feasible mass distribution of legal configurations must use the stated type-level resource masses and satisfy \(\operatorname*{ess\,inf}_a u_{\operatorname{type}(a)}(B_a)\ge q\).</p><h3>Target</h3><p>For every fixed \(b\ge2\), is deciding whether such a feasible mass distribution exists solvable in polynomial time, or is it NP-hard?</p><h3>Nearest known results</h3><p>For finite agents and indivisible resources, the corresponding \(b\)-bounded egalitarian-welfare sharing problem is NP-hard for every constant \(b\ge2\).<br>No verified result for precisely the typed mass formulation above is recorded here.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Classification</h3><p>For every fixed \(b\ge 2\), the typed mass feasibility problem is \(\mathrm{NP}\)-hard. In fact, hardness already holds with:</p><ul><li>one agent type;</li><li>an empty sharing relation;</li><li>no sharing incidences at all;</li><li>strictly positive integral utilities; and</li><li>resource masses belonging to \(\{1/2\}\).</li></ul><p>Thus the finite-agent sharing reduction is unnecessary: the difficulty already arises from distributing indivisible ownership bundles among a continuous mass of identical agents.</p><h3>Configuration interpretation</h3><p>Because ownership is specified only through the aggregate masses \(\rho_{\theta r}\), a no-sharing configuration of a type-\(\theta\) agent is an integral vector \(x\in\mathbb Z_{\ge 0}^{R}\), where \(x_r\) is the number of class-\(r\) copies owned by that agent.</p><p>For a single type of mass \(1\), a feasible mass distribution is therefore a probability distribution on integral bundle vectors satisfying</p><p>\[
+\mathbb E[x_r]=\rho_{\theta r}
+\]</p><p>for every resource class \(r\), with utility at least \(q\) almost surely. This is exactly the type-level aggregate-ownership interpretation in the question.</p><h3>Reduction from \(\mathrm{PARTITION}\)</h3><p>We reduce from the standard \(\mathrm{NP}\)-complete problem \(\mathrm{PARTITION}\), whose input is a list of positive integers \(w_1,\ldots,w_n\) and whose question is whether some \(S\subseteq\{1,\ldots,n\}\) satisfies \(\sum_{i\in S}w_i=\frac12\sum_{i=1}^n w_i\). Its \(\mathrm{NP}\)-completeness is classical; see [Karp’s original paper](https://doi.org/10.1007/978-1-4684-2001-2_9).</p><p>Put</p><p>\[
+W=\sum_{i=1}^n w_i,\qquad M=\max_i w_i,\qquad B=n+1.
+\]</p><p>For each \(i\in\{1,\ldots,n\}\), introduce two resource classes \(r_i^0,r_i^1\). Define</p><p>\[
+T=\sum_{i=1}^n B^{i-1},
+\qquad
+D=nM+W+1,
+\]</p><p>and</p><p>\[
+L=DB^{n-1}+M,
+\qquad
+A=nL+DT+W+1.
+\]</p><p>There is one type \(\theta\), with mass</p><p>\[
+\mu_\theta=1.
+\]</p><p>For every \(i\) and \(s\in\{0,1\}\), set</p><p>\[
+\rho_{\theta,r_i^s}=\frac12
+\]</p><p>and</p><p>\[
+u_\theta(r_i^s)=A+DB^{i-1}+s w_i.
+\]</p><p>Finally, set</p><p>\[
+q=nA+DT+\frac W2.
+\]</p><p>Take the typed sharing relation to be empty. Hence every legal configuration has zero sharing incidences and satisfies every fixed bound \(b\ge 0\).</p><p>All constructed numbers have polynomial binary encoding length: \(B^{n-1}\) has \(O(n\log n)\) bits, and all subsequent arithmetic increases the encoding length only polynomially.</p><h3>Encoding lemma</h3><p>Let \(x=(x_i^s)_{i,s}\in\mathbb Z_{\ge0}^{2n}\) be any integral bundle satisfying</p><p>\[
+\sum_{i=1}^n\sum_{s=0}^1 u_\theta(r_i^s)x_i^s=q.
+\]</p><p>Then there is a set \(S\subseteq\{1,\ldots,n\}\) satisfying</p><p>\[
+\sum_{i\in S}w_i=\frac W2.
+\]</p><h3>Proof</h3><p>Let</p><p>\[
+k=\sum_{i=1}^n\sum_{s=0}^1x_i^s
+\]</p><p>be the total number of copies in the bundle. Each utility coefficient equals \(A\) plus a nonnegative quantity of at most \(L\).</p><p>First suppose \(k\ge n+1\). Then the bundle utility is at least \((n+1)A\). Because \(A&gt;DT+W/2\),</p><p>\[
+(n+1)A&gt;nA+DT+\frac W2=q,
+\]</p><p>contradicting equality.</p><p>Now suppose \(k\le n-1\). Its utility is at most</p><p>\[
+kA+kL\le kA+nL&lt;kA+A\le nA&lt;q,
+\]</p><p>where \(nL&lt;A\) follows from the definition of \(A\). This again contradicts equality. Consequently,</p><p>\[
+k=n.
+\]</p><p>Define</p><p>\[
+c_i=x_i^0+x_i^1.
+\]</p><p>After cancelling the contribution \(nA\), the utility equality becomes</p><p>\[
+D\left(\sum_{i=1}^n B^{i-1}c_i-T\right)
++
+\left(\sum_{i=1}^n w_i x_i^1-\frac W2\right)
+=0.
+\]</p><p>Because the bundle contains exactly \(n\) copies,</p><p>\[
+0\le \sum_{i=1}^n w_i x_i^1\le nM.
+\]</p><p>Therefore</p><p>\[
+\left|\sum_{i=1}^n w_i x_i^1-\frac W2\right|&lt;D.
+\]</p><p>The first parenthesized expression is an integer. If it were nonzero, its contribution would have absolute value at least \(D\), too large to be cancelled by the second term. Hence</p><p>\[
+\sum_{i=1}^n B^{i-1}c_i=T
+\]</p><p>and</p><p>\[
+\sum_{i=1}^n w_i x_i^1=\frac W2.
+\]</p><p>Moreover, \(\sum_i c_i=n\), so each \(c_i\) lies in \(\{0,\ldots,n\}=\{0,\ldots,B-1\}\). Thus \((c_1,\ldots,c_n)\) is a valid base-\(B\) digit vector. Since \(T\) has base-\(B\) digits all equal to \(1\), uniqueness of base-\(B\) expansion gives</p><p>\[
+c_i=1
+\]</p><p>for every \(i\). Therefore each \(x_i^1\) belongs to \(\{0,1\}\). Taking</p><p>\[
+S=\{i:x_i^1=1\}
+\]</p><p>gives \(\sum_{i\in S}w_i=W/2\), as required. \(\square\)</p><h3>Correctness of the reduction</h3><h3>A partition produces a feasible mass distribution</h3><p>Suppose \(S\subseteq\{1,\ldots,n\}\) satisfies \(\sum_{i\in S}w_i=W/2\).</p><p>Define a bundle \(x^S\) that contains \(r_i^1\) when \(i\in S\), and \(r_i^0\) when \(i\notin S\). Its utility is exactly</p><p>\[
+nA+DT+\sum_{i\in S}w_i=q.
+\]</p><p>Define \(x^{\overline S}\) by making the opposite choice for every \(i\). Since the complement also has total weight \(W/2\), this second bundle also has utility exactly \(q\).</p><p>Assign mass \(1/2\) to each of these two configurations. Every class \(r_i^s\) then has expected multiplicity \(1/2\), exactly matching its prescribed mass. Every agent obtains utility \(q\), and there are no sharing incidences. Thus the constructed instance is feasible.</p><h3>A feasible mass distribution produces a partition</h3><p>Conversely, suppose a feasible mass distribution exists. Let \(X\) be the integral ownership bundle of a randomly selected type-\(\theta\) agent.</p><p>Resource balance gives</p><p>\[
+\mathbb E[X_i^s]=\frac12
+\]</p><p>for every \(i,s\). By additivity and the finiteness of the resource-class set,</p><p>\[
+\mathbb E[u_\theta(X)]
+=
+\sum_{i=1}^n\sum_{s=0}^1
+u_\theta(r_i^s)\mathbb E[X_i^s]
+=
+\frac12\sum_{i=1}^n\sum_{s=0}^1u_\theta(r_i^s)
+=q.
+\]</p><p>Feasibility gives \(u_\theta(X)\ge q\) almost surely. Hence the nonnegative random variable \(u_\theta(X)-q\) has expectation zero, so</p><p>\[
+u_\theta(X)=q
+\]</p><p>almost surely.</p><p>Applying the encoding lemma to any bundle in this full-measure set yields a subset \(S\) with total weight \(W/2\). Therefore the original \(\mathrm{PARTITION}\) instance is affirmative.</p><h3>Conclusion</h3><p>The construction is a polynomial-time many-one reduction from \(\mathrm{PARTITION}\). It uses no sharing, so it is valid independently of the fixed incidence bound. Consequently, for every fixed \(b\ge2\), deciding feasibility in the stated typed mass formulation is \(\mathrm{NP}\)-hard.</p><p>The proof establishes weak \(\mathrm{NP}\)-hardness. It does not claim strong \(\mathrm{NP}\)-hardness or membership in \(\mathrm{NP}\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly establishes a polynomial-time many-one reduction from \(\mathrm{PARTITION}\) to the typed mass feasibility problem. The argument proves weak \(\mathrm{NP}\)-hardness for every fixed \(b\ge 2\), and in fact for every fixed \(b\ge 0\).</p><p>No substantive logical gap or false assertion was found.</p><h3>Step-by-step audit</h3><h3>1. Configuration interpretation</h3><p>With one type of mass \(1\) and no sharing, representing a mass distribution by a probability distribution over integral ownership vectors is consistent with the stated type-level aggregate-mass formulation:</p><p>\[
+\mathbb E[x_r]=\rho_{\theta r}.
+\]</p><p>The incidence bound is vacuous because the sharing relation is empty. Ownership access is still retained, as required.</p><h3>2. Source problem</h3><p>The stated version of \(\mathrm{PARTITION}\), with positive integer weights encoded in binary, is NP-complete. The cited Karp paper is bibliographically appropriate and includes Partition among its NP-complete problems. [Karp, “Reducibility Among Combinatorial Problems”](https://doi.org/10.1007/978-1-4684-2001-2_9)</p><p>Using \(\mathrm{PARTITION}\) establishes weak rather than strong NP-hardness, which the prover explicitly acknowledges.</p><h3>3. Size of the construction</h3><p>The largest exponential-looking quantity is \(B^{n-1}\), whose binary length is</p><p>\[
+(n-1)\log_2(n+1)=O(n\log n).
+\]</p><p>The quantities \(D,L,A,q\) are obtained through polynomially many arithmetic operations on polynomial-bit-length integers. Thus the reduction has polynomial output length and can be computed in polynomial time.</p><p>The threshold \(q\) may be half-integral when \(W\) is odd, but rational thresholds are allowed. This causes no problem.</p><h3>4. Encoding lemma: determination of bundle size</h3><p>Every coefficient has the form</p><p>\[
+A+DB^{i-1}+s w_i,
+\]</p><p>with the non-\(A\) part lying between \(0\) and \(L\).</p><p>If \(k\ge n+1\), the utility is at least \((n+1)A\). Since</p><p>\[
+A=nL+DT+W+1&gt;DT+\frac W2,
+\]</p><p>one obtains</p><p>\[
+(n+1)A&gt;nA+DT+\frac W2=q.
+\]</p><p>If \(k\le n-1\), the utility is at most</p><p>\[
+kA+kL\le kA+nL&lt;kA+A\le nA&lt;q.
+\]</p><p>All inequalities used here follow from the definitions. Therefore equality with \(q\) forces \(k=n\).</p><h3>5. Encoding lemma: separation by \(D\)</h3><p>After cancelling \(nA\), the displayed equality is correct:</p><p>\[
+D\left(\sum_i B^{i-1}c_i-T\right)
++
+\left(\sum_i w_i x_i^1-\frac W2\right)=0.
+\]</p><p>Since the bundle contains \(n\) copies,</p><p>\[
+0\le \sum_i w_i x_i^1\le nM.
+\]</p><p>Moreover,</p><p>\[
+\left|\sum_i w_i x_i^1-\frac W2\right|&lt;nM+W+1=D.
+\]</p><p>Thus a nonzero integer value of the first parenthesis would contribute absolute value at least \(D\), which the second term cannot cancel. Both terms must therefore vanish.</p><p>This reasoning remains valid when \(W\) is odd: in that case the equality premise is simply impossible because the bundle utility is integral while \(q\) is half-integral.</p><h3>6. Base-\(B\) argument</h3><p>The values \(c_i\) are nonnegative integers satisfying</p><p>\[
+\sum_i c_i=n.
+\]</p><p>Consequently \(0\le c_i\le n=B-1\), so they are valid base-\(B\) digits. The equality</p><p>\[
+\sum_i B^{i-1}c_i=\sum_i B^{i-1}
+\]</p><p>and uniqueness of base-\(B\) representation imply \(c_i=1\) for every \(i\). Hence \(x_i^1\in\{0,1\}\), and the vanishing of the weight term yields a valid partition.</p><h3>7. Forward direction</h3><p>Given a partition \(S\), the two complementary bundles each contain exactly one of \(r_i^0,r_i^1\) for every \(i\). Both have utility \(q\), because both \(S\) and its complement have weight \(W/2\).</p><p>Assigning mass \(1/2\) to each bundle gives expected multiplicity \(1/2\) for every resource class. Thus all aggregate masses, utility requirements, and incidence bounds are satisfied.</p><h3>8. Reverse direction</h3><p>Resource balance implies</p><p>\[
+\mathbb E[X_i^s]=\frac12.
+\]</p><p>Linearity of expectation gives</p><p>\[
+\mathbb E[u_\theta(X)]
+=
+\frac12\sum_{i,s}u_\theta(r_i^s)
+=
+nA+DT+\frac W2
+=
+q.
+\]</p><p>The finite number of resource classes and their finite expected multiplicities ensure that this expectation is well-defined and finite.</p><p>Since feasibility gives \(u_\theta(X)\ge q\) almost surely, the nonnegative integrable variable \(u_\theta(X)-q\) has expectation zero and must vanish almost surely. The encoding lemma then yields a partition.</p><h3>Verdict</h3><p>The target is fully resolved as stated: the continuous typed mass feasibility problem is weakly NP-hard for every fixed \(b\ge2\). The proof does not establish membership in \(\mathrm{NP}\) or strong NP-hardness, but neither is required by the target.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

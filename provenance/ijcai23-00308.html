@@ -1,0 +1,74 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Ties in Multiwinner Approval Voting — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Ties in Multiwinner Approval Voting <span style="font-weight:normal;color:#8a7350">(ijcai23-00308)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\#P\)-hard, and \(\#W[1]\)-hard parameterized by \(k\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.5 — class: algorithmic</p>
+<blockquote class="thmq">Let f be MEqS, Phase 1 of MEqS, Phragm´en, or a greedy variant of a 1-concave Thiele rule. There is an FPT algorithm for f-UNIQUE-COMMITTEE parameterized by the committee size.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), committee size \(k\), listed approval types \(A\subseteq C\), and rational masses \(\mu_A\ge 0\) with \(\sum_A\mu_A=1\), construct \(W_0=\varnothing\); at each \(i\in\{1,\ldots,k\}\), branch over every \(c\in C\setminus W_{i-1}\) maximizing \(M_\mu(c\mid W_{i-1})=\sum_A\mu_A\bigl(H_{|A\cap(W_{i-1}\cup\{c\})|}-H_{|A\cap W_{i-1}|}\bigr)\), where \(H_j=\sum_{r=1}^{j}1/r\), and let \(\mathcal{G}_\infty(\mu,k)\) be the resulting committees; decide whether \(|\mathcal{G}_\infty(\mu,k)|=1\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given a finite candidate set \(C\), \(k\in\{1,\ldots,|C|\}\), and an explicitly listed finite-support rational distribution \(\mu=(\mu_A)_{A\subseteq C}\) with \(\sum_A\mu_A=1\), define \(w(q)=\sum_{j=1}^{q}1/j\). Starting with \(S_0=\varnothing\), GreedyPAV iteratively adds any \(c\in C\setminus S\) maximizing \(\Delta_\mu(c\mid S)=\sum_{A\subseteq C}\mu_A\mathbf{1}[c\in A](w(|A\cap S|+1)-w(|A\cap S|))\). Let \(\mathcal{G}_\mu(C,k)\) be the distinct size-\(k\) committees obtainable over all maximizing tie resolutions.</p><p>Is computing \(|\mathcal{G}_\mu(C,k)|\) in \(P\), or is it \(\#P\)-hard?</p><p>For finite approval-voter lists, counting GreedyPAV winning committees under all internal tie resolutions is \(\#P\)-hard and \(\#W[1]\)-hard when parameterized by \(k\).</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Theorem</h3><p>Under the stated sparse encoding of \(\mu\), where the positive-mass pairs \((A,\mu_A)\) are explicitly listed, computing \(\lvert\mathcal G_\mu(C,k)\rvert\) is \(\#P\)-hard. Moreover, the problem remains \(\#W[1]\)-hard when parameterized by \(k\).</p><h3>Proof</h3><p>Let \(V=(A_1,\ldots,A_n)\) be a nonempty finite approval-voter list. For each approval set \(A\subseteq C\), define its multiplicity</p><p>\[
+m_A=\lvert\{i\in\{1,\ldots,n\}:A_i=A\}\rvert.
+\]</p><p>Construct the rational distribution \(\mu\) by setting</p><p>\[
+\mu_A=\frac{m_A}{n}.
+\]</p><p>Only sets with \(m_A&gt;0\) need to be listed. There are at most \(n\) such sets, and every numerator and denominator has \(O(\log n)\) bits. Hence the construction is polynomial-time.</p><p>For a finite voter list, write its unnormalized GreedyPAV marginal as</p><p>\[
+\Delta_V(c\mid S)=\sum_{i=1}^n \mathbf 1[c\in A_i]\left(w(\lvert A_i\cap S\rvert+1)-w(\lvert A_i\cap S\rvert)\right).
+\]</p><p>For every \(S\subseteq C\) and \(c\in C\setminus S\), the constructed distribution satisfies</p><p>\[
+\begin{aligned}
+\Delta_\mu(c\mid S)
+&amp;=\sum_{A\subseteq C}\frac{m_A}{n}\mathbf 1[c\in A]
+ \left(w(\lvert A\cap S\rvert+1)-w(\lvert A\cap S\rvert)\right)\\
+&amp;=\frac1n\sum_{i=1}^n\mathbf 1[c\in A_i]
+ \left(w(\lvert A_i\cap S\rvert+1)-w(\lvert A_i\cap S\rvert)\right)\\
+&amp;=\frac1n\Delta_V(c\mid S).
+\end{aligned}
+\]</p><p>Because \(1/n&gt;0\), for every pair \(c,d\in C\setminus S\),</p><p>\[
+\Delta_\mu(c\mid S)\geq\Delta_\mu(d\mid S)
+\quad\Longleftrightarrow\quad
+\Delta_V(c\mid S)\geq\Delta_V(d\mid S).
+\]</p><p>Consequently, the complete set of maximizing candidates is identical in the two instances at every intermediate committee \(S\):</p><p>\[
+\operatorname*{arg\,max}_{c\in C\setminus S}\Delta_\mu(c\mid S)
+=
+\operatorname*{arg\,max}_{c\in C\setminus S}\Delta_V(c\mid S).
+\]</p><p>It follows inductively that an ordered sequence \((c_1,\ldots,c_k)\) is a legal sequence of GreedyPAV tie resolutions for \(V\) if and only if it is legal for \(\mu\). Therefore the sets of distinct endpoint committees coincide:</p><p>\[
+\mathcal G_\mu(C,k)=\mathcal G_V(C,k).
+\]</p><p>In particular,</p><p>\[
+\lvert\mathcal G_\mu(C,k)\rvert
+=
+\lvert\mathcal G_V(C,k)\rvert.
+\]</p><p>Thus the normalization map is a polynomial-time, value-preserving reduction from counting GreedyPAV committees for finite voter lists. By the supplied hardness result, computing \(\lvert\mathcal G_\mu(C,k)\rvert\) is \(\#P\)-hard.</p><p>The reduction leaves \(k\) unchanged. Hence it is also parameter preserving, and the supplied \(\#W[1]\)-hardness parameterized by \(k\) transfers to the rational-distribution problem.</p><h3>Conclusion</h3><p>The distributional formulation does not make the counting problem polynomial-time: normalization merely multiplies every marginal score by the same positive constant. Therefore exact polynomial-time computation would imply \(\mathrm{FP}=\#P\).</p><p>This argument establishes hardness only; it does not claim membership in \(\#P\), since the function counts distinct reachable committees rather than tie-resolution sequences.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Beginning of the proof and application of the supplied hardness result: The reduction assumes the voter list is nonempty so that division by n is defined, but the supplied hardness statement is not explicitly restricted to nonempty lists. State that the source hardness holds under this restriction, or account separately for n=0.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The reduction is correct and value-preserving. It transfers both the supplied \(\#P\)-hardness and parameterized \(\#W[1]\)-hardness to the explicitly supported rational-distribution formulation. There is one minor unaddressed edge case concerning the assumption that the source voter list is nonempty.</p><h3>Step-by-step audit</h3><ul><li><b>Construction of the distribution.</b></li></ul><p>For a voter list \(V=(A_1,\ldots,A_n)\) with \(n&gt;0\), defining<br>\[
+   \mu_A=\frac{m_A}{n}
+   \]<br>gives nonnegative rational weights satisfying<br>\[
+   \sum_{A\subseteq C}\mu_A=\frac{1}{n}\sum_A m_A=1.
+   \]<br>Omitting zero-mass sets is consistent with the stated sparse finite-support encoding.</p><ul><li><b>Polynomial-time encoding.</b></li></ul><p>There are at most \(n\) distinct approval sets. The integers \(m_A\) and \(n\) require \(O(\log n)\) bits, so the claimed polynomial construction is valid. Computing the multiplicities is also routine in polynomial time from an explicitly listed voter profile.</p><ul><li><b>Equality of marginal scores up to scaling.</b></li></ul><p>Grouping voters according to their approval sets correctly yields<br>\[
+   \Delta_\mu(c\mid S)=\frac{1}{n}\Delta_V(c\mid S).
+   \]<br>This equality holds for every intermediate committee \(S\) and every unelected candidate \(c\).</p><ul><li><b>Preservation of maximizers.</b></li></ul><p>Since \(1/n&gt;0\), multiplication by \(1/n\) preserves all comparisons, including equalities. Therefore the entire maximizing set is identical for the two instances at every state \(S\).</p><ul><li><b>Preservation of tie-resolution sequences.</b></li></ul><p>The inductive conclusion is valid: the same candidate choices are legal after every common prefix, so the two instances have exactly the same legal ordered selection sequences.</p><ul><li><b>Preservation of distinct endpoint committees.</b></li></ul><p>Because legal sequences coincide, their unordered size-\(k\) endpoint committees also coincide. Thus the reduction preserves the required count of distinct committees, rather than merely preserving the number of tie-resolution sequences.</p><ul><li><b>Hardness transfer.</b></li></ul><p>Subject to the supplied hardness result applying to nonempty voter lists, the polynomial-time value-preserving reduction establishes \(\#P\)-hardness.</p><ul><li><b>Parameterized hardness.</b></li></ul><p>The reduction leaves \(k\) unchanged and runs in polynomial time, hence is an appropriate parameter-preserving counting reduction. The supplied \(\#W[1]\)-hardness therefore transfers.</p><ul><li><b>Membership disclaimer.</b></li></ul><p>The prover correctly refrains from claiming membership in \(\#P\). Nothing in the reduction requires such membership to establish \(\#P\)-hardness.</p><h3>Issue requiring clarification</h3><p>The proof begins with a <b>nonempty</b> voter list, whereas the supplied source hardness statement merely says “finite approval-voter lists.” The normalization \(\mu_A=m_A/n\) is undefined when \(n=0\). This is only a minor edge-case gap because it is enough to state that the supplied hardness holds for nonempty profiles, or separately explain why empty profiles can be excluded without affecting hardness. No substantive change to the reduction is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

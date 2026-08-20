@@ -1,0 +1,83 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Epistemic EFX Allocations Exist for Monotone Valuations — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Epistemic EFX Allocations Exist for Monotone Valuations <span style="font-weight:normal;color:#8a7350">(aaai25-33476)</span></h1>
+<p class="banner">claim: resolved · adversarial review: partial</p>
+<p class="answer"><b>Answer:</b> Neither alternative applies as stated: the required allocation need not exist, even for \(|G|=2\) and a normalized additive valuation, so the formulation is not a total search problem.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.8 — class: hardness</p>
+<blockquote class="thmq">The problem of computing an EEFX alloca- tion for for any number n ≥2 of agents with identical sub- modular valuations is PLS-hard. Since our reduction works even for three agents, Theo- rems 4.7 and 4.8 hold true for the problem of computing EEFX allocations even for three agents with identical sub- modular valuations. Note that the set of EFX and EEFX al- locations coincide for the case of two agents and hence it inherits the same computational hardness guarantees as that of EFX here.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational masses of valuation types, rational capacities of finitely many indivisible item kinds, and value-oracle access to each type valuation, output an aggregate allocation x over whole bundles B⊆G satisfying type and capacity marginals, together with an EEFX certificate for every supported (type,B): a mass partition of the remaining item supply into whole comparison bundles C satisfying v(B)≥v(C\{g}) for every g∈C.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(G\) be a finite set of goods, \(\Theta\) a finite set of types with rational masses \(\mu\in\Delta(\Theta)\), and rational supplies \(s_g\in[0,1]\). Each type has a normalized monotone valuation \(v_	heta:2^G	o\mathbb{Q}_{\ge0}\), accessed by rational value queries; restrict to \(v_	heta=v\) for all \(	heta\), where \(v\) is submodular.</p><p>A societal allocation is rational \(x_{	heta,B}\ge0\) for \(B\subseteq G\), with \(\sum_Bx_{	heta,B}=\mu_	heta\) and \(\sum_{	heta,B
+i g}x_{	heta,B}=s_g\). For every used \((	heta,B)\), it must provide a rational distribution \(y^{	heta,B}\) on \(2^G\) whose marginals are \(s_g\), and such that \(v(B)\ge v(C\setminus\{g\})\) whenever \(y^{	heta,B}_C&gt;0\) and \(g\in C\).</p><p><b>Target.</b> Is this continuous EEFX search problem solvable in polynomial time, or is it PLS-hard, in the rational value-query model?</p><p><b>Nearest known results.</b> For discrete agents, computing an EEFX allocation for any \(n\ge2\) agents with identical submodular valuations is PLS-hard; it also has an exponential value-query lower bound. These results concern integral allocations to finitely many agents, not the type-mass problem above.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>The Stated Search Problem Is Not Total</h3><h3>1. Aggregate formulation</h3><p>Let \(\Delta(s)\) denote the set of distributions \(p\) on \(2^G\) having marginals \(s\). For \(C\subseteq G\), define</p><p>\[
+r(C):=
+\begin{cases}
+\max_{g\in C}v(C\setminus\{g\}),&amp;C\neq\varnothing,\\
+0,&amp;C=\varnothing.
+\end{cases}
+\]</p><p>Because all types have the same valuation, the type structure is inessential.</p><h3>Lemma 1: Common-certificate reduction</h3><p>A societal allocation exists if and only if there are rational distributions \(p,q\in\Delta(s)\) such that</p><p>\[
+v(B)\ge r(C)
+\]</p><p>for every \(B\in\operatorname{supp}(p)\) and \(C\in\operatorname{supp}(q)\).</p><h3>Proof</h3><p>Suppose a societal allocation \(x\) exists. Define \(p_B=\sum_{\theta}x_{\theta,B}\). Then \(p\in\Delta(s)\).</p><p>Choose a used pair \((\theta_0,B_0)\) minimizing \(v(B)\) over all used pairs, and put \(q=y^{\theta_0,B_0}\). For every \(C\in\operatorname{supp}(q)\), the certificate condition gives \(v(B_0)\ge r(C)\). Every \(B\in\operatorname{supp}(p)\) is used by some type, so \(v(B)\ge v(B_0)\ge r(C)\).</p><p>Conversely, given such \(p,q\), define \(x_{\theta,B}=\mu_\theta p_B\) and use \(q\) as the certificate for every used \((\theta,B)\). The mass and supply equations follow from \(p\in\Delta(s)\), while the displayed inequality verifies every certificate. \(\square\)</p><p>Equivalently, for \(a\in\mathbb Q_{\ge0}\), define</p><p>\[
+\mathcal H_a=\{B\subseteq G:v(B)\ge a\},
+\qquad
+\mathcal L_a=\{C\subseteq G:r(C)\le a\}.
+\]</p><p>Then feasibility is equivalent to the existence of \(a\) such that</p><p>\[
+s\in\operatorname{conv}\{\mathbf 1_B:B\in\mathcal H_a\}
+\cap
+\operatorname{conv}\{\mathbf 1_C:C\in\mathcal L_a\}.
+\]</p><p>This characterization already shows that existence is an additional condition, not a consequence of monotonicity or submodularity.</p><h3>2. A two-good infeasible instance</h3><p>Let</p><p>\[
+G=\{a,b\},\qquad
+\Theta=\{\theta\},\qquad
+\mu_\theta=1,
+\qquad
+s_a=s_b=\frac34.
+\]</p><p>Use the additive valuation</p><p>\[
+v(\varnothing)=0,\qquad
+v(\{a\})=\frac13,\qquad
+v(\{b\})=\frac23,\qquad
+v(\{a,b\})=1.
+\]</p><p>This valuation is rational, normalized even under the stronger convention \(v(G)=1\), monotone, additive, and therefore submodular.</p><p>Assume for contradiction that a societal allocation exists. Let \(B\) be any used bundle, and consider its certificate \(y^B\). If \(C\) is distributed according to \(y^B\), then</p><p>\[
+\Pr(a,b\in C)
+\ge
+\Pr(a\in C)+\Pr(b\in C)-1
+=
+\frac12.
+\]</p><p>Consequently \(y^B_{\{a,b\}}&gt;0\). Applying the certificate inequality to \(C=\{a,b\}\) and \(g=a\) gives</p><p>\[
+v(B)\ge v(\{b\})=\frac23.
+\]</p><p>The only bundles satisfying this inequality are \(\{b\}\) and \(\{a,b\}\). Thus every used bundle contains \(b\). The allocation marginal of \(b\) must therefore be</p><p>\[
+\sum_{B\ni b}x_{\theta,B}
+=
+\sum_Bx_{\theta,B}
+=
+1,
+\]</p><p>contradicting the required supply \(s_b=3/4\). Hence this valid input has no solution. \(\square\)</p><h3>3. The obstruction is robust</h3><p>More generally, let \(G=\{a,b\}\), with \(v(\{a\})&lt;v(\{b\})\). If \(s_a+s_b&gt;1\), every marginal-\(s\) certificate assigns positive probability to \(\{a,b\}\). It follows exactly as above that every used allocation bundle must have value at least \(v(\{b\})\), hence must contain \(b\). Therefore feasibility requires \(s_b=1\).</p><p>Conversely, \(s_b=1\) is sufficient: put probability \(s_a\) on \(\{a,b\}\) and \(1-s_a\) on \(\{b\}\), both for the allocation and its certificates. Thus, when singleton values are unequal and supplies overlap, infeasibility occurs throughout a nontrivial region of the supply space.</p><h3>4. Complexity consequence</h3><p>The requested output does not allow an “infeasible” answer, yet valid instances need not possess any required allocation. Therefore the formulation is not a total search problem.</p><p>In particular:</p><ul><li>No algorithm can return a societal allocation on every input described in the question.</li><li>The problem is not a PLS problem as stated, since PLS consists of total search problems.</li><li>This does not rule out PLS-hardness of some promised feasible restriction. It shows that the proposed “polynomial-time versus PLS-hard” dichotomy is not applicable to the unrestricted formulation.</li><li>If the intended problem is instead to find an allocation or certify infeasibility, its complexity is a different, presently unsettled feasibility-search question.</li><li>Likewise, the complexity of natural guaranteed-feasible slices, such as uniform supplies \(s_g=1/n\), is not settled by this counterexample or by the cited discrete hardness result.</li></ul><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 4 and the final answer, especially &quot;Neither alternative applies as stated&quot;: The counterexample proves non-totality and hence non-membership in PLS, but it does not rule out PLS-hardness of the unrestricted partial relation. PLS-hardness does not generally require membership in PLS.</li><li><b>minor</b> — Section 1, convex-hull characterization: The argument does not explicitly justify that real convex representations of the rational point s can be replaced by rational distributions, as required by the original formulation.</li><li><b>minor</b> — Section 3, converse sufficiency claim: The proposed allocation and certificates have the required marginals, but the certificate inequalities are not explicitly checked.</li><li><b>minor</b> — Section 4, item 4: The claim that the feasibility-search question is &quot;presently unsettled&quot; is unsupported by a citation or argument.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Summary</h3><p>The prover correctly establishes a substantive obstruction: the stated allocation relation is not total. The two-good additive instance is valid and rigorously shown to be infeasible.</p><p>However, this does not fully resolve the target’s “polynomial-time or PLS-hard” question. Non-membership in PLS does not by itself rule out PLS-hardness: a partial search problem can still be PLS-hard under reductions whose generated instances are feasible. Thus the conclusion that “neither alternative applies” is stronger than what the counterexample proves.</p><h3>Step-by-step audit</h3><h3>1. Common-certificate reduction</h3><p>The forward direction is correct:</p><ul><li>Since total type mass is \(1\), at least one used pair exists.</li><li>The aggregate distribution \(p_B=\sum_\theta x_{\theta,B}\) has total mass \(1\) and marginals \(s\).</li><li>A value-minimizing used pair exists because there are finitely many pairs.</li><li>Its certificate \(q\) has marginals \(s\).</li><li>The certificate inequalities imply \(v(B_0)\ge r(C)\) for every \(C\in\operatorname{supp}(q)\).</li><li>Minimality of \(B_0\) then gives \(v(B)\ge v(B_0)\ge r(C)\) for every \(B\in\operatorname{supp}(p)\).</li></ul><p>The converse is also correct. Setting \(x_{\theta,B}=\mu_\theta p_B\) satisfies the type-mass and supply equations, and the common distribution \(q\) certifies every used pair.</p><p>The convex-hull reformulation is substantively correct. There is a minor omitted rationality justification: membership of rational \(s\) in a convex hull initially provides real convex coefficients, whereas the original problem requires rational distributions. Because these are rational finite linear systems, rational feasible coefficients exist, but this fact should be stated.</p><h3>2. Two-good infeasible instance</h3><p>The valuation is normalized, monotone, additive, and submodular.</p><p>For any certificate with both marginals \(3/4\), the union bound gives</p><p>\[
+\Pr(a,b\in C)\ge \frac34+\frac34-1=\frac12.
+\]</p><p>On a two-good ground set, this is exactly the probability of \(C=\{a,b\}\), so that bundle has positive certificate probability.</p><p>Taking \(g=a\) in the certificate condition correctly yields \(v(B)\ge v(\{b\})=2/3\). The only bundles meeting this threshold are \(\{b\}\) and \(\{a,b\}\), both containing \(b\). Hence every used allocation bundle contains \(b\), forcing its allocation marginal to be \(1\), contradicting \(s_b=3/4\).</p><p>This counterexample is correct and proves that the stated relation is not total.</p><h3>3. Robustness claim</h3><p>The necessity argument is correct for two goods. If \(s_a+s_b&gt;1\), every certificate places positive probability on \(\{a,b\}\). If \(v(\{a\})&lt;v(\{b\})\), every bundle with value at least \(v(\{b\})\) must contain \(b\).</p><p>The sufficiency claim for \(s_b=1\) is also correct, although its certificate check is omitted. On the proposed support, \(r(\{b\})=0\) and \(r(\{a,b\})=v(\{b\})\), while both allocation bundles have value at least \(v(\{b\})\). This is a routine but necessary verification.</p><h3>4. Complexity conclusions</h3><p>The following conclusions are justified:</p><ul><li>No algorithm can return the required allocation on every input in the stated domain.</li><li>The relation is not itself a member of PLS under the standard definition of PLS as a class of total search problems.</li><li>A promised-feasible version would be a different formal problem.</li></ul><p>The stronger conclusion that neither polynomial-time solvability nor PLS-hardness applies is not established. Being outside PLS does not imply being outside the class of PLS-hard problems. A partial relation can be PLS-hard if every PLS problem reduces to feasible instances of that relation. The prover neither excludes nor proves such a reduction.</p><p>The assertion that the feasibility-search variant is “presently unsettled” is also unsupported by a citation or argument. It is ancillary to the valid infeasibility result but cannot be accepted as verified.</p><h3>Genuine progress</h3><p>The output rigorously proves that the allocation requirement is not guaranteed to be feasible, even for two goods and a normalized additive valuation. This is a decisive correction to any interpretation of the formulation as an unconditional total search problem.</p><h3>Minimum clarification needed</h3><p>The prover must distinguish these two conclusions:</p><ul><li>The stated relation is not total and therefore is not a PLS problem.</li><li>Whether the resulting partial relation is PLS-hard remains unaddressed unless “PLS-hard” is explicitly being used only for problems already known to be total.</li></ul><p>Any claim that related variants are presently unsettled also needs a precise reference or should be removed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

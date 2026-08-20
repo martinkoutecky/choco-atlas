@@ -1,0 +1,81 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Candidate Nomination for Condorcet-consistent Voting Rules — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Candidate Nomination for Condorcet-consistent Voting Rules <span style="font-weight:normal;color:#8a7350">(aamas25-00209)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\)-complete</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.4 (★) — class: algorithmic</p>
+<blockquote class="thmq">There exists an algorithm that solves Possible President for Maximin and runs in FPT time with parameter 𝑡.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), a party partition \(\mathcal P\), distinguished party \(P^\star\), and a finite-support rational distribution \(\mu\) over complete rankings of \(C\), decide whether some nomination \(\eta(P)\in P\) makes \(p^\star=\eta(P^\star)\) the unique Maximin winner, where \(w_\mu(a,b)=\sum_{\theta:a\succ_\theta b}\mu_\theta\) and \(\operatorname{MM}_{\mu,\eta}(a)=\min_{b\ne a}w_\mu(a,b)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) be partitioned into parties \(\mathcal P\), each of size at most \(2\), with distinguished party \(P^\star\). The input gives an explicit rational distribution \(\mu\) over strict complete rankings \(t\) of \(C\). Put \(w_\mu(a,b)=\sum_{t:a\succ_t b}\mu_t\); \(a\) defeats \(b\) iff \(w_\mu(a,b)&gt;1/2\). For a nomination vector \(x\) with \(x_P\in P\), the Copeland score of a nominee is its number of defeated fellow nominees; it is a unique Copeland winner if its score is strictly maximal.</p><p><b>Target.</b> Is it NP-hard, or solvable in polynomial time, to decide whether some nomination vector makes \(x_{P^\star}\) the unique Copeland winner?</p><p><b>Nearest known results.</b> For finite elections with exactly three voters, the corresponding Possible President problem for Copeland is NP-complete even when every party has size at most \(2\). No result for the distribution-over-rankings version is assumed here.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Theorem</h3><p>The problem is \(\mathrm{NP}\)-complete, and hence \(\mathrm{NP}\)-hard, even when the distribution has support size at most \(3\) and every probability has denominator \(3\).</p><h3>1. Membership in \(\mathrm{NP}\)</h3><p>A certificate specifies one nominee \(x_P\in P\) for every party \(P\in\mathcal P\). Because every party has size at most \(2\), the certificate has polynomial length.</p><p>Let the explicit support of the distribution be \(t_1,\ldots,t_s\), with rational probabilities</p><p>\[
+\mu_{t_i}=\frac{p_i}{q_i}.
+\]</p><p>For every ordered pair of nominees \(a,b\), compute</p><p>\[
+w_\mu(a,b)=\sum_{i:a\succ_{t_i}b}\frac{p_i}{q_i}.
+\]</p><p>This comparison can be performed exactly in polynomial time. Indeed, putting \(D=\prod_{i=1}^s q_i\), we have</p><p>\[
+w_\mu(a,b)&gt;\frac12
+\quad\Longleftrightarrow\quad
+2\sum_{i:a\succ_{t_i}b}p_i\frac{D}{q_i}&gt;D.
+\]</p><p>Although \(D\) can be numerically large, its binary length is at most \(\sum_i\lceil\log_2 q_i\rceil\), which is bounded by the input length. Thus all required integer arithmetic has polynomial bit complexity.</p><p>After determining every pairwise defeat relation among the nominees, one computes each nominee’s Copeland score and checks whether</p><p>\[
+\operatorname{score}(x_{P^\star})
+&gt;
+\operatorname{score}(x_P)
+\]</p><p>for every other nominated candidate \(x_P\). Consequently, the problem belongs to \(\mathrm{NP}\).</p><h3>2. Reduction from the three-voter problem</h3><p>Use the stated \(\mathrm{NP}\)-complete Possible President problem for Copeland with exactly three voters and parties of size at most \(2\).</p><p>Consider such an instance, consisting of:</p><ul><li>a candidate set \(C\);</li><li>a partition \(\mathcal P\) of \(C\), with \(|P|\leq 2\);</li><li>a distinguished party \(P^\star\);</li><li>three strict complete rankings \(t_1,t_2,t_3\).</li></ul><p>Preserve \(C\), \(\mathcal P\), and \(P^\star\). Define a distribution \(\mu\) by taking the empirical distribution of the three voters:</p><p>\[
+\mu_t=\frac{|\{i\in\{1,2,3\}:t_i=t\}|}{3}
+\]</p><p>for every ranking \(t\) that occurs among \(t_1,t_2,t_3\). Repeated rankings are therefore aggregated. This produces an explicit rational distribution with support size at most \(3\), and the construction is polynomial-time.</p><h3>3. Preservation of pairwise defeats</h3><p>Fix distinct candidates \(a,b\in C\). By construction,</p><p>\[
+w_\mu(a,b)
+=
+\sum_{t:a\succ_t b}\mu_t
+=
+\frac{|\{i\in\{1,2,3\}:a\succ_{t_i}b\}|}{3}.
+\]</p><p>Therefore,</p><p>\[
+w_\mu(a,b)&gt;\frac12
+\quad\Longleftrightarrow\quad
+|\{i:a\succ_{t_i}b\}|&gt;\frac32.
+\]</p><p>The quantity on the right is an integer, so this is equivalent to</p><p>\[
+|\{i:a\succ_{t_i}b\}|\geq 2.
+\]</p><p>Thus \(a\) defeats \(b\) under \(\mu\) if and only if at least two of the three original voters prefer \(a\) to \(b\). This is precisely the strict pairwise-majority relation of the original election.</p><p>Because there are three voters, no pairwise majority tie is possible.</p><h3>4. Preservation of nomination outcomes</h3><p>Let \(x\) be any nomination vector. The preceding argument applies to every pair of candidates in the nominated set</p><p>\[
+\{x_P:P\in\mathcal P\}.
+\]</p><p>Hence the pairwise-defeat digraph induced by the nominees is identical in the original three-voter election and in the constructed distributional instance. Since the Copeland score used here is the outdegree in this digraph, every nominee has exactly the same score in both instances.</p><p>In particular,</p><p>\[
+x_{P^\star}\text{ is the unique Copeland winner under }\mu
+\]</p><p>if and only if it is the unique Copeland winner in the original three-voter election.</p><p>Thus the original instance admits a successful nomination vector if and only if the constructed distributional instance does.</p><h3>5. Conclusion</h3><p>The construction is a polynomial-time many-one reduction from the stated three-voter \(\mathrm{NP}\)-complete problem. Therefore the distribution-over-rankings problem is \(\mathrm{NP}\)-hard. Together with membership in \(\mathrm{NP}\), it is \(\mathrm{NP}\)-complete.</p><p>The hardness already holds for empirical distributions of three voters, so allowing arbitrary explicitly represented rational distributions does not make the problem easier.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly establishes \(\mathrm{NP}\)-completeness by translating the assumed three-voter hardness result into an empirical distribution over those voters’ rankings. The translation preserves every pairwise majority relation and therefore preserves all Copeland scores and unique-winner outcomes for every nomination vector.</p><p>No substantive gap or false statement was found.</p><h3>Step-by-step audit</h3><h3>1. Membership in \(\mathrm{NP}\)</h3><p>The proposed certificate contains one candidate from each party. Its encoding length is polynomial in the explicitly represented candidate set and partition.</p><p>The exact comparison of</p><p>\[
+w_\mu(a,b)=\sum_{i:a\succ_{t_i}b}\frac{p_i}{q_i}
+\]</p><p>with \(1/2\) is valid. Taking \(D=\prod_i q_i\) gives an integer comparison, and</p><p>\[
+\log_2 D=\sum_i\log_2 q_i,
+\]</p><p>so the bit length of \(D\) is polynomially bounded by the input length. Computing \(D\), the scaled summands, and their sum requires only polynomially many arithmetic operations on polynomial-length integers.</p><p>Once the pairwise defeat relation is known, computing all Copeland scores and testing strict maximality is polynomial time. Thus membership in \(\mathrm{NP}\) is rigorously established.</p><h3>2. Construction of the reduction</h3><p>The reduction starts from exactly the hardness result granted in the task: Possible President for Copeland with three voters and parties of size at most \(2\).</p><p>The empirical distribution</p><p>\[
+\mu_t=\frac{|\{i\in\{1,2,3\}:t_i=t\}|}{3}
+\]</p><p>is a valid rational probability distribution. Its support contains at most three rankings, repeated rankings are handled correctly, and all probabilities can be represented with denominator \(3\), including \(3/3\) if all rankings coincide. The construction has polynomial size and is computable in polynomial time.</p><h3>3. Preservation of pairwise defeats</h3><p>For every distinct \(a,b\),</p><p>\[
+w_\mu(a,b)
+=
+\frac{|\{i:a\succ_{t_i}b\}|}{3}.
+\]</p><p>Consequently,</p><p>\[
+w_\mu(a,b)&gt;\frac12
+\]</p><p>holds exactly when at least two of the three voters rank \(a\) above \(b\). This is precisely strict majority among three voters. Since the number of voters is odd and rankings are strict, pairwise ties cannot occur.</p><p>This calculation is correct and covers every candidate pair.</p><h3>4. Preservation of nomination outcomes</h3><p>For an arbitrary nomination vector, the pairwise-defeat digraph induced by its nominees is identical in the source and target instances. Under the problem’s stated Copeland convention, a nominee’s score is exactly its outdegree in this digraph.</p><p>Therefore every nominee has the same score in both instances. In particular, the distinguished party’s nominee is the unique score maximizer in one instance if and only if it is the unique score maximizer in the other. This establishes the required many-one equivalence for the existential question over nomination vectors.</p><h3>5. Complexity conclusion</h3><p>The reduction proves \(\mathrm{NP}\)-hardness, and the independently established membership argument proves \(\mathrm{NP}\)-completeness. The stronger restriction to distributions supported on at most three rankings is also justified.</p><p>The prover’s concluding metadata does not follow the verifier’s requested JSON schema, but that is not a defect in the mathematical argument being audited.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

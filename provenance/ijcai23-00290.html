@@ -1,0 +1,161 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Measuring a Priori Voting Power in Liquid Democracy — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Measuring a Priori Voting Power in Liquid Democracy <span style="font-weight:normal;color:#8a7350">(ijcai23-00290)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> For finite explicitly encoded rational instances with \(I-Q\) nonsingular, exact computation of \(\operatorname{MC}_{t^\star,\rho}\) is in \(\mathrm{FP}\). The least successful \(\rho\) need not exist; existence, the least value when attained, and the infimum are computable in polynomial time. Under \(1/2\leq q\leq 1\), every nonempty successful set has the form \((\tau,\mu_{t^\star}]\), so it has no least element.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: algorithmic</p>
+<blockquote class="thmq">Given a bipartite digraph G = (V, E) with V = (Vd, Vv) and E = {(i, j)|i ∈Vd, j ∈Vv}, a WVG with weight function w and quota-ratio q, and a voter i, measure Mld i can be computed in pseudo-polynomial time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given delegator types \(A\), proxy types \(B\), rational masses \(\mu_a,\nu_b\) summing to \(1\), per-agent weights \(w_t\), quota \(q\in(1/2,1]\), direct-voting probability \(p_v\), delegation probability \(p_d=1-p_v\), and a delegation distribution \(\rho\) over \(B\), each \(a\in A\) chooses \(+\), \(-\), or \(b\in B\), while each \(b\in B\) votes \(+\) or \(-\). For profile \(d\), define \(S^+_\mu(d)=\sum_{a:d(a)=+}w_a\mu_a+\sum_{b:d(b)=+}(w_b\nu_b+\sum_{a:d(a)=b}w_a\mu_a)\), define \(S^-_\mu(d)\) analogously, and let \(W_\mu(d)=1\) iff \(S^+_\mu(d)&gt;q(S^+_\mu(d)+S^-_\mu(d))\). Compute the expected criticality \(\mathbb{E}_d[(W_\mu(d[r\leftarrow+])-W_\mu(d[r\leftarrow-]))/2]\) of a positive-mass target type \(r\), or decide whether it is at least \(\theta\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> A type \(t\in T\) has mass \(\mu_t\), weight \(w_t\), delegation probability \(d_t\), and kernel \(K\), with \(Q_{tu}=d_tK_{tu}\). Apart from a forced cohort, mass votes directly for each sign with probability \((1-d_t)/2\), and otherwise delegates; non-terminating delegated mass abstains.</p><p>For a cohort of mass \(ho\) split from \(t^\star\) and forced to sign \(\sigma\in\{+,-\}\), set \(b_t^\sigma=(1-d_t)(\mu_t-ho\mathbf{1}_{t=t^\star})/2+ho\mathbf{1}_{t=t^\star}\), and \(b_t^{-\sigma}=(1-d_t)(\mu_t-ho\mathbf{1}_{t=t^\star})/2\). Let \(r^\pm=b^\pm+Qr^\pm\) be the final non-abstaining masses, and let \(W^\pm=1\) iff \(\sum_t w_tr_t^\pm&gt;q\sum_t w_t(r_t^++r_t^-)\), with \(W^\pm=-1\) otherwise. Define \(\operatorname{MC}_{t^\star,ho}=(W^+ - W^-)/2\).</p><p><b>Target.</b> Is exact computation of \(\operatorname{MC}_{t^\star,ho}\), or of the least \(ho\in(0,\mu_{t^\star}]\) for which \(\operatorname{MC}_{t^\star,ho}=1\), polynomial-time solvable, or NP-hard?</p><p><b>Nearest known results.</b> For finite individual voters with an arbitrary delegation digraph and a weighted voting game, computing the LD Penrose--Banzhaf measure of one voter is \(\#\mathrm{P}\)-hard under Turing reductions, even with weights linear in the number of voters.<br>For finite individual voters, exact computation is pseudo-polynomial on the specified bipartite proxy-voting graphs and on complete delegation digraphs.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity of the Type-Mass Delegation Model</h3><h3>Result</h3><p>Assume that \(T\) is finite, all numerical data are explicitly given binary rationals, and the fixed-point equations have unique solutions. Equivalently, for the substochastic matrix \(Q\), assume \(I-Q\) is nonsingular; a natural sufficient condition is \(\operatorname{spr}(Q)&lt;1\).</p><p>Under these assumptions:</p><ul><li>Exact computation of \(\operatorname{MC}_{t^\star,\rho}\) is in \(\mathrm{FP}\), hence polynomial-time solvable.</li></ul><ul><li>The set of forcing masses satisfying \(\operatorname{MC}_{t^\star,\rho}=1\) is an interval determined by two affine rational inequalities. Its feasibility, infimum, and the existence and value of a minimum are computable in polynomial time.</li></ul><ul><li>With the usual quota range \(1/2\leq q\leq 1\), whenever a successful forcing mass exists, there is generally no least successful \(\rho\). More precisely, the successful set is an interval of the form \((\tau,\mu_{t^\star}]\).</li></ul><p>Thus the proposed “least \(\rho\)” optimization is not a total function under the stated strict quota rule.</p><h3>1. Affine form of the propagated masses</h3><p>Relabel the forced sign as \(+\). Let \(e\) be the unit vector of type \(t^\star\), set \(d=d_{t^\star}\), and define</p><p>\[
+c_t=\frac{(1-d_t)\mu_t}{2},\qquad
+\alpha=\frac{1+d}{2},\qquad
+\beta=\frac{1-d}{2}.
+\]</p><p>Then \(\alpha-\beta=d\). Direct substitution into the definition of \(b^\pm\) gives</p><p>\[
+b^+(\rho)=c+\alpha\rho e,\qquad
+b^-(\rho)=c-\beta\rho e.
+\]</p><p>Indeed, at \(t^\star\),</p><p>\[
+\frac{(1-d)(\mu_{t^\star}-\rho)}{2}+\rho
+=
+\frac{(1-d)\mu_{t^\star}}{2}+\frac{1+d}{2}\rho,
+\]</p><p>while the opposite sign receives</p><p>\[
+\frac{(1-d)(\mu_{t^\star}-\rho)}{2}
+=
+\frac{(1-d)\mu_{t^\star}}{2}-\frac{1-d}{2}\rho.
+\]</p><p>Let \(A=(I-Q)^{-1}\). From \(r^\pm=b^\pm+Qr^\pm\), one obtains</p><p>\[
+r^+(\rho)=h+\alpha\rho g,\qquad
+r^-(\rho)=h-\beta\rho g,
+\]</p><p>where \(h=Ac\) and \(g=Ae\). Thus both final masses are affine functions of the single variable \(\rho\).</p><p>Set</p><p>\[
+H=w^\top h,\qquad G=w^\top g.
+\]</p><p>The weighted masses are therefore</p><p>\[
+S^+(\rho)=H+\alpha G\rho,\qquad
+S^-(\rho)=H-\beta G\rho,
+\]</p><p>and their sum is</p><p>\[
+S^+(\rho)+S^-(\rho)=2H+dG\rho.
+\]</p><h3>2. Reduction to two affine inequalities</h3><p>Define the quota surpluses</p><p>\[
+F^\pm(\rho)=S^\pm(\rho)-q\bigl(S^+(\rho)+S^-(\rho)\bigr).
+\]</p><p>The definition of \(W^\pm\) says that \(W^\pm=1\) exactly when \(F^\pm(\rho)&gt;0\), and \(W^\pm=-1\) exactly when \(F^\pm(\rho)\leq 0\).</p><p>Consequently,</p><p>\[
+\operatorname{MC}_{t^\star,\rho}=1
+\]</p><p>holds exactly when</p><p>\[
+F^+(\rho)&gt;0\qquad\text{and}\qquad F^-(\rho)\leq 0.
+\]</p><p>Using the preceding formulas gives</p><p>\[
+F^+(\rho)=(1-2q)H+(\alpha-qd)G\rho
+\]</p><p>and</p><p>\[
+F^-(\rho)=(1-2q)H-(\beta+qd)G\rho.
+\]</p><p>Both are affine rational functions of \(\rho\).</p><h3>3. Polynomial-time exact computation</h3><p>For a specified rational \(\rho\), the algorithm is:</p><ul><li>Form the rational matrix \(I-Q\).</li><li>Solve \((I-Q)h=c\) and \((I-Q)g=e\) by exact rational linear algebra.</li><li>Compute \(H=w^\top h\) and \(G=w^\top g\).</li><li>Evaluate the signs of \(F^+(\rho)\) and \(F^-(\rho)\).</li><li>Recover \(W^+\), \(W^-\), and hence \(\operatorname{MC}_{t^\star,\rho}\).</li></ul><p>Exact Gaussian elimination over binary rationals runs in time polynomial in the matrix dimension and total input bit length. Standard determinant bounds ensure that all intermediate and output rationals have polynomially bounded bit length. The final comparisons can be performed by integer cross-multiplication.</p><p>Therefore exact computation of \(\operatorname{MC}_{t^\star,\rho}\) belongs to \(\mathrm{FP}\).</p><h3>4. Computing the successful interval</h3><p>For arbitrary rational \(q\), the successful set is</p><p>\[
+\mathcal S=
+\left\{
+\rho\in(0,\mu_{t^\star}]:
+F^+(\rho)&gt;0,\ F^-(\rho)\leq 0
+\right\}.
+\]</p><p>Each affine inequality is either vacuous, inconsistent, a lower bound on \(\rho\), or an upper bound on \(\rho\). Every nonconstant boundary has the form \(-a/b\) for rational coefficients \(a,b\).</p><p>Intersecting these two half-lines with \((0,\mu_{t^\star}]\) yields an interval, possibly empty, with explicitly known rational endpoints and endpoint-inclusion flags. Hence one can determine in polynomial time whether:</p><ul><li>\(\mathcal S\) is empty;</li><li>\(\mathcal S\) is nonempty but has no least element;</li><li>\(\mathcal S\) has a least element, and what that rational element is;</li><li>the infimum of \(\mathcal S\).</li></ul><p>Thus even without the standard quota restriction, the appropriately tagged threshold problem is polynomial-time solvable.</p><h3>5. Sharper result for standard quotas</h3><p>Assume now that \(w_t\geq 0\), \(0\leq d_t\leq 1\), and \(1/2\leq q\leq 1\). Since \(Q\geq 0\) and \(\operatorname{spr}(Q)&lt;1\),</p><p>\[
+A=(I-Q)^{-1}=\sum_{k=0}^{\infty}Q^k
+\]</p><p>is entrywise nonnegative. Hence \(H\geq 0\) and \(G\geq 0\).</p><p>First,</p><p>\[
+F^-(\rho)=(1-2q)H-(\beta+qd)G\rho\leq 0
+\]</p><p>for every \(\rho\geq 0\). Thus the opposite sign never satisfies its strict quota once the forced sign is being tested.</p><p>Next, let</p><p>\[
+\gamma=\alpha-qd
+=\frac{1+d(1-2q)}{2}.
+\]</p><p>Because \(1/2\leq q\leq 1\) and \(0\leq d\leq 1\),</p><p>\[
+\gamma\geq 1-q\geq 0.
+\]</p><p>If \(\gamma G=0\), then \(F^+(\rho)=(1-2q)H\leq 0\), so no successful forcing mass exists.</p><p>If \(\gamma G&gt;0\), define</p><p>\[
+\tau=\frac{(2q-1)H}{\gamma G}.
+\]</p><p>Then \(\tau\geq 0\), and</p><p>\[
+F^+(\rho)&gt;0
+\quad\Longleftrightarrow\quad
+\rho&gt;\tau.
+\]</p><p>It follows that</p><p>\[
+\mathcal S=
+\begin{cases}
+(\tau,\mu_{t^\star}] &amp; \text{if }\tau&lt;\mu_{t^\star},\\
+\varnothing &amp; \text{if }\tau\geq\mu_{t^\star}.
+\end{cases}
+\]</p><p>Therefore, under standard quota assumptions, every nonempty successful set has an infimum but no least element. The failure of attainment comes directly from the strict quota comparison.</p><h3>6. Explicit counterexample to existence of a least mass</h3><p>Take one type \(T=\{t^\star\}\) with</p><p>\[
+\mu_{t^\star}=1,\qquad w_{t^\star}=1,\qquad d_{t^\star}=0,\qquad Q=0,\qquad q=\frac34.
+\]</p><p>Then</p><p>\[
+r^+(\rho)=\frac{1+\rho}{2},\qquad
+r^-(\rho)=\frac{1-\rho}{2},
+\]</p><p>and their total weighted mass is \(1\). Therefore</p><p>\[
+W^+=1
+\quad\Longleftrightarrow\quad
+\frac{1+\rho}{2}&gt;\frac34
+\quad\Longleftrightarrow\quad
+\rho&gt;\frac12.
+\]</p><p>Meanwhile \(r^-(\rho)\leq 1/2&lt;3/4\), so \(W^-=-1\) for every \(\rho\in(0,1]\). Consequently,</p><p>\[
+\operatorname{MC}_{t^\star,\rho}=1
+\quad\Longleftrightarrow\quad
+\rho\in\left(\frac12,1\right].
+\]</p><p>This set has infimum \(1/2\), but no least element.</p><h3>7. Singular fixed points</h3><p>As written, the definitions do not guarantee that \(r^\pm=b^\pm+Qr^\pm\) has a unique finite solution.</p><p>For example, take one type with \(d_{t^\star}=1\) and \(K=(1)\), so \(Q=(1)\). For a positive forced cohort, \(b^+(\rho)=\rho\), and the fixed-point equation becomes</p><p>\[
+r^+=\rho+r^+,
+\]</p><p>which has no finite solution. With \(b=0\), the equation \(r=Qr\) instead has infinitely many solutions.</p><p>Thus the sentence that nonterminating delegated mass abstains needs either:</p><ul><li>the explicit assumption \(\operatorname{spr}(Q)&lt;1\); or</li><li>a separate canonical transient-state construction replacing the displayed singular fixed-point equation.</li></ul><p>Without such a convention, \(\operatorname{MC}_{t^\star,\rho}\) is not defined on every stated instance, so no total complexity classification is possible there.</p><h3>8. Why the finite-voter hardness does not transfer</h3><p>The finite LD Penrose--Banzhaf problem averages marginal contributions over exponentially many random voting and delegation configurations. In the present definition, the direct-vote randomness has already been replaced by deterministic masses \((1-d_t)\mu_t/2\), after which only a fixed linear system and one quota comparison remain.</p><p>In particular, applying the quota after aggregating expected masses is not the same operation as averaging the outcomes of quota comparisons. The latter contains the combinatorial counting responsible for \(\#\mathrm P\)-hardness; the former reduces to rational linear algebra. Therefore the nearest finite-voter hardness result does not imply hardness of the quantity defined here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 1, “Relabel the forced sign as +.”: The sign labels are not freely interchangeable because the defined quantity is the oriented difference (W^+ - W^-)/2. The write-up must say that the derivation assumes sigma=+, or explicitly explain that sigma=- swaps the two outcomes and negates MC.</li><li><b>minor</b> — Opening Result item 3 versus Section 5: The opening claim attributes the threshold form only to the quota range, but the derivation also uses nonnegative weights, masses, delegation probabilities, and a nonnegative transient Q. These hypotheses should be attached to the summarized claim.</li><li><b>minor</b> — Section 3, exact Gaussian elimination: The claim that all intermediate rationals have polynomially bounded bit length should specify a controlled exact method such as fraction-free or modular elimination; determinant bounds alone do not describe the implementation being analyzed.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly reduces the nonsingular, rationally encoded model to exact rational linear algebra and two affine inequalities in \(\rho\). The principal polynomial-time classification is sound under the expressly added hypothesis that \(I-Q\) is nonsingular.</p><p>The threshold analysis for standard nonnegative voting data is also correct: whenever the successful set is nonempty, strictness of the quota makes it an interval open at its lower endpoint, so a least successful positive mass does not exist.</p><p>Two minor clarifications are needed. Most importantly, the instruction “relabel the forced sign as \(+\)” is not literally innocuous because the definition fixes the orientation \((W^+-W^-)/2\). The argument should explicitly distinguish relabeling the physical signs from changing the sign of \(\operatorname{MC}\). The exact-linear-algebra complexity claim should also name an implementation with controlled bit growth.</p><h3>Step-by-step verification</h3><h3>1. Scope and well-definedness</h3><p>The prover assumes finite \(T\), binary-rational input, and nonsingularity of \(I-Q\). These are sufficient for the claimed complexity result.</p><p>For a fixed right-hand side, the system</p><p>\[
+(I-Q)r=b
+\]</p><p>has a unique solution exactly when \(I-Q\) is nonsingular. The statement that \(\operatorname{spr}(Q)&lt;1\) is sufficient is correct.</p><p>For a finite nonnegative substochastic \(Q\), nonsingularity of \(I-Q\) in fact forces \(\operatorname{spr}(Q)&lt;1\), although the proof only needs the stated sufficient implication.</p><p>The prover correctly observes that the original displayed fixed-point definition can fail to define \(r^\pm\) on singular instances. Its one-state example with \(Q=(1)\) and \(b^+=\rho&gt;0\) gives the inconsistent equation</p><p>\[
+r^+=\rho+r^+.
+\]</p><p>Thus the conditional scope of the complexity classification is clearly disclosed rather than concealed.</p><h3>2. Affine dependence on \(\rho\)</h3><p>With \(c_t=(1-d_t)\mu_t/2\), the computations</p><p>\[
+b^+(\rho)=c+\frac{1+d}{2}\rho e
+\]</p><p>and</p><p>\[
+b^-(\rho)=c-\frac{1-d}{2}\rho e
+\]</p><p>are correct when the forced sign is the originally designated \(+\) sign.</p><p>Multiplication by \(A=(I-Q)^{-1}\) correctly gives</p><p>\[
+r^+(\rho)=h+\alpha\rho g,\qquad
+r^-(\rho)=h-\beta\rho g.
+\]</p><p>The derived weighted totals</p><p>\[
+S^+(\rho)=H+\alpha G\rho,\qquad
+S^-(\rho)=H-\beta G\rho
+\]</p><p>and</p><p>\[
+S^+(\rho)+S^-(\rho)=2H+dG\rho
+\]</p><p>are algebraically correct because \(\alpha-\beta=d\).</p><h3>3. Characterization of \(\operatorname{MC}=1\)</h3><p>Since \(W^\pm\in\{-1,1\}\),</p><p>\[
+\frac{W^+-W^-}{2}=1
+\]</p><p>holds exactly when \(W^+=1\) and \(W^-=-1\). Under the strict quota convention, this is equivalent to</p><p>\[
+F^+(\rho)&gt;0,\qquad F^-(\rho)\leq 0.
+\]</p><p>The treatment of equality in the second inequality is correct.</p><p>Direct expansion verifies</p><p>\[
+F^+(\rho)=(1-2q)H+(\alpha-qd)G\rho
+\]</p><p>and</p><p>\[
+F^-(\rho)=(1-2q)H-(\beta+qd)G\rho.
+\]</p><p>No term or sign is missing.</p><h3>4. Polynomial-time exact computation</h3><p>Solving two rational linear systems, forming two rational inner products, and comparing affine rational expressions can all be done in polynomial time in the dimension and binary input length.</p><p>The conclusion that specified-\(\rho\) computation lies in \(\mathrm{FP}\) is therefore correct.</p><p>The sentence claiming polynomial bounds for “all intermediate” rationals is slightly too implementation-independent. Ordinary unspecific symbolic Gaussian elimination can exhibit avoidable expression growth. It is enough to specify fraction-free Gaussian elimination, a modular exact solver, or another standard polynomial-bit-complexity rational-linear-algebra algorithm. This is an expositional repair, not a mathematical obstruction.</p><h3>5. General successful set</h3><p>Each affine inequality in one real variable defines a half-line, the empty set, or the entire line. Their intersection with \((0,\mu_{t^\star}]\) is consequently an interval with computable rational endpoints and endpoint-inclusion data.</p><p>The claimed polynomial-time procedures for emptiness, infimum, attainment, and the value of an attained minimum follow correctly.</p><h3>6. Standard-quota specialization</h3><p>Under \(Q\geq0\) and \(\operatorname{spr}(Q)&lt;1\), the Neumann series</p><p>\[
+(I-Q)^{-1}=\sum_{k=0}^{\infty}Q^k
+\]</p><p>is valid and entrywise nonnegative. With nonnegative masses and weights, this gives \(H,G\geq0\).</p><p>For \(q\geq1/2\),</p><p>\[
+F^-(\rho)=(1-2q)H-(\beta+qd)G\rho\leq0
+\]</p><p>is correct.</p><p>The coefficient</p><p>\[
+\gamma=\frac{1+d(1-2q)}2
+\]</p><p>satisfies</p><p>\[
+\gamma\geq1-q\geq0.
+\]</p><p>If \(\gamma G=0\), then \(F^+(\rho)=(1-2q)H\leq0\), so success is impossible. If \(\gamma G&gt;0\), the equivalence</p><p>\[
+F^+(\rho)&gt;0
+\quad\Longleftrightarrow\quad
+\rho&gt;\frac{(2q-1)H}{\gamma G}
+\]</p><p>is correct. Intersecting with the allowed domain gives precisely the displayed successful set.</p><p>The opening summary mentions only the quota range, whereas the derivation also requires nonnegative weights and the usual probability and mass assumptions. Those hypotheses are eventually stated in Section 5, but they should accompany the summary claim as well.</p><h3>7. Explicit example</h3><p>For the one-type example, the formulas</p><p>\[
+r^+(\rho)=\frac{1+\rho}{2},\qquad
+r^-(\rho)=\frac{1-\rho}{2}
+\]</p><p>are correct. The strict quota condition \(r^+&gt;3/4\) is equivalent to \(\rho&gt;1/2\), while the negative sign never wins. Hence the successful set is exactly</p><p>\[
+\left(\frac12,1\right],
+\]</p><p>which has no least member. The example correctly establishes the claimed failure of totality for the “least \(\rho\)” request.</p><h3>8. Forced-sign relabeling</h3><p>The proof begins, “Relabel the forced sign as \(+\).” This requires clarification. The task defines</p><p>\[
+\operatorname{MC}=\frac{W^+-W^-}{2}
+\]</p><p>using fixed sign labels. Swapping the labels changes the sign of \(\operatorname{MC}\). Thus, if the input permits \(\sigma=-\), the formulas as written compute the favorable-sign difference after relabeling, not literally the originally labeled \(\operatorname{MC}\).</p><p>This does not undermine the polynomial-time classification: one may swap the computed roles of \(+\) and \(-\) and negate the resulting marginal contribution. But that translation must be stated explicitly, especially for the least-\(\rho\) condition \(\operatorname{MC}=1\).</p><h3>9. Relation to finite-voter hardness</h3><p>The explanation correctly distinguishes evaluating a quota on deterministic aggregate masses from averaging quota outcomes over exponentially many individual configurations. Nothing in the cited finite-voter hardness result contradicts the affine-linear calculation here.</p><p>This discussion is explanatory rather than necessary to the proof, but it is internally consistent.</p><h3>Minimum requested repairs</h3><ul><li>State that the main derivation assumes the cohort is forced to the originally labeled \(+\) sign. If \(\sigma=-\), explicitly swap \(S^+\) and \(S^-\) and account for the resulting sign change in \(\operatorname{MC}\).</li></ul><ul><li>In the opening standard-quota claim, include the nonnegativity assumptions on weights, masses, and delegation probabilities.</li></ul><ul><li>Replace the unspecific appeal to exact Gaussian elimination with a named exact rational-linear-algebra method having polynomial bit complexity.</li></ul><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,79 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Optimal Matchings with One-Sided Preferences: Fixed and Cost-Based Quotas — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Optimal Matchings with One-Sided Preferences: Fixed and Cost-Based Quotas <span style="font-weight:normal;color:#8a7350">(aamas22-00081)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> polynomial-time solvable (in \(P\))</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1.2 — class: hardness</p>
+<blockquote class="thmq">The CUM-SIGN-Q problem is NP-hard even when preferences of all applicants are strict and 𝑞(𝑝) = 1 for every post 𝑝∈𝑃. The CUM-SIGN-Q problem admits a randomized polynomial time algorithm when the number of ranks is 𝑂(1).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite posts \(P\), finite applicant types \(T\), rational masses \(\mu_t\ge0\) with \(\sum_{t\in T}\mu_t=1\), rational normalized capacities \(q_p\), strict preference and eligibility data assigning each eligible pair \((t,p)\) a rank \(r_t(p)\in\{1,\ldots,r\}\), and a target signature \(\rho=(\rho_1,\ldots,\rho_{r+1})\), decide whether there exist masses \(x_{t,p}\ge0\) and unmatched masses \(u_t\ge0\) such that \(\sum_p x_{t,p}+u_t=\mu_t\), \(\sum_t x_{t,p}\le q_p\), \(z_j=\sum_{t,p:r_t(p)=j}x_{t,p}\), \(z_{r+1}=\sum_tu_t\), and \(\sum_{j=1}^{\ell}z_j\ge\sum_{j=1}^{\ell}\rho_j\) for every \(\ell\); output such an allocation if one exists.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given finite sets of posts \(P\) and applicant types \(T\), rational type masses \(\mu_t\ge0\) with \(\sum_{t\in T}\mu_t=1\), rational post capacities \(q_p\), and eligible type--post pairs with strict ranks \(r_t(p)\in\{1,\ldots,r\}\), an allocation consists of \(x_{t,p}\ge0\) and \(u_t\ge0\). It is feasible when \(\sum_p x_{t,p}+u_t=\mu_t\) for every \(t\) and \(\sum_t x_{t,p}\le q_p\) for every \(p\).</p><p>Its signature is \(z=(z_1,\ldots,z_{r+1})\), where \(z_j=\sum_{t,p:r_t(p)=j}x_{t,p}\) for \(j\le r\), and \(z_{r+1}=\sum_tu_t\). For a rational target signature \(ho\), \(z\) is cumulatively at least \(ho\) if \(\sum_{j=1}^{\ell}z_j\ge\sum_{j=1}^{\ell}ho_j\) for every \(\ell\in\{1,\ldots,r+1\}\).</p><p>Is deciding whether such a feasible allocation exists, and producing one when it does, NP-hard or in \(P\)?</p><p>For indivisible applicants with fixed quotas, the analogous cumulative-signature matching problem is NP-hard even with unit post quotas and strict preferences.<br>No verified result is recorded here for this exact distributional formulation.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The distributional cumulative-signature problem is polynomial-time solvable. Moreover, whenever a feasible allocation exists, an exact rational allocation can be produced in polynomial time.</p><h3>Linear-program formulation</h3><p>Let \(E\subseteq T\times P\) be the set of eligible type–post pairs, and define the cumulative targets</p><p>\[
+R_\ell=\sum_{j=1}^{\ell}\rho_j
+\]</p><p>for every \(\ell\in\{1,\ldots,r+1\}\).</p><p>Use one variable \(x_{t,p}\) for every \((t,p)\in E\), and one variable \(u_t\) for every \(t\in T\). Consider the following rational linear system.</p><p>For every type \(t\),</p><p>\[
+\sum_{p:(t,p)\in E}x_{t,p}+u_t=\mu_t.
+\]</p><p>For every post \(p\),</p><p>\[
+\sum_{t:(t,p)\in E}x_{t,p}\le q_p.
+\]</p><p>For every \(\ell\in\{1,\ldots,r\}\),</p><p>\[
+\sum_{\substack{(t,p)\in E\\r_t(p)\le\ell}}x_{t,p}\ge R_\ell.
+\]</p><p>Finally,</p><p>\[
+x_{t,p}\ge0,\qquad u_t\ge0.
+\]</p><p>The cumulative constraint for \(\ell=r+1\) can be checked separately as</p><p>\[
+1\ge R_{r+1}.
+\]</p><p>Indeed, summing all type-mass equalities gives</p><p>\[
+\sum_{(t,p)\in E}x_{t,p}+\sum_{t\in T}u_t
+=\sum_{t\in T}\mu_t=1.
+\]</p><p>Thus every feasible allocation has total signature mass exactly \(1\).</p><h3>Equivalence proof</h3><p>For \(\ell\le r\), the definition of the signature gives</p><p>\[
+\sum_{j=1}^{\ell}z_j
+=
+\sum_{j=1}^{\ell}
+\sum_{\substack{(t,p)\in E\\r_t(p)=j}}x_{t,p}
+=
+\sum_{\substack{(t,p)\in E\\r_t(p)\le\ell}}x_{t,p}.
+\]</p><p>Consequently, the linear inequality indexed by \(\ell\) is exactly the cumulative-signature requirement</p><p>\[
+\sum_{j=1}^{\ell}z_j\ge\sum_{j=1}^{\ell}\rho_j.
+\]</p><p>For \(\ell=r+1\),</p><p>\[
+\sum_{j=1}^{r+1}z_j=1,
+\]</p><p>so the last cumulative condition is exactly \(1\ge R_{r+1}\).</p><p>Therefore:</p><ul><li>Every allocation satisfying the displayed linear system and \(1\ge R_{r+1}\) is feasible and has signature cumulatively at least \(\rho\).</li><li>Conversely, every feasible allocation whose signature is cumulatively at least \(\rho\) satisfies that linear system.</li></ul><p>Hence the original problem is precisely rational linear feasibility.</p><h3>Polynomial-time complexity</h3><p>The linear system has</p><p>\[
+|E|+|T|
+\]</p><p>variables and \(O(|T|+|P|+r+|E|)\) constraints, counting nonnegativity constraints. Its coefficients are \(0\), \(1\), or \(-1\), while its right-hand sides are rational numbers obtained from the input by polynomially many rational additions.</p><p>Under the standard binary encoding of rational numbers, rational linear-program feasibility is decidable in time polynomial in the number of variables, the number of constraints, and the total coefficient bit length. The applicable theorem also returns an exact rational feasible point when one exists.</p><p>There is no output-size obstruction here. Every feasible variable satisfies</p><p>\[
+0\le x_{t,p}\le\mu_t,\qquad 0\le u_t\le\mu_t,
+\]</p><p>so the feasible region is bounded. If it is nonempty, it has a vertex. A vertex is determined by a nonsingular square subsystem of rational equalities. Cramer’s rule together with the determinant bit-size bound shows that its coordinates have bit length polynomial in the input length. Thus an exact rational allocation of polynomial encoding length exists and can be produced by an exact rational LP algorithm.</p><p>Because \(\rho\) explicitly contains \(r+1\) coordinates, constructing all \(r\) cumulative inequalities is polynomial in the stated input size.</p><h3>Conclusion</h3><p>The indivisible hardness result does not transfer: indivisibility imposes implicit integrality constraints, whereas the distributional formulation permits arbitrary splitting of each type mass and all its requirements are linear.</p><p>Thus the exact distributional feasibility-and-construction problem is in \(P\). In particular, it is not an NP-hardness analogue of the indivisible problem unless \(P=NP\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly reduces the distributional problem to rational linear-program feasibility. The formulation is equivalent to the requested cumulative-signature constraints, has polynomial encoding length, and supports exact rational construction in polynomial time.</p><p>No mathematical gap affecting the conclusion was found.</p><h3>Step-by-step audit</h3><ul><li><b>Variables and feasibility constraints</b></li></ul><p>The variables \(x_{t,p}\) are introduced exactly for eligible pairs, with \(u_t\) for each type. The type-mass equalities and post-capacity inequalities coincide with the definition of feasibility. Nonnegativity is explicitly imposed.</p><ul><li><b>Cumulative constraints for \(\ell\le r\)</b></li></ul><p>The identity</p><p>\[
+   \sum_{j=1}^{\ell}z_j
+   =
+   \sum_{\substack{(t,p)\in E\\r_t(p)\le\ell}}x_{t,p}
+   \]</p><p>follows directly from the strict rank assignments \(r_t(p)\in\{1,\ldots,r\}\). Therefore each displayed LP inequality is exactly the corresponding cumulative-signature condition.</p><ul><li><b>The final cumulative constraint</b></li></ul><p>Summing the type-mass equalities gives</p><p>\[
+   \sum_{(t,p)\in E}x_{t,p}+\sum_tu_t=1.
+   \]</p><p>Since the signature counts every assigned mass at its rank and all unassigned mass in coordinate \(r+1\), this proves</p><p>\[
+   \sum_{j=1}^{r+1}z_j=1.
+   \]</p><p>Thus the condition at \(\ell=r+1\) is indeed equivalent to \(1\ge R_{r+1}\). Checking this scalar condition separately is valid.</p><ul><li><b>Equivalence</b></li></ul><p>Both directions are established:</p><ul><li>A solution of the linear system satisfying \(1\ge R_{r+1}\) is a feasible allocation meeting every cumulative target.</li><li>Any feasible allocation meeting the cumulative target satisfies every constraint of the linear system.</li></ul><p>No integrality condition is present in the distributional formulation, so no omitted discrete constraint undermines this equivalence.</p><ul><li><b>Polynomial encoding size</b></li></ul><p>There are \(|E|+|T|\) variables and polynomially many constraints. Constructing \(R_\ell\) and the cumulative coefficient rows requires polynomially many rational operations. Their binary encoding lengths remain polynomial in the total input length.</p><p>The observation that \(\rho\) explicitly has \(r+1\) coordinates correctly prevents a hidden exponential dependence on a compactly encoded \(r\).</p><ul><li><b>Polynomial-time decision and construction</b></li></ul><p>Rational linear-program feasibility is solvable in polynomial time in the Turing model. Standard exact postprocessing can return a rational feasible point of polynomial encoding length.</p><p>The supplementary output-size argument is sound: the type equations and nonnegativity imply</p><p>\[
+   0\le x_{t,p}\le\mu_t,\qquad 0\le u_t\le\mu_t,
+   \]</p><p>so the feasible polyhedron is bounded. A nonempty bounded rational polyhedron has a vertex, and standard determinant bounds give polynomial coordinate bit length.</p><ul><li><b>Conclusion</b></li></ul><p>The conclusion that the problem lies in \(P\), including production of an exact rational allocation, follows. The comparison with the indivisible problem is also accurate: the cited hardness does not transfer merely from the indivisible model because its integrality requirement is absent here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

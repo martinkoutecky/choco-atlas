@@ -1,0 +1,226 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Condorcet Winners and Anscombe&#x27;s Paradox Under Weighted Binary Voting — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Condorcet Winners and Anscombe&#x27;s Paradox Under Weighted Binary Voting <span style="font-weight:normal;color:#8a7350">(aamas25-00027)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\)-hard; indeed, the problem is both \(\mathrm{NP}\)-hard and \(\mathrm{coNP}\)-hard and belongs to \(\Sigma_2^p\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: hardness</p>
+<blockquote class="thmq">Deciding whether an instance I = P admits a Con- dorcet winner is co-NP-hard in the unweighted setting with odd 𝑛.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(t\) and a finite-support rational distribution \(\mu=(\mu_v)_{v\in\{\pm1\}^t}\) with \(\sum_v\mu_v=1\), decide whether there exists \(p\in\{\pm1\}^t\) such that for every \(p&#x27;\in\{\pm1\}^t\), \(D_\mu(p,p&#x27;):=\sum_v\mu_v\operatorname{sgn}\!\left(\frac{1}{t}\sum_{j=1}^t v_j(p_j-p&#x27;_j)\right)\ge0\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> The input is \(t\) and a rational distribution \(\mu\), given by its finite support \(\{(v,\mu_v)\}\) with \(v\in\{\pm1\}^t\), \(\mu_v\ge0\), and \(\sum_v\mu_v=1\). Let \(\operatorname{sgn}(x)\in\{-1,0,1\}\) be the sign of \(x\), and define \(\Delta_\mu(p,q)=\sum_v\mu_v\operatorname{sgn}(\langle v,p-qangle)\). A proposal \(p\in\{\pm1\}^t\) is a Condorcet winner if \(\Delta_\mu(p,q)\ge0\) for every \(q\in\{\pm1\}^t\).</p><p><b>Target.</b> Is deciding whether such a Condorcet winner exists solvable in polynomial time, or is it NP-hard?</p><p><b>Nearest known results.</b> For finite unweighted profiles with an odd number of voters, deciding whether a Condorcet winner exists is co-NP-hard. Such profiles embed into the distributional formulation through their empirical distributions, so the distributional problem is also co-NP-hard.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity of Distributional Condorcet-Winner Existence</h3><h3>Result</h3><p>The problem is \(\mathrm{NP}\)-hard under polynomial-time many-one reductions. Together with the stated embedding of odd unweighted profiles, it is both \(\mathrm{NP}\)-hard and \(\mathrm{coNP}\)-hard. It also belongs to \(\Sigma_2^p\).</p><p>Consequently, a polynomial-time algorithm would imply \(\mathrm{P}=\mathrm{NP}\).</p><h3>1. Opponents as coordinate-flip sets</h3><p>Fix \(p\in\{\pm1\}^t\). Every proposal \(q\) is uniquely specified by the set</p><p>$$
+S=\{i:q_i=-p_i\}.
+$$</p><p>Write this proposal as \(q^S\). Then</p><p>$$
+\langle v,p-q^S\rangle
+=2\sum_{i\in S}v_ip_i,
+$$</p><p>and hence</p><p>$$
+\Delta_\mu(p,q^S)
+=
+\mathbb E_{v\sim\mu}
+\left[
+\operatorname{sgn}\left(\sum_{i\in S}v_ip_i\right)
+\right].
+$$</p><p>In particular, for \(S=\{i\}\),</p><p>$$
+\Delta_\mu(p,q^{\{i\}})
+=p_i\,\mathbb E_\mu[v_i].
+$$</p><p>Thus every Condorcet winner satisfies</p><p>$$
+p_i\mathbb E_\mu[v_i]\ge 0
+$$</p><p>for every coordinate \(i\). Coordinates with strictly positive expectation are therefore forced to \(+1\), while zero-expectation coordinates can encode Boolean choices.</p><h3>2. A constant-size clause gadget</h3><p>Consider seven local coordinates</p><p>$$
+I=\{a_0,a_1,a_2,a_3,x,y,z\},
+$$</p><p>where the \(a_i\) are anchors and \(x,y,z\) encode the three literals of a clause.</p><p>For \(T\subseteq I\), define the character</p><p>$$
+\chi_T(u)=\prod_{i\in T}u_i.
+$$</p><p>Let</p><p>$$
+\begin{aligned}
+h(u)={}&amp;u_{a_0}+15u_{a_1}+u_{a_2}+u_{a_3}
++\frac{40}{3}u_{a_0}u_{a_1}u_{a_3}\\
+&amp;-8u_{a_0}u_{a_1}u_x
+-8u_{a_0}u_{a_1}u_y\\
+&amp;-\frac{46}{3}
+u_{a_0}u_{a_1}u_{a_2}u_{a_3}u_xu_yu_z.
+\end{aligned}
+$$</p><p>Set</p><p>$$
+\varepsilon=\frac{3}{188},
+\qquad
+\nu(u)=2^{-7}\bigl(1+\varepsilon h(u)\bigr).
+$$</p><p>The sum of the absolute values of the coefficients of \(h\) is</p><p>$$
+1+15+1+1+\frac{40}{3}+8+8+\frac{46}{3}
+=\frac{188}{3}.
+$$</p><p>Therefore \(1+\varepsilon h(u)\ge 0\) for every \(u\). Moreover, every character appearing in \(h\) is nonconstant, so its uniform average is zero. Consequently,</p><p>$$
+\sum_{u\in\{\pm1\}^7}\nu(u)=1.
+$$</p><p>Thus \(\nu\) is a rational distribution with at most \(128\) support points.</p><p>Fourier orthogonality gives</p><p>$$
+\begin{aligned}
+\mathbb E_\nu[u_{a_0}]&amp;=\varepsilon,&amp;
+\mathbb E_\nu[u_{a_1}]&amp;=15\varepsilon,\\
+\mathbb E_\nu[u_{a_2}]&amp;=\varepsilon,&amp;
+\mathbb E_\nu[u_{a_3}]&amp;=\varepsilon,
+\end{aligned}
+$$</p><p>whereas</p><p>$$
+\mathbb E_\nu[u_x]
+=
+\mathbb E_\nu[u_y]
+=
+\mathbb E_\nu[u_z]
+=0.
+$$</p><p>Also, the complete marginal of \((u_x,u_y,u_z)\) is uniform, because every term of \(h\) contains at least one anchor coordinate.</p><h3>Lemma 1: Clause-gadget inequalities</h3><p>Let \(\eta\) be an independent uniform element of \(\{\pm1\}\). For a local proposal</p><p>$$
+r=(1,1,1,1,r_x,r_y,r_z),
+$$</p><p>a set \(L\subseteq I\), and an integer \(D\), define</p><p>$$
+G_r(L,D)=
+\mathbb E_{u\sim\nu,\eta}
+\left[
+\operatorname{sgn}
+\left(
+\sum_{i\in L}u_ir_i+\eta D
+\right)
+\right].
+$$</p><p>Then:</p><ul><li>If at least one of \(r_x,r_y,r_z\) equals \(+1\), then \(G_r(L,D)\ge 0\) for every \(L\) and every \(D\).</li><li>For</li></ul><p>$$
+r^-=(1,1,1,1,-1,-1,-1),
+$$</p><p>one has</p><p>$$
+G_{r^-}(I,0)=-\varepsilon.
+$$</p><h3>Exact verification</h3><p>Put \(d=|D|\), \(\ell=|L|\), and define</p><p>$$
+\begin{aligned}
+\kappa_{\ell,k,d}
+={}&amp;2^{-\ell-1}
+\sum_{\alpha=0}^k
+\sum_{\beta=0}^{\ell-k}
+\binom{k}{\alpha}
+\binom{\ell-k}{\beta}
+(-1)^\alpha\\
+&amp;\quad\cdot
+\left[
+\operatorname{sgn}\bigl(\ell-2(\alpha+\beta)+d\bigr)
++
+\operatorname{sgn}\bigl(\ell-2(\alpha+\beta)-d\bigr)
+\right].
+\end{aligned}
+$$</p><p>This is the Fourier coefficient of the symmetrized threshold function associated with \(L\) and \(d\). Integrating coordinates outside \(L\) gives</p><p>$$
+\begin{aligned}
+\varepsilon^{-1}G_r(L,D)
+={}&amp;A_L\kappa_{\ell,1,d}\\
+&amp;+
+\left(
+\frac{40}{3}\mathbf 1_{\{a_0,a_1,a_3\}\subseteq L}
+-8r_x\mathbf 1_{\{a_0,a_1,x\}\subseteq L}
+-8r_y\mathbf 1_{\{a_0,a_1,y\}\subseteq L}
+\right)\kappa_{\ell,3,d}\\
+&amp;-\frac{46}{3}
+r_xr_yr_z\mathbf 1_{L=I}\kappa_{7,7,d},
+\end{aligned}
+$$</p><p>where</p><p>$$
+A_L=
+\mathbf 1_{a_0\in L}
++15\mathbf 1_{a_1\in L}
++\mathbf 1_{a_2\in L}
++\mathbf 1_{a_3\in L}.
+$$</p><p>Substitution into this formula gives the following exact minima, taken over all \(L\) of cardinality \(\ell\) and all seven triples \((r_x,r_y,r_z)\ne(-1,-1,-1)\):</p><p>| \(\ell\) | \(d=0\) | \(d=1\) | \(d=2\) | \(d=3\) | \(d=4\) | \(d=5\) | \(d=6\) | \(d=7\) |<br>|---:|---:|---:|---:|---:|---:|---:|---:|---:|<br>| \(0\) | \(0\) |  |  |  |  |  |  |  |<br>| \(1\) | \(0\) | \(0\) |  |  |  |  |  |  |<br>| \(2\) | \(0\) | \(0\) | \(0\) |  |  |  |  |  |<br>| \(3\) | \(0\) | \(0\) | \(0\) | \(0\) |  |  |  |  |<br>| \(4\) | \(\frac38\) | \(\frac38\) | \(\frac14\) | \(0\) | \(0\) |  |  |  |<br>| \(5\) | \(\frac34\) | \(\frac58\) | \(\frac12\) | \(\frac5{16}\) | \(0\) | \(0\) |  |  |<br>| \(6\) | \(\frac{15}{16}\) | \(\frac{15}{16}\) | \(\frac{45}{64}\) | \(\frac{15}{32}\) | \(\frac9{32}\) | \(\frac1{32}\) | \(\frac1{64}\) |  |<br>| \(7\) | \(0\) | \(\frac{365}{96}\) | \(\frac16\) | \(\frac{89}{48}\) | \(\frac16\) | \(\frac{31}{96}\) | \(0\) | \(0\) |</p><p>All entries are nonnegative. If \(d&gt;\ell\), the two signs in the definition cancel, so \(G_r(L,D)=0\). This proves the first assertion.</p><p>For the all-false triple, direct evaluation uses</p><p>$$
+\kappa_{7,1,0}=\frac5{16},
+\qquad
+\kappa_{7,3,0}=-\frac1{16},
+\qquad
+\kappa_{7,7,0}=-\frac5{16}.
+$$</p><p>Consequently,</p><p>$$
+\begin{aligned}
+\varepsilon^{-1}G_{r^-}(I,0)
+&amp;=
+18\cdot\frac5{16}
++
+\left(\frac{40}{3}+8+8\right)\left(-\frac1{16}\right)
++
+\frac{46}{3}\left(-\frac5{16}\right)\\
+&amp;=-1.
+\end{aligned}
+$$</p><p>Hence \(G_{r^-}(I,0)=-\varepsilon\), proving the lemma.</p><h3>3. Reduction from \(3\)-SAT</h3><p>We reduce from \(3\)-SAT restricted to clauses containing three distinct variables. This restriction remains \(\mathrm{NP}\)-complete: clauses with fewer than three variables can be padded with fresh variables in the standard satisfiability-preserving way, and tautological clauses can be removed.</p><p>Let the formula have variables \(X_1,\ldots,X_n\) and clauses \(C_1,\ldots,C_m\), with \(m\ge1\).</p><h3>Global coordinates</h3><p>Create:</p><ul><li>one issue \(X_j\) for each Boolean variable;</li><li>four private anchors \(a_{c,0},a_{c,1},a_{c,2},a_{c,3}\) for every clause \(C_c\).</li></ul><p>Thus</p><p>$$
+t=n+4m.
+$$</p><p>For clause \(C_c\), order its literals as</p><p>$$
+\ell_{c,1},\ell_{c,2},\ell_{c,3}.
+$$</p><p>Let \(j(c,r)\) be the variable occurring in \(\ell_{c,r}\), and let</p><p>$$
+s_{c,r}=
+\begin{cases}
++1,&amp;\text{if }\ell_{c,r}=X_{j(c,r)},\\
+-1,&amp;\text{if }\ell_{c,r}=\neg X_{j(c,r)}.
+\end{cases}
+$$</p><h3>Clause component</h3><p>To sample from the clause distribution \(\mu^c\):</p><ul><li>Draw \(u\sim\nu\).</li><li>Draw an independent uniform \(\eta\in\{\pm1\}\).</li><li>Set</li></ul><p>$$
+v_{a_{c,k}}=u_{a_k}
+$$</p><p>for the four private anchors.</p><ul><li>For the three clause variables, set</li></ul><p>$$
+v_{X_{j(c,1)}}=s_{c,1}u_x,\qquad
+v_{X_{j(c,2)}}=s_{c,2}u_y,\qquad
+v_{X_{j(c,3)}}=s_{c,3}u_z.
+$$</p><ul><li>Set every remaining coordinate equal to \(\eta\).</li></ul><p>Finally, define</p><p>$$
+\mu=\frac1m\sum_{c=1}^m\mu^c.
+$$</p><p>Each \(\mu^c\) has at most \(2^8=256\) support points. Therefore \(\mu\) has at most \(256m\) explicitly listed atoms before identical atoms are merged. All probabilities are rational with polynomial encoding length, so the construction is polynomial-time.</p><h3>4. Correctness of the reduction</h3><h3>Lemma 2: Every Condorcet winner encodes a truth assignment</h3><p>For an anchor \(a_{c,k}\), its expectation under its own clause component is respectively</p><p>$$
+\varepsilon,\quad 15\varepsilon,\quad \varepsilon,\quad \varepsilon.
+$$</p><p>Every other clause component treats this anchor as an outside coordinate \(\eta\), whose expectation is zero. Hence</p><p>$$
+\mathbb E_\mu[v_{a_{c,k}}]&gt;0.
+$$</p><p>By the singleton-flip inequality, every Condorcet winner must set every anchor to \(+1\).</p><p>Every variable coordinate has expectation zero: when it is local to a clause, its \(u_x,u_y,u_z\) marginal is zero, and otherwise it equals the mean-zero variable \(\eta\). Thus the variable coordinates of a possible winner are unrestricted and naturally encode a Boolean assignment.</p><h3>Lemma 3: A satisfying assignment yields a Condorcet winner</h3><p>Let \(\tau\in\{\pm1\}^n\) satisfy the formula. Define \(p\) by</p><p>$$
+p_{X_j}=\tau_j
+$$</p><p>and set every anchor coordinate to \(+1\).</p><p>Consider any flip set \(S\). For clause \(C_c\), the local proposal seen by its gadget is</p><p>$$
+r_c=
+\left(
+1,1,1,1,
+s_{c,1}\tau_{j(c,1)},
+s_{c,2}\tau_{j(c,2)},
+s_{c,3}\tau_{j(c,3)}
+\right).
+$$</p><p>Because \(C_c\) is satisfied, at least one of the last three entries is \(+1\).</p><p>Let \(L_c\) be the intersection of \(S\) with the seven local coordinates of \(C_c\). All selected outside coordinates equal \(\eta\), so their combined contribution has the form \(\eta D_c\) for an integer \(D_c\). Lemma 1 therefore gives</p><p>$$
+\mathbb E_{\mu^c}
+\left[
+\operatorname{sgn}
+\left(
+\sum_{i\in S}v_ip_i
+\right)
+\right]
+\ge0.
+$$</p><p>Averaging this inequality over all clauses yields</p><p>$$
+\Delta_\mu(p,q^S)\ge0.
+$$</p><p>Since this holds for every \(S\), \(p\) is a Condorcet winner.</p><h3>Lemma 4: A Condorcet winner yields a satisfying assignment</h3><p>Let \(p\) be a Condorcet winner. By Lemma 2, all its anchors equal \(+1\). Interpret its variable coordinates as an assignment \(\tau\).</p><p>Suppose that some clause \(C_c\) is false. Then all three corresponding literal signs are \(-1\). Let \(S\) consist of exactly the seven local coordinates of \(C_c\).</p><p>Under \(\mu^c\), Lemma 1 gives</p><p>$$
+\mathbb E_{\mu^c}
+\left[
+\operatorname{sgn}
+\left(
+\sum_{i\in S}v_ip_i
+\right)
+\right]
+=-\varepsilon.
+$$</p><p>Now consider a different clause \(C_{c&#x27;}\). The set \(S\) contains none of its private anchors, so its selected local coordinates consist only of shared variable coordinates. Their joint marginal is uniform. All selected coordinates outside \(C_{c&#x27;}\) equal the independent uniform sign \(\eta\). The simultaneous negation of the selected local variables and \(\eta\) negates the total sum while preserving its distribution. Since \(\operatorname{sgn}\) is odd, the corresponding expected sign is zero.</p><p>It follows that</p><p>$$
+\Delta_\mu(p,q^S)
+=
+-\frac{\varepsilon}{m}
+&lt;0,
+$$</p><p>contradicting that \(p\) is a Condorcet winner. Therefore every clause is satisfied.</p><p>Combining Lemmas 3 and 4,</p><p>$$
+\varphi\text{ is satisfiable}
+\quad\Longleftrightarrow\quad
+(\,t,\mu\,)\text{ admits a Condorcet winner}.
+$$</p><p>This proves \(\mathrm{NP}\)-hardness.</p><h3>5. Other complexity bounds</h3><p>The known odd-unweighted result of [Baharav, Constantinescu, and Wattenhofer](https://www.ac.tuwien.ac.at/comsoc2025/comsoc2025-papers/112.pdf) gives \(\mathrm{coNP}\)-hardness. Indeed, an unweighted profile embeds by assigning each voter mass \(1/N\), without changing any pairwise majority inequality.</p><p>Finally, the problem lies in \(\Sigma_2^p\). It has the form</p><p>$$
+\exists p\in\{\pm1\}^t\;
+\forall q\in\{\pm1\}^t:
+\Delta_\mu(p,q)\ge0,
+$$</p><p>and the innermost predicate can be evaluated exactly in polynomial time from the explicit rational support.</p><p>Thus the established classification is</p><p>$$
+\text{\(\mathrm{NP}\)-hard and \(\mathrm{coNP}\)-hard, and contained in \(\Sigma_2^p\).}
+$$</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Verdict</h3><p>The prover correctly establishes \(\mathrm{NP}\)-hardness by a polynomial-time many-one reduction from restricted \(3\)-SAT. The additional claims of \(\mathrm{coNP}\)-hardness and membership in \(\Sigma_2^p\) are also justified. No substantive gaps were found.</p><h3>Step-by-step audit</h3><ul><li><b>Flip-set reformulation:</b> Correct. Every opponent corresponds uniquely to a coordinate set \(S\), and the displayed inner-product and singleton-flip formulas follow exactly. The forced-anchor conclusion is valid.</li></ul><ul><li><b>Clause distribution:</b> Correct. The absolute coefficient sum is \(188/3\), so the choice \(\varepsilon=3/188\) ensures nonnegative masses. Fourier orthogonality proves normalization, the stated first moments, and uniformity of the three-variable marginal.</li></ul><ul><li><b>Clause-gadget lemma:</b> Correct. The Fourier-coefficient formula accounts for every character in \(h\), including the proposal-sign factors. The exhaustive minima table was independently rechecked exactly and all entries agree with the prover’s table. For \(|D|&gt;|L|\), cancellation over the uniform sign is valid. The all-false evaluation indeed equals \(-\varepsilon\).</li></ul><ul><li><b>Reduction size:</b> Correct. There are \(n+4m\) coordinates and at most \(256m\) listed atoms before merging. All weights have polynomial rational encoding length.</li></ul><ul><li><b>Forced anchors and variable expectations:</b> Correct. Each private anchor has a strictly positive global expectation, while every variable coordinate has expectation zero.</li></ul><ul><li><b>Satisfying assignment direction:</b> Correct. For each clause, satisfaction gives at least one positive literal coordinate in the local proposal. All selected nonlocal coordinates share the sign \(\eta\), and their proposal-weighted contribution is \(\eta D_c\) for an integer \(D_c\). Lemma 1 therefore applies for every flip set.</li></ul><ul><li><b>Condorcet winner direction:</b> Correct. For a false clause, flipping its seven local coordinates produces contribution \(-\varepsilon\) from that clause. In every other clause component, the selected local variables have a uniform joint marginal independent of \(\eta\); simultaneous sign reversal makes the total selected sum symmetric, so the expected sign is zero. Thus the overall margin is \(-\varepsilon/m&lt;0\), a contradiction.</li></ul><ul><li><b>Additional complexity claims:</b> Correct. The empirical-distribution embedding preserves every pairwise majority margin, yielding the stated \(\mathrm{coNP}\)-hardness. The existential choice of \(p\), universal choice of \(q\), and polynomial-time exact evaluation of the explicitly supported rational distribution place the problem in \(\Sigma_2^p\).</li></ul><p>The output fully resolves the requested dichotomy by establishing \(\mathrm{NP}\)-hardness.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

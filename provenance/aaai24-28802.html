@@ -1,0 +1,87 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Envy-Free House Allocation under Uncertain Preferences — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Envy-Free House Allocation under Uncertain Preferences <span style="font-weight:normal;color:#8a7350">(aaai24-28802)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}hard}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 4.2 — class: algorithmic</p>
+<blockquote class="thmq">For any reasonable uncertainty model that is independent, given a set M ′ ⊂M with |M ′| = n of houses, an allocation of M ′ to N which maximizes the prob- ability of EF can be computed in polynomial time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite applicant types with rational masses, a fixed menu of recurring house classes with rational capacities summing to one, and an independent preference lottery for each type, compute a feasible mass matching \(x\) maximizing the per-capita log EF probability \(\sum_{t,h} x_{t,h} \log q_{t,h}\), where \(q_{t,h}\) is the probability that \(h\) is top among the menu for type \(t\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> Given finite sets \(\Theta,H,K\), rational masses \(\mu_\theta\ge 0\) with \(\sum_\theta\mu_\theta=1\), rational capacities \(\kappa_h\), and a rational distribution \(\pi\) on \(K\), each type \(\theta\) has a complete strict ranking \(\rho_\theta^k\) of \(H\) in each state \(k\). Choose \(x_{\theta h}\ge0\) with \(\sum_hx_{\theta h}=\mu_\theta\) and \(\sum_\theta x_{\theta h}\le\kappa_h\). It is envy-free in state \(k\) if, whenever \(x_{\theta h}&gt;0\), \(h\) is strictly ranked above every \(h&#x27;\ne h\) with \(x_{\theta&#x27; h&#x27;}&gt;0\) for some \(\theta&#x27;\). Its score is \(\sum_{k\in K}\pi_k\mathbf{1}[x\text{ is envy-free in }k]\).</p><p><b>Target.</b> Is computing a maximum-score mass assignment polynomial-time solvable, or NP-hard?</p><p><b>Nearest known results.</b> For finite agents and houses under a joint distribution over strict preference profiles, maximizing the probability of an envy-free allocation admits no polynomial-time \(\left(\frac65-\varepsilon\right)\)-approximation for any constant \(\varepsilon&gt;0\), unless \(\mathrm{P}=\mathrm{NP}\). No result for exactly the mass-assignment variant above is verified here.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity of Maximum-Score Mass Assignment</h3><h3>Result</h3><p>Computing a maximum-score mass assignment is \(\mathrm{NP\text{-}hard}\). More strongly, deciding whether the maximum score equals \(1\) is \(\mathrm{NP\text{-}complete}\), even when all positive type masses are equal, all house capacities are equal, and the number of states is constant.</p><p>The finite-agent hardness therefore survives the mass formulation exactly; fractional assignments do not remove it.</p><h3>1. A purity lemma</h3><p>Write \(h\succ_\theta^k g\) when type \(\theta\) strictly prefers \(h\) to \(g\) in state \(k\).</p><p><b>Lemma 1.</b> If a feasible mass assignment \(x\) is envy-free in some state \(k\), then every type \(\theta\) with \(\mu_\theta&gt;0\) is assigned entirely to one house.</p><p><b>Proof.</b> Suppose instead that, for some \(\theta\), there are distinct houses \(h\) and \(g\) with</p><p>\[
+\(x_{\theta h}&gt;0\qquad\text{and}\qquad x_{\theta g}&gt;0.\)
+\]</p><p>Because \(x_{\theta g}&gt;0\), house \(g\) is occupied. Applying envy-freeness to the positive cell \(x_{\theta h}\) gives</p><p>\[
+\(h\succ_\theta^k g.\)
+\]</p><p>Similarly, since \(h\) is occupied, applying envy-freeness to \(x_{\theta g}&gt;0\) gives</p><p>\[
+\(g\succ_\theta^k h.\)
+\]</p><p>These two inequalities contradict the fact that \(\rho_\theta^k\) is a strict ranking. Hence there is a unique house \(f(\theta)\) with \(x_{\theta f(\theta)}&gt;0\). The row-sum constraint then gives</p><p>\[
+\(x_{\theta f(\theta)}=\mu_\theta.\)
+\]</p><p>This proves the lemma. \(\square\)</p><p><b>Corollary 2.</b> Every mass assignment having positive score is type-pure.</p><p>Indeed, positive score means that the assignment is envy-free in at least one state \(k\) with \(\pi_k&gt;0\), so Lemma 1 applies.</p><p>Thus, except for assignments of score \(0\), the apparently fractional problem reduces to choosing a map</p><p>\[
+\(f:\{\theta:\mu_\theta&gt;0\}\longrightarrow H\)
+\]</p><p>satisfying</p><p>\[
+\(\sum_{\theta:f(\theta)=h}\mu_\theta\leq\kappa_h\)
+\]</p><p>for every \(h\in H\).</p><h3>2. Embedding the finite-agent problem</h3><p>Consider a finite house-allocation instance with agent set \(A\), house set \(H\), \(n=|A|\), and \(n\leq |H|\). In every state \(k\), each agent \(a\) has a strict ranking \(\rho_a^k\). A finite allocation is an injection</p><p>\[
+\(\varphi:A\longrightarrow H.\)
+\]</p><p>It is envy-free in state \(k\) precisely when, for every pair of distinct agents \(a,b\),</p><p>\[
+\(\varphi(a)\succ_a^k\varphi(b).\)
+\]</p><p>Construct the following mass instance:</p><p>\[
+\(\Theta=A,\qquad \mu_a=\frac1n\quad(a\in A),\qquad
+\kappa_h=\frac1n\quad(h\in H).\)
+\]</p><p>Copy the states, their probabilities, and all rankings unchanged. This transformation is polynomial-time: the rational number \(1/n\) has polynomial encoding length.</p><p>For an injection \(\varphi\), define</p><p>\[
+\(x^\varphi_{ah}=
+\begin{cases}
+\frac1n,&amp;h=\varphi(a),\\
+0,&amp;h\neq\varphi(a).
+\end{cases}\)
+\]</p><p>This is feasible. Its occupied houses are exactly \(\varphi(A)\), and the mass envy-free condition for agent-type \(a\) is</p><p>\[
+\(\varphi(a)\succ_a^k h
+\quad\text{for every }h\in\varphi(A)\setminus\{\varphi(a)\}.\)
+\]</p><p>Because \(\varphi\) is injective, this is exactly the finite-agent envy-free condition. Therefore \(x^\varphi\) and \(\varphi\) have the same score.</p><p>Conversely, let \(x\) be a feasible mass assignment of positive score. By Corollary 2, there is a map \(f:A\to H\) such that</p><p>\[
+\(x_{a,f(a)}=\frac1n.\)
+\]</p><p>If two distinct agents \(a,b\) had \(f(a)=f(b)=h\), then the load on \(h\) would be at least</p><p>\[
+\(\frac1n+\frac1n=\frac2n&gt;\frac1n=\kappa_h,\)
+\]</p><p>contradicting feasibility. Hence \(f\) is injective. By the preceding equivalence, \(f\) has exactly the same score as \(x\).</p><h3>3. Equality of optimal values</h3><p>Let \(\mathrm{OPT}_{\mathrm{fin}}\) be the maximum score in the finite instance and let \(\mathrm{OPT}_{\mathrm{mass}}\) be the maximum score in the constructed mass instance.</p><p>Every finite allocation produces a mass assignment of the same score, so</p><p>\[
+\(\mathrm{OPT}_{\mathrm{mass}}\geq \mathrm{OPT}_{\mathrm{fin}}.\)
+\]</p><p>Conversely, consider any feasible mass assignment \(x\).</p><ul><li>If its score is positive, the preceding argument converts it into a finite allocation with exactly the same score.</li><li>If its score is \(0\), then its score is at most \(\mathrm{OPT}_{\mathrm{fin}}\), since all scores are nonnegative.</li></ul><p>Thus every feasible mass assignment has score at most \(\mathrm{OPT}_{\mathrm{fin}}\), and consequently</p><p>\[
+\(\mathrm{OPT}_{\mathrm{mass}}\leq \mathrm{OPT}_{\mathrm{fin}}.\)
+\]</p><p>Therefore</p><p>\[
+\(\mathrm{OPT}_{\mathrm{mass}}=\mathrm{OPT}_{\mathrm{fin}}.\)
+\]</p><p>This also handles the case in which the common optimum is \(0\): fractional zero-score assignments may exist, but they cannot improve the optimum.</p><h3>4. Hardness</h3><p>For the finite joint-distribution model, deciding whether there is an allocation that is envy-free with probability \(1\) is \(\mathrm{NP\text{-}complete}\), even with a constant number of explicitly listed strict preference profiles. The same work proves the stated \((6/5-\varepsilon)\)-inapproximability for the maximum-probability problem [Aziz et al., Theorems 7.1 and 7.2](https://ojs.aaai.org/index.php/AAAI/article/download/28802/29534).</p><p>Apply the embedding above to an instance of the finite probability-\(1\) decision problem. Equality of optimal values gives</p><p>\[
+\(\mathrm{OPT}_{\mathrm{mass}}=1
+\quad\Longleftrightarrow\quad
+\mathrm{OPT}_{\mathrm{fin}}=1.\)
+\]</p><p>Hence deciding whether the mass optimum is \(1\) is \(\mathrm{NP\text{-}hard}\).</p><p>It is also in \(\mathrm{NP}\). A certificate consists of a map \(f:\Theta\to H\). In polynomial time one can check</p><p>\[
+\(\sum_{\theta:f(\theta)=h}\mu_\theta\leq\kappa_h\)
+\]</p><p>for every house and, for every state \(k\) with \(\pi_k&gt;0\), verify that</p><p>\[
+\(f(\theta)\succ_\theta^k g\)
+\]</p><p>for every positive-mass type \(\theta\) and every other occupied house \(g\neq f(\theta)\). Lemma 1 guarantees that every score-\(1\) assignment has such a certificate.</p><p>Thus the score-\(1\) decision problem is \(\mathrm{NP\text{-}complete}\), and computing an optimal mass assignment is \(\mathrm{NP\text{-}hard}\).</p><h3>5. Approximation consequence</h3><p>The same embedding preserves approximation ratios. If an approximation algorithm returns a mass assignment with positive score, Corollary 2 converts it into a finite allocation of exactly the same score. If the optimum is \(0\), every finite allocation is optimal.</p><p>Consequently, for every fixed \(0&lt;\varepsilon&lt;1/5\), a polynomial-time \((6/5-\varepsilon)\)-approximation for the mass problem would give the same approximation for the finite problem. Therefore no such algorithm exists unless \(\mathrm{P}=\mathrm{NP}\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification Report</h3><h3>Overall verdict</h3><p>The prover correctly establishes that computing a maximum-score mass assignment is NP-hard. The stronger claim that deciding whether the optimum equals \(1\) is NP-complete is also justified.</p><p>The reduction preserves the optimum exactly, including the zero-optimum case. No substantive gaps or false steps were found.</p><h3>Step-by-step audit</h3><h3>1. Purity lemma</h3><p>The argument is correct.</p><p>If one positive-mass type \(\theta\) has positive assignments to distinct houses \(h\) and \(g\), both houses are occupied. Envy-freeness applied to \(x_{\theta h}&gt;0\) requires \(h\succ_\theta^k g\), while its application to \(x_{\theta g}&gt;0\) requires \(g\succ_\theta^k h\). These conclusions contradict strictness of the ranking.</p><p>Once at most one cell in the row is positive, the row-sum condition implies that the unique positive cell equals \(\mu_\theta\). The restriction to \(\mu_\theta&gt;0\) is necessary and is stated.</p><h3>2. Positive-score corollary</h3><p>This is correct. Since \(\pi\) is a probability distribution, a positive score implies envy-freeness in at least one state having positive probability. Lemma 1 then applies to every positive-mass type.</p><p>Zero-mass types cause no difficulty because they contribute neither occupied mass nor capacity load.</p><h3>3. Construction from finite house allocation</h3><p>The construction</p><p>\[
+\mu_a=\frac1n,\qquad \kappa_h=\frac1n
+\]</p><p>is polynomially encoded and feasible for every finite injection.</p><p>For an injection \(\varphi\), the occupied houses are exactly \(\varphi(A)\). The mass envy-free condition for type \(a\) therefore says precisely that \(a\) ranks \(\varphi(a)\) above every house assigned to another agent. This matches the finite-agent definition.</p><p>The converse is also correct for every positive-score mass assignment. Purity assigns each type its entire mass \(1/n\) at one house. Two types cannot share a house because that would create load \(2/n\), exceeding capacity \(1/n\). Hence the induced map is injective.</p><h3>4. Equality of optimal values</h3><p>Both inequalities are established correctly.</p><p>Every finite allocation gives a mass assignment of equal score, yielding \(\mathrm{OPT}_{\mathrm{mass}}\geq\mathrm{OPT}_{\mathrm{fin}}\).</p><p>Every positive-score mass assignment yields an injection of equal score. A zero-score assignment cannot exceed \(\mathrm{OPT}_{\mathrm{fin}}\), since the latter is nonnegative. Thus \(\mathrm{OPT}_{\mathrm{mass}}\leq\mathrm{OPT}_{\mathrm{fin}}\).</p><p>The separate treatment of score-zero assignments correctly closes a possible gap left by the purity lemma.</p><h3>5. External hardness theorem</h3><p>The cited result supports the required source problem. The referenced paper states that, in the joint probability model, existence of an allocation that is certainly envy-free is NP-complete even with a constant number of profiles. It also states the claimed \(6/5-\varepsilon\) inapproximability result. See [Aziz et al., Theorems 7.1 and 7.2](https://arxiv.org/html/2312.11286).</p><p>The cited model uses strict preference profiles and the same finite house-allocation envy condition employed in the reduction. Its hypotheses therefore match the construction as written.</p><h3>6. NP membership</h3><p>The certificate argument is correct. A map from positive-mass types to houses has polynomial size. Exact rational capacity sums and all relevant ranking comparisons can be checked in polynomial time.</p><p>For an optimum-\(1\) assignment, at least one positive-probability state exists, so Lemma 1 guarantees a type-pure certificate. Verification over every state with \(\pi_k&gt;0\) is exactly what score \(1\) requires.</p><h3>7. Restricted-instance and approximation claims</h3><p>The construction indeed gives equal positive masses, equal capacities, and preserves the constant number of states.</p><p>The approximation consequence is also valid. A finite-factor approximation cannot return score \(0\) when the optimum is positive. When the optimum is \(0\), every finite allocation attains the optimum. Thus the reduction transfers the cited multiplicative inapproximability.</p><h3>Issues and repair requirements</h3><p>No major or minor mathematical issues were identified. No additional clarification is needed to verify the proof.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,102 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Equilibria in Schelling Games: Computational Hardness and Robustness — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Equilibria in Schelling Games: Computational Hardness and Robustness <span style="font-weight:normal;color:#8a7350">(aamas22-00088)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable: every valid instance admits a stable mass assignment.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.1 — class: hardness</p>
+<blockquote class="thmq">S-Eq is NP-complete. Note that membership in NP is trivial, as we can check whether an assignment is a swap-equilibrium by iterating over all pairs of agents and checking whether they have a profitable swap.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a connected graph \(G=(V,E)\), rational capacities \(b_v&gt;0\) with \(\sum_{v\in V}b_v=1\), and a two-type population distribution \(\mu=(\mu_1,\mu_2)\), decide whether there exists a mass assignment \(x_{\ell v}\ge0\) satisfying \(\sum_{\ell=1}^2x_{\ell v}=b_v\) and \(\sum_{v\in V}x_{\ell v}=\mu_\ell\), such that no pair of infinitesimal households of distinct types has a mutually profitable swap. Here \(u_\ell(v;x)=0\) when the neighbourhood has zero mass, and otherwise \(u_\ell(v;x)=\frac{\sum_{w\in N(v)}x_{\ell w}}{\sum_{k=1}^2\sum_{w\in N(v)}x_{kw}}\); a swap from \(u\) and \(v\) is profitable exactly when \(x_{\ell u}x_{kv}&gt;0\), \(\ell\ne k\), and \(u_\ell(v;x)&gt;u_\ell(u;x)\) and \(u_k(u;x)&gt;u_k(v;x)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>For each \(v\in V\), let \(N(v)\) be its neighbourhood. The input consists of a connected graph \(G=(V,E)\), rational \(b_v&gt;0\) with \(\sum_{v\in V}b_v=1\), and rational \(\mu_1,\mu_2\ge 0\) with \(\mu_1+\mu_2=1\). An assignment has \(x_{\ell v}\ge0\), \(\sum_{\ell=1}^2x_{\ell v}=b_v\), and \(\sum_{v\in V}x_{\ell v}=\mu_\ell\). Define \(u_\ell(v;x)=0\) if \(\sum_{k=1}^2\sum_{w\in N(v)}x_{kw}=0\), and otherwise \(u_\ell(v;x)=\frac{\sum_{w\in N(v)}x_{\ell w}}{\sum_{k=1}^2\sum_{w\in N(v)}x_{kw}}\). It is stable if no \(u,v\in V\) and \(\ell\ne k\) satisfy \(x_{\ell u}x_{kv}&gt;0\), \(u_\ell(v;x)&gt;u_\ell(u;x)\), and \(u_k(u;x)&gt;u_k(v;x)\).</p><p><b>Target.</b> Is deciding whether such a stable mass assignment exists solvable in polynomial time, or is it NP-hard?</p><p><b>Nearest known results.</b> For finite two-type Schelling games with every vertex occupied and the same fraction-of-own-type utility, deciding whether a swap-equilibrium exists is NP-complete (Kreisel, Boehmer, Froese, and Niedermeier, 2022). No result for the mass-assignment formulation above is included here.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Answer</h3><p>The decision problem is polynomial-time solvable. In fact, every valid input admits a stable mass assignment, so the decision algorithm always answers “yes.”</p><h3>1. Reduction to one type</h3><p>Let</p><p>\[
+\(y_v:=x_{1v}\).
+\]</p><p>Then \(x_{2v}=b_v-y_v\), and the feasible set for \(y\) is</p><p>\[
+\(K:=\left\{y\in\mathbb R^V:0\le y_v\le b_v\text{ for every }v,\ \sum_{v\in V}y_v=\mu_1\right\}\).
+\]</p><p>This set is nonempty because \(y_v=\mu_1b_v\) belongs to \(K\). It is also compact and convex.</p><p>Suppose first that \(|V|\ge2\). Since \(G\) is connected, every vertex has a neighbor. Define</p><p>\[
+\(B_v:=\sum_{w\in N(v)}b_w&gt;0\)
+\]</p><p>and</p><p>\[
+\(q_v(y):=\frac{\sum_{w\in N(v)}y_w}{B_v}\).
+\]</p><p>The denominator in the utility definition is independent of the assignment:</p><p>\[
+\(\sum_{k=1}^2\sum_{w\in N(v)}x_{kw}
+=\sum_{w\in N(v)}(x_{1w}+x_{2w})
+=\sum_{w\in N(v)}b_w
+=B_v\).
+\]</p><p>Consequently,</p><p>\[
+\(u_1(v;x)=q_v(y),\qquad u_2(v;x)=1-q_v(y)\).
+\]</p><p>Each \(q_v\) is a linear, hence continuous, function of \(y\).</p><h3>2. Exact form of a blocking pair</h3><p>Consider first a potential blocking pair with \(\ell=1\) and \(k=2\). Its conditions become</p><p>\[
+\(y_u&gt;0,\qquad y_v&lt;b_v,\qquad q_v(y)&gt;q_u(y)\),
+\]</p><p>because</p><p>\[
+\(u_2(u;x)&gt;u_2(v;x)\iff 1-q_u(y)&gt;1-q_v(y)\iff q_v(y)&gt;q_u(y)\).
+\]</p><p>If instead \(\ell=2\) and \(k=1\), interchanging the names of \(u\) and \(v\) gives the same condition. Therefore an assignment is stable exactly when</p><p>\[
+\(y_u&gt;0\text{ and }y_v&lt;b_v\quad\Longrightarrow\quad q_u(y)\ge q_v(y)\)
+\]</p><p>for all \(u,v\in V\).</p><p>Thus every vertex carrying positive type-\(1\) mass must have weakly greater type-\(1\) neighborhood fraction than every vertex having room for additional type-\(1\) mass.</p><h3>3. A best-response correspondence</h3><p>For \(y,a\in K\), define</p><p>\[
+\(\Phi(y,a):=\sum_{v\in V}q_v(y)a_v\).
+\]</p><p>For fixed \(y\), define the correspondence</p><p>\[
+\(F(y):=\operatorname*{arg\,max}_{a\in K}\Phi(y,a)\).
+\]</p><p>We verify the hypotheses of Kakutani’s fixed-point theorem.</p><ul><li>The domain \(K\) is a nonempty compact convex subset of the finite-dimensional space \(\mathbb R^V\).</li></ul><ul><li>For every \(y\in K\), the function \(a\mapsto\Phi(y,a)\) is linear and continuous. Hence \(F(y)\) is nonempty and compact because the maximum is attained on \(K\).</li></ul><ul><li>The set \(F(y)\) is convex: if \(a,a&#x27;\) both maximize the same linear functional, then every convex combination of \(a\) and \(a&#x27;\) also maximizes it.</li></ul><ul><li>The function \(\Phi\) is jointly continuous. Since the feasible set \(K\) is fixed and compact, the Berge maximum theorem implies that \(F\) is upper hemicontinuous. Equivalently, this can be checked directly: if \(y^{(n)}\to y\), \(a^{(n)}\to a\), and \(a^{(n)}\in F(y^{(n)})\), then for every \(c\in K\),</li></ul><p>\[
+\(\Phi(y^{(n)},a^{(n)})\ge\Phi(y^{(n)},c)\).
+\]</p><p>Taking limits gives \(\Phi(y,a)\ge\Phi(y,c)\), so \(a\in F(y)\).</p><p>Kakutani’s theorem therefore yields some \(y^*\in K\) satisfying</p><p>\[
+\(y^*\in F(y^*)\).
+\]</p><h3>4. Every fixed point is stable</h3><p>Suppose, toward a contradiction, that \(y^*\) is not stable. By the characterization above, there are vertices \(u,v\) such that</p><p>\[
+\(y^*_u&gt;0,\qquad y^*_v&lt;b_v,\qquad q_v(y^*)&gt;q_u(y^*)\).
+\]</p><p>Choose</p><p>\[
+\(0&lt;\delta\le\min\{y^*_u,b_v-y^*_v\}\)
+\]</p><p>and transfer \(\delta\) units of type-\(1\) mass from \(u\) to \(v\):</p><p>\[
+\(a:=y^*-\delta e_u+\delta e_v\).
+\]</p><p>The coordinate bounds remain satisfied, and \(\sum_w a_w=\sum_w y^*_w=\mu_1\), so \(a\in K\). But</p><p>\[
+\(\Phi(y^*,a)-\Phi(y^*,y^*)
+=\delta\bigl(q_v(y^*)-q_u(y^*)\bigr)&gt;0\).
+\]</p><p>This contradicts \(y^*\in F(y^*)\). Hence \(y^*\) is stable.</p><p>Setting</p><p>\[
+\(x_{1v}:=y^*_v,\qquad x_{2v}:=b_v-y^*_v\)
+\]</p><p>produces the required stable mass assignment.</p><h3>5. The one-vertex case</h3><p>If \(V=\{v\}\), then \(b_v=1\). Set</p><p>\[
+\(x_{1v}=\mu_1,\qquad x_{2v}=\mu_2\).
+\]</p><p>The neighborhood is empty, so both utilities are \(0\). No strict utility inequalities can hold, and the assignment is stable.</p><h3>6. Complexity consequence</h3><p>Every connected valid instance, including the one-vertex instance, admits a stable assignment. Therefore the existence language contains every promised input. A decision algorithm can simply answer “yes,” and hence runs in constant time after input validation.</p><p>This does not imply that constructing a stable assignment by a particular representation is computationally easy; the fixed-point proof is existential. It completely settles the stated existence decision problem.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Summary</h3><p>The prover’s argument is correct and fully resolves the stated existence decision problem. It proves that every valid connected instance admits a stable mass assignment. Consequently, the promised decision problem is polynomial-time solvable by always answering “yes.”</p><p>No mathematical gaps or false assertions were found.</p><h3>Step-by-step audit</h3><h3>1. Reduction to one type</h3><p>Setting \(y_v=x_{1v}\) correctly forces \(x_{2v}=b_v-y_v\). The resulting feasible set</p><p>\[
+K=\left\{y\in\mathbb R^V:0\leq y_v\leq b_v,\ \sum_v y_v=\mu_1\right\}
+\]</p><p>is nonempty because \(y_v=\mu_1b_v\) satisfies all constraints, using \(0\leq\mu_1\leq1\) and \(\sum_v b_v=1\). Compactness and convexity follow directly from the finite-dimensional linear constraints.</p><p>For \(\lvert V\rvert\geq2\), connectedness ensures every vertex has a neighbor. Since every \(b_w&gt;0\), this gives</p><p>\[
+B_v=\sum_{w\in N(v)}b_w&gt;0.
+\]</p><p>The utility denominator is correctly shown to equal \(B_v\), independently of the assignment. Thus</p><p>\[
+u_1(v;x)=q_v(y),\qquad u_2(v;x)=1-q_v(y).
+\]</p><p>There is no unhandled zero-denominator case in this part of the proof.</p><h3>2. Characterization of blocking pairs</h3><p>For \(\ell=1\) and \(k=2\), the mass condition is exactly</p><p>\[
+y_u&gt;0,\qquad b_v-y_v&gt;0,
+\]</p><p>and both strict utility inequalities reduce to \(q_v(y)&gt;q_u(y)\).</p><p>For \(\ell=2\) and \(k=1\), swapping the labels of \(u\) and \(v\) indeed gives the same condition. Because stability quantifies over all ordered pairs \(u,v\), this renaming is legitimate.</p><p>Therefore the stated characterization</p><p>\[
+y_u&gt;0\ \text{and}\ y_v&lt;b_v
+\quad\Longrightarrow\quad
+q_u(y)\geq q_v(y)
+\]</p><p>for every \(u,v\) is equivalent to the original stability definition.</p><h3>3. Fixed-point correspondence</h3><p>For each \(y\in K\), the correspondence</p><p>\[
+F(y)=\operatorname*{arg\,max}_{a\in K}\sum_v q_v(y)a_v
+\]</p><p>has nonempty, compact, and convex values:</p><ul><li>Nonemptiness and compactness follow from maximizing a continuous function over compact \(K\).</li><li>Convexity follows because the objective is linear in \(a\).</li></ul><p>The objective is jointly continuous. The cited Berge maximum theorem applies because the feasible correspondence is the fixed nonempty compact set \(K\). Hence \(F\) is upper hemicontinuous.</p><p>The supplied sequential argument establishes that the graph of \(F\) is closed. In this compact finite-dimensional setting, this is also sufficient for upper hemicontinuity. Thus the hypotheses of Kakutani’s fixed-point theorem are satisfied, and the conclusion \(y^*\in F(y^*)\) is justified.</p><h3>4. Stability of a fixed point</h3><p>If \(y^*\) violated stability, the characterization from Section 2 would give \(u,v\) with</p><p>\[
+y_u^*&gt;0,\qquad y_v^*&lt;b_v,\qquad q_v(y^*)&gt;q_u(y^*).
+\]</p><p>A positive \(\delta\) satisfying the stated bound exists. The transferred vector</p><p>\[
+a=y^*-\delta e_u+\delta e_v
+\]</p><p>remains in \(K\): the coordinate bounds are respected and the total mass remains \(\mu_1\).</p><p>The objective change is correctly calculated as</p><p>\[
+\Phi(y^*,a)-\Phi(y^*,y^*)
+=\delta\bigl(q_v(y^*)-q_u(y^*)\bigr)&gt;0.
+\]</p><p>This contradicts \(y^*\in F(y^*)\). Hence every such fixed point is stable. Translating back to \(x_{1v}=y_v^*\) and \(x_{2v}=b_v-y_v^*\) satisfies all assignment constraints.</p><h3>5. One-vertex case</h3><p>For a connected graph with one vertex, its neighborhood is empty under the usual graph convention. The denominator in every utility is zero, so the definition assigns both utilities the value \(0\). Strict improvement inequalities are therefore impossible. The proposed assignment is feasible and stable.</p><h3>6. Complexity conclusion</h3><p>The proof is existential, but the target asks only whether a stable assignment exists. Since every valid promised input has one, an always-“yes” decision procedure is correct. Input validation, if counted, is plainly polynomial-time; after validation, the answer itself is constant-time.</p><p>The absence of an explicit procedure for constructing \(y^*\) does not affect the stated decision problem.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

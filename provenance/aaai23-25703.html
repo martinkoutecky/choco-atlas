@@ -1,0 +1,124 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Optimizing Multiple Simultaneous Objectives for Voting and Facility Location — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Optimizing Multiple Simultaneous Objectives for Voting and Facility Location <span style="font-weight:normal;color:#8a7350">(aaai23-25703)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{FP}\); \(\sup_I\min_{A\in F}R_I(A)=\beta_3=(3+\sqrt{5})/2\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.4 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given explicit finite facilities F, finite complete client types T with rational distances d(t,A), rational mass distribution μ, and rational 0&lt;λ&lt;ρ≤1, output a facility A minimizing the maximum of Cλμ(A)/OPTλ and Cρμ(A)/OPTρ, where Cθμ(A) is the total distance of the worst θ mass and OPTθ is its minimum over F; determine the tight worst-case guarantee f(ρ/λ).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><h3>Definitions</h3><p>Let \(T\cup F\) be a finite metric space with an explicitly given rational distance matrix, and let \(\mu\in\Delta(T)\cap\mathbb{Q}^{T}\). For rational \(0&lt;\lambda_1&lt;\lambda_2&lt;\lambda_3\leq1\), define \(C^\mu_\lambda(A)=\max\{\sum_{t\in T}z_t d(t,A):0\leq z_t\leq\mu_t,\ \sum_{t\in T}z_t=\lambda\}\) and \(C^{\mu,*}_\lambda=\min_{B\in F}C^\mu_\lambda(B)\).<br>Restrict to instances with \(C^{\mu,*}_{\lambda_i}&gt;0\), and put \(R_I(A)=\max_{i\in\{1,2,3\}}C^\mu_{\lambda_i}(A)/C^{\mu,*}_{\lambda_i}\).</p><h3>Target</h3><p>Is computing a facility minimizing \(R_I(A)\) polynomial-time solvable, or NP-hard?<br>Is \(\sup_I\min_{A\in F}R_I(A)=eta_3\), where \(eta_3=rac{3+\sqrt{5}}{2}\)?</p><h3>Nearest known results</h3><p>For unit-mass discrete clients, equivalently \(\mu_t=1/n\) and \(\lambda_i=k_i/n\), the worst-case simultaneous ratio for three centrum objectives is exactly \(eta_3\): a \(eta_3\) upper bound holds, and an instance forces ratio at least \(eta_3\) for every facility.<br>No result for the exact rational-mass formulation above was verified.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Resolution</h3><p>Let \(m=|T|\) and \(q_t(A)=d(t,A)\). The facility minimizing \(R_I(A)\) is computable exactly in polynomial time. Moreover,</p><p>\[
+\sup_I\min_{A\in F}R_I(A)=\beta_3=\frac{3+\sqrt5}{2}.
+\]</p><p>The supremum need not be attained by any rational instance.</p><h3>1. Exact evaluation of one upper-tail objective</h3><p>Fix \(A\in F\) and \(0&lt;\lambda\leq1\). Order the clients as \(t_1,\ldots,t_m\) so that</p><p>\[
+q_{t_1}(A)\geq q_{t_2}(A)\geq\cdots\geq q_{t_m}(A).
+\]</p><p>Write \(S_j=\sum_{\ell=1}^j\mu_{t_\ell}\), \(S_0=0\), and let \(r\) be the least index satisfying \(S_r\geq\lambda\). Then</p><p>\[
+C^\mu_\lambda(A)
+=
+\sum_{\ell&lt;r}\mu_{t_\ell}q_{t_\ell}(A)
++
+\bigl(\lambda-S_{r-1}\bigr)q_{t_r}(A).
+\]</p><p>Indeed, for every feasible \(z\),</p><p>\[
+\sum_{\ell=1}^m z_{t_\ell}q_{t_\ell}(A)
+=
+\lambda q_{t_r}(A)
++
+\sum_{\ell&lt;r}z_{t_\ell}\bigl(q_{t_\ell}(A)-q_{t_r}(A)\bigr)
++
+\sum_{\ell&gt;r}z_{t_\ell}\bigl(q_{t_\ell}(A)-q_{t_r}(A)\bigr).
+\]</p><p>For \(\ell&lt;r\), the coefficient is nonnegative, so \(z_{t_\ell}\leq\mu_{t_\ell}\) gives an upper bound. For \(\ell&gt;r\), the coefficient is nonpositive, so the corresponding sum is at most zero. This proves that every feasible \(z\) has value at most the displayed formula.</p><p>Equality is attained by taking \(z_{t_\ell}=\mu_{t_\ell}\) for \(\ell&lt;r\), \(z_{t_r}=\lambda-S_{r-1}\), and \(z_{t_\ell}=0\) for \(\ell&gt;r\). Thus the formula is exact.</p><h3>2. Polynomial-time optimization</h3><p>For each \(A\in F\), sort the values \(d(t,A)\) once. The three values \(C^\mu_{\lambda_i}(A)\) can then be obtained by scanning the resulting cumulative masses.</p><p>After computing these quantities for all \(A\in F\), compute</p><p>\[
+D_i=C^{\mu,*}_{\lambda_i}
+=\min_{B\in F}C^\mu_{\lambda_i}(B)
+\]</p><p>for each \(i\in\{1,2,3\}\). By hypothesis, every \(D_i\) is positive. Hence exact rational comparison determines</p><p>\[
+R_I(A)=\max_{i\in\{1,2,3\}}
+\frac{C^\mu_{\lambda_i}(A)}{D_i}
+\]</p><p>and then an \(A\in F\) minimizing this value.</p><p>The algorithm uses \(O(|F||T|\log|T|)\) rational-arithmetic operations. Products and sums of polynomially many binary-encoded rationals have polynomially bounded bit length, and ratios are compared by exact cross-multiplication. Therefore the algorithm runs in polynomial bit complexity. In particular, the search problem belongs to \(\mathrm{FP}\).</p><h3>3. Transfer of the unit-mass upper bound</h3><p>Fix an arbitrary rational-mass instance \(I\). Choose a positive integer \(N\) clearing all denominators of the numbers \(\mu_t\) and \(\lambda_i\). Thus</p><p>\[
+n_t=N\mu_t\in\mathbb Z_{\geq0},
+\qquad
+k_i=N\lambda_i\in\mathbb Z,
+\]</p><p>and \(\sum_t n_t=N\). Since the \(\lambda_i\) are strictly increasing, \(1\leq k_1&lt;k_2&lt;k_3\leq N\).</p><p>Create \(n_t\) unit-mass client copies of every \(t\). To avoid using a pseudometric with zero distance between copies, fix \(\varepsilon&gt;0\), attach every copy of \(t\) to the original point \(t\) by an edge of length \(\varepsilon\), and use the induced shortest-path metric on the copies and \(F\). Explicitly,</p><p>\[
+d_\varepsilon((t,j),A)=d(t,A)+\varepsilon.
+\]</p><p>This is a genuine metric: it is the restriction of the metric obtained by attaching distinct leaves to the original metric space.</p><p>Give every copy mass \(1/N\). Aggregating the variables of all copies of \(t\) shows that, for every \(A\in F\),</p><p>\[
+C^{\mathrm{copy}}_{k_i/N}(A)
+=
+C^\mu_{\lambda_i}(A)+\varepsilon\lambda_i.
+\]</p><p>The aggregation is exact: copy-level feasible variables sum to some \(z_t\leq n_t/N=\mu_t\), while every such \(z_t\) can be distributed among the \(n_t\) copies, each having capacity \(1/N\). The additional distance \(\varepsilon\) contributes exactly \(\varepsilon\sum_tz_t=\varepsilon\lambda_i\).</p><p>Consequently,</p><p>\[
+C^{\mathrm{copy},*}_{k_i/N}
+=
+C^{\mu,*}_{\lambda_i}+\varepsilon\lambda_i.
+\]</p><p>Applying the supplied unit-mass three-centrum theorem gives</p><p>\[
+\min_{A\in F}
+\max_i
+\frac{C^\mu_{\lambda_i}(A)+\varepsilon\lambda_i}
+     {C^{\mu,*}_{\lambda_i}+\varepsilon\lambda_i}
+\leq\beta_3.
+\]</p><p>Every denominator is positive at \(\varepsilon=0\). Because \(F\) and the set of levels are finite, the left-hand side is a continuous function of \(\varepsilon\). Letting \(\varepsilon\downarrow0\) yields</p><p>\[
+\min_{A\in F}R_I(A)\leq\beta_3.
+\]</p><p>Thus</p><p>\[
+\sup_I\min_{A\in F}R_I(A)\leq\beta_3.
+\]</p><p>The potentially exponential numerical value of \(N\) causes no computational problem: cloning is used only in this existential proof, while the algorithm in Section 2 operates directly on the binary-encoded rational masses.</p><h3>4. Rational metrics retain the matching lower bound</h3><p>Take the supplied tight unit-mass instance \(I_0\), with its three positive optimal costs, for which every facility has simultaneous ratio at least \(\beta_3\). Its masses \(1/n\) and levels \(k_i/n\) are rational. It remains only to ensure that its distance matrix may be required to be rational and a genuine metric.</p><p>For a fixed mass vector and fixed levels, define</p><p>\[
+G(d)=\min_{A\in F}\max_i
+\frac{C^{\mu,d}_{\lambda_i}(A)}
+     {C^{\mu,d,*}_{\lambda_i}}.
+\]</p><p>If two client-facility distance matrices differ entrywise by at most \(\eta\), then, for every \(A\) and \(i\),</p><p>\[
+\left|
+C^{\mu,d}_{\lambda_i}(A)
+-
+C^{\mu,d&#x27;}_{\lambda_i}(A)
+\right|
+\leq\lambda_i\eta.
+\]</p><p>This follows because every feasible \(z\) has total mass \(\lambda_i\). Taking minima over \(A\) gives the same bound for the optimal costs. Since the three optimal costs of \(I_0\) are positive, all relevant ratios, finite maxima, and finite minima are continuous in a neighbourhood of its distance matrix. Hence \(G\) is continuous there.</p><p>Rational genuine metrics are dense among finite real metrics, and also among finite pseudometrics after an arbitrarily small perturbation. To see this, let \(\delta(x,y)=1\) for \(x\neq y\) and \(\delta(x,x)=0\). For \(\alpha&gt;0\),</p><p>\[
+d^\alpha=d+\alpha\delta
+\]</p><p>has positive distance between distinct labels and triangle-inequality slack at least \(\alpha\) on every triple of pairwise distinct points. Approximate each off-diagonal entry of \(d^\alpha\), symmetrically, by a rational number with error less than \(\alpha/4\). Every triangle inequality remains valid because its slack changes by less than \(3\alpha/4\), and all off-diagonal entries remain positive. Letting \(\alpha\downarrow0\) produces rational genuine metrics converging to \(d\).</p><p>Therefore, for every \(\xi&gt;0\), there is an admissible rational-metric instance \(I_\xi\) with</p><p>\[
+\min_{A\in F}R_{I_\xi}(A)&gt;\beta_3-\xi.
+\]</p><p>It follows that</p><p>\[
+\sup_I\min_{A\in F}R_I(A)\geq\beta_3.
+\]</p><p>Together with the upper bound,</p><p>\[
+\boxed{
+\sup_I\min_{A\in F}R_I(A)
+=
+\beta_3
+=
+\frac{3+\sqrt5}{2}
+}.
+\]</p><p>Finally, every individual rational instance has rational tail costs and hence a rational value \(\min_A R_I(A)\). Since \(\beta_3\) is irrational, the supremum is not attained by any instance having entirely rational input data.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The prover resolves both questions correctly:</p><ul><li>A minimizing facility can be computed exactly in polynomial bit complexity.</li><li>The worst-case simultaneous ratio over rational-mass instances is</li></ul><p>\(\beta_3=(3+\sqrt5)/2\).</p><p>The argument rigorously transfers both the upper and lower bounds from the supplied unit-mass result. No substantive gaps or false statements were found.</p><h3>Step-by-step audit</h3><h3>1. Evaluation of \(C^\mu_\lambda(A)\)</h3><p>The sorting formula is correct. Since \(\sum_t\mu_t=1\) and \(0&lt;\lambda\leq1\), the crossing index \(r\) exists. Minimality of \(r\) gives</p><p>\[
+0\leq \lambda-S_{r-1}\leq\mu_{t_r},
+\]</p><p>so the proposed maximizing vector is feasible.</p><p>The upper-bound decomposition correctly uses:</p><ul><li>nonnegative coefficients for indices \(\ell&lt;r\);</li><li>nonpositive coefficients for indices \(\ell&gt;r\);</li><li>the capacity constraints \(z_t\leq\mu_t\).</li></ul><p>The displayed feasible vector attains the bound, including when distances are tied or some client masses are zero. Thus the formula is exact.</p><h3>2. Polynomial-time optimization</h3><p>For every explicitly listed facility, sorting the client distances and scanning cumulative masses computes all three objectives exactly.</p><p>The denominators \(D_i\) are positive by the problem hypothesis, so all ratios and comparisons are well-defined. Since the input contains only polynomially many binary-encoded rationals, exact additions, multiplications, and cross-multiplications retain polynomial bit length. Therefore enumeration over \(F\) gives an exact polynomial-time algorithm.</p><p>The claimed membership in \(\mathrm{FP}\) follows.</p><h3>3. Transfer of the unit-mass upper bound</h3><p>Choosing \(N\) to clear all denominators correctly produces integers \(n_t=N\mu_t\) and \(k_i=N\lambda_i\), with</p><p>\[
+1\leq k_1&lt;k_2&lt;k_3\leq N.
+\]</p><p>The leaf construction produces a genuine metric and ensures</p><p>\[
+d_\varepsilon((t,j),A)=d(t,A)+\varepsilon.
+\]</p><p>The aggregation argument is exact in both directions: copy-level mass aggregates to a feasible original vector, and every original feasible vector can be distributed among the copies. Consequently,</p><p>\[
+C^{\mathrm{copy}}_{k_i/N}(A)
+=
+C^\mu_{\lambda_i}(A)+\varepsilon\lambda_i.
+\]</p><p>Taking minima over the same facility set gives the corresponding identity for optimal costs.</p><p>The supplied unit-mass theorem applies to this genuine finite metric. The minimum of finitely many maxima of continuous rational functions is continuous near \(\varepsilon=0\), since all limiting denominators are positive. Passing to the limit therefore proves the upper bound.</p><p>The observation that \(N\) may be numerically large does not affect the algorithmic result because cloning is used only for the mathematical transfer.</p><h3>4. Transfer of the lower bound</h3><p>The objective changes by at most \(\lambda_i\eta\) when every relevant distance changes by at most \(\eta\). This follows directly from the fixed total selected mass \(\lambda_i\). The same estimate survives minimization over facilities.</p><p>Because the tight unit-mass instance has positive optimal costs, all ratios remain continuous in a sufficiently small neighborhood. Finite maxima and minima preserve continuity.</p><p>The density argument is correct. For distinct points,</p><p>\[
+d^\alpha(x,y)=d(x,y)+\alpha
+\]</p><p>adds at least \(\alpha\) of triangle slack to every pairwise-distinct triangle. A symmetric rational perturbation of less than \(\alpha/4\) per edge changes a triangle slack by less than \(3\alpha/4\), preserving every triangle inequality and positivity of off-diagonal distances.</p><p>Thus admissible rational genuine metrics can approach the tight unit-mass instance closely enough to obtain values arbitrarily near \(\beta_3\) from below. This proves the matching supremum lower bound.</p><h3>5. Non-attainment</h3><p>For a rational input, every tail cost, optimal cost, ratio, finite maximum, and finite minimum is rational. Since \(\beta_3=(3+\sqrt5)/2\) is irrational, no rational instance attains the supremum. This conclusion is correct.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

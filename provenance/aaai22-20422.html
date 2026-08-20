@@ -1,0 +1,54 @@
+<!doctype html><html><head><meta charset="utf-8"><title>The Complexity of Learning Approval-Based Multiwinner Voting Rules — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>The Complexity of Learning Approval-Based Multiwinner Voting Rules <span style="font-weight:normal;color:#8a7350">(aaai22-20422)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> polynomial-time solvable; every valid instance is a YES-instance, and the parameterized problem is fixed-parameter tractable</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 14 — class: hardness</p>
+<blockquote class="thmq">TARGETABCS parameterized by the commit- tee size k is coW[1]-hard.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m,k\), a rational distribution \(\mu\) over nonempty approval types \(\sigma\subseteq\Sigma\), and a \(k\)-committee \(A\), decide whether there exists a non-trivial monotone ABCS scoring function \(f\) such that \(A\in\arg\max_{|C|=k}\sum_{\sigma}\mu_{\sigma}f(|C\cap\sigma|,|\sigma|)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> Let Σ be a candidate set of size \(m\), and let \(\mu\) be explicitly given by its positive rational masses \(\mu_\sigma\) on nonempty proper types \(\sigma\subsetneq\Sigma\), with \(\sum_\sigma\mu_\sigma=1\). A committee has size \(k\).<br>An ABCS scoring function is a nonzero \(f:X_{m,k}	o\mathbb R_{\geq0}\), monotone in its first argument, where \(X_{m,k}=\{(x,y):1\leq y\leq m-1,\ \max\{0,y-m+k\}\leq x\leq\min\{k,y\}\}\).<br>For a committee \(C\), its score is \(S_f(C)=\sum_\sigma\mu_\sigma f(|C\cap\sigma|,|\sigma|)\). The given committee \(A\) is winning when \(A\in\arg\max_{|C|=k}S_f(C)\).</p><p><b>Target.</b> Is this continuous problem solvable in polynomial time, or is it NP-hard?<br>If it is NP-hard, is it fixed-parameter tractable when parameterized by \(k\)?</p><p><b>Nearest known results.</b> For explicitly listed finite approval profiles, the corresponding TARGETABCS problem is coW[1]-hard parameterized by \(k\).<br>No result for exactly the rational-distribution formulation above was verified.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>Under the stated definitions, the problem is polynomial-time solvable—in fact, every valid instance is a YES-instance.</p><h3>Proof</h3><p>Define \(f:X_{m,k}\to\mathbb R_{\geq 0}\) by</p><p>\[
+f(x,y)=1
+\]</p><p>for every \((x,y)\in X_{m,k}\).</p><p>This function satisfies every stated requirement:</p><ul><li>It is nonzero.</li><li>It is nonnegative.</li><li>For each fixed \(y\), it is monotone in \(x\), since \(f(x,y)=f(x+1,y)=1\) whenever both arguments belong to \(X_{m,k}\).</li></ul><p>For every committee \(C\) of size \(k\), its score is</p><p>\[
+S_f(C)
+ =\sum_{\sigma}\mu_\sigma f(|C\cap\sigma|,|\sigma|)
+ =\sum_{\sigma}\mu_\sigma
+ =1.
+\]</p><p>Thus every size-\(k\) committee receives exactly the same score. In particular,</p><p>\[
+A\in\operatorname*{arg\,max}_{|C|=k}S_f(C).
+\]</p><p>Hence a valid witnessing scoring function exists for every input instance.</p><h3>Complexity Consequences</h3><p>The decision algorithm can simply return YES. It therefore runs in constant time on promised well-formed inputs, and certainly in polynomial time.</p><p>The parameterized problem is also fixed-parameter tractable with respect to \(k\), again because the answer is always YES.</p><p>The quoted hardness result for finite approval profiles cannot apply to the problem exactly as defined here. Such a result must impose an additional nontriviality condition excluding committee-independent scoring functions—for example, requiring at least one strict marginal increase,</p><p>\[
+f(x+1,y)&gt;f(x,y),
+\]</p><p>or imposing a normalization such as \(f(0,y)=0\) together with positivity at some attainable \(x&gt;0\). Merely requiring \(f\neq 0\) does not exclude the constant function.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification Report</h3><h3>Summary</h3><p>The prover’s conclusion is correct under the definitions as written. The constant scoring function is admissible and makes every size-\(k\) committee a winner. Therefore every well-formed instance is a YES-instance, yielding a polynomial-time—and indeed constant-decision—algorithm.</p><h3>Step-by-step verification</h3><ul><li><b>Admissibility of the proposed function.</b></li></ul><p>The function \(f(x,y)=1\) is defined on all of \(X_{m,k}\), is nonzero, takes only nonnegative values, and is monotone in its first argument. Equality between consecutive values is permitted because “monotone” does not require strict increase.</p><ul><li><b>Applicability to committee/type pairs.</b></li></ul><p>For every size-\(k\) committee \(C\) and type \(\sigma\) of size \(y\), the intersection size \(x=|C\cap\sigma|\) satisfies<br>\[
+   \max\{0,y-m+k\}\leq x\leq\min\{k,y\},
+   \]<br>so \((|C\cap\sigma|,|\sigma|)\in X_{m,k}\). Thus every evaluation of \(f\) in the score is defined.</p><ul><li><b>Score calculation.</b></li></ul><p>Substituting \(f=1\) gives<br>\[
+   S_f(C)=\sum_\sigma\mu_\sigma=1,
+   \]<br>using the stated normalization of \(\mu\). This calculation is correct for every size-\(k\) committee.</p><ul><li><b>Winning condition.</b></li></ul><p>Since all feasible committees have the same score, every such committee lies in the argmax. Hence the given committee \(A\) is winning, assuming—as part of a well-formed instance—that \(A\) has size \(k\).</p><ul><li><b>Complexity conclusion.</b></li></ul><p>On the promised domain of well-formed instances, an algorithm that always returns YES is correct. It is polynomial-time and fixed-parameter tractable with respect to \(k\).</p><ul><li><b>Relationship to the quoted hardness result.</b></li></ul><p>The observation that the finite-profile hardness result cannot apply unchanged is justified: the admissible constant function trivializes the existential winning-function question. The suggested additional restrictions are illustrative and are not needed for the proof.</p><p>No substantive gaps, false claims, or missing lemmas were found.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

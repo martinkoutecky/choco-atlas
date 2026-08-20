@@ -1,0 +1,116 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Rank Aggregation Using Scoring Rules — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Rank Aggregation Using Scoring Rules <span style="font-weight:normal;color:#8a7350">(aaai23-25685)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}complete}\), and therefore \(\mathrm{NP\text{-}hard}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 6.8 — class: hardness</p>
+<blockquote class="thmq">Let n ≥8 be a ﬁxed even integer. Then WIN- NER DETERMINATION for Sequential-Borda-Loser (aka Baldwin), restricted to instances with exactly n voters, is NP-complete. In addition, if the ETH is true, then the prob- lem cannot be solved in 2o(m) · poly(m) time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates C, a rational distribution μ over complete rankings of C, and a designated candidate d, does there exist a sequential Baldwin elimination in which each round removes a minimum weighted-Borda-score candidate and d is the last remaining candidate?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given a candidate set \(C\), explicitly listed complete ranking types \(T\subseteq L(C)\), and binary-encoded rational masses \(\mu_t\ge 0\) with \(\sum_{t\in T}\mu_t=1\), let \(S\subseteq C\) be the surviving candidates. For \(c\in S\), define its Borda score as \(\sum_{t\in T}\mu_tigl(|S|-\operatorname{pos}_{t|S}(c)+1igr)\).</p><p>A Sequential-Borda-Loser elimination is legal if, at each round, it removes any surviving candidate of minimum current Borda score, then restricts every ranking to the survivors. Given \(d\in C\), ask whether some legal elimination sequence leaves \(d\) as the sole final survivor.</p><p><b>Target.</b> Is this rational-mass Sequential-Borda-Loser winner-determination problem solvable in polynomial time, or is it NP-hard?</p><p><b>Nearest known results.</b> In the discrete setting, Sequential-Borda-Loser winner determination is NP-complete even when the number of voters is any fixed even \(n\ge 8\); consequently, the unrestricted discrete problem is NP-hard.<br>No result for the exact rational-mass formulation is asserted here.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Rational-Mass Sequential-Borda-Loser Complexity</h3><h3>Theorem</h3><p>Rational-mass Sequential-Borda-Loser winner determination is \(\mathrm{NP}\)-complete. In particular, it is \(\mathrm{NP}\)-hard even when there are at most eight ranking types and every mass is an integer multiple of \(1/8\).</p><p>The hardness statement uses the given premise that discrete Sequential-Borda-Loser winner determination is \(\mathrm{NP}\)-complete for every fixed even number \(n\geq 8\) of voters.</p><h3>1. Reduction from the discrete problem</h3><p>Fix \(n=8\). Consider a discrete instance consisting of:</p><ul><li>a candidate set \(C\);</li><li>eight complete rankings \(t_1,\ldots,t_8\), with repetitions allowed;</li><li>a distinguished candidate \(d\in C\).</li></ul><p>For every distinct ranking \(t\) occurring among these eight ballots, let</p><p>\[
+k_t=\left|\{i\in\{1,\ldots,8\}:t_i=t\}\right|.
+\]</p><p>Construct the rational-mass instance with the same candidate set and distinguished candidate, ranking-type set</p><p>\[
+T=\{t_i:i\in\{1,\ldots,8\}\},
+\]</p><p>and masses</p><p>\[
+\mu_t=\frac{k_t}{8}.
+\]</p><p>These masses are nonnegative and satisfy</p><p>\[
+\sum_{t\in T}\mu_t
+=
+\frac{1}{8}\sum_{t\in T}k_t
+=
+1.
+\]</p><p>The construction is polynomial-time. Indeed, there are at most eight types, and every mass has a constant-size denominator.</p><h3>2. Preservation of every elimination step</h3><p>For a surviving set \(S\subseteq C\), define the positive-base discrete Borda score</p><p>\[
+B^{\mathrm{disc},+}_S(c)
+=
+\sum_{i=1}^{8}
+\left(
+|S|-\operatorname{pos}_{t_i|S}(c)+1
+\right).
+\]</p><p>The mass score in the constructed instance is</p><p>\[
+\begin{aligned}
+B^\mu_S(c)
+&amp;=
+\sum_{t\in T}
+\frac{k_t}{8}
+\left(
+|S|-\operatorname{pos}_{t|S}(c)+1
+\right)\\
+&amp;=
+\frac{1}{8}
+B^{\mathrm{disc},+}_S(c).
+\end{aligned}
+\]</p><p>Consequently, for all \(c,c&#x27;\in S\),</p><p>\[
+B^\mu_S(c)\leq B^\mu_S(c&#x27;)
+\quad\Longleftrightarrow\quad
+B^{\mathrm{disc},+}_S(c)
+\leq
+B^{\mathrm{disc},+}_S(c&#x27;).
+\]</p><p>Thus the minimum-score candidates are exactly the same in both instances for every possible surviving set \(S\).</p><p>If the cited discrete theorem uses the conventional zero-based Borda score</p><p>\[
+B^{\mathrm{disc},0}_S(c)
+=
+\sum_{i=1}^{8}
+\left(
+|S|-\operatorname{pos}_{t_i|S}(c)
+\right),
+\]</p><p>then</p><p>\[
+B^{\mathrm{disc},+}_S(c)
+=
+B^{\mathrm{disc},0}_S(c)+8.
+\]</p><p>The added quantity \(8\) is independent of \(c\), so it also leaves the set of minimum-score candidates unchanged.</p><p>By induction on the number of elimination rounds, an elimination sequence is legal in the discrete instance if and only if it is legal in the constructed mass instance. Therefore,</p><p>\[
+d\text{ can be the final survivor in the discrete instance}
+\quad\Longleftrightarrow\quad
+d\text{ can be the final survivor in the mass instance}.
+\]</p><p>This is a polynomial-time many-one reduction. Hence the rational-mass problem is \(\mathrm{NP}\)-hard.</p><h3>3. Membership in \(\mathrm{NP}\)</h3><p>Let \(m=|C|\). A certificate is an ordering</p><p>\[
+(c_1,\ldots,c_{m-1})
+\]</p><p>of \(C\setminus\{d\}\), interpreted as the proposed elimination sequence.</p><p>At round \(j\), let</p><p>\[
+S_j=C\setminus\{c_1,\ldots,c_{j-1}\}.
+\]</p><p>The verifier checks that, for every \(x\in S_j\),</p><p>\[
+B^\mu_{S_j}(c_j)\leq B^\mu_{S_j}(x).
+\]</p><p>Positions in every restricted ranking can be computed by scanning the explicitly listed ranking. It remains to justify that the rational comparisons are polynomial-time exact computations.</p><p>Write each input mass as</p><p>\[
+\mu_t=\frac{a_t}{b_t},
+\]</p><p>where \(a_t,b_t\) are binary-encoded integers and \(b_t&gt;0\). Let</p><p>\[
+D=\prod_{t\in T}b_t.
+\]</p><p>Its bit length satisfies</p><p>\[
+\log D=\sum_{t\in T}\log b_t,
+\]</p><p>which is at most linear in the total encoding length of the masses. Multiplying a score comparison by \(D&gt;0\) reduces it to comparison of binary integers:</p><p>\[
+D\left(B^\mu_{S_j}(x)-B^\mu_{S_j}(c_j)\right)
+=
+\sum_{t\in T}
+a_t\frac{D}{b_t}
+\left(
+\operatorname{pos}_{t|S_j}(c_j)
+-
+\operatorname{pos}_{t|S_j}(x)
+\right).
+\]</p><p>Every position difference has absolute value at most \(m-1\), and all integers in this expression have polynomial bit length. Standard binary integer arithmetic therefore verifies each comparison in polynomial time. There are only polynomially many rounds and comparisons.</p><p>Thus the problem belongs to \(\mathrm{NP}\).</p><h3>Conclusion</h3><p>The rational-mass formulation does not make possible-winner determination polynomial-time: the fixed-eight-voter discrete instances embed exactly after normalization. Together with membership in \(\mathrm{NP}\), this proves \(\mathrm{NP}\)-completeness. Consequently, a polynomial-time algorithm would imply \(\mathrm{P}=\mathrm{NP}\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The prover fully resolves the target. The reduction correctly embeds the fixed-eight-voter discrete problem into the rational-mass formulation, preserves every legal elimination sequence, and establishes membership in \(\mathrm{NP}\).</p><p>No substantive gaps, false statements, or missing hypotheses were found.</p><h3>Step-by-step audit</h3><h3>1. Source problem and construction</h3><p>The prover legitimately invokes the supplied premise that the discrete problem is \(\mathrm{NP}\)-complete for exactly eight voters.</p><p>Grouping identical ballots into ranking types and assigning each distinct type \(t\) mass \(k_t/8\) is correct. The masses are nonnegative, sum to \(1\), have constant-size encodings, and produce at most eight explicitly listed types. The construction is polynomial-time.</p><h3>2. Preservation of scores and ties</h3><p>For every surviving set \(S\), expanding each type according to its multiplicity gives</p><p>\[
+B^\mu_S(c)=\frac{1}{8}B^{\mathrm{disc},+}_S(c).
+\]</p><p>Multiplication by the positive constant \(1/8\) preserves all pairwise score comparisons, including equality. Therefore it preserves the complete set of minimum-score candidates, not merely one selected loser.</p><p>The treatment of the conventional zero-based Borda definition is also correct: the positive-base score adds exactly \(1\) per voter, hence \(8\) to every candidate’s score in every round. This uniform shift preserves minima and ties.</p><p>Because this equivalence holds for every possible surviving set, the induction asserting equivalence of legal elimination sequences is valid. Consequently, the distinguished candidate is a possible final survivor in one instance exactly when it is in the other.</p><h3>3. Hardness conclusion</h3><p>The construction is a polynomial-time many-one reduction from the fixed-eight-voter discrete problem. Thus the claimed \(\mathrm{NP}\)-hardness, including the restriction to at most eight ranking types with masses that are multiples of \(1/8\), follows.</p><h3>4. Membership in \(\mathrm{NP}\)</h3><p>An ordering of all candidates other than \(d\) is a polynomial-size certificate. Under the ordinary meaning of “ordering of \(C\setminus\{d\}\),” it contains every such candidate exactly once.</p><p>At each round, checking that the proposed eliminated candidate has score no larger than every surviving candidate exactly verifies the legality condition.</p><p>The common-denominator argument is valid. Although \(D=\prod_t b_t\) may be numerically large, its binary length is the sum of the denominator bit lengths and is therefore polynomial in the input length. The displayed cleared-denominator identity has the correct sign and cancels the candidate-independent terms. All resulting integers have polynomial bit length, so exact comparisons require polynomial time.</p><p>There are only \(m-1\) rounds and polynomially many comparisons per round. Hence membership in \(\mathrm{NP}\) is established.</p><h3>Final adjudication</h3><p>The claimed \(\mathrm{NP}\)-completeness is justified. In particular, the answer correctly classifies the target problem as \(\mathrm{NP}\)-hard.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

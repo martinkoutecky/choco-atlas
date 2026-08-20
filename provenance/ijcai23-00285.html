@@ -1,0 +1,179 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Optimal Seat Arrangement: What Are the Hard and Easy Cases? — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Optimal Seat Arrangement: What Are the Hard and Easy Cases? <span style="font-weight:normal;color:#8a7350">(ijcai23-00285)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\text{polynomial-time solvable}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 10 — class: hardness</p>
+<blockquote class="thmq">For each considered seat graph class, EFA is W[1]-hard wrt. k even if the preferences are binary or strict.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite type set \(T\), rational masses \(\mu_a\) with \(\sum_a\mu_a=1\), rational compatibilities \(w_{ab}\), and \(\rho\in[0,1]\), decide whether there exist \(x_{ab}\ge0\) for two-seat offices and \(z_a\ge0\) for isolated desks satisfying \(\sum_{a\le b}x_{ab}=\rho/2\), \(\sum_a z_a=1-\rho\), and \(2x_{aa}+\sum_{b\ne a}x_{\min(a,b),\max(a,b)}+z_a=\mu_a\), such that every type occupying positive paired mass weakly prefers its assigned partner to every occupied partner type and every type with \(z_a&gt;0\) weakly prefers isolation to every occupied partner type.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Definitions. Let \(T\) be finite, with rational masses \(\mu_t\ge 0\) satisfying \(\sum_{t\in T}\mu_t=1\), and let \(s:T	imes T	o\{0,1\}\) be symmetric. A configuration of an \(\ell\)-leaf star is \(\alpha\in T^{\ell+1}\), with center \(\alpha_0\); let \(a_t(\alpha)\) be the number of occurrences of \(t\) in \(\alpha\), and \(W(\alpha)=\sum_{i=1}^{\ell}igl(s(\alpha_0,\alpha_i)+s(\alpha_i,\alpha_0)igr)\).</p><p>For \(B\) identical stars, choose \(z_\alpha\ge0\) with \(\sum_\alpha z_\alpha=1\) and \(\sum_\alpha z_\alpha a_t(\alpha)=(\ell+1)\mu_t\) for every \(t\in T\), maximizing \(\sum_\alpha z_\alpha W(\alpha)\).</p><p>Target. Is this continuous maximum-welfare problem solvable in polynomial time, or is it NP-hard?</p><p>Known results. In the discrete maximum-welfare seat-arrangement problem, optimization is NP-hard for stars-graphs even with binary symmetric preferences and constant maximum preference degree. No continuous-side result is assumed here.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity of Continuous Welfare Maximization on Stars</h3><h3>Claim</h3><p>The continuous maximum-welfare problem is solvable in polynomial time. More precisely, it is exactly equivalent to a rational linear program with \(|T|^2\) variables and \(|T|\) equality constraints.</p><p>Throughout the proof, assume \(\ell\geq 1\). When \(\ell=0\), every configuration consists only of its center, all welfare values are zero, and the problem is trivial.</p><h3>1. Leaf-count notation</h3><p>For a configuration \(\alpha\), define</p><p>\[
+k_v(\alpha)
+=
+\left|\left\{i\in\{1,\ldots,\ell\}:\alpha_i=v\right\}\right|.
+\]</p><p>Thus</p><p>\[
+\sum_{v\in T}k_v(\alpha)=\ell
+\]</p><p>and</p><p>\[
+a_t(\alpha)
+=
+\mathbf 1[\alpha_0=t]+k_t(\alpha).
+\]</p><p>For \(u,v\in T\), put</p><p>\[
+g_{uv}=s(u,v)+s(v,u).
+\]</p><p>Because \(s\) is symmetric and binary, \(g_{uv}=2s(u,v)\), although the proof does not require symmetry or binarity. If \(\alpha_0=u\), then</p><p>\[
+W(\alpha)=\sum_{v\in T}k_v(\alpha)g_{uv}.
+\]</p><h3>2. Compact linear program</h3><p>Consider variables \(y_{uv}\geq 0\) for \(u,v\in T\), and the linear program</p><p>\[
+\begin{aligned}
+\max\quad&amp;
+\ell\sum_{u,v\in T}g_{uv}y_{uv}
+\\
+\text{subject to}\quad&amp;
+\sum_{v\in T}y_{tv}
++
+\ell\sum_{u\in T}y_{ut}
+=
+(\ell+1)\mu_t
+&amp;&amp;\text{for every }t\in T,
+\\
+&amp;y_{uv}\geq 0
+&amp;&amp;\text{for every }u,v\in T.
+\end{aligned}
+\tag{P}
+\]</p><p>Summing all equality constraints gives</p><p>\[
+(\ell+1)\sum_{u,v\in T}y_{uv}
+=
+(\ell+1)\sum_{t\in T}\mu_t
+=
+\ell+1.
+\]</p><p>Consequently, every feasible solution satisfies</p><p>\[
+\sum_{u,v\in T}y_{uv}=1.
+\]</p><p>The program is feasible: setting</p><p>\[
+y_{uv}=\mu_u\mu_v
+\]</p><p>gives, for every \(t\),</p><p>\[
+\sum_v y_{tv}+\ell\sum_u y_{ut}
+=
+\mu_t+\ell\mu_t
+=
+(\ell+1)\mu_t.
+\]</p><p>Its feasible region is bounded because all variables are nonnegative and sum to one.</p><h3>3. Compression of arbitrary configurations</h3><h3>Lemma</h3><p>Every feasible configuration distribution \(z\) induces a feasible solution \(y\) of \((P)\) having exactly the same objective value.</p><h3>Proof</h3><p>Given \(z\), define</p><p>\[
+y_{uv}
+=
+\frac{1}{\ell}
+\sum_{\substack{\alpha\\ \alpha_0=u}}
+z_\alpha k_v(\alpha).
+\]</p><p>First,</p><p>\[
+\begin{aligned}
+\sum_{u,v}y_{uv}
+&amp;=
+\frac{1}{\ell}
+\sum_\alpha z_\alpha
+\sum_v k_v(\alpha)
+\\
+&amp;=
+\frac{1}{\ell}\sum_\alpha z_\alpha\ell
+=1.
+\end{aligned}
+\]</p><p>For any \(t\in T\),</p><p>\[
+\begin{aligned}
+\sum_v y_{tv}
+&amp;=
+\frac{1}{\ell}
+\sum_{\alpha:\alpha_0=t}
+z_\alpha\sum_v k_v(\alpha)
+\\
+&amp;=
+\sum_{\alpha:\alpha_0=t}z_\alpha,
+\end{aligned}
+\]</p><p>while</p><p>\[
+\ell\sum_u y_{ut}
+=
+\sum_\alpha z_\alpha k_t(\alpha).
+\]</p><p>Therefore,</p><p>\[
+\begin{aligned}
+\sum_v y_{tv}+\ell\sum_u y_{ut}
+&amp;=
+\sum_\alpha z_\alpha
+\left(\mathbf 1[\alpha_0=t]+k_t(\alpha)\right)
+\\
+&amp;=
+\sum_\alpha z_\alpha a_t(\alpha)
+\\
+&amp;=
+(\ell+1)\mu_t.
+\end{aligned}
+\]</p><p>Thus \(y\) is feasible for \((P)\).</p><p>Finally,</p><p>\[
+\begin{aligned}
+\ell\sum_{u,v}g_{uv}y_{uv}
+&amp;=
+\sum_u\sum_{\alpha:\alpha_0=u}
+z_\alpha\sum_v k_v(\alpha)g_{uv}
+\\
+&amp;=
+\sum_\alpha z_\alpha W(\alpha).
+\end{aligned}
+\]</p><p>Hence the objective value is preserved. \(\square\)</p><h3>4. Realizing every compact solution</h3><h3>Lemma</h3><p>Every feasible solution \(y\) of \((P)\) can be realized by a feasible configuration distribution \(z\) with the same objective value.</p><h3>Proof</h3><p>For each ordered pair \(u,v\in T\), let</p><p>\[
+\beta^{uv}=(u,v,\ldots,v)
+\]</p><p>be the configuration whose center has type \(u\) and whose \(\ell\) leaves all have type \(v\). Define</p><p>\[
+z_{\beta^{uv}}=y_{uv}
+\]</p><p>and set all other \(z_\alpha\) to zero. Because \(\ell\geq 1\), the configurations \(\beta^{uv}\) are distinct for distinct ordered pairs \((u,v)\).</p><p>We already proved that every feasible \(y\) satisfies \(\sum_{u,v}y_{uv}=1\), so \(z\) is a probability distribution. Moreover,</p><p>\[
+a_t(\beta^{uv})
+=
+\mathbf 1[u=t]+\ell\mathbf 1[v=t].
+\]</p><p>Consequently,</p><p>\[
+\begin{aligned}
+\sum_\alpha z_\alpha a_t(\alpha)
+&amp;=
+\sum_v y_{tv}+\ell\sum_u y_{ut}
+\\
+&amp;=
+(\ell+1)\mu_t.
+\end{aligned}
+\]</p><p>Thus \(z\) satisfies every type-mass constraint. Finally,</p><p>\[
+W(\beta^{uv})=\ell g_{uv},
+\]</p><p>and hence</p><p>\[
+\sum_\alpha z_\alpha W(\alpha)
+=
+\ell\sum_{u,v}g_{uv}y_{uv}.
+\]</p><p>The objective value is therefore preserved. \(\square\)</p><h3>5. Polynomial-time complexity</h3><p>The two lemmas show that the original configuration program and \((P)\) have exactly the same feasible objective values and therefore the same optimum.</p><p>If \(n=|T|\), then \((P)\) has</p><p>\[
+n^2
+\]</p><p>variables and \(n\) equality constraints. All coefficients are rational, and their binary encoding lengths are polynomial in the encoding lengths of \(\ell\), \(\mu\), and \(s\). Standard exact algorithms for rational linear programming therefore compute its optimal value in polynomial time.</p><p>An optimal configuration distribution also has a succinct polynomial-size representation: it is supported only on the at most \(n^2\) monochromatic-leaf configurations \(\beta^{uv}\). If \(\ell\) is binary encoded, each such configuration can be represented as “center \(u\), followed by \(\ell\) copies of \(v\).”</p><h3>6. Why discrete hardness does not transfer</h3><p>The compression replaces a configuration having several different leaf types by a fractional mixture of stars whose leaves are monochromatic. This operation preserves type masses and welfare exactly, but it need not preserve the requirement that there be an integral number of each configuration among \(B\) discrete stars.</p><p>Thus the discrete problem retains integrality constraints that are absent from the continuous formulation. Its NP-hardness does not imply hardness of this continuous relaxation.</p><h3>Conclusion</h3><p>The continuous maximum-welfare problem is polynomial-time solvable by an explicit compact linear program. The assumptions that preferences are binary, symmetric, or have constant degree are unnecessary for this conclusion; additivity of welfare across center-leaf edges and the aggregate type-mass constraints are sufficient.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The prover correctly resolves the target. The continuous optimization problem is exactly represented by the compact linear program \( (P) \), and both directions of the equivalence are rigorously established. No substantive gaps or false statements were found.</p><h3>Step-by-step audit</h3><ul><li><b>Configuration decomposition</b></li></ul><p>The identities</p><p>\[
+   a_t(\alpha)=\mathbf 1[\alpha_0=t]+k_t(\alpha)
+   \]</p><p>and</p><p>\[
+   W(\alpha)=\sum_{v\in T}k_v(\alpha)g_{\alpha_0v}
+   \]</p><p>follow directly from the definitions. The factor of \(2\) under symmetric binary preferences is handled correctly through \(g_{uv}=s(u,v)+s(v,u)\).</p><ul><li><b>Compact linear program</b></li></ul><p>Summing the type constraints of \( (P) \) correctly yields</p><p>\[
+   (\ell+1)\sum_{u,v}y_{uv}=\ell+1,
+   \]</p><p>hence \(\sum_{u,v}y_{uv}=1\). The proposed feasible point \(y_{uv}=\mu_u\mu_v\) satisfies every constraint, including cases where some \(\mu_t=0\). Nonnegativity and unit total mass imply boundedness.</p><ul><li><b>Compression from \(z\) to \(y\)</b></li></ul><p>The definition</p><p>\[
+   y_{uv}=\frac1\ell\sum_{\alpha:\alpha_0=u}z_\alpha k_v(\alpha)
+   \]</p><p>is valid for the explicitly assumed case \(\ell\geq1\). The calculations correctly recover:</p><ul><li>the center-type mass through \(\sum_v y_{tv}\);</li><li>the leaf-type mass through \(\ell\sum_u y_{ut}\);</li><li>the original welfare through \(\ell\sum_{u,v}g_{uv}y_{uv}\).</li></ul><p>Thus feasibility and objective value are preserved.</p><ul><li><b>Realization from \(y\) to \(z\)</b></li></ul><p>For \(\beta^{uv}=(u,v,\ldots,v)\), distinct ordered pairs produce distinct configurations when \(\ell\geq1\). Assigning \(z_{\beta^{uv}}=y_{uv}\) therefore defines an unambiguous probability distribution. Its type counts and welfare are computed correctly:</p><p>\[
+   a_t(\beta^{uv})=\mathbf1[u=t]+\ell\mathbf1[v=t],
+   \qquad
+   W(\beta^{uv})=\ell g_{uv}.
+   \]</p><p>Hence every feasible compact solution is realized with exactly the same objective value.</p><ul><li><b>Polynomial-time conclusion</b></li></ul><p>The compact program has \(|T|^2\) variables and \(|T|\) equality constraints, with rational coefficients of polynomial binary encoding length. Standard rational linear-programming algorithms therefore compute the optimum in polynomial time. The treatment of binary-encoded \(\ell\) is adequate because monochromatic-leaf configurations admit a succinct representation.</p><ul><li><b>Edge case</b></li></ul><p>The case \(\ell=0\) is separately and correctly identified as trivial: every welfare value is zero.</p><ul><li><b>Relation to discrete hardness</b></li></ul><p>The explanation is consistent with the proof. The continuous formulation permits fractional mixtures that need not correspond to integral numbers of configurations among finitely many discrete stars, so the stated discrete hardness result does not transfer automatically.</p><p>No missing hypotheses, unjustified theorem applications, critical computational errors, or unresolved edge cases were identified.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,108 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Complexity of Deliberative Coalition Formation — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Complexity of Deliberative Coalition Formation <span style="font-weight:normal;color:#8a7350">(aaai22-20428)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}hard}\), indeed \(\mathrm{NP\text{-}complete}\), when \(d\) is part of the input</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 8 — class: hardness</p>
+<blockquote class="thmq">by a reduction from 3-SAT; the proof is provided in the full version of the paper. Just like for hypercubes, Euc-SCORE is ﬁxed-parameter tractable with respect to the number of agents.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational types \(v^1,\ldots,v^\tau\in\mathbb{Q}^d\), rational masses \(\mu_j&gt;0\) with \(\sum_j\mu_j=1\), and a rational threshold \(\eta\in[0,1]\), with status quo \(0\), decide whether there exists \(x\in\mathbb{R}^d\setminus\{0\}\) such that \(\sum_{j:\,\lVert v^j-x\rVert_2&lt;\lVert v^j\rVert_2}\mu_j\ge\eta\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given \(d\in\mathbb{N}\), rational type vectors \(v^1,\ldots,v^	au\in\mathbb{Q}^d\), rational masses \(\mu_j&gt;0\) with \(\sum_{j=1}^{	au}\mu_j=1\), and \(\eta\in\mathbb{Q}\cap[0,1]\), the status quo is \(0\). A type \(v^j\) approves \(x\in\mathbb{R}^d\setminus\{0\}\) iff \(\lVert v^j-xVert_2&lt;\lVert v^jVert_2\). Its support is the total mass of approving types.</p><p><b>Target.</b> Is deciding whether some \(x\in\mathbb{R}^d\setminus\{0\}\) has support at least \(\eta\) solvable in polynomial time, or is it NP-hard?</p><p><b>Nearest known results.</b> For a finite list of rational Euclidean agents and an integer threshold, deciding whether a non-status-quo proposal is approved by at least that many agents is NP-complete (Euc-SCORE, Theorem 8 of Elkind, Ghosh, and Goldberg, 2022).</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Classification</h3><p>Under the standard interpretation that \(d\) is part of the input, the problem is \(\mathrm{NP}\)-complete, and therefore \(\mathrm{NP}\)-hard.</p><h3>1. Polynomial-time reduction from Euc-SCORE</h3><p>An Euc-SCORE instance consists of rational points \(a^1,\ldots,a^n\in\mathbb{Q}^d\) and a positive integer \(k\). It asks whether some \(x\in\mathbb{R}^d\setminus\{0\}\) satisfies</p><p>\[
+\lVert a^i-x\rVert_2&lt;\lVert a^i\rVert_2
+\]</p><p>for at least \(k\) agents. This problem is \(\mathrm{NP}\)-complete by [Elkind, Ghosh, and Goldberg, Theorem 8](https://ojs.aaai.org/index.php/AAAI/article/download/20428/20187).</p><p>For an instance with \(1\leq k\leq n\), construct the weighted instance</p><p>\[
+\tau=n,\qquad v^i=a^i,\qquad \mu_i=\frac1n,\qquad \eta=\frac{k}{n}.
+\]</p><p>These data satisfy \(\mu_i&gt;0\) and</p><p>\[
+\sum_{i=1}^n\mu_i=1.
+\]</p><p>For every nonzero proposal \(x\), let</p><p>\[
+A(x)=\left\{i\in[n]:
+\lVert a^i-x\rVert_2&lt;\lVert a^i\rVert_2
+\right\}.
+\]</p><p>Its support in the constructed instance is exactly</p><p>\[
+\sum_{i\in A(x)}\mu_i
+=\frac{|A(x)|}{n}.
+\]</p><p>Consequently,</p><p>\[
+\operatorname{support}(x)\geq\eta
+\quad\Longleftrightarrow\quad
+\frac{|A(x)|}{n}\geq\frac{k}{n}
+\quad\Longleftrightarrow\quad
+|A(x)|\geq k.
+\]</p><p>Thus the Euc-SCORE instance is a yes-instance if and only if the constructed weighted instance is a yes-instance.</p><p>The construction is polynomial-time: the fractions \(1/n\) and \(k/n\) require only \(O(\log n+\log k)\) bits. If \(k&gt;n\), the source instance is automatically a no-instance and can be mapped to the fixed no-instance \(d=1\), \(v^1=0\), \(\mu_1=1\), and \(\eta=1\).</p><p>This proves \(\mathrm{NP}\)-hardness, already for uniform masses.</p><h3>2. Membership in \(\mathrm{NP}\)</h3><p>We prove the stronger upper bound. For \(v,x\in\mathbb{R}^d\),</p><p>\[
+\lVert v-x\rVert_2^2&lt;\lVert v\rVert_2^2
+\quad\Longleftrightarrow\quad
+2\langle v,x\rangle&gt;\lVert x\rVert_2^2.
+\]</p><p>For nonzero \(x\), define</p><p>\[
+y=\frac{2x}{\lVert x\rVert_2^2}.
+\]</p><p>Then</p><p>\[
+\lVert v-x\rVert_2&lt;\lVert v\rVert_2
+\quad\Longleftrightarrow\quad
+\langle v,y\rangle&gt;1.
+\]</p><p>Conversely, for every nonzero \(y\), setting</p><p>\[
+x=\frac{2y}{\lVert y\rVert_2^2}
+\]</p><p>gives the same equivalence.</p><p>Assume \(\eta&gt;0\). The instance is therefore a yes-instance if and only if there is a nonempty subset \(S\subseteq[\tau]\) such that</p><p>\[
+\sum_{j\in S}\mu_j\geq\eta
+\]</p><p>and the rational linear system</p><p>\[
+\langle v^j,y\rangle\geq1
+\qquad\text{for every }j\in S
+\]</p><p>is feasible.</p><p>Indeed, strict feasibility implies weak feasibility. Conversely, if \(y\) satisfies the weak system, then \(2y\) satisfies</p><p>\[
+\langle v^j,2y\rangle\geq2&gt;1
+\]</p><p>for every \(j\in S\), and hence determines a nonzero proposal approved by every type in \(S\).</p><p>An \(\mathrm{NP}\) verifier guesses \(S\), computes its rational mass exactly, and tests the displayed rational linear system by polynomial-time linear programming. The case \(\eta=0\) is trivially a yes-instance when \(d\geq1\).</p><p>Hence the problem belongs to \(\mathrm{NP}\).</p><h3>3. Conclusion and dimensional scope</h3><p>The reduction and the upper bound together prove that the problem is \(\mathrm{NP}\)-complete when \(d\) is part of the input. Thus no polynomial-time algorithm exists unless \(\mathrm{P}=\mathrm{NP}\).</p><p>This does not assert hardness for a fixed constant \(d\). For fixed \(d\), the hyperplanes</p><p>\[
+\left\{y:\langle v^j,y\rangle=1\right\}
+\]</p><p>have only polynomially many arrangement faces, on each of which the approval set is constant. Enumerating these faces and maximizing their total rational mass gives a polynomial-time algorithm, consistently with Proposition 10 of the cited paper.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 2, treatment of the case \(\eta=0\): The claim handles only \(d\geq1\). If the user&#x27;s convention allows \(0\in\mathbb N\), then for \(d=0\) there is no nonzero proposal and the instance is a no-instance even when \(\eta=0\). State that \(d\) is positive or add this trivial branch.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Summary</h3><p>The prover correctly establishes \(\mathrm{NP}\)-hardness, and the \(\mathrm{NP}\)-membership argument is sound. The cited source defines Euclidean deliberation with rational agent coordinates, status quo \(0\), and unrestricted proposal space \(\mathbb R^d\), and states that Euc-SCORE is \(\mathrm{NP}\)-complete in Theorem 8 ([official paper](https://ojs.aaai.org/index.php/AAAI/article/download/20428/20187)).</p><p>There is only a minor edge-case ambiguity concerning whether \(\mathbb N\) includes \(0\).</p><h3>Step-by-step audit</h3><h3>1. Reduction source</h3><p>The description of Euc-SCORE matches the cited result:</p><ul><li>Agent locations are rational vectors encoded in binary.</li><li>The status quo is the origin.</li><li>Proposals range over \(\mathbb R^d\setminus\{0\}\).</li><li>Approval is determined by the same strict Euclidean-distance inequality.</li><li>The threshold is a positive integer.</li><li>The cited Theorem 8 states that Euc-SCORE is \(\mathrm{NP}\)-complete.</li></ul><p>Thus using Euc-SCORE as the reduction source is justified.</p><h3>2. Construction of the weighted instance</h3><p>For \(1\leq k\leq n\), the assignment</p><p>\[
+\tau=n,\qquad v^i=a^i,\qquad \mu_i=\frac1n,\qquad \eta=\frac{k}{n}
+\]</p><p>produces a valid target instance:</p><ul><li>Every mass is positive.</li><li>The masses sum to \(1\).</li><li>The threshold lies in \([0,1]\).</li><li>All numerical data are rational.</li></ul><p>For every proposal \(x\), its support is exactly</p><p>\[
+\sum_{i\in A(x)}\frac1n=\frac{|A(x)|}{n}.
+\]</p><p>Because \(n&gt;0\),</p><p>\[
+\frac{|A(x)|}{n}\geq\frac{k}{n}
+\]</p><p>is equivalent to \(|A(x)|\geq k\). Hence the reduction preserves yes- and no-instances exactly.</p><p>The stated encoding bound is adequate. Although there are \(n\) copies of \(1/n\), the total output length remains polynomial.</p><h3>3. Case \(k&gt;n\)</h3><p>Such a source instance is necessarily negative. The proposed fixed target instance with \(d=1\), \(v^1=0\), \(\mu_1=1\), and \(\eta=1\) is also negative: no nonzero \(x\) can satisfy</p><p>\[
+\lVert -x\rVert_2&lt;0.
+\]</p><p>The fact that a zero type may fail the ancillary convention in the cited deliberation model is irrelevant: zero types are explicitly permitted by the target problem.</p><p>Therefore the \(\mathrm{NP}\)-hardness reduction is correct.</p><h3>4. Algebraic reformulation</h3><p>Squaring the nonnegative norms gives</p><p>\[
+\lVert v-x\rVert_2^2&lt;\lVert v\rVert_2^2
+\]</p><p>if and only if</p><p>\[
+\lVert x\rVert_2^2-2\langle v,x\rangle&lt;0,
+\]</p><p>equivalently,</p><p>\[
+2\langle v,x\rangle&gt;\lVert x\rVert_2^2.
+\]</p><p>For nonzero \(x\), defining</p><p>\[
+y=\frac{2x}{\lVert x\rVert_2^2}
+\]</p><p>therefore yields precisely</p><p>\[
+\langle v,y\rangle&gt;1.
+\]</p><p>The inverse formula</p><p>\[
+x=\frac{2y}{\lVert y\rVert_2^2}
+\]</p><p>is valid for every nonzero \(y\), and substituting it recovers the same equivalence. No irrational certificate is required.</p><h3>5. Replacement of strict inequalities by weak inequalities</h3><p>For \(\eta&gt;0\), any subset \(S\) whose mass is at least \(\eta\) is nonempty because every mass is positive.</p><p>If a proposal exists, its transformed vector \(y\) satisfies the strict system and hence the weak system</p><p>\[
+\langle v^j,y\rangle\geq1
+\qquad(j\in S).
+\]</p><p>Conversely, if the weak system is feasible, nonemptiness of \(S\) ensures \(y\neq0\). Scaling to \(2y\) gives</p><p>\[
+\langle v^j,2y\rangle\geq2&gt;1,
+\]</p><p>so the inverse transformation produces a nonzero proposal approved by all types in \(S\). Thus the claimed equivalence is correct.</p><h3>6. Polynomial verifier</h3><p>A subset \(S\subseteq[\tau]\) has polynomial description length. Its rational mass can be added and compared with \(\eta\) in polynomial time, with polynomially bounded intermediate bit length.</p><p>Feasibility of the displayed rational weak linear system is decidable by polynomial-time linear programming. Since deterministic polynomial-time computation is permitted after guessing the certificate, this establishes membership in \(\mathrm{NP}\).</p><h3>7. Zero-threshold case</h3><p>For \(d\geq1\), the assertion is correct: a nonzero proposal exists and every support value is nonnegative, so threshold \(0\) is always attained.</p><p>There is a minor convention-dependent omission. If \(\mathbb N\) includes \(0\), then \(d=0\) gives</p><p>\[
+\mathbb R^0\setminus\{0\}=\varnothing,
+\]</p><p>so even an instance with \(\eta=0\) is negative. The write-up should either state that dimensions are positive integers or explicitly handle \(d=0\). This does not affect the complexity classification.</p><h3>8. Fixed-dimensional aside</h3><p>The aside is consistent with Proposition 10 of the cited paper. For fixed \(d\), the arrangement of the rational hyperplanes</p><p>\[
+\langle v^j,y\rangle=1
+\]</p><p>has polynomially many faces, and the truth value of each strict inequality is constant on every relatively open face. Computing the total rational mass of each resulting approval pattern therefore extends the unweighted fixed-dimensional algorithm to weighted types.</p><h3>Verdict</h3><p>The reduction and upper bound substantively prove \(\mathrm{NP}\)-completeness when the dimension is part of the input. Only the \(d=0\) convention requires clarification.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

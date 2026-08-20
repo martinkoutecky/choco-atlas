@@ -1,0 +1,75 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Nash Stability in Hedonic Skill Games — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Nash Stability in Hedonic Skill Games <span style="font-weight:normal;color:#8a7350">(aamas24-00084)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{polynomial\text{-}time\ solvable}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5.3 — class: hardness</p>
+<blockquote class="thmq">Computing a Nash stable outcome in hedonic skill games with singleton tasks is a PLS-complete problem when 𝑞= 2.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite skill set \(S\), rational masses \(\mu_\theta\) over nonempty skill-set types \(\theta\subseteq S\), rational positive weights \(w_s\) for singleton tasks, and two coalitions, compute a mass allocation \(x_{\theta,j}\ge0\) satisfying \(\sum_{j=1}^{2}x_{\theta,j}=\mu_\theta\) such that every type with \(x_{\theta,j}&gt;0\) satisfies \(u_{\theta,j}\ge u_{\theta,3-j}\), where \(M_{s,j}=\sum_{\theta\ni s}x_{\theta,j}\) and \(u_{\theta,j}=\sum_{s\in\theta}w_s/M_{s,j}\), with a zero denominator interpreted as \(+\infty\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> Let \(S\) be a finite skill set. Each skill \(s\in S\) has a singleton task of weight \(w_s&gt;0\). The explicitly listed types \(A\in\mathcal A\subseteq 2^S\) have rational masses \(\mu_A\). Split each type between two coalitions using \(x_{A,j}\ge0\) with \(x_{A,1}+x_{A,2}=\mu_A\). Define \(M_{j,s}=\sum_{A
+i s}x_{A,j}\) and \(u_A(j;x)=\sum_{s\in A}w_s/M_{j,s}\), with \(w_s/0:=+\infty\). A split is Nash stable if \(x_{A,j}&gt;0\Rightarrow u_A(j;x)\ge u_A(3-j;x)\).</p><p><b>Target.</b> Is computing a Nash-stable split \(x\) for this two-coalition nonatomic singleton-task skill game polynomial-time solvable, or is it PLS-hard?</p><p><b>Nearest known results.</b> In the finite-agent singleton-task version with two coalitions, computing a Nash-stable outcome is PLS-complete. Such discrete instances always have a Nash-stable outcome because better-response dynamics converges.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Theorem</h3><p>Computing a Nash-stable split is polynomial-time solvable. In fact, every valid instance admits the explicit symmetric split</p><p>\[
+x_{A,1}=x_{A,2}=\frac{\mu_A}{2}
+\]</p><p>for every \(A\in\mathcal A\).</p><h3>Proof</h3><p>Because \(\mu_A\) is a mass, assume \(\mu_A\geq 0\). Define the total mass possessing skill \(s\) by</p><p>\[
+T_s=\sum_{\substack{A\in\mathcal A\\s\in A}}\mu_A.
+\]</p><p>Under the proposed split, for each coalition \(j\in\{1,2\}\) and skill \(s\in S\),</p><p>\[
+M_{j,s}
+=\sum_{\substack{A\in\mathcal A\\s\in A}}x_{A,j}
+=\sum_{\substack{A\in\mathcal A\\s\in A}}\frac{\mu_A}{2}
+=\frac{T_s}{2}.
+\]</p><p>Consequently,</p><p>\[
+M_{1,s}=M_{2,s}
+\]</p><p>for every \(s\in S\).</p><p>Fix a type \(A\in\mathcal A\).</p><p>If \(\mu_A=0\), then \(x_{A,1}=x_{A,2}=0\). Both implications in the definition of Nash stability have false antecedents, so this type imposes no condition.</p><p>Suppose instead that \(\mu_A&gt;0\). Then \(x_{A,1}&gt;0\) and \(x_{A,2}&gt;0\). Moreover, for every \(s\in A\),</p><p>\[
+T_s\geq \mu_A&gt;0,
+\]</p><p>so both relevant skill masses are positive. Therefore,</p><p>\[
+u_A(1;x)
+=\sum_{s\in A}\frac{w_s}{M_{1,s}}
+=\sum_{s\in A}\frac{2w_s}{T_s}
+=\sum_{s\in A}\frac{w_s}{M_{2,s}}
+=u_A(2;x).
+\]</p><p>Thus both Nash-stability inequalities hold:</p><p>\[
+u_A(1;x)\geq u_A(2;x)
+\qquad\text{and}\qquad
+u_A(2;x)\geq u_A(1;x).
+\]</p><p>This applies to every positive-mass type. Hence the symmetric split is Nash stable.</p><h3>Complexity</h3><p>For each explicitly listed type \(A\), the algorithm outputs two copies of the rational number \(\mu_A/2\). If \(\mu_A=p_A/q_A\) is given in binary, one may output \(p_A/(2q_A)\), whose encoding length exceeds that of \(\mu_A\) by at most one bit. The running time and output size are therefore linear, up to ordinary rational-encoding costs, in the explicit input size.</p><p>The finite-agent \(\mathrm{PLS}\)-completeness result does not transfer: a discrete agent generally cannot be divided equally between the two coalitions, whereas nonatomic type mass can. Thus the search problem belongs to \(\mathrm{FP}\); it could be \(\mathrm{PLS}\)-hard under standard reductions only if \(\mathrm{FP}=\mathrm{PLS}\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><h3>Summary</h3><p>The prover fully resolves the target. The symmetric split<br>\[
+x_{A,1}=x_{A,2}=\frac{\mu_A}{2}
+\]<br>is feasible and Nash stable, and it can be computed in polynomial—indeed linear—time in the explicit input size.</p><h3>Step-by-step audit</h3><ul><li><b>Nonnegativity of masses.</b> Treating \(\mu_A\geq 0\) as part of a valid instance is justified by the term “mass” and is also necessary for the constraints \(x_{A,j}\geq 0\) and \(x_{A,1}+x_{A,2}=\mu_A\) to be feasible.</li></ul><ul><li><b>Feasibility of the proposed split.</b> For every listed type,</li></ul><p>\[
+   x_{A,1}=x_{A,2}=\frac{\mu_A}{2}\geq 0
+   \]<br>and<br>\[
+   x_{A,1}+x_{A,2}=\mu_A.
+   \]<br>Thus the proposed output satisfies all split constraints.</p><ul><li><b>Equality of coalition skill masses.</b> The calculation</li></ul><p>\[
+   M_{j,s}=\sum_{A\ni s}\frac{\mu_A}{2}=\frac{T_s}{2}
+   \]<br>is correct. Hence \(M_{1,s}=M_{2,s}\) for every skill \(s\).</p><ul><li><b>Zero-mass types.</b> If \(\mu_A=0\), both assigned masses are zero. Therefore neither implication in the Nash-stability definition has a true antecedent. The prover correctly concludes that such a type imposes no stability requirement, regardless of whether its formal utilities contain infinite terms.</li></ul><ul><li><b>Positive-mass types and denominators.</b> If \(\mu_A&gt;0\), then both \(x_{A,1}\) and \(x_{A,2}\) are positive. For every \(s\in A\),</li></ul><p>\[
+   T_s\geq \mu_A&gt;0,
+   \]<br>so the utility denominators associated with this type are nonzero. This correctly excludes any ambiguity involving \(+\infty\).</p><ul><li><b>Utility equality.</b> Since corresponding skill masses agree between the coalitions,</li></ul><p>\[
+   u_A(1;x)=\sum_{s\in A}\frac{2w_s}{T_s}=u_A(2;x).
+   \]<br>Equality implies both required weak inequalities. The argument also remains valid when \(A=\varnothing\), since both utilities are then empty sums equal to zero.</p><ul><li><b>Global Nash stability.</b> The preceding cases cover every explicitly listed type, so the conclusion that the symmetric split is Nash stable follows.</li></ul><ul><li><b>Complexity.</b> Computing and outputting \(\mu_A/2\) twice for every explicitly listed type requires polynomial time and polynomial output length. The stated binary rational encoding bound is correct up to routine normalization details, which cannot increase the encoding beyond polynomial size.</li></ul><ul><li><b>Comparison with the finite-agent result.</b> The observation that nonatomic masses can be divided symmetrically while individual discrete agents cannot is accurate. The explicit polynomial-time construction establishes membership in \(\mathrm{FP}\), independently of the nearest finite-agent hardness result.</li></ul><p>No unjustified steps, false claims, missing lemmas, or relevant edge-case failures were found.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

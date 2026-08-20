@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Maxmin Participatory Budgeting — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Maxmin Participatory Budgeting <span style="font-weight:normal;color:#8a7350">(ijcai22-00070)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}complete}\), and hence \(\mathrm{NP\text{-}hard}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: hardness</p>
+<blockquote class="thmq">The decision version of MPB is strongly NP- hard.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given projects \(P\) with integer costs \(c(p)\), budget \(b\), approval types \(A_t\subseteq P\), and a rational distribution \(\mu\) with \(\mu_t\ge0\) and \(\sum_t\mu_t=1\), decide whether there exists \(S\subseteq P\) such that \(\sum_{p\in S}c(p)\le b\) and \(\min_{t:\mu_t&gt;0}\sum_{p\in S\cap A_t}c(p)\ge s\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><h3>Definitions</h3><p>An instance consists of a finite project set \(P\), integer costs \(c(p)\), an integer budget \(b\), approval types \(A_t\subseteq P\), rational masses \(\mu_t\geq0\) with \(\sum_t\mu_t=1\), and an integer threshold \(s\). Decide whether some \(S\subseteq P\) has \(c(S)\leq b\) and \(c(S\cap A_t)\geq s\) for every \(t\) with \(\mu_t&gt;0\).</p><h3>Target</h3><p>Is this decision problem solvable in polynomial time, or is it NP-hard?</p><h3>Nearest known results</h3><p>The ordinary finite-voter maxmin participatory-budgeting decision problem is strongly NP-hard.<br>The formulation above is the same decision problem after deleting zero-mass types: masses do not otherwise occur in its constraints, and each positive-mass type can be represented by one voter. Thus the known hardness result already applies to this formulation.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Claim</h3><p>The decision problem is \(\mathrm{NP}\)-complete, and in particular \(\mathrm{NP}\)-hard. The rational masses do not change feasibility once zero-mass types are deleted.</p><h3>Reduction from finite-voter maxmin participatory budgeting</h3><p>Consider an instance of the ordinary finite-voter maxmin participatory-budgeting decision problem. It consists of:</p><ul><li>a finite project set \(P\);</li><li>integer project costs \(c(p)\);</li><li>a budget \(b\);</li><li>voters \(1,\ldots,n\), where voter \(i\) approves \(A_i\subseteq P\);</li><li>a threshold \(s\).</li></ul><p>The question is whether there exists \(S\subseteq P\) such that \(c(S)\leq b\) and</p><p>\[
+c(S\cap A_i)\geq s
+\]</p><p>for every voter \(i\).</p><p>Construct an instance of the problem in the question as follows. Retain \(P,c,b,s\). For every voter \(i\), introduce a type \(t_i\) with</p><p>\[
+A_{t_i}=A_i
+\qquad\text{and}\qquad
+\mu_{t_i}=\frac1n.
+\]</p><p>Every type has positive mass, and the masses satisfy</p><p>\[
+\sum_{i=1}^n\mu_{t_i}
+=
+\sum_{i=1}^n\frac1n
+=
+1.
+\]</p><p>The construction is polynomial-time: each rational number \(1/n\) has binary encoding length \(O(\log n)\).</p><p>If approval types are required to be distinct, group together voters with the same approval set. For each distinct approval set \(A\), let \(m_A\) be the number of voters approving exactly \(A\), and introduce one type of mass \(m_A/n\). This alternative construction is also polynomial-time and has exactly the same constraints.</p><h3>Correctness of the reduction</h3><p>Let \(S\subseteq P\). The budget condition in the constructed instance is unchanged:</p><p>\[
+c(S)\leq b.
+\]</p><p>Moreover, every constructed type has positive mass. Consequently, its constraint is imposed, and for each voter \(i\) it is exactly</p><p>\[
+c(S\cap A_{t_i})
+=
+c(S\cap A_i)
+\geq s.
+\]</p><p>Thus \(S\) is feasible for the ordinary finite-voter instance if and only if \(S\) is feasible for the constructed type-and-mass instance.</p><p>Therefore the reduction preserves yes-instances and no-instances. Since the ordinary finite-voter maxmin participatory-budgeting decision problem is strongly \(\mathrm{NP}\)-hard by the stated known result, the problem in the question is \(\mathrm{NP}\)-hard.</p><h3>Membership in \(\mathrm{NP}\)</h3><p>A certificate is a subset \(S\subseteq P\), represented by its incidence vector.</p><p>Given \(S\), one can compute \(c(S)\) and, for every positive-mass type \(t\), compute \(c(S\cap A_t)\). Integer addition and comparison take polynomial time in the binary encoding length of the instance. One can therefore verify in polynomial time that</p><p>\[
+c(S)\leq b
+\qquad\text{and}\qquad
+c(S\cap A_t)\geq s
+\]</p><p>for every \(t\) with \(\mu_t&gt;0\). Hence the problem belongs to \(\mathrm{NP}\).</p><h3>Conclusion</h3><p>The decision problem is \(\mathrm{NP}\)-complete. In particular, it is not polynomial-time solvable unless \(\mathrm{P}=\mathrm{NP}\). The masses affect only whether a type is present: after deleting zero-mass types, their numerical values play no role in feasibility.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Reduction construction assigning each type mass \(1/n\): The proof does not explicitly assume \(n\geq 1\), although this is required for \(1/n\) to be defined and for the displayed mass normalization. It should state that the source hardness applies to nonempty electorates or handle the \(n=0\) edge case separately.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Summary</h3><p>The reduction correctly transfers the stated strong \( \mathrm{NP} \)-hardness result, and the membership argument establishes \( \mathrm{NP} \)-completeness. The only gap is the unstated requirement \(n\geq 1\), needed to define the masses \(1/n\).</p><h3>Step-by-step audit</h3><ul><li><b>Source problem.</b> The prover accurately restates the ordinary finite-voter decision problem supplied in the nearest known results.</li></ul><ul><li><b>Construction.</b> Retaining \(P,c,b,s\) and assigning each voter a type with the same approval set and mass \(1/n\) is polynomial in the source encoding. The calculation that these masses sum to \(1\) is correct, provided \(n\geq 1\).</li></ul><ul><li><b>Repeated approval sets.</b> The optional grouping construction is correct: replacing voters sharing an approval set by one type of mass \(m_A/n\) preserves exactly one copy of the same feasibility constraint. Constraint multiplicity has no effect.</li></ul><ul><li><b>Correctness equivalence.</b> For every candidate subset \(S\), the budget constraint is unchanged and every constructed type has positive mass. Thus each target constraint is identical to its corresponding voter constraint. The claimed if-and-only-if preservation is valid.</li></ul><ul><li><b>Hardness conclusion.</b> Given the stated known strong \( \mathrm{NP} \)-hardness of the source problem, the polynomial-time equivalence-preserving construction establishes \( \mathrm{NP} \)-hardness of the target problem.</li></ul><ul><li><b>Membership in \( \mathrm{NP} \).</b> An incidence vector for \(S\) has polynomial length. All required sums, rational positivity tests, and integer comparisons can be performed in polynomial time in the explicit binary input encoding. This establishes membership in \( \mathrm{NP} \).</li></ul><ul><li><b>Final classification.</b> Combining membership with hardness justifies \( \mathrm{NP} \)-completeness and the conditional statement about polynomial-time solvability.</li></ul><h3>Required clarification</h3><p>The source-instance description does not explicitly state \(n\geq 1\). Without it, \(1/n\) is undefined when \(n=0\). The write-up should state that the cited hardness result applies to instances with a nonempty electorate, or separately specify the reduction on the zero-voter edge case. This is a minor domain clarification and does not affect the substantive hardness argument.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,117 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Participation Incentives in Approval-Based Committee Elections — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Participation Incentives in Approval-Based Committee Elections <span style="font-weight:normal;color:#8a7350">(aaai24-28810)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\text{-complete}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: hardness</p>
+<blockquote class="thmq">For every sequential Thiele rule except AV, it is NP-hard to decide whether a voter can benefit from abstention.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>For a fixed sequential Thiele rule \(R\) other than AV, given candidates \(C\), committee size \(k\), rational approval-type masses \(\mu\), a distinguished type \(t^\star\), and rational \(0 &lt; \beta \le \mu_{t^\star}\), let \(\mu^- = \mu - \beta e_{t^\star}\). Decide whether the set of committees \(F_R(\mu^-)\) selected under all tie-breakings is strictly Kelly-preferred by type \(t^\star\) to \(F_R(\mu)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given a finite candidate set \(C\), committee size \(k\), explicit nonempty approval types \(T\subseteq 2^C\setminus\{\varnothing\}\), rational masses \((\mu_t)_{t\in T}\) summing to \(1\), sequential PAV starts with \(S=\varnothing\) and repeatedly adds any candidate maximizing \(\Delta_\mu(c\mid S)=\sum_{t\in T}\mu_t\bigl(H_{|t\cap(S\cup\{c\})|}-H_{|t\cap S|}\bigr)\), where \(H_0=0\) and \(H_j=\sum_{r=1}^j1/r\). All tie choices are allowed.</p><p><b>Target.</b> Is it polynomial-time solvable, or NP-hard, to decide whether some size-\(k\) committee obtainable by this process contains at least \(s\) candidates approved by a distinguished type \(t^\star\), i.e. satisfies \(|W\cap t^\star|\ge s\)?</p><p><b>Nearest known results.</b> For finite unweighted approval profiles, deciding whether a given voter approves at least \(s\) candidates in some sequential-PAV winning committee is NP-complete. No continuous-mass result is stated here.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity of the Rational-Mass Sequential-PAV Problem</h3><h3>Theorem</h3><p>The decision problem is \(\mathrm{NP}\)-complete. In particular, allowing rational masses over explicitly listed approval types preserves the known hardness for finite unweighted approval profiles exactly; no approximation or limiting argument is needed.</p><h3>1. Simplifying the marginal contribution</h3><p>Let \(S\subseteq C\) and \(c\in C\setminus S\). For every type \(t\in T\),</p><p>\[
+H_{|t\cap(S\cup\{c\})|}-H_{|t\cap S|}
+=
+\begin{cases}
+\dfrac{1}{|t\cap S|+1},&amp;c\in t,\\[4pt]
+0,&amp;c\notin t.
+\end{cases}
+\]</p><p>Therefore</p><p>\[
+\Delta_\mu(c\mid S)
+=
+\sum_{\substack{t\in T\\c\in t}}
+\frac{\mu_t}{|t\cap S|+1}.
+\]</p><p>This form will be used both for verification and for the reduction.</p><h3>2. Membership in \(\mathrm{NP}\)</h3><p>A certificate is an ordered sequence of distinct candidates</p><p>\[
+(c_1,\ldots,c_k).
+\]</p><p>For \(j\in\{1,\ldots,k\}\), let</p><p>\[
+S_{j-1}=\{c_1,\ldots,c_{j-1}\}.
+\]</p><p>The verifier checks that, for every \(j\) and every \(d\in C\setminus S_{j-1}\),</p><p>\[
+\Delta_\mu(c_j\mid S_{j-1})
+\geq
+\Delta_\mu(d\mid S_{j-1}).
+\]</p><p>This is precisely the condition that \(c_j\) is an allowed tie choice at step \(j\). The verifier then checks</p><p>\[
+|S_k\cap t^\star|\geq s.
+\]</p><p>It remains to justify that the marginal comparisons can be performed in polynomial time.</p><p>Write each input mass as \(\mu_t=p_t/q_t\). Every term in a marginal has the form</p><p>\[
+\frac{p_t}{q_t(|t\cap S|+1)}.
+\]</p><p>The additional factor \(|t\cap S|+1\) is at most \(|C|+1\). A common denominator obtained by multiplying the denominators of at most \(|T|\) terms has bit length at most the sum of their bit lengths, namely polynomial in the input size. Hence every marginal can be computed and compared exactly using polynomially many operations on polynomial-bit integers.</p><p>There are at most \(k|C|\) relevant marginal comparisons. Thus the certificate is verifiable in polynomial time, proving that the problem belongs to \(\mathrm{NP}\).</p><h3>3. Reduction from finite unweighted sequential PAV</h3><p>Use the supplied known result:</p><blockquote>Given a finite unweighted approval profile, a committee size \(k\), a distinguished voter, and a threshold \(s\), deciding whether some sequential-PAV winning committee contains at least \(s\) candidates approved by that voter is \(\mathrm{NP}\)-complete.</blockquote><p>Consider such an instance. Let the voters be indexed by \(i\in\{1,\ldots,n\}\), let \(A_i\subseteq C\) be voter \(i\)&#x27;s approval set, and let \(i^\star\) be the distinguished voter.</p><p>Assume first that \(A_{i^\star}\neq\varnothing\). Let</p><p>\[
+V^+=\{i:A_i\neq\varnothing\},
+\qquad
+N=|V^+|.
+\]</p><p>Because \(A_{i^\star}\neq\varnothing\), we have \(N\geq1\).</p><p>For every distinct nonempty approval set \(t\) occurring in the profile, define</p><p>\[
+n_t=|\{i:A_i=t\}|.
+\]</p><p>Construct the rational-mass instance by setting</p><p>\[
+T=\{A_i:i\in V^+\},
+\qquad
+\mu_t=\frac{n_t}{N},
+\qquad
+t^\star=A_{i^\star}.
+\]</p><p>Repeated approval sets occur only once in \(T\). Their multiplicities are encoded in the masses. Every mass is positive, and</p><p>\[
+\sum_{t\in T}\mu_t
+=
+\frac{1}{N}\sum_{t\in T}n_t
+=
+1.
+\]</p><h3>4. Exact preservation of every sequential choice</h3><p>Let \(\Delta_V(c\mid S)\) denote the ordinary unweighted sequential-PAV marginal in the original profile. For every state \(S\subseteq C\) and every \(c\in C\setminus S\),</p><p>\[
+\begin{aligned}
+\Delta_\mu(c\mid S)
+&amp;=
+\sum_{t\in T}
+\frac{n_t}{N}
+\left(
+H_{|t\cap(S\cup\{c\})|}
+-
+H_{|t\cap S|}
+\right)\\
+&amp;=
+\frac{1}{N}
+\sum_{i\in V^+}
+\left(
+H_{|A_i\cap(S\cup\{c\})|}
+-
+H_{|A_i\cap S|}
+\right).
+\end{aligned}
+\]</p><p>A voter with \(A_i=\varnothing\) contributes zero to every marginal. Consequently,</p><p>\[
+\Delta_\mu(c\mid S)=\frac{1}{N}\Delta_V(c\mid S).
+\]</p><p>The factor \(1/N\) is positive and independent of \(c\). Hence, for all remaining candidates \(c,d\),</p><p>\[
+\Delta_\mu(c\mid S)\geq\Delta_\mu(d\mid S)
+\quad\Longleftrightarrow\quad
+\Delta_V(c\mid S)\geq\Delta_V(d\mid S).
+\]</p><p>Thus the maximizing candidates, including all ties, are identical at every state \(S\).</p><p>Induction on the number of selection steps now shows that an ordered candidate sequence is permitted in the original unweighted instance if and only if it is permitted in the rational-mass instance. Therefore the two instances have exactly the same obtainable size-\(k\) committees.</p><p>Moreover,</p><p>\[
+|W\cap t^\star|
+=
+|W\cap A_{i^\star}|,
+\]</p><p>so the distinguished-voter condition is also preserved exactly. It is immaterial if other voters share \(A_{i^\star}\), because the target condition depends only on the distinguished approval set, not on the identity or mass of the corresponding type.</p><h3>5. Empty distinguished ballots</h3><p>If \(A_{i^\star}=\varnothing\), then every committee \(W\) satisfies</p><p>\[
+|W\cap A_{i^\star}|=0.
+\]</p><p>Such an instance is therefore decidable immediately from whether a size-\(k\) sequential-PAV outcome exists and whether \(0\geq s\). For standard well-formed instances with \(0\leq k\leq|C|\), an outcome always exists.</p><p>These trivial cases can be mapped to fixed valid yes- and no-instances of the rational-mass problem. For example:</p><ul><li>A fixed yes-instance has \(C=\{a\}\), \(k=1\), \(T=\{\{a\}\}\), \(\mu_{\{a\}}=1\), \(t^\star=\{a\}\), and \(s=1\).</li></ul><ul><li>A fixed no-instance has \(C=\{a,b\}\), \(k=1\), masses \(\mu_{\{a\}}=1/3\) and \(\mu_{\{b\}}=2/3\), distinguished type \(t^\star=\{a\}\), and \(s=1\). Candidate \(b\) is the unique first-step maximizer.</li></ul><p>Hence the requirement that all explicitly represented types be nonempty does not obstruct the reduction.</p><h3>6. Polynomial size and conclusion</h3><p>The distinct approval types can be obtained by grouping equal approval ballots. There are at most \(n\) such types, and every mass \(n_t/N\) has polynomial encoding length. The construction is therefore a polynomial-time many-one reduction.</p><p>The problem is \(\mathrm{NP}\)-hard by this reduction and belongs to \(\mathrm{NP}\) by Section 2. Therefore it is \(\mathrm{NP}\)-complete. In particular, it is not polynomial-time solvable unless \(\mathrm{P}=\mathrm{NP}\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Sections 2 and 5, treatment of the committee-size parameter: The write-up relies on the standard condition 0 &lt;= k &lt;= |C| but the USER_TASK does not state it explicitly. If k is binary encoded and unrestricted, the verifier should first reject k &gt; |C|; otherwise the asserted k|C| runtime bound is not explicitly polynomial in the input length. The empty-ballot branch likewise needs the no-outcome convention for k &gt; |C|.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The prover correctly establishes NP-completeness by exactly encoding multiplicities of identical unweighted ballots as rational masses. The normalization scales every marginal by the same positive factor, so all maximizing candidates and ties are preserved at every state. No approximation or continuity argument is used.</p><p>The proof has only a minor edge-case omission concerning encodings with \(k&gt;|C|\).</p><h3>Step-by-step audit</h3><h3>1. Marginal-contribution formula</h3><p>For \(c\notin S\), if \(c\in t\), adding \(c\) increases \(|t\cap S|\) by exactly one, so the harmonic-score increment is</p><p>\[
+\frac{1}{|t\cap S|+1}.
+\]</p><p>If \(c\notin t\), the increment is zero. The resulting formula for \(\Delta_\mu(c\mid S)\) is correct.</p><h3>2. Membership in NP</h3><p>An ordered sequence of distinct candidates correctly records all tie choices. Comparing its selected candidate with every remaining candidate at each step is exactly the condition for the sequence to be obtainable.</p><p>The exact-arithmetic argument is sound:</p><ul><li>Each denominator is \(q_t(|t\cap S|+1)\).</li><li>Products of polynomially many input denominators have polynomial bit length.</li><li>Sums and comparisons of the resulting rational numbers therefore take polynomial time.</li></ul><p>There is a minor encoding edge case. The claimed bound of at most \(k|C|\) comparisons is polynomial only after observing that a yes-instance must have \(k\leq |C|\), or after specifying that the verifier first rejects \(k&gt;|C|\). If \(k\) is binary encoded and unrestricted, the written runtime statement alone is not sufficient. This is a routine clarification and does not affect the substantive NP-membership argument.</p><h3>3. Construction of the reduction</h3><p>Grouping identical nonempty ballots and assigning mass \(\mu_t=n_t/N\) is valid:</p><ul><li>Every constructed type is nonempty.</li><li>The distinguished ballot is represented whenever \(A_{i^\star}\neq\varnothing\).</li><li>The masses are positive rationals summing to one.</li><li>There are at most \(n\) types.</li><li>Each mass has polynomial encoding length.</li></ul><p>The construction meets the target input format.</p><h3>4. Preservation of sequential choices</h3><p>The displayed identity</p><p>\[
+\Delta_\mu(c\mid S)=\frac{1}{N}\Delta_V(c\mid S)
+\]</p><p>is correct. Empty-ballot voters contribute zero, while grouping identical nonempty ballots reproduces their multiplicities exactly.</p><p>Because \(N\geq1\), multiplication by \(1/N\) preserves all strict comparisons and equalities. Thus it preserves the complete set of maximizers, including ties, at every state. The stated induction therefore establishes equality of all permitted ordered sequences and all obtainable size-\(k\) committees.</p><p>The distinguished-voter objective is also preserved because \(t^\star=A_{i^\star}\). Other voters having the same approval set does not change the set-intersection condition.</p><h3>5. Empty distinguished ballot</h3><p>When \(A_{i^\star}=\varnothing\), the target count is always zero. Under the standard condition \(0\leq k\leq |C|\), an outcome exists, so the source answer is determined by whether \(0\geq s\). Branching to fixed yes- and no-instances is a valid polynomial-time reduction.</p><p>The proposed fixed no-instance is indeed negative: the initial marginals are \(1/3\) for \(a\) and \(2/3\) for \(b\), so \(b\) is uniquely selected.</p><p>The write-up should explicitly state how malformed or unrestricted instances with \(k&gt;|C|\) are treated. The natural convention is that no size-\(k\) outcome exists, but the user task did not explicitly impose \(k\leq|C|\).</p><h3>Conclusion</h3><p>The reduction is exact, polynomial in size, and preserves both every sequential tie choice and the distinguished-type objective. Combined with the valid NP-membership argument, it establishes NP-completeness. The only identified defect is a routine input-domain clarification.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

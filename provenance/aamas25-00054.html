@@ -1,0 +1,84 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Towards Fair and Efficient Public Transportation: A Bus Stop Model — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Towards Fair and Efficient Public Transportation: A Bus Stop Model <span style="font-weight:normal;color:#8a7350">(aamas25-00054)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}complete}\), and hence \(\mathrm{NP\text{-}hard}\), even for any fixed rational \(\alpha\in[0,1)\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.5 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite \(V\subseteq\mathbb Q\), budget \(b\), \(\alpha\in[0,1)\), finite endpoint types \(\Theta\subseteq V^2\), and rational masses \(\mu\), output \(S\subseteq V\) with \(|S|\le b\) such that for every \(R\subseteq V\), \(\mu(\{\theta:c_\theta(R)&lt;c_\theta(S)\})&lt;2|R|/b\), where \(c_\theta(S)=\min\{r_\theta-\ell_\theta,\min_{x,y\in S}(|\ell_\theta-x|+\alpha|x-y|+|r_\theta-y|)\}\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given a finite \(V\subseteq\mathbb{Q}\), a finite type set \(T\subseteq\{(\ell,r)\in V^2:\ell&lt;r\}\), rational masses \((\mu_	heta)_{	heta\in T}\) summing to \(1\), rational \(\alpha\in[0,1)\), binary-encoded costs \(\gamma:V	o\mathbb{N}\), budget \(B\), and threshold \(q\), choose an integral set \(S\subseteq V\).<br>For \(	heta=(\ell,r)\), let \(c_	heta(S)=\min\{r-\ell,\min_{x,y\in S}(|\ell-x|+\alpha|x-y|+|r-y|)\}\), with \(c_	heta(\varnothing)=r-\ell\). A set is feasible if \(\sum_{v\in S}\gamma(v)\le B\).</p><p><b>Target.</b> Is deciding whether a feasible \(S\) satisfies \(\sum_{	heta\in T}\mu_	heta c_	heta(S)\le q\) NP-hard, or solvable in polynomial time?</p><p>For explicitly listed finite agents, the analogous problem with binary-encoded stop-construction costs is NP-complete for every fixed \(\alpha\in[0,1)\).<br>For uniform stop costs, minimum-total-cost bus-stop selection for finite agent lists is computable in polynomial time; this does not cover binary-encoded \(\gamma\).</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity Classification</h3><h3>Theorem</h3><p>The decision problem is \(\mathrm{NP}\)-complete. In particular, it is \(\mathrm{NP}\)-hard even when \(\alpha\) is fixed to any rational constant \(\alpha_0\in[0,1)\).</p><h3>Membership in \(\mathrm{NP}\)</h3><p>A certificate is the incidence vector of a set \(S\subseteq V\), whose length is \(\lvert V\rvert\).</p><p>First compute \(\sum_{v\in S}\gamma(v)\) and verify that it is at most \(B\). For every \(\theta=(\ell,r)\in T\), compute</p><p>\[
+c_\theta(S)=
+\min\left\{
+r-\ell,\;
+\min_{(x,y)\in S^2}
+\bigl(
+\lvert \ell-x\rvert+\alpha\lvert x-y\rvert+\lvert r-y\rvert
+\bigr)
+\right\}.
+\]</p><p>There are at most \(\lvert V\rvert^2\) ordered pairs \((x,y)\) for each type. Thus all values \(c_\theta(S)\) can be computed using \(O(\lvert T\rvert\lvert V\rvert^2)\) rational-arithmetic operations. When \(S=\varnothing\), the prescribed value \(c_\theta(S)=r-\ell\) is used directly.</p><p>All input numbers are binary-encoded rationals or integers. Addition, multiplication, absolute value, and comparison of the resulting rationals have polynomial bit complexity: the bit length of a common denominator obtained from polynomially many input rationals is at most the sum of their input bit lengths. Consequently, one can verify exactly whether</p><p>\[
+\sum_{\theta\in T}\mu_\theta c_\theta(S)\leq q
+\]</p><p>in polynomial time. Hence the problem belongs to \(\mathrm{NP}\).</p><h3>Reduction from Explicitly Listed Agents</h3><p>Use the premise that the analogous finite-agent problem with binary-encoded construction costs is \(\mathrm{NP}\)-complete for every fixed \(\alpha_0\in[0,1)\).</p><p>Fix such a rational \(\alpha_0\), for example \(\alpha_0=0\). Consider an instance of that finite-agent problem with agents</p><p>\[
+\theta_1,\ldots,\theta_n,
+\]</p><p>where every \(\theta_i=(\ell_i,r_i)\) belongs to \(\{(\ell,r)\in V^2:\ell&lt;r\}\). Suppose its objective is the unnormalized total cost</p><p>\[
+\sum_{i=1}^n c_{\theta_i}(S),
+\]</p><p>and its threshold is \(Q\).</p><p>For each distinct type \(\theta\) occurring among the agents, let</p><p>\[
+m_\theta=\bigl\lvert\{i:\theta_i=\theta\}\bigr\rvert.
+\]</p><p>Construct the type-mass instance by setting</p><p>\[
+T=\{\theta_i:1\leq i\leq n\},
+\qquad
+\mu_\theta=\frac{m_\theta}{n},
+\qquad
+q=\frac{Q}{n}.
+\]</p><p>Keep \(V\), \(\gamma\), \(B\), and \(\alpha_0\) unchanged. The masses are positive rationals satisfying</p><p>\[
+\sum_{\theta\in T}\mu_\theta
+=
+\frac{1}{n}\sum_{\theta\in T}m_\theta
+=
+1.
+\]</p><p>For every \(S\subseteq V\), repeated agents of the same type have the same travel cost. Therefore</p><p>\[
+\begin{aligned}
+\sum_{\theta\in T}\mu_\theta c_\theta(S)
+&amp;=
+\frac{1}{n}\sum_{\theta\in T}m_\theta c_\theta(S)\\
+&amp;=
+\frac{1}{n}\sum_{i=1}^n c_{\theta_i}(S).
+\end{aligned}
+\]</p><p>It follows that</p><p>\[
+\sum_{\theta\in T}\mu_\theta c_\theta(S)\leq q
+\quad\Longleftrightarrow\quad
+\sum_{i=1}^n c_{\theta_i}(S)\leq Q.
+\]</p><p>The feasible sets are identical because the construction costs and budget are unchanged. If the finite-agent formulation already uses average rather than total cost, one simply keeps its threshold unchanged.</p><p>The transformation is polynomial-time: \(\lvert T\rvert\leq n\), the multiplicities can be counted in polynomial time, and each rational \(m_\theta/n\) has polynomial encoding length.</p><p>Thus every finite-agent instance is represented exactly by a type-mass instance. The target problem is therefore \(\mathrm{NP}\)-hard, even for fixed \(\alpha_0\).</p><h3>Conclusion</h3><p>The rational type-mass representation does not remove the finite-agent hardness: explicitly listed agents can be grouped by type without changing the objective. Together with membership in \(\mathrm{NP}\), this proves \(\mathrm{NP}\)-completeness.</p><p>The polynomial-time result for uniform construction costs does not apply because the reduction retains arbitrary binary-encoded values of \(\gamma(v)\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The prover correctly establishes \( \mathrm{NP} \)-completeness, assuming the finite-agent hardness statement supplied in the task. The reduction is an exact aggregation of duplicate agent types and preserves feasibility and the decision threshold.</p><h3>Step-by-step audit</h3><ul><li><b>Membership in \( \mathrm{NP} \).</b></li></ul><p>A set \( S\subseteq V \) has an incidence-vector certificate of polynomial length. The budget can be checked exactly in polynomial time.</p><ul><li><b>Evaluation of individual costs.</b></li></ul><p>For each \( \theta\in T \), enumerating all ordered pairs in \( S^2 \) requires at most \( |V|^2 \) evaluations. The special case \( S=\varnothing \) is handled consistently with the definition.</p><ul><li><b>Exact rational arithmetic.</b></li></ul><p>Every evaluated expression uses polynomially many arithmetic operations on binary-encoded rationals. Numerator and denominator lengths remain polynomially bounded, so the weighted objective and comparison with \( q \) are exactly computable in polynomial time.</p><ul><li><b>Source problem.</b></li></ul><p>The reduction uses precisely the finite-agent \( \mathrm{NP} \)-completeness premise supplied in the task, retaining \( V \), \( \gamma \), \( B \), and the fixed rational value of \( \alpha \).</p><ul><li><b>Aggregation by type.</b></li></ul><p>Assigning \( \mu_\theta=m_\theta/n \) gives masses summing to \( 1 \). The displayed identity<br>\[
+   \sum_{\theta\in T}\mu_\theta c_\theta(S)
+   =
+   \frac{1}{n}\sum_{i=1}^n c_{\theta_i}(S)
+   \]<br>is correct because duplicate agents of the same type have identical costs.</p><ul><li><b>Threshold preservation.</b></li></ul><p>Setting \( q=Q/n \) makes the source and target objective inequalities equivalent for every \( S\subseteq V \). Feasibility is unchanged.</p><ul><li><b>Polynomial encoding.</b></li></ul><p>The number of distinct types is at most \( n \), multiplicities are computable in polynomial time, and each mass \( m_\theta/n \) has polynomial binary encoding length.</p><ul><li><b>Conclusion.</b></li></ul><p>Hardness holds even after fixing any rational \( \alpha_0\in[0,1) \), while membership in \( \mathrm{NP} \) holds for the general input problem. Thus the claimed \( \mathrm{NP} \)-completeness follows.</p><p>No substantive gaps, false statements, or unverified applications remain.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,96 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Distance Preservation Games — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Distance Preservation Games <span style="font-weight:normal;color:#8a7350">(ijcai25-00415)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\)-complete, and therefore \(\mathrm{NP}\)-hard</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 6(ii) — class: hardness</p>
+<blockquote class="thmq">Given a DPG I and value q ∈Q, it is NP- complete to decide whether there is a location profile A such that SWI(A) ≥q even if I is (i) a path DPG or (ii) an ene- mies and neutrals DPG.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite type set \(T\), rational masses \(\mu_t\ge 0\) with \(\sum_{t\in T}\mu_t=1\), an undirected graph \(E\subseteq\binom{T}{2}\), and rational \(q\), each type \(t\) is an atomless mass \(\mu_t\); every member of type \(t\) has ideal distance \(1\) to every member of type \(u\) iff \(\{t,u\}\in E\), and is neutral otherwise. Choose a probability measure \(\lambda_t\) on \([0,1]\) for each type&#x27;s locations and decide whether there exist \((\lambda_t)_{t\in T}\) with normalized welfare \(\operatorname{SW}(\lambda)=2\sum_{\{t,u\}\in E}\mu_t\mu_u\int_{[0,1]^2}|x-y|\,d\lambda_t(x)\,d\lambda_u(y)\ge q\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> An instance consists of a finite set \(T\), rational masses \(\mu_t\ge 0\) with \(\sum_{t\in T}\mu_t=1\), an undirected enemy graph \(F\) on \(T\), and \(q\in\mathbb{Q}\). A solution assigns each type \(t\) a Borel probability measure \(\lambda_t\) on \([0,1]\). For every \(\{t,u\}\in F\), let \(X_t\sim\lambda_t\) and \(X_u\sim\lambda_u\) be independent. Its score is \(2\sum_{\{t,u\}\in F}\mu_t\mu_u\mathbb{E}[|X_t-X_u|]\).</p><p><b>Target.</b> Is deciding whether there exist \((\lambda_t)_{t\in T}\) with score at least \(q\) solvable in polynomial time, or is it NP-hard?</p><p><b>Known results.</b> For the finite-agent enemies-and-neutrals location problem, where every enemy pair mutually has ideal distance \(1\) and agents choose deterministic locations in \([0,1]\), the welfare-threshold problem is NP-complete. The result above permits distributions over locations for type masses rather than one deterministic location per agent.</p></div>
+<h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity Classification</h3><h3>Theorem</h3><p>The distributional welfare-threshold problem is \(\mathrm{NP}\)-complete, and hence \(\mathrm{NP}\)-hard. This remains true when all masses are equal.</p><p>More precisely, its optimum equals</p><p>\[
+\max_{S\subseteq T} 2\sum_{\{t,u\}\in F:\,|\{t,u\}\cap S|=1}\mu_t\mu_u,
+\]</p><p>so the problem is exactly a weighted \(\mathrm{MaxCut}\) problem.</p><h3>Step 1: Randomization does not improve the optimum</h3><p>For a deterministic location vector \(x=(x_t)_{t\in T}\in[0,1]^T\), define</p><p>\[
+W(x)=2\sum_{\{t,u\}\in F}\mu_t\mu_u|x_t-x_u|.
+\]</p><p>Let \((\lambda_t)_{t\in T}\) be any feasible collection of Borel probability measures. Because \(T\) is finite, their product measure exists. Thus we may simultaneously sample mutually independent random variables \(X_t\sim\lambda_t\).</p><p>Linearity of expectation gives</p><p>\[
+\mathbb{E}[W(X)]
+=
+2\sum_{\{t,u\}\in F}\mu_t\mu_u\mathbb{E}[|X_t-X_u|],
+\]</p><p>which is exactly the score of \((\lambda_t)_{t\in T}\).</p><p>The function \(W\) is continuous on the compact set \([0,1]^T\), so it has a maximum \(M_{\mathrm{det}}\). Since \(W(X)\le M_{\mathrm{det}}\) pointwise,</p><p>\[
+\operatorname{score}((\lambda_t)_{t\in T})
+=
+\mathbb{E}[W(X)]
+\le M_{\mathrm{det}}.
+\]</p><p>Conversely, every deterministic vector \(x\) is represented by the point masses \(\lambda_t=\delta_{x_t}\). Therefore</p><p>\[
+\sup_{(\lambda_t)}\operatorname{score}((\lambda_t))
+=
+\max_{x\in[0,1]^T}W(x).
+\]</p><p>Thus arbitrary probability measures give no advantage over deterministic locations.</p><h3>Step 2: Every deterministic solution can be replaced by an endpoint cut</h3><p>For \(a,b\in[0,1]\), the layer-cake identity states</p><p>\[
+|a-b|
+=
+\int_0^1
+\left|
+\mathbf{1}_{\{a&gt;s\}}-\mathbf{1}_{\{b&gt;s\}}
+\right|\,ds.
+\]</p><p>Fix \(x\in[0,1]^T\), and for each \(s\in[0,1]\) define</p><p>\[
+S_s=\{t\in T:x_t&gt;s\}.
+\]</p><p>Let the weighted cut value of \(S\subseteq T\) be</p><p>\[
+C(S)
+=
+2\sum_{\{t,u\}\in F:\,|\{t,u\}\cap S|=1}\mu_t\mu_u.
+\]</p><p>Applying the layer-cake identity to every edge and interchanging the finite sum with the integral yields</p><p>\[
+W(x)=\int_0^1 C(S_s)\,ds.
+\]</p><p>Consequently,</p><p>\[
+W(x)\le\max_{S\subseteq T}C(S).
+\]</p><p>Conversely, for any \(S\subseteq T\), place every \(t\in S\) at \(1\) and every \(t\notin S\) at \(0\). The resulting deterministic score is exactly \(C(S)\). Hence</p><p>\[
+\max_{x\in[0,1]^T}W(x)
+=
+\max_{S\subseteq T}C(S).
+\]</p><p>Combining Steps 1 and 2 proves that an optimal distributional solution always consists of point masses supported on \(\{0,1\}\).</p><h3>Step 3: Membership in \(\mathrm{NP}\)</h3><p>The preceding equality shows that the answer is yes if and only if there exists a subset \(S\subseteq T\) satisfying \(C(S)\ge q\).</p><p>A certificate is therefore the bit vector specifying \(S\). Its length is \(|T|\). Given \(S\), one can compute</p><p>\[
+C(S)=2\sum_{\{t,u\}\in\delta(S)}\mu_t\mu_u
+\]</p><p>and compare it with \(q\) using exact rational arithmetic. The number of arithmetic operations and the resulting numerator and denominator bit lengths are polynomial in the binary input length. Thus the problem belongs to \(\mathrm{NP}\).</p><h3>Step 4: \(\mathrm{NP}\)-hardness</h3><p>Reduce from the standard \(\mathrm{MaxCut}\) decision problem. Let \((G=(V,E),K)\) be an instance with \(n=|V|\ge1\). Construct the distributional instance by setting</p><p>\[
+T=V,\qquad F=E,\qquad \mu_t=\frac1n\ \text{for every }t\in T,
+\qquad q=\frac{2K}{n^2}.
+\]</p><p>The masses are nonnegative and sum to \(1\). For every \(S\subseteq V\),</p><p>\[
+C(S)
+=
+2\sum_{\{t,u\}\in\delta_G(S)}\frac1n\frac1n
+=
+\frac{2|\delta_G(S)|}{n^2}.
+\]</p><p>Therefore,</p><p>\[
+C(S)\ge q
+\quad\Longleftrightarrow\quad
+|\delta_G(S)|\ge K.
+\]</p><p>By Steps 1 and 2, the constructed distributional instance has score at least \(q\) if and only if \(G\) has a cut containing at least \(K\) edges. The construction and the rational threshold have polynomial encoding length. This is a polynomial-time many-one reduction from \(\mathrm{MaxCut}\).</p><h3>Conclusion</h3><p>The problem is \(\mathrm{NP}\)-complete. The important point is that merely observing that deterministic placements are feasible distributional placements would not suffice for hardness: randomization might, a priori, turn deterministic no-instances into yes-instances. Steps 1 and 2 rule this out by proving exact equality of the distributional, deterministic, and cut optima.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-5.6-sol / high, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification Report</h3><h3>Overall assessment</h3><p>The prover fully resolves the target. The reduction of the distributional optimization problem to weighted \(\mathrm{MaxCut}\) is correct, and both membership in \(\mathrm{NP}\) and \(\mathrm{NP}\)-hardness are rigorously established.</p><h3>Step-by-step verification</h3><ul><li><b>Coupling the distributions.</b> Since \(T\) is finite, the finite product of the Borel probability measures \((\lambda_t)_{t\in T}\) exists. Sampling from this product produces mutually independent variables with the prescribed marginals, which is compatible with the pairwise independence required in the score definition.</li></ul><ul><li><b>Expectation identity.</b> Substituting the sampled vector \(X\) into \(W\) and applying linearity of expectation gives exactly the distributional score. The edge set is finite, so no integrability or interchange issue arises.</li></ul><ul><li><b>Randomization cannot improve the optimum.</b> Continuity of \(W\) on compact \([0,1]^T\) guarantees a deterministic maximizer. The pointwise inequality \(W(X)\le M_{\mathrm{det}}\) therefore implies the corresponding expectation bound. Conversely, every deterministic placement is represented by Dirac measures. Thus the distributional and deterministic optima agree. Although the display initially uses a supremum over measures, the deterministic maximizer also shows that this supremum is attained.</li></ul><ul><li><b>Layer-cake representation.</b> The identity</li></ul><p>\[
+   |a-b|=\int_0^1\left|\mathbf 1_{\{a&gt;s\}}-\mathbf 1_{\{b&gt;s\}}\right|\,ds
+   \]<br>is valid for all \(a,b\in[0,1]\). The use of strict inequality affects only measure-zero threshold values and creates no problem.</p><ul><li><b>Reduction to cuts.</b> Applying the identity edgewise yields \(W(x)=\int_0^1C(S_s)\,ds\). Since the integration interval has length \(1\), this gives \(W(x)\le\max_SC(S)\). Conversely, the endpoint placement associated with any cut \(S\) has score exactly \(C(S)\). Hence the deterministic optimum is precisely the maximum weighted cut value.</li></ul><ul><li><b>Membership in \(\mathrm{NP}\).</b> A cut \(S\) is a polynomial-length certificate. Products and sums of binary-encoded rational masses can be computed and compared with \(q\) in polynomial time; the accumulated numerator and denominator lengths remain polynomial in the total input length.</li></ul><ul><li><b>Hardness reduction.</b> For a \(\mathrm{MaxCut}\) instance with \(n\ge1\), assigning every vertex mass \(1/n\) satisfies the mass constraint and gives</li></ul><p>\[
+   C(S)=\frac{2|\delta_G(S)|}{n^2}.
+   \]<br>With \(q=2K/n^2\), the threshold condition is exactly equivalent to the existence of a cut with at least \(K\) edges. The construction and all rational encodings have polynomial size.</p><ul><li><b>Conclusion.</b> The established equivalence with \(\mathrm{MaxCut}\), together with the certificate argument, proves \(\mathrm{NP}\)-completeness. No unjustified nontrivial steps, missing hypotheses, or edge-case failures were found.</li></ul><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>
