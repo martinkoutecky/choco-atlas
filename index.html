@@ -8,11 +8,40 @@
  :root { --ink: #2e2416; --paper: #f2e8d0; --line: #8a7350; }
  * { box-sizing: border-box; }
  body { margin: 0; background: var(--paper); color: var(--ink); font-family: Georgia, 'Iowan Old Style', serif; }
- header { display: flex; align-items: baseline; gap: 2em; padding: .8em 1.4em; border-bottom: 3px double var(--line); }
+ header { display: flex; align-items: baseline; gap: 2em; padding: .8em 1.4em; background: #0b0e1a; border-bottom: 1px solid #2a3350; }
+ header h1 { color: #e8ecf8; }
  header h1 { font-size: 1.25em; margin: 0; letter-spacing: 4px; }
- nav a { color: #5a4632; margin-right: 1.4em; cursor: pointer; text-decoration: none; border-bottom: 1px dotted #5a4632; }
- nav a.on { font-weight: bold; border-bottom: 2px solid var(--line); }
+ nav a { color: #8fa0c8; margin-right: 1.4em; cursor: pointer; text-decoration: none; border-bottom: 1px dotted #4a5578; }
+ nav a.on { font-weight: bold; color: #e8ecf8; border-bottom: 2px solid #c9b458; }
  .tab { display: none; padding: .5em 1.4em 1em; } .tab.on { display: block; }
+ #tab-sky { background: #0b0e1a; color: #aab3cf; }
+ .sky-funnel { padding: .65em 0 .8em; }
+ .sky-funnel h2 { color: #e8ecf8; font: bold 1em Arial, sans-serif; letter-spacing: .4px; margin: .25em 0 .55em; }
+ .sky-frow { margin: 0 0 .58em; }
+ .sky-flabel { color: #aab3cf; font: .82em Arial, sans-serif; margin-bottom: .16em; }
+ .sky-fbar { display: flex; width: 100%; height: 18px; background: #151a2a; overflow: hidden; }
+ .sky-fbar span { display: block; min-width: 2px; }
+ .sky-fbar .sky-unused { background: #151a2a; min-width: 0; }
+ .sky-fkeys { display: flex; flex-wrap: wrap; gap: .15em 2em; margin-top: .18em;
+   font: bold .72em Arial, sans-serif; }
+ .sky-foot { color: #7d88a6; font: italic .72em Arial, sans-serif; margin: .2em 0 0; }
+ #skywrap { position: relative; width: 100%; height: 70vh; min-height: 420px; background: #0b0e1a; }
+ #skycanvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
+ #skycanvas.dragging { cursor: grabbing; }
+ #skytip { position: absolute; display: none; max-width: min(28em, 82vw); padding: .5em .65em;
+   background: rgba(17,22,39,.96); border: 1px solid #4f5b8a; color: #d8deef;
+   font: .78em/1.35 Arial, sans-serif; pointer-events: none; z-index: 5; box-shadow: 0 3px 14px #05070d; }
+ #skytip i { color: #8fa0c8; }
+ .sky-legend { display: grid; grid-template-columns: repeat(2, minmax(13em, max-content)); gap: .35em 2em;
+   color: #aab3cf; font: .78em Arial, sans-serif; margin: .7em 0; }
+ .sky-legend span::before { content: ''; display: inline-block; width: .68em; height: .68em;
+   border-radius: 50%; background: var(--sky-col); margin-right: .65em; box-shadow: 0 0 5px var(--sky-col); }
+ .sky-caption { color: #7d88a6; font: .78em/1.45 Arial, sans-serif; margin: .65em 0 .15em; }
+ @media (max-width: 650px) {
+   .sky-legend { grid-template-columns: 1fr; }
+   .sky-fkeys { column-gap: 1em; }
+   #skywrap { min-height: 340px; }
+ }
  /* fill the screen but never overflow it: the canvas is 1250x880, so width is capped
     by both the viewport width and (aspect x usable height below the header). */
  #mapwrap { width: min(92vw, 124vh, 2400px); margin: 0 auto; }
@@ -129,10 +158,27 @@
  .townwrap { overflow-x: auto; }
 </style></head><body>
 <header><h1>THE CHOCO ATLAS</h1>
- <nav><a id="t-map" class="on" onclick="showTab('map')">The Map</a><a id="t-papers" onclick="showTab('papers')">The Papers</a><a id="t-town" onclick="showTab('town')">The Bribery Town</a><a id="t-lean" onclick="showTab('lean')">The Foundations</a><a id="t-about" onclick="showTab('about')">About &amp; Method</a></nav>
+ <nav><a id="t-sky" class="on" onclick="showTab('sky')">From Space</a><a id="t-map" onclick="showTab('map')">The Map</a><a id="t-papers" onclick="showTab('papers')">The Papers</a><a id="t-town" onclick="showTab('town')">The Bribery Town</a><a id="t-lean" onclick="showTab('lean')">The Foundations</a><a id="t-about" onclick="showTab('about')">About &amp; Method</a></nav>
 </header>
 
-<div id="tab-map" class="tab on">
+<div id="tab-sky" class="tab on">
+ <div class="sky-funnel"><h2>THE CHOCO PIPELINE — counts as of 2026-08-21 (AI labels, preliminary)</h2><div class="sky-frow"><div class="sky-flabel">the field (candidate corpus, OpenAlex 1980–) (of 13,693)</div><div class="sky-fbar"><span style="width:89.6443%;background:#232a40"></span><span style="width:10.3557%;background:#4f5b8a"></span></div><div class="sky-fkeys"><span style="color:#8fa0c8">12,275 awaiting</span><span style="color:#4f5b8a">1,418 pulled into the pipeline</span></div></div><div class="sky-frow"><div class="sky-flabel">screened: is it ComSoC? (of 1,418)</div><div class="sky-fbar"><span style="width:47.3202%;background:#4f5b8a"></span><span style="width:5.3597%;background:#8a86b8"></span><span style="width:47.3202%;background:#c9b458"></span></div><div class="sky-fkeys"><span style="color:#4f5b8a">671 not ComSoC</span><span style="color:#8a86b8">76 borderline</span><span style="color:#c9b458">671 ComSoC</span></div></div><div class="sky-frow"><div class="sky-flabel">judged: does it continuize? (of 747)</div><div class="sky-fbar"><span style="width:20.5959%;background:#6b6430"></span><span style="width:11.1399%;background:#4f5b8a"></span><span style="width:20.7254%;background:#e05555"></span><span style="width:0.6477%;background:#e09a3c"></span><span style="width:43.6528%;background:#37d67a"></span><span style="width:3.2383%;background:#8a86b8"></span></div><div class="sky-fkeys"><span style="color:#6b6430">159 awaiting</span><span style="color:#4f5b8a">86 judged not-ComSoC</span><span style="color:#e05555">160 red</span><span style="color:#e09a3c">5 orange</span><span style="color:#37d67a">337 green</span><span style="color:#8a86b8">25 judged in earlier waves</span></div></div><div class="sky-frow"><div class="sky-flabel">green anchors (of 351)</div><div class="sky-fbar"><span style="width:64.3875%;background:#2f9c5c"></span><span style="width:32.4786%;background:#b04a4a"></span><span style="width:3.1339%;background:#666b75"></span><span style="width:0.0000%;background:#8a86b8"></span></div><div class="sky-fkeys"><span style="color:#2f9c5c">226 algorithmic</span><span style="color:#b04a4a">114 hardness</span><span style="color:#666b75">11 other</span><span style="color:#8a86b8">0 unknown (older judge schema)</span></div></div><div class="sky-frow"><div class="sky-flabel">the mirror (of 351)</div><div class="sky-fbar"><span style="width:49.8575%;background:#b8973b"></span><span style="width:4.8433%;background:#37d67a"></span><span style="width:0.2849%;background:#7df9c9"></span><span class="sky-unused" style="width:45.0142%"></span></div><div class="sky-fkeys"><span style="color:#b8973b">175 prove-attempted</span><span style="color:#37d67a">17 curated claims</span><span style="color:#7df9c9">1 machine-verified (Lean) ★</span></div></div><p class="sky-foot">188 prove runs total across all waves; 175 on currently-green papers.</p></div>
+ <div id="skywrap">
+  <canvas id="skycanvas" aria-label="Night map of the computational social choice paper corpus"></canvas>
+  <div id="skytip"></div>
+ </div>
+ <div class="sky-legend">
+  <span style="--sky-col:#3a4258">not yet surveyed</span>
+  <span style="--sky-col:#e05555">does not continuize</span>
+  <span style="--sky-col:#4f5b8a">screened, not ComSoC</span>
+  <span style="--sky-col:#37d67a">continuizes (green)</span>
+  <span style="--sky-col:#c9b458">ComSoC, awaiting judgment</span>
+  <span style="--sky-col:#7df9c9">mirror theorem attempted/held</span>
+ </div>
+ <p class="sky-caption">One dot = one paper; positions from title embeddings (OpenAlex, N=14,917). The pipeline surveys in transects — venue by venue, year by year — so light spreads across the whole field, not one region. AI labels, preliminary. Data updates with every build.</p>
+</div>
+
+<div id="tab-map" class="tab">
  <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5em">
   <p class="aggs" style="margin:.15em 0">351/527 papers continuizable (66%) · 199 carry a hardness result · new results: 143/176 mirrors attempted (81%) · complexity drops: 34/132 settled hardness mirrors (+5 encoding-dependent)</p>
   <span onclick="mapReset()" title="scroll to zoom, drag to pan" style="border:1px solid var(--line);padding:.1em .6em;cursor:pointer;font-size:.85em;color:#5a4632">reset view</span>
@@ -1159,8 +1205,196 @@ function rmath(el) {
 }
 document.addEventListener('DOMContentLoaded', () => rmath(document.body));
 
+const SKY_STYLE = {
+  unlit:        {color:'#3a4258', radius:1.25, order:0},
+  screened_out: {color:'#4f5b8a', radius:1.7,  order:1},
+  comsoc:       {color:'#c9b458', radius:2.25, order:2},
+  red:          {color:'#e05555', radius:2.8,  order:3},
+  orange:       {color:'#e09a3c', radius:2.8,  order:4},
+  green:        {color:'#37d67a', radius:2.8,  order:5},
+  proved:       {color:'#7df9c9', radius:3.7,  order:6}
+};
+const SKY_STATUS = {
+  unlit:'not yet surveyed', screened_out:'screened, not ComSoC',
+  comsoc:'ComSoC, awaiting judgment', red:'does not continuize',
+  orange:'orange — needs human judgment', green:'continuizes (green)',
+  proved:'mirror theorem attempted/held'
+};
+let SKY = null, skyCtx = null, skyGrid = new Map(), skyFrame = 0;
+let skyW = 0, skyH = 0, skyDpr = 1, skyBase = 1;
+let skyView = {zoom:1, panX:0, panY:0, cx:0, cy:0};
+let skyDrag = null;
+
+function skyMedian(values) {
+  values.sort((a,b) => a-b);
+  const m = Math.floor(values.length / 2);
+  return values.length % 2 ? values[m] : (values[m-1] + values[m]) / 2;
+}
+function skyPrepare(points) {
+  const xs = points.map(p => p.x), ys = points.map(p => p.y);
+  const topics = new Map();
+  points.forEach(p => {
+    if (!p.topic) return;
+    if (!topics.has(p.topic)) topics.set(p.topic, {xs:[], ys:[]});
+    topics.get(p.topic).xs.push(p.x); topics.get(p.topic).ys.push(p.y);
+  });
+  const labels = [...topics.entries()].sort((a,b) => b[1].xs.length-a[1].xs.length).slice(0,7)
+    .map(([name,v]) => ({name, x:skyMedian(v.xs), y:skyMedian(v.ys)}));
+  SKY = {
+    points, labels,
+    minX:Math.min(...xs), maxX:Math.max(...xs), minY:Math.min(...ys), maxY:Math.max(...ys),
+    draw:[...points].sort((a,b) => SKY_STYLE[a.status].order-SKY_STYLE[b.status].order)
+  };
+  skyView.cx = (SKY.minX + SKY.maxX) / 2;
+  skyView.cy = (SKY.minY + SKY.maxY) / 2;
+  skyView.zoom = 1; skyView.panX = 0; skyView.panY = 0;
+}
+function skyWorldAt(sx, sy) {
+  return {x:skyView.cx + (sx-skyW/2-skyView.panX)/(skyBase*skyView.zoom),
+          y:skyView.cy + (sy-skyH/2-skyView.panY)/(skyBase*skyView.zoom)};
+}
+function skyScreen(p) {
+  return {x:(p.x-skyView.cx)*skyBase*skyView.zoom + skyW/2 + skyView.panX,
+          y:(p.y-skyView.cy)*skyBase*skyView.zoom + skyH/2 + skyView.panY};
+}
+function skyResize() {
+  const canvas = document.getElementById('skycanvas');
+  if (!canvas) return;
+  const oldCenter = SKY && skyW ? skyWorldAt(skyW/2, skyH/2) : null;
+  const rect = canvas.getBoundingClientRect();
+  skyW = Math.max(1, Math.round(rect.width)); skyH = Math.max(1, Math.round(rect.height));
+  skyDpr = Math.max(1, window.devicePixelRatio || 1);
+  canvas.width = Math.round(skyW * skyDpr); canvas.height = Math.round(skyH * skyDpr);
+  skyCtx = canvas.getContext('2d');
+  if (SKY) {
+    skyBase = Math.min((skyW-40)/Math.max(SKY.maxX-SKY.minX,1),
+                       (skyH-40)/Math.max(SKY.maxY-SKY.minY,1));
+    if (oldCenter) {
+      skyView.panX = -(oldCenter.x-skyView.cx)*skyBase*skyView.zoom;
+      skyView.panY = -(oldCenter.y-skyView.cy)*skyBase*skyView.zoom;
+    }
+  }
+  skyDrawSoon();
+}
+function skyDrawSoon() {
+  if (skyFrame) return;
+  skyFrame = requestAnimationFrame(() => { skyFrame = 0; skyDraw(); });
+}
+function skyCircle(ctx, x, y, r) {
+  ctx.moveTo(x+r,y); ctx.arc(x,y,r,0,Math.PI*2);
+}
+function skyDraw() {
+  if (!skyCtx || !skyW || !skyH) return;
+  const ctx = skyCtx;
+  ctx.setTransform(skyDpr,0,0,skyDpr,0,0);
+  ctx.clearRect(0,0,skyW,skyH); ctx.fillStyle='#0b0e1a'; ctx.fillRect(0,0,skyW,skyH);
+  if (!SKY) return;
+  skyGrid = new Map();
+  const visible = [];
+  SKY.draw.forEach(p => {
+    const s=skyScreen(p), sty=SKY_STYLE[p.status];
+    if (s.x < -10 || s.x > skyW+10 || s.y < -10 || s.y > skyH+10) return;
+    visible.push([p,s,sty]);
+    const key=Math.floor(s.x/16)+','+Math.floor(s.y/16);
+    if (!skyGrid.has(key)) skyGrid.set(key,[]);
+    skyGrid.get(key).push([p,s]);
+  });
+  // A cheap, low-alpha halo pass gives lit points a glow without 15k shadowBlur calls.
+  ctx.globalAlpha=.14;
+  for (const [p,s,sty] of visible) {
+    if (!['red','orange','green','proved'].includes(p.status)) continue;
+    ctx.beginPath(); ctx.fillStyle=sty.color; skyCircle(ctx,s.x,s.y,sty.radius*2.8); ctx.fill();
+  }
+  ctx.globalAlpha=1;
+  for (const [p,s,sty] of visible) {
+    ctx.beginPath(); ctx.fillStyle=sty.color; skyCircle(ctx,s.x,s.y,sty.radius); ctx.fill();
+  }
+  if (skyView.zoom <= 2.5) skyDrawLabels(ctx);
+}
+function skyDrawLabels(ctx) {
+  ctx.font='small-caps bold 13px Georgia, serif'; ctx.letterSpacing='2px';
+  ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.lineJoin='round';
+  const placed=[];
+  for (const lab of SKY.labels) {
+    const s=skyScreen(lab);
+    let name=lab.name;
+    if (name.length > 34) name=name.slice(0,31)+'…';
+    const w=ctx.measureText(name).width;
+    let y=s.y, tries=0;
+    while (placed.some(q => Math.abs(s.x-q.x) < (w+q.w)/2+8 && Math.abs(y-q.y) < 14) && tries++ < 18) y += 14;
+    if (s.x < -w || s.x > skyW+w || y < -12 || y > skyH+12) continue;
+    placed.push({x:s.x,y,w});
+    ctx.strokeStyle='rgba(3,5,12,.9)'; ctx.lineWidth=4; ctx.strokeText(name,s.x,y);
+    ctx.fillStyle='rgba(196,210,245,.96)'; ctx.fillText(name,s.x,y);
+  }
+}
+function skyNearest(sx, sy) {
+  const gx=Math.floor(sx/16), gy=Math.floor(sy/16); let best=null, bd=64;
+  for (let dx=-1;dx<=1;dx++) for (let dy=-1;dy<=1;dy++) {
+    for (const item of (skyGrid.get((gx+dx)+','+(gy+dy)) || [])) {
+      const d=(item[1].x-sx)**2+(item[1].y-sy)**2;
+      if (d <= bd) { bd=d; best=item[0]; }
+    }
+  }
+  return best;
+}
+function skyHover(evt) {
+  const canvas=document.getElementById('skycanvas'), wrap=document.getElementById('skywrap');
+  const rect=canvas.getBoundingClientRect(), p=skyNearest(evt.clientX-rect.left,evt.clientY-rect.top);
+  const tip=document.getElementById('skytip');
+  if (!p) { tip.style.display='none'; return; }
+  tip.innerHTML='<b>'+esc(p.title)+'</b><br>'+esc(p.year || 'year unknown')+' · '+esc(p.topic || 'topic unclassified')+
+    '<br><i>'+esc(SKY_STATUS[p.status] || p.status)+(p.dossier?' · click for dossier':'')+'</i>';
+  tip.style.display='block';
+  let left=evt.clientX-wrap.getBoundingClientRect().left+12, top=evt.clientY-wrap.getBoundingClientRect().top+12;
+  left=Math.min(left,wrap.clientWidth-tip.offsetWidth-8); top=Math.min(top,wrap.clientHeight-tip.offsetHeight-8);
+  tip.style.left=Math.max(8,left)+'px'; tip.style.top=Math.max(8,top)+'px';
+}
+function initSky() {
+  const canvas=document.getElementById('skycanvas');
+  canvas.addEventListener('pointerdown', evt => {
+    canvas.setPointerCapture(evt.pointerId); canvas.classList.add('dragging');
+    skyDrag={x:evt.clientX,y:evt.clientY,moved:false}; document.getElementById('skytip').style.display='none';
+  });
+  canvas.addEventListener('pointermove', evt => {
+    if (!skyDrag) { skyHover(evt); return; }
+    const dx=evt.clientX-skyDrag.x, dy=evt.clientY-skyDrag.y;
+    skyView.panX+=dx; skyView.panY+=dy; skyDrag.x=evt.clientX; skyDrag.y=evt.clientY;
+    if (Math.abs(dx)+Math.abs(dy)>1) skyDrag.moved=true;
+    skyDrawSoon();
+  });
+  canvas.addEventListener('pointerleave', () => { if (!skyDrag) document.getElementById('skytip').style.display='none'; });
+  canvas.addEventListener('pointerup', evt => {
+    const moved=skyDrag && skyDrag.moved; skyDrag=null; canvas.classList.remove('dragging');
+    if (!moved) {
+      const rect=canvas.getBoundingClientRect(), p=skyNearest(evt.clientX-rect.left,evt.clientY-rect.top);
+      if (p && p.dossier && p.slug) window.location.href='papers/'+encodeURIComponent(p.slug)+'.html';
+    }
+  });
+  canvas.addEventListener('wheel', evt => {
+    evt.preventDefault();
+    const rect=canvas.getBoundingClientRect(), sx=evt.clientX-rect.left, sy=evt.clientY-rect.top;
+    const world=skyWorldAt(sx,sy), next=Math.max(.65,Math.min(12,skyView.zoom*Math.exp(-evt.deltaY*.001)));
+    skyView.zoom=next;
+    skyView.panX=sx-skyW/2-(world.x-skyView.cx)*skyBase*next;
+    skyView.panY=sy-skyH/2-(world.y-skyView.cy)*skyBase*next;
+    document.getElementById('skytip').style.display='none'; skyDrawSoon();
+  }, {passive:false});
+  fetch('sky.json').then(r => {
+    if (!r.ok) throw new Error('HTTP '+r.status);
+    return r.json();
+  }).then(points => { skyPrepare(points); skyResize(); })
+    .catch(err => {
+      const tip=document.getElementById('skytip'); tip.textContent='Night-map data could not be loaded: '+err;
+      tip.style.display='block'; tip.style.left='1em'; tip.style.top='1em';
+    });
+  skyResize();
+}
+window.addEventListener('resize', skyResize);
+initSky();
+
 function showTab(t) {
-  for (const id of ['map','papers','town','lean','about']) {
+  for (const id of ['sky','map','papers','town','lean','about']) {
     document.getElementById('tab-' + id).classList.toggle('on', id === t);
     document.getElementById('t-' + id).classList.toggle('on', id === t);
   }
@@ -1169,6 +1403,7 @@ function showTab(t) {
   if (t === 'map' || t === 'papers')
     document.getElementById('fbslot-' + t).appendChild(document.getElementById('filterbar'));
   if (t === 'map') fitMap();
+  if (t === 'sky') requestAnimationFrame(skyResize);
   closePanel();
 }
 // The whole map must be on screen at load (no scrolling to see the coastline):
@@ -1535,5 +1770,5 @@ function sortT(i) {
   ).forEach(r => tb.appendChild(r));
 }
 </script>
-<footer>Generated 2026-08-20 by tools/atlas_build.py (pipeline commit d9d7a3f) from runs triple__gpt-5.6-terra__high__ctx2r8-rejudge1 + proveR2,proveC2r1,proveW1,proveW2,proveW3,proveW4,proveW5 · 351/613 papers green · 143 mirror results proven and adversarially reviewed · map background hand-drawn once; everything else is artifacts.</footer>
+<footer>Generated 2026-08-21 by tools/atlas_build.py (pipeline commit 7a90ce6+dirty) from runs triple__gpt-5.6-terra__high__ctx2r8-rejudge1 + proveR2,proveC2r1,proveW1,proveW2,proveW3,proveW4,proveW5 · 351/613 papers green · 143 mirror results proven and adversarially reviewed · map background hand-drawn once; everything else is artifacts.</footer>
 </body></html>
