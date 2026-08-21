@@ -1309,23 +1309,25 @@ function skyDraw() {
   for (const [p,s,sty] of visible) {
     ctx.beginPath(); ctx.fillStyle=sty.color; skyCircle(ctx,s.x,s.y,sty.radius); ctx.fill();
   }
-  if (skyView.zoom <= 2.5) skyDrawLabels(ctx);
+  skyDrawLabels(ctx);
 }
 function skyDrawLabels(ctx) {
-  ctx.font='small-caps bold 13px Georgia, serif'; ctx.letterSpacing='2px';
+  const labAlpha = skyView.zoom > 2.5 ? Math.max(.3, .92 - (skyView.zoom-2.5)*.18) : .92;
+  ctx.font='12px Georgia, serif'; ctx.letterSpacing='3px';
   ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.lineJoin='round';
   const placed=[];
   for (const lab of SKY.labels) {
     const s=skyScreen(lab);
     let name=lab.name;
     if (name.length > 34) name=name.slice(0,31)+'…';
+    name='· '+name.toUpperCase()+' ·';
     const w=ctx.measureText(name).width;
     let y=s.y, tries=0;
     while (placed.some(q => Math.abs(s.x-q.x) < (w+q.w)/2+8 && Math.abs(y-q.y) < 14) && tries++ < 18) y += 14;
     if (s.x < -w || s.x > skyW+w || y < -12 || y > skyH+12) continue;
     placed.push({x:s.x,y,w});
-    ctx.strokeStyle='rgba(3,5,12,.9)'; ctx.lineWidth=4; ctx.strokeText(name,s.x,y);
-    ctx.fillStyle='rgba(196,210,245,.96)'; ctx.fillText(name,s.x,y);
+    ctx.strokeStyle='rgba(3,5,12,.85)'; ctx.lineWidth=4; ctx.strokeText(name,s.x,y);
+    ctx.fillStyle='rgba(216,203,168,'+labAlpha+')'; ctx.fillText(name,s.x,y);
   }
 }
 function skyNearest(sx, sy) {
@@ -1770,5 +1772,5 @@ function sortT(i) {
   ).forEach(r => tb.appendChild(r));
 }
 </script>
-<footer>Generated 2026-08-21 by tools/atlas_build.py (pipeline commit c50c885) from runs triple__gpt-5.6-terra__high__ctx2r8-rejudge1 + proveR2,proveC2r1,proveW1,proveW2,proveW3,proveW4,proveW5 · 351/613 papers green · 143 mirror results proven and adversarially reviewed · map background hand-drawn once; everything else is artifacts.</footer>
+<footer>Generated 2026-08-21 by tools/atlas_build.py (pipeline commit 1e9eeea) from runs triple__gpt-5.6-terra__high__ctx2r8-rejudge1 + proveR2,proveC2r1,proveW1,proveW2,proveW3,proveW4,proveW5 · 351/613 papers green · 143 mirror results proven and adversarially reviewed · map background hand-drawn once; everything else is artifacts.</footer>
 </body></html>
