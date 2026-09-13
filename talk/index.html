@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChoCo in ten minutes</title>
+<link rel="stylesheet" href="vendor/reset.min.css">
+<link rel="stylesheet" href="vendor/reveal.min.css">
+<style>
+  :root {
+    --paper: #0b0e1a;
+    --panel: #151a2a;
+    --line: #2a3350;
+    --ink: #e8ecf8;
+    --muted: #aab3cf;
+    --dim: #7d88a6;
+    --gold: #c9b458;
+    --green: #33d17a;
+    --red: #e05252;
+    --blue: #6f7fb8;
+    --serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --sans: Arial, Helvetica, sans-serif;
+  }
+  html, body, .reveal-viewport, .reveal .slide-background, .reveal .backgrounds { background: var(--paper); color: var(--ink); }
+  .reveal { font-family: var(--serif); font-size: 34px; color: var(--ink); }
+  .reveal .slides section { text-align: left; padding: 0 40px; box-sizing: border-box; height: 100%; }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: var(--serif); color: var(--ink); text-transform: none; letter-spacing: 0; font-weight: normal; text-wrap: balance; margin: 0 0 .5em; }
+  .reveal h1 { font-size: 2.1em; letter-spacing: 6px; }
+  .reveal h2 { font-size: 1.45em; }
+  .reveal p { margin: 0 0 .5em; line-height: 1.35; }
+  .reveal .lead { color: var(--muted); font-size: .9em; }
+  .reveal .eyebrow { font: bold .5em var(--sans); letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2em; }
+  .reveal .foot { position: absolute; bottom: 0; left: 40px; right: 40px; font: italic .55em var(--sans); color: var(--dim); }
+  .reveal .k { color: var(--gold); }
+  .reveal .g { color: var(--green); }
+  .reveal .r { color: var(--red); }
+  .reveal .b { color: var(--blue); }
+  .reveal strong { color: var(--ink); font-weight: bold; }
+  .reveal a { color: var(--muted); border-bottom: 1px dotted var(--dim); text-decoration: none; }
+  .reveal .progress { color: var(--gold); }
+  .reveal .controls { color: var(--dim); }
+
+  /* title */
+  .title h1 { margin-top: 1.2em; }
+  .title .sub { font-size: 1.05em; color: var(--muted); max-width: 22ch; }
+  .title .who { position: absolute; bottom: 60px; left: 40px; font: .55em var(--sans); color: var(--dim); letter-spacing: 1px; }
+
+  /* two-column */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+  .cols.wide { grid-template-columns: 1.3fr 1fr; }
+  .verdict { font-family: var(--serif); font-size: 1.05em; line-height: 1.3; }
+  .verdict small { display: block; font: .55em var(--sans); color: var(--dim); margin-top: .8em; letter-spacing: .5px; }
+
+  /* svg voters */
+  svg text { font-family: var(--sans); }
+
+  /* paper cards */
+  .papers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: .6em; }
+  .paper { background: var(--panel); border: 1px solid var(--line); padding: 22px 24px; font: .5em/1.35 var(--sans); color: var(--muted); min-height: 210px; position: relative; }
+  .paper .venue { color: var(--dim); font-size: .85em; letter-spacing: 1px; text-transform: uppercase; margin-bottom: .6em; }
+  .paper .t { color: var(--ink); font: 1.1em var(--serif); margin-bottom: 1em; }
+  .paper .q { border-top: 1px solid var(--line); padding-top: .6em; }
+  .paper .q span { display: block; margin: .2em 0; }
+  .paper .stamp { position: absolute; right: 14px; top: 14px; font-weight: bold; letter-spacing: 1px; font-size: .8em; padding: 2px 8px; border: 2px solid; transform: rotate(6deg); }
+
+  /* funnel */
+  .funnel { font-family: var(--sans); margin-top: .3em; }
+  .frow { margin-bottom: 14px; }
+  .flabel { font-size: .55em; color: var(--muted); margin-bottom: 4px; }
+  .flabel b { color: var(--ink); font-weight: normal; }
+  .fbar { display: flex; height: 26px; background: var(--panel); }
+  .fbar div { height: 100%; }
+  .fleg { font-size: .5em; color: var(--dim); margin-top: 4px; display: flex; gap: 1.6em; }
+  .fleg b { font-weight: bold; }
+  .stages { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 1em; font: .48em/1.3 var(--sans); color: var(--muted); }
+  .stages div { border-top: 3px solid var(--gold); padding-top: 8px; }
+  .stages div b { display: block; color: var(--ink); margin-bottom: 4px; }
+
+  /* bribery table */
+  table.map { border-collapse: separate; border-spacing: 5px; font: .5em var(--sans); color: var(--muted); }
+  table.map th { font-weight: normal; color: var(--dim); text-align: left; padding: 0 6px; white-space: nowrap; }
+  table.map thead th { text-align: center; padding-bottom: 2px; }
+  table.map td { width: 44px; height: 38px; background: transparent; border: 1px solid var(--line); text-align: center; color: var(--ink); font-size: 1.2em; }
+  table.map td.c { background: rgba(51,209,122,.32); border-color: rgba(51,209,122,.6); }
+  table.map td.h { background: rgba(224,82,82,.35); border-color: rgba(224,82,82,.6); }
+  table.map td.o { background: transparent; }
+  .legend { font: .5em var(--sans); color: var(--muted); margin-top: .6em; display: flex; gap: 1.6em; align-items: center; }
+  .sw { display: inline-block; width: 16px; height: 16px; vertical-align: -3px; margin-right: 6px; border: 1px solid var(--line); }
+
+  .reveal ul { margin: 0; }
+  .reveal li { margin: .35em 0; line-height: 1.3; }
+  .fieldmap { display: block; max-height: 590px; width: auto; max-width: 100%; margin: 0 auto; border: 1px solid var(--line); }
+  .demo h2 { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- 1 · title -->
+<section class="title">
+  <div class="eyebrow">AI use session · September 2026</div>
+  <h1>ChoCo</h1>
+  <p class="sub">the continuous mirror of computational social choice, and the pipeline that charts it</p>
+  <div class="who">MARTIN KOUTECKÝ · COMPUTER SCIENCE INSTITUTE, CHARLES UNIVERSITY · choco-atlas.eu</div>
+  <aside class="notes">
+    One idea to leave with: take any paper about agents with preferences, replace the agents by a handful of types carrying continuous mass, and ask whether the problem got easier. Asking is mechanical. Answering used to be a paper. Now it is a pipeline run. Ten minutes: the idea in two pictures, why a machine can ask it, what came out, then the atlas live.
+  </aside>
+</section>
+
+<!-- 2 · discrete -->
+<section>
+  <div class="eyebrow">The original problem</div>
+  <div class="cols wide">
+    <div id="voters"></div>
+    <div class="verdict">
+      Voters are indivisible.<br>
+      Each has a ranking. An attacker pays to change some of them, and asks for the cheapest way to make a candidate win.
+      <span class="r">Hard.</span>
+      <small>Bribery under the Borda rule. NP-hard, like most of the field's problems, and studied for two decades.</small>
+    </div>
+  </div>
+  <aside class="notes">
+    No comsoc needed. Voters, rankings, an attacker with a budget. The question "cheapest way to change the outcome" is NP-hard for almost every voting rule. The field has hundreds of such hardness results. The claim of the project: a lot of that hardness comes from one thing, that voters are whole.
+  </aside>
+</section>
+
+<!-- 3 · mirror -->
+<section>
+  <div class="eyebrow">The mirror</div>
+  <div class="cols wide">
+    <div id="types"></div>
+    <div class="verdict">
+      Merge the voters into types, and let the types carry mass.<br>
+      Same question, same rule, masses instead of heads.
+      <span class="g">A linear program.</span>
+      <small>Borda bribery, continuous version: polynomial. The hardness was the indivisibility.</small>
+    </div>
+  </div>
+  <p class="foot">Not always. Sometimes the continuous problem is as hard as the original, and that is the interesting case.</p>
+  <aside class="notes">
+    Same picture, voters merged into four bars. The bribery problem becomes a linear program and is polynomial. So for this one problem, the hardness was entirely the indivisibility. The project question: how much of the field's hardness is like that, and where hardness survives, what is it made of. Note the footer: sometimes nothing changes. That is a finding too.
+  </aside>
+</section>
+
+<!-- 4 · uniform question -->
+<section>
+  <div class="eyebrow">Why this is an AI story</div>
+  <h2>The question is the same for every paper.</h2>
+  <div class="papers">
+    <div class="paper">
+      <div class="venue">AAAI 2022</div>
+      <div class="t">Maximizing Nash Social Welfare in 2-Value Instances</div>
+      <div class="q"><span>Does it continuize?</span><span>Does the complexity drop?</span></div>
+      <div class="stamp g" style="border-color:var(--green)">MIRROR</div>
+    </div>
+    <div class="paper">
+      <div class="venue">IJCAI 2024</div>
+      <div class="t">Committee elections, control, matching under preferences, fair division, ...</div>
+      <div class="q"><span>Does it continuize?</span><span>Does the complexity drop?</span></div>
+      <div class="stamp g" style="border-color:var(--green)">MIRROR</div>
+    </div>
+    <div class="paper">
+      <div class="venue">AAMAS 2025</div>
+      <div class="t">Kemeny rank aggregation, and other problems that only scale</div>
+      <div class="q"><span>Does it continuize?</span><span>Does the complexity drop?</span></div>
+      <div class="stamp r" style="border-color:var(--red)">NO MIRROR</div>
+    </div>
+  </div>
+  <p class="lead" style="margin-top:1em">A question that is the same for every paper is a question a machine can ask <span class="k">six hundred times</span>, with a proof attempt attached.</p>
+  <aside class="notes">
+    The point for this audience. The mirror question has a fixed shape: does the problem survive replacing agents by masses, and if so, does its complexity change. A fixed-shape question is what a language model pipeline is good at asking at scale, and the proof attempts are where current models earn their keep. Not every paper has a mirror; for some, the continuous version is the same problem after scaling, and the pipeline says so.
+  </aside>
+</section>
+
+<!-- 5 · pipeline -->
+<section>
+  <div class="eyebrow">The pipeline · counts as of 2026-08-22</div>
+  <div class="funnel">
+    <div class="frow">
+      <div class="flabel">the field: candidate corpus from OpenAlex, 1980 onward <b>(13,693)</b></div>
+      <div class="fbar"><div style="width:89.6%;background:#1e2540"></div><div style="width:10.4%;background:#4f5b8a"></div></div>
+      <div class="fleg"><span style="color:#8fa0c8"><b>12,275</b> awaiting</span><span style="color:#8fa0c8"><b>1,418</b> pulled</span></div>
+    </div>
+    <div class="frow">
+      <div class="flabel">screened: is it social choice? <b>(1,418)</b></div>
+      <div class="fbar"><div style="width:47.3%;background:#4f5b8a"></div><div style="width:5.4%;background:#7d88b8"></div><div style="width:47.3%;background:#c9b458"></div></div>
+      <div class="fleg"><span class="b"><b>671</b> no</span><span class="b"><b>76</b> borderline</span><span class="k"><b>671</b> yes</span></div>
+    </div>
+    <div class="frow">
+      <div class="flabel">judged: does the society continuize? <b>(747)</b></div>
+      <div class="fbar"><div style="width:21.3%;background:#6b5f2a"></div><div style="width:11.5%;background:#4f5b8a"></div><div style="width:21.4%;background:#e05252"></div><div style="width:0.7%;background:#e0a052"></div><div style="width:45.1%;background:#33d17a"></div></div>
+      <div class="fleg"><span style="color:#b8a04a"><b>159</b> awaiting</span><span class="b"><b>86</b> not social choice</span><span class="r"><b>160</b> does not</span><span style="color:#e0a052"><b>5</b> borderline</span><span class="g"><b>337</b> continuizes</span></div>
+    </div>
+    <div class="frow">
+      <div class="flabel">the mirror: posed, proved, adversarially reviewed <b>(of 351)</b></div>
+      <div class="fbar"><div style="width:40.5%;background:#33d17a"></div><div style="width:9.4%;background:#c9b458"></div><div style="width:50.1%;background:#151a2a"></div></div>
+      <div class="fleg"><span class="k"><b>175</b> mirror posed, proof attempted</span><span class="g"><b>142</b> machine-proved and independently reviewed</span></div>
+    </div>
+  </div>
+  <div class="stages">
+    <div><b>screen</b>is this paper social choice at all</div>
+    <div><b>judge</b>does its society continuize, and what is the anchor result</div>
+    <div><b>pose</b>state the mirror problem precisely</div>
+    <div><b>prove</b>a prover model settles it</div>
+    <div><b>review</b>a second model attacks the proof; only survivors are green</div>
+  </div>
+  <p class="foot">Every stage is a model run with its full transcript kept. I check the judgments before the pipeline advances.</p>
+  <aside class="notes">
+    Walk down the funnel. Thirteen thousand candidate papers from OpenAlex, fourteen hundred pulled so far, screened for social choice, then judged: does the society continuize, and which result is the anchor. Of the green papers, 175 have a mirror posed and a proof attempted, 142 of those proofs survived an adversarial review by a second model. Five stages, each a model run, all transcripts kept. My job is checking judgments, not writing proofs.
+  </aside>
+</section>
+
+<!-- 6 · map -->
+<section>
+  <div class="eyebrow">What the map looks like · the bribery corner</div>
+  <div class="cols wide">
+    <div>
+      <table class="map">
+        <thead><tr><th></th><th>Sco</th><th>Bor</th><th>dAp</th><th>Cnd</th><th>Buc</th><th>Kem</th><th>Sla</th><th>Dod</th><th>You</th></tr></thead>
+        <tbody>
+          <tr><th>Winner</th><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="h"></td><td class="h"></td><td class="c"></td><td class="c"></td></tr>
+          <tr><th>Shift bribery</th><td class="c"></td><td class="c">★</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="h"></td><td class="h"></td><td class="o"></td><td class="o"></td></tr>
+          <tr><th>Swap bribery</th><td class="o"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="o"></td><td class="h"></td><td class="h"></td><td class="o"></td><td class="o"></td></tr>
+          <tr><th>$Bribery</th><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="o"></td><td class="h"></td><td class="h"></td><td class="o"></td><td class="o"></td></tr>
+          <tr><th>Control</th><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="h"></td><td class="h"></td><td class="o"></td><td class="o"></td></tr>
+          <tr><th>⋮</th><td class="o">⋮</td><td class="o">⋮</td><td class="o">⋮</td><td class="o">⋮</td><td class="o">⋮</td><td class="o">⋮</td><td class="o">⋮</td><td class="o">⋮</td><td class="o">⋱</td></tr>
+        </tbody>
+      </table>
+      <div class="legend"><span><span class="sw" style="background:rgba(51,209,122,.32)"></span>mirror tractable</span><span><span class="sw" style="background:rgba(224,82,82,.35)"></span>mirror hard</span><span><span class="sw"></span>open</span><span>★ also machine-proved</span></div>
+    </div>
+    <div class="verdict" style="font-size:.85em">
+      Rows are problems, columns are voting rules. Discretely, almost everything here is <span class="r">hard</span>.
+      <br><br>
+      In the mirror, most of it is <span class="g">a linear program</span>. Two columns stay hard, because for those rules the continuous problem is the discrete one after scaling.
+      <small>The ★ cell is the one the pipeline proved on its own, after I had proved it by hand. The white cells are what I work on.</small>
+    </div>
+  </div>
+  <aside class="notes">
+    This corner was charted by hand in my bribery paper. Green: the mirror is a linear program. Red: Kemeny and Slater, where the continuous problem is literally the discrete one after scaling, so nothing drops. White: open. The star is the pipeline reproducing a hand-proved cell on its own. Point to make: not every column has a mirror, and the map says which do. Then: let's look at the whole thing.
+  </aside>
+</section>
+
+<!-- 7 · field map, bridge to the atlas -->
+<section>
+  <div class="eyebrow">The whole field, one dot per paper</div>
+  <img class="fieldmap" src="field-map.png" alt="Semantic map of the surveyed papers, colored by pipeline status">
+  <aside class="notes">
+    Every dot is a paper, placed by topic. Green clusters are areas where the mirror idea bites; red ones where it does not. Next slide is the live site.
+  </aside>
+</section>
+
+<!-- 8 · the atlas, live -->
+<section class="demo" data-background-iframe="https://choco-atlas.eu/" data-background-interactive>
+  <aside class="notes">
+    Live. Open a green paper, show the anchor result, the posed mirror, the proof, and the adversarial review. Then a venue page for breadth. Then stop.
+  </aside>
+</section>
+
+</div>
+</div>
+
+<script src="vendor/reveal.min.js"></script>
+<script>
+  // ---- slide 2: a crowd of voters, each with a ranking ----
+  (function () {
+    const C = ['a', 'b', 'c'];
+    const perms = [['a','b','c'],['a','c','b'],['b','a','c'],['b','c','a'],['c','a','b'],['c','b','a']];
+    // 16 voters over 4 types (masses 7, 5, 3, 1 over the first four perms)
+    const counts = [7, 5, 3, 1];
+    const col = ['#33d17a', '#c9b458', '#6f7fb8', '#e05252'];
+    let voters = [];
+    counts.forEach((n, t) => { for (let i = 0; i < n; i++) voters.push(t); });
+    // shuffle deterministically
+    let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+    for (let i = voters.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [voters[i], voters[j]] = [voters[j], voters[i]]; }
+    let s = '<svg viewBox="0 0 640 400" width="100%">';
+    voters.forEach((t, i) => {
+      const x = 40 + (i % 8) * 76, y = 40 + Math.floor(i / 8) * 180;
+      s += `<g transform="translate(${x},${y})">
+        <circle cx="0" cy="0" r="16" fill="${col[t]}" opacity=".95"/>
+        <path d="M-22,24 q22,-14 44,0 v70 h-44z" fill="${col[t]}" opacity=".8"/>
+        <text x="0" y="120" text-anchor="middle" font-size="14" fill="#aab3cf">${perms[t].join('≻')}</text>
+      </g>`;
+    });
+    s += '</svg>';
+    document.getElementById('voters').innerHTML = s;
+
+    // ---- slide 3: the same electorate as four types with masses ----
+    const total = counts.reduce((a, b) => a + b, 0);
+    let u = '<svg viewBox="0 0 640 400" width="100%">';
+    u += '<line x1="60" y1="330" x2="600" y2="330" stroke="#2a3350" stroke-width="2"/>';
+    counts.forEach((n, t) => {
+      const w = 110, gap = 30, x = 70 + t * (w + gap), h = 260 * n / counts[0], y = 330 - h;
+      u += `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${col[t]}" opacity=".85"/>
+        <text x="${x + w / 2}" y="${y - 12}" text-anchor="middle" font-size="24" fill="#e8ecf8" font-family="Georgia,serif">${(n / total).toFixed(2)}</text>
+        <text x="${x + w / 2}" y="362" text-anchor="middle" font-size="18" fill="#aab3cf">${perms[t].join(' ≻ ')}</text>`;
+    });
+    u += '<text x="60" y="30" font-size="16" fill="#7d88a6" font-style="italic">mass of each type · sums to 1</text></svg>';
+    document.getElementById('types').innerHTML = u;
+  })();
+
+  Reveal.initialize({
+    width: 1280, height: 720, margin: 0.06,
+    hash: true, controls: true, progress: true, center: false,
+    transition: 'fade', transitionSpeed: 'fast', backgroundTransition: 'none',
+    slideNumber: 'c/t',
+  });
+</script>
+</body>
+</html>
