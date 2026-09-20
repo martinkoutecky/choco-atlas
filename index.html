@@ -24,6 +24,10 @@
  .sky-fbar .sky-unused { background: #151a2a; min-width: 0; }
  .sky-fkeys { display: flex; flex-wrap: wrap; gap: .15em 2em; margin-top: .18em;
    font: bold .72em Arial, sans-serif; }
+ .sky-fbar span[data-focus], .sky-fkeys span[data-focus] { cursor: pointer; }
+ .sky-fkeys span[data-focus]:hover { text-decoration: underline dotted; }
+ .sky-fkeys span.on { outline: 1px dotted currentColor; outline-offset: 2px; }
+ .sky-fbar span.on { box-shadow: 0 0 0 1px #e8ecf8 inset; }
  .sky-foot { color: #7d88a6; font: italic .72em Arial, sans-serif; margin: .2em 0 0; }
  #skywrap { position: relative; width: 100%; height: 70vh; min-height: 420px; background: #0b0e1a; }
  #skycanvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
@@ -45,7 +49,7 @@
  /* fill the screen but never overflow it: the canvas is 1250x880, so width is capped
     by both the viewport width and (aspect x usable height below the header). */
  #mapwrap { width: min(92vw, 124vh, 2400px); margin: 0 auto; }
- #mapsvg { cursor: grab; }
+ #mapsvg { cursor: grab; touch-action: none; }
  svg text.lbl, svg text.plbl { paint-order: stroke; stroke: #f0e6cb; stroke-width: 3.5px; stroke-linejoin: round; stroke-opacity: .85; }
  svg text.lbl { text-anchor: middle; fill: #5a4632; font-family: Georgia, serif; letter-spacing: 1.5px; }
  svg text.unch { fill: #a08c60; font-style: italic; letter-spacing: 2px; }
@@ -164,7 +168,7 @@
 </header>
 
 <div id="tab-sky" class="tab on">
- <div class="sky-funnel"><h2>THE CHOCO PIPELINE — counts as of 2026-08-22 (AI labels, preliminary)</h2><div class="sky-frow"><div class="sky-flabel">the field (candidate corpus, OpenAlex 1980–) (of 13,693)</div><div class="sky-fbar"><span style="width:89.6443%;background:#232a40"></span><span style="width:10.3557%;background:#4f5b8a"></span></div><div class="sky-fkeys"><span style="color:#8fa0c8">12,275 awaiting</span><span style="color:#4f5b8a">1,418 pulled into the pipeline</span></div></div><div class="sky-frow"><div class="sky-flabel">screened: is it ComSoC? (of 1,418)</div><div class="sky-fbar"><span style="width:47.3202%;background:#4f5b8a"></span><span style="width:5.3597%;background:#8a86b8"></span><span style="width:47.3202%;background:#c9b458"></span></div><div class="sky-fkeys"><span style="color:#4f5b8a">671 not ComSoC</span><span style="color:#8a86b8">76 borderline</span><span style="color:#c9b458">671 ComSoC</span></div></div><div class="sky-frow"><div class="sky-flabel">judged: does it continuize? (current wave) (of 747)</div><div class="sky-fbar"><span style="width:21.2851%;background:#6b6430"></span><span style="width:11.5127%;background:#4f5b8a"></span><span style="width:21.4190%;background:#e05555"></span><span style="width:0.6693%;background:#e09a3c"></span><span style="width:45.1138%;background:#37d67a"></span></div><div class="sky-fkeys"><span style="color:#6b6430">159 awaiting</span><span style="color:#4f5b8a">86 judged not-ComSoC</span><span style="color:#e05555">160 red</span><span style="color:#e09a3c">5 orange</span><span style="color:#37d67a">337 green</span></div></div><div class="sky-frow"><div class="sky-flabel">green anchors (of 351)</div><div class="sky-fbar"><span style="width:64.3875%;background:#2f9c5c"></span><span style="width:32.4786%;background:#b04a4a"></span><span style="width:3.1339%;background:#666b75"></span><span style="width:0.0000%;background:#8a86b8"></span></div><div class="sky-fkeys"><span style="color:#2f9c5c">226 algorithmic</span><span style="color:#b04a4a">114 hardness</span><span style="color:#666b75">11 other</span><span style="color:#8a86b8">0 unknown (older judge schema)</span></div></div><div class="sky-frow"><div class="sky-flabel">the mirror (of 351)</div><div class="sky-fbar"><span style="width:49.8575%;background:#b8973b"></span><span style="width:40.4558%;background:#37d67a"></span><span style="width:4.8433%;background:#8a86b8"></span><span style="width:0.2849%;background:#7df9c9"></span><span class="sky-unused" style="width:4.5584%"></span></div><div class="sky-fkeys"><span style="color:#b8973b">175 prove-attempted</span><span style="color:#37d67a">142 settled + independently reviewed</span><span style="color:#8a86b8">17 curated claims</span><span style="color:#7df9c9">1 formalized in Lean ★</span></div></div><p class="sky-foot">Current wave: 502 ComSoC judgments; +25 earlier-wave judgments (14 green). 188 prove runs total across all waves; 175 on currently-green papers.</p></div>
+ <div class="sky-funnel"><h2>THE CHOCO PIPELINE — counts as of 2026-09-20 (AI labels, preliminary)</h2><div class="sky-frow"><div class="sky-flabel">the field (candidate corpus, OpenAlex 1980–) (of 13,693)</div><div class="sky-fbar"><span style="width:89.6443%;background:#232a40" data-focus="unlit" onclick="skyFocus(this)" title="highlight these stars in the sky"></span><span style="width:10.3557%;background:#4f5b8a" data-focus="screened_out comsoc red orange green proved" onclick="skyFocus(this)" title="highlight these stars in the sky"></span></div><div class="sky-fkeys"><span style="color:#8fa0c8" data-focus="unlit" onclick="skyFocus(this)" title="highlight these stars in the sky">12,275 awaiting</span><span style="color:#4f5b8a" data-focus="screened_out comsoc red orange green proved" onclick="skyFocus(this)" title="highlight these stars in the sky">1,418 pulled into the pipeline</span></div></div><div class="sky-frow"><div class="sky-flabel">screened: is it ComSoC? (of 1,418)</div><div class="sky-fbar"><span style="width:47.3202%;background:#4f5b8a" data-focus="screened_out" onclick="skyFocus(this)" title="highlight these stars in the sky"></span><span style="width:5.3597%;background:#8a86b8" data-focus="comsoc" onclick="skyFocus(this)" title="highlight these stars in the sky"></span><span style="width:47.3202%;background:#c9b458" data-focus="comsoc" onclick="skyFocus(this)" title="highlight these stars in the sky"></span></div><div class="sky-fkeys"><span style="color:#4f5b8a" data-focus="screened_out" onclick="skyFocus(this)" title="highlight these stars in the sky">671 not ComSoC</span><span style="color:#8a86b8" data-focus="comsoc" onclick="skyFocus(this)" title="highlight these stars in the sky">76 borderline</span><span style="color:#c9b458" data-focus="comsoc" onclick="skyFocus(this)" title="highlight these stars in the sky">671 ComSoC</span></div></div><div class="sky-frow"><div class="sky-flabel">judged: does it continuize? (current wave) (of 747)</div><div class="sky-fbar"><span style="width:21.2851%;background:#6b6430" data-focus="comsoc" onclick="skyFocus(this)" title="highlight these stars in the sky"></span><span style="width:11.5127%;background:#4f5b8a" data-focus="screened_out" onclick="skyFocus(this)" title="highlight these stars in the sky"></span><span style="width:21.4190%;background:#e05555" data-focus="red" onclick="skyFocus(this)" title="highlight these stars in the sky"></span><span style="width:0.6693%;background:#e09a3c" data-focus="orange" onclick="skyFocus(this)" title="highlight these stars in the sky"></span><span style="width:45.1138%;background:#37d67a" data-focus="green proved" onclick="skyFocus(this)" title="highlight these stars in the sky"></span></div><div class="sky-fkeys"><span style="color:#6b6430" data-focus="comsoc" onclick="skyFocus(this)" title="highlight these stars in the sky">159 awaiting</span><span style="color:#4f5b8a" data-focus="screened_out" onclick="skyFocus(this)" title="highlight these stars in the sky">86 judged not-ComSoC</span><span style="color:#e05555" data-focus="red" onclick="skyFocus(this)" title="highlight these stars in the sky">160 red</span><span style="color:#e09a3c" data-focus="orange" onclick="skyFocus(this)" title="highlight these stars in the sky">5 orange</span><span style="color:#37d67a" data-focus="green proved" onclick="skyFocus(this)" title="highlight these stars in the sky">337 green</span></div></div><div class="sky-frow"><div class="sky-flabel">green anchors (of 351)</div><div class="sky-fbar"><span style="width:64.3875%;background:#2f9c5c"></span><span style="width:32.4786%;background:#b04a4a"></span><span style="width:3.1339%;background:#666b75"></span><span style="width:0.0000%;background:#8a86b8"></span></div><div class="sky-fkeys"><span style="color:#2f9c5c">226 algorithmic</span><span style="color:#b04a4a">114 hardness</span><span style="color:#666b75">11 other</span><span style="color:#8a86b8">0 unknown (older judge schema)</span></div></div><div class="sky-frow"><div class="sky-flabel">the mirror (of 351)</div><div class="sky-fbar"><span style="width:49.8575%;background:#b8973b" data-focus="green proved" onclick="skyFocus(this)" title="highlight these stars in the sky"></span><span style="width:40.4558%;background:#37d67a" data-focus="proved" onclick="skyFocus(this)" title="highlight these stars in the sky"></span><span style="width:4.8433%;background:#8a86b8"></span><span style="width:0.2849%;background:#7df9c9" data-focus="proved" onclick="skyFocus(this)" title="highlight these stars in the sky"></span><span class="sky-unused" style="width:4.5584%"></span></div><div class="sky-fkeys"><span style="color:#b8973b" data-focus="green proved" onclick="skyFocus(this)" title="highlight these stars in the sky">175 prove-attempted</span><span style="color:#37d67a" data-focus="proved" onclick="skyFocus(this)" title="highlight these stars in the sky">142 settled + independently reviewed</span><span style="color:#8a86b8">17 curated claims</span><span style="color:#7df9c9" data-focus="proved" onclick="skyFocus(this)" title="highlight these stars in the sky">1 formalized in Lean ★</span></div></div><p class="sky-foot">Current wave: 502 ComSoC judgments; +25 earlier-wave judgments (14 green). 188 prove runs total across all waves; 175 on currently-green papers.</p></div>
  <div id="skywrap">
   <canvas id="skycanvas" aria-label="Night map of the computational social choice paper corpus"></canvas>
   <div id="skytip"></div>
@@ -1226,6 +1230,15 @@ let SKY = null, skyCtx = null, skyGrid = new Map(), skyFrame = 0;
 let skyW = 0, skyH = 0, skyDpr = 1, skyBase = 1;
 let skyView = {zoom:1, panX:0, panY:0, cx:0, cy:0};
 let skyDrag = null;
+let skyFocusSet = null, skyFocusKey = null;
+function skyFocus(el) {
+  const k = el.dataset.focus;
+  skyFocusKey = skyFocusKey === k ? null : k;
+  skyFocusSet = skyFocusKey ? new Set(skyFocusKey.split(' ')) : null;
+  document.querySelectorAll('[data-focus]').forEach(x =>
+    x.classList.toggle('on', x.dataset.focus === skyFocusKey));
+  skyDrawSoon();
+}
 
 function skyMedian(values) {
   values.sort((a,b) => a-b);
@@ -1305,12 +1318,14 @@ function skyDraw() {
   ctx.globalAlpha=.14;
   for (const [p,s,sty] of visible) {
     if (!['red','orange','green','proved'].includes(p.status)) continue;
+    if (skyFocusSet && !skyFocusSet.has(p.status)) continue;
     ctx.beginPath(); ctx.fillStyle=sty.color; skyCircle(ctx,s.x,s.y,sty.radius*2.8); ctx.fill();
   }
-  ctx.globalAlpha=1;
   for (const [p,s,sty] of visible) {
+    ctx.globalAlpha = skyFocusSet && !skyFocusSet.has(p.status) ? .12 : 1;
     ctx.beginPath(); ctx.fillStyle=sty.color; skyCircle(ctx,s.x,s.y,sty.radius); ctx.fill();
   }
+  ctx.globalAlpha=1;
   skyDrawLabels(ctx);
 }
 function skyDrawLabels(ctx) {
@@ -1333,14 +1348,17 @@ function skyDrawLabels(ctx) {
   }
 }
 function skyNearest(sx, sy) {
-  const gx=Math.floor(sx/16), gy=Math.floor(sy/16); let best=null, bd=64;
+  // Among overlapping dots, a lit one (screen-passed or better) wins the click over
+  // an unlit/screened-out one, even when the dark dot is a pixel closer.
+  const gx=Math.floor(sx/16), gy=Math.floor(sy/16); let best=null, bd=64, lit=null, ld=64;
   for (let dx=-1;dx<=1;dx++) for (let dy=-1;dy<=1;dy++) {
     for (const item of (skyGrid.get((gx+dx)+','+(gy+dy)) || [])) {
       const d=(item[1].x-sx)**2+(item[1].y-sy)**2;
       if (d <= bd) { bd=d; best=item[0]; }
+      if (d <= ld && SKY_STYLE[item[0].status].order >= 2) { ld=d; lit=item[0]; }
     }
   }
-  return best;
+  return lit || best;
 }
 function skyHover(evt) {
   const canvas=document.getElementById('skycanvas'), wrap=document.getElementById('skywrap');
@@ -1356,24 +1374,68 @@ function skyHover(evt) {
 }
 function initSky() {
   const canvas=document.getElementById('skycanvas');
+  // One pointer pans (and a still tap clicks); two pointers pinch-zoom about their
+  // midpoint. The canvas has touch-action:none, so all gestures arrive here.
+  const ptrs = new Map();
+  let pinch = null;   // previous two-finger frame: {d, mx, my} in canvas coords
   canvas.addEventListener('pointerdown', evt => {
-    canvas.setPointerCapture(evt.pointerId); canvas.classList.add('dragging');
-    skyDrag={x:evt.clientX,y:evt.clientY,moved:false}; document.getElementById('skytip').style.display='none';
+    canvas.setPointerCapture(evt.pointerId);
+    ptrs.set(evt.pointerId, {x:evt.clientX, y:evt.clientY});
+    document.getElementById('skytip').style.display='none';
+    if (ptrs.size === 2) {
+      const [a,b]=[...ptrs.values()], rect=canvas.getBoundingClientRect();
+      pinch={d:Math.max(24,Math.hypot(a.x-b.x,a.y-b.y)),
+             mx:(a.x+b.x)/2-rect.left, my:(a.y+b.y)/2-rect.top};
+      skyDrag=null;
+    } else if (ptrs.size === 1) {
+      canvas.classList.add('dragging');
+      skyDrag={x:evt.clientX,y:evt.clientY,moved:false};
+    }
   });
   canvas.addEventListener('pointermove', evt => {
-    if (!skyDrag) { skyHover(evt); return; }
+    if (!ptrs.has(evt.pointerId)) { skyHover(evt); return; }
+    const pp=ptrs.get(evt.pointerId); pp.x=evt.clientX; pp.y=evt.clientY;
+    if (pinch && ptrs.size >= 2) {
+      const [a,b]=[...ptrs.values()], rect=canvas.getBoundingClientRect();
+      const d=Math.max(24,Math.hypot(a.x-b.x,a.y-b.y));
+      const mx=(a.x+b.x)/2-rect.left, my=(a.y+b.y)/2-rect.top;
+      const world=skyWorldAt(pinch.mx,pinch.my);
+      const next=Math.max(.65,Math.min(40,skyView.zoom*d/pinch.d));
+      skyView.zoom=next;
+      skyView.panX=mx-skyW/2-(world.x-skyView.cx)*skyBase*next;
+      skyView.panY=my-skyH/2-(world.y-skyView.cy)*skyBase*next;
+      pinch={d,mx,my}; skyDrawSoon(); return;
+    }
+    if (!skyDrag) return;
     const dx=evt.clientX-skyDrag.x, dy=evt.clientY-skyDrag.y;
     skyView.panX+=dx; skyView.panY+=dy; skyDrag.x=evt.clientX; skyDrag.y=evt.clientY;
     if (Math.abs(dx)+Math.abs(dy)>1) skyDrag.moved=true;
     skyDrawSoon();
   });
-  canvas.addEventListener('pointerleave', () => { if (!skyDrag) document.getElementById('skytip').style.display='none'; });
+  canvas.addEventListener('pointerleave', () => { if (!ptrs.size) document.getElementById('skytip').style.display='none'; });
+  function skyRelease(evt) {
+    ptrs.delete(evt.pointerId);
+    if (ptrs.size < 2) pinch=null;
+    if (ptrs.size === 1) {
+      const [pp]=[...ptrs.values()];
+      skyDrag={x:pp.x,y:pp.y,moved:true};   // a pinch just ended: not a click
+    } else if (!ptrs.size) canvas.classList.remove('dragging');
+  }
   canvas.addEventListener('pointerup', evt => {
-    const moved=skyDrag && skyDrag.moved; skyDrag=null; canvas.classList.remove('dragging');
-    if (!moved) {
-      const rect=canvas.getBoundingClientRect(), p=skyNearest(evt.clientX-rect.left,evt.clientY-rect.top);
-      if (p && p.dossier && p.slug) window.location.href='papers/'+encodeURIComponent(p.slug)+'.html';
+    const hadPinch = pinch !== null || ptrs.size > 1;
+    const moved = (skyDrag && skyDrag.moved) || hadPinch;
+    skyRelease(evt);
+    if (!ptrs.size) {
+      skyDrag=null;
+      if (!moved) {
+        const rect=canvas.getBoundingClientRect(), p=skyNearest(evt.clientX-rect.left,evt.clientY-rect.top);
+        if (p && p.dossier && p.slug) window.location.href='papers/'+encodeURIComponent(p.slug)+'.html';
+      }
     }
+  });
+  canvas.addEventListener('pointercancel', evt => {
+    skyRelease(evt);
+    if (!ptrs.size) { skyDrag=null; canvas.classList.remove('dragging'); }
   });
   canvas.addEventListener('wheel', evt => {
     evt.preventDefault();
@@ -1605,16 +1667,55 @@ function townFilter(f, el) {
     vb.w = nw; vb.h = nw * H0 / W0;
     clamp(); apply();
   }, {passive: false});
-  let drag = null;
-  svg.addEventListener('mousedown', e => { drag = {x: e.clientX, y: e.clientY, vx: vb.x, vy: vb.y}; });
-  window.addEventListener('mousemove', e => {
+  // Pointer-based pan + two-finger pinch (mouse drag still pans, wheel still zooms).
+  // Deliberately NO setPointerCapture on the svg: capture would retarget events and
+  // eat the pins' click handlers. Touch pointers implicitly capture to their target,
+  // and everything bubbles, so window-level move/up sees the whole gesture anyway.
+  const ptrs = new Map();
+  let drag = null, pinch = null;
+  svg.addEventListener('pointerdown', e => {
+    ptrs.set(e.pointerId, {x: e.clientX, y: e.clientY});
+    if (ptrs.size === 2) {
+      const [a,b]=[...ptrs.values()];
+      pinch={d:Math.max(24,Math.hypot(a.x-b.x,a.y-b.y)), mx:(a.x+b.x)/2, my:(a.y+b.y)/2};
+      drag=null;
+    } else if (ptrs.size === 1) {
+      drag={x:e.clientX, y:e.clientY, vx:vb.x, vy:vb.y};
+    }
+  });
+  window.addEventListener('pointermove', e => {
+    if (!ptrs.has(e.pointerId)) return;
+    const pp=ptrs.get(e.pointerId); pp.x=e.clientX; pp.y=e.clientY;
+    if (pinch && ptrs.size >= 2) {
+      const [a,b]=[...ptrs.values()];
+      const d=Math.max(24,Math.hypot(a.x-b.x,a.y-b.y));
+      const mx=(a.x+b.x)/2, my=(a.y+b.y)/2;
+      // world point under the previous midpoint must land under the new midpoint
+      const pt=svg.createSVGPoint(); pt.x=pinch.mx; pt.y=pinch.my;
+      const c=pt.matrixTransform(svg.getScreenCTM().inverse());
+      const nw=Math.min(W0, Math.max(W0/14, vb.w*pinch.d/d));
+      const rect=svg.getBoundingClientRect();
+      vb.x=c.x-(mx-rect.left)*nw/rect.width;
+      vb.y=c.y-(my-rect.top)*(nw*H0/W0)/rect.height;
+      vb.w=nw; vb.h=nw*H0/W0;
+      clamp(); apply();
+      pinch={d,mx,my};
+      return;
+    }
     if (!drag) return;
     const s = vb.w / svg.clientWidth;
     vb.x = drag.vx - (e.clientX - drag.x) * s;
     vb.y = drag.vy - (e.clientY - drag.y) * s;
     clamp(); apply();
   });
-  window.addEventListener('mouseup', () => drag = null);
+  function mapRelease(e) {
+    if (!ptrs.delete(e.pointerId)) return;
+    if (ptrs.size < 2) pinch=null;
+    if (ptrs.size === 1) { const [pp]=[...ptrs.values()]; drag={x:pp.x,y:pp.y,vx:vb.x,vy:vb.y}; }
+    else if (!ptrs.size) drag=null;
+  }
+  window.addEventListener('pointerup', mapRelease);
+  window.addEventListener('pointercancel', mapRelease);
   window.mapReset = () => { vb = {x: 0, y: 0, w: W0, h: H0}; apply(); };
   window.addEventListener('resize', updateLOD);
   updateLOD();
@@ -1776,5 +1877,5 @@ function sortT(i) {
   ).forEach(r => tb.appendChild(r));
 }
 </script>
-<footer>Generated 2026-08-22 by tools/atlas_build.py (pipeline commit 09f1a66) from runs triple__gpt-5.6-terra__high__ctx2r8-rejudge1 + proveR2,proveC2r1,proveW1,proveW2,proveW3,proveW4,proveW5 · 351/613 papers green · 143 mirror results proven and adversarially reviewed · map background hand-drawn once; everything else is artifacts.</footer>
+<footer>Generated 2026-09-20 by tools/atlas_build.py (pipeline commit f8618f4+dirty) from runs triple__gpt-5.6-terra__high__ctx2r8-rejudge1 + proveR2,proveC2r1,proveW1,proveW2,proveW3,proveW4,proveW5 · 351/613 papers green · 143 mirror results proven and adversarially reviewed · map background hand-drawn once; everything else is artifacts.</footer>
 </body></html>
