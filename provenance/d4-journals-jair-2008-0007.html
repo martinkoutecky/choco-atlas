@@ -1,0 +1,109 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Complexity of Strategic Behavior in Multi-Winner Elections — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Complexity of Strategic Behavior in Multi-Winner Elections <span style="font-weight:normal;color:#8a7350">(d4-journals-jair-2008-0007)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\text{-complete}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 4.15 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Control by Removing Voters in Bloc is NP-complete, even when the chairman simply wants to include a distinguished candidate among the winners.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), committee size \(k\), distinguished candidate \(p\), rational type masses \(\mu_t\), integral Bloc ballots \(B_t\subseteq C\) with \(|B_t|=k\), and rational budget \(\rho\), does there exist \(x_t\) with \(0\le x_t\le\mu_t\) and \(\sum_t x_t\le\rho\) such that \(S_x(c)=\sum_t(\mu_t-x_t)\mathbf{1}[c\in B_t]\) makes \(p\) one of the \(k\) winners under adversarial tie-breaking?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) be a candidate set, \(1\le k\le |C|\), and \(p\in C\). Each explicitly listed type \(t\) has a nonnegative rational mass \(\mu_t\) and a Bloc ballot \(B_t\subseteq C\) with \(|B_t|=k\). A controller may remove mass \(x_t\) from each type, where \(0\le x_t\le\mu_t\) and \(\sum_t x_t\le\rho\). The remaining score of \(c\) is \(S_x(c)=\sum_t(\mu_t-x_t)\mathbf{1}[c\in B_t]\). Ties are broken against \(p\): it wins exactly when fewer than \(k\) other candidates have score at least \(S_x(p)\). All rational inputs are binary encoded.</p><p>Is deciding whether such a removal makes \(p\) a winner in \(\mathrm{P}\), or is it \(\mathrm{NP}\)-hard?</p><p>For indivisible voters, constructive control by removing voters under Bloc is \(\mathrm{NP}\)-complete. That result does not classify removal of divisible type masses.</p></div>
+<h2>Prover output (gpt-6-astra / medium, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The problem is \(\mathrm{NP}\)-complete. The reduction below explicitly allows arbitrary fractional removals.</p><h3>1. Removing mass from ballots containing the preferred candidate is unnecessary</h3><p>For any removal vector \(x\), define \(\widehat{x}\) by restoring all removed mass from types whose ballots contain \(p\), while leaving other removals unchanged. This decreases the total removed mass.</p><p>For every candidate \(c\ne p\),<br>\[
+S_{\widehat{x}}(c)-S_{\widehat{x}}(p)
+=
+S_x(c)-S_x(p)
+-
+\sum_{t:p\in B_t}x_t\bigl(1-\mathbf{1}[c\in B_t]\bigr).
+\]<br>Every summand is nonnegative. Consequently, every candidate strictly below \(p\) under \(x\) remains strictly below \(p\) under \(\widehat{x}\).</p><p>Thus, if a successful removal exists, one exists that removes mass only from ballots not containing \(p\).</p><h3>2. Reduction from Clique</h3><p>We use the following standard \(\mathrm{NP}\)-complete problem: given a finite simple graph \(G\) and an integer \(\ell\), determine whether \(G\) contains a clique of size \(\ell\). We may restrict to \(3\le\ell\le |V(G)|\): excluded cases are polynomial-time decidable and can be mapped to fixed yes- or no-instances satisfying this restriction.</p><p>Write \(m=|E(G)|\), and set<br>\[
+q=\binom{\ell}{2},
+\qquad
+R=2q(\ell+1)+q.
+\]<br>Form \(H\) by adding \(R\) disjoint edges to \(G\), using new vertices and no other new edges. Let<br>\[
+n=|E(H)|=m+R,
+\qquad
+k=n-q+1,
+\qquad
+\varepsilon=\frac{2q}{n}.
+\]<br>Since \(n&gt;2q(\ell+1)\), we have<br>\[
+0&lt;\varepsilon&lt;\frac{1}{\ell+1}.
+\]</p><p>Every original vertex has degree at most \(m\), and every new vertex has degree one. Moreover,<br>\[
+k=m+2q(\ell+1)+1,
+\]<br>so every vertex of \(H\) has degree at most \(k\).</p><p>Because \(\ell\ge3\), none of the added isolated edges can participate in a clique of size \(\ell\). Hence \(H\) has such a clique exactly when \(G\) does.</p><h3>Election construction</h3><p>The candidates are:</p><ul><li>the preferred candidate \(p\);</li><li>one candidate \(a_e\) for each edge \(e\in E(H)\);</li><li>private filler candidates introduced below.</li></ul><p>There are two families of types.</p><p><b>Vertex types.</b> For each vertex \(v\in V(H)\), create a type of mass \(1\). Its ballot contains all edge candidates corresponding to edges incident with \(v\), together with \(k-\deg_H(v)\) private filler candidates.</p><p>Each filler candidate appears in exactly this one ballot. Every vertex ballot has size \(k\) and excludes \(p\).</p><p><b>Types containing \(p\).</b> Enumerate the edges cyclically as \(e_0,\ldots,e_{n-1}\). For each index \(i\), create a type of mass \(2/n\) with ballot<br>\[
+B_i=\{p\}\cup
+\{a_{e_j}:j\notin\{i,i+1,\ldots,i+q-1\}\pmod n\}.
+\]<br>Here the omitted indices are taken modulo \(n\). Since \(q&lt;n\), this ballot contains exactly \(1+n-q=k\) candidates.</p><p>Set the removal budget to \(\rho=\ell\).</p><p>The construction is polynomial in the input size. Indeed, \(R=O(\ell^3)\), and \(\ell\le |V(G)|\). There are \(n+|V(H)|\) explicitly listed types, each with \(k\) approvals, and at most \(|V(H)|k\) filler candidates. All masses and the budget have polynomial binary encoding length.</p><h3>3. What a fractional removal can accomplish</h3><p>By Section 1, we may restrict attention to removals from vertex types. Denote the mass removed from vertex \(v\)&#x27;s type by \(x_v\). The constraints are<br>\[
+0\le x_v\le1,
+\qquad
+\sum_{v\in V(H)}x_v\le\ell.
+\]</p><p>The score of \(p\) is exactly \(2\). Every filler candidate has score at most \(1\), and therefore is strictly below \(p\).</p><p>Each edge candidate appears in exactly \(n-q\) of the types containing \(p\). For an edge \(e=\{u,v\}\), its remaining score is consequently<br>\[
+S_x(a_e)
+=
+\frac{2(n-q)}{n}+(1-x_u)+(1-x_v)
+=
+4-\varepsilon-x_u-x_v.
+\]<br>It is strictly below \(p\) exactly when<br>\[
+x_u+x_v&gt;2-\varepsilon.
+\tag{1}
+\]</p><p>Let \(b\) be the number of edge candidates strictly below \(p\). The only candidates that can tie or exceed \(p\) are the other \(n-b\) edge candidates. Therefore,<br>\[
+p\text{ wins}
+\quad\Longleftrightarrow\quad
+n-b&lt;k=n-q+1
+\quad\Longleftrightarrow\quad
+b\ge q.
+\tag{2}
+\]</p><h3>A bound that applies to arbitrary fractional removals</h3><p>Define<br>\[
+U=\{v\in V(H):x_v&gt;1-\varepsilon\}.
+\]</p><p>If an edge satisfies (1), both its endpoints belong to \(U\). For example, since \(x_v\le1\),<br>\[
+x_u&gt;2-\varepsilon-x_v\ge1-\varepsilon,
+\]<br>and the same argument applies to \(x_v\).</p><p>Furthermore, \(|U|\le\ell\). Otherwise, the budget would satisfy<br>\[
+\sum_v x_v
+&gt;
+(\ell+1)(1-\varepsilon)
+&gt;
+\ell,
+\]<br>where the last strict inequality follows from \(\varepsilon&lt;1/(\ell+1)\). This contradicts feasibility.</p><p>Thus every edge candidate strictly below \(p\) corresponds to an edge induced by a set of at most \(\ell\) vertices. This conclusion does not assume that removals are integral.</p><h3>4. Correctness of the reduction</h3><h3>A clique gives a successful removal</h3><p>Suppose \(H\) contains a clique \(K\) of size \(\ell\). Remove the full unit mass from each vertex type corresponding to \(K\), using total budget \(\ell\).</p><p>For each of the \(q\) edges inside \(K\), both endpoint removals equal \(1\), so its candidate&#x27;s score is<br>\[
+4-\varepsilon-2=2-\varepsilon&lt;2=S_x(p).
+\]<br>Hence at least \(q\) edge candidates are strictly below \(p\), and (2) implies that \(p\) wins.</p><h3>A successful fractional removal gives a clique</h3><p>Suppose a successful removal exists. Restore all removals from types containing \(p\), as justified in Section 1.</p><p>By (2), at least \(q\) edge candidates are strictly below \(p\). All corresponding edges have both endpoints in the set \(U\) defined above, with \(|U|\le\ell\). Since \(H\) is simple,<br>\[
+q
+\le |E(H[U])|
+\le \binom{|U|}{2}
+\le \binom{\ell}{2}
+=q.
+\]<br>All inequalities must therefore be equalities. Because \(\ell\ge3\), equality forces \(|U|=\ell\), and the induced graph \(H[U]\) contains every possible edge. Thus \(U\) is a clique of size \(\ell\).</p><p>As observed earlier, such a clique lies in \(G\). This proves \(\mathrm{NP}\)-hardness.</p><h3>5. Membership in \(\mathrm{NP}\)</h3><p>Let \(M=|C|\). The winning condition is equivalent to having at least \(M-k\) other candidates strictly below \(p\).</p><p>Guess a subset \(D\subseteq C\setminus\{p\}\) of size \(M-k\). For this choice, consider the rational linear program that maximizes \(\delta\), subject to<br>\[
+0\le x_t\le\mu_t,\qquad
+\sum_t x_t\le\rho,\qquad
+0\le\delta\le1,
+\]<br>and<br>\[
+S_x(p)-S_x(c)\ge\delta
+\qquad\text{for every }c\in D.
+\]</p><p>For a nonempty \(D\), all its candidates can be placed strictly below \(p\) exactly when this program is feasible with positive optimum: finitely many positive score gaps have a positive minimum, which can be capped at \(1\). If \(D\) is empty, the score constraints are vacuous, and any feasible removal allows \(\delta=1\).</p><p>We use the standard polynomial-time solvability theorem for rational linear programming. Its hypotheses hold here: the constraints and objective have rational coefficients of polynomial encoding length, there are polynomially many variables and constraints, and every variable is bounded. Thus infeasibility or positivity of the exact optimum can be decided in polynomial time.</p><p>The guessed subset has polynomial size, and its verification is polynomial-time. Therefore the problem belongs to \(\mathrm{NP}\), completing the proof of \(\mathrm{NP}\)-completeness.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6-astra / low, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The output correctly proves that the problem is \(\mathrm{NP}\)-complete, including when arbitrary fractional removals are allowed. I found no major or minor issues.</p><ul><li><b>Restoring mass on ballots containing \(p\).</b> The score-difference identity is correct: restoring mass on such a ballot increases \(p\)&#x27;s score and increases another candidate&#x27;s score only if that candidate also appears on the ballot. Consequently, every previously strict score advantage of \(p\) is preserved. Restoration also preserves the removal bounds and cannot increase the budget used. The restriction to removals from ballots excluding \(p\) is therefore justified.</li></ul><ul><li><b>Graph construction and parameter bounds.</b> Restricting Clique to \(3\le\ell\le |V(G)|\) preserves NP-hardness as stated. The added components contain only two vertices each, so they cannot contribute to an \(\ell\)-clique.</li></ul><p>The arithmetic is correct: \(n=m+2q(\ell+1)+q\), hence \(k=m+2q(\ell+1)+1\). In particular, \(q&gt;0\), \(q&lt;n\), and \(0&lt;\varepsilon&lt;1/(\ell+1)\). Original vertex degrees are at most \(m\), and added vertex degrees are one, so all required filler counts are nonnegative.</p><ul><li><b>Validity and size of the election.</b> Every vertex ballot has exactly \(k\) candidates. Every ballot containing \(p\) omits exactly \(q\) distinct edge candidates and therefore also has exactly \(k\) candidates. Private fillers introduce no unintended score contributions. There are already \(n+1\) candidates before adding fillers, so the required condition \(1\le k\le |C|\) holds.</li></ul><p>The construction is polynomial in size: \(\ell\le |V(G)|\) bounds the number of added edges polynomially, and the explicitly listed ballots and private fillers also have polynomial total size. The masses \(1\) and \(2/n\), and budget \(\ell\), have polynomial binary encoding length.</p><ul><li><b>Scores and the winning threshold.</b> After the justified restoration, \(p\)&#x27;s score is exactly \(2\), and each filler has score at most \(1\). Each edge candidate is omitted from exactly \(q\) cyclic ballots and included in exactly two vertex ballots. Thus its score is correctly computed as \(4-\varepsilon-x_u-x_v\).</li></ul><p>The strict comparison \(x_u+x_v&gt;2-\varepsilon\) correctly implements ties being broken against \(p\). Since only edge candidates can tie or exceed \(p\), the winning condition is exactly \(n-b&lt;n-q+1\), equivalently \(b\ge q\). The integer threshold is handled correctly.</p><ul><li><b>The bound for fractional removals.</b> If an edge candidate is strictly below \(p\), the bound \(x_v\le1\) forces \(x_u&gt;1-\varepsilon\), and symmetrically for the other endpoint. Therefore both endpoints belong to \(U\).</li></ul><p>If \(U\) had at least \(\ell+1\) vertices, their removals alone would sum to more than \((\ell+1)(1-\varepsilon)&gt;\ell\). Both strict inequalities are justified. Hence \(|U|\le\ell\). This argument applies to arbitrary real feasible removals and does not silently assume integrality.</p><ul><li><b>Both directions of the reduction.</b> An \(\ell\)-clique supplies a feasible removal of total mass \(\ell\), placing its \(q\) edge candidates strictly below \(p\).</li></ul><p>Conversely, success supplies at least \(q\) edges induced by \(U\). The displayed chain bounding their number by \(\binom{|U|}{2}\le\binom{\ell}{2}=q\) is valid because the graph is simple. Equality forces \(|U|=\ell\) and all possible edges within \(U\). The restriction \(\ell\ge3\) then excludes every added two-vertex component. The extracted clique therefore lies in \(G\).</p><ul><li><b>Membership in NP.</b> The required number of other candidates strictly below \(p\) is correctly stated as \(M-k\). Guessing such a subset has polynomial certificate size.</li></ul><p>For nonempty \(D\), simultaneous strict score inequalities are equivalent to feasibility with a positive common margin \(\delta\); finiteness of \(D\) justifies taking the minimum positive gap. The cap \(\delta\le1\) does not affect this equivalence. The empty case, including \(k=M\), is explicitly and correctly handled.</p><p>The invoked rational linear-programming theorem provides polynomial-time feasibility and exact optimization for explicitly encoded rational programs. Its application is justified: the score expressions are affine with polynomial-length rational coefficients, the program has polynomially many variables and constraints, and all variables are bounded. Thus testing whether the optimum is positive is a valid polynomial-time verification procedure. No assumption about a numerical tolerance or an unencoded real certificate is needed.</p><p>No additional clarification or repair is required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

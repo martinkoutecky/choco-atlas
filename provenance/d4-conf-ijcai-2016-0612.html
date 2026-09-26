@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Subset Selection via Implicit Utilitarian Voting — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Subset Selection via Implicit Utilitarian Voting <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2016-0612)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}hard}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Given a preference proﬁle ~σ and an integer k, computing a k-subset of alternatives that has the minimum distortion or the minimum regret on ~σ is NP-hard. Given that f ⇤ reg outperforms f ⇤ dist in the experiments of Section 4, and that both rules are computationally hard, f ⇤ reg stands out as the clear choice for implementation in our web- site RoboVote. We therefore devoted our efforts to developing a scalable implementation for f ⇤ reg. The ﬁrst step is to simplify the description of f ⇤ reg.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite alternative set \(A\), an integer \(k\), and a rational sparse distribution \(\mu=(\mu_\sigma)\) over complete rankings \(\sigma\in\mathcal{L}(A)\), output an integral \(k\)-subset \(T\) minimizing \(\operatorname{Reg}_\mu(T)=\max_{S\in\binom{A}{k}}\sum_{\sigma}\mu_\sigma\mathbf{1}[S\succ_\sigma T]/\sigma(S)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><h3>Definitions</h3><p>For a complete ranking \(\sigma\), let \(\sigma(a)\) be the position of \(a\), with \(1\) best; for nonempty \(S\subseteq A\), let \(\sigma(S)=\min_{a\in S}\sigma(a)\). Write \(S\succ_\sigma T\) when \(\sigma(S)&lt;\sigma(T)\).<br>The input distribution has finite support, with rational \(\mu_\sigma\geq0\) and \(\sum_\sigma\mu_\sigma=1\). For \(T\in\binom{A}{k}\), define \(\operatorname{Reg}_\mu(T)=\max_{S\in\binom{A}{k}}\sum_\sigma\mu_\sigma\mathbf{1}[S\succ_\sigma T]/\sigma(S)\).</p><h3>Target</h3><p>Is computing an integral \(k\)-subset \(T\) minimizing \(\operatorname{Reg}_\mu(T)\) solvable in polynomial time, or is it NP-hard?</p><h3>Nearest known results</h3><p>For finite preference profiles, computing a \(k\)-subset minimizing the corresponding deterministic regret objective is NP-hard.<br>This result uses voter multiplicities rather than rational masses.</p></div>
+<h2>Prover output (gpt-6-astra / medium, Bolzano prover prompt)</h2><div class="pre"><p><b>Result.</b> Computing an optimal integral \(k\)-subset is NP-hard, using the deterministic-regret hardness result supplied in the question. Normalizing voter multiplicities preserves every optimal solution.</p><p><b>Hardness premise.</b> Write a finite preference profile as rankings \(\sigma_1,\ldots,\sigma_r\) with positive integer multiplicities \(m_1,\ldots,m_r\). The supplied hardness result concerns minimizing the corresponding objective<br>\[
+D(T)=\max_{S\in\binom{A}{k}}\sum_{i=1}^{r}m_i
+\frac{\mathbf{1}[S\succ_{\sigma_i}T]}{\sigma_i(S)}
+\]<br>over \(T\in\binom{A}{k}\). If that objective is defined using the average over voters, it differs from \(D\) only by a positive constant, so its minimizers are identical.</p><p><b>Reduction.</b> Keep \(A\) and \(k\) unchanged. Set \(M=\sum_{i=1}^{r}m_i\) and define<br>\[
+\mu_\sigma=\frac{\sum_{i:\sigma_i=\sigma}m_i}{M}.
+\]<br>These masses are nonnegative rationals summing to \(1\), so they define a valid target instance.</p><p>This construction takes polynomial time. For explicitly listed voters, count occurrences of each ranking. For binary-encoded multiplicities, if each multiplicity has at most \(b\) bits, then \(M\) has at most \(b+\lceil\log_2 r\rceil+1\) bits. Every numerator is at most \(M\), and at most \(r\) distinct rankings appear. Thus the resulting distribution has polynomial encoding length, even when multiplicities are encoded succinctly.</p><p><b>Preservation of the objective.</b> For every feasible \(T\),<br>\[
+\begin{aligned}
+\operatorname{Reg}_\mu(T)
+&amp;=\max_{S\in\binom{A}{k}}
+\sum_{i=1}^{r}\frac{m_i}{M}
+\frac{\mathbf{1}[S\succ_{\sigma_i}T]}{\sigma_i(S)}\\
+&amp;=\frac{1}{M}\max_{S\in\binom{A}{k}}
+\sum_{i=1}^{r}m_i
+\frac{\mathbf{1}[S\succ_{\sigma_i}T]}{\sigma_i(S)}\\
+&amp;=\frac{D(T)}{M}.
+\end{aligned}
+\]<br>The second equality holds because \(M\) is positive and independent of \(S\). Consequently, for any feasible \(T,U\),<br>\[
+\operatorname{Reg}_\mu(T)\leq\operatorname{Reg}_\mu(U)
+\quad\Longleftrightarrow\quad
+D(T)\leq D(U).
+\]<br>Hence the two instances have exactly the same minimizing committees.</p><p>A polynomial-time algorithm computing a minimizing \(T\) for rational input distributions would therefore compute a minimizing committee for the NP-hard deterministic problem: perform the normalization, call the algorithm, and return its committee. This proves the claimed NP-hardness. The only external hardness premise used is the corresponding deterministic result stated in the question.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6-astra / low, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The argument is correct under the deterministic-regret hardness premise supplied in <code>USER_TASK</code>. It gives a polynomial-time reduction preserving every optimal committee.</p><h3>Step-by-step verification</h3><ul><li><b>Use of the hardness premise.</b> The prover explicitly states the deterministic objective being used. This is the multiplicity-weighted counterpart of the objective in <code>USER_TASK</code>, consistent with the supplied “corresponding deterministic regret objective” premise. No stronger external theorem is needed. The observation about averaging is correct: dividing the objective by the positive total number of voters does not change its minimizers.</li></ul><ul><li><b>Validity of the constructed distribution.</b> For a nonempty profile with positive integer multiplicities, \(M=\sum_{i=1}^{r}m_i&gt;0\). Aggregating repeated rankings and dividing their total multiplicities by \(M\) produces nonnegative rational masses whose sum is exactly \(1\). Keeping \(A\) and \(k\) unchanged preserves the feasible committees and competitors.</li></ul><p>The argument operates on the meaningful domain of the stated problem: \(1\leq k\leq |A|\) and nonempty preference profiles. Outside this domain, the given objectives or normalization need not be defined; this does not affect the reduction on valid instances.</p><ul><li><b>Polynomial construction and encoding size.</b> The stated bound of \(b+\lceil\log_2 r\rceil+1\) bits for \(M\) is valid, although conservative. Every aggregated numerator is at most \(M\), and there are at most \(r\) distinct rankings. Counting and aggregating rankings, adding the multiplicities, and writing the rational masses all take polynomial time in the source encoding length. Explicitly listed voters and binary-encoded multiplicities are both covered.</li></ul><ul><li><b>Equality of objectives.</b> The first displayed equality correctly expands the aggregated distribution back into the original indexed profile: identical rankings contribute identical comparison indicators and denominators. Because \(M&gt;0\) is independent of the competing committee \(S\), it can be factored out of the maximum. Thus the claimed identity \(\operatorname{Reg}_{\mu}(T)=D(T)/M\) holds for every feasible \(T\).</li></ul><ul><li><b>Preservation of minimizers.</b> Multiplication by the positive constant \(1/M\) preserves all pairwise objective comparisons, including ties. Consequently, the two instances have exactly the same minimizing committees. This establishes the necessary preservation for a search reduction, not merely preservation of optimal values.</li></ul><ul><li><b>Hardness conclusion.</b> A polynomial-time algorithm returning an optimal target committee would, after the polynomial normalization, return an optimal committee for the supplied NP-hard deterministic problem. The returned committee requires no further transformation. The NP-hardness conclusion follows. The prover does not claim membership in NP or NP-completeness, so no decision-problem certificate argument is required.</li></ul><h3>Issues and repair feedback</h3><p>No major or minor issues were found. No additional clarification or repair is required relative to the hardness premise explicitly supplied in <code>USER_TASK</code>.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

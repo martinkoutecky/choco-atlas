@@ -1,0 +1,60 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Almost Envy-Freeness in Group Resource Allocation — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Almost Envy-Freeness in Group Resource Allocation <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2019-0800)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\text{-complete}\), already for \(\varepsilon=0\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 3.7 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For two groups of agents with binary valuations, it is NP-complete to decide whether there exists an EF1 allocation.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite indivisible goods \(G\) and a rational distribution \(\mu\) over types \(t=(i,v)\), where \(i\in\{1,2\}\) is the fixed group and \(v\in\{0,1\}^{|G|}\) is a binary additive valuation, choose a partition \(B_1\dot\cup B_2=G\) minimizing \(D_\mu(B_1,B_2)=\sum_t\mu_t\mathbf{1}[t\text{ is not EF1 under }(B_1,B_2)]\); decide whether \(D_\mu\le\varepsilon\), with \(\varepsilon=0\) as the exact analogue of Proposition 3.7.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given finite indivisible goods \(G\), an explicitly listed rational distribution \(\mu\) over types \(t=(i,v)\), where \(i\in\{1,2\}\) and \(v\in\{0,1\}^{|G|}\) is additive, choose a partition \(B_1\dot\cup B_2=G\).<br>A type \(t=(i,v)\) is EF1 if there is \(S\subseteq B_{3-i}\) with \(|S|\leq 1\) such that \(v(B_i)\geq v(B_{3-i}\setminus S)\). Define \(D_\mu(B_1,B_2)=\sum_t\mu_t\mathbf{1}[t\text{ is not EF1}]\).</p><p>Is deciding whether some partition has \(D_\mu(B_1,B_2)\leq\varepsilon\) solvable in polynomial time, or is it NP-hard? In particular, this includes \(\varepsilon=0\).</p><p>For finite lists of agents in two fixed groups with binary valuations, deciding existence of an EF1 allocation is NP-complete.</p></div>
+<h2>Prover output (gpt-6-astra / medium, Bolzano prover prompt)</h2><div class="pre"><p>The decision problem is <b>NP-complete</b>, already when \(\varepsilon=0\), using the NP-completeness premise supplied in the question.</p><p>First, we verify membership in NP. A certificate is a partition \((B_1,B_2)\), encoded by one bit per good. For a listed type \(t=(i,v)\), put<br>\[
+a_t=v(B_i),\qquad b_t=v(B_{3-i}).
+\]<br>Because valuations are binary, removing at most one good from the other bundle can reduce its value by at most one. If \(b_t&gt;0\), this reduction is achievable by removing a positively valued good; if \(b_t=0\), the type is already envy-free. Consequently,<br>\[
+t\text{ is EF1}\quad\Longleftrightarrow\quad a_t\geq b_t-1,
+\]<br>and therefore<br>\[
+D_\mu(B_1,B_2)=\sum_{t:\,b_t\geq a_t+2}\mu_t.
+\]<br>All bundle values can be computed in polynomial time. The rational sum and comparison with the rational threshold \(\varepsilon\) can also be performed exactly in polynomial time: a common denominator obtained by multiplying the input denominators has bit length at most the sum of their bit lengths. Thus the problem belongs to NP.</p><p>For NP-hardness, use the supplied NP-complete problem: agents belong to two fixed groups, each group receives one bundle in a partition of the goods, and every agent must satisfy EF1 according to that agent’s binary additive valuation.</p><p>Let an instance have agents \(A=\{1,\ldots,N\}\), where \(N&gt;0\). Agent \(a\) belongs to group \(i_a\in\{1,2\}\) and has valuation vector \(v_a\). Keep the same goods and define a distribution on the distinct occurring types by<br>\[
+\mu_{(i,v)}
+=
+\frac{\bigl|\{a\in A:i_a=i,\ v_a=v\}\bigr|}{N}.
+\]<br>Set \(\varepsilon=0\). This explicitly listed distribution has at most \(N\) types, has total mass one, and has polynomial encoding length. Aggregating agents with identical types is valid because their EF1 conditions coincide for every partition.</p><p>For every partition, the construction gives the exact identity<br>\[
+D_\mu(B_1,B_2)
+=
+\frac{1}{N}
+\bigl|\{a\in A:\text{agent }a\text{ is not EF1 under }(B_1,B_2)\}\bigr|.
+\]<br>Indeed, each distinct type contributes precisely the fraction of agents with that type when its EF1 condition fails, and contributes zero otherwise. Hence<br>\[
+D_\mu(B_1,B_2)\leq 0
+\quad\Longleftrightarrow\quad
+\text{every agent is EF1}.
+\]<br>Thus the constructed instance admits a qualifying partition exactly when the original fixed-group instance does. This is a polynomial-time many-one reduction, proving NP-hardness for \(\varepsilon=0\). Together with membership in NP, it proves NP-completeness both for that restriction and for the problem with an input threshold.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6-astra / low, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The proof is correct and rigorous relative to the NP-completeness premise explicitly supplied in USER_TASK. It establishes NP-completeness already for \(\varepsilon=0\). No major or minor mathematical issues were found.</p><ul><li><b>Source problem and scope.</b> The prover uses exactly the supplied fixed-group problem: two prescribed groups receive bundles forming a partition, and every agent must satisfy EF1 under their own binary additive valuation. This is a given premise, so no independent hardness proof or external theorem verification is needed. The reduction preserves the goods, group labels, and valuations.</li></ul><ul><li><b>EF1 characterization.</b> For binary additive valuations, removing at most one good decreases the other bundle’s value by at most one. If \(b_t&gt;0\), some good in that bundle has value one, so that decrease is attainable. If \(b_t=0\), EF1 holds automatically, and \(a_t\geq b_t-1\) also holds because \(a_t\geq0\). Thus the claimed equivalence is valid in all cases, including empty bundles and zero valuations. Since bundle values are integers, failure is exactly \(b_t\geq a_t+2\).</li></ul><ul><li><b>Membership in NP.</b> A partition requires one bit per good. Each listed type’s bundle values and failure indicator can be computed in polynomial time in the explicit input size. Exact rational summation and comparison also take polynomial time: the product of the input denominators has polynomial bit length, and the resulting numerators and arithmetic operations remain polynomially bounded. This establishes membership in NP for a rational input threshold and for the restriction \(\varepsilon=0\).</li></ul><ul><li><b>Validity and size of the reduction.</b> Each distinct occurring type receives its multiplicity divided by \(N\). These probabilities are positive and sum to one. There are at most \(N\) distinct types, and each multiplicity and denominator has polynomial encoding length. Identical types can be identified by comparing their explicit group labels and valuation vectors in polynomial time. Restricting to \(N&gt;0\) creates no substantive omission: instances with no agents are automatically feasible and cannot be the source of hardness.</li></ul><ul><li><b>Preservation of feasibility.</b> Agents with identical types have identical EF1 conditions for every partition. Consequently, the displayed identity equating \(D_\mu\) to the fraction of agents failing EF1 is exact. All occurring types have positive probability, so \(D_\mu\leq0\) holds precisely when no agent fails EF1. This proves both directions of the required equivalence between source and target instances.</li></ul><ul><li><b>Complexity conclusion.</b> The construction is a polynomial-time many-one reduction with threshold fixed to zero. It proves NP-hardness of that restriction. Membership in NP gives NP-completeness of the restriction, and the general rational-threshold problem inherits hardness while remaining in NP.</li></ul><p>No repair or additional clarification is required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

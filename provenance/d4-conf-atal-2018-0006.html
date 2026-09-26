@@ -1,0 +1,124 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Greedy Algorithms for Maximizing Nash Social Welfare — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Greedy Algorithms for Maximizing Nash Social Welfare <span style="font-weight:normal;color:#8a7350">(d4-conf-atal-2018-0006)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Corollary 5.2 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Given any fair division instance with concave and binary valuations, a Nash optimal allocation can be computed in polynomial time. Remark 2.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\), rational type masses \(\mu\), rational per-capita supplies \(\rho\), and a finite type set \(T\) with \(\Gamma_t\subseteq[m]\) and nondecreasing concave \(f_t:\{0,\ldots,m\}\to\mathbb{Q}_{\ge0}\), choose \(x_{t,B}\ge0\) for \(t\in T\) and \(B\subseteq[m]\) satisfying \(\sum_B x_{t,B}=\mu_t\) and \(\sum_{t,B:\,j\in B}x_{t,B}=\rho_j\), and compute an \(\varepsilon\)-optimal allocation maximizing \(\exp(\sum_{t,B}x_{t,B}\log f_t(|B\cap\Gamma_t|))\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><h3>Definitions</h3><p>Input consists of \(m\), a finite set \(T\), rational \(\mu_t,\rho_j\geq0\), sets \(\Gamma_t\subseteq[m]\), and table-encoded nondecreasing concave functions \(f_t:\{0,\ldots,m\}\to\mathbb{Q}_{\geq0}\). A continuous allocation is \(x_{t,B}\geq0\) satisfying \(\sum_Bx_{t,B}=\mu_t\) and \(\sum_{t,B:\,j\in B}x_{t,B}=\rho_j\).<br>Its Nash welfare is \(U(x)=\exp\!\left(\sum_{t,B}x_{t,B}\log f_t(|B\cap\Gamma_t|)\right)\), with \(U(x)=0\) if a positive-mass term has value \(0\). An \(\varepsilon\)-optimal allocation has \(U(x)\geq e^{-\varepsilon}\max_yU(y)\).</p><h3>Target</h3><p>Is computing an \(\varepsilon\)-optimal continuous allocation solvable in polynomial time (in the input size and \(\log(1/\varepsilon)\)), or is it NP-hard?</p><h3>Nearest known results</h3><p>For the discrete problem in which each indivisible good is assigned to one agent and agent \(i\)&#x27;s valuation is \(f_i(|S\cap\Gamma_i|)\), with \(f_i\) nondecreasing and concave, a Nash-optimal allocation is computable in polynomial time.</p></div>
+<h2>Prover output (gpt-6-astra / medium, Bolzano prover prompt)</h2><div class="pre"><p>For every positive rational \(\varepsilon\), the problem is <b>polynomial-time solvable</b> in the input size and \(\log(1/\varepsilon)\). A polynomial-size rational allocation can be returned explicitly. The key is a polynomial-size linear formulation that records the mass assigned to each possible cardinality and its item marginals.</p><p><b>1. A polynomial-size formulation.</b></p><p>Write \(J_t=\Gamma_t\), \(n_t=|J_t|\), and \(M=\sum_t\mu_t\). For each \(t\) and \(k\in\{0,\ldots,n_t\}\), introduce:</p><ul><li>\(z_{t,k}\): the mass of bundles containing exactly \(k\) items of \(J_t\);</li><li>\(y_{t,k,j}\), for \(j\in J_t\): the mass of those bundles containing \(j\).</li></ul><p>For \(j\notin J_t\), introduce \(a_{t,j}\), the total mass of type \(t\) containing \(j\).</p><p>Consider the rational polytope \(P\) defined by<br>\[
+\sum_{k=0}^{n_t}z_{t,k}=\mu_t,\qquad z_{t,k}\geq0,
+\]<br>\[
+0\leq y_{t,k,j}\leq z_{t,k},
+\qquad
+\sum_{j\in J_t}y_{t,k,j}=kz_{t,k},
+\]<br>\[
+0\leq a_{t,j}\leq\mu_t,
+\]<br>and, for every \(j\in[m]\),<br>\[
+\sum_{t:\,j\in J_t}\sum_{k=0}^{n_t}y_{t,k,j}
++
+\sum_{t:\,j\notin J_t}a_{t,j}
+=\rho_j.
+\]</p><p>This formulation has \(O(|T|(m+1)^2)\) variables and constraints. Its rational coefficients have polynomial encoding length.</p><p>Every feasible allocation induces a point of \(P\): set<br>\[
+z_{t,k}=\sum_{B:\,|B\cap J_t|=k}x_{t,B},
+\]<br>\[
+y_{t,k,j}
+=\sum_{B:\,|B\cap J_t|=k,\ j\in B}x_{t,B},
+\qquad
+a_{t,j}=\sum_{B:\,j\in B}x_{t,B}.
+\]<br>The displayed constraints follow directly from the allocation constraints and counting the \(k\) relevant items in each bundle.</p><p>We next prove the converse constructively.</p><p><b>2. Every rational point of \(P\) has a polynomial-size allocation representation.</b></p><p>First fix a finite set \(J\), an integer \(k\in\{0,\ldots,|J|\}\), and rational numbers satisfying<br>\[
+z&gt;0,\qquad 0\leq y_j\leq z,\qquad \sum_{j\in J}y_j=kz.
+\]<br>We claim that these are the marginals of a rational distribution of total mass \(z\) on at most \(|J|+1\) subsets of size \(k\).</p><p>Choose a set \(S\subseteq J\) of size \(k\) containing every coordinate with \(y_j=z\), and containing only coordinates with \(y_j&gt;0\). Such a choice exists: the sum condition implies that at most \(k\) coordinates equal \(z\), and at least \(k\) coordinates are positive.</p><p>Set<br>\[
+\delta=
+\min\left(
+\{z\}
+\cup\{y_j:j\in S\}
+\cup\{z-y_j:j\notin S\}
+\right).
+\]<br>Every number in this minimum is positive. Assign mass \(\delta\) to \(S\), and replace<br>\[
+z\leftarrow z-\delta,\qquad
+y_j\leftarrow y_j-\delta\,\mathbf 1_{\{j\in S\}}.
+\]</p><p>The residual quantities satisfy the same constraints. Indeed, selected coordinates remain nonnegative and satisfy<br>\[
+y_j-\delta\leq z-\delta;
+\]<br>unselected coordinates satisfy \(y_j\leq z-\delta\) by the definition of \(\delta\). The sum decreases by \(k\delta\).</p><p>If the residual mass is positive, at least one previously strict coordinate reaches either zero or the new upper bound. Coordinates already at a bound remain at a bound: a zero coordinate is unselected, and a coordinate equal to \(z\) is selected. Consequently, after at most \(|J|\) such steps, all coordinates are at bounds, and one final step removes the remaining mass. This proves the claim.</p><p>Apply this construction separately to every positive \(z_{t,k}\). For each type \(t\), it produces a list of relevant-item subsets, with rational masses summing to \(\mu_t\), realizing all the prescribed \(y_{t,k,j}\).</p><p>It remains to incorporate items outside \(J_t\). Represent the list as consecutive half-open intervals partitioning \([0,\mu_t)\), each interval labeled by its relevant-item subset. For every \(j\notin J_t\), include \(j\) precisely on \([0,a_{t,j})\). Cut the partition at every endpoint \(a_{t,j}\). Each resulting interval now specifies one complete bundle; give that bundle mass equal to the interval’s length.</p><p>This realizes every required marginal. It also preserves the masses \(z_{t,k}\), because adding items outside \(J_t\) does not change the relevant cardinality.</p><p>For each type, the initial list has at most \((n_t+1)^2\) intervals, and adding outside items introduces at most \(m-n_t\) cuts. Thus the allocation has polynomial support.</p><p>The construction also has polynomial bit complexity. Its operations are comparisons, additions, and subtractions of rational numbers. A common denominator for the polynomially many input coordinates has polynomial bit length and remains a common denominator throughout.</p><p>Therefore \(P\) is an exact formulation, and rational points of \(P\) can be converted into explicit rational allocations in polynomial time.</p><p><b>3. Feasibility and zero welfare.</b></p><p>Rational linear programming decides feasibility of \(P\) in polynomial time and, when feasible, returns a rational feasible point of polynomial encoding length. If \(P\) is infeasible, the original instance is infeasible.</p><p>Now define \(P^+\) by adding<br>\[
+z_{t,k}=0
+\quad\text{whenever}\quad f_t(k)=0.
+\]</p><p>A feasible allocation has positive welfare if and only if it induces a point of \(P^+\):</p><ul><li>Positive welfare means no positive mass is assigned to a bundle with value zero.</li><li>Conversely, the construction in Section 2 applied to a point of \(P^+\) uses only bundles with positive value whenever their mass is positive.</li></ul><p>Hence, if \(P\) is feasible but \(P^+\) is infeasible, every feasible allocation has welfare zero. Any allocation constructed from a rational feasible point of \(P\) is then optimal.</p><p>If \(M=0\), feasibility requires every \(\rho_j=0\). The zero allocation is optimal and has welfare \(1\), since its logarithmic welfare is the empty sum.</p><p>It therefore remains to treat \(M&gt;0\) and nonempty \(P^+\).</p><p><b>4. Approximating the logarithmic objective.</b></p><p>On \(P^+\), define<br>\[
+L(z)=
+\sum_{t,k:\,f_t(k)&gt;0}z_{t,k}\log f_t(k).
+\]<br>The formulation and reconstruction preserve this objective exactly. Thus maximizing welfare is equivalent to maximizing \(L\) on \(P^+\).</p><p>All variables of \(P^+\) are bounded, so \(P^+\) is compact. The objective \(L\) is a finite linear function there; consequently, a maximizer \(z^*\) exists.</p><p>Put<br>\[
+\bar\varepsilon=\min\{\varepsilon,1\},
+\qquad
+\eta=\frac{\bar\varepsilon}{4\max\{1,M\}}.
+\]<br>For every positive table entry used in the objective, compute a rational approximation \(c_{t,k}\) satisfying<br>\[
+|c_{t,k}-\log f_t(k)|\leq\eta.
+\]<br>Define the rational objective<br>\[
+\widehat L(z)=\sum_{t,k:\,f_t(k)&gt;0}c_{t,k}z_{t,k}.
+\]</p><p>These logarithm approximations can be computed in polynomial time. For completeness, write a positive rational \(q\) as \(q=2^h r\), with \(1\leq r&lt;2\). The magnitude of \(h\) is bounded by the binary encoding length of \(q\). For \(w=(r-1)/(r+1)\), use<br>\[
+\log r
+=
+2\sum_{\ell=0}^{N-1}\frac{w^{2\ell+1}}{2\ell+1}
++R_N.
+\]<br>Since \(0\leq w\leq1/3\),<br>\[
+|R_N|
+\leq
+2\sum_{\ell=N}^{\infty}(1/3)^{2\ell+1}
+\leq3^{-2N}.
+\]<br>The same formula approximates \(\log 2\), using \(w=1/3\). Combining the two approximations gives an approximation to<br>\[
+\log q=h\log 2+\log r
+\]<br>with error at most \((|h|+1)3^{-2N}\). A polynomial number of terms therefore suffices, and the rational partial sums have polynomial encoding length.</p><p>Solve the rational linear program maximizing \(\widehat L\) on \(P^+\), and let \(\widehat z\) denote the resulting cardinality masses. For every feasible \(z\),<br>\[
+|L(z)-\widehat L(z)|
+\leq
+\eta\sum_{t,k}z_{t,k}
+=\eta M.
+\]<br>Optimality for the approximate objective now gives<br>\[
+L(\widehat z)
+\geq \widehat L(\widehat z)-\eta M
+\geq \widehat L(z^*)-\eta M
+\geq L(z^*)-2\eta M
+\geq L(z^*)-\varepsilon.
+\]</p><p>Reconstruct an allocation \(\widehat x\) from the complete rational LP solution. Because reconstruction preserves \(L\),<br>\[
+U(\widehat x)
+=\exp(L(\widehat z))
+\geq e^{-\varepsilon}\exp(L(z^*))
+=e^{-\varepsilon}\max_x U(x).
+\]</p><p><b>5. Complexity and conclusion.</b></p><p>The algorithm uses polynomial-size rational linear programs, logarithm approximations of polynomial encoding length, and a polynomial-time reconstruction producing polynomially many nonzero bundle masses. Since<br>\[
+\log(1/\eta)
+=
+O\!\left(
+1+\log\max\{1,M\}
++\log(1/\bar\varepsilon)
+\right),
+\]<br>its running time is polynomial in the input size and \(\max\{0,\log(1/\varepsilon)\}\).</p><p>The proof does not require monotonicity or concavity: the same result holds for arbitrary nonnegative rational table-encoded functions of the relevant-item cardinality.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6-astra / low, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The argument establishes the claimed polynomial-time result. The formulation, reconstruction, treatment of zero values, and approximation guarantee are correct. No major or minor mathematical issues were found.</p><ul><li><b>Size and validity of the formulation.</b></li></ul><p>The variables record exactly the information needed for the item constraints and objective. In particular, the constraint \(\sum_{j\in J_t}y_{t,k,j}=kz_{t,k}\) correctly counts relevant-item incidences, while \(y_{t,k,j}\leq z_{t,k}\) enforces that a bundle contains each item at most once.</p><p>Outside-item marginals need no cardinality-indexed constraints because outside items do not affect value, and the problem imposes no further restrictions on bundles.</p><p>The formulation has polynomial size and rational coefficients of polynomial encoding length. Every feasible allocation induces a feasible point with the stated cardinality masses.</p><ul><li><b>The cardinality-marginal decomposition is valid.</b></li></ul><p>The required set \(S\) exists: the sum constraint bounds the number of coordinates equal to \(z\) by \(k\), and guarantees at least \(k\) positive coordinates. This also covers \(k=0\), \(k=|J|\), and \(J=\varnothing\).</p><p>Every candidate in the minimum defining \(\delta\) is positive. After subtraction:</p><ul><li>Selected coordinates remain nonnegative and below the new upper bound.</li><li>Unselected coordinates remain below the new upper bound by the choice of \(\delta\).</li><li>The sum constraint remains valid.</li></ul><p>If positive mass remains, a previously strict coordinate reaches a bound. Existing bound coordinates remain at bounds, so the termination argument and support bound of \(|J|+1\) are correct.</p><ul><li><b>Reconstruction of complete bundles is valid.</b></li></ul><p>Cutting the interval representation at the outside-item marginal endpoints realizes each \(a_{t,j}\) exactly. These cuts preserve relevant-item subsets and therefore preserve every \(z_{t,k}\) and \(y_{t,k,j}\).</p><p>The stated support bound is valid. Zero-mass types require no intervals and cause no difficulty. Repeated complete bundles can have their masses combined.</p><p>The bit-complexity justification is also sound: a product of the input coordinate denominators provides a common denominator of polynomial bit length, and the reconstruction uses only polynomially many comparisons, additions, and subtractions.</p><p>Although Section 2 emphasizes rational points for algorithmic purposes, its finite decomposition and interval construction also apply to real points. Thus the asserted exactness does not leave a gap concerning real feasible allocations or maximizers.</p><ul><li><b>Feasibility and zero welfare are handled correctly.</b></li></ul><p>The constraints defining \(P^+\) exclude exactly the cardinalities that would cause zero welfare when assigned positive mass. Hence feasibility of \(P^+\) is equivalent to existence of a positive-welfare allocation.</p><p>If \(P\) is feasible and \(P^+\) is infeasible, every feasible allocation has welfare zero, so the proposed output is optimal.</p><p>The case \(M=0\) is correctly separated: feasibility requires all item marginals to vanish, and the zero allocation has welfare \(1\) under the stated empty-sum convention. Reporting infeasibility when \(P\) is empty appropriately handles inputs for which no allocation exists.</p><ul><li><b>The objective reduction and existence of an optimum are correct.</b></li></ul><p>On \(P^+\), every coefficient used in \(L\) is finite, and reconstruction preserves \(L\). All variables are bounded by the type masses, so the nonempty polytope \(P^+\) is compact and its linear objective attains a maximum.</p><p>Because this case admits positive welfare, allocations with zero welfare cannot improve the optimum. Maximizing \(L\) therefore resolves the original welfare maximization.</p><ul><li><b>The logarithm computation and error bounds check out.</b></li></ul><p>The normalization \(q=2^h r\) has the stated range and encoding bounds. The tail estimate is valid: the geometric bound displayed in the proof is at most \(3^{-2N}\). Combining approximations to \(\log r\) and \(\log 2\) gives error at most \((|h|+1)3^{-2N}\), including when \(h\) is negative.</p><p>Consequently, polynomially many terms suffice for the required accuracy, and the rational sums have polynomial encoding length.</p><p>The uniform objective error is correctly bounded by \(\eta M\). Optimality of the rational approximate objective then yields the stated loss of at most \(2\eta M\), which is indeed at most \(\varepsilon\). Exponentiating gives exactly the required multiplicative guarantee.</p><ul><li><b>The algorithmic conclusion follows.</b></li></ul><p>The rational linear programming results invoked apply here: the programs have explicitly represented rational data of polynomial length; feasibility can be decided in polynomial time; and the bounded, nonempty optimization program admits a rational optimal solution of polynomial encoding length.</p><p>The accuracy dependence is polynomial in \(\max\{0,\log(1/\varepsilon)\}\), with the usual inclusion of the encoding length of supplied rational inputs. Reconstruction produces an explicit allocation with polynomial support.</p><p>No step uses monotonicity or concavity, so the stated extension to arbitrary nonnegative rational cardinality tables is justified.</p><p>No repair or additional mathematical clarification is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

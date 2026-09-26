@@ -1,0 +1,94 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Approximation algorithms for combinatorial auctions with complement-free bidders — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Approximation algorithms for combinatorial auctions with complement-free bidders <span style="font-weight:normal;color:#8a7350">(s5-6979b60be2b0e2cd454eb1bc3d4b4df1e3e5841d)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> The exact maximum welfare is computable in polynomial time, so the problem is in \(\mathrm{P}\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.13 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>It is NP-hard to approximate the optimal allocation among val- uations given in the XOS language to within any constant factor less than e/(e −1).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\) item types, bidder types \(t\in\{1,\ldots,\tau\}\) with rational masses \(\mu_t\), rational per-capita supplies \(b_j\), and explicitly represented XOS valuations \(v_t\), compute or approximate the maximum welfare \(\sum_{t,S}x_{t,S}v_t(S)\) subject to \(x_{t,S}\ge0\), \(\sum_{S\subseteq M}x_{t,S}=\mu_t\), and \(\sum_{t,S:j\in S}x_{t,S}\le b_j\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>An explicitly represented XOS valuation is a list of nonnegative rational additive clauses \(a_{t,\ell,j}\), with \(v_t(S)=\max_\ell\sum_{j\in S}a_{t,\ell,j}\).<br>Given item types \(M\), bidder types \(t\) with rational masses \(\mu_t\), and rational supplies \(b_j\), maximize \(\sum_{t,S\subseteq M}x_{t,S}v_t(S)\) subject to \(x_{t,S}\geq 0\), \(\sum_S x_{t,S}=\mu_t\), and \(\sum_{t,S:j\in S}x_{t,S}\leq b_j\).</p><p>Is computing this maximum welfare in P, or is it NP-hard?</p><p>For a finite list of bidders with explicitly represented XOS valuations, approximating maximum welfare within any constant factor smaller than \(\mathrm e/(\mathrm e-1)\) is NP-hard. The supplied result also gives a polynomial-time method for solving the unit-mass, unit-supply fractional allocation program using demand queries; it does not state a complexity result for the rational-mass, rational-supply formulation above.</p></div>
+<h2>Prover output (gpt-6-astra / medium, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>Computing the maximum welfare is <b>in P</b>, including for rational masses and rational supplies. A polynomial-size linear program gives its exact value.</p><p>Assume masses and supplies are nonnegative, as appropriate for the allocation problem, and each bidder type has at least one clause. Write \(L_t\) for the set of explicitly listed clauses of type \(t\), and let \(m=|M|\).</p><h3>A polynomial-size linear program</h3><p>Introduce variables:</p><ul><li>\(y_{t,\ell}\): the mass of type \(t\) assigned to clause \(\ell\);</li><li>\(z_{t,\ell,j}\): the mass within that group receiving item \(j\).</li></ul><p>Consider the linear program<br>\[
+\begin{aligned}
+\text{maximize}\quad&amp;
+\sum_t\sum_{\ell\in L_t}\sum_{j\in M}
+a_{t,\ell,j}z_{t,\ell,j}\\
+\text{subject to}\quad&amp;
+\sum_{\ell\in L_t}y_{t,\ell}=\mu_t
+&amp;&amp;\text{for every }t,\\
+&amp;
+\sum_t\sum_{\ell\in L_t}z_{t,\ell,j}\le b_j
+&amp;&amp;\text{for every }j,\\
+&amp;
+0\le z_{t,\ell,j}\le y_{t,\ell}
+&amp;&amp;\text{for every }t,\ell,j,\\
+&amp;
+y_{t,\ell}\ge0
+&amp;&amp;\text{for every }t,\ell.
+\end{aligned}
+\]<br>Denote its optimum by \(\mathrm{OPT}_{\mathrm{ext}}\), and the optimum in the question by \(\mathrm{OPT}_{\mathrm{orig}}\).</p><p>Both programs are feasible: assign all mass to the empty bundle in the original program; in the new program, assign each type’s mass to any clause and set every \(z\) to zero. Both feasible regions are closed and bounded, so their optima are attained.</p><h3>Every original allocation gives an equally valuable feasible solution</h3><p>Let \(x\) be feasible for the original program. For each type \(t\) and bundle \(S\), choose a maximizing clause \(\ell(t,S)\), so that<br>\[
+v_t(S)=\sum_{j\in S}a_{t,\ell(t,S),j}.
+\]<br>Define<br>\[
+y_{t,\ell}
+=\sum_{S:\ell(t,S)=\ell}x_{t,S},
+\qquad
+z_{t,\ell,j}
+=\sum_{\substack{S:\ell(t,S)=\ell\\j\in S}}x_{t,S}.
+\]<br>These variables satisfy all the new constraints. In particular, the total consumption of each item is unchanged. Their objective equals<br>\[
+\sum_{t,\ell,j}a_{t,\ell,j}z_{t,\ell,j}
+=
+\sum_{t,S}x_{t,S}
+\sum_{j\in S}a_{t,\ell(t,S),j}
+=
+\sum_{t,S}x_{t,S}v_t(S).
+\]<br>Consequently, \(\mathrm{OPT}_{\mathrm{orig}}\le\mathrm{OPT}_{\mathrm{ext}}\).</p><h3>Every new solution can be realized by bundles</h3><p>Fix any feasible \((y,z)\). We first realize the prescribed item masses separately for each pair \((t,\ell)\).</p><p>Suppose \(m\ge1\). Order the items as \(j_1,\ldots,j_m\) so that<br>\[
+z_{t,\ell,j_1}\ge\cdots\ge z_{t,\ell,j_m}.
+\]<br>Set<br>\[
+c_0=y_{t,\ell},\qquad
+c_k=z_{t,\ell,j_k}\ \ (1\le k\le m),\qquad
+c_{m+1}=0.
+\]<br>The constraints ensure that this sequence is nonincreasing. For each \(k\) from zero through \(m\), assign mass<br>\[
+w_k=c_k-c_{k+1}
+\]<br>to the prefix bundle \(S_k=\{j_1,\ldots,j_k\}\), with \(S_0=\varnothing\).</p><p>These masses are nonnegative and sum to \(y_{t,\ell}\). Item \(j_r\) occurs exactly in the bundles with \(k\ge r\), so its assigned mass is<br>\[
+\sum_{k=r}^{m}w_k
+=\sum_{k=r}^{m}(c_k-c_{k+1})
+=c_r
+=z_{t,\ell,j_r}.
+\]<br>If \(m=0\), simply assign mass \(y_{t,\ell}\) to the empty bundle.</p><p>Combine these constructions over all clauses and types, adding masses whenever the same type and bundle occur. The resulting \(x\) satisfies the original type-mass equalities and item-supply inequalities, because the construction preserves all corresponding totals.</p><p>For every constructed bundle, the definition of XOS gives<br>\[
+v_t(S_k)\ge\sum_{j\in S_k}a_{t,\ell,j}.
+\]<br>Thus the welfare of the combined allocation is at least<br>\[
+\sum_{t,\ell}\sum_{k=0}^{m}
+w_k\sum_{j\in S_k}a_{t,\ell,j}
+=
+\sum_{t,\ell,j}a_{t,\ell,j}z_{t,\ell,j}.
+\]<br>Applying this construction to an optimal new solution proves<br>\(\mathrm{OPT}_{\mathrm{orig}}\ge\mathrm{OPT}_{\mathrm{ext}}\).<br>Therefore the two optima are equal.</p><h3>Complexity and the supplied hardness result</h3><p>The new program has \((m+1)\sum_t|L_t|\) variables and polynomially many constraints. Its coefficients consist of input rationals and the constants \(0,1,-1\), so its encoding length is polynomial in the explicit input length. The polynomial-time theorem for rational linear programming therefore computes its exact optimum in polynomial time.</p><p>The construction also yields an optimal original allocation with at most \((m+1)\sum_t|L_t|\) listed bundles, counting repetitions before aggregation.</p><p>The supplied finite-bidder welfare hardness result concerns integral allocations. The program here permits splitting each type’s mass among bundles and constrains aggregate item consumption. The proof establishes polynomial-time solvability of precisely this fractional formulation, without extending the supplied demand-query result by assumption.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6-astra / low, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s conclusion is correct: the fractional welfare maximum is computable exactly in polynomial time. The extended linear program is equivalent in optimal value to the original program, and the equivalence is proved explicitly. No substantive gaps were found.</p><h3>Step-by-step verification</h3><ul><li><b>Definitions and domain.</b></li></ul><p>The proof explicitly assumes nonnegative masses and supplies and at least one clause per type. These are the natural domain conditions for the stated allocation problem: an empty clause list would leave the displayed definition of the valuation undefined. If “rational masses” and “rational supplies” were intended to permit negative values, the feasibility claim would need qualification; any such negative entry makes the original program infeasible. This does not affect the claimed complexity for allocation instances.</p><ul><li><b>Feasibility, boundedness, and attainment.</b></li></ul><p>The stated feasible solutions are valid. In the original program, each variable satisfies \(0\le x_{t,S}\le\mu_t\). In the extended program, \(0\le y_{t,\ell}\le\mu_t\) and \(0\le z_{t,\ell,j}\le y_{t,\ell}\). Both programs have finitely many variables and closed, bounded, nonempty feasible regions. Their linear objectives therefore attain finite optima.</p><ul><li><b>Original allocation to extended solution.</b></li></ul><p>A maximizing clause exists because each clause list is finite and nonempty. Choosing one for each pair \((t,S)\) partitions the bundles of each type. Consequently:</p><ul><li>The resulting clause masses sum to \(\mu_t\).</li><li>Each item mass within a clause group lies between zero and that group’s mass.</li><li>Aggregate consumption of every item is preserved.</li><li>The objective is preserved exactly, because the chosen clause realizes \(v_t(S)\).</li></ul><p>Thus the inequality \(\mathrm{OPT}_{\mathrm{orig}}\le\mathrm{OPT}_{\mathrm{ext}}\) is justified. This direction is an existence argument; it does not require enumerating all original bundles algorithmically.</p><ul><li><b>Realization of extended variables by bundles.</b></li></ul><p>After sorting the item masses, the constraints imply<br>\(c_0\ge c_1\ge\cdots\ge c_m\ge c_{m+1}=0\).<br>Therefore every \(w_k=c_k-c_{k+1}\) is nonnegative. The total mass telescopes to \(c_0=y_{t,\ell}\), and the mass receiving item \(j_r\) telescopes to \(c_r=z_{t,\ell,j_r}\). These computations are correct.</p><p>Tied item masses cause no problem: some bundle masses may simply be zero. Groups with \(y_{t,\ell}=0\) also work, since all their item masses and constructed bundle masses are zero. The case \(m=0\) is handled explicitly.</p><ul><li><b>Aggregation and welfare comparison.</b></li></ul><p>Aggregating the constructed masses by type and bundle preserves the required type masses and item consumptions. Each bundle’s XOS value is at least its value under the clause used to construct that group. Summing these inequalities remains valid even when several groups produce the same bundle, because welfare is linear in allocated mass.</p><p>The displayed objective identity follows by summing each item’s preserved marginal mass. Hence every extended feasible solution gives an original feasible allocation with at least its objective value. Applying this to an extended optimum establishes the reverse inequality and therefore equality of the two optima.</p><ul><li><b>Polynomial-time claim.</b></li></ul><p>The variable count \((m+1)\sum_t|L_t|\) is correct, and the number of constraints is polynomial in the explicit input length. Writing a conventional rational LP encoding also requires only polynomial space; no exponentially indexed bundle variables appear in this program.</p><p>The invoked standard rational linear programming theorem supplies a polynomial-time algorithm, in binary encoding length, for finding an exact rational optimum of a feasible rational LP with finite optimum. The proof verifies those hypotheses: rational coefficients, polynomial encoding length, feasibility, and boundedness. Thus its application is justified.</p><ul><li><b>Recovered allocation and hardness distinction.</b></li></ul><p>Each clause group contributes at most \(m+1\) bundles, so the stated support bound is correct. Equality of the optima ensures that recovering bundles from an extended optimum produces an optimal original allocation.</p><p>The distinction from integral finite-bidder welfare maximization is also correct. Integral allocation hardness does not contradict polynomial-time optimization of this fractional program. The proof does not rely on an unstated extension of the supplied demand-query result.</p><h3>Feedback</h3><p>No repair is needed for the stated allocation domain. The proof supplies both directions of the equivalence, covers the relevant degenerate cases, and justifies exact polynomial-time computation.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

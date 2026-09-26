@@ -1,0 +1,79 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Computational Aspects of Multi-Winner Approval Voting — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Computational Aspects of Multi-Winner Approval Voting <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2014-0025)</span></h1>
+<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="answer"><b>Answer:</b> NP-complete, and hence NP-hard, even when every positive-mass approval type contains exactly two candidates.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>WD for PAV is NP-complete, even if each agent approves of two candidates.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), committee size \(k\), rational finite-support masses \(\mu_A\) over approval types \(A\subseteq C\), and threshold \(q\), decide whether there exists an integral committee \(W\subseteq C\) with \(\lvert W\rvert=k\) and \(\sum_A\mu_A H_{\lvert W\cap A\rvert}\ge q\), where \(H_r=\sum_{j=1}^{r}1/j\); equivalently, compute a maximizing \(W\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p><b>Definitions.</b> An instance consists of a candidate set \(C\), a committee size \(k\), a finite list of approval types \(A\subseteq C\) with rational masses \(\mu_A\ge 0\) satisfying \(\sum_A\mu_A=1\), and a rational threshold \(q\). Let \(H_0=0\) and \(H_r=\sum_{j=1}^{r}1/j\). A committee \(W\subseteq C\) of size \(k\) has score \(S(W)=\sum_A\mu_AH_{\lvert W\cap A\rvert}\).</p><p><b>Target.</b> Is deciding whether some \(W\subseteq C\) with \(\lvert W\rvert=k\) satisfies \(S(W)\ge q\) solvable in polynomial time, or is it NP-hard?</p><p><b>Nearest known results.</b> For unweighted finite approval profiles, winner determination under proportional approval voting is NP-complete, even when every voter approves exactly two candidates.</p></div>
+<h2>Prover output (gpt-6-astra / medium, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The decision problem is <b>NP-complete</b>, and hence NP-hard. Hardness holds even when every positive-mass approval type contains exactly two candidates.</p><h3>NP-hardness</h3><p>We use the NP-completeness result supplied in the question for the unweighted PAV threshold problem.</p><p>An unweighted instance consists of a candidate set \(C\), a committee size \(k\), explicitly listed voters with approval sets \(A_1,\ldots,A_n\), and a threshold \(T\). Its question is whether some committee \(W\) of size \(k\) satisfies<br>\[
+\sum_{i=1}^{n}H_{|W\cap A_i|}\ge T.
+\]<br>We may assume \(n\ge 1\): instances with no voters have constant score zero and can be decided directly.</p><p>For each distinct approval set \(A\) occurring in the profile, let<br>\[
+c_A=\bigl|\{i:A_i=A\}\bigr|.
+\]<br>Construct a target instance with the same \(C\) and \(k\), and set<br>\[
+\mu_A=\frac{c_A}{n},
+\qquad
+q=\frac{T}{n}.
+\]<br>These masses are nonnegative rationals, and<br>\[
+\sum_A\mu_A=\frac{\sum_Ac_A}{n}=1.
+\]<br>Thus the constructed instance satisfies the required normalization.</p><p>For every committee \(W\) of size \(k\),<br>\[
+S(W)
+=\sum_A\frac{c_A}{n}H_{|W\cap A|}
+=\frac1n\sum_{i=1}^{n}H_{|W\cap A_i|}.
+\]<br>Since \(n&gt;0\), it follows that<br>\[
+S(W)\ge q
+\quad\Longleftrightarrow\quad
+\sum_{i=1}^{n}H_{|W\cap A_i|}\ge T.
+\]<br>Consequently, the original instance is a yes-instance exactly when the constructed instance is a yes-instance.</p><p>The construction takes polynomial time: identical approval sets can be grouped in polynomial time, each count \(c_A\) is at most \(n\), and dividing the input threshold by \(n\) adds at most \(O(\log n)\) bits to its representation. If every original voter approves exactly two candidates, every resulting approval type also contains exactly two candidates. The supplied hardness result therefore applies.</p><h3>Membership in NP</h3><p>A certificate is a committee \(W\). We first check that \(W\subseteq C\) and \(|W|=k\). It remains to show that its score can be compared with \(q\) exactly in polynomial time.</p><p>Let \(m=|C|\), and write the listed masses and threshold as<br>\[
+\mu_{A_i}=\frac{a_i}{b_i}\quad(1\le i\le t),
+\qquad
+q=\frac{u}{v},
+\]<br>with positive integer denominators. Define<br>\[
+D=m!\,v\prod_{i=1}^{t}b_i.
+\]<br>Every denominator \(j\) occurring in any \(H_r\), where \(r\le m\), divides \(m!\). Therefore<br>\[
+D S(W)
+=
+\sum_{i=1}^{t}
+a_i\sum_{j=1}^{|W\cap A_i|}
+\frac{D}{b_i j},
+\qquad
+Dq=\frac{Du}{v}
+\]<br>are integers, with every displayed division exact.</p><p>The bit length of \(D\) is at most<br>\[
+O\!\left(m\log(m+1)+\log v+\sum_{i=1}^{t}\log b_i\right),
+\]<br>which is polynomial in the explicit input length. There are at most \(tm\) summands, and their numerators also have polynomial bit length. Standard integer arithmetic therefore computes and compares these integers in polynomial time. Because \(D&gt;0\), this comparison decides whether \(S(W)\ge q\).</p><p>Thus the problem belongs to NP. Combined with the reduction above, this proves NP-completeness.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6-astra / low, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover resolves the target correctly. The reduction establishes NP-hardness, including the restriction to approval types of size two, and the certificate verification establishes membership in NP. No substantive or expositional repairs are needed.</p><ul><li><b>Use of the supplied hardness result.</b> The prover explicitly states the unweighted threshold problem used as the source. This is the decision version of the PAV winner-determination result supplied in the task. Its candidates, committee size, approval sets, and harmonic score agree with the target definitions. No additional theorem hypotheses are introduced.</li></ul><p>Restricting to profiles with \(n\ge 1\) is harmless: profiles without voters have identically zero score, and their feasibility and threshold conditions can be decided directly.</p><ul><li><b>Validity of the constructed instance.</b> Grouping voters with identical approval sets gives positive integer counts \(c_A\) satisfying \(\sum_A c_A=n\). Therefore the proposed masses \(\mu_A=c_A/n\) are rational, nonnegative, and sum to one. The threshold \(q=T/n\) is rational. Retaining \(C\) and \(k\) preserves the feasible committees.</li></ul><ul><li><b>Correctness of the reduction.</b> For every feasible committee \(W\), grouping equal approval sets yields exactly</li></ul><p>\[
+   S(W)=\frac{1}{n}\sum_{i=1}^{n}H_{\lvert W\cap A_i\rvert}.
+   \]<br>Since \(n&gt;0\), comparison against \(q=T/n\) preserves the threshold inequality in both directions. Thus the reduction preserves both yes-instances and no-instances.</p><ul><li><b>Polynomial size and running time.</b> Under the explicit input representation used in the task and proof, grouping approval sets takes polynomial time. There are at most \(n\) resulting types, and each count and mass denominator requires \(O(\log(n+1))\) bits. Dividing the source threshold by \(n\) increases its representation length by at most that amount. The construction is consequently a polynomial-time reduction.</li></ul><p>Grouping does not change any approval set, so the restriction that each voter approves exactly two candidates transfers to every resulting positive-mass type.</p><ul><li><b>Certificate verification and exact arithmetic.</b> A committee has polynomial representation length, and checking containment and cardinality takes polynomial time. After those checks, every intersection size is at most \(m=\lvert C\rvert\).</li></ul><p>The proposed positive integer<br>\[
+   D=m!\,v\prod_{i=1}^{t}b_i
+   \]<br>clears every relevant denominator: for each summand, \(j\) divides \(m!\), and \(b_i\) is a factor of the denominator product. Thus \(D/(b_i j)\) is an integer. The displayed formulas for \(DS(W)\) and \(Dq\) are correct.</p><p>The bit-length bound is polynomial in the explicit input length. Including the input numerators and adding at most \(tm\) terms still gives integers of polynomial bit length. Exact computation and comparison therefore take polynomial time.</p><ul><li><b>Edge cases and conclusion.</b> Zero masses contribute zero. Empty intersections use the empty sum, matching \(H_0=0\). If \(m=0\), the definition \(0!=1\) keeps the denominator construction valid. Infeasible committee sizes fail the certificate check. Negative thresholds cause no difficulty because the comparison uses signed integers and a positive multiplier.</li></ul><p>Both NP-hardness and NP membership are established, so the claimed NP-completeness follows.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>
