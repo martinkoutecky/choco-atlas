@@ -1,0 +1,211 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Stable Marriage with Covering Constraints-A Complete Computational Trichotomy — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Stable Marriage with Covering Constraints-A Complete Computational Trichotomy <span style="font-weight:normal;color:#8a7350">(d4-conf-sagt-2017-0020)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 9 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>SMC-1 is NP-hard even if ∆W = 2 and ∆M = 3.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational masses μ_i and ν_j on male and female types, with each type specifying acceptable counterpart types, a strict order over them, and whether it is distinguished, find a mass matching x covering all distinguished female mass and minimizing \(\operatorname{BP}(x)=\sum_{(i,j)\in E}u^M_{ij}(x)u^W_{ji}(x)\), where every female type has at most two acceptable male types and every male type has at most three acceptable female types; equivalently, decide whether \(\operatorname{BP}(x)\le B\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: male types \(M\) and female types \(W\), each with positive binary-rational mass \(\mu_i\) or \(\nu_j\). Let \(\tau=|M|+|W|\) be the support size, not the number of possible types; let \(m=|E|\) count mutually acceptable type pairs and \(L\) be the total input bit length. Masses need not sum to one or have equal totals on the two sides.<br>Each type strictly ranks its acceptable counterpart types, all above being unmatched. Acceptability is mutual; each female list has length at most two and each male list at most three. A subset \(W^\star\subseteq W\) is distinguished; there are no distinguished male types.<br>A mass matching has real entries \(x_{ij}\geq0\) on \(E\), with \(\sum_{j:(i,j)\in E}x_{ij}\leq\mu_i\) and \(\sum_{i:(i,j)\in E}x_{ij}\leq\nu_j\); feasibility requires equality in the latter constraint for every \(j\in W^\star\). Remaining mass is unmatched.<br>For \((i,j)\in E\), define \(u^M_{ij}(x)=\mu_i-\sum_{k:(i,k)\in E,\ k\succeq_i j}x_{ik}\) and \(u^W_{ji}(x)=\nu_j-\sum_{h:(h,j)\in E,\ h\succeq_j i}x_{hj}\), where \(\succeq\) includes equality. These are the masses unmatched or assigned to strictly worse types. Set \(\operatorname{BP}(x)=\sum_{(i,j)\in E}u^M_{ij}(x)u^W_{ji}(x)\).</p><p>Given a binary-rational threshold \(B\geq0\), is deciding whether a feasible mass matching \(x\) satisfies \(\operatorname{BP}(x)\leq B\) solvable in polynomial time in \(m,\tau,L\), or is it NP-hard?</p><p>The discrete problem of covering distinguished women while minimizing blocking pairs is NP-hard with female lists of length at most two and male lists of length at most three ([Mnich–Schlotter](https://arxiv.org/abs/1602.08230v3)).<br>For fractional bipartite matchings with strict preferences, maximizing welfare or the number of fully matched agents subject to ordinal stability is polynomial-time solvable ([Chen–Roy–Sorge](https://www.ijcai.org/proceedings/2021/0013.pdf)); those objectives differ from the product objective above. No result settling this exact mass problem was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Defined the previously unspecified willingness terms as unmatched mass plus mass assigned to strictly worse counterpart types, excluding mass already assigned to the proposed counterpart type.</li><li>Defined mass matchings using nonnegative real entries, marginal upper bounds, and full coverage of every distinguished female type; infeasible instances are rejected.</li><li>Used arbitrary positive rational masses without normalization or equal side totals, reflecting the discrete model&#x27;s unrestricted population sizes.</li><li>Restricted distinguished types to women, as required by the one-sided anchor.</li><li>Made acceptability mutual and placed every acceptable counterpart above being unmatched.</li><li>Specified a nonnegative binary-rational decision threshold and defined m as the number of mutually acceptable type pairs.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status: partial progress</h3><p>The general problem with female lists of length at most $2$ and male lists of length at most $3$ remains unresolved here.</p><p>The new result is a polynomial-time algorithm for <b>all thresholds and arbitrary rational masses when both sides’ lists have length at most $2$</b>. More generally, I give an exact decomposition that isolates the terms preventing the same convexity argument from handling male lists of length $3$.</p><h3>1. An exact decomposition of the objective</h3><p>Let $V=M\cup W$. Write $x_e=x_{ij}$ for an acceptable pair $e=(i,j)$, and define<br>$$
+s_v(x)=\sum_{e\ni v}x_e.
+$$<br>For $e=(i,j)$, let<br>$$
+A_e(x)=\sum_{h\succ_i j}x_{ih},
+\qquad
+C_e(x)=\sum_{g\succ_j i}x_{gj}.
+$$<br>Thus $A_e$ and $C_e$ count assignments strictly preferred to $e$ at its male and female endpoints, respectively. The dissatisfaction quantities are<br>$$
+u^M_e=\mu_i-x_e-A_e,
+\qquad
+u^W_e=\nu_j-x_e-C_e.
+$$</p><p>Expanding the objective gives<br>$$
+\operatorname{BP}(x)=c+\ell(x)+Q(x),
+$$<br>where<br>$$
+c=\sum_{(i,j)\in E}\mu_i\nu_j,
+$$<br>$$
+\ell(x)=-
+\sum_{e=(i,j)\in E}
+\left[
+\nu_j(x_e+A_e(x))+
+\mu_i(x_e+C_e(x))
+\right],
+$$<br>and the homogeneous quadratic part is<br>$$
+Q(x)=\sum_{e\in E}(x_e+A_e(x))(x_e+C_e(x)).
+$$</p><p><b>Lemma 1.</b> For arbitrary strict preference lists,<br>$$
+Q(x)=
+\frac12\sum_{v\in V}s_v(x)^2+
+\sum_{e\in E}A_e(x)C_e(x).
+$$</p><p><b>Proof.</b> Expanding $Q$ yields<br>$$
+Q(x)=
+\sum_e x_e^2+
+\sum_e x_e(A_e+C_e)+
+\sum_e A_eC_e.
+$$<br>At a fixed vertex, each unordered pair of distinct incident edges contributes exactly once to the middle sum: it contributes through the less-preferred edge, whose strict-better sum contains the more-preferred edge. Consequently,<br>$$
+\sum_e x_e(A_e+C_e)
+=
+\sum_{v\in V}
+\sum_{\substack{\{e,f\}\subseteq E\\e,f\ni v,\ e\ne f}}
+x_ex_f.
+$$<br>Every edge has two endpoints. Therefore<br>$$
+\frac12\sum_{v\in V}s_v^2
+=
+\sum_e x_e^2+
+\sum_{v\in V}
+\sum_{\substack{\{e,f\}\subseteq E\\e,f\ni v,\ e\ne f}}
+x_ex_f.
+$$<br>Substitution proves the identity. $\square$</p><p>These are polynomial identities, valid even for signed vectors $x$; feasibility is not needed.</p><h3>2. A sum-of-squares formula under the stated list bounds</h3><p>From now on, assume female lists have length at most $2$ and male lists have length at most $3$.</p><p>Define two sets of acceptable pairs:</p><ul><li>$D$ consists of pairs ranked <b>last at both endpoints</b>.</li><li>$R$ consists of pairs whose male endpoint has a list of length exactly $3$ and ranks the pair second, and whose female endpoint has a list of length exactly $2$ and ranks the pair second.</li></ul><p>For $e\in R$, let $a(e)$ be the first-choice edge at its male endpoint, and let $b(e)$ be the first-choice edge at its female endpoint.</p><p>Because every nonisolated vertex has a unique last-choice edge, distinct edges of $D$ have disjoint endpoints. Let $V(D)$ denote their endpoints.</p><p>Define<br>$$
+Q_0(x)=
+\frac12\sum_{v\notin V(D)}s_v(x)^2
++
+\frac12\sum_{e=(i,j)\in D}
+\left[
+(s_i(x)+s_j(x)-x_e)^2+x_e^2
+\right].
+$$</p><p><b>Theorem 2.</b> Under the stated list bounds,<br>$$
+\boxed{
+\operatorname{BP}(x)
+=
+c+\ell(x)+Q_0(x)+
+\sum_{e\in R}x_{a(e)}x_{b(e)}.
+}
+$$<br>In particular, $Q_0$ is positive semidefinite.</p><p><b>Proof.</b> We first classify the products $A_eC_e$ in Lemma 1.</p><p>If an edge is ranked first at either endpoint, the corresponding strict-better sum is zero, so $A_eC_e=0$.</p><p>Suppose instead that both strict-better sums are nonzero. The female endpoint must have two acceptable men and rank $e$ second.</p><p>At the male endpoint there are exactly two possibilities:</p><ul><li>The man ranks $e$ last. Then $e\in D$, and</li></ul><p>$$
+   A_e=s_i-x_e,
+   \qquad
+   C_e=s_j-x_e.
+   $$</p><ul><li>The man has three acceptable women and ranks $e$ second. Then $e\in R$, and</li></ul><p>$$
+   A_e=x_{a(e)},
+   \qquad
+   C_e=x_{b(e)}.
+   $$</p><p>This exhausts the possibilities. Edges in $D$ that are also first choices at an endpoint have a zero strict-better sum there, and the same formula remains valid. Hence<br>$$
+\sum_e A_eC_e
+=
+\sum_{e=(i,j)\in D}(s_i-x_e)(s_j-x_e)
++
+\sum_{e\in R}x_{a(e)}x_{b(e)}.
+$$</p><p>For every $e=(i,j)\in D$, direct expansion gives<br>$$
+\frac12s_i^2+\frac12s_j^2+(s_i-x_e)(s_j-x_e)
+=
+\frac12(s_i+s_j-x_e)^2+\frac12x_e^2.
+$$<br>The edges in $D$ have disjoint endpoints, so these replacements use disjoint terms of $\frac12\sum_v s_v^2$. Applying them to Lemma 1 gives the claimed decomposition.</p><p>Finally, $Q_0$ is a sum of squares of linear functions, with nonnegative coefficients. Thus $Q_0(x)\geq0$ for every real vector $x$, which proves positive semidefiniteness. $\square$</p><h3>3. A polynomial-time solvable case for every threshold</h3><p><b>Corollary 3.</b> If $R=\varnothing$, the decision problem is polynomial-time solvable in $m,\tau,L$, for arbitrary positive rational masses, arbitrary $W^\star$, and every rational threshold $B\geq0$.</p><p>In particular, this holds when both male and female preference lists have length at most $2$.</p><p><b>Proof.</b> Let $P$ be the feasible set specified in the question. It is a rational polytope: its constraints are linear, with rational right-hand sides. It has $m$ variables and a polynomial number of constraints.</p><p>Every coordinate satisfies<br>$$
+0\leq x_{ij}\leq\min\{\mu_i,\nu_j\},
+$$<br>so $P$ is bounded. An empty $P$ gives a no-instance.</p><p>When $R=\varnothing$, Theorem 2 gives<br>$$
+\operatorname{BP}(x)=c+\ell(x)+Q_0(x).
+$$<br>The objective is convex because its quadratic part is positive semidefinite.</p><p>We use the exact convex quadratic programming theorem of Kozlov–Tarasov–Khachiyan: a quadratic objective with rational positive-semidefinite Hessian, minimized under rational linear constraints, admits a polynomial-time algorithm that detects infeasibility and, when a finite optimum exists, computes the exact optimal value. Their theorem is formulated for integer data; clearing denominators extends it to rational data with polynomial increase in encoding length. [Kozlov–Tarasov–Khachiyan, *The polynomial solvability of convex quadratic programming*](https://www.mathnet.ru/eng/zvmmf5189)</p><p>All hypotheses hold here:</p><ul><li>The constraints and objective coefficients are rational.</li><li>Theorem 2 proves positive semidefiniteness.</li><li>A nonempty $P$ is compact, so the objective attains a finite minimum.</li><li>Constructing the quadratic program requires only polynomially many rational operations, and its encoding length is polynomial in $m,\tau,L$.</li></ul><p>Compute the exact minimum and compare it with $B$. This handles equality at the threshold as well as strict inequality.</p><p>If male lists have length at most $2$, no edge meets the definition of $R$, proving the stated special case. No balance or normalization of the masses was used. $\square$</p><p>This also gives a tractable subclass allowing male lists of length $3$: it suffices that no man’s middle-ranked pair is simultaneously the less-preferred pair of its female endpoint.</p><h3>4. Quantifying the remaining nonconvexity</h3><p>The decomposition also gives a bound on the number of negative eigenvalues.</p><p><b>Proposition 4.</b> Let $k=|R|$, and let $H$ be the Hessian of $\operatorname{BP}$. Then $H$ has at most $k$ negative eigenvalues, counted with multiplicity.</p><p>Moreover, fixing the coordinates $x_{a(e)}$ for all $e\in R$ makes the objective convex in the remaining coordinates. For prescribed rational values of those coordinates, the resulting constrained decision problem is polynomial-time solvable.</p><p><b>Proof.</b> Consider the linear subspace<br>$$
+T=\{z\in\mathbb R^m:z_{a(e)}=0\text{ for every }e\in R\}.
+$$<br>Its codimension is at most $k$. On this subspace, every residual product vanishes, so Theorem 2 gives<br>$$
+\frac12z^{\mathsf T}Hz=Q(z)=Q_0(z)\geq0.
+$$</p><p>If the negative eigenspace of $H$ had dimension greater than $k$, it would intersect $T$ in a nonzero vector. The quadratic form would be strictly negative on that vector, contradicting the displayed inequality.</p><p>After fixing $x_{a(e)}=\alpha_e$, every residual product becomes the linear term<br>$$
+\alpha_e x_{b(e)}.
+$$<br>The remaining quadratic part is the restriction of the positive-semidefinite form $Q_0$. The feasible constraints remain rational and linear when the prescribed values are rational. Corollary 3’s quadratic programming argument therefore applies, with input length including the prescribed values. $\square$</p><p>This proposition does not provide a global algorithm: the optimal values of the fixed coordinates are still unknown.</p><h3>One residual term already permits nonconvexity</h3><p>The bound in Proposition 4 cannot be replaced by a claim that the objective remains convex whenever $k$ is small.</p><p>Consider men $a,b,c,d$ with masses<br>$$
+\mu_a=2,
+\qquad
+\mu_b=\mu_c=\mu_d=1,
+$$<br>and five distinguished women, each of mass $1$. Preferences are:</p><p>| Type | Preference list |<br>|---|---|<br>| $a$ | $w_{da}\succ w_{ab}\succ w_{ac}$ |<br>| $b$ | $w_{ab}\succ w_{bd}$ |<br>| $c$ | $w_{ac}\succ w_{cd}$ |<br>| $d$ | $w_{bd}\succ w_{cd}\succ w_{da}$ |<br>| $w_{ab}$ | $a\succ b$ |<br>| $w_{ac}$ | $a\succ c$ |<br>| $w_{bd}$ | $b\succ d$ |<br>| $w_{cd}$ | $c\succ d$ |<br>| $w_{da}$ | $d\succ a$ |</p><p>Here<br>$$
+R=\{(d,w_{cd})\},
+$$<br>so $k=1$.</p><p>For $p,q\geq0$ with $p+q\leq1$, allocate:</p><p>| Woman | Mass to first choice | Mass to second choice |<br>|---|---:|---:|<br>| $w_{ab}$ | $1-p$ | $p$ |<br>| $w_{ac}$ | $1-q$ | $q$ |<br>| $w_{bd}$ | $1-p$ | $p$ |<br>| $w_{cd}$ | $1-q$ | $q$ |<br>| $w_{da}$ | $1-p-q$ | $p+q$ |</p><p>Every woman is saturated. The male totals are<br>$$
+(p+q)+(1-p)+(1-q)=2,
+$$<br>$$
+p+(1-p)=1,
+\qquad
+q+(1-q)=1,
+$$<br>and<br>$$
+p+q+(1-p-q)=1.
+$$<br>Thus the allocations are feasible.</p><p>Every woman’s dissatisfaction toward her second-choice man is zero. For the first-choice pairs involving $w_{ac},w_{bd},w_{cd},w_{da}$, the man ranks that woman last and is saturated, so his dissatisfaction is zero.</p><p>Only $(a,w_{ab})$ can contribute. Its two factors are<br>$$
+u^M_{a,w_{ab}}=2-(p+q)-(1-p)=1-q,
+$$<br>$$
+u^W_{w_{ab},a}=p.
+$$<br>Consequently,<br>$$
+\operatorname{BP}(p,q)=p(1-q).
+$$</p><p>Along the feasible affine segment $p=q=t$, with $0\leq t\leq\frac12$,<br>$$
+\operatorname{BP}(t,t)=t-t^2.
+$$<br>At its midpoint,<br>$$
+\operatorname{BP}\left(\frac14,\frac14\right)
+=\frac{3}{16}
+&gt;
+\frac18
+=
+\frac12\left(
+\operatorname{BP}(0,0)+
+\operatorname{BP}\left(\frac12,\frac12\right)
+\right).
+$$<br>Hence the objective is not convex on the feasible set.</p><p>This segment also supplies a direction of strictly negative curvature. Proposition 4 bounds the number of negative eigenvalues by $1$, so the Hessian in this example has exactly one negative eigenvalue. Disjoint copies show that the bound of $k$ negative eigenvalues is attained for every positive integer $k$.</p><h3>5. Polynomial-size certificates for the general problem</h3><p>For completeness, the general problem belongs to $\mathrm{NP}$. This statement is useful if a future reduction establishes hardness.</p><p><b>Proposition 5.</b> Every yes-instance has a rational feasible witness of polynomial encoding length.</p><p><b>Proof.</b> Write<br>$$
+q(x)=\operatorname{BP}(x)
+=\frac12x^{\mathsf T}Hx+h^{\mathsf T}x+c.
+$$<br>The coefficients have polynomial encoding length.</p><p>For a yes-instance, the compact feasible polytope $P$ is nonempty, so $q$ has a global minimizer $x^\ast$. Let $F$ be the smallest face of $P$ containing $x^\ast$. Then $x^\ast$ lies in the relative interior of $F$.</p><p>Choose independent active input constraints describing<br>$$
+\operatorname{aff}(F)=\{x:Cx=d\}.
+$$<br>Let the columns of $U$ form a rational basis of $\ker C$. Gaussian elimination produces such a basis with polynomial encoding length.</p><p>Every direction in $\ker C$ permits sufficiently small perturbations of both signs from $x^\ast$ within $F$. First-order optimality therefore gives<br>$$
+U^{\mathsf T}(Hx^\ast+h)=0.
+$$<br>Define the rational polytope<br>$$
+S=\{x\in P:Cx=d,\ U^{\mathsf T}(Hx+h)=0\}.
+$$<br>It is nonempty and bounded.</p><p>The objective is constant on $S$. Indeed, for $a,b\in S$, put $z=b-a$. Since $Cz=0$, stationarity at both points gives<br>$$
+z^{\mathsf T}(Ha+h)=z^{\mathsf T}(Hb+h)=0.
+$$<br>Subtracting yields $z^{\mathsf T}Hz=0$. Thus<br>$$
+q(b)-q(a)
+=
+z^{\mathsf T}(Ha+h)+\frac12z^{\mathsf T}Hz
+=0.
+$$<br>Every point of $S$ therefore has the global minimum value.</p><p>A nonempty bounded polytope has a vertex. At a vertex of $S$, a nonsingular subsystem of its active constraints determines all coordinates. Those constraints have rational coefficients of polynomial encoding length. Clearing denominators and applying Cramer’s rule gives polynomial bit bounds for the coordinates: determinants of matrices of polynomial dimension and polynomial-bit entries themselves have polynomial bit length.</p><p>Hence $S$ contains a polynomial-size rational global minimizer. In a yes-instance, this point has objective at most $B$. Exact rational arithmetic verifies its feasibility and objective comparison in polynomial time. $\square$</p><h3>6. What remains open</h3><p>The decomposition settles every threshold when both sides’ lists have length at most $2$, and identifies the additional bilinear terms present under the requested length-three male bound.</p><p>It does <b>not</b> settle how to optimize those residual terms globally. Nonconvexity, including the example with just one residual term, is not a hardness proof. A complete classification still requires either a polynomial-time algorithm for the full objective or a reduction that controls all fractional feasible allocations.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 6: What remains open; full USER_TASK classification: The polynomial-time result covers the subclass $R=\varnothing$, but the output provides neither a polynomial-time algorithm nor an $\mathrm{NP}$-hardness proof for all instances with female lists of length at most $2$ and male lists of length at most $3$. This is an acknowledged completeness limitation, not an error in the established partial results.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Result: partial.</b> The output establishes correct, rigorous partial results: an exact decomposition, polynomial-time solvability for the stated subclass, a sharp bound on negative eigenvalues, a feasible nonconvexity example, and membership of the general decision problem in $\mathrm{NP}$.</p><p>It does not classify the full problem in <code>USER_TASK</code>. The prover explicitly acknowledges this limitation. I found no false mathematical step or substantive gap in the partial results.</p><h3>1. Objective expansion and Lemma 1</h3><p>The definitions of $A_e$ and $C_e$ correctly exclude the edge $e$ itself. Consequently,<br>$$
+u^M_e=\mu_i-x_e-A_e,
+\qquad
+u^W_e=\nu_j-x_e-C_e
+$$<br>agree with the task’s dissatisfaction quantities.</p><p>Expanding their product gives exactly the stated constant, linear, and quadratic parts. All signs and coefficients are correct.</p><p>In Lemma 1, each unordered pair of incident edges contributes once to<br>$$
+\sum_e x_e(A_e+C_e),
+$$<br>because strict preferences select exactly one less-preferred edge in that pair. Also, each edge’s square occurs twice in $\sum_v s_v^2$, once at each endpoint. Thus<br>$$
+Q(x)=\frac12\sum_v s_v(x)^2+\sum_e A_e(x)C_e(x)
+$$<br>is correct.</p><p>No feasibility assumption enters this calculation, so the claimed extension to signed vectors is justified.</p><p><b>Finding:</b> verified.</p><h3>2. Theorem 2: sum-of-squares decomposition</h3><p>The sets $D$ and $R$ correctly classify every potentially nonzero product $A_eC_e$ under the list bounds.</p><p>If both strict-better sums are nonzero, the female endpoint necessarily ranks $e$ second on a list of length two. The male endpoint then either ranks $e$ last, placing it in $D$, or ranks it second on a list of length three, placing it in $R$. These possibilities exhaust the permitted ranks.</p><p>For an edge in $D$,<br>$$
+A_e=s_i-x_e,
+\qquad
+C_e=s_j-x_e.
+$$<br>These identities remain valid when an endpoint has degree one: its corresponding difference is zero.</p><p>Distinct edges in $D$ have disjoint endpoints because each vertex has only one last-ranked edge. Therefore the proposed replacements do not reuse any vertex-square term.</p><p>The critical algebraic identity is correct:<br>$$
+\frac12s_i^2+\frac12s_j^2+(s_i-x_e)(s_j-x_e)
+=
+\frac12(s_i+s_j-x_e)^2+\frac12x_e^2.
+$$</p><p>It follows that the displayed decomposition is exact. The formula for $Q_0$ is a sum of squares with nonnegative coefficients, so its positive semidefiniteness follows for all real vectors.</p><p><b>Finding:</b> verified.</p><h3>3. Corollary 3: exact polynomial-time solvability when $R=\varnothing$</h3><p>The feasible set has $m$ variables and polynomially many rational linear constraints. Each edge coordinate is bounded by the masses at its endpoints. Thus the feasible set is bounded and closed; if nonempty, it is compact. Distinguished isolated women correctly produce infeasibility through their required saturation constraints.</p><p>When $R=\varnothing$, the objective’s quadratic part is $Q_0$, so the objective is convex.</p><p>The cited theorem supplies the exact computation claimed, rather than merely approximate optimization. The original paper defines exact solution to include detecting feasibility, determining boundedness below, and computing the exact rational optimum and an attaining point; it establishes polynomial running time for integer positive-semidefinite quadratic data and integer linear constraints. [Kozlov–Tarasov–Khachiyan, original paper](https://www.mathnet.ru/php/getFT.phtml?jrnid=zvmmf&amp;option_lang=eng&amp;paperid=5189&amp;what=fullt)</p><p>The application satisfies the hypotheses:</p><ul><li>The Hessian is rational, symmetric, and positive semidefinite.</li><li>All constraints have rational coefficients.</li><li>Equalities can be represented by linear inequalities.</li><li>Nonempty compactness guarantees an attained finite optimum.</li><li>Clearing denominators preserves positive semidefiniteness when the objective is multiplied by a positive factor and increases encoding length only polynomially.</li><li>Constructing the expanded quadratic program has polynomial encoding size.</li></ul><p>Exact comparison with $B$ therefore handles equality at the threshold. The specialization to lists of length at most two on both sides is correct because $R$ is then empty.</p><p><b>Finding:</b> verified, including the exact threshold decision claim.</p><h3>4. Proposition 4: negative eigenvalues and fixed coordinates</h3><p>The subspace $T$ has codimension at most $k$, even if some designated coordinates coincide. On $T$, every residual product vanishes, leaving the nonnegative quadratic form $Q_0$.</p><p>If the negative eigenspace had dimension greater than $k$, the dimension bound would force a nonzero intersection with $T$. The Hessian’s quadratic form is strictly negative on every nonzero vector in its negative eigenspace, contradicting nonnegativity on $T$.</p><p>Fixing the designated coordinates converts each residual product into an affine term in the remaining variables. Restricting $Q_0$ preserves positive semidefiniteness. Prescribed rational values preserve rational linear constraints, so the cited quadratic-programming theorem applies with those values included in the input length. Inconsistent prescriptions simply produce infeasibility.</p><p>The proposition correctly does not claim that this yields a global algorithm.</p><p><b>Finding:</b> verified.</p><h3>5. Nonconvexity example and sharpness</h3><p>The preference table respects mutual acceptability and the required list bounds. Inspection confirms<br>$$
+R=\{(d,w_{cd})\}.
+$$</p><p>For the stated parameter domain, all allocated masses are nonnegative. Each woman receives total mass one, and the male totals are exactly<br>$$
+2,\quad 1,\quad 1,\quad 1.
+$$<br>Hence the entire parameterized family is feasible.</p><p>Every second-choice pair has zero female dissatisfaction because its woman is saturated. For the four identified first-choice pairs, the man is saturated and ranks that woman last, giving zero male dissatisfaction.</p><p>The remaining pair has factors<br>$$
+u^M_{a,w_{ab}}=1-q,
+\qquad
+u^W_{w_{ab},a}=p.
+$$<br>Thus the objective calculation<br>$$
+\operatorname{BP}(p,q)=p(1-q)
+$$<br>is correct.</p><p>On the affine feasible segment $p=q=t$, the midpoint and endpoint calculations are<br>$$
+\operatorname{BP}\left(\frac14,\frac14\right)=\frac{3}{16},
+\qquad
+\frac12\left(\operatorname{BP}(0,0)+
+\operatorname{BP}\left(\frac12,\frac12\right)\right)=\frac18.
+$$<br>The strict inequality violates convexity.</p><p>The restriction has second derivative $-2$, so it supplies a direction of negative Hessian curvature. Together with Proposition 4, this establishes exactly one negative eigenvalue. Disjoint copies produce independent Hessian blocks and additive counts of residual edges, justifying sharpness for every positive integer $k$.</p><p><b>Finding:</b> verified. This demonstrates nonconvexity, not computational hardness, as the prover correctly states.</p><h3>6. Proposition 5: polynomial-size rational certificates</h3><p>The argument does not assume convexity and is valid for the general objective.</p><p>A global minimizer exists on a nonempty compact feasible polytope. Its membership in the relative interior of its smallest containing face permits sufficiently small feasible perturbations of both signs along every direction in that face’s affine hull. The stated first-order stationarity condition therefore follows.</p><p>Selecting independent active input constraints to describe the affine hull is valid for a face of a polytope. A rational nullspace basis of polynomial encoding length can be obtained by Gaussian elimination.</p><p>The set $S$ is a nonempty bounded rational polytope: it contains $x^\ast$ and is contained in $P$.</p><p>For $a,b\in S$, their difference belongs to $\ker C$. Stationarity at both points gives the two displayed scalar equalities. Subtraction yields<br>$$
+z^{\mathsf T}Hz=0,
+$$<br>and the exact quadratic difference formula then proves that $q$ is constant on $S$. Since $x^\ast\in S$, that constant is the global minimum.</p><p>A vertex of $S$ is determined by a full-rank subsystem of active constraints. The polynomial coefficient bounds and determinant bounds justify polynomial encoding length for its rational coordinates. This includes lower-dimensional polytopes; the active equations still determine a vertex uniquely in the ambient space.</p><p>Exact rational evaluation verifies both feasibility and the objective comparison in polynomial time. Thus the claimed membership in $\mathrm{NP}$ is established.</p><p><b>Finding:</b> verified.</p><h3>7. Remaining task-level issue and actionable feedback</h3><p><b>Major completeness issue:</b> the full classification requested by <code>USER_TASK</code> remains unresolved. The established polynomial-time algorithm applies when $R=\varnothing$; the general allowed instances may have residual bilinear terms.</p><p>Membership in $\mathrm{NP}$ and nonconvexity do not determine whether the decision problem is polynomial-time solvable or $\mathrm{NP}$-hard.</p><p>No clarification or expositional repair is needed for the verified partial results. Completing the assignment requires a substantive additional result: either a polynomial-time algorithm covering all permitted instances or a valid hardness reduction for the continuous feasible allocations. The write-up accurately identifies this outstanding requirement.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

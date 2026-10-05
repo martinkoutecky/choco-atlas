@@ -1,0 +1,112 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-1c7f16779b6734bdfd57bd86753bd34cfd368bdc — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-1c7f16779b6734bdfd57bd86753bd34cfd368bdc <span style="font-weight:normal;color:#8a7350">(s5-1c7f16779b6734bdfd57bd86753bd34cfd368bdc)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> The rational-mass Kemeny outcome-extension problem is in \(\mathrm{P}\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Corollary 2 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>When the integrity constraint is represented as a DNNF circuit, then the problem OUTCOME(F) can be solved in polynomial time when F is either the Kemeny, the Slater, or the leximax rule.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given project atoms \(P\), a DNNF integrity constraint \(\Gamma\), a finite support \(\mathcal{B}\subseteq 2^P\) of approval-ballot types with rational masses \(\mu_B\ge 0\) summing to \(1\), and a set of literals \(L\), determine whether some satisfying allocation \(A\subseteq P\) maximizing \(K_\mu(A)=\sum_{B\in\mathcal{B}}\mu_B\bigl(|A\cap B|+|(P\setminus A)\cap(P\setminus B)|\bigr)\) agrees with every literal in \(L\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(P\) be a set of \(m\) project atoms. The integrity constraint \(\Gamma\) is supplied as a DNNF circuit: a rooted directed acyclic graph with literal or constant leaves and conjunction or disjunction gates, such that distinct children of each conjunction involve disjoint sets of atoms. Let \(s\) count its vertices and edges.<br>A society is given by its support: a list \(\mathcal B\subseteq 2^P\) of \(\tau\) distinct approval-ballot types with positive binary-rational masses \(\mu_B\), satisfying \(\sum_{B\in\mathcal B}\mu_B=1\). Here \(\tau\) is the support size, not the number of possible approval sets. Ballots need not satisfy \(\Gamma\).<br>Allocations remain subsets \(A\subseteq P\). Among allocations satisfying \(\Gamma\), retain every maximizer of \(K_\mu(A)=\sum_{B\in\mathcal B}\mu_B\bigl(|A\cap B|+|(P\setminus A)\cap(P\setminus B)|\bigr)\), with no tie-breaking.<br>Given a literal set \(\mathcal L\subseteq P\cup\{\neg p:p\in P\}\), decide whether some retained allocation includes every positively specified project and excludes every negatively specified project. If \(\Gamma\) has no satisfying allocation, the answer is no. Running times are measured in \(m,\tau,L,s,|\mathcal L|\), where \(L\) is the total binary input length.</p><p>Is this rational-mass Kemeny outcome-extension problem in \(\mathrm P\), or is it \(\mathrm{NP}\)-hard?</p><p>For societies supplied as finite lists of agents, outcome extension under Kemeny, Slater, and leximax is polynomial-time solvable when the integrity constraint is supplied as a DNNF circuit. This discrete result does not explicitly state a complexity bound for societies supplied with binary-rational masses.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Removed zero-mass ballot types so that the supplied list is exactly the positive-mass support; retained normalization to total mass one.</li><li>Specified that ballots need not satisfy the integrity constraint, as in the discrete judgment-aggregation definition.</li><li>Specified that all maximizing allocations remain eligible, preserving the discrete rule&#x27;s treatment of ties.</li><li>Defined unsatisfiable integrity constraints to produce a no answer, following the existential decision question.</li><li>Renamed the input literal set to \(\mathcal L\), reserving \(L\) for total binary input length, and included the supplied circuit size in the running-time variables.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The problem is in \(\mathrm P\). Binary-rational masses can be converted into integer weights of polynomial bit length, and these weights can be optimized directly on the DNNF. Outcome extension is then decided by comparing the unrestricted optimum with the optimum subject to the specified literals.</p><p>The proof below does not require the DNNF to be deterministic or smooth.</p><h3>1. Convert the objective to integer literal weights</h3><p>Write each supplied mass as \(\mu_B=a_B/d_B\), where \(a_B,d_B\) are positive integers given in binary. Set<br>\[
+D=\prod_{B\in\mathcal B}d_B,
+\qquad
+n_B=a_B(D/d_B).
+\]<br>Then each \(n_B\) is a positive integer, and normalization gives<br>\[
+\sum_{B\in\mathcal B}n_B=D.
+\]</p><p>For every project \(p\in P\), define<br>\[
+W_p=\sum_{\substack{B\in\mathcal B\\p\in B}}n_B,
+\qquad
+c_p(1)=W_p,
+\qquad
+c_p(0)=D-W_p.
+\]<br>Represent an allocation by its characteristic assignment \(x\in\{0,1\}^P\). By rearranging the sums in the definition of \(K_\mu\),<br>\[
+\begin{aligned}
+D K_\mu(x)
+&amp;=\sum_{B\in\mathcal B}n_B
+  \sum_{p\in P}
+  \bigl(x_p\mathbf 1_{p\in B}+(1-x_p)\mathbf 1_{p\notin B}\bigr)\\
+&amp;=\sum_{p\in P}\bigl(x_pW_p+(1-x_p)(D-W_p)\bigr)\\
+&amp;=\sum_{p\in P}c_p(x_p).
+\end{aligned}
+\]<br>Consequently, maximizing \(K_\mu\) is equivalent to maximizing the integer score<br>\[
+S(x)=\sum_{p\in P}c_p(x_p).
+\]</p><p>This conversion has polynomial bit complexity. Indeed,<br>\[
+\log_2 D=\sum_{B\in\mathcal B}\log_2 d_B\leq L,
+\]<br>so \(D\) has at most \(L+1\) bits. Moreover, \(0\leq W_p\leq D\). Products, exact divisions, and sums needed to compute all the weights therefore take polynomial time in \(m,\tau,L\).</p><h3>2. Weighted optimization on a possibly nonsmooth DNNF</h3><p>We give an algorithm that also permits restrictions on individual projects. For each \(p\), let \(T_p\subseteq\{0,1\}\) be its nonempty set of allowed values, and define<br>\[
+h_p=\max_{b\in T_p}c_p(b).
+\]<br>For unrestricted optimization, use \(T_p=\{0,1\}\).</p><p>For each circuit vertex \(g\), let \(V_g\subseteq P\) be the set of atoms occurring in the subcircuit rooted at \(g\), and let \(\varphi_g\) denote its Boolean function. Define<br>\[
+F_g=
+\max\left\{
+\sum_{p\in V_g}c_p(x_p):
+x\in\prod_{p\in V_g}T_p,\ \varphi_g(x)=1
+\right\},
+\]<br>where the maximum over an empty feasible set is represented by the infeasibility marker \(-\infty\).</p><p>Also define<br>\[
+H_g=\sum_{p\in V_g}h_p.
+\]</p><p>The scopes \(V_g\) are computed bottom-up by taking unions of child scopes. We now prove recurrences for \(F_g\).</p><h3>Leaves</h3><p>For a literal leaf \(p\),<br>\[
+F_g=
+\begin{cases}
+c_p(1),&amp;1\in T_p,\\
+-\infty,&amp;1\notin T_p.
+\end{cases}
+\]<br>For a literal leaf \(\neg p\),<br>\[
+F_g=
+\begin{cases}
+c_p(0),&amp;0\in T_p,\\
+-\infty,&amp;0\notin T_p.
+\end{cases}
+\]<br>A true constant has value \(0\), and a false constant has value \(-\infty\). These values follow directly from the definition of \(F_g\).</p><h3>Conjunction gates</h3><p>Suppose \(g\) is a conjunction with children \(g_1,\ldots,g_k\). Decomposability states that their scopes are pairwise disjoint. Hence<br>\[
+F_g=\sum_{i=1}^kF_{g_i},
+\]<br>with the result infeasible if any child is infeasible.</p><p>To justify this recurrence, every feasible assignment for \(g\) restricts to a feasible assignment for each child, so its score is at most the displayed sum. Conversely, when all children are feasible, choose an optimal assignment for each child. Their disjoint scopes allow these assignments to be combined without conflict. The combined assignment satisfies every child, and its score is exactly the displayed sum.</p><h3>Disjunction gates</h3><p>Suppose \(g\) is a disjunction with children \(g_1,\ldots,g_k\). Then<br>\[
+F_g=
+\max_{1\leq i\leq k}
+\left(F_{g_i}+H_g-H_{g_i}\right),
+\]<br>where an infeasible child contributes \(-\infty\).</p><p>Here \(H_g-H_{g_i}\) supplies the optimal contribution of atoms absent from child \(g_i\). This correction is necessary because the input DNNF need not be smooth.</p><p>For the upper bound, any feasible assignment for \(g\) satisfies some child \(g_i\). Its contribution on \(V_{g_i}\) is at most \(F_{g_i}\), and its contribution on \(V_g\setminus V_{g_i}\) is at most<br>\[
+\sum_{p\in V_g\setminus V_{g_i}}h_p=H_g-H_{g_i}.
+\]<br>For the reverse bound, take an optimal feasible assignment for child \(g_i\), and independently choose an allowed value attaining \(h_p\) for each \(p\in V_g\setminus V_{g_i}\). The added variables do not occur in that child, so the resulting assignment still satisfies it, and therefore satisfies \(g\). Its score attains the corresponding term.</p><p>Thus the recurrence is exact even when several children can be satisfied simultaneously.</p><h3>Complete assignments at the root</h3><p>Let \(r\) be the root and put \(H_P=\sum_{p\in P}h_p\). If \(F_r\) is infeasible, no allowed allocation satisfies \(\Gamma\). Otherwise, the optimum over complete allocations is<br>\[
+M(T)=F_r+H_P-H_r.
+\]<br>Indeed, atoms outside \(V_r\) do not affect \(\Gamma\), so their allowed values can be chosen independently to maximize their contributions.</p><p>Together, these recurrences prove the algorithm correct by induction over a bottom-up ordering of the DAG.</p><h3>3. Decide outcome extension</h3><p>First, if \(\mathcal L\) contains both \(p\) and \(\neg p\) for some project, return no: no allocation can satisfy all its literals.</p><p>Otherwise, perform the optimization twice:</p><ul><li>With \(T_p=\{0,1\}\) for every project, obtain the unrestricted optimum \(M_0\).</li><li>With</li></ul><p>\[
+   T_p=
+   \begin{cases}
+   \{1\},&amp;p\in\mathcal L,\\
+   \{0\},&amp;\neg p\in\mathcal L,\\
+   \{0,1\},&amp;\text{otherwise},
+   \end{cases}
+   \]<br>obtain the restricted optimum \(M_{\mathcal L}\).</p><p>Return yes exactly when both optima are feasible and<br>\[
+M_{\mathcal L}=M_0.
+\]</p><p>If this equality holds, an allocation attaining the restricted optimum satisfies \(\Gamma\) and every literal in \(\mathcal L\), while attaining the unrestricted optimum. It is therefore retained.</p><p>Conversely, if a retained allocation satisfies every specified literal, it is feasible for the restricted optimization and has score \(M_0\). Restricted feasible allocations form a subset of unrestricted feasible allocations, so<br>\[
+M_{\mathcal L}\leq M_0.
+\]<br>The retained allocation supplies the reverse inequality, proving equality.</p><p>If \(\Gamma\) is unsatisfiable, the first optimization is infeasible and the algorithm returns no as required. Equality testing preserves every optimal tie.</p><h3>4. Polynomial running time</h3><p>Represent each scope \(V_g\) by an \(m\)-entry Boolean vector. Computing all scopes takes \(O(ms)\) elementary operations. Computing the quantities \(H_g\), and then evaluating the recurrences, requires polynomially many integer additions, subtractions, and comparisons.</p><p>Every feasible local score and every completion sum lies between \(0\) and \(mD\). Thus all finite values used by the dynamic program have<br>\[
+O\bigl(L+\log(m+1)\bigr)
+\]<br>bits. The infeasibility marker requires no numerical encoding of an unbounded integer.</p><p>The weight preprocessing, both optimization passes, and the examination of \(\mathcal L\) consequently take polynomial time in \(m,\tau,L,s,|\mathcal L|\).</p><p>Clearing denominators does not require expanding the society into \(D\) agents: the algorithm uses only the binary representation of \(D\). This supplies the bit-complexity argument that is missing from a direct appeal to the finite-agent result.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s claim is correct: the supplied argument establishes polynomial-time solvability, including polynomial bit complexity for binary-rational masses. No substantive gap or false step was found.</p><ul><li><b>Clearing denominators is valid and polynomial in the input length.</b></li></ul><p>Each denominator \(d_B\) is positive, so \(D=\prod_B d_B\) is positive and divisible by every \(d_B\). Consequently, \(n_B=a_B(D/d_B)\) is a positive integer. The normalization assumption gives \(\sum_B n_B=D\) exactly.</p><p>The bound \(\log_2 D\leq L\) is valid because the total input length includes the binary encodings of all denominators. Thus the potentially large numerical value of \(D\) does not imply a large binary representation. The products, exact divisions, and sums involve polynomially many operations on integers of polynomial bit length.</p><ul><li><b>The integer objective is exactly equivalent to the original objective.</b></li></ul><p>The rearrangement of the finite sums correctly collects the contribution of each project. For an included project \(p\), its scaled contribution is \(W_p\); for an excluded project, its scaled contribution is \(D-W_p\).</p><p>Hence the displayed identity \(DK_\mu(x)=S(x)\) is correct. Since \(D&gt;0\), this transformation preserves the complete set of maximizers, including all ties. The argument does not assume that ballots satisfy the integrity constraint.</p><ul><li><b>The dynamic-programming definitions are well posed.</b></li></ul><p>Every allowed set \(T_p\) is nonempty, so each \(h_p\) exists. Every local feasible set is finite; therefore a feasible local optimum is attained. The separate infeasibility marker correctly handles empty feasible sets.</p><p>The scope \(V_g\) contains every atom on which the subcircuit can depend. Computing scopes by unions is correct even if a syntactically occurring atom does not affect the represented Boolean function.</p><p>The literal and constant leaf values agree with the definition of \(F_g\). In particular, constants have empty scope and therefore contribute zero score when feasible.</p><ul><li><b>The conjunction recurrence uses precisely the supplied decomposability hypothesis.</b></li></ul><p>The children’s scopes are pairwise disjoint. Thus a feasible parent assignment induces feasible child assignments, and its score splits into their scores. Conversely, optimal feasible child assignments can be combined without assigning conflicting values to any atom.</p><p>Both inequalities needed for the recurrence are explicitly justified. If a child is infeasible, the conjunction is infeasible. Shared subcircuits elsewhere in the DAG do not invalidate this local argument.</p><ul><li><b>The disjunction recurrence correctly handles nonsmooth and nondeterministic circuits.</b></li></ul><p>Each child scope is contained in the parent scope, so \(H_g-H_{g_i}\) is exactly the sum of the unrestricted-by-that-child contributions over \(V_g\setminus V_{g_i}\), subject to the specified allowed sets.</p><p>The upper-bound argument correctly uses a child satisfied by the parent assignment. The reverse-bound argument correctly extends an optimal child assignment on atoms absent from that child. Those added values cannot change the child’s truth value.</p><p>Overlapping child scopes and simultaneous satisfaction of several children cause no difficulty: the operation is maximization, and both bounds apply to the displayed recurrence. Neither determinism nor smoothness is required.</p><p>If nullary gates are permitted, the usual empty-conjunction and empty-disjunction conventions are consistent with the write-up’s empty-feasible-set convention. They introduce no substantive exceptional case.</p><ul><li><b>Completion at the root and the extension test are correct.</b></li></ul><p>Atoms outside \(V_r\) do not occur in the constraint, so the root completion term correctly accounts for their independent optimal contributions.</p><p>Contradictory specified literals are rejected correctly. Otherwise, the restricted feasible set is a subset of the unrestricted feasible set. Equality of their feasible optimum values is therefore equivalent to the existence of a globally optimal allocation satisfying all specified literals. The write-up explicitly proves both directions and correctly rejects an unsatisfiable constraint.</p><p>No tie-breaking is introduced: every optimal allocation remains eligible for the existential extension test.</p><ul><li><b>The running-time argument establishes polynomial bit complexity.</b></li></ul><p>Boolean-vector scope computations require \(O(ms)\) elementary operations. The remaining computations use polynomially many additions, subtractions, comparisons, and preprocessing operations.</p><p>Since \(0\leq c_p(b)\leq D\), feasible scores and completion contributions are bounded by \(mD\). Their binary lengths are \(O(L+\log(m+1))\). Temporary arithmetic expressions also have polynomial bit length. The infeasibility marker is handled symbolically.</p><p>Both optimization passes and the literal-consistency check consequently run in polynomial time in the requested parameters. The argument never expands the society into a list of \(D\) agents.</p><p>The output fully addresses the assigned problem. No additional clarification or repair is required, and no external theorem is invoked whose hypotheses remain unchecked.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

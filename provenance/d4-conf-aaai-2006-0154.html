@@ -1,0 +1,88 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2006-0154 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2006-0154 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2006-0154)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\text{NP-hard}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>The Slater problem is NP-hard (even in the ab- sence of pairwise ties).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a candidate set \(C\) and a finite support of strict rankings \(t\), each with positive binary-rational mass \(\mu_t\) summing to \(1\), and with no pair tied in the population, compute a ranking \(\succ\) minimizing the number of unordered candidate pairs that \(\succ\) orders opposite to their population pairwise-majority direction.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) be a finite nonempty candidate set, with \(m=|C|\). A society is given by its support: a list of \(\tau\) distinct strict rankings \(t\) of \(C\), each with positive binary-rational mass \(\mu_t\), where \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number \(m!\) of possible rankings; let \(L\) be the total input bit length.<br>For distinct candidates, define \(a\to b\) when \(\sum_{t:a\succ_t b}\mu_t&gt;1/2\). Promise that no pair has mass exactly \(1/2\) in either direction.<br>For a strict ranking \(\succ\) of \(C\), its disagreement count is \(D(\succ)=|\{(a,b)\in C^2:a\succ b\text{ and }b\to a\}|\); each unordered pair contributes at most one. Compute a ranking minimizing \(D\), allowing any minimizer when several exist.</p><p>Is computing an optimal ranking for this society possible in time polynomial in \(m,\tau,L\), or is it NP-hard?</p><p>For finite lists of voters with strict rankings, computing a Slater ranking is NP-hard even without pairwise ties.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Required the candidate set to be nonempty, as naturally implicit in the ranking problem.</li><li>Specified that any optimal ranking may be returned; no tie-breaking among minimizers was prescribed.</li><li>Defined L as the total bit length of the support-encoded input.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Conclusion</h3><p>Computing an optimal ranking is \(\text{NP-hard}\). This holds even when every mass is a dyadic rational, meaning a rational with denominator a power of two. Consequently, a polynomial-time algorithm in \(m,\tau,L\) would imply \(\mathrm{P}=\mathrm{NP}\).</p><h3>Starting hardness result</h3><p>We use the supplied premise: computing a Slater ranking from an explicitly listed finite electorate of strict rankings is \(\text{NP-hard}\), even without pairwise ties. This is also established in [Conitzer’s paper](https://cdn.aaai.org/AAAI/2006/AAAI06-098.pdf).</p><p>Let such an instance have candidates \(C\) and voters with rankings \(v_1,\ldots,v_N\), where \(N\geq 1\). For distinct candidates \(a,b\), put<br>\[
+p_{ab}=\frac{|\{i:a\succ_{v_i}b\}|}{N}.
+\]<br>The absence of ties implies<br>\[
+\left|p_{ab}-\frac12\right|
+=\frac{\left|2|\{i:a\succ_{v_i}b\}|-N\right|}{2N}
+\geq\frac{1}{2N},
+\]<br>because the numerator is a nonzero integer.</p><p>We construct a support-list society with exactly the same pairwise majority relation.</p><h3>Construction with dyadic masses</h3><p>Choose the smallest power of two \(Q\) satisfying \(Q&gt;2N^2\). Then \(Q\leq 4N^2\). Write<br>\[
+Q=Nq+r,\qquad 0\leq r&lt;N.
+\]<br>Assign voter \(i\) the temporary mass<br>\[
+w_i=
+\begin{cases}
+(q+1)/Q,&amp;1\leq i\leq r,\\
+q/Q,&amp;r&lt;i\leq N.
+\end{cases}
+\]<br>Since \(Q&gt;N\), we have \(q\geq1\), so every mass is positive. Moreover,<br>\[
+\sum_{i=1}^Nw_i
+=\frac{r(q+1)+(N-r)q}{Q}=1.
+\]<br>Each mass approximates the original uniform mass:<br>\[
+\left|w_i-\frac1N\right|\leq\frac1Q.
+\]<br>Indeed, for the two possible values of \(w_i\), the differences are respectively \((N-r)/(NQ)\) and \(r/(NQ)\).</p><p>Now merge identical rankings. For each distinct ranking \(t\) appearing among the voters, define<br>\[
+\mu_t=\sum_{\{i:v_i=t\}}w_i.
+\]<br>These masses are positive dyadic rationals and sum to one. The resulting support has \(\tau\leq N\) distinct rankings.</p><h3>Preservation of every majority edge</h3><p>For distinct candidates \(a,b\), the constructed society’s mass preferring \(a\) to \(b\) is<br>\[
+p&#x27;_{ab}
+=\sum_{\{t:a\succ_tb\}}\mu_t
+=\sum_{\{i:a\succ_{v_i}b\}}w_i.
+\]<br>Consequently,<br>\[
+|p&#x27;_{ab}-p_{ab}|
+\leq\sum_{\{i:a\succ_{v_i}b\}}\left|w_i-\frac1N\right|
+\leq\frac NQ
+&lt;\frac1{2N}.
+\]<br>The original probability \(p_{ab}\) lies at distance at least \(1/(2N)\) from \(1/2\). Thus this perturbation cannot reach or cross \(1/2\). It follows that<br>\[
+p&#x27;_{ab}&gt;\frac12
+\quad\Longleftrightarrow\quad
+p_{ab}&gt;\frac12.
+\]<br>The constructed society therefore satisfies the no-ties promise and has exactly the original majority tournament.</p><p>For every output ranking \(\succ\), its disagreement count consequently equals its Slater disagreement count in the original electorate. Hence <b>every</b> minimizer for the constructed society is a Slater ranking for the original instance.</p><h3>Polynomial size and hardness transfer</h3><p>The electorate is explicitly listed, so \(N\) is bounded by its input length. Grouping identical rankings and calculating their masses take polynomial time.</p><p>Every merged mass has the form \(A_t/Q\), with \(1\leq A_t\leq Q\). Since \(Q\leq4N^2\), its numerator and denominator require \(O(\log(N+1))\) bits. There are at most \(N\) support entries, each containing one original ranking. Thus the constructed input length \(L\), candidate count \(m\), and support size \(\tau\) are all polynomially bounded in the original input length.</p><p>A hypothetical algorithm polynomial in \(m,\tau,L\), applied to this construction, would therefore compute a Slater ranking in polynomial time for every instance of the supplied hard problem. This proves the claimed \(\text{NP-hardness}\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><p>The prover resolves the assigned problem correctly. The reduction produces a valid support-list society of polynomial size, preserves every pairwise majority direction, and therefore preserves the entire disagreement objective. No major or minor mathematical issues were found.</p><h3>1. Starting hardness premise</h3><p>The prover uses precisely the hardness premise supplied in <code>USER_TASK</code>: computing a Slater ranking from an explicitly listed finite electorate of strict rankings is NP-hard even without pairwise ties.</p><p>The required hypotheses are stated: the source instance consists of strict rankings \(v_1,\ldots,v_N\), with \(N\geq1\), and has no pairwise ties. Repeated rankings are permitted in this source representation.</p><p>The linked [Conitzer paper](https://cdn.aaai.org/AAAI/2006/AAAI06-098.pdf) also states NP-hardness of computing an optimal Slater ranking without pairwise ties and defines the Slater objective consistently with the task. The proof may rely directly on the supplied premise; no additional external theorem is needed.</p><p><b>Assessment:</b> Valid starting premise and application.</p><h3>2. Original majority margin</h3><p>For any distinct candidates \(a,b\), let \(k=|\{i:a\succ_{v_i}b\}|\). The prover’s computation<br>\[
+\left|p_{ab}-\frac12\right|=\frac{|2k-N|}{2N}
+\]<br>is correct.</p><p>The no-ties hypothesis gives \(2k-N\neq0\). Since this is an integer, its absolute value is at least \(1\), establishing the claimed lower bound \(1/(2N)\). This applies uniformly to every distinct pair.</p><p><b>Assessment:</b> Correct computation, with all hypotheses satisfied.</p><h3>3. Choice of denominator and temporary masses</h3><p>The smallest power of two \(Q&gt;2N^2\) exists. Its predecessor \(Q/2\) is at most \(2N^2\), so \(Q\leq4N^2\), including when \(2N^2\) itself is a power of two.</p><p>Euclidean division gives \(Q=Nq+r\), with \(0\leq r&lt;N\). Since \(N\geq1\) and \(Q&gt;2N^2\), the stated implication \(Q&gt;N\) holds, and \(q\geq1\). Thus every assigned temporary mass is positive.</p><p>The normalization calculation is exact:<br>\[
+r(q+1)+(N-r)q=Nq+r=Q.
+\]</p><p>The two approximation errors are also correct:<br>\[
+\frac{q+1}{Q}-\frac1N=\frac{N-r}{NQ},
+\qquad
+\frac1N-\frac qQ=\frac r{NQ}.
+\]<br>Both are at most \(1/Q\). When \(r=0\), the first branch is unused and all temporary masses equal \(1/N\); this causes no exception to the argument.</p><p><b>Assessment:</b> All constants, inequalities, and boundary cases are correct.</p><h3>4. Merging identical rankings</h3><p>The construction defines one support entry for each ranking actually occurring in the electorate. Consequently, the support rankings are distinct and \(\tau\leq N\).</p><p>Each merged mass is a sum of positive temporary masses, so it is positive. Merging preserves the total mass \(1\). Since every temporary mass has denominator \(Q\), each merged mass has the form \(A_t/Q\) with an integer numerator. As \(Q\) is a power of two, these are dyadic rationals and satisfy the binary-rational input requirement.</p><p><b>Assessment:</b> The constructed society satisfies the support and mass requirements.</p><h3>5. Preservation of majority directions and the promise</h3><p>The equality<br>\[
+p&#x27;_{ab}=\sum_{\{i:a\succ_{v_i}b\}}w_i
+\]<br>follows directly from grouping voters by identical rankings.</p><p>The triangle inequality and the individual error bounds give<br>\[
+|p&#x27;_{ab}-p_{ab}|\leq\frac NQ&lt;\frac1{2N}.
+\]<br>The strict inequality follows from \(Q&gt;2N^2\).</p><p>This perturbation is strictly smaller than the original distance from \(1/2\). Hence a probability originally above \(1/2\) remains above it, and one originally below remains below it. Equality with \(1/2\) is also excluded.</p><p>Thus the construction preserves every majority edge and satisfies the target’s no-ties promise.</p><p><b>Assessment:</b> Correct; no pair or direction is omitted.</p><h3>6. Preservation of the optimization objective</h3><p>The target disagreement count and the source Slater disagreement count use the same ranking and the same majority relation. Since that relation is preserved, their values coincide for every strict ranking of \(C\).</p><p>Therefore their sets of minimizers coincide. The prover explicitly establishes preservation for <b>every</b> minimizer, which addresses the task’s allowance that an algorithm may return any optimal ranking.</p><p><b>Assessment:</b> Exact objective preservation; the hardness transfer does not depend on tie-breaking among optimal rankings.</p><h3>7. Polynomial construction and encoding size</h3><p>The source electorate is explicitly listed, so \(N\) is bounded by its input length. Grouping identical rankings, computing \(Q,q,r\), and accumulating integer numerators are polynomial-time operations.</p><p>Every merged numerator satisfies \(1\leq A_t\leq Q\). Because \(Q\leq4N^2\), both numerator and denominator have \(O(\log(N+1))\) bits. This also bounds a terminating binary representation of each dyadic mass.</p><p>There are at most \(N\) support entries, and their rankings are taken from the source input. Hence the output length \(L\), candidate count \(m\), and support size \(\tau\) are polynomially bounded in the source input length.</p><p>A polynomial-time target algorithm would consequently solve the supplied NP-hard source problem in polynomial time.</p><p><b>Assessment:</b> Valid polynomial-time reduction and hardness conclusion.</p><h3>8. Edge cases and final adjudication</h3><p>For \(N=1\), the construction chooses \(Q=4\), produces total mass \(1\), and satisfies every stated bound. For \(m=1\), all pairwise statements are vacuous and the objective is zero; the construction remains valid. Such trivial instances do not affect hardness over the full input family.</p><p>The claimed NP-hardness is fully established, including the stronger restriction to dyadic masses. No repair or additional clarification is required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

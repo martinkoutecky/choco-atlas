@@ -1,0 +1,403 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ifaamas-2025-0089 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ifaamas-2025-0089 <span style="font-weight:normal;color:#8a7350">(d4-conf-ifaamas-2025-0089)</span></h1>
+<p class="banner">NEW RESULT — continuous: depends on the encoding · adversarial review: proved · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> The stated operator guarantee is false: the non-strict weight bound permits nonconvergence, and strict convergence does not ensure return-optimal policies or efficient minimum-excess credits. With separate scalar transition-coordinate piece lists, computing the requested approximation is $\mathrm{NP}$-hard even for $m=\tau=1$, $\gamma=1/2$, and $\varepsilon=1/8$; exact output is in $\mathrm{FP}^{\mathrm{NP}}$ and has deterministic exponential-time algorithms. With an explicitly supplied common piece list for the entire transition vector, exact policy and minimum-excess credit optimization is polynomial-time solvable.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.4 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Nucleolus-based Bellman operator can converge the optimal Nucleolus Q-value and the corresponding optimal joint deterministic policy when 𝑖∈𝑁 max𝑎𝑖𝑤𝑖(𝑠,𝑎𝑖) ≤ 1 𝛾+𝜆 Consequently, we believe nucleolus Q learning can help us find the maximum social welfare based on nucleolus allocation. We can conclude that no agent has an incentive to deviate from the current coalition, and this allocation provides an explanation for the credit assignment of global rewards in cooperative MARL. Implementation in Practice.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite state set \(S\), subtasks \(G\), finite actions, supported agent types \(T\) with rational masses \(\mu_t\), and rational piecewise-affine type-mass transition, reward, and coalition-utility maps, compute a discounted policy \(\pi\) and efficient per-capita credits \(q_t(s)\) that maximize return and then minimize, at each state, \(\sup_{\alpha\in[0,\mu]^T}\{U_s^\pi(\alpha)-\sum_{t\in T}\alpha_tq_t(s)\}\). Does the corresponding type-mass Bellman operator converge under \(\sum_{t\in T}\mu_t\max_a w_t(s,a)\le 1/(\gamma+\lambda)\), and what is the worst-case complexity of computing an \(\varepsilon\)-approximate solution?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of \(\tau\) types \(T\) with positive masses \(\mu_t\), each a binary rational; \(\tau\) counts supported types, not possible types. Allow arbitrary total mass \(\sum_t\mu_t&gt;0\).<br>Let \(S\) be a nonempty finite, fully observed state set and \(G\) a nonempty set of \(m\) subtasks. Each type has a nonempty finite action set \(A_t\), with each action assigned to one subtask. A feasible action-mass profile belongs to \(D=\{x\ge0:\sum_{a\in A_t}x_{ta}=\mu_t\ \forall t\}\); masses assigned to subtasks partition the society, and empty subtask coalitions are allowed.<br>The input explicitly lists rational polyhedral pieces and affine formulas for continuous maps \(P(s&#x27;\mid s,x)\), signed reward \(R(s,x)\), nonnegative coalition worth \(U(s,x,\alpha)\), and nonnegative weights \(w_t(s,x)\). Require \(P(\cdot\mid s,x)\) to be a probability distribution and \(U(s,x,0)=0\). Coalition worth already includes optimal autonomous coalition actions; \(\alpha\in[0,\mu]=\prod_t[0,\mu_t]\), including the empty and grand coalitions.<br>A stationary deterministic policy \(\pi:S\to D\) has discounted value \(V^\pi\), with rational discount \(0&lt;\gamma&lt;1\). Set \(U_s^\pi(\alpha)=U(s,\pi(s),\alpha)\). Credits are unrestricted real per-capita amounts satisfying efficiency \(\sum_t\mu_tq_t(s)=V^\pi(s)\).<br>First maximize return from every state; for the selected policy, minimize independently at each state \(E_s^\pi(q)=\sup_{\alpha\in[0,\mu]}\{U_s^\pi(\alpha)-\sum_t\alpha_tq_t(s)\}\). Only this maximum excess is minimized, without further lexicographic refinement.<br>For bounded credit functions \(Q_t:S\times D\to\mathbb R\), define \(M_Q(s)=\sup_{y\in D}\sum_t\mu_tQ_t(s,y)\) and \(E_Q(s,x)=\sup_{\alpha\in[0,\mu]}\{U(s,x,\alpha)-\sum_t\alpha_tQ_t(s,x)\}\). With fixed rational \(\lambda\ge0\), define \((\mathcal H Q)_t(s,x)=w_t(s,x)[R(s,x)+\gamma\sum_{s&#x27;}P(s&#x27;\mid s,x)M_Q(s&#x27;)+\lambda E_Q(s,x)]\).<br>An additive \(\varepsilon\)-approximation means efficient credits, return loss at most \(\varepsilon\) in every state, and excess at most \(\varepsilon\) above its minimum for the returned policy. Here \(\varepsilon&gt;0\) is a binary rational and \(L\) is total input bit length.<br>Does iteration of \(\mathcal H\) from every bounded initial function converge in the supremum norm under \(\sum_t\mu_t\sup_{x\in D}w_t(s,x)\le1/(\gamma+\lambda)\) for every state, and does its limit yield a return-optimal policy with minimum-excess credits?<br>Is computing an additive \(\varepsilon\)-approximate policy and credits polynomial-time solvable or NP-hard, and what is its worst-case complexity in \(m,\tau,|S|,\sum_t|A_t|,L\) and the accuracy and discount parameters?<br>For finite agents, a convergence theorem claims optimal credits and an optimal deterministic joint policy under the analogous weight bound; it supplies no polynomial-time complexity guarantee ([source](https://arxiv.org/html/2503.00372v1)).<br>No result settling this specified type-mass problem was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Mass normalization was unspecified; masses have arbitrary positive total, preserving the finite model&#x27;s counting measure.</li><li>Continuous joint actions and coalition structures were unspecified; each type&#x27;s mass may split among finitely many actions, each labeled by one subtask, with all mass assigned and empty subtask coalitions allowed.</li><li>Observation and policy domains were unspecified; use fully observed states and stationary deterministic policies selecting action-mass profiles.</li><li>The representation of piecewise-affine maps was unspecified; use continuous maps with explicitly listed rational polyhedral pieces and formulas, counted in total input bit length.</li><li>The policy dependence of supplied coalition utilities was unspecified; evaluate the supplied worth map at the current policy profile, with autonomous coalition-action optimization already incorporated, nonnegative worth, and zero empty-coalition worth.</li><li>The credit domain was unspecified; use unrestricted real credits subject to efficiency, without adding individual-rationality constraints absent from the stated allocation domain.</li><li>The secondary objective was ambiguous across return-optimal policies; choose any return-optimal policy and minimize credits for that policy at each state. Retain the graded maximum-excess objective without replacing it by the full lexicographic nucleolus.</li><li>The type-mass operator and weights were undefined; explicitly replace finite-agent sums by mass-weighted sums in the displayed discrete operator, supply fixed nonnegative piecewise-affine weights, retain the positive excess term, and hold the nonnegative multiplier fixed.</li><li>Convergence and approximation were unspecified; use convergence from bounded initial functions in the supremum norm and additive errors in statewise return and maximum excess, with exact efficiency.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Conclusions and representation convention</h3><p>The convergence and optimization guarantee is <b>false</b>. The non-strict weight bound permits a two-cycle. A strict bound gives convergence, but the limit can select a return-suboptimal greedy policy, violate efficiency, or give efficient credits that do not minimize excess.</p><p>The complexity answer depends on how transition pieces are listed:</p><ul><li><b>Separate scalar-coordinate lists:</b> if each map $x\mapsto P(s&#x27;\mid s,x)$ has its own piece list, computing the requested approximation is $\mathrm{NP}$-hard, even with $m=\tau=1$, $\gamma=1/2$, and $\varepsilon=1/8$. Exact output is computable in $\mathrm{FP}^{\mathrm{NP}}$ and in deterministic exponential time.</li><li><b>An explicit common transition-vector list:</b> if each state has one supplied piece list on which the entire vector $P(\cdot\mid s,x)$ is affine, exact policy and credit optimization is polynomial-time solvable.</li></ul><p>I use the first convention for the main complexity classification, since the task writes the transition maps as scalar functions $P(s&#x27;\mid s,x)$. I also prove the second classification, so neither reading is left unsettled.</p><p>All computational statements use binary rational input and output and concern inputs satisfying the stated validity assumptions. The algorithms below produce exact rational solutions, which in particular satisfy every positive requested $\varepsilon$.</p><p>The cited paper states its analogous convergence claim in [Theorem 3.4](https://arxiv.org/html/2503.00372v1). None of the arguments below relies on that claim.</p><h3>2. The operator: strict contraction, but failure at equality</h3><p>Let $\mathcal B$ be the vector space of all bounded credit functions. Write<br>$$
+M=\sum_t\mu_t&gt;0,
+\qquad
+\|Q\|_\mu
+=
+\max_{s\in S}\sum_t\mu_t\sup_{x\in D}|Q_t(s,x)|.
+$$<br>If $\|Q\|_\infty$ denotes the supremum over all $t,s,x$, then<br>$$
+\left(\min_t\mu_t\right)\|Q\|_\infty
+\leq
+\|Q\|_\mu
+\leq
+M\|Q\|_\infty.
+$$<br>Indeed, the upper bound follows by bounding every coordinate by $\|Q\|_\infty$, and the lower bound follows by retaining a coordinate whose supremum approaches $\|Q\|_\infty$. Because there are finitely many types and every $\mu_t$ is positive, these norms are equivalent. Thus $\mathcal B$ is complete in $\|\cdot\|_\mu$.</p><p>For bounded functions $f,g$ on the same nonempty domain,<br>$$
+|\sup f-\sup g|\leq\sup|f-g|.
+$$<br>Consequently,<br>$$
+|M_Q(s)-M_{\widetilde Q}(s)|
+\leq
+\|Q-\widetilde Q\|_\mu,
+$$<br>and, since $0\leq\alpha_t\leq\mu_t$,<br>$$
+\begin{aligned}
+|E_Q(s,x)-E_{\widetilde Q}(s,x)|
+&amp;\leq
+\sup_{\alpha\in[0,\mu]}
+\left|\sum_t\alpha_t(Q_t-\widetilde Q_t)(s,x)\right|\\
+&amp;\leq
+\sum_t\mu_t|Q_t(s,x)-\widetilde Q_t(s,x)|\\
+&amp;\leq
+\|Q-\widetilde Q\|_\mu.
+\end{aligned}
+$$</p><p>Define<br>$$
+W=\max_s\sum_t\mu_t\sup_{x\in D}w_t(s,x).
+$$<br>Nonnegative weights and probability normalization now imply<br>$$
+\|\mathcal HQ-\mathcal H\widetilde Q\|_\mu
+\leq
+(\gamma+\lambda)W\|Q-\widetilde Q\|_\mu.
+$$</p><p>The operator maps $\mathcal B$ into itself. To see this, $D$ and $[0,\mu]$ are compact, so the continuous input functions $R,U,w_t$ are bounded; boundedness of $Q$ then bounds both suprema appearing in $\mathcal H$.</p><p>Therefore, if<br>$$
+c=(\gamma+\lambda)W&lt;1,
+$$<br>the contraction theorem gives a unique bounded fixed point $Q^*$ and<br>$$
+\|\mathcal H^kQ^{(0)}-Q^*\|_\mu
+\leq
+c^k\|Q^{(0)}-Q^*\|_\mu.
+$$<br>Norm equivalence gives convergence in the supremum norm.</p><p>Under the stated non-strict bound, this argument proves only nonexpansiveness. The following example shows that convergence can fail.</p><h3>A two-cycle for every permitted value of $\lambda$</h3><p>Take one type of mass $1$, one action, and two states. Thus $D$ is a singleton. Let transitions deterministically swap the states, and set<br>$$
+R(s_i,x)=-\lambda,
+\qquad
+U(s_i,x,\alpha)=\alpha,
+\qquad
+w_1(s_i,x)=\frac{1}{\gamma+\lambda}.
+$$<br>These are rational affine functions satisfying all assumptions, including the weight bound with equality.</p><p>Represent a credit function by $q=(q_1,q_2)$. Whenever $q_i&lt;1$,<br>$$
+E_Q(s_i,x)
+=
+\max_{0\leq\alpha\leq1}\alpha(1-q_i)
+=
+1-q_i.
+$$<br>Hence<br>$$
+(\mathcal Hq)_i
+=
+\frac{\gamma q_{3-i}-\lambda q_i}{\gamma+\lambda}.
+$$<br>For<br>$$
+q^{(0)}=(1/2,-1/2),
+$$<br>both coordinates remain below $1$, and direct substitution gives<br>$$
+\mathcal Hq^{(0)}=-q^{(0)},
+\qquad
+\mathcal H^2q^{(0)}=q^{(0)}.
+$$<br>Thus iteration need not converge under the stated bound, including when $\lambda=0$.</p><h3>3. Convergence does not establish the optimization objectives</h3><p>The bilinear example in the notes is inadmissible: $10x\alpha$ is not jointly piecewise affine on a finite polyhedral cover. The following replacement satisfies the required representation exactly.</p><h3>A strictly convergent operator with a return-suboptimal greedy policy</h3><p>Take one state, one type of mass $1$, and two actions assigned to the same subtask. Let $x\in[0,1]$ denote the mass on the second action. Set<br>$$
+P(s\mid s,x)=1,
+\qquad
+R(s,x)=1-x,
+\qquad
+\gamma=\frac12,
+\qquad
+\lambda=\frac14,
+\qquad
+w_1(s,x)=1.
+$$<br>Define<br>$$
+U(s,x,\alpha)=10\min\{x,\alpha\}.
+$$<br>Its explicit jointly affine pieces are<br>$$
+U(s,x,\alpha)=
+\begin{cases}
+10\alpha,&amp;\alpha\leq x,\\
+10x,&amp;x\leq\alpha.
+\end{cases}
+$$<br>The pieces agree on their intersection. The function is continuous, nonnegative, and zero when $\alpha=0$.</p><p>Here $c=3/4&lt;1$, so the operator has a unique bounded fixed point. I claim that it is<br>$$
+Q^*(s,x)
+=
+\frac{\frac83+\frac32x}{1+\frac14x}.
+$$<br>Its derivative is<br>$$
+\frac{d}{dx}Q^*(s,x)
+=
+\frac{5/6}{(1+x/4)^2}&gt;0,
+$$<br>and its endpoint values are $8/3$ and $10/3$. In particular,<br>$$
+M_{Q^*}(s)=\frac{10}{3},
+\qquad
+0&lt;Q^*(s,x)&lt;10.
+$$</p><p>For a credit $q$ with $0&lt;q&lt;10$, the excess expression is increasing in $\alpha$ on $[0,x]$ and decreasing on $[x,1]$:<br>$$
+10\min\{x,\alpha\}-q\alpha
+=
+\begin{cases}
+(10-q)\alpha,&amp;\alpha\leq x,\\
+10x-q\alpha,&amp;\alpha\geq x.
+\end{cases}
+$$<br>Its maximum is therefore attained at $\alpha=x$, giving<br>$$
+E_{Q^*}(s,x)=x(10-Q^*(s,x)).
+$$<br>Substitution yields<br>$$
+\begin{aligned}
+(\mathcal HQ^*)(s,x)
+&amp;=
+1-x+\frac12\frac{10}{3}
++\frac14x(10-Q^*(s,x))\\
+&amp;=
+\frac83+\frac32x-\frac14xQ^*(s,x)\\
+&amp;=
+Q^*(s,x),
+\end{aligned}
+$$<br>where the last equality is precisely the defining formula for $Q^*$. Uniqueness follows from contraction.</p><p>The unique action maximizing aggregate fixed-point credit is $x=1$. Its policy value is<br>$$
+V^{x=1}(s)=0.
+$$<br>The return-optimal action is $x=0$, with value<br>$$
+V^{x=0}(s)=\frac{1}{1-\gamma}=2.
+$$<br>Moreover, at the greedy action the fixed-point credit is $10/3$, while efficiency requires the sole type’s credit to equal $0$.</p><p>Thus strict convergence, positive weights, and even<br>$$
+\sum_t\mu_tw_t(s,x)=1
+$$<br>do not ensure return-optimal greedy selection or efficient fixed-point credits.</p><h3>Efficient fixed-point credits can fail to minimize excess, for every $\lambda$</h3><p>Fix any rational $\lambda\geq0$. Take one state, two types of mass $1$ each, and one action per type. Let<br>$$
+P(s\mid s)=1,
+\qquad
+R(s)=1,
+\qquad
+\gamma=\frac12,
+\qquad
+U(s,x,\alpha)=3\alpha_2.
+$$<br>There is a unique policy, of value $2$.</p><p>Put<br>$$
+b=2+\frac52\lambda,
+\qquad
+w_1=\frac{3}{2b},
+\qquad
+w_2=\frac{1}{2b}.
+$$<br>These weights are positive and satisfy a strict contraction bound:<br>$$
+(\gamma+\lambda)(w_1+w_2)
+=
+\frac{1+2\lambda}{2+\frac52\lambda}
+&lt;1.
+$$</p><p>Consider<br>$$
+q^*=(3/2,1/2).
+$$<br>Its aggregate credit is $2$, so it is efficient. Its excess is<br>$$
+E(q^*)
+=
+\max_{\alpha\in[0,1]^2}
+\left(3\alpha_2-\frac32\alpha_1-\frac12\alpha_2\right)
+=
+\frac52.
+$$<br>The scalar expression multiplied by the weights is<br>$$
+1+\frac12\cdot2+\lambda\frac52=b.
+$$<br>Hence $\mathcal Hq^*=q^*$, and contraction makes it the unique fixed point.</p><p>For every efficient credit vector, the grand coalition gives the lower bound<br>$$
+E(q)\geq U(s,x,(1,1))-(q_1+q_2)=3-2=1.
+$$<br>The efficient credits $(0,2)$ attain this bound:<br>$$
+E(0,2)=\max_{\alpha\in[0,1]^2}\alpha_2=1.
+$$<br>Thus the fixed-point credits have excess $5/2$, whereas the minimum is $1$.</p><p>This proves failure of the credit objective even when convergence, efficiency, and return optimality all hold.</p><h3>4. Existence of a simultaneously return-optimal policy</h3><p>Write<br>$$
+N=\sum_t|A_t|,
+\qquad
+d=N-\tau.
+$$<br>Because every supported mass is positive and every action set is nonempty, $D$ is a nonempty compact product of simplices, of affine dimension $d$.</p><p>Define the ordinary return Bellman operator on $\mathbb R^S$:<br>$$
+(Tv)(s)
+=
+\max_{x\in D}
+\left\{
+R(s,x)+\gamma\sum_{s&#x27;}P(s&#x27;\mid s,x)v(s&#x27;)
+\right\}.
+$$<br>Continuity and compactness give an attained maximum. Probability normalization gives<br>$$
+\|Tv-Tu\|_\infty\leq\gamma\|v-u\|_\infty.
+$$<br>Therefore $T$ has a unique fixed point $V^*$.</p><p>Choose a maximizing profile $\pi^*(s)$ at each state. Then<br>$$
+V^*=R^{\pi^*}+\gamma P^{\pi^*}V^*.
+$$<br>For any stochastic matrix $P^\pi$, the inverse<br>$$
+(I-\gamma P^\pi)^{-1}
+=
+\sum_{r=0}^{\infty}\gamma^r(P^\pi)^r
+$$<br>exists and is entrywise nonnegative. Thus the displayed equation implies $V^{\pi^*}=V^*$.</p><p>For any other stationary deterministic policy $\pi$, the Bellman fixed-point equation implies<br>$$
+V^*\geq R^\pi+\gamma P^\pi V^*.
+$$<br>Subtracting the policy-evaluation equation and multiplying by the nonnegative inverse gives<br>$$
+V^*-V^\pi
+=
+(I-\gamma P^\pi)^{-1}
+\left((I-\gamma P^\pi)V^*-R^\pi\right)
+\geq0.
+$$<br>Hence $\pi^*$ is return-optimal from every state. Signed rewards and arbitrary total mass cause no difficulty.</p><h3>5. Minimum-excess credits for a fixed rational policy</h3><p>The only algorithmic facts about linear programming used below are strong duality and polynomial-time exact solution of rational linear programs. These standard facts are stated in the [linear-programming lecture notes](https://theory.stanford.edu/~jvondrak/CS369P/lec1.pdf).</p><p>Fix a rational policy $\pi$ and a state $s$. Policy evaluation computes $V^\pi$ by solving<br>$$
+(I-\gamma P^\pi)V^\pi=R^\pi.
+$$<br>The inverse exists by the argument above. Rational linear algebra computes the value exactly in polynomial time.</p><p>Set $x=\pi(s)$ and $V=V^\pi(s)$. Slice every listed piece of $U$ at this fixed $x$ and intersect it with $[0,\mu]$. Discard empty slices using linear-programming feasibility tests. Each remaining slice has a rational description<br>$$
+F_j=\{\alpha:B_j\alpha\leq d_j\},
+\qquad
+U(s,x,\alpha)=b_j^\top\alpha+c_j.
+$$<br>Each $F_j$ is nonempty and compact because the coalition box has been included.</p><p>On this slice, maximum excess equals<br>$$
+c_j+\max_{\alpha\in F_j}(b_j-q)^\top\alpha.
+$$<br>The inner linear program has a finite attained optimum. Strong duality therefore says that its value is<br>$$
+\min\left\{
+d_j^\top z_j:
+z_j\geq0,\ B_j^\top z_j=b_j-q
+\right\},
+$$<br>with an attained dual optimum.</p><p>It follows that the slice’s maximum excess is at most $e$ exactly when there exists $z_j$ satisfying<br>$$
+z_j\geq0,
+\qquad
+B_j^\top z_j=b_j-q,
+\qquad
+d_j^\top z_j+c_j\leq e.
+$$</p><p>Thus minimum-excess credits are obtained from the rational linear program<br>$$
+\min e
+$$<br>subject to the preceding constraints for every nonempty slice, and<br>$$
+\sum_t\mu_tq_t=V,
+\qquad
+e\geq0.
+$$<br>The variables $q_t$ are unrestricted in sign, as required.</p><p>To check feasibility, choose $q_t=V/M$ for all types. This is efficient, and compactness makes its maximum excess finite. Taking $e$ at least that excess and using dual attainment supplies feasible $z_j$. The objective is bounded below by $0$, since the empty coalition has worth $0$ and contributes excess $0$.</p><p>The linear program consequently has an attained rational optimum. Its description length is polynomial in the original input and the policy’s encoding length. Therefore:</p><p><b>For a fixed rational policy, exact minimum-excess credits are polynomial-time computable, independently at every state.</b></p><p>This argument minimizes only the maximum excess; it introduces no lexicographic refinement.</p><h3>6. Approximation hardness under separate-coordinate encoding</h3><p>I give a polynomial-size reduction from satisfiability of a three-literal conjunctive formula with $n\geq1$ variables and $k\geq1$ clauses.</p><h3>Action profiles encode the entire Boolean cube</h3><p>Use one type of mass $1$ and $n+1$ actions, all assigned to one subtask:<br>$$
+D=\left\{x\in\mathbb R^{n+1}_{\geq0}:
+\sum_{i=0}^{n}x_i=1\right\}.
+$$<br>Define<br>$$
+y_i(x)=\min\{1,nx_i\},
+\qquad 1\leq i\leq n.
+$$<br>The map $x\mapsto y(x)$ is onto $[0,1]^n$. Indeed, for any $y$ in that cube, choose<br>$$
+x_i=\frac{y_i}{n}\quad(i\geq1),
+\qquad
+x_0=1-\frac1n\sum_{i=1}^ny_i.
+$$<br>These masses are nonnegative, sum to $1$, and yield the prescribed $y$.</p><p>For a positive literal use $y_i$, and for a negative literal use $1-y_i$. For clause $j$, let<br>$$
+f_j(x)=
+\max\{\ell_{j1}(y(x)),\ell_{j2}(y(x)),\ell_{j3}(y(x))\}.
+$$<br>Each $f_j$ is continuous and lies in $[0,1]$.</p><p>Each clause function has an explicit constant-size piecewise-affine description: choose one of the two clipping regimes for each of its three literal occurrences, and then choose a largest literal. This yields at most<br>$$
+2^3\cdot3=24
+$$<br>rational polyhedral pieces. On each piece, the selected literal is affine in $x$. Ties give agreeing formulas, and inconsistent regimes may be discarded. The description of $1-f_j$ has the same bound.</p><h3>The discounted system evaluates satisfied clauses</h3><p>Use states<br>$$
+S=\{s_0\}\cup\{g_j,b_j:1\leq j\leq k\}.
+$$<br>Every $g_j$ and $b_j$ is absorbing. Set<br>$$
+R(s_0,x)=0,
+\qquad
+R(g_j,x)=\frac{k}{2},
+\qquad
+R(b_j,x)=0,
+\qquad
+\gamma=\frac12.
+$$<br>At the initial state, define<br>$$
+P(g_j\mid s_0,x)=\frac{f_j(x)}{k},
+\qquad
+P(b_j\mid s_0,x)=\frac{1-f_j(x)}{k}.
+$$<br>These probabilities are nonnegative and sum to $1$. Each scalar coordinate has at most $24$ pieces.</p><p>The absorbing-state values are $k$ and $0$. Therefore any policy selecting $x$ at $s_0$ has<br>$$
+V^\pi(s_0)=\frac12\sum_{j=1}^kf_j(x).
+$$</p><p>Set $U=0$. For any fixed rational $\lambda\geq0$, one can take the positive constant weight<br>$$
+w_1=\frac{1}{2(\gamma+\lambda)},
+$$<br>which even satisfies the strict operator bound. The weights have no role in the policy-and-credit optimization objective.</p><h3>The return gap</h3><p>Define on the cube<br>$$
+F(y)=
+\sum_{j=1}^k
+\max\{\ell_{j1}(y),\ell_{j2}(y),\ell_{j3}(y)\}.
+$$<br>Each summand is a maximum of affine functions and is therefore convex. Hence $F$ is convex.</p><p>Every cube point is a convex combination of Boolean vertices. Convexity consequently gives<br>$$
+F(y)\leq\max_{z\in\{0,1\}^n}F(z).
+$$<br>At a Boolean vertex, each clause term is $1$ exactly when that clause is satisfied, and otherwise is $0$. Thus $F(z)$ counts satisfied clauses.</p><p>Using surjectivity of $x\mapsto y(x)$, we obtain<br>$$
+V^*(s_0)=
+\begin{cases}
+k/2,&amp;\text{if the formula is satisfiable},\\
+\text{at most }(k-1)/2,&amp;\text{if it is unsatisfiable}.
+\end{cases}
+$$</p><p>Suppose a polynomial-time algorithm returned the requested approximation with $\varepsilon=1/8$. On satisfiable instances, its policy would satisfy<br>$$
+V^\pi(s_0)\geq k/2-1/8.
+$$<br>On unsatisfiable instances, every policy satisfies<br>$$
+V^\pi(s_0)\leq k/2-1/2.
+$$<br>Evaluating the returned rational policy and comparing with<br>$$
+k/2-1/4
+$$<br>would decide satisfiability.</p><p>The credit requirement creates no obstruction: all policy values in this construction are nonnegative; the sole type’s efficient credit is its policy value, and $U=0$ then gives excess $0$, its minimum.</p><p>The construction has polynomial encoding length and parameters<br>$$
+m=\tau=1,
+\qquad
+|S|=2k+1,
+\qquad
+N=n+1,
+\qquad
+\gamma=\frac12,
+\qquad
+\varepsilon=\frac18.
+$$<br>Therefore the approximation problem is $\mathrm{NP}$-hard under separate-coordinate encoding.</p><h3>7. Exact algorithms and deterministic running-time bounds</h3><h3>A finite sufficient set of rational profiles</h3><p>Eliminate one action coordinate per type using the mass equalities. This identifies the affine hull of $D$ with $\mathbb R^d$.</p><p>For each state, intersect $D$ with one reward piece and one piece from each transition-coordinate list. The nonempty intersections form a finite cover by compact rational polytopes. On each such cell, the Bellman objective is affine for every fixed $v$.</p><p>An affine function on a nonempty compact polytope attains its maximum at a vertex. Thus cell vertices suffice for every Bellman maximization.</p><p>Let $H$ be the total number of inequality rows in the reward and transition piece descriptions and in $D$, over all states, after coordinate elimination. Represent any equalities by pairs of inequalities.</p><p>Every cell vertex has $d$ linearly independent active rows. Indeed, if its active rows had rank less than $d$, there would be a nonzero direction annihilating them. A sufficiently small displacement in either direction would preserve every inactive strict inequality as well, contradicting extremality.</p><p>Enumerate all choices of $d$ rows from this global pool. For each independent choice, solve the corresponding equalities and retain the solution if it belongs to $D$. The resulting set $Z$ has at most $H^d$ elements and contains every relevant cell vertex. Additional retained profiles are feasible actions, so they cannot increase the optimum beyond the original action domain.</p><p>When $d=0$, $D$ itself is a singleton and no enumeration is needed.</p><p>Every candidate has polynomial bit length. After elimination, all coefficients have polynomial bit length. Clearing denominators in a selected system and applying Cramer’s rule expresses each coordinate as a ratio of determinants of dimension $d$; the determinant bounds give polynomial bit length in $L+N$.</p><h3>A finite-action Bellman linear program</h3><p>For every $v$, the Bellman maximum over $D$ equals its maximum over $Z$. Consider<br>$$
+\min_v\sum_sv(s)
+$$<br>subject to<br>$$
+v(s)\geq
+R(s,z)+\gamma\sum_{s&#x27;}P(s&#x27;\mid s,z)v(s&#x27;)
+\qquad
+(s\in S,\ z\in Z).
+$$</p><p>These constraints say $v\geq Tv$. The operator $T$ is monotone because transition probabilities are nonnegative. Iteration therefore gives<br>$$
+v\geq Tv\geq T^2v\geq\cdots.
+$$<br>Contraction implies $T^kv\to V^*$, so every feasible $v$ satisfies $v\geq V^*$.</p><p>Conversely, $V^*=TV^*$ is feasible. Thus $V^*$ is the unique minimizing value vector. Choosing a maximizing candidate at each state gives an exact return-optimal rational policy. Section 5 then computes its exact minimum-excess credits.</p><p>The resulting deterministic bound is<br>$$
+(H+1)^{O(d)}
+\operatorname{poly}(m,\tau,|S|,N,L).
+$$<br>Since the explicit row count is bounded by a polynomial in the input size, a coarser bound is<br>$$
+(L+N+|S|+1)^{O(N-\tau)}
+\operatorname{poly}(m,\tau,|S|,N,L).
+$$</p><h3>An alternative bound using cell enumeration</h3><p>At each state, explicitly enumerate the intersections of one reward piece and one piece from each of its $|S|$ transition-coordinate lists. Their number is at most<br>$$
+(L+1)^{|S|+1}.
+$$<br>The construction in Section 9 solves the problem by a linear program polynomial in this expanded description size. This gives another bound:<br>$$
+(L+1)^{O(|S|+1)}
+\operatorname{poly}(m,\tau,|S|,N,L).
+$$</p><p>One may use whichever algorithm has the smaller bound. In particular, either fixed action dimension $N-\tau$ or fixed state count $|S|$ gives polynomial time under separate-coordinate encoding.</p><h3>8. Decision complexity and an $\mathrm{FP}^{\mathrm{NP}}$ upper bound</h3><h3>The return-threshold problem is $\mathrm{NP}$-complete</h3><p>Consider the decision problem<br>$$
+V^*(s_0)\geq b
+$$<br>for an input rational threshold $b$.</p><p>A certificate specifies a candidate profile at each state by the indices of its $d$ independent active rows. The verifier solves these systems, checks feasibility in $D$, evaluates rewards and transitions, and solves the rational policy-evaluation system.</p><p>All these operations are polynomial-time, and the certificate has polynomial length. An optimal candidate policy exists by Section 7. Hence the decision problem belongs to $\mathrm{NP}$.</p><p>The reduction in Section 6, with threshold $b=k/2$, proves $\mathrm{NP}$-hardness. Thus the return-threshold problem is $\mathrm{NP}$-complete on the specified valid-input class.</p><h3>Exact output is computable in $\mathrm{FP}^{\mathrm{NP}}$</h3><p>For every candidate policy, the action coordinates have polynomial bit length. Its value is obtained by solving an $|S|$-dimensional rational linear system, so determinant bounds give polynomial bit length for every value coordinate and for<br>$$
+J(\pi)=\sum_sV^\pi(s).
+$$<br>Consequently, there is a computable polynomial bound $B$ such that every candidate-policy sum has numerator and positive denominator of bit length at most $B$.</p><p>Distinct such sums differ by at least<br>$$
+2^{-2B}.
+$$<br>Indeed, the difference of two distinct rational numbers with denominators at most $2^B$ has a nonzero integer numerator over a denominator at most $2^{2B}$.</p><p>The query<br>$$
+\text{“Does a candidate policy satisfy }J(\pi)\geq a\text{?”}
+$$<br>belongs to $\mathrm{NP}$ by the preceding verifier.</p><p>A rational bound on all policy values is readily computed. For example, if $R_{\max}$ bounds $|R(s,x)|$ on the compact domain, then<br>$$
+|J(\pi)|\leq\frac{|S|R_{\max}}{1-\gamma}.
+$$<br>Such an $R_{\max}$ can be found by optimizing each affine reward formula over its piece, or by an elementary coefficient bound.</p><p>Binary search with the $\mathrm{NP}$ oracle yields a feasible lower threshold $\ell$ and an upper threshold $u$ such that the maximum lies in $[\ell,u)$ and<br>$$
+u-\ell&lt;2^{-2B}.
+$$<br>Only polynomially many queries are needed, since both the initial interval endpoints and $B$ have polynomial encoding length.</p><p>A witness satisfying $J(\pi)\geq\ell$ can be extracted with polynomially many additional $\mathrm{NP}$ queries: fix the polynomial-length certificate one bit at a time, asking whether the current prefix has a valid extension satisfying the threshold.</p><p>The extracted policy must maximize $J$ exactly. Otherwise its sum and the maximum would be distinct candidate-policy sums separated by at least $2^{-2B}$, while both lie in $[\ell,u)$.</p><p>Finally, $V^*$ componentwise dominates every policy value, and an optimal candidate policy attains $V^*$. Maximizing the sum therefore forces<br>$$
+V^\pi(s)=V^*(s)
+\qquad\text{for every }s.
+$$<br>The credit linear programs then complete the exact output in polynomial time.</p><p>Thus the exact policy-and-credit search problem belongs to<br>$$
+\mathrm{FP}^{\mathrm{NP}}.
+$$</p><h3>9. Polynomial time with an explicit common transition-vector list</h3><p>Suppose now that, for each state, one explicitly supplied piece list describes the entire vector $P(\cdot\mid s,x)$.</p><p>Intersect that list with the reward list and $D$. Only two piece lists are combined, so the number and total description size of the resulting cells are polynomial. Discard empty cells by linear-programming feasibility tests.</p><p>For a remaining cell, write<br>$$
+C_{sj}=\{x:A_{sj}x\leq b_{sj}\},
+$$<br>including all domain constraints, and<br>$$
+P(\cdot\mid s,x)=p_{sj}+B_{sj}x,
+\qquad
+R(s,x)=r_{sj}+a_{sj}^\top x.
+$$<br>The cell is nonempty and compact. Its Bellman inequality is<br>$$
+v(s)\geq
+r_{sj}+\gamma p_{sj}^\top v
++
+\max_{x\in C_{sj}}
+\left(a_{sj}+\gamma B_{sj}^\top v\right)^\top x.
+$$<br>For each fixed $v$, the inner linear program has a finite attained optimum. Strong duality makes this inequality equivalent to existence of $z_{sj}$ satisfying<br>$$
+z_{sj}\geq0,
+$$<br>$$
+A_{sj}^\top z_{sj}
+=
+a_{sj}+\gamma B_{sj}^\top v,
+$$<br>$$
+b_{sj}^\top z_{sj}
++r_{sj}+\gamma p_{sj}^\top v
+\leq v(s).
+$$<br>These are linear constraints jointly in $v$ and $z_{sj}$.</p><p>Minimize $\sum_sv(s)$ subject to these constraints over all cells. This is a polynomial-size rational linear program. The constraints are equivalent to $v\geq Tv$; the argument in Section 7 shows that its minimizing value vector is exactly $V^*$.</p><p>At this rational $V^*$, maximize the affine Bellman expression on each cell by linear programming and choose a best profile at each state. This yields a rational return-optimal policy in polynomial time. Section 5 supplies exact minimum-excess credits in polynomial time.</p><p>Therefore the entire problem is polynomial-time solvable under explicit common transition-vector encoding.</p><p>The hardness construction does not contradict this result: it supplies short separate scalar lists, rather than a polynomial-size explicit common refinement for the whole transition vector.</p><h3>10. Dependence on accuracy, discount, and society parameters</h3><p>The algorithms above compute exact policies and credits. Their bounds therefore require no additional numerical factor in<br>$$
+\varepsilon^{-1}
+\quad\text{or}\quad
+(1-\gamma)^{-1}.
+$$<br>The binary encodings of $\gamma$, the masses, and the other numerical data are included in $L$. Exact rational linear algebra and linear programming have polynomial bit complexity in those encodings.</p><p>Small supported masses can make per-capita credits numerically large. This does not invalidate the bit-complexity bounds: their reciprocals have bit lengths controlled by the mass encodings, and the credit linear program has polynomial-size rational data.</p><p>The subtask labels introduce no further optimization constraint beyond those already encoded in $D$ and the supplied functions. Empty subtask coalitions are allowed, so no enumeration of assignments to subtasks is needed. Nevertheless, fixing $m$ and $\tau$ alone does not make the separate-coordinate problem tractable: hardness holds with both equal to $1$.</p><p>Since hardness already holds at constant accuracy and discount, a general algorithm polynomial in all input parameters, even with polynomial factors in $\varepsilon^{-1}$ and $(1-\gamma)^{-1}$, would imply<br>$$
+\mathrm P=\mathrm{NP}.
+$$</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s argument is correct under its stated representation conventions. The counterexamples refute the operator guarantee, and the complexity arguments establish the claimed distinction between separate transition-coordinate lists and an explicit common transition-vector list. I found no major or minor mathematical issues.</p><ul><li><b>Scope and representation conventions</b></li></ul><p>The output explicitly distinguishes two encodings rather than silently assuming that separate scalar piece lists have a polynomial-size common refinement. This distinction matters to both the reduction and the algorithms.</p><p>Its computational claims concern valid inputs with binary rational data and rational outputs. Producing exact rational solutions satisfies the requested additive approximation whenever $\varepsilon&gt;0$. The extra common-list classification is conditional on that representation actually being supplied.</p><ul><li><b>Weighted norm and contraction estimate</b></li></ul><p>The norm comparison is correct:<br>$$
+   \left(\min_t\mu_t\right)\|Q\|_\infty
+   \leq \|Q\|_\mu
+   \leq M\|Q\|_\infty.
+   $$<br>Positivity of every supported mass and finiteness of the type set justify equivalence with the supremum norm and completeness.</p><p>Both supremum-difference estimates apply to bounded functions on nonempty domains. For the excess estimate, the necessary bound is precisely $0\leq\alpha_t\leq\mu_t$; no normalization of total mass is used.</p><p>Probability normalization, nonnegative weights, and the two preceding estimates justify<br>$$
+   \|\mathcal HQ-\mathcal H\widetilde Q\|_\mu
+   \leq(\gamma+\lambda)W\|Q-\widetilde Q\|_\mu.
+   $$<br>Compactness and continuity bound the input functions, so $\mathcal H$ indeed maps bounded credit functions to bounded credit functions.</p><p>Thus the contraction theorem is correctly applied when $(\gamma+\lambda)W&lt;1$. At equality, the estimate gives only nonexpansiveness, as the prover states.</p><ul><li><b>Nonconvergence under the stated bound</b></li></ul><p>The two-state example satisfies all input requirements: the action domain is a singleton, transitions are stochastic, rewards may be signed, coalition worth is nonnegative and vanishes at the empty coalition, and the weight bound holds with equality.</p><p>For both vectors in the proposed orbit, every coordinate is strictly below $1$, so the excess formula<br>$$
+   E_Q(s_i,x)=1-q_i
+   $$<br>remains valid throughout the orbit. Substitution gives<br>$$
+   \mathcal H(1/2,-1/2)=(-1/2,1/2),
+   \qquad
+   \mathcal H(-1/2,1/2)=(1/2,-1/2).
+   $$<br>This works for every permitted rational $\lambda\geq0$, including $\lambda=0$. Consequently, the requested convergence from every bounded initial function is genuinely refuted.</p><ul><li><b>Return-suboptimal and inefficient fixed-point selection</b></li></ul><p>The replacement coalition-worth function<br>$$
+   U(s,x,\alpha)=10\min\{x,\alpha\}
+   $$<br>has the required finite jointly piecewise-affine representation. Its formulas agree on their shared boundary.</p><p>The displayed fixed-point formula, derivative, and endpoint values all check:<br>$$
+   Q^*(s,0)=\frac83,
+   \qquad
+   Q^*(s,1)=\frac{10}{3},
+   \qquad
+   \frac{d}{dx}Q^*(s,x)
+   =\frac{5/6}{(1+x/4)^2}&gt;0.
+   $$<br>The range lies strictly between $0$ and $10$, validating the excess calculation used in the fixed-point substitution.</p><p>The substitution establishes $\mathcal HQ^*=Q^*$, and the strict contraction establishes uniqueness and convergence to this fixed point.</p><p>Aggregate-credit maximization uniquely chooses $x=1$, whose return is $0$, whereas $x=0$ has return $2$. At the selected action, the sole type’s fixed-point credit is $10/3$, while efficiency requires $0$. Both claimed failures therefore follow.</p><ul><li><b>Efficient credits that fail to minimize excess</b></li></ul><p>The second example also satisfies all assumptions. Its contraction factor is<br>$$
+   \frac{1+2\lambda}{2+\frac52\lambda}&lt;1
+   $$<br>for every $\lambda\geq0$.</p><p>The candidate credits $(3/2,1/2)$ are efficient because the unique policy has value $2$. Their excess is correctly computed as $5/2$, and multiplication by the specified weights verifies the fixed-point equation.</p><p>The grand coalition gives excess at least $1$ for every efficient credit vector. The displayed vector $(0,2)$ attains excess $1$. Thus the claimed minimum and the fixed point’s failure to attain it are both verified.</p><p>These examples establish failures of the specified operator independently of the cited finite-agent theorem. The output correctly identifies the analogous claim in [Theorem $3.4$ of the cited paper](https://arxiv.org/html/2503.00372v1).</p><ul><li><b>Existence of a simultaneously return-optimal policy</b></li></ul><p>The action domain is a nonempty compact product of simplices, with dimension $N-\tau$. Continuity supplies attained Bellman maxima, and stochasticity supplies the contraction factor $\gamma$.</p><p>The maximizing policy satisfies the policy-evaluation equation at $V^*$. The displayed inverse series converges because $0&lt;\gamma&lt;1$ and the transition matrix is stochastic; every summand is entrywise nonnegative.</p><p>The comparison with an arbitrary policy uses this nonnegative inverse correctly. It proves componentwise optimality from every state, including with signed rewards and arbitrary positive total mass.</p><ul><li><b>Minimum-excess credit linear program</b></li></ul><p>Slicing the explicitly listed coalition-worth pieces at a fixed rational action yields rational polyhedra. Including the coalition box makes every retained slice compact; feasibility testing removes empty slices.</p><p>The primal excess maximization on each retained slice has a finite attained optimum. Its dual has the stated signs and equality constraint:<br>$$
+   z_j\geq0,
+   \qquad
+   B_j^\top z_j=b_j-q.
+   $$<br>Strong duality therefore justifies the existential dual constraints representing the excess bound. The relevant duality and rational linear-programming facts are supported by the [cited lecture notes](https://theory.stanford.edu/~jvondrak/CS369P/lec1.pdf).</p><p>Efficiency is imposed exactly, credits remain unrestricted in sign, and $e\geq0$ is valid because the empty coalition contributes zero excess. The feasibility argument and objective lower bound justify an attained rational optimum.</p><p>The resulting program has polynomial description size for a rational policy of polynomial encoding length. It minimizes only maximum excess, as required.</p><ul><li><b>Approximation hardness</b></li></ul><p>The simplex-to-cube map is surjective by the displayed construction. The slack coordinate is nonnegative because $\sum_i y_i\leq n$.</p><p>Each clause function has the claimed constant-size piece representation: clipping regimes determine affine literal formulas, and selecting a largest literal adds only affine inequalities. Boundary formulas agree, including repeated literal occurrences.</p><p>The transition probabilities are nonnegative and normalized. The absorbing-state rewards give values $k$ and $0$, hence the initial-state value is exactly<br>$$
+   \frac12\sum_j f_j(x).
+   $$</p><p>The convexity argument is applied to $F$ on the Boolean cube, rather than to its clipped composition on the simplex. It correctly places a maximum at a Boolean vertex, where the objective counts satisfied clauses.</p><p>The satisfiable and unsatisfiable return bounds are separated by the proposed threshold even after return loss $\varepsilon=1/8$. Rational policy evaluation decides which side of the threshold the returned policy occupies.</p><p>With $U=0$, nonnegative policy values give efficient sole-type credits with zero excess. Therefore the credit requirement does not obstruct the reduction. The claimed hardness with $m=\tau=1$ and constant discount and accuracy is established under separate-coordinate encoding.</p><ul><li><b>Exact algorithms and complexity upper bounds</b></li></ul><p>On each common reward-transition cell, the Bellman objective is affine. Compactness justifies maximization at a vertex.</p><p>The active-row argument remains valid for lower-dimensional cells: failure of full active-row rank would permit both sufficiently small opposite displacements, contradicting extremality. Consequently, enumeration from the global row pool includes every required vertex. Retaining extra feasible profiles cannot change the optimum beyond the original action domain.</p><p>Determinant bounds justify polynomial encoding length for each candidate. The finite-action Bellman linear program correctly represents $v\geq Tv$; monotonicity and contraction establish that every feasible vector dominates $V^*$.</p><p>The two deterministic running-time bounds follow from the respective row and cell enumerations. They are upper bounds, and the prover does not claim matching lower bounds for their parameter dependence.</p><p>The threshold certificate has polynomial length and is polynomial-time verifiable on the stated valid-input class. The hardness reduction establishes the corresponding completeness claim.</p><p>For the $\mathrm{FP}^{\mathrm{NP}}$ upper bound, candidate-policy values and sums have polynomial bit length. The rational separation bound, oracle binary search, and witness extraction correctly identify an exactly maximizing candidate policy. Componentwise domination by $V^*$ then justifies recovering simultaneous return optimality by maximizing the sum.</p><ul><li><b>Common-list polynomial algorithm and parameter dependence</b></li></ul><p>With an explicit common transition-vector list, intersecting it with the reward list creates only polynomially many cells. The dualized Bellman constraints are linear jointly in the value vector and dual variables; no bilinear term remains.</p><p>Nonempty compact cells satisfy the hypotheses for strong duality. The resulting polynomial-size rational linear program recovers $V^*$, and subsequent cell optimization recovers a rational optimal policy. The credit programs complete the requested output.</p><p>Thus the encoding distinction is substantiated. The separate-coordinate reduction does not provide a polynomial-size common transition-vector refinement.</p><p>Because the algorithms compute exact solutions, they need no numerical running-time factor in $\varepsilon^{-1}$ or $(1-\gamma)^{-1}$. Their binary encoding lengths remain part of $L$. The discussion of small masses and subtask labels is consistent with the specified model.</p><p>No repair or additional mathematical clarification is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

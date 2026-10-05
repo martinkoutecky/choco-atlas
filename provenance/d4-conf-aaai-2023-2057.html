@@ -1,0 +1,96 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2023-2057 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2023-2057 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2023-2057)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\text{polynomial-time solvable}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 6 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Let λ ≥0, and D = (dii′)i,i′∈N be an arbi- trary symmetric nonnegative matrix. Then argmin ¨ f X i,i′∈N:i̸=i′ ( ˆfi+ ˆfi′−dii′)2+λ∥¨f∥2 2 = 2(n −1)⃗π−8n(n−1) 4n+λ−4 ¯µ 2n + λ −4 . 2In the AWG model the equal-difﬁculty assumption is a nor- mative decision, since we can always scale the data. Essentially, it means that we measure errors in standard deviations, giving the same importance to all questions. 3We use ¨f instead of hat+arrow accent.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite set of complete worker-noise types \(\Theta\), positive rational masses \(\mu_t\) summing to one, and a symmetric rational matrix \(D\) of mean report distances between distinct agents of each type pair, compute a minimizer \(\hat f\) of \(\sum_{t,u\in\Theta}\mu_t\mu_u(\hat f_t+\hat f_u-D_{tu})^2\). For \(t=u\), \(D_{tt}\) is the mean distance between distinct agents of that type.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a nonempty list \(\Theta\) of \(\tau\) worker-noise types with positive masses \(\mu_t\in\mathbb{Q}_{&gt;0}\), encoded in binary, satisfying \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types.<br>Types identify complete report distributions; their relevant numerical information is supplied directly as an arbitrary symmetric matrix \(D\in\mathbb{Q}_{\geq0}^{\tau\times\tau}\). No report distributions need to be reconstructed.<br>\(D_{tu}\) represents the mean report distance between distinct agents of types \(t,u\); in particular, \(D_{tt}\) concerns two distinct agents of the same type and need not vanish.<br>Compute an exact minimizer over \(\hat f\in\mathbb{R}^{\Theta}\) of \(\sum_{t,u\in\Theta}\mu_t\mu_u(\hat f_t+\hat f_u-D_{tu})^2\), including all ordered type pairs. Estimates may be negative; there is no regularization.<br>Let \(L\) be the total binary input length and \(m\) the underlying number of report coordinates, if specified. State running times in \(m,\tau,L\); reports themselves are not input.</p><p>Is computing an exact minimizer of this mass-weighted fault-estimation problem solvable in polynomial time, or is it NP-hard?</p><p>For a finite population of at least three workers, the unweighted off-diagonal objective over unrestricted real estimates, also allowing nonnegative quadratic regularization, has a closed-form polynomial-time solution. [Meir et al.](https://ojs.aaai.org/index.php/AAAI/article/download/25750/25522)<br>No result for exactly the mass-weighted problem above was identified in the search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The estimate domain was unspecified; use unrestricted real estimates, as in the discrete least-squares definition, rather than imposing nonnegativity.</li><li>The signs and realizability requirements for D were unspecified; require nonnegative rational entries but no additional realizability promise, matching the anchor&#x27;s arbitrary symmetric nonnegative matrix domain.</li><li>Complete worker-noise types had no computational encoding; treat them as support identifiers, with their relevant numerical information supplied by D.</li><li>The graded objective omits regularization; take the anchor&#x27;s unregularized specialization.</li><li>The output precision was unspecified; require an exact minimizer.</li><li>The report dimension and input bit length were undefined; define m as the underlying report-coordinate count, if specified, and L as total binary input length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The problem is <b>polynomial-time solvable</b>. Its unique exact minimizer is</p><p>\[
+\boxed{\hat f_t^*
+=\sum_{u\in\Theta}\mu_uD_{tu}
+-\frac12\sum_{v,u\in\Theta}\mu_v\mu_uD_{vu}.}
+\]</p><p>This formula applies to every nonempty support, including \(\tau=1\), and retains all diagonal entries \(D_{tt}\).</p><h3>Derivation and proof of optimality</h3><p>Write \(f\) for the vector of estimates, and define</p><p>\[
+r_t=\sum_{u\in\Theta}\mu_uD_{tu},
+\qquad
+A=\sum_{t\in\Theta}\mu_tr_t,
+\qquad
+s(f)=\sum_{t\in\Theta}\mu_tf_t.
+\]</p><p>The given objective is</p><p>\[
+F(f)=\sum_{t,u\in\Theta}\mu_t\mu_u(f_t+f_u-D_{tu})^2.
+\]</p><p>Using symmetry of \(D\) and \(\sum_t\mu_t=1\), expansion gives</p><p>\[
+F(f)
+=2\sum_t\mu_tf_t^2
++2s(f)^2
+-4\sum_t\mu_tr_tf_t
++C,
+\qquad
+C=\sum_{t,u}\mu_t\mu_uD_{tu}^2.
+\]</p><p>Indeed, the two squared-estimate terms each contribute \(\sum_t\mu_tf_t^2\); the cross term contributes \(2s(f)^2\); and symmetry makes the two terms linear in the estimates equal.</p><p>Consequently, for every \(t\),</p><p>\[
+\frac{\partial F}{\partial f_t}
+=4\mu_t\bigl(f_t+s(f)-r_t\bigr).
+\]</p><p>Since every mass is positive, stationarity is equivalent to</p><p>\[
+f_t+s(f)=r_t
+\quad\text{for every }t.
+\]</p><p>Multiplying these equations by \(\mu_t\) and summing yields \(2s(f)=A\). Thus the only stationary candidate is \(f_t^*=r_t-A/2\). Its weighted mean is \(s(f^*)=A/2\), so it satisfies every stationarity equation.</p><p>To prove global optimality and uniqueness directly, let \(h\in\mathbb R^\Theta\). Substituting \(f^*+h\) into the expanded objective gives</p><p>\[
+F(f^*+h)-F(f^*)
+=
+2\sum_t\mu_th_t^2
++2\left(\sum_t\mu_th_t\right)^2.
+\]</p><p>The linear terms vanish because \(f_t^*+s(f^*)-r_t=0\) for every \(t\). Both displayed terms are nonnegative. If \(h\ne0\), the first is strictly positive because every \(\mu_t&gt;0\). Therefore \(f^*\) is the unique global minimizer.</p><p>All sums here include diagonal type pairs. In particular, for \(\tau=1\), the formula gives \(f_1^*=D_{11}/2\).</p><h3>Exact computation and bit complexity</h3><p>Computing the weighted row means \(r_t\), then \(A\), then the output vector requires \(O(\tau^2)\) rational arithmetic operations. We must also bound their bit complexity.</p><p>Write the input rationals as \(\mu_t=p_t/q_t\) and \(D_{tu}=c_{tu}/d_{tu}\), with positive denominators. Let \(P\) be the product of the mass denominators and \(Q\) the product of the supplied matrix-entry denominators. Define integers</p><p>\[
+a_t=p_t(P/q_t),
+\qquad
+b_{tu}=c_{tu}(Q/d_{tu}).
+\]</p><p>Then \(\mu_t=a_t/P\) and \(D_{tu}=b_{tu}/Q\). Set</p><p>\[
+R_t=\sum_u a_ub_{tu},
+\qquad
+B=\sum_t a_tR_t.
+\]</p><p>The exact output can be represented as</p><p>\[
+f_t^*=\frac{2PR_t-B}{2P^2Q}.
+\]</p><p>The products \(P,Q\) have \(O(L)\) bits because the total lengths of their input denominators are bounded by \(L\). The integers \(a_t,b_{tu},R_t,B\), and the output numerators and denominator also have \(O(L)\) bits: multiplication adds bit lengths, and the sums add at most \(O(\log\tau)\) bits.</p><p>There are \(O(\tau^2)\) integer operations. Using elementary multiplication and long division therefore gives the conservative bound \(O(\tau^2L^2)\) bit operations. Since the explicitly supplied matrix implies \(\tau^2=O(L)\), this is also \(O(L^3)\). Unreduced fractions already provide an exact output.</p><p>There is no computational dependence on the value of \(m\): report coordinates and report distributions are not processed. If \(m\) is supplied as metadata, its encoding contributes only to \(L\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s output fully resolves the assigned problem. The minimizer, uniqueness argument, and polynomial bit-complexity bound are correct. No mathematical gaps were found.</p><h3>1. Agreement with the task</h3><p>The proof uses exactly the stated objective: all ordered type pairs, including diagonal pairs, weighted by \(\mu_t\mu_u\). It assumes symmetry of \(D\), strictly positive masses, and total mass one, all supplied by the task.</p><p>The estimates remain unrestricted real numbers. No assumption that \(D_{tt}=0\), reconstruction of report distributions, or regularization is introduced.</p><h3>2. Expansion and differentiation</h3><p>The expansion<br>\[
+F(f)=2\sum_t\mu_tf_t^2+2s(f)^2-4\sum_t\mu_tr_tf_t+C
+\]<br>is correct.</p><p>Normalization of the masses gives each squared-estimate contribution \(\sum_t\mu_tf_t^2\). The estimate cross term is \(2s(f)^2\). Symmetry of \(D\) makes each of the two distance-linear contributions equal to \(-2\sum_t\mu_tr_tf_t\).</p><p>Differentiating therefore gives<br>\[
+\frac{\partial F}{\partial f_t}
+=4\mu_t(f_t+s(f)-r_t).
+\]<br>This calculation includes diagonal pairs correctly. Positivity of every mass justifies the equivalence between stationarity and the displayed equations.</p><h3>3. Stationary candidate</h3><p>Multiplying \(f_t+s(f)=r_t\) by \(\mu_t\) and summing gives \(2s(f)=A\), using \(\sum_t\mu_t=1\). Consequently, every stationary point must satisfy \(f_t=r_t-A/2\).</p><p>The stated candidate has weighted mean \(A/2\), so it satisfies all stationarity equations. Both necessity and sufficiency are established.</p><h3>4. Global optimality and uniqueness</h3><p>The asserted difference identity<br>\[
+F(f^*+h)-F(f^*)
+=2\sum_t\mu_th_t^2
++2\left(\sum_t\mu_th_t\right)^2
+\]<br>follows from the expanded objective: the linear contribution vanishes by stationarity.</p><p>Both remaining terms are nonnegative. For every nonzero \(h\), strict positivity of the masses makes the first term strictly positive. This proves existence, global optimality, and uniqueness without an additional convexity theorem.</p><p>The single-type case is correctly covered: normalization forces \(\mu_1=1\), and the formula gives \(f_1^*=D_{11}/2\).</p><h3>5. Exact arithmetic and running time</h3><p>The common-denominator construction is valid. Its definitions give<br>\[
+r_t=\frac{R_t}{PQ},
+\qquad
+A=\frac{B}{P^2Q},
+\]<br>so the reported output fraction is correct.</p><p>The products of input denominators have \(O(L)\) bits. Each subsequently constructed integer also has \(O(L)\) bits: only a constant number of such factors are multiplied in any term, and summation contributes at most \(O(\log\tau)\) additional bits.</p><p>Constructing the denominators, scaled entries, sums, and output requires \(O(\tau^2)\) integer operations. Elementary multiplication and division on these integers justify the stated \(O(\tau^2L^2)\) bit-operation bound. Explicit matrix encoding implies \(\tau^2=O(L)\), yielding \(O(L^3)\).</p><p>Unreduced rational fractions are valid exact outputs. The absence of computational dependence on the value of \(m\) matches the task because reports are not input.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,321 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-8805bfe923e715964fe024d8e75cb1071cb9746a — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-8805bfe923e715964fe024d8e75cb1071cb9746a <span style="font-weight:normal;color:#8a7350">(s5-8805bfe923e715964fe024d8e75cb1071cb9746a)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem: DA has no applicant-proposing, linear-memory, menu-in-outcome description. In fact, with \(n\) applicants and \(n\) institutions, any applicant-proposing menu-in-outcome description of DA requires \(\Omega(n^2)\) memory. — class: other</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\) institutions with per-capita capacities, a rational distribution \(\mu\) over \(\tau\) applicant types specifying rankings and priority classes, a rule for splitting mass within priority classes, and a negligible focal applicant with fixed priorities, compute her menu in phase one. Given her reported ranking in phase two, return her top-ranked institution in that menu and the exact type-to-institution allocation from applicant-proposing mass DA; determine the exact time and working-space complexity in \(m,\tau,L\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list of \(\tau\) types with positive binary-rational masses \(\mu_t\), summing to \(1\). The support size \(\tau\) is not the number of possible types. Each type has a strict, possibly partial ranking of \(m\geq 1\) institutions and an integer priority class at each institution; omitted institutions are unacceptable. Unmatched is the outside option. Institution \(h\) has binary-rational capacity \(q_h\in(0,1]\) and accepts every type.<br>Within each type, applicants have a uniformly distributed coordinate \(u\in[0,1]\), retained across institutions and rounds. Institutions rank applicants lexicographically by increasing priority class, then increasing \(u\), then type index. This fixed single-coordinate rule specifies how mass is split within classes.<br>Applicant-proposing mass DA uses synchronous rounds: unheld applicants propose to their next acceptable institution, and each institution retains its highest-priority mass up to capacity from its previous holdings and new proposals. Rejected applicants advance their lists. The allocation is the limit of these rounds; \(x_{th}\) is the mass of type \(t\) assigned to \(h\), with unmatched mass also recorded.<br>A focal applicant has zero mass, fixed priority classes, and a fixed rational coordinate and distinct index. She does not change the mass allocation. Institution \(h\) is available to her exactly when the mass assigned there with strictly higher priority than hers is less than \(q_h\); equality excludes her. Her menu \(M\) consists of the institutions she can obtain under some strict partial report using these admission rules.<br>A two-phase algorithm must output \(M\) before receiving her ranking, then output her favorite acceptable institution in \(M\), or unmatched, and the exact allocation \(x\). Each support ranking is accessible only through successive next-entry queries, without rereading or resetting; queries to different types may be interleaved. All other input is read-only and randomly accessible. Output is write-only; all retained information and query positions count as working space.<br>Let \(L\) be total input bit length and \(B\) the total encoding length of masses, capacities, and the focal coordinate. Measure deterministic bit-time and working bits.</p><p>What is the optimal exact time–space tradeoff for this two-phase problem in \(m,\tau,L,B\)? In particular, is polynomial time with \(\widetilde O(m+\tau+B)\) working bits possible, or is asymptotically greater working space unavoidable?</p><p>For finite societies, every applicant-proposing menu-in-outcome description of DA requires \(\Omega(n^2)\) memory bits with \(n\) applicants and institutions; storing all rankings gives a \(\widetilde O(n^2)\) upper bound. [Gonczarowski–Heffetz–Thomas](https://yannai.gonch.name/scientific/papers/2022-semd-arxiv-v3.pdf).<br>Continuum stable matchings have a market-clearing cutoff characterization, including a continuum model of priority classes with single tie breaking; this does not establish the exact two-phase streaming complexity above. [Azevedo–Leshno](https://eduardomazevedo.github.io/papers/Azevedo-Leshno-Supply-and-Demand-Matching.pdf).</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized total background mass to one, making capacities per capita; required positive capacities and allowed excess total capacity.</li><li>Used strict partial rankings with unmatched as the outside option, preserving the discrete preference domain.</li><li>The splitting rule had no encoding or consistency requirements. Fixed persistent uniform single-coordinate tie breaking, with type indices resolving residual ties, rather than allowing an unspecified rule as an algorithmic input.</li><li>Defined mass DA through synchronous rounds and their limiting allocation, since finite termination was not specified.</li><li>Interpreted the focal applicant as exactly zero mass and specified her within-class position. Fixed admission at limiting capacity boundaries by excluding equality.</li><li>Restored the anchor&#x27;s applicant-proposing input restriction as nonresettable next-entry access to each support ranking; allowed unrestricted access to institutional priorities and numerical metadata.</li><li>Specified bit complexity, write-only output, and counted retained information and query positions as working memory.</li><li>Introduced numerical encoding length B to express the near-linear space alternative without treating the entire ranking encoding as free working memory.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Proven bounds and remaining gap</h3><p>The proposed $\widetilde O(m+\tau+B)$ space bound is impossible, even with unlimited running time. A self-contained proof below establishes an $\Omega(m\tau)$ lower bound on instances with small numerical encodings.</p><p>I also establish the following unrestricted upper bound:</p><p>$$
+T=
+2^{O(m\tau\log(m+1))}\operatorname{poly}(L),
+$$</p><p>$$
+S=
+O\!\left(
+m\tau\log(m+1)
++
+m^2(B+\log(m+1))
++
+\log(L+1)
+\right).
+$$</p><p>This algorithm computes the exact DA limit, including instances where synchronous DA never stabilizes in finitely many rounds. In particular, every allocation entry is rational, with bit length $O(m(B+\log(m+1)))$.</p><p>These results do <b>not</b> determine the optimal unrestricted tradeoff. The remaining gap includes whether a polynomial-time exact algorithm can use $\widetilde O(m\tau+B)$ working bits.</p><p>All logarithms below have base $2$. The cutoff viewpoint is related to [Azevedo–Leshno](https://eduardomazevedo.github.io/papers/Azevedo-Leshno-Supply-and-Demand-Matching.pdf); the particular characterization, rationality bound, and algorithm used here are proved directly.</p><h3>1. Admission thresholds and demand</h3><p>For each institution $h$, replace its support priority classes by their ordinal positions among the distinct support classes at $h$. Write</p><p>$$
+a_{th}\in\{0,\ldots,d_h-1\},
+\qquad
+1\leq d_h\leq\tau,
+$$</p><p>where smaller positions mean higher priority. Thus the support applicant $(t,u)$ has score</p><p>$$
+\rho_h(t,u)=a_{th}+u,
+$$</p><p>and institutions prefer smaller scores.</p><p>This transformation preserves the support priority ordering except at isolated coordinate endpoints. Those endpoints have zero mass. Type-index tie breaking also concerns only zero-mass sets.</p><p>A threshold vector belongs to the box</p><p>$$
+s\in\mathcal B:=\prod_{h=1}^{m}[0,d_h].
+$$</p><p>Under $s$, institution $h$ admits type $t$ at coordinates below</p><p>$$
+c_{th}(s)=\min\{1,\max\{0,s_h-a_{th}\}\}.
+$$</p><p>Let $g\prec_t h$ mean that $g$ occurs before $h$ in type $t$’s acceptable ranking. For an acceptable $h$, define</p><p>$$
+b_{th}(s)=
+\max\left(\{0\}\cup\{c_{tg}(s):g\prec_t h\}\right).
+$$</p><p>An applicant of type $t$ chooses $h$ exactly when $h$ admits her and every earlier acceptable institution rejects her. Consequently, up to endpoints, the coordinates choosing $h$ form the interval</p><p>$$
+(b_{th}(s),c_{th}(s))
+$$</p><p>when its upper endpoint exceeds its lower endpoint. The resulting allocation and demand are</p><p>$$
+x_{th}(s)=
+\mu_t\bigl(c_{th}(s)-b_{th}(s)\bigr)_+,
+$$</p><p>$$
+D_h(s)=
+\sum_{t:\,h\text{ acceptable to }t}
+\mu_t\bigl(c_{th}(s)-b_{th}(s)\bigr)_+,
+$$</p><p>where $z_+=\max\{z,0\}$; omitted institutions receive zero mass.</p><p>The unmatched mass of type $t$ is</p><p>$$
+x_{t\varnothing}(s)=
+\mu_t\left(
+1-\max\left(\{0\}\cup
+\{c_{th}(s):h\text{ acceptable to }t\}\right)
+\right).
+$$</p><p>Define the feasible threshold set</p><p>$$
+\mathcal F=
+\{s\in\mathcal B:D_h(s)\leq q_h\text{ for every }h\}.
+$$</p><p>Each $D_h$ is continuous. Moreover:</p><ul><li>Increasing $s_h$ weakly increases $D_h$.</li><li>Increasing any other threshold weakly decreases $D_h$.</li></ul><p>The first assertion follows because $b_{th}$ does not involve $h$. The second follows because another institution’s threshold can only increase the maximum over institutions preceding $h$.</p><h3>Lemma 1: There is a greatest feasible threshold vector</h3><p>The set $\mathcal F$ has a componentwise greatest element, denoted $s^*$.</p><p><b>Proof.</b> The vector $0$ is feasible. Continuity makes $\mathcal F$ closed, and its containing box is compact.</p><p>It is also closed under componentwise maximum. Indeed, let $s,t\in\mathcal F$ and put $v=\max\{s,t\}$ componentwise. For any $h$, choose one of $s,t$, say $s$, with $s_h=v_h$. The other coordinates of $v$ are at least those of $s$, so</p><p>$$
+D_h(v)\leq D_h(s)\leq q_h.
+$$</p><p>Thus $v\in\mathcal F$.</p><p>For each coordinate $h$, compactness supplies a feasible vector maximizing that coordinate. Taking the componentwise maximum of these $m$ vectors produces a feasible vector attaining every coordinate maximum. It dominates every element of $\mathcal F$. $\square$</p><p>An immediate consequence is that $s^*$ uniquely maximizes</p><p>$$
+\sum_{h=1}^{m}s_h
+$$</p><p>over $\mathcal F$: any different feasible vector is weakly smaller in every coordinate and strictly smaller in at least one.</p><h3>2. The greatest feasible thresholds give the DA limit</h3><p>This section identifies the correct threshold vector for applicant-proposing DA. It does not assume finite-round stabilization.</p><h3>Cumulative proposals and round thresholds</h3><p>Let $P_h^r$ be the set of applicants who have proposed to $h$ by the end of round $r$.</p><p>At every round, the institution’s holdings are its highest-priority mass, up to capacity, from $P_h^r$. To justify the use of cumulative proposals, consider an earlier rejected applicant. If rejection occurred from an overfull pool, at that time there was already capacity mass strictly ahead of her, apart from zero-mass ties. Adding proposals cannot make her enter the highest-priority capacity mass. Thus removing previous rejections before the next round has no effect on the result.</p><p>For $z\in[0,d_h]$, define</p><p>$$
+F_h^r(z)=
+\operatorname{mass}
+\{(t,u)\in P_h^r:\rho_h(t,u)&lt;z\}.
+$$</p><p>This function is continuous: for every fixed score, its level set contains at most one coordinate per type and hence has zero mass. Define</p><p>$$
+s_h^r=
+\max\{z\in[0,d_h]:F_h^r(z)\leq q_h\}.
+$$</p><p>If cumulative proposal mass is at most capacity, this threshold equals $d_h$. Otherwise the holdings, up to endpoints, are precisely the cumulative proposers with score below $s_h^r$, and their mass is $q_h$.</p><p>Since cumulative proposal sets increase,</p><p>$$
+s_h^{r+1}\leq s_h^r.
+$$</p><p>Therefore every coordinate has a limit</p><p>$$
+s_h^\infty=\lim_{r\to\infty}s_h^r.
+$$</p><h3>Lemma 2: Every feasible vector lies below every round threshold</h3><p>For every $y\in\mathcal F$ and every round $r$,</p><p>$$
+s_h^r\geq y_h
+\qquad\text{for every }h.
+$$</p><p><b>Proof.</b> Set $s_h^0=d_h$. Proceed by induction on $r$.</p><p>Consider a cumulative proposer to $h$ with score strictly below $y_h$. Before proposing to $h$, she was rejected by every institution she ranks before $h$. Each such rejection occurred in a round earlier than her proposal to $h$, hence before round $r$.</p><p>By the induction hypothesis, an earlier institution’s threshold at that rejection was at least its threshold in $y$. Rejection therefore implies that the applicant was not admitted there under $y$, apart from zero-mass endpoints.</p><p>Since she is admitted to $h$ under $y$, she demands $h$ under $y$. Consequently,</p><p>$$
+F_h^r(y_h)\leq D_h(y)\leq q_h.
+$$</p><p>The definition of $s_h^r$ gives $s_h^r\geq y_h$. $\square$</p><h3>Lemma 3: The limiting allocation is demand at $s^\infty$</h3><p>Almost every applicant’s final DA assignment is her favorite acceptable institution admitting her under $s^\infty$.</p><p><b>Proof.</b> An applicant proposes to each acceptable institution at most once. A rejection advances her strict list permanently. Therefore her holding status changes only finitely many times, and her assignment eventually becomes constant. If she becomes permanently unmatched, every acceptable institution has rejected her.</p><p>Exclude the coordinate endpoints of all round thresholds and limit thresholds. This is a countable union of zero-mass sets.</p><p>Suppose an applicant is eventually held at $h$. Her score at $h$ is below every sufficiently late round threshold. It is thus at most $s_h^\infty$, and, after excluding limit endpoints, strictly below it.</p><p>Every acceptable institution preceding $h$ rejected her at some finite round. Its threshold at that rejection was at least its limiting threshold, so it does not admit her under $s^\infty$.</p><p>The same argument handles applicants who eventually become unmatched. $\square$</p><p>Each round’s holdings at $h$ have mass at most $q_h$. The indicators of holding $h$ converge almost everywhere, so dominated convergence gives</p><p>$$
+D_h(s^\infty)\leq q_h.
+$$</p><p>Thus $s^\infty\in\mathcal F$.</p><p>Lemma 2 shows that $s^\infty$ dominates every feasible vector. By Lemma 1,</p><p>$$
+s^\infty=s^*.
+$$</p><p>We have proved:</p><blockquote><b>The exact applicant-proposing DA allocation is $x(s^*)$, where $s^*$ is the greatest feasible threshold vector.</b></blockquote><p>This selection matters: computing an arbitrary feasible or market-clearing vector would not establish that the applicant-proposing outcome was obtained.</p><h3>3. Rationality and a denominator bound</h3><p>Let $Q$ be the product of the positive denominators in the input encodings of all masses, capacities, and the focal coordinate. Then these quantities can all be written with denominator $Q$, and</p><p>$$
+\log Q\leq B.
+$$</p><p>Set</p><p>$$
+W=m!Q^m.
+$$</p><h3>Lemma 4: A finite rational polyhedral decomposition</h3><p>The feasible set $\mathcal F$ is a finite union of compact rational polytopes. Every defining inequality in each polytope can be written with integer coefficients satisfying</p><p>$$
+|A_{ih}|\leq Q.
+$$</p><p><b>Proof.</b> For each acceptable pair $(t,h)$, choose a branch for the clamp defining $c_{th}$:</p><p>$$
+c_{th}=0,\qquad
+c_{th}=s_h-a_{th},\qquad
+c_{th}=1.
+$$</p><p>The respective branch conditions are</p><p>$$
+s_h-a_{th}\leq0,
+$$</p><p>$$
+0\leq s_h-a_{th}\leq1,
+$$</p><p>$$
+s_h-a_{th}\geq1.
+$$</p><p>Next choose which of $0$ and the preceding $c_{tg}$ values attains $b_{th}$. Enforce that choice by requiring it to be at least every other candidate.</p><p>Finally choose a branch for the positive part: either $c_{th}\geq b_{th}$, giving contribution $\mu_t(c_{th}-b_{th})$, or $c_{th}\leq b_{th}$, giving contribution zero.</p><p>All these conditions are closed linear inequalities. They cover the box, including branch boundaries. On every resulting region, every $D_h$ is affine. Intersecting the region with the box and the inequalities $D_h\leq q_h$ gives a compact rational polytope.</p><p>The branch and box inequalities have integer coefficients of absolute value at most $1$. In an affine demand expression, each type contributes to any variable a coefficient from</p><p>$$
+\{-\mu_t,0,\mu_t\}.
+$$</p><p>Since $\sum_t\mu_t=1$, every coefficient has absolute value at most $1$. Multiplication of a demand inequality by $Q$ therefore yields integer coefficients of absolute value at most $Q$. $\square$</p><p>The constants in the primitive affine branches belong to</p><p>$$
+\{0,1,-a_{th}\}.
+$$</p><p>Their absolute values are at most $\tau$. Thus the right-hand sides of the integer inequalities above can also be bounded in absolute value by</p><p>$$
+(\tau+2)Q.
+$$</p><h3>Proposition 5: Common rational denominator</h3><p>There is an integer $d$ with</p><p>$$
+1\leq d\leq W
+$$</p><p>such that every coordinate of $s^*$ has denominator dividing $d$. Every allocation entry has denominator dividing $Qd$.</p><p><b>Proof.</b> Choose one of the polytopes from Lemma 4 containing $s^*$. Because $s^*$ uniquely maximizes $\sum_hs_h$ on all of $\mathcal F$, it uniquely maximizes that linear function on this polytope.</p><p>A unique maximizer of a linear function on a polytope is a vertex. Indeed, if it were a nontrivial convex combination of two distinct polytope points, linearity and maximality would force both points to be maximizers.</p><p>At a vertex, the active inequality normals span the ambient space. Otherwise a nonzero vector orthogonal to all active normals would permit sufficiently small movements in both directions while preserving all inequalities, contradicting extremality.</p><p>Select $m$ linearly independent active inequalities. Their equalities form an integer system</p><p>$$
+As^*=b,
+\qquad
+\det A\ne0.
+$$</p><p>By the coefficient bound and the determinant expansion,</p><p>$$
+|\det A|
+\leq m!Q^m=W.
+$$</p><p>Cramer’s rule gives a common denominator</p><p>$$
+d=|\det A|.
+$$</p><p>Every $c_{th}(s^*)$, every $b_{th}(s^*)$, and their positive differences consequently have denominator dividing $d$. Multiplication by $\mu_t$, whose denominator divides $Q$, proves the allocation assertion, including unmatched mass. $\square$</p><p>Since allocation entries lie in $[0,1]$, their numerators and denominators have bit length at most</p><p>$$
+O(\log(QW+1))
+=
+O(m(B+\log(m+1))).
+$$</p><p>Thus exact allocation output does not require irrational numbers or unbounded numerical representations.</p><h3>4. An unrestricted exact algorithm</h3><p>The preceding proof gives a deterministic finite algorithm respecting the ranking streams and the two-phase output order.</p><h3>4.1 Read and retain the rankings</h3><p>Consume each support ranking once and store its institution identifiers and length. This uses</p><p>$$
+O(m\tau\log(m+1))
+$$</p><p>bits, including stream positions.</p><p>Priority classes remain in the randomly accessible input. Their ordinal positions $a_{th}$ can be recomputed when needed. Comparing binary-encoded integers can be done by scanning their signs, lengths, and digits, with $O(\log(L+1))$ index bits; their full encodings need not be retained.</p><h3>4.2 Enumerate branch polytopes and their vertices</h3><p>Let $P$ denote the total number of acceptable support ranking entries, so $P\leq m\tau$.</p><p>For each acceptable pair there are:</p><ul><li>At most three clamp branches.</li><li>At most $m+1$ choices for the preceding maximum.</li><li>Two positive-part branches.</li></ul><p>There are consequently at most</p><p>$$
+[6(m+1)]^P
+$$</p><p>branch descriptions. One description occupies $O(P\log(m+1))$ bits.</p><p>Each resulting polytope has</p><p>$$
+N=O(m^2\tau+m)
+$$</p><p>defining inequalities. Enumerate all ordered choices of $m$ inequalities. For each choice:</p><ul><li>Generate the integer system $As=b$.</li><li>Skip it if $\det A=0$.</li><li>Compute its rational solution by Cramer’s rule.</li><li>Check every defining inequality of the polytope.</li><li>For feasible solutions, retain the one with largest $\sum_hs_h$.</li></ul><p>Every polytope vertex appears in this enumeration. Proposition 5 ensures that $s^*$ appears. Since every retained candidate is feasible and $s^*$ is the unique global maximizer, the retained final vector is exactly $s^*$.</p><h3>Arithmetic space</h3><p>For completeness, determinants can be computed by their permutation expansions. Generate one permutation at a time, recompute the needed matrix entries from the branch description, and accumulate its signed product.</p><p>For $\det A$, products and the accumulator need</p><p>$$
+O(\log(W+1))
+$$</p><p>bits. For a Cramer numerator, exactly one factor in each product comes from the right-hand side, so its absolute value is at most</p><p>$$
+(\tau+2)W.
+$$</p><p>Keeping the current candidate and the best candidate therefore uses</p><p>$$
+O\bigl(m(\log(W+1)+\log(\tau+1))\bigr)
+$$</p><p>bits. No array of all polytope inequalities or all allocation entries is needed.</p><p>Integer addition and multiplication can be implemented with working storage linear in the operand lengths. Together with the stored rankings, branch description, and input indices, this gives</p><p>$$
+S=
+O\!\left(
+m\tau\log(m+1)
++
+m^2(B+\log(m+1))
++
+\log(L+1)
+\right).
+$$</p><p>Here the term $m\log(\tau+1)$ is absorbed by $m\tau\log(m+1)$.</p><h3>Bit-time</h3><p>There are at most $N^m$ systems per branch description. The determinant expansion contributes a factor of at most $(m+1)m!$, and all remaining operations take polynomial bit-time in $L$.</p><p>Hence</p><p>$$
+T\leq
+[6(m+1)]^{m\tau}
+N^m
+(m+1)m!
+\operatorname{poly}(L).
+$$</p><p>Using $N=O(m^2\tau+m)$ and $\log(\tau+1)=O(\tau)$ gives</p><p>$$
+T=
+2^{O(m\tau\log(m+1))}
+\operatorname{poly}(L).
+$$</p><p>In particular, the exponential dependence is combinatorial; the dependence on numerical encoding length is polynomial.</p><h3>4.3 Compute and output the menu</h3><p>The focal applicant has zero mass, so the allocation is independent of her report. Her menu is exactly the set of available institutions: a singleton report obtains any available institution, and an unavailable institution remains unavailable under every report.</p><p>Write $u_f$ for her coordinate and $p_{fh}$ for her original priority class at $h$. For an acceptable pair $(t,h)$, let</p><p>$$
+b=b_{th}(s^*),
+\qquad
+c=c_{th}(s^*).
+$$</p><p>Its contribution to the assigned mass strictly ahead of the focal applicant is:</p><p>$$
+\begin{cases}
+\mu_t(c-b)_+,
+&amp; p_{th}&lt;p_{fh},\\[2mm]
+\mu_t\bigl(\min\{c,u_f\}-b\bigr)_+,
+&amp; p_{th}=p_{fh},\\[2mm]
+0,
+&amp; p_{th}&gt;p_{fh}.
+\end{cases}
+$$</p><p>The distinct index only affects comparisons at $u=u_f$, a zero-mass set.</p><p>Sum these contributions exactly. Include $h$ in the menu precisely when the sum is strictly less than $q_h$. Thus the stipulated equality exclusion is implemented exactly.</p><p>Output this menu before receiving the focal ranking.</p><h3>4.4 Complete the second phase</h3><p>Read the focal ranking and select its first menu institution, or unmatched if none exists. Then compute and write each $x_{th}(s^*)$ and each unmatched mass using the formulas in Section 1.</p><p>The retained rankings are ordinary working memory, so using them repeatedly respects the prohibition on rereading or resetting the original streams. The allocation can be output entry by entry without storing its full matrix.</p><h3>5. Infinite rounds occur even with one tie-breaking coordinate</h3><p>Here is a small instance showing why an exact algorithm cannot simply wait for synchronous stabilization.</p><p>There are two institutions, with</p><p>$$
+q_{h_1}=\frac38,
+\qquad
+q_{h_2}=\frac14,
+$$</p><p>and three types:</p><p>| Type | Mass | Acceptable ranking | Class at $h_1$ | Class at $h_2$ |<br>|---|---:|---|---:|---:|<br>| $A$ | $\frac14$ | $h_1,h_2$ | $1$ | $0$ |<br>| $B$ | $\frac38$ | $h_2,h_1$ | $0$ | $1$ |<br>| $C$ | $\frac38$ | $h_1$ | $1$ | $1$ |</p><p>Set</p><p>$$
+a=\frac14,\qquad
+b=\frac38,\qquad
+c=\frac38.
+$$</p><p>At each finite round, both institutions retain some class-$1$ applicants. Let their within-class coordinate cutoffs after round $r$ be $v_1^r,v_2^r$, and put $v_1^0=v_2^0=1$.</p><p>By round $r$, the class-$0$ applicants who have proposed to $h_1$ are the $B$ applicants rejected by $h_2$ through round $r-1$. Their mass is</p><p>$$
+b(1-v_2^{r-1}).
+$$</p><p>This is strictly below $q_{h_1}=b$, so all are held. The remaining capacity for the initial class-$1$ pool $A\cup C$ is $bv_2^{r-1}$. Thus</p><p>$$
+v_1^r=\frac{b}{a+c}v_2^{r-1}
+=\frac35v_2^{r-1}.
+$$</p><p>Likewise, the class-$0$ proposals to $h_2$ have mass $a(1-v_1^{r-1})$, giving</p><p>$$
+v_2^r=\frac{a}{b}v_1^{r-1}
+=\frac23v_1^{r-1}.
+$$</p><p>These sequences are positive and nonincreasing. Moreover,</p><p>$$
+v_i^{r+2}=\frac25v_i^r
+\qquad(i=1,2).
+$$</p><p>Therefore both cutoffs converge to zero but remain positive at every finite round. There is positive class-$1$ held mass at every finite round, so DA never stabilizes finitely.</p><p>Its limit assigns all $B$ mass to $h_1$, all $A$ mass to $h_2$, and leaves $C$ unmatched. This rational allocation is computed by the algorithm above.</p><h3>6. An unconditional streaming-space lower bound</h3><p>I now prove the space obstruction independently of the upper bound.</p><h3>6.1 Construction</h3><p>Fix $k\geq4$ and $r\geq1$. Use</p><p>$$
+m=k+2,
+\qquad
+\tau=r+2.
+$$</p><p>The institutions are $h_1,\ldots,h_k,w,z$. Let $K,R$ be the smallest powers of two with $K\geq k$ and $R\geq r$. Define</p><p>$$
+a=\frac12,
+\qquad
+\mu=\frac{1}{64KR},
+\qquad
+\varepsilon=r\mu.
+$$</p><p>The support contains:</p><ul><li>An anchor type of mass $a$, ranking $h_1,\ldots,h_k$ in increasing order.</li><li>$r$ variable types, each of mass $\mu$.</li><li>A dummy type of mass $\frac12-\varepsilon$, with empty ranking.</li></ul><p>These masses are positive and sum to $1$, because</p><p>$$
+\varepsilon\leq\frac{1}{64K}.
+$$</p><p>Put $s=\lfloor k/2\rfloor$. Independently for every variable type $t$, choose an $s$-element subset</p><p>$$
+S_t\subseteq\{1,\ldots,k\}.
+$$</p><p>Its baseline ranking lists the corresponding institutions in increasing index order, followed by $w$. All variable lists have the same length.</p><p>Capacities are</p><p>$$
+q_{h_j}=\frac{1}{4K},
+\qquad
+q_w=1,
+\qquad
+q_z=\frac{\mu}{4}.
+$$</p><p>At every $h_j$, all support types have class $1$, and the focal applicant has class $0$. At $w$, variable type $t$ has class $t$, and the focal applicant has class $0$. At $z$, variable type $t$ has class $t$, and the focal applicant has class $r+1$.</p><p>The anchor and dummy have class $1$ at $w,z$, which neither ranks. Fix the focal coordinate to $\frac12$ and her index to a distinct value.</p><p>All randomly accessible data are identical across the</p><p>$$
+N=\binom{k}{\lfloor k/2\rfloor}^{r}
+$$</p><p>baseline profiles. Variable types remain distinct even if their subsets coincide, because their priority classes at $w,z$ differ.</p><h3>6.2 DA stabilizes finitely on these inputs</h3><p>Every proposal among the $h_j$ institutions moves forward in institution index.</p><p>Institution $h_1$ receives all its proposals in round $1$. Inductively, every later proposal to $h_j$ follows rejection from some $h_i$ with $i&lt;j$. If $h_i$ stabilizes by round $i$, that proposal reaches $h_j$ by round $i+1\leq j$.</p><p>Thus $h_j$ stabilizes by round $j$, and terminal proposals reach $w$ or $z$ by round $k+1$. The same conclusion holds when a variable type’s terminal entry is changed from $w$ to $z$.</p><h3>6.3 Increasing coordinate cutoffs</h3><p>Write $c_0=0$. Institution $h_j$ fills and has a final common coordinate cutoff $c_j$ satisfying</p><p>$$
+0&lt;c_j-c_{j-1}\leq\frac{1}{2K},
+\qquad
+c_j\leq\frac{j}{2K}\leq\frac12.
+$$</p><p>To prove this, assume the assertion for preceding institutions. The anchor’s final proposals to $h_j$ are exactly its coordinates above $c_{j-1}$, up to endpoints. Their mass is</p><p>$$
+a(1-c_{j-1})\geq\frac14\geq q_{h_j},
+$$</p><p>so $h_j$ fills.</p><p>At coordinates at most $c_{j-1}$, no anchor mass proposes. All variable types together have mass at most</p><p>$$
+\varepsilon\leq\frac{1}{64K}&lt;q_{h_j}.
+$$</p><p>Thus capacity cannot be filled at or below $c_{j-1}$, giving $c_j&gt;c_{j-1}$.</p><p>Let $v_j$ be the total variable mass assigned to $h_j$. The anchor’s retained mass there is $a(c_j-c_{j-1})$, so</p><p>$$
+q_{h_j}=a(c_j-c_{j-1})+v_j,
+\qquad
+0\leq v_j\leq\varepsilon.
+$$</p><p>Consequently,</p><p>$$
+\frac{15}{32K}
+\leq c_j-c_{j-1}
+\leq\frac{1}{2K}.
+$$</p><p>Summing the upper bounds completes the induction.</p><p>If variable type $t$ lists $h_j$, let $b_{tj}$ be the largest cutoff among its preceding listed institutions, or zero if none precedes it. Its allocation is</p><p>$$
+x_{th_j}=\mu(c_j-b_{tj}).
+$$</p><p>Since all preceding listed indices are smaller,</p><p>$$
+b_{tj}\leq c_{j-1}&lt;c_j,
+$$</p><p>so this allocation is positive. Omitted institutions receive no proposals. Therefore</p><p>$$
+x_{th_j}&gt;0
+\quad\Longleftrightarrow\quad
+j\in S_t.
+$$</p><p>The exact allocation thus determines every subset $S_t$. Distinct baseline profiles have distinct allocations.</p><p>Each variable type has at least $\mu/2$ mass remaining after its listed $h_j$ institutions, because all their cutoffs are at most $\frac12$.</p><h3>6.4 The menu forces consumption of every variable list</h3><p>Every baseline input gives the focal applicant the full menu:</p><ul><li>Her class is strictly better than all assigned support classes at every $h_j$ and at $w$.</li><li>Institution $z$ is empty.</li></ul><p>Fix a variable type $t$. Change only its terminal entry from $w$ to $z$. This preserves its list length and every randomly accessible datum.</p><p>The earlier allocation is unchanged, because the modification only changes a terminal destination. At least $\mu/2$ of type $t$ proposes to $z$, exceeding its capacity $\mu/4$. Hence $z$ fills entirely with mass strictly ahead of the focal applicant.</p><p>The higher-priority assigned mass at $z$ then equals $q_z$, so equality exclusion removes $z$ from her menu.</p><p>Suppose an exact deterministic algorithm completed the menu phase on a baseline input without querying type $t$’s terminal entry. Every observation made so far would be identical on the modified input. The algorithm would output the same menu on both, contradicting their different availability at $z$.</p><p>Therefore every variable terminal entry must be queried before the menu phase ends. Successive-entry access forces all preceding variable entries to be consumed as well. This holds under arbitrary interleaving.</p><p>In particular, the menu phase requires $\Omega(rk)$ next-entry queries.</p><h3>6.5 State counting at the phase boundary</h3><p>Consider the retained state immediately after the menu phase and before the focal ranking is received.</p><p>Every variable ranking has been consumed. Its remaining stream responses are identical across the baseline family. The other ranking streams have fixed contents; their positions count as retained information. All randomly accessible data are identical.</p><p>Suppose two distinct baseline profiles yielded the same retained state. Give the focal applicant the same report on both, for example the singleton list $w$.</p><p>From that point onward, all available input observations agree. Determinism therefore gives the same second-phase allocation output. This contradicts the fact that the allocation determines all the subsets $S_t$.</p><p>Thus the phase-boundary states distinguish all $N$ profiles. If the working-space bound is $S$ bits, including retained control information and stream positions, then</p><p>$$
+S\geq
+r\log\binom{k}{\lfloor k/2\rfloor}-O(1).
+$$</p><p>The largest binomial coefficient is at least the average of the $k+1$ coefficients, whose sum is $2^k$. Hence</p><p>$$
+\binom{k}{\lfloor k/2\rfloor}
+\geq\frac{2^k}{k+1},
+$$</p><p>and therefore</p><p>$$
+S\geq
+r\bigl(k-\log(k+1)\bigr)-O(1)
+=
+\Omega(rk).
+$$</p><p>Since $m=k+2$ and $\tau=r+2$,</p><p>$$
+S=\Omega(m\tau)
+$$</p><p>for the stated ranges.</p><p>This argument imposes no running-time restriction. The information must remain available because the consumed ranking entries cannot be recovered and allocation output is postponed until the second phase.</p><h3>6.6 Numerical input length</h3><p>Every constructed mass, capacity, and focal coordinate is dyadic. Each has encoding length $O(\log(KR))$, giving</p><p>$$
+B=O((m+\tau)\log(m\tau)).
+$$</p><p>With ordinary explicit encodings of rankings and priority classes,</p><p>$$
+L=O(m\tau\log(m\tau)).
+$$</p><p>Take $k=r=n$, with $n$ a power of two. Then</p><p>$$
+m=\tau=n+2,
+\qquad
+B=O(n\log n),
+\qquad
+L=\Theta(n^2\log n),
+$$</p><p>while every exact algorithm needs $\Omega(n^2)$ working bits.</p><p>A $\widetilde O(m+\tau+B)$ bound would give only $n(\log n)^{O(1)}$ bits on this sequence. The lower bound rules it out, including for polynomial-time algorithms.</p><h3>7. What remains open</h3><p>The small-space possibility posed in the question is conclusively excluded. The unrestricted results above also prove exact rational representability and give a finite algorithm for infinite-round limits.</p><p>They leave a substantial complexity gap:</p><ul><li>The general upper bound has exponential time; no general polynomial-time exact algorithm is established here.</li><li>The space lower bound is $\Omega(m\tau)$ on instances with small $B$, whereas the upper bound contains an $m^2B$ term.</li><li>No matching dependence on numerical input length or optimal deterministic time–space tradeoff is proved.</li></ul><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 7 and the response to USER_TASK: The optimal exact time–space tradeoff remains unresolved. The established $\Omega(m\tau)$ space lower bound and exponential-time upper bound do not determine general polynomial-time solvability or matching dependence on numerical encoding length.</li><li><b>minor</b> — Section 2, dominated-convergence application after Lemma 3: The named theorem is not stated explicitly. State the applicable dominated-convergence theorem and identify the integrable dominating function $1$ on the finite applicant measure space; the hypotheses already hold.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial, with sound substantive progress.</b> The write-up establishes the claimed streaming-space lower bound and an exponential-time exact upper bound. It therefore excludes $\widetilde O(m+\tau+B)$ working space, even without a running-time restriction. It does <b>not</b> determine the optimal exact time–space tradeoff requested in <code>USER_TASK</code>, and it explicitly acknowledges that limitation.</p><p>I found no false central step or counterexample to the established bounds.</p><h3>1. Threshold representation and feasible set</h3><p>The ordinal replacement of support priority classes preserves their ordering except at coordinate endpoints. Those exceptions have zero mass, so they do not affect the support allocation. The later focal-admission calculation correctly returns to the original priority classes.</p><p>The demand formulas are correct. Because the same coordinate is retained across institutions, rejection by every institution preceding $h$ is equivalent, apart from endpoints, to<br>$$
+u&gt;b_{th}(s).
+$$<br>Admission at $h$ requires<br>$$
+u&lt;c_{th}(s).
+$$<br>Their intersection gives the stated interval and allocation formula. The unmatched formula also correctly accounts for applicants admitted nowhere acceptable.</p><p>The continuity and monotonicity assertions follow from the displayed formulas:</p><ul><li>Increasing $s_h$ increases $c_{th}$ without changing $b_{th}$.</li><li>Increasing another coordinate can increase $b_{th}$ but cannot increase demand at $h$.</li></ul><p><b>Lemma 1 is valid.</b> The feasible set is nonempty and compact. Its closure under componentwise maximum is established using the correct direction of cross-coordinate monotonicity. Taking the maximum of finitely many coordinate-maximizing feasible vectors produces a greatest feasible vector. Its claimed unique maximization of $\sum_h s_h$ follows.</p><h3>2. Identification with the DA limit</h3><p>The cumulative-proposal interpretation is justified. Once an applicant is rejected from an overfull pool, adding applicants cannot restore her position within its highest-priority capacity mass. Zero-mass ties do not change this conclusion.</p><p>The functions $F_h^r$ are continuous because each score level has zero mass. The maximum defining $s_h^r$ exists. In the overfull case, continuity gives exactly capacity mass below the threshold, including when the score distribution has gaps. Increasing cumulative proposal sets makes the thresholds nonincreasing.</p><p><b>Lemma 2 is valid.</b> The induction uses only thresholds from rounds strictly preceding the proposal under consideration. An applicant proposing to $h$ below $y_h$ has been rejected by every earlier acceptable institution; the inductive threshold bound makes those institutions unavailable under $y$, apart from endpoints. Thus the inclusion underlying<br>$$
+F_h^r(y_h)\leq D_h(y)
+$$<br>is justified.</p><p><b>Lemma 3 is valid.</b> Each applicant can make only finitely many proposals and experience only finitely many rejections. Consequently, her assignment eventually becomes constant, even if the population as a whole never stabilizes in a finite round. Removing the countably many round and limit endpoints is legitimate.</p><p>The subsequent dominated-convergence application is valid: the holding indicators are bounded by $1$, and the total applicant measure is finite. This proves feasibility of $s^\infty$. Together with Lemma 2 and Lemma 1, it establishes<br>$$
+s^\infty=s^*.
+$$</p><p><b>Minor expositional issue:</b> The named dominated-convergence theorem is not stated explicitly, as the verification instructions require for cited theorems. Its hypotheses are nevertheless satisfied directly by the objects already defined. The minimum clarification is to state the applicable theorem and identify the integrable dominating function $1$.</p><h3>3. Polyhedral decomposition and rationality</h3><p><b>Lemma 4 is valid.</b> The clamp branches, choices of preceding maxima, and positive-part branches define finitely many closed linear regions covering the box. Demand is affine on each region.</p><p>The coefficient bound is correct. For a fixed demand inequality, each type contributes at most $\mu_t$ in absolute value to any variable coefficient. Hence the aggregate coefficient has absolute value at most $1$, and clearing denominators gives<br>$$
+|A_{ih}|\leq Q.
+$$</p><p>The right-hand-side bound $(\tau+2)Q$ is also sufficient. Primitive affine constants lie between $-(\tau-1)$ and $1$, and their differences and mass-weighted sums satisfy the stated bound.</p><p><b>Proposition 5 is valid.</b> The unique maximizer is a vertex of any containing branch polytope. The supplied argument that active normals span the ambient space also covers lower-dimensional polytopes.</p><p>Selecting independent active inequalities permits Cramer’s rule. The determinant expansion yields<br>$$
+1\leq |\det A|\leq m!Q^m.
+$$<br>All threshold coordinates consequently share a denominator dividing $d=|\det A|$. Clamps, maxima, and positive parts preserve that denominator divisibility. Multiplication by masses introduces at most the factor $Q$.</p><p>The allocation bit-length bound<br>$$
+O\bigl(m(B+\log(m+1))\bigr)
+$$<br>follows because allocation entries belong to $[0,1]$ and have denominator dividing $Qd$. No irrationality issue remains.</p><h3>4. Exact algorithm and resource bounds</h3><p>The enumeration algorithm is correct:</p><ul><li>Retaining each ranking after a single consumption respects the streaming restriction.</li><li>The branch enumeration covers every feasible threshold vector.</li><li>Enumerating independent active inequality systems covers every branch-polytope vertex.</li><li>Feasibility checks discard candidates outside their designated polytopes.</li><li>Maximizing $\sum_h s_h$ selects $s^*$ uniquely.</li></ul><p>The bound<br>$$
+N=O(m^2\tau+m)
+$$<br>allows for the preceding-maximum comparisons for every acceptable pair.</p><p>The determinant arithmetic bounds are valid. A Cramer determinant uses precisely one right-hand-side entry in every product, yielding the stated bound $(\tau+2)W$. Current and best candidates can each retain a common denominator; no product of separate coordinate denominators is required.</p><p>The resulting working-space bound is supported:<br>$$
+S=
+O\!\left(
+m\tau\log(m+1)+
+m^2(B+\log(m+1))+
+\log(L+1)
+\right).
+$$<br>The omitted $m\log(\tau+1)$ contribution is correctly absorbed by the ranking-storage term.</p><p>The time estimate also follows from the enumerations:<br>$$
+T=
+2^{O(m\tau\log(m+1))}\operatorname{poly}(L).
+$$<br>This establishes a finite exact algorithm, not a polynomial-time algorithm.</p><p>The focal-menu calculation implements the specified strict inequality correctly. It counts assigned mass ahead of the focal applicant using original priority classes and her coordinate. Type-index comparisons concern only zero mass. Singleton reports establish attainability of every available institution.</p><p>The second phase can determine menu membership from the retained thresholds and rankings, so it does not require reading the write-only menu output. Allocation entries can likewise be generated individually within the claimed space.</p><h3>5. Infinite-round example</h3><p>The displayed recurrences are consistent with synchronous DA:<br>$$
+v_1^r=\frac35v_2^{r-1},
+\qquad
+v_2^r=\frac23v_1^{r-1}.
+$$<br>They give<br>$$
+v_i^{r+2}=\frac25v_i^r.
+$$<br>The cutoffs remain positive at every finite round and converge to zero. Thus positive class-$1$ mass remains held at every finite round, while the limiting allocation has none. The claimed failure of finite stabilization and the stated limiting allocation are correct.</p><h3>6. Streaming-space lower bound</h3><p>The construction satisfies the task’s input restrictions. Masses are positive and sum to $1$; capacities are positive and at most $1$; rankings are strict; all numerical quantities are dyadic.</p><p>The finite-stabilization argument is valid because proposals among the $h_j$ move strictly forward in institution index.</p><p>The cutoff induction is sound. The anchor supplies enough proposals to fill each institution. Variable mass alone cannot fill capacity below the preceding cutoff. The capacity equation gives<br>$$
+\frac{15}{32K}
+\leq c_j-c_{j-1}
+\leq\frac{1}{2K},
+$$<br>and hence $c_j\leq \frac12$.</p><p>Therefore every listed $h_j$ receives positive mass from the corresponding variable type, while every omitted institution receives zero:<br>$$
+x_{th_j}&gt;0\quad\Longleftrightarrow\quad j\in S_t.
+$$<br>The allocation distinguishes all baseline profiles.</p><p>The terminal-entry modification correctly forces consumption before the menu phase ends. Switching one terminal destination to $z$ leaves earlier allocations unchanged and sends at least $\mu/2$ mass to capacity $\mu/4$. All assigned mass there precedes the focal applicant, so equality exclusion removes $z$ from the menu. The indistinguishability argument applies under arbitrary interleaving.</p><p>The phase-boundary state count is valid. Consumed variable rankings cannot be recovered; remaining observations agree whenever retained states agree. The required second-phase allocation outputs differ between distinct profiles. Thus<br>$$
+S\geq r\log\binom{k}{\lfloor k/2\rfloor}-O(1)
+=\Omega(m\tau).
+$$<br>The proof does not impose a running-time bound.</p><p>The numerical encoding estimates are correct. On the balanced sequence,<br>$$
+B=O(n\log n),\qquad S=\Omega(n^2).
+$$<br>This excludes $\widetilde O(m+\tau+B)$ working space.</p><h3>7. Remaining task gap and actionable feedback</h3><p><b>Major unresolved task requirement:</b> The optimal exact time–space tradeoff is not established. The exponential-time upper bound and unconditional space lower bound leave unresolved both general polynomial-time solvability and the necessary dependence of working space on numerical encoding length.</p><p>This is an acknowledged limitation, not an overclaim. No local clarification can close it; additional mathematical results are required. Retain the partial characterization and clearly distinguish the settled small-space impossibility from the unresolved optimal tradeoff.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

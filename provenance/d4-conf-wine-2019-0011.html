@@ -1,0 +1,113 @@
+<!doctype html><html><head><meta charset="utf-8"><title>The Capacity Constrained Facility Location Problem — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>The Capacity Constrained Facility Location Problem <span style="font-weight:normal;color:#8a7350">(d4-conf-wine-2019-0011)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> For \(m=1\), the decision problem is in \(\mathrm{P}\). The exact optimum and an optimal support location are computable in \(O(\tau^2L^2)\) bit operations. The exact worst-case ratio is \(R(\kappa)=\min\{2,1/\kappa\}\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finitely supported rational location types \( x_t\in[0,1]\) with masses \(\mu_t\) summing to one and capacity fraction \(\kappa\in(0,1]\), compute the maximum welfare from placing a facility at \(s\in[0,1]\) and serving the \(\kappa\)-closest mass, allowing a partial endpoint type, and determine the worst-case approximation ratio of the weighted-median mechanism relative to this optimum over all such \(\mu\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: distinct rational locations \(x_t\in[0,1]\), with positive binary-rational masses \(\mu_t\) satisfying \(\sum_{t=1}^{\tau}\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types.<br>There is one facility, so \(m=1\); its capacity is a binary rational \(\kappa\in(0,1]\). At location \(s\in[0,1]\), serve exactly \(\kappa\) mass in increasing order of \(|x_t-s|\), breaking equal-distance ties by increasing \(x_t\) and splitting the final type as necessary.<br>If \(a_t(s)\) is the mass served from type \(t\), define \(W_\mu(s,\kappa)=\sum_t a_t(s)(1-|x_t-s|)\); unserved mass has zero utility. Let \(W^*(\mu,\kappa)=\max_{s\in[0,1]}W_\mu(s,\kappa)\).<br>The weighted-median mechanism chooses the lower median \(s_{\mathrm{med}}=\min\{x_t:\sum_{j:x_j\le x_t}\mu_j\ge 1/2\}\). Define \(R(\kappa)=\sup_\mu W^*(\mu,\kappa)/W_\mu(s_{\mathrm{med}},\kappa)\), over all finite rational supports and positive rational masses of total mass one.</p><p>Is deciding \(W^*(\mu,\kappa)\ge q\), for a binary-rational threshold \(q\), in P or NP-hard, and can the exact optimum and an optimal location be computed in polynomial time? State running times in \(m=1\), \(\tau\), and the total input bit length \(L\).<br>What is the exact worst-case ratio \(R(\kappa)\) for every rational \(\kappa\in(0,1]\)?</p><p>For finite agents, the optimal location and welfare are polynomial-time computable; the median&#x27;s tight ratio is \(2k/(k+1)\) when \(1\le k\le\lceil(n-1)/2\rceil\). [Aziz et al.](https://econcs.seas.harvard.edu/resource/azizgamesecon20pdf)<br>Related distributional work characterizes welfare and optimal percentile mechanisms in a Bayesian population limit under absolutely continuous distributions; it does not settle this rational-support complexity and worst-case-ratio question. [Auricchio and Zhang](https://arxiv.org/html/2412.00563v1)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified served utility as one minus absolute distance and unserved utility as zero, matching the discrete welfare model.</li><li>Required capacity to be binary rational and introduced a binary-rational welfare threshold to state the decision problem.</li><li>Selected the lower weighted median, matching the discrete mechanism&#x27;s lower median for even population sizes.</li><li>Fixed equal-distance priority by increasing location and allowed a partial final type, including at a tied distance.</li><li>Defined the worst-case ratio as a supremum over arbitrary finite rational supports at each fixed rational capacity fraction.</li><li>Used m=1 for the single facility and L for the total binary encoding length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Results</h3><p>For \(m=1\), deciding \(W^*(\mu,\kappa)\ge q\) is in \(\mathrm{P}\). An exact optimum and an optimal support location can be computed using \(O(\tau^2)\) arithmetic operations on \(O(L)\)-bit integers, or \(O(\tau^2L^2)\) bit operations with schoolbook arithmetic.</p><p>The exact worst-case ratio is</p><p>\[
+R(\kappa)=\min\{2,1/\kappa\}.
+\]</p><p>Thus \(R(\kappa)=2\) for \(0&lt;\kappa\le 1/2\), and \(R(\kappa)=1/\kappa\) for \(1/2\le\kappa\le1\). Three-point societies with dyadic masses already approach these bounds.</p><h3>2. Two elementary lemmas</h3><p>Relabel the support so that \(x_1&lt;\cdots&lt;x_\tau\). Define the feasible allocations by</p><p>\[
+\mathcal A_\kappa=\left\{a:0\le a_t\le\mu_t,\ \sum_t a_t=\kappa\right\},
+\]</p><p>and their welfare at location \(s\) by</p><p>\[
+U(s,a)=\sum_t a_t(1-|x_t-s|).
+\]</p><p><b>Lemma 1: the prescribed service rule maximizes welfare at a fixed location.</b> For every \(s\),</p><p>\[
+W_\mu(s,\kappa)=\max_{a\in\mathcal A_\kappa}U(s,a).
+\]</p><p>Indeed, ordering types by increasing distance orders their per-unit utilities decreasingly. Transferring mass from a later type to an earlier unfilled type cannot decrease welfare. Applying these transfers successively fills each type up to its mass before proceeding to the next, splitting the last type as specified. Equal-distance types have equal utility, so the tie rule does not affect aggregate welfare.</p><p><b>Lemma 2: a weighted median minimizes weighted absolute distance.</b> Let \(w_t\ge0\), with total weight \(B&gt;0\). Suppose a support point \(z\) satisfies</p><p>\[
+\sum_{x_t&lt;z}w_t\le B/2,\qquad
+\sum_{x_t&gt;z}w_t\le B/2.
+\]</p><p>Then \(C_w(z)\le C_w(s)\) for every \(s\), where \(C_w(s)=\sum_t w_t|x_t-s|\).</p><p>For \(s&gt;z\), types at or left of \(z\) have their distance increased by exactly \(s-z\). For types right of \(z\), the triangle inequality bounds the distance change below by \(-(s-z)\). Consequently,</p><p>\[
+C_w(s)-C_w(z)
+\ge
+\left(B-2\sum_{x_t&gt;z}w_t\right)(s-z)
+\ge0.
+\]</p><p>For \(s&lt;z\), the same argument gives</p><p>\[
+C_w(s)-C_w(z)
+\ge
+\left(B-2\sum_{x_t&lt;z}w_t\right)(z-s)
+\ge0.
+\]</p><p>Such a support point always exists: choose the first support point where cumulative weight reaches \(B/2\). Its strictly-left weight is less than \(B/2\), and its strictly-right weight is at most \(B/2\).</p><h3>3. Exact optimization and bit complexity</h3><h3>An optimum occurs at a support point</h3><p>Fix any location \(s\), and let \(a\) be its prescribed allocation. Choose a weighted median \(z\) of the allocation weights \(a_t\), whose total is \(\kappa&gt;0\). Lemma 2 gives</p><p>\[
+U(z,a)=\kappa-C_a(z)\ge\kappa-C_a(s)=W_\mu(s,\kappa).
+\]</p><p>By Lemma 1, the prescribed allocation at \(z\) performs at least as well as \(a\):</p><p>\[
+W_\mu(z,\kappa)\ge U(z,a).
+\]</p><p>Thus every location is weakly dominated by a support location, proving</p><p>\[
+W^*(\mu,\kappa)=\max_{1\le i\le\tau}W_\mu(x_i,\kappa).
+\]</p><p>This also proves existence of an optimal location without any continuity assumption.</p><h3>Algorithm</h3><p>Sort the support once. For each candidate \(x_i\), its positive distances occur in two already sorted lists:</p><p>\[
+x_i-x_{i-1},\ldots,x_i-x_1,
+\qquad
+x_{i+1}-x_i,\ldots,x_\tau-x_i.
+\]</p><p>Process type \(i\) first, then merge these lists, choosing the left type when distances tie. Fill capacity greedily and calculate welfare exactly. Each candidate takes \(O(\tau)\) arithmetic operations. Sorting takes \(O(\tau\log\tau)\) comparisons, so the overall arithmetic count is \(O(\tau^2)\).</p><p>For an explicit bit bound, let \(D\) be the product of all input denominators, including that of \(q\). Since their total encoding length is at most \(L\), \(D\) has \(O(L)\) bits. Write</p><p>\[
+x_t=X_t/D,\qquad \mu_t=M_t/D,\qquad
+\kappa=K/D,\qquad q=Q/D.
+\]</p><p>Every greedy allocation has the form \(a_t=A_t/D\), with integer \(A_t\): capacity filling uses only subtraction and minimum operations on the scaled integer masses. At candidate \(x_i\), its exact welfare numerator is</p><p>\[
+N_i=\sum_t A_t\bigl(D-|X_t-X_i|\bigr),
+\qquad
+W_\mu(x_i,\kappa)=N_i/D^2.
+\]</p><p>All these integers have \(O(L)\) bits; in particular, \(0\le N_i\le KD\le D^2\). Preprocessing, sorting, evaluation, and final comparison therefore take \(O(\tau^2L^2)\) bit operations using schoolbook arithmetic. The decision test is simply</p><p>\[
+\max_i N_i\ge QD.
+\]</p><p>The maximizing input location and the fraction \(\max_iN_i/D^2\) give exact outputs of \(O(L)\) bits.</p><p>Hence the problem is in \(\mathrm{P}\); it could be NP-hard under polynomial-time reductions only if \(\mathrm{P}=\mathrm{NP}\). All loops depend on support size \(\tau\), irrespective of how finely the masses are encoded. This establishes the encoded-support analogue of the finite-agent observation in [Aziz et al., Remark 2](https://econcs.seas.harvard.edu/resource/azizgamesecon20pdf).</p><h3>4. Universal upper bound on the median ratio</h3><p>Let \(z=s_{\mathrm{med}}\), and define full-population welfare by</p><p>\[
+F(s)=\sum_t\mu_t(1-|x_t-s|).
+\]</p><p>The lower median satisfies the hypotheses of Lemma 2 with weights \(\mu_t\). Thus \(F(z)\ge F(s)\) for every \(s\).</p><p>Because utilities are nonnegative and allocations satisfy \(a_t\le\mu_t\),</p><p>\[
+W_\mu(s,\kappa)\le F(s)\le F(z),
+\qquad\text{hence}\qquad W^*(\mu,\kappa)\le F(z).
+\]</p><p>The allocation \(a_t=\kappa\mu_t\) is feasible. Lemma 1 therefore implies</p><p>\[
+W_\mu(z,\kappa)\ge\kappa F(z).
+\]</p><p>Moreover, every type has utility at least \(1/2\) at location \(1/2\). Consequently,</p><p>\[
+F(z)\ge F(1/2)\ge1/2,
+\qquad
+W_\mu(z,\kappa)\ge\kappa/2&gt;0.
+\]</p><p>Dividing the preceding inequalities gives</p><p>\[
+\frac{W^*(\mu,\kappa)}{W_\mu(z,\kappa)}\le\frac1\kappa.
+\]</p><p>Also \(W^*(\mu,\kappa)\le\kappa\), because exactly \(\kappa\) mass is served and per-unit utility is at most one. Together with \(W_\mu(z,\kappa)\ge\kappa/2\), this yields the second bound:</p><p>\[
+\frac{W^*(\mu,\kappa)}{W_\mu(z,\kappa)}\le2.
+\]</p><p>Therefore \(R(\kappa)\le\min\{2,1/\kappa\}\).</p><h3>5. Matching rational constructions</h3><p>For a positive dyadic \(\varepsilon&lt;\min\{\kappa,1/2\}\), take the society</p><p>| Location | Mass |<br>|---|---:|<br>| \(0\) | \(1/2-\varepsilon\) |<br>| \(1/2\) | \(\varepsilon\) |<br>| \(1\) | \(1/2\) |</p><p>All masses are positive and sum to one. Cumulative mass first reaches \(1/2\) at location \(1/2\), so this is the lower median.</p><p>At the median, the central mass is served first, and every other type has utility \(1/2\). Hence</p><p>\[
+W_\mu(1/2,\kappa)
+=\varepsilon+\frac{\kappa-\varepsilon}{2}
+=\frac{\kappa+\varepsilon}{2}.
+\]</p><p><b>Case \(0&lt;\kappa\le1/2\).</b> Locating at \(1\) serves \(\kappa\) mass at utility one. Since welfare cannot exceed \(\kappa\),</p><p>\[
+W^*(\mu,\kappa)=\kappa,
+\qquad
+\frac{W^*(\mu,\kappa)}{W_\mu(1/2,\kappa)}
+=\frac{2\kappa}{\kappa+\varepsilon}.
+\]</p><p>Taking \(\varepsilon=2^{-h}\) and letting \(h\) tend to infinity proves \(R(\kappa)\ge2\).</p><p><b>Case \(1/2&lt;\kappa\le1\).</b> Additionally choose \(\varepsilon&lt;\kappa-1/2\). At location \(1\), all mass at \(1\) and \(1/2\) is served; any remaining served mass comes from \(0\) and contributes zero. Therefore</p><p>\[
+W_\mu(1,\kappa)=\frac12+\frac{\varepsilon}{2}.
+\]</p><p>Full-population welfare at the median is also \((1+\varepsilon)/2\), which Section 4 bounds the optimum above by. Thus</p><p>\[
+W^*(\mu,\kappa)=\frac{1+\varepsilon}{2},
+\qquad
+\frac{W^*(\mu,\kappa)}{W_\mu(1/2,\kappa)}
+=\frac{1+\varepsilon}{\kappa+\varepsilon}.
+\]</p><p>Along the same dyadic sequence, this tends to \(1/\kappa\). For \(\kappa=1\), the ratio is exactly one, as also follows from full-population median optimality.</p><p>These constructions match both universal upper bounds and settle the stated supremum.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verdict</h3><p><b>The prover resolves both parts of the task correctly.</b> The exact optimization algorithm is polynomial in the encoded input size, and the claimed worst-case ratio \(R(\kappa)=\min\{2,1/\kappa\}\) follows from valid universal bounds and admissible matching constructions. No major or minor mathematical issues were found.</p><h3>Step-by-step verification</h3><h3>1. Fixed-location allocation optimality</h3><p>Lemma 1 correctly identifies the prescribed service rule with welfare maximization over \(\mathcal A_\kappa\).</p><p>At a fixed location, utility is linear in the served masses. If an allocation serves a more distant type while leaving a closer type unfilled, transferring the available mass between them preserves feasibility and cannot decrease welfare. Processing types in the prescribed order therefore produces the greedy allocation. Because the support is finite, this exchange procedure requires only finitely many transfers.</p><p>Equal-distance types have identical utility, so the specified tie rule affects the allocation but not its welfare. Splitting the final type is allowed by the task. Total mass one and \(0&lt;\kappa\le1\) ensure that capacity can always be filled exactly.</p><p><b>Assessment:</b> Correct.</p><h3>2. Weighted-median lemma</h3><p>Both distance-change inequalities are valid. For \(s&gt;z\), types at or left of \(z\) contribute exactly their weight times \(s-z\); each type right of \(z\) contributes at least its weight times \(-(s-z)\). The resulting coefficient is \(B-2\sum_{x_t&gt;z}w_t\), which is nonnegative under the stated hypothesis. The argument for \(s&lt;z\) is symmetric.</p><p>The existence assertion also handles zero weights correctly: the first support point whose cumulative weight reaches \(B/2\) has strictly-left weight less than \(B/2\) and strictly-right weight at most \(B/2\). Since \(B&gt;0\), such a point exists.</p><p><b>Assessment:</b> Correct, including the hypotheses needed for subsequent applications.</p><h3>3. Reduction to support locations</h3><p>The prescribed allocation at any location \(s\) has total weight \(\kappa&gt;0\), so Lemma 2 applies to its allocation weights. Its weighted median \(z\) is an original support location.</p><p>The two inequalities have the correct directions:</p><ul><li>Moving the fixed allocation to \(z\) weakly improves its welfare.</li><li>Reoptimizing the allocation at \(z\) weakly improves welfare again.</li></ul><p>Thus every location is weakly dominated by a support location. Taking the maximum over the finite support proves both the displayed equality for \(W^*\) and existence of an optimum.</p><p>Zero allocation weights cause no difficulty. The argument also covers \(\tau=1\) and \(\kappa=1\).</p><p><b>Assessment:</b> Correct.</p><h3>4. Algorithm and exact bit complexity</h3><p>At each candidate \(x_i\), the listed left and right distances are individually increasing. Merging them enumerates all remaining types in increasing distance. Choosing the left type on equality implements the increasing-location tie rule.</p><p>Each candidate processes at most \(\tau\) types, giving \(O(\tau^2)\) arithmetic operations overall after sorting.</p><p>The common-denominator analysis is sound:</p><ul><li>The product \(D\) has \(O(L)\) bits because the sum of the encoded denominator lengths is bounded by \(L\).</li><li>Every input denominator divides \(D\).</li><li>Greedy subtraction and minimum operations preserve integer scaled allocations \(A_t\).</li><li>The formula \(N_i=\sum_t A_t(D-|X_t-X_i|)\) is exactly the welfare numerator over denominator \(D^2\).</li><li>All summands are nonnegative, and \(N_i\le KD\le D^2\). Hence intermediate partial sums also have \(O(L)\) bits.</li><li>Threshold comparison by \(\max_iN_i\ge QD\) is exact, including thresholds outside the attainable welfare range.</li></ul><p>Constructing the common denominator, scaling the inputs, sorting, evaluating candidates, and comparing against the threshold all fit within \(O(\tau^2L^2)\) schoolbook bit operations. The output location and unreduced exact welfare fraction have \(O(L)\) bits.</p><p>These bounds apply with \(m=1\); they make no claim about variable \(m\). They depend on support size rather than any expanded number of agents.</p><p>The ancillary comparison with [Aziz et al., Remark 2](https://econcs.seas.harvard.edu/resource/azizgamesecon20pdf) is accurate: that remark states polynomial-time computability for the finite-agent problem. The present proof establishes its own encoded-support result independently.</p><p><b>Assessment:</b> Correct.</p><h3>5. Universal ratio bounds</h3><p>The lower population median satisfies Lemma 2 with total weight one, so it maximizes full-population welfare \(F\).</p><p>The inequality \(W_\mu(s,\kappa)\le F(s)\) correctly uses both nonnegative utilities on \([0,1]\) and \(a_t\le\mu_t\). The proportional allocation \(a_t=\kappa\mu_t\) is feasible because \(0&lt;\kappa\le1\), establishing \(W_\mu(z,\kappa)\ge\kappa F(z)\).</p><p>At location \(1/2\), every utility is at least \(1/2\). Thus \(F(z)\ge1/2\) and the median welfare is strictly positive. Both divisions are therefore justified.</p><p>The resulting bounds \(1/\kappa\) and \(2\) hold simultaneously for every admissible society.</p><p><b>Assessment:</b> Correct.</p><h3>6. Matching constructions and endpoints</h3><p>The three locations are distinct rational points. The chosen masses are positive dyadic rationals summing to one. Their cumulative masses make \(1/2\) exactly the lower median.</p><p>Since \(\varepsilon&lt;\kappa\), its central mass is fully served there, and the remaining served mass has utility \(1/2\). The median welfare calculation is correct.</p><p>For \(0&lt;\kappa\le1/2\), the mass at location one fills capacity by itself, attaining the universal welfare ceiling \(\kappa\). The displayed ratio tends to two.</p><p>For \(1/2&lt;\kappa\le1\), the additional restriction \(\varepsilon&lt;\kappa-1/2\) ensures that capacity includes all mass at one and at \(1/2\). Remaining mass comes from zero with zero utility. The resulting welfare equals \(F(1/2)\), so the earlier upper bound proves optimality. The ratio tends to \(1/\kappa\).</p><p>For each fixed admissible \(\kappa\), all required restrictions hold along a sufficiently late tail of the dyadic sequence. This suffices for the supremum. The boundary \(\kappa=1/2\) is covered by the first case, and \(\kappa=1\) gives ratio exactly one.</p><p><b>Assessment:</b> Correct.</p><h3>Required clarification or repair</h3><p>None. Both the complexity classification and the exact supremum are established as written.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

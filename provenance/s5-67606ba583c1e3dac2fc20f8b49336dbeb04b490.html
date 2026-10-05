@@ -1,0 +1,265 @@
+<!doctype html><html><head><meta charset="utf-8"><title>On the Complexities of Understanding Matching Mechanisms — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>On the Complexities of Understanding Matching Mechanisms <span style="font-weight:normal;color:#8a7350">(s5-67606ba583c1e3dac2fc20f8b49336dbeb04b490)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5.5 — class: other</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>The concurrent representation complexity of TTC is eΘ min(|A|, |I|2)  .</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given schools \(H\), rational capacities \(q_h\) with \(\sum_{h\in H}q_h=1\), a finite complete type set \(T\), rational mass distribution \(\mu\), public priority orders over types, and strict school rankings for each type, define weighted continuum TTC by transferring maximal feasible residual mass around cycles to obtain \(x_{t,h}\). Determine, as a function of \(m=|H|\), \(\tau=|T|\), and encoding length \(L\), the minimum worst-case certificate length \(\log_2|\mathcal C|\) allowing every type \(t\) with \(\mu_t&gt;0\) to recover \(x_{t,\cdot}/\mu_t\) from its own ranking and a certificate \(C\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(H\) be \(m\geq2\) schools with public positive binary-rational capacities \(q_h\) satisfying \(\sum_hq_h=1\). A society is given by its support: a list \(T\) of \(\tau\) types with positive binary-rational masses \(\mu_t\), with \(\sum_t\mu_t=1\); \(\tau\) is the support size, not the number of possible rankings. Type labels and each school&#x27;s strict total priority order over them are public; each type has a private strict complete school ranking \(P_t\). Distinct labels may have identical rankings. Consider \(\tau\geq m^a\) for any fixed \(a&gt;1\).<br>Weighted TTC starts with residual type masses \(\mu_t\), residual capacities \(q_h\), and \(x_{t,h}=0\). Each positive-residual type points to its favorite positive-capacity school, and each positive-capacity school points to its highest-priority positive-residual type. Simultaneously clear every directed cycle: transfer the minimum residual mass or capacity among its vertices, assigning that amount to each type at the school it points to and subtracting it from every vertex&#x27;s residual. Delete zero-residual vertices and repeat.<br>For fixed public \((H,T,q,Q)\), a representation protocol consists of a finite certificate alphabet \(\mathcal C\) and deterministic decoders \(D_t(P_t,C)\). For every mass distribution and ranking profile of total binary encoding length at most \(L\), one common certificate must satisfy \(D_t(P_t,C)=(x_{t,h}/\mu_t)_{h\in H}\) for every \(t\). The encoder sees the entire input; decoders know their labels and the public data, but no masses or other types&#x27; rankings. Protocols must cover all these inputs; decoding is exact and computationally unrestricted. Let \(B(m,\tau,L)\) be the maximum, over admissible public data, of the minimum protocol cost \(\log_2|\mathcal C|\).</p><p>What is the asymptotically tight worst-case certificate length \(B(m,\tau,L)\) for weighted TTC? State any algorithmic running times in \(m,\tau,L\) and the fixed regime parameter \(a\).</p><p>For discrete TTC with public priorities, concurrent representation requires \(\widetilde\Theta(\min\{n,m^2\})\) bits for \(n\) applicants and \(m\) schools ([Gonczarowski–Thomas](https://arxiv.org/html/2212.08709v3)).<br>Continuum TTC has a school-pair cutoff characterization under density regularity assumptions; this does not establish optimal certificate length for finitely supported rational masses and type-level priorities ([Leshno–Lo](https://jleshno.weebly.com/uploads/3/7/4/6/37467639/leshno_lo-ttc_cutoffs.pdf)).</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized total society mass to one and required every listed mass and school capacity to be strictly positive.</li><li>Interpreted completeness as strict complete school rankings, with all schools acceptable, rather than enumeration of all possible types.</li><li>Used persistent type labels for public priorities and decoder identities; rankings remain private, and different labels may share a ranking.</li><li>Made capacities, support labels, and priorities public; masses are known to the encoder but not supplied to decoders, following the question&#x27;s restriction to own ranking and certificate.</li><li>Defined maximal cycle transfers explicitly and cleared disjoint cycles simultaneously to remove cycle-selection ambiguity.</li><li>Required one fixed protocol to cover every admissible private input, then maximized its minimum cost over public environments; interpreted L as an upper bound on total input encoding length.</li><li>Carried over the many-more-participants regime using support size: tau is at least m raised to any fixed exponent a greater than one.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial progress: a compressed simulation certificate</h3><p>The bounds below substantially improve the upper bound in <code>NOTES</code>. They also give matching bounds in a wider budget regime, including some budgets dominated by the space needed to store rankings. They do <b>not</b> determine the optimal certificate length for every feasible encoding budget.</p><h3>1. Encoding convention and proved bounds</h3><p>I use the convention in <code>NOTES</code>: rankings are explicit lists, and rational masses are represented by binary numerators and denominators. More precisely, store every ranking as $m$ school indices, each using $\lceil\log_2 m\rceil$ bits, and use a fixed self-delimiting encoding for the mass tuple. Put<br>$$
+R=\tau m\lceil\log_2 m\rceil,
+\qquad
+M=L-R.
+$$<br>Thus $M$ is the budget available for encoding masses. Public capacities are excluded from $L$, as in <code>NOTES</code>.</p><p>For every feasible budget, I prove<br>$$
+B(m,\tau,L)
+\leq
+\min\left\{
+L+1,\;
+M+1+\bigl(\tau+m(m-1)\bigr)\log_2 m
+\right\}.
+$$</p><p>There are encoding-dependent constants $c,A,C&gt;0$ such that<br>$$
+B(m,\tau,L)
+\geq
+c\bigl(M-A\tau\log_2\tau\bigr)_+-C,
+$$<br>where $z_+=\max\{z,0\}$.</p><p>Consequently,<br>$$
+\boxed{
+B(m,\tau,L)=\Theta(M)
+\quad\text{if}\quad
+M\geq C_0\bigl(\tau\log_2\tau+m^2\log_2 m\bigr)
+}
+$$<br>for a sufficiently large encoding-dependent constant $C_0$.</p><p>In particular, if $\tau\geq m^2$, this becomes<br>$$
+\boxed{
+B(m,\tau,L)=\Theta(M)
+\quad\text{if}\quad
+M\geq C_1\tau\log_2\tau.
+}
+$$</p><p>I also prove a separate lower bound that isolates the information carried by other types’ rankings. For suitably chosen <b>fixed</b> masses, whose total encoding length is $O(\tau\log_2\tau)$, certificates require<br>$$
+\Omega(\tau\log_2 m)
+$$<br>bits when $\tau\geq 2m+4$. This lower bound remains valid even if the decoders are additionally given all masses. With two schools, the corresponding bound is $\Omega(\tau)$.</p><p>The remaining sections prove these statements from the premises.</p><h3>2. Clearing cycles one at a time gives the same outcome</h3><p>Write $r_t$ and $c_h$ for residual masses and capacities. A state also includes the accumulated allocation matrix.</p><p>A directed cycle contains equally many types and schools. Clearing it by an amount $\delta$ therefore decreases total residual mass and total residual capacity by the same amount. Hence<br>$$
+\sum_t r_t=\sum_h c_h
+$$<br>is preserved.</p><p>If this common total is positive, both classes of vertices are nonempty. Every remaining vertex has an outgoing edge, so the finite directed graph contains a cycle. Clearing a cycle exhausts at least one vertex. Thus any sequence of individual cycle clearings terminates after at most $\tau+m$ clearings, and its terminal state has zero residual mass and capacity.</p><p>We next prove that the terminal allocation is independent of the order of individual clearings.</p><h3>Lemma 1: current cycles commute</h3><p>Suppose two different cycles are present in one state. They are vertex-disjoint because every vertex has one outgoing edge.</p><p>After either cycle is cleared, the other remains a cycle:</p><ul><li>Its type vertices and their chosen schools retain their residual quantities. Since their favorite available schools remain available, their outgoing edges remain unchanged.</li><li>Its school vertices and their chosen types also retain their residual quantities. A chosen type remains highest priority among remaining types: removing other types cannot displace a still-active highest-priority type.</li></ul><p>The transfer amount on the second cycle is unchanged. Clearing both cycles in either order therefore gives the same residual quantities and accumulated allocations.</p><h3>Lemma 2: the terminal allocation is unique</h3><p>Use induction on the number of positive-residual vertices.</p><p>If two clearing sequences choose the same first cycle, apply the induction hypothesis to the resulting state. If they choose different first cycles, Lemma 1 gives a common state reachable by clearing those two cycles in either order. Every resulting state has fewer positive-residual vertices. The induction hypothesis implies that both sequences have the same terminal state.</p><p>This proves uniqueness.</p><p>The cycles cleared in a simultaneous TTC round are vertex-disjoint. By Lemma 1, that round can be performed as a sequence of individual clearings with exactly the same result. Therefore the unique terminal allocation just proved is precisely the weighted TTC allocation specified in the question.</p><h3>3. A certificate consisting of masses and school choices</h3><p>The new upper bound uses a deterministic simulation in which some type pointers are temporarily unknown.</p><p>The simulator knows the initial masses from the certificate. It maintains residual quantities, allocations, and a set of <b>known pointers</b>. A known pointer records a type’s favorite currently available school. Initially, all type pointers are unknown.</p><p>At each iteration:</p><ul><li>Every active school points to its highest-priority active type, determined from public priorities and current residuals.</li><li>If these school pointers and the known type pointers contain a directed cycle, clear one such cycle using a fixed deterministic rule.</li><li>Delete exhausted vertices. Erase a surviving type’s known pointer if its chosen school was deleted.</li><li>If no fully specified cycle exists, choose the first active school, under a fixed ordering, whose pointed-to type has an unknown pointer. Read one school index from the certificate and use it as that type’s pointer.</li></ul><p>The encoder supplies the type’s actual favorite available school at step 4.</p><p>There is always a school eligible for step 4 when no fully specified cycle exists. Otherwise, every school’s pointed-to type would have a known pointer. Following school-to-type-to-school edges would then give a directed cycle in the finite set of active schools.</p><p>Known pointers remain correct until their chosen schools disappear. Consequently, every cycle cleared by this simulation is a genuine current TTC cycle. Lemma 2 proves that its final allocation is correct.</p><p>It remains to bound the number of school indices required.</p><h3>Lemma 3: at most $m$ previously queried types remain active</h3><p>When a type is queried for the first time, assign it a permanent <b>sponsor</b>: the school selected in step 4.</p><p>While that school and type both remain active, the sponsor continues pointing to that type. The type was highest priority when selected, and subsequently only types are removed.</p><p>Two currently active, previously queried types cannot have the same sponsor. A school cannot first sponsor another type while its earlier sponsored type remains active. Once the school is deleted, it cannot sponsor any new type.</p><p>Thus sponsorship is injective among active, previously queried types. There are at most $m$ such types.</p><h3>Lemma 4: at most $\tau+m(m-1)$ queries occur</h3><p>There are at most $\tau$ first queries.</p><p>Every later query of a type follows erasure of an earlier pointer, which occurs only when its chosen school is deleted while the type survives. At any school-deletion step, Lemma 3 bounds the number of surviving, previously queried types by $m$. Thus at most $m$ pointers are erased at that step.</p><p>There are at most $m-1$ school-deletion steps leaving positive residual capacity. A deletion leaving no capacity also leaves no residual type mass, by residual-total equality, so it causes no later query.</p><p>Each subsequent query can be charged to a different preceding erasure. Therefore the total number of queries is at most<br>$$
+J=\tau+m(m-1).
+$$</p><h3>Certificate size</h3><p>Use a certificate alphabet consisting of:</p><ul><li>a mass-encoding string of length at most $M$;</li><li>a stream of exactly $J$ school indices, padding unused positions arbitrarily.</li></ul><p>There are fewer than $2^{M+1}$ possible mass strings and $m^J$ possible streams. Hence<br>$$
+\log_2|\mathcal C|
+&lt;
+M+1+J\log_2 m.
+$$</p><p>Every decoder performs the same simulation and returns its own row normalized by the initial mass supplied in the certificate. The decoder may ignore its private ranking; this is permitted by the representation definition.</p><p>Malformed certificates can be assigned an arbitrary deterministic output. Representation requires only that every admissible input have one correct certificate.</p><p>Sending the entire private input separately gives an alphabet of size $2^{L+1}-1$. Combining the two protocols proves<br>$$
+B(m,\tau,L)
+\leq
+\min\left\{
+L+1,\;
+M+1+\bigl(\tau+m(m-1)\bigr)\log_2 m
+\right\}.
+$$</p><h3>Corollary: sparse allocation support</h3><p>Every positive allocation occurs along a revealed pointer. A type’s favorite available school changes only when that school is deleted, so the type cannot revisit an earlier allocation school.</p><p>Lemma 4 therefore gives<br>$$
+\sum_t|\{h:x_{t,h}&gt;0\}|
+\leq
+\tau+m(m-1).
+$$<br>Every type is fully assigned, so<br>$$
+\sum_t\left(|\{h:x_{t,h}&gt;0\}|-1\right)
+\leq m(m-1).
+$$<br>In particular, at most $m(m-1)$ types receive positive allocations at multiple schools.</p><h3>4. A precision lower bound using the numerical budget</h3><p>This repairs the budget accounting in the previous precision construction by separating the fixed ranking cost $R$.</p><p>All schools have the same priority order, starting with a distinguished type $t_*$, followed by a type $s$, followed by the other types. Every ranking is<br>$$
+h_1\succ h_2\succ\cdots\succ h_m.
+$$</p><p>Set<br>$$
+q_{h_1}=\frac14.
+$$<br>For $m=2$, set $q_{h_2}=3/4$. For $m\geq3$, set $q_{h_2}=1/2$ and divide the remaining capacity $1/4$ positively among the other schools.</p><p>The $\tau-2$ filler types have fixed positive masses summing to $1/4$, with total encoding length $O(\tau\log_2\tau)$. Explicitly, with<br>$$
+r=\tau-2,
+\qquad
+N=2^{\lceil\log_2r\rceil},
+$$<br>give the first $r-1$ fillers mass $1/(4N)$ and the last mass $(N-r+1)/(4N)$.</p><p>For $k\geq3$, vary<br>$$
+\mu_{t_*}=y_j=\frac14+\frac{j}{2^k},
+\qquad
+\mu_s=\frac34-y_j,
+\qquad
+1\leq j\leq2^{k-2}-1.
+$$<br>All masses are positive and sum to one.</p><p>Identical school priorities imply that the highest-priority active type is served until exhausted: every school points to it, so its pointer and that school form the only cycle. In particular, $t_*$ first receives $1/4$ at $h_1$, exhausting that school. Its remaining mass satisfies<br>$$
+0&lt;y_j-\frac14&lt;\frac14&lt;q_{h_2},
+$$<br>so it then finishes at $h_2$. Its normalized allocation at $h_1$ is<br>$$
+\frac{x_{t_*,h_1}}{\mu_{t_*}}
+=
+\frac{1}{4y_j}.
+$$</p><p>These values are distinct, while the ranking supplied to $D_{t_*}$ is fixed. Different family members must therefore use different certificates. Thus<br>$$
+\log_2|\mathcal C|
+\geq
+\log_2(2^{k-2}-1)
+\geq k-3.
+$$</p><p>The rankings use exactly $R$ bits. For encoding-dependent constants $A,E$, the mass tuple uses at most<br>$$
+A\tau\log_2\tau+Ek
+$$<br>bits. Choosing the largest admissible $k$, and using nonnegativity when this construction does not fit, proves<br>$$
+B(m,\tau,L)
+\geq
+\frac1E\bigl(M-A\tau\log_2\tau\bigr)_+-4.
+$$</p><p>Together with the upper bound, this establishes the matching bounds stated in Section 1.</p><h3>5. Fixed masses can force many bits about rankings</h3><p>The next construction shows that exact fractional outputs can encode many other types’ preferences even when all masses are fixed and publicly supplied.</p><h3>5.1 Small distinct primes</h3><p>We first justify the numerical ingredients without assuming a prime-distribution theorem.</p><p>For every positive integer $r$, there are $r$ distinct primes at least $5$, each bounded by $64(r+2)^2$.</p><p>To see this, choose<br>$$
+N=2^{2\lceil\log_2(r+2)\rceil+4}.
+$$<br>Then<br>$$
+16(r+2)^2\leq N&lt;64(r+2)^2.
+$$<br>The central binomial coefficient satisfies<br>$$
+\binom{N}{N/2}\geq\frac{2^N}{N+1}.
+$$<br>For any prime $p$, its exponent in this binomial coefficient is<br>$$
+\sum_{j\geq1}
+\left(
+\left\lfloor\frac{N}{p^j}\right\rfloor
+-
+2\left\lfloor\frac{N/2}{p^j}\right\rfloor
+\right).
+$$<br>Each summand is zero or one. Hence the exponent is at most $\lfloor\log_pN\rfloor$, and that prime’s contribution is at most $N$. Writing $\pi(N)$ for the number of primes at most $N$ gives<br>$$
+\binom{N}{N/2}\leq N^{\pi(N)}.
+$$<br>Consequently,<br>$$
+\pi(N)
+\geq
+\frac{N-\log_2(N+1)}{\log_2N}
+\geq
+\frac{N}{2\log_2N}.
+$$<br>Since $\log_2N\leq2(r+2)+6$, the last expression is at least $r+2$. Removing primes $2$ and $3$ leaves the required $r$ primes.</p><h3>5.2 Construction for $m\geq3$</h3><p>Suppose $\tau\geq2m+4$. Put<br>$$
+s=m-1,
+\qquad
+r=\left\lfloor\frac{\tau-m}{2}\right\rfloor,
+\qquad
+f=\tau-s-2r.
+$$<br>Then $f\in\{1,2\}$ and $r\geq\tau/4$.</p><p>Use small schools $h_1,\ldots,h_s$ and a fallback school $h_0$, with capacities<br>$$
+q_{h_j}=\frac{1}{4s},
+\qquad
+q_{h_0}=\frac34.
+$$</p><p>Choose distinct primes $p_1,\ldots,p_r$ as above. The types are:</p><ul><li>selectors $u_1,\ldots,u_r$, with masses</li></ul><p>$$
+  \mu_{u_i}=\frac{1}{4rs p_i};
+  $$</p><ul><li>partners $v_1,\ldots,v_r$, with masses</li></ul><p>$$
+  \mu_{v_i}=\frac{sp_i-1}{4rs p_i};
+  $$</p><ul><li>probes $w_1,\ldots,w_s$, each with mass $1/(2s)$;</li><li>$f$ fillers, each with mass $1/(4f)$.</li></ul><p>Each selector-partner pair has total mass $1/(4r)$. The pair masses, probe masses, and filler masses total $1/4$, $1/2$, and $1/4$, respectively.</p><p>Every school has the same strict priority order: selectors first, then probes, then partners and fillers. Fix all rankings except those of the selectors. Probe $w_j$ ranks $h_j$ first and $h_0$ second.</p><p>For each function<br>$$
+g:\{1,\ldots,r\}\longrightarrow\{1,\ldots,s\},
+$$<br>selector $u_i$ ranks $h_{g(i)}$ first. Complete every ranking strictly in a fixed manner.</p><p>Let<br>$$
+\sigma=\sum_i\mu_{u_i}.
+$$<br>Because $p_i\geq5$,<br>$$
+\sigma\leq\frac{1}{20s}&lt;\frac{1}{4s}.
+$$<br>Thus every selector is fully assigned at its first-choice school. Define<br>$$
+\sigma_j=\sum_{i:g(i)=j}\mu_{u_i}.
+$$<br>When probe $w_j$ is served, the remaining capacity of its first-choice school is<br>$$
+\frac{1}{4s}-\sigma_j&gt;0.
+$$<br>Earlier probes consume only their own small school and the fallback school. The probes’ total required fallback allocation is<br>$$
+\sum_{j=1}^s
+\left(
+\frac{1}{2s}-\frac{1}{4s}+\sigma_j
+\right)
+=
+\frac14+\sigma
+&lt;
+\frac34.
+$$<br>Therefore the fallback school remains available until every probe finishes.</p><p>Probe $w_j$ consequently observes<br>$$
+\frac{x_{w_j,h_j}}{\mu_{w_j}}
+=
+\frac12-\frac{1}{2r}
+\sum_{i:g(i)=j}\frac1{p_i}.
+$$</p><h3>5.3 Distinct assignments give distinct probe outputs</h3><p>Subset sums of $1/p_1,\ldots,1/p_r$ are distinct.</p><p>Indeed, suppose<br>$$
+\sum_i\frac{z_i}{p_i}=0,
+\qquad
+z_i\in\{-1,0,1\}.
+$$<br>Multiply by $P=\prod_i p_i$ and reduce modulo $p_j$. This gives<br>$$
+z_j\frac{P}{p_j}\equiv0\pmod{p_j}.
+$$<br>The factor $P/p_j$ is invertible modulo $p_j$, so $z_j\equiv0\pmod{p_j}$. Since $p_j\geq5$, necessarily $z_j=0$.</p><p>Thus the probe-output tuple identifies the set of selectors choosing each school, and hence identifies $g$. All probe rankings and all masses are fixed. No two different functions $g$ can share a certificate.</p><p>There are $s^r$ functions, so<br>$$
+\log_2|\mathcal C|
+\geq
+r\log_2s
+=
+\Omega(\tau\log_2m).
+$$</p><p>Every mass numerator and denominator has $O(\log_2\tau)$ bits, because $r,s\leq\tau$ and $p_i=O(r^2)$. The total mass encoding length is therefore $O(\tau\log_2\tau)$.</p><h3>5.4 Two schools</h3><p>For $m=2$ and $\tau\geq4$, put<br>$$
+r=\left\lfloor\frac{\tau-2}{2}\right\rfloor,
+\qquad
+f=\tau-1-2r\in\{1,2\}.
+$$<br>Use capacities $1/4$ and $3/4$, one probe of mass $1/2$, selector masses $1/(4rp_i)$, partner masses $(p_i-1)/(4rp_i)$, and $f$ fillers of mass $1/(4f)$.</p><p>Each selector independently ranks either school first. The probe has the fixed ranking $h_1\succ h_2$. Its first-school allocation is<br>$$
+\frac14-
+\sum_{i:\,u_i\text{ ranks }h_1\text{ first}}\frac{1}{4rp_i}.
+$$<br>The selectors’ total mass is at most $1/20$, so both their assignments and the probe’s subsequent completion are feasible exactly as above.</p><p>Distinct subsets give distinct probe outputs. Hence at least $2^r$ certificates are necessary, proving $\Omega(\tau)$ bits with fixed masses.</p><p>These constructions explain why the discrete concurrent-representation bound cannot simply be transferred to exact weighted outcomes. The discrete result concerns indivisible applicants; here a fixed probe’s fractional row records subset sums of other types’ masses. [Gonczarowski–Thomas, Section 5](https://arxiv.org/html/2212.08709v3#S5)</p><h3>6. Consequences and the remaining gap</h3><p>The compressed simulation removes the need to transmit all ranking lists. Its overhead beyond the mass encoding is at most<br>$$
+O\bigl((\tau+m^2)\log_2m\bigr).
+$$<br>This yields tight bounds whenever the numerical budget dominates that overhead and the baseline mass-encoding cost.</p><p>In particular, throughout the regime $a\geq2$, the condition $\tau\geq m^a$ implies $\tau\geq m^2$. Therefore<br>$$
+B(m,\tau,L)=\Theta(L-R)
+$$<br>whenever<br>$$
+L-R\geq C_1\tau\log_2\tau.
+$$</p><p>For every fixed $a&gt;1$, the new upper bound also rules out a uniform assertion $B=\Theta(L)$ under this encoding convention. Take<br>$$
+\tau=\lceil m^a\rceil,
+\qquad
+M=C_2\tau\log_2\tau
+$$<br>for a sufficiently large fixed constant $C_2$. Then<br>$$
+L=\Theta(\tau m\log_2m),
+$$<br>whereas<br>$$
+B(m,\tau,L)
+=
+O\bigl((\tau+m^2)\log_2m\bigr)
+=
+o(L).
+$$<br>The last equality follows from<br>$$
+\frac{\tau+m^2}{\tau m}
+=
+\frac1m+\frac m\tau
+\longrightarrow0.
+$$</p><p>What remains unresolved is the optimal bound for smaller numerical budgets. In particular:</p><ul><li>The precision construction does not give a matching lower bound when $M$ is close to the minimum possible mass-encoding length.</li><li>When $1&lt;a&lt;2$ and $M=O(\tau\log_2\tau)$, the upper bound may contain a dominating $m^2\log_2m$ term. The fixed-mass construction proves only $\Omega(\tau\log_2m)$, so it does not close that gap.</li></ul><p>These are mathematical gaps, not conclusions inferred from the discrete or continuum cutoff results.</p><h3>7. Exact computation and running times</h3><p>Let $\ell_q$ be the total binary encoding length of public capacities, and put<br>$$
+K=L+\ell_q.
+$$<br>Let $D$ be the product of all mass and capacity denominators. It has $O(K)$ bits. Scaling by $D$ makes initial masses and capacities integers. Every subsequent residual and allocation is an integer between zero and $D$.</p><p>Scanning rankings and priorities and finding cycles takes $O(m\tau)$ elementary operations per ordinary TTC round. There are at most $m+\tau$ rounds. A conservative exact bit-operation bound is<br>$$
+O\bigl((m+\tau)m\tau K^2\bigr)
+=
+O\bigl(\tau^{\,2+1/a}K^2\bigr).
+$$</p><p>The compressed simulation has at most $J$ pointer revelations and at most $\tau+m$ cycle clearings. Recomputing school pointers and finding cycles at each iteration gives encoder and decoder running times<br>$$
+O\bigl((\tau+m^2)m\tau K^2\bigr)
+=
+O\left(
+\tau^{\,1+1/a+\max\{1,2/a\}}K^2
+\right).
+$$<br>Normalization is exact: a row entry is the ratio of its scaled allocation to the positive scaled initial mass.</p><p>These bounds include capacity precision because exact outputs can inherit arbitrarily many bits from public capacities. If capacity encoding is included in $L$, replace $K$ by $O(L)$.</p><p>As an auxiliary check, the compressed simulation agreed with simultaneous TTC on $3000$ randomly generated integer-scaled instances, and every instance satisfied the revelation bound. The proofs above do not rely on that check.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Sections 1, 4, and 5: encoding convention and mass-length estimates: The supplied material does not include NOTES, and an unspecified fixed self-delimiting encoding does not by itself guarantee the linear length overhead needed for the numerical lower bounds. Specify the encoding or explicitly assume a constant-factor bound in terms of numerator and denominator bit lengths and tuple overhead.</li><li><b>minor</b> — Section 1 and Section 5: fixed-mass ranking lower bounds: Explicitly qualify these lower bounds for $B(m,\tau,L)$ by the budget needed to admit the constructed family, including the ranking cost: $L\geq R+C_{\mathrm{mass}}\tau\log_2\tau$ for a suitable encoding-dependent constant.</li><li><b>major</b> — Section 6 and the requested asymptotically tight characterization: The output does not settle all feasible budgets. The precision lower bound is uninformative near the minimum mass-encoding budget, and for $1&lt;a&lt;2$ the supplied bounds can leave a gap between the upper term involving $m^2\log_2m$ and the lower bound involving $\tau\log_2m$. Matching bounds in these remaining ranges are required to resolve USER_TASK.</li></ul>
+<div class="pre"><p>The output establishes substantial partial results. The compressed certificate construction and both lower-bound constructions are sound under a conventional binary encoding of rationals. However, it does not determine the asymptotically tight certificate length for every feasible budget, as <code>USER_TASK</code> requests. The prover correctly acknowledges this limitation.</p><p>I found no false central mathematical step. The principal major issue is incomplete coverage of the requested parameter range; the remaining issues concern encoding assumptions and budget qualifications.</p><ul><li><b>Encoding convention and scope of the claims</b></li></ul><p>The decomposition<br>$$
+   R=\tau m\lceil\log_2m\rceil,\qquad M=L-R
+   $$<br>is correct under the explicitly stated fixed-width encoding of rankings, provided the remaining private-input encoding consists exactly of the mass tuple.</p><p>Excluding public capacities from this private-input budget is consistent with the task’s description of the encoded mass distribution and ranking profile.</p><p><b>Minor issue:</b> The supplied inputs do not include <code>NOTES</code>, and “a fixed self-delimiting encoding” does not specify its length overhead. The numerical lower bounds require an encoding whose length is bounded by a constant times the total numerator and denominator bit lengths, with suitable tuple overhead. Self-delimitation alone does not guarantee that property.</p><p><b>Minimum clarification:</b> State the required encoding-length bound explicitly, or specify the actual encoding. Present the results as conditional on that convention, without relying on unavailable <code>NOTES</code>.</p><ul><li><b>Termination and equivalence of sequential and simultaneous clearing</b></li></ul><p>The residual-total invariant is correct. A cycle contains equally many types and schools, so clearing it subtracts the same total quantity from both sides.</p><p>If the common residual total is positive, both vertex classes are nonempty. Every active vertex has an outgoing edge, and a finite functional digraph contains a directed cycle. Each clearing exhausts at least one vertex, so the bound of at most $\tau+m$ individual clearings is valid.</p><p><b>Lemma 1 is correct.</b> Distinct current cycles are vertex-disjoint. Clearing one leaves all residual quantities on the other unchanged. A surviving type’s favorite available school remains its favorite when other schools disappear; likewise, a school’s surviving highest-priority type remains highest priority when other types disappear. Thus the second cycle and its clearing amount remain unchanged.</p><p><b>Lemma 2 is correct.</b> The induction includes accumulated allocations in the state, which is essential. In the different-first-cycle case, commutation supplies the common successor state, and induction applies to each state with fewer active vertices. The zero-residual terminal case follows from the preceding termination argument.</p><p>Consequently, sequential clearing has a unique terminal allocation, and serializing each simultaneous round preserves its allocation. This establishes equivalence with the specified weighted TTC mechanism.</p><ul><li><b>Correctness of the compressed simulation</b></li></ul><p>The pointer invariant is valid: every revealed pointer identifies the type’s actual favorite available school and remains correct until that school disappears.</p><p>The existence argument for step 4 is also valid. If every school pointed to a type with a known pointer, following alternating school and type pointers would produce a fully specified directed cycle. Therefore the absence of such a cycle guarantees an eligible school.</p><p>Every cleared cycle is consequently a genuine current TTC cycle. Together with termination and Lemma 2, this proves correctness of the simulation.</p><p>The encoder can provide the required school choices because it sees the entire profile. The decoders can reproduce the simulation from public priorities, certified masses, and the choice stream. Ignoring their own private rankings is permitted by the representation definition.</p><ul><li><b>Sponsorship and the revelation bound</b></li></ul><p><b>Lemma 3 is correct.</b> While a sponsor school and its sponsored type remain active, that school continues pointing to that type. The school therefore cannot sponsor another type during this period. A deleted school never sponsors again.</p><p>This also handles the potentially delicate case of a sponsored type surviving its sponsor’s deletion: the deleted sponsor cannot subsequently be reused. Thus permanent sponsors are distinct among active previously queried types, giving the stated bound of $m$.</p><p><b>Lemma 4 is correct.</b> Each repeated query requires a preceding pointer erasure. At a deletion step, at most $m$ surviving previously queried types can lose pointers. There are at most $m-1$ school-deletion steps leaving positive capacity. A final deletion leaving zero capacity also leaves zero residual type mass and cannot cause a later query.</p><p>Charging repeated queries to distinct erasures gives<br>$$
+   J=\tau+m(m-1).
+   $$</p><ul><li><b>Certificate counting and sparse allocation support</b></li></ul><p>There are fewer than $2^{M+1}$ binary mass strings of length at most $M$, and exactly $m^J$ streams of $J$ school choices. Therefore the claimed certificate-alphabet bound is correct.</p><p>This is a bound on $\log_2|\mathcal C|$, so counting $m$-ary streams directly is legitimate; there is no need to replace $\log_2m$ by a rounded binary-symbol length.</p><p>The full-input alternative also has the stated alphabet-size bound. Taking the better protocol is valid for each fixed public instance, and therefore gives the claimed worst-case upper bound.</p><p>Malformed certificates may receive arbitrary deterministic outputs. The task imposes correctness for an appropriate certificate on each admissible input, rather than soundness for every certificate.</p><p>The sparse-support corollary is correct. Every positive allocation uses a revealed pointer, and a type cannot return to a previously abandoned allocation school because that school has been deleted. Hence<br>$$
+   \sum_t|\{h:x_{t,h}&gt;0\}|\leq J.
+   $$<br>Every positive-mass type receives its entire mass, so subtracting $\tau$ gives the claimed bound on additional support entries and on the number of split types.</p><ul><li><b>Precision lower bound</b></li></ul><p>The construction satisfies the task’s positivity and total-mass requirements. In the stipulated regime, $\tau\geq3$, so the filler construction has at least one filler and is well-defined.</p><p>The filler masses sum to $1/4$. The remaining two masses sum to $3/4$, so the full mass tuple sums to one.</p><p>With identical school priorities, every active school points to the same highest-priority active type. Its favorite-school edge therefore produces the only directed cycle. The sequential-service description is correct.</p><p>For the specified range of $j$,<br>$$
+   \frac14&lt;y_j&lt;\frac12.
+   $$<br>Thus the distinguished type receives exactly $1/4$ at the first school and finishes at the second. Its normalized first-school allocation is indeed<br>$$
+   \frac1{4y_j}.
+   $$</p><p>These outputs are distinct while its decoder’s private ranking is fixed. Therefore different family members require different certificates. The estimate<br>$$
+   \log_2(2^{k-2}-1)\geq k-3
+   $$<br>holds for every $k\geq3$, including the endpoint.</p><p>Subject to the encoding clarification in item 1, the mass-length estimate and the resulting lower bound are valid. Choosing the largest admissible integer $k$ accounts for the additive constant; when no such $k$ fits, the displayed lower bound follows from nonnegativity.</p><ul><li><b>Small-prime construction</b></li></ul><p>The elementary prime-counting argument is correct.</p><p>The chosen even integer $N$ satisfies the stated quadratic bounds. The central binomial coefficient is at least the average binomial coefficient. The displayed prime-exponent formula is correct, each summand is zero or one, and each prime’s contribution is at most $N$. Hence<br>$$
+   \binom{N}{N/2}\leq N^{\pi(N)}
+   $$<br>follows.</p><p>The subsequent numerical bounds hold throughout the asserted range. In particular, writing $b=r+2\geq3$, the stated estimates imply<br>$$
+   \frac{N}{2\log_2N}\geq\frac{8b^2}{2b+6}\geq b.
+   $$<br>Removing the primes $2$ and $3$ therefore leaves at least $r$ primes satisfying the required size bound.</p><p>No unverified prime-distribution theorem is being invoked.</p><ul><li><b>Fixed-mass ranking lower bound for at least three schools</b></li></ul><p>The type counts are correct:<br>$$
+   s+2r+f=\tau,\qquad f\in\{1,2\}.
+   $$<br>The condition $\tau\geq2m+4$ also implies $r\geq\tau/4$.</p><p>Every mass is positive, each selector-partner pair has the stated total, and all masses sum to one.</p><p>The total selector mass satisfies<br>$$
+   \sigma\leq\frac1{20s}&lt;\frac1{4s}.
+   $$<br>Thus selectors can all finish at their chosen first schools.</p><p>Each probe encounters remaining first-school capacity<br>$$
+   \frac1{4s}-\sigma_j,
+   $$<br>which is positive and smaller than its mass. Earlier probes consume only their own small schools and the fallback school. The total fallback requirement is $1/4+\sigma$, strictly below its initial capacity. Therefore the probe-allocation formula is correct.</p><p>The modular argument proves distinctness of reciprocal-prime subset sums. Consequently, the entire probe-output tuple identifies the selector assignment function.</p><p>The certificate collision argument uses multiple decoders correctly: if two functions differ, at least one probe must have a different output, while that probe’s ranking and all masses remain fixed. The same certificate cannot serve both inputs.</p><p>Finally, $\log_2(m-1)$ is comparable to $\log_2m$ for $m\geq3$, giving the asserted lower-bound order. The individual mass encodings have the claimed logarithmic size under the conventional encoding assumption.</p><p><b>Minor issue:</b> This lower bound for $B(m,\tau,L)$ applies only when the budget accommodates the fixed masses and all explicit rankings.</p><p><b>Minimum clarification:</b> State the budget condition explicitly, for example that the family is admissible once<br>$$
+   L\geq R+C_{\mathrm{mass}}\tau\log_2\tau
+   $$<br>for a suitable encoding-dependent constant.</p><ul><li><b>Two-school construction</b></li></ul><p>The counts, positive masses, and total mass are correct for $\tau\geq4$. The priority convention inherited from the preceding construction places selectors before the probe.</p><p>Selectors assigned to either school fit because their total mass is at most $1/20$. The probe’s first-school allocation has the stated form. Its completion at the second school remains feasible even after selectors choosing that school have been served.</p><p>Reciprocal-prime subset-sum injectivity again prevents certificate collisions. Since $r$ is proportional to $\tau$ on the asserted range, the lower bound $\Omega(\tau)$ follows.</p><ul><li><b>Consequences and unresolved parameter ranges</b></li></ul><p>The matching $\Theta(M)$ claims follow from the proved upper and lower bounds when $M$ exceeds the stated baseline and overhead terms by a sufficiently large constant factor.</p><p>The simplification when $\tau\geq m^2$ is valid because $\tau\log_2\tau$ dominates both relevant overhead terms.</p><p>The example disproving a uniform $\Theta(L)$ assertion under the selected encoding convention is also valid. For fixed $a&gt;1$,<br>$$
+    \frac1m+\frac m\tau\longrightarrow0,
+    $$<br>and the displayed certificate upper bound is therefore $o(L)$.</p><p><b>Major limitation relative to <code>USER_TASK</code>:</b> These results do not provide an asymptotically tight characterization for every feasible budget. In particular, the precision lower bound becomes uninformative near the minimum mass-encoding budget. Moreover, when $1&lt;a&lt;2$, the supplied bounds can retain a gap between the upper term involving $m^2\log_2m$ and the fixed-mass lower bound involving $\tau\log_2m$.</p><p>This is an acknowledged incompleteness, not a contradiction or a false theorem.</p><p><b>Required additional work:</b> Supply matching bounds throughout these remaining ranges, with their budget conditions stated explicitly. The present proof does not contain the mathematics needed to close them.</p><ul><li><b>Exact computation and running times</b></li></ul><p>Scaling by the product of the mass and capacity denominators is valid. Its bit length is bounded by $O(K)$, and all residuals and individual allocation entries remain integers between zero and $D$.</p><p>The ordinary TTC bound uses a valid upper bound on the number of rounds. The compressed simulation bound correctly counts pointer revelations and cycle clearings. The stated conservative bit-operation bounds are consistent with straightforward exact arithmetic.</p><p>The substitutions using $\tau\geq m^a$ are correct, including the exponent<br>$$
+    1+\frac1a+\max\left\{1,\frac2a\right\}
+    $$<br>for compressed simulation.</p><p>The dependence on $\ell_q$ is necessary when public capacity precision is excluded from $L$. Accordingly, the proved bounds are in terms of $K=L+\ell_q$, rather than solely $m,\tau,L$. The prover explicitly identifies this qualification and gives the alternative when capacity encoding is included in $L$.</p><p>The reported random-instance check is not independently reproducible from the supplied material. It is not used in the proofs and supplies no necessary mathematical justification.</p><ul><li><b>Use of external results and overall adjudication</b></li></ul><p>The discrete comparison is contextual; no discrete theorem or continuum cutoff theorem is used to justify the new bounds. The distinction between representation and verification agrees with the model discussed in [Gonczarowski–Thomas, Section 5](https://arxiv.org/html/2212.08709v3#S5). No unverified external theorem application blocks the constructions.</p><p>The appropriate status is <b>partial</b>. The work proves meaningful bounds and a correct compressed representation protocol, but leaves part of the requested tight characterization unresolved. Under the mandated output schema, the continuous status must therefore be <b>unresolved</b>, despite the separately established exact simulation algorithms.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

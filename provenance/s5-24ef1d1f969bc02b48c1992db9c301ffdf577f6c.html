@@ -1,0 +1,182 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-24ef1d1f969bc02b48c1992db9c301ffdf577f6c — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-24ef1d1f969bc02b48c1992db9c301ffdf577f6c <span style="font-weight:normal;color:#8a7350">(s5-24ef1d1f969bc02b48c1992db9c301ffdf577f6c)</span></h1>
+<p class="banner">claim: resolved · adversarial review: proved · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> The finite-support mass objective is exactly a specialization of the anchor’s weighted $\alpha$-fair stationary objective, with $w_i=\mu_i^\alpha$ for $\alpha\ne1$ and $w_i=\mu_i$ for logarithmic utility. The stationary characterization applies under the verified positive-ratio conditions, with zero-reward cases handled separately.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 5 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite support \(T\) of worker types with rational masses \(\mu_t&gt;0\) summing to one, a finite deadline set \(D\), and rational means \(a_{td}=\mathbb{E}[\min\{X_t,d\}]&gt;0\) and \(q_{td}=\mathbb{E}[R_t(d)]\), choose a stationary lottery \(p_{td}\geq 0\), with \(\sum_{t,d}p_{td}=1\), to maximize \(F_\alpha(p)=\sum_{t\in T}\mu_t\frac{(\rho_t(p)/\mu_t)^{1-\alpha}}{1-\alpha}\), using the logarithmic limit at \(\alpha=1\), where \(\rho_t(p)=\frac{\sum_d p_{td}q_{td}}{\sum_{j,d}p_{jd}a_{jd}}\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A genuinely open proof task cannot be supplied for this anchor and formulation without changing the question. The anchor already treats stationary lotteries over finitely many groups and deadlines with arbitrary positive weights; it does not require an explicit list of individual workers.<br>The proposed finite-support mass objective is exactly a specialization of that weighted objective: for \(\alpha\ne1\), its weights are \(w_t=\mu_t^\alpha\); for \(\alpha=1\), its weights are \(w_t=\mu_t\), with an additive constant independent of the lottery. This identification is an algebraic inference from the definitions.<br>The existing result characterizes an optimal stationary lottery for these weights, including logarithmic utility. Thus the mass formulation is already covered at the level of the anchor’s algorithmic characterization. [Verified source](https://proceedings.neurips.cc/paper/2020/file/9ec0cfdc84044494e10582436e013e64-Paper.pdf).</p></div>
+
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Scope and conclusion</h3><p>The finite-support mass objective is a specialization of the anchor’s weighted stationary objective. The normalized optimal-lottery formula applies when its reward-to-time ratios and normalization are well-defined. Zero-reward cases require explicit treatment, given below.</p><p>I use the formulation from <code>NOTES</code>: a nonempty finite group set $I$, a nonempty finite deadline set $D$, positive finite masses $\mu_i$, and fairness parameter $\alpha&gt;0$. The feasible stationary lotteries and action statistics remain unchanged. The conclusion concerns stationary reward rates, rather than exact optimization over history-dependent policies at a finite time budget.</p><h3>2. Definitions and correspondence with the anchor</h3><p>For each action $(i,d)$, assume finite expected reward $a_{i,d}\geq0$ and finite expected processing time $b_{i,d}&gt;0$. A stationary lottery satisfies</p><p>$$
+P(i,d)\geq0,\qquad \sum_{i\in I}\sum_{d\in D}P(i,d)=1.
+$$</p><p>Define</p><p>$$
+T(P)=\sum_{i,d}P(i,d)b_{i,d},
+\qquad
+\rho_i(P)=\frac{\sum_dP(i,d)a_{i,d}}{T(P)}.
+$$</p><p>The denominator is positive because it is a convex combination of strictly positive numbers.</p><p>In the anchor, these statistics are</p><p>$$
+a_{i,d}=\mathbb E\!\left[R_{i,1}\mathbf1_{\{X_{i,1}\leq d\}}\right],
+\qquad
+b_{i,d}=\mathbb E[\min\{X_{i,1},d\}].
+$$</p><p>Its positive completion times and positive finite deadlines imply $b_{i,d}&gt;0$; its bounded deadline-truncated rewards imply $a_{i,d}&lt;\infty$. Proposition 2 gives precisely the displayed rate expression. Sections 2–3 model finite groups and deadlines, omit individual assignment within groups, and allow arbitrary positive utility weights. Definition 3 optimizes the limiting stationary objective. [Cayci, Gupta, and Eryilmaz, *Group-Fair Online Allocation in Continuous Time*](https://proceedings.neurips.cc/paper/2020/file/9ec0cfdc84044494e10582436e013e64-Paper.pdf).</p><p>For $x&gt;0$, let</p><p>$$
+u_\alpha(x)=
+\begin{cases}
+\dfrac{x^{1-\alpha}}{1-\alpha},&amp;\alpha\ne1,\\
+\log x,&amp;\alpha=1.
+\end{cases}
+$$</p><p>Use the one-sided extensions</p><p>$$
+u_\alpha(0)=
+\begin{cases}
+0,&amp;0&lt;\alpha&lt;1,\\
+-\infty,&amp;\alpha\geq1.
+\end{cases}
+$$</p><p>The mass and weighted objectives are, respectively,</p><p>$$
+F_\alpha(P)=\sum_i\mu_i u_\alpha\!\left(\frac{\rho_i(P)}{\mu_i}\right),
+\qquad
+G_{\alpha,w}(P)=\sum_iw_i u_\alpha(\rho_i(P)).
+$$</p><p>All these extended sums are defined: no summand is $+\infty$.</p><h3>3. Proven claim: exact objective equivalence</h3><p>If $\alpha\ne1$ and $\rho_i(P)&gt;0$, then</p><p>$$
+\mu_i u_\alpha\!\left(\frac{\rho_i(P)}{\mu_i}\right)
+=
+\frac{\mu_i\bigl(\rho_i(P)/\mu_i\bigr)^{1-\alpha}}{1-\alpha}
+=
+\mu_i^\alpha u_\alpha(\rho_i(P)).
+$$</p><p>This equality also holds at zero rates under the specified extensions. Thus</p><p>$$
+F_\alpha(P)=G_{\alpha,w}(P),
+\qquad w_i=\mu_i^\alpha&gt;0.
+$$</p><p>For $\alpha=1$, including the extended interpretation at zero,</p><p>$$
+\mu_i\log\!\left(\frac{\rho_i(P)}{\mu_i}\right)
+=
+\mu_i\log\rho_i(P)-\mu_i\log\mu_i.
+$$</p><p>Consequently,</p><p>$$
+F_1(P)=G_{1,w}(P)-\sum_i\mu_i\log\mu_i,
+\qquad w_i=\mu_i&gt;0.
+$$</p><p>The subtracted constant is finite and independent of $P$. Therefore, in every case,</p><p>$$
+\operatorname*{arg\,max}_P F_\alpha(P)
+=
+\operatorname*{arg\,max}_P G_{\alpha,w}(P).
+$$</p><p>This includes all ties and degenerate extended-valued cases.</p><h3>4. Precise stationary characterization and its domain</h3><p>Define the optimal reward-to-time ratio of group $i$ by</p><p>$$
+r_i^*=\max_{d\in D}\frac{a_{i,d}}{b_{i,d}}.
+$$</p><p>Choose any maximizing deadline $d_i^*$ and write $\tau_i=b_{i,d_i^*}&gt;0$. The paper denotes this mean processing time by $\mu_i$; here $\tau_i$ avoids confusion with the group mass.</p><p>When every $r_i^*&gt;0$, the stationary lottery characterized by Proposition 5, for $\alpha\ne1$, is</p><p>$$
+c_i=w_i^{1/\alpha}(r_i^*)^{1/\alpha-1},
+\qquad
+\phi_i^*=\frac{c_i}{\sum_jc_j},
+$$</p><p>$$
+P^*(i,d)=
+\mathbf1_{\{d=d_i^*\}}
+\frac{c_i/\tau_i}{\sum_jc_j/\tau_j}.
+$$</p><p>For logarithmic utility, Corollary 1(i) gives</p><p>$$
+\phi_i^*=\frac{w_i}{\sum_jw_j},
+\qquad
+P^*(i,d)=
+\mathbf1_{\{d=d_i^*\}}
+\frac{w_i/\tau_i}{\sum_jw_j/\tau_j}.
+$$</p><p>Here $\phi_i^*$ is the processing-time fraction, rather than the action-selection probability. These are the relevant stationary formulas from [Proposition 5 and Corollary 1(i)](https://proceedings.neurips.cc/paper/2020/file/9ec0cfdc84044494e10582436e013e64-Paper.pdf). Positive finite ratios and weights make every numerator and normalization positive and finite. No uniqueness of the maximizing deadline is required.</p><p>The following proof verifies these formulas and supplies their zero-reward boundary cases without invoking finite-budget assertions.</p><h3>5. Proof of the characterization</h3><h3>Reduction to processing-time fractions</h3><p>For any lottery, set</p><p>$$
+q_{i,d}=\frac{P(i,d)b_{i,d}}{T(P)}.
+$$</p><p>Then $q_{i,d}\geq0$ and $\sum_{i,d}q_{i,d}=1$. Conversely, every such $q$ determines a lottery through</p><p>$$
+P(i,d)=
+\frac{q_{i,d}/b_{i,d}}
+{\sum_{j,e}q_{j,e}/b_{j,e}}.
+$$</p><p>Indeed, putting $H=\sum_{j,e}q_{j,e}/b_{j,e}&gt;0$, this lottery has $T(P)=1/H$ and recovers the original $q$.</p><p>Write</p><p>$$
+r_{i,d}=\frac{a_{i,d}}{b_{i,d}},
+\qquad
+\phi_i=\sum_dq_{i,d}.
+$$</p><p>The rates satisfy</p><p>$$
+\rho_i(P)=\sum_dq_{i,d}r_{i,d}\leq r_i^*\phi_i.
+$$</p><p>Every vector $\phi_i\geq0$ with $\sum_i\phi_i=1$ attains equality simultaneously: take $q_{i,d_i^*}=\phi_i$ and all other entries zero.</p><p>Since $u_\alpha$ is increasing, maximizing $G_{\alpha,w}$ therefore reduces exactly to maximizing</p><p>$$
+H_{\alpha,w}(\phi)=\sum_iw_i u_\alpha(r_i^*\phi_i)
+$$</p><p>over this simplex.</p><h3>All groups have positive reward-to-time ratios</h3><p>Assume $r_i^*&gt;0$ for every $i$. On positive arguments,</p><p>$$
+u_\alpha&#x27;(x)=x^{-\alpha}&gt;0,
+\qquad
+u_\alpha&#x27;&#x27;(x)=-\alpha x^{-\alpha-1}&lt;0.
+$$</p><p>Thus each summand is strictly concave.</p><p>For $\alpha\ne1$, put</p><p>$$
+c_i=w_i^{1/\alpha}(r_i^*)^{1/\alpha-1},
+\qquad Z=\sum_ic_i,
+\qquad \phi_i^*=\frac{c_i}{Z}.
+$$</p><p>Every $\phi_i^*$ is positive, and direct differentiation gives</p><p>$$
+\left.
+\frac{d}{dx}\bigl[w_i u_\alpha(r_i^*x)\bigr]
+\right|_{x=\phi_i^*}
+=
+w_i(r_i^*)^{1-\alpha}(\phi_i^*)^{-\alpha}
+=
+Z^\alpha.
+$$</p><p>The derivatives are therefore equal across groups. Concavity gives, for every feasible $\phi$,</p><p>$$
+H_{\alpha,w}(\phi)
+\leq
+H_{\alpha,w}(\phi^*)
++
+Z^\alpha\sum_i(\phi_i-\phi_i^*)
+=
+H_{\alpha,w}(\phi^*).
+$$</p><p>For $0&lt;\alpha&lt;1$, the tangent inequality extends to zero by continuity. For $\alpha&gt;1$, a zero coordinate makes the left side $-\infty$, so the inequality remains valid. Strict concavity makes $\phi^*$ the unique maximizing time-fraction vector.</p><p>For $\alpha=1$, let $W=\sum_iw_i$ and $\phi_i^*=w_i/W$. Then</p><p>$$
+\left.
+\frac{d}{dx}\bigl[w_i\log(r_i^*x)\bigr]
+\right|_{x=\phi_i^*}
+=
+\frac{w_i}{\phi_i^*}=W.
+$$</p><p>The same tangent argument proves optimality and uniqueness; boundary vectors have objective $-\infty$.</p><p>Applying the inverse transformation from $q$ to $P$ yields exactly the lotteries in Section 4. The optimal stationary weighted values are</p><p>$$
+\max_PG_{\alpha,w}(P)=\frac{Z^\alpha}{1-\alpha}
+\qquad(\alpha\ne1),
+$$</p><p>and</p><p>$$
+\max_PG_{1,w}(P)
+=
+\sum_iw_i\log\!\left(\frac{r_i^*w_i}{W}\right).
+$$</p><p>For the power case, the value follows by substituting $\phi_i^*=c_i/Z$ and using $c_i^\alpha=w_i(r_i^*)^{1-\alpha}$.</p><h3>Zero-reward groups when $0&lt;\alpha&lt;1$</h3><p>Let</p><p>$$
+I_+=\{i:r_i^*&gt;0\}.
+$$</p><p>If $I_+$ is empty, all $a_{i,d}$ are zero because $b_{i,d}&gt;0$ and $a_{i,d}\geq0$. Every rate and both objectives are zero. Every lottery is optimal; no normalized formula is needed.</p><p>Suppose $I_+$ is nonempty. Zero-reward groups contribute zero utility. For a feasible $\phi$, put $s=\sum_{i\in I_+}\phi_i$.</p><p>If $s=0$, its objective is zero, whereas allocating positive time to a positive-reward group gives strictly positive utility. Such a vector is not optimal.</p><p>If $0&lt;s&lt;1$, replace $\phi_i$ by $\phi_i/s$ on $I_+$ and by zero elsewhere. This is feasible, increases every positive rate among those groups, and increases at least one strictly. Strict increase of the utilities proves that the original vector is not optimal.</p><p>Hence every optimum allocates all processing time to $I_+$. Applying the preceding positive-ratio proof on $I_+$ gives the characterization, with all sums restricted to $I_+$ and zero lottery probability elsewhere. Its normalizations are positive.</p><h3>Zero-reward groups when $\alpha\geq1$</h3><p>If some $r_i^*=0$, then $\rho_i(P)=0$ for every lottery. Its positively weighted utility is $-\infty$, while all other summands are finite or $-\infty$. Therefore,</p><p>$$
+F_\alpha(P)=G_{\alpha,w}(P)=-\infty
+\qquad\text{for every }P.
+$$</p><p>There is no finite-valued feasible objective. Under extended-valued maximization, every lottery attains the common value $-\infty$. The positive-ratio characterization is not applicable.</p><p>Conversely, if every $r_i^*&gt;0$, giving positive probability to one positive-reward action per group produces simultaneous positive rates. Thus this condition is exactly what is needed for a finite-valued feasible objective when $\alpha\geq1$.</p><h3>6. Consequence for the mass formulation</h3><p>For the mass weights, the power-utility coefficients simplify to</p><p>$$
+c_i=\mu_i(r_i^*)^{1/\alpha-1}.
+$$</p><p>For logarithmic utility,</p><p>$$
+\phi_i^*=\frac{\mu_i}{\sum_j\mu_j}.
+$$</p><p>These substitutions preserve the feasible lotteries and require no list of individual workers. Zero-reward cases have been completely accounted for above.</p><p>Accordingly, the finite-support mass formulation is already covered by the weighted stationary optimization problem: its nondegenerate characterization is the anchor’s formula with the displayed weights, and its degenerate cases are elementary. This establishes the stated specialization, without asserting an additional computational-complexity classification.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The output resolves the assigned specialization claim. Its algebra, stationary optimization formulas, and treatment of zero-reward groups are correct under its explicitly stated assumptions. No major or minor mathematical issues were found.</p><h3>1. Scope and assumptions</h3><p>The relevant target is the identification of the finite-support mass objective with the anchor’s weighted stationary objective, including logarithmic utility. The output addresses this directly. It correctly distinguishes optimization of stationary reward rates from exact finite-budget optimization over history-dependent policies.</p><p>The output assumes nonempty finite sets $I$ and $D$, positive finite masses $\mu_i$, and a finite real parameter $\alpha&gt;0$. These match the intended weighted fairness setting. Although <code>NOTES</code> is not supplied, the definitions and assumptions used from it are reproduced explicitly, so verification does not depend on that unavailable reference.</p><p>The action assumptions<br>$$
+0\leq a_{i,d}&lt;\infty,\qquad 0&lt;b_{i,d}&lt;\infty
+$$<br>ensure that every feasible lottery has a positive finite denominator $T(P)$ and finite nonnegative rates $\rho_i(P)$. Thus all subsequent ratios are defined.</p><h3>2. Correspondence with the cited anchor</h3><p>The source supports the claimed correspondence: Section 2 uses finitely many groups and positive finite deadlines, models group-level reward and completion-time statistics, and expressly omits assignments within groups. Definition 1 permits arbitrary positive weights. Proposition 2 supplies the displayed stationary rate expression, and Definition 3 defines optimization of its utility sum. Proposition 5 and Corollary 1(i) contain the stated power and logarithmic lottery formulas. The output appropriately restricts their normalized use to positive reward-to-time ratios. [Verified paper](https://proceedings.neurips.cc/paper/2020/file/9ec0cfdc84044494e10582436e013e64-Paper.pdf).</p><p>The output also provides an independent verification of the optimization formulas. Consequently, its conclusion does not depend on importing finite-budget claims from the paper.</p><h3>3. Objective equivalence</h3><p>For $\alpha\ne1$, the calculation<br>$$
+\mu_i\left(\frac{\rho_i}{\mu_i}\right)^{1-\alpha}
+=
+\mu_i^\alpha\rho_i^{1-\alpha}
+$$<br>is correct for positive rates. Division by $1-\alpha$ preserves the asserted equality, including when this denominator is negative.</p><p>The extensions at zero are consistent:</p><ul><li>For $0&lt;\alpha&lt;1$, both corresponding terms equal zero.</li><li>For $\alpha&gt;1$, both corresponding terms equal $-\infty$, since their multipliers are positive and finite.</li></ul><p>For $\alpha=1$, the logarithmic identity is correct on positive rates. At zero, both sides equal $-\infty$ under the stated interpretation. The constant<br>$$
+\sum_i\mu_i\log\mu_i
+$$<br>is finite because the index set is finite and every mass is positive and finite.</p><p>Every summand is finite or $-\infty$, so there is no undefined combination of opposite infinities. Equality of objectives, or their difference by a finite constant, therefore establishes equality of their maximizing sets, including the explicitly adopted extended-valued convention.</p><h3>4. Transformation to processing-time fractions</h3><p>The transformation<br>$$
+q_{i,d}=\frac{P(i,d)b_{i,d}}{T(P)}
+$$<br>correctly sends feasible lotteries to the probability simplex.</p><p>For the proposed inverse, the normalization<br>$$
+H=\sum_{j,e}\frac{q_{j,e}}{b_{j,e}}
+$$<br>is positive and finite. Substitution gives $T(P)=1/H$ and recovers $q$, as claimed. Thus the transformation is a bijection; no feasible distributions are lost.</p><p>The rate identity<br>$$
+\rho_i(P)=\sum_dq_{i,d}\frac{a_{i,d}}{b_{i,d}}
+$$<br>and bound $\rho_i(P)\leq r_i^*\phi_i$ are correct. Finiteness and nonemptiness of $D$ ensure a maximizing deadline exists. The specified choice of $q$ attains all these bounds simultaneously for every feasible time-fraction vector.</p><p>Monotonicity therefore justifies the exact reduction to $H_{\alpha,w}$. This remains valid with the stated values at zero.</p><h3>5. Positive-ratio power case</h3><p>Every coefficient $c_i$ and its normalization $Z$ is positive and finite. The exponent identity<br>$$
+c_i^\alpha=w_i(r_i^*)^{1-\alpha}
+$$<br>is correct.</p><p>The derivative at $\phi_i^*=c_i/Z$ is correctly computed as $Z^\alpha$, independently of $i$. The supporting-tangent inequality applies because each summand is differentiable and concave on positive arguments. The simplex constraint cancels the summed linear term.</p><p>The boundary treatment is sufficient: continuity handles $0&lt;\alpha&lt;1$, while a zero coordinate gives objective $-\infty$ for $\alpha&gt;1$. Strict concavity establishes uniqueness of the maximizing time-fraction vector. This does not assert uniqueness of the maximizing lottery when deadlines tie.</p><p>The inverse transformation produces the displayed lottery. Substitution into the objective verifies the stated optimal value $Z^\alpha/(1-\alpha)$, including its negative sign when $\alpha&gt;1$.</p><h3>6. Positive-ratio logarithmic case</h3><p>The derivative calculation<br>$$
+\frac{w_i}{\phi_i^*}=W
+$$<br>is correct. The same tangent inequality establishes optimality, and strict concavity establishes uniqueness of the time-fraction vector. Boundary vectors have objective $-\infty$.</p><p>Both the lottery normalization and the displayed optimal logarithmic value are correct. The factors $w_i$ in that value are retained.</p><h3>7. Zero-reward groups for $0&lt;\alpha&lt;1$</h3><p>If $I_+$ is empty, nonnegativity of rewards and positivity of processing times imply that every action reward is zero. Both objectives are therefore identically zero.</p><p>When $I_+$ is nonempty, a vector with $s=0$ has zero objective and cannot maximize it, since a positive-reward allocation gives positive utility.</p><p>For $0&lt;s&lt;1$, the rescaling is feasible. Every previously positive rate in $I_+$ increases, and at least one such rate exists because $s&gt;0$. Strict increase of utility proves strict improvement. Thus every optimum has $s=1$, and restricting the positive-ratio calculation to $I_+$ is justified.</p><h3>8. Zero-reward groups for $\alpha\geq1$</h3><p>A group with $r_i^*=0$ has zero reward under every action and every lottery. Its weighted utility is $-\infty$, and no other term is $+\infty$. Hence both objectives are identically $-\infty$.</p><p>The claim that every lottery is optimal is explicitly conditional on extended-valued maximization. The output also correctly states that no finite-valued feasible objective exists.</p><p>Conversely, positive ratios for every group allow simultaneous positive rates by allocating positive probability to one positive-reward action per group. This verifies the claimed necessary and sufficient condition for finite-valued feasibility.</p><h3>9. Final adjudication</h3><p>The mass-weight substitutions are correct and preserve the feasible lotteries. The output establishes the intended specialization and verifies an optimal stationary lottery in every stated case. No additional lemma or clarification is needed.</p><p>It expressly declines to classify computational complexity. An optimal-lottery formula alone does not supply a complexity classification without an input representation and computational model; none is required by this task.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

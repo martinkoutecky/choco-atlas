@@ -1,0 +1,174 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2014-0411 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2014-0411 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2014-0411)</span></h1>
+<p class="banner">claim: resolved · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\rho_m=\Theta(1/(\log m)^2)\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For a non-adaptive adversary and any randomized online algorithm, the competitive ratio is O( log log m log m ), even in the special case of STNV.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>For \(m\) candidates, an instance is a piecewise-constant schedule \(\nu:[0,1]\to A\) with rational interval lengths summing to \(1\), fixed before the policy’s random choices. A randomized policy observes each arriving type \(\nu(s)\) but not the future, and may irrevocably add one candidate to an initially empty singleton slate. Let \(\mu_a=|\{s:\nu(s)=a\}|\), and let \(W_{\mathcal A}(\nu)\) be the mass whose top choice is on the slate when it arrives. Determine the asymptotic order in \(m\) of \(\rho_m=\sup_{\mathcal A}\inf_{\nu}\mathbb E[W_{\mathcal A}(\nu)]/\max_a\mu_a\); in particular, does Proposition 1’s \(O(\log\log m/\log m)\) upper bound hold for these ordered mass schedules?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(A=\{1,\ldots,m\}\), with \(m\ge2\). A type \(a\in A\) has unique top choice \(a\) and earns value \(1\) precisely when \(a\) is available; otherwise its value is \(0\).<br>A society is given by its support: the list of the \(\tau\) types with positive mass, each with its mass as a binary rational. Here \(\tau\) is the support size, not the number of possible types; masses sum to \(1\).<br>An ordered instance additionally specifies a right-continuous, piecewise-constant schedule \(\nu:[0,1)\to A\) with \(q\) intervals of positive rational lengths, inducing masses \(\mu_a=\int_0^1\mathbf1\{\nu(s)=a\}\,ds\). Let \(L\) be the total binary encoding length; state any running times in \(m,\tau,q,L\).<br>The entire instance is fixed before the policy&#x27;s random choices. The policy initially knows only \(A\) and the horizon \(1\); the support, masses, interval lengths, and future types are not revealed. At time \(s\), it observes \(s\) and the type history through \(s\).<br>A randomized measurable policy may, at a stopping time \(T\), irrevocably add any candidate \(C\in A\) to its initially empty slate of capacity one. Its choice may depend only on observations through \(T\) and its private randomness; it may also never select. Selection is effective immediately, giving \(W_{\mathcal A}(\nu)=\int_T^1\mathbf1\{\nu(s)=C\}\,ds\), or \(0\) if it never selects.<br>The offline benchmark is \(\max_{a\in A}\mu_a\). Define \(\rho_m=\sup_{\mathcal A}\inf_\nu \mathbb E[W_{\mathcal A}(\nu)]/\max_{a\in A}\mu_a\), over all such policies without computational restrictions and all admissible schedules.</p><p>What is the asymptotic order of \(\rho_m\) as \(m\to\infty\)? In particular, is \(\rho_m=O(\log\log m/\log m)\), or can ordered mass schedules admit a larger optimal competitive ratio?</p><p>For finite agent sequences, randomized policies against an oblivious adversary have competitive ratio at most \(O(\log\log m/\log m)\), already with capacity one and only top choices valued; a matching guarantee was left open [Oren–Lucier](https://www.cs.toronto.edu/~oren/cs_toronto/Publications_files/OnlineSocialChoice_final.pdf).<br>No result settling this exact continuous schedule problem was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Separated the instance&#x27;s support encoding from online information: masses and future schedule data are not provided to the policy, preserving the discrete information model.</li><li>Specified continuous observation of elapsed time and revealed types, with decisions formalized as measurable stopping times; interval lengths are not announced.</li><li>Allowed selection of any candidate, as in the discrete definition, rather than restricting selection to the currently arriving type.</li><li>Specified positive rational interval lengths, unit total mass, right-continuous schedules, and m at least two.</li><li>Specified immediate effectiveness of selection, zero welfare before selection, and permission never to select.</li><li>Introduced the interval count q and total encoding length L; imposed no computational restriction on the competitive-ratio supremum.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>In the stated observation model,<br>\[
+\rho_m=\Theta\!\left(\frac{1}{(\log m)^2}\right).
+\]</p><p>Thus the proposed upper bound holds, and can be strengthened to \(O(1/(\log m)^2)\). Ordered continuous schedules do not admit a larger competitive ratio.</p><p>The proof below is direct. The [cited finite-sequence bound of Oren–Lucier, Proposition 1](https://www.cs.toronto.edu/~oren/cs_toronto/Publications_files/OnlineSocialChoice_final.pdf) supplies context; it is not needed as a theorem in the argument.</p><p>Throughout, \(\ln\) denotes the natural logarithm, and \(\log_2\) denotes the binary logarithm.</p><h3>1. A matching lower bound</h3><p>For an observed schedule, define its cumulative masses by<br>\[
+x_a(s)=\int_0^s\mathbf 1\{\nu(u)=a\}\,du.
+\]<br>These are continuous, nondecreasing functions, determined by the observed history, and satisfy \(\sum_a x_a(s)=s\).</p><p>Write \(M=\max_a\mu_a\). Since the masses sum to one, \(1/m\le M\le1\).</p><h3>1.1. A policy for a guessed mass scale</h3><p>Fix a parameter \(\theta&gt;0\), and set<br>\[
+b=\frac{\theta}{\ln(2m)},\qquad
+z_a(s)=\frac{e^{x_a(s)/b}-1}{m},\qquad
+S(s)=\sum_{a=1}^m z_a(s).
+\]</p><p>Draw \(U\) uniformly from \((0,1)\). Select the currently observed type at the first time \(T&lt;1\) when \(S(T)\ge U\); if there is no such time, never select.</p><p>This is an admissible measurable policy. It uses only \(m\), the observed cumulative masses, and private randomness. In particular, \(S\) is continuous and adapted, so its threshold-hitting time is a stopping time.</p><p>Suppose now that \(\theta\le M\). Extend the cumulative functions continuously to time one. For a type attaining mass \(M\),<br>\[
+S(1)\ge\frac{e^{M/b}-1}{m}
+\ge\frac{2m-1}{m}&gt;1.
+\]<br>Consequently, there is a unique \(t_*&lt;1\) with \(S(t_*)=1\).</p><p>Before \(t_*\), only the currently observed type contributes to the increase of \(S\). The uniform threshold therefore gives, for \(s\le t_*\),<br>\[
+\Pr(T\le s,\ C=a)=z_a(s).
+\]<br>Indeed, the probability of selecting type \(a\) during a time interval is the increase of \(S\) on the portions of that interval having type \(a\); this increase is exactly the increase of \(z_a\). Interval boundaries have probability zero because \(U\) has a continuous distribution.</p><p>By integrating these selection probabilities, the expected welfare earned before \(t_*\) is<br>\[
+\begin{aligned}
+\mathbb E\!\left[\int_T^{t_*}\mathbf 1\{\nu(s)=C\}\,ds\right]
+&amp;=\sum_a\int_0^{t_*}z_a(s)\,dx_a(s)\\
+&amp;=\frac1m\sum_a\left[b\bigl(e^{x_a(t_*)/b}-1\bigr)-x_a(t_*)\right]\\
+&amp;=b-\frac{t_*}{m}.
+\end{aligned}
+\]</p><p>At \(t_*\), the equality \(S(t_*)=1\) means<br>\[
+\frac1m\sum_a e^{x_a(t_*)/b}=2.
+\]<br>Jensen’s inequality, applied to the convex exponential function, yields<br>\[
+e^{t_*/(mb)}
+=e^{\frac1m\sum_a x_a(t_*)/b}
+\le2.
+\]<br>Hence \(t_*/m\le b\ln2\), and the policy’s total expected welfare satisfies<br>\[
+\mathbb E[W]\ge b(1-\ln2)
+=\frac{(1-\ln2)\theta}{\ln(2m)}.
+\]</p><h3>1.2. Guessing without knowing the masses</h3><p>Let<br>\[
+J=\lfloor\log_2 m\rfloor+1,\qquad
+\theta_j=\frac{2^j}{m}\quad(0\le j&lt;J).
+\]<br>Choose \(j\) uniformly, then run the preceding policy with parameter \(\theta_j\).</p><p>For every \(M\in[1/m,1]\), one of these scales satisfies<br>\[
+\frac M2&lt;\theta_j\le M.
+\]<br>For this choice, the proved guarantee applies. Welfare for every other choice is nonnegative. Therefore<br>\[
+\mathbb E[W]\ge
+\frac{(1-\ln2)M}{2J\ln(2m)}.
+\]<br>Taking the infimum over schedules gives<br>\[
+\rho_m\ge
+\frac{1-\ln2}{2(\lfloor\log_2m\rfloor+1)\ln(2m)}
+=\Omega\!\left(\frac1{(\log m)^2}\right).
+\]</p><h3>2. Two facts used in the upper bound</h3><h3>2.1. Selection can be postponed until the chosen type is current</h3><p>Given any policy that chooses \(C\) at time \(T\), consider a policy that internally makes the same decision but postpones actual selection until the first time at or after \(T\) when \(C\) is current.</p><p>This is an admissible stopping rule: it waits for an observed occurrence of the already determined type. Because schedules have finitely many constant intervals, the first such occurrence exists whenever there is a future occurrence.</p><p>The postponement changes no welfare: the original policy earns zero between its decision and that first occurrence. If the type never appears again, both policies earn zero.</p><p>Thus, for the upper bound, it suffices to consider policies that select the currently observed type.</p><h3>2.2. Geometric block lengths bound every stopping rule’s expected residual</h3><p>Let a block have length \(D=\varepsilon G\), where<br>\[
+\Pr(G=k)=2^{-k}\quad(k=1,2,\ldots).
+\]<br>Thus \(\mathbb E[G]=2\) and \(\operatorname{Var}(G)=2\).</p><p>Suppose a policy selects the block’s type while that block is running. Its conditional expected remaining block length is at most \(2\varepsilon\).</p><p>To verify this also for stopping times, write the elapsed block time at selection as \(k\varepsilon+v\), with \(0\le v&lt;\varepsilon\). Observing that the block is still running reveals \(G\ge k+1\). Conditional on this survival, \(G-k\) again has the displayed geometric distribution.</p><p>Within this grid cell, the observation history reveals nothing further about the geometric continuation. Consequently, a stopping decision inside the cell cannot condition on that continuation, and its conditional expected residual is<br>\[
+\varepsilon\mathbb E[G-k\mid G\ge k+1]-v
+=2\varepsilon-v\le2\varepsilon.
+\]<br>At a grid boundary, right-continuity assigns a continuing block to the next cell, so the same calculation applies.</p><p>A deterministic cutoff can only reduce the remaining block length. The bound therefore remains valid for blocks truncated at such a cutoff.</p><h3>3. An oblivious distribution of rational schedules</h3><p>It suffices to construct the upper-bound family for sufficiently large \(m\). Define<br>\[
+N=\lfloor\sqrt m\rfloor,\qquad
+\ell=\left\lfloor\log_2\frac{m}{16N}\right\rfloor,\qquad
+h=\left\lfloor\frac12\log_2N\right\rfloor.
+\]<br>For sufficiently large \(m\), these are positive and \(N\ell\le m-1\).</p><p>Use \(N\ell\) distinct prefix types, arranged into \(\ell\) phases of \(N\) blocks each. Type \((i-1)N+j\) belongs to block \(j\) of phase \(i\).</p><p>Set<br>\[
+\delta_i=\frac{2^{i-1}}m,\qquad
+\varepsilon_i=\frac{\delta_i}{2}.
+\]<br>Independently draw geometric variables \(G_{i,j}\) with the distribution above. The proposed length of block \((i,j)\) is<br>\[
+D_{i,j}=\varepsilon_iG_{i,j},
+\]<br>so its mean is \(\delta_i\).</p><p>For each \(r\in\{1,\ldots,\ell\}\), construct a schedule \(\nu_r\) as follows:</p><ul><li>Process phases one through \(r\), in their specified order, using the drawn block lengths.</li><li>Stop this prefix when either those phases finish or time \(1/2\) is reached. Truncate the current block if necessary.</li><li>Divide the remaining horizon equally among all \(m\) types, in the fixed order \(m,1,\ldots,m-1\).</li></ul><p>The filler therefore gives each type at most \(1/m\) additional mass. Its first type, \(m\), is absent from every prefix.</p><p>All randomness determining the schedule is drawn before the policy’s private randomness. This is an oblivious distribution, not an adaptive adversary.</p><h3>4. Bounding online welfare</h3><p>Fix any policy, and apply the postponement from Section 2.1.</p><p>Couple its runs on all \(\nu_r\) using the same private randomness and the same geometric variables. Let \(p_i\) be its probability of selecting during prefix phase \(i\) on the longest schedule \(\nu_\ell\). Since there is only one selection,<br>\[
+\sum_{i=1}^{\ell}p_i\le1.
+\]</p><p>For \(i\le r\), the schedules \(\nu_r\) and \(\nu_\ell\) have identical observed histories throughout their common prefix phase \(i\). Their probabilities of selecting during that phase are therefore the same, namely \(p_i\). This remains true when the prefix is cut off early: every relevant schedule has the same cutoff.</p><p>Each prefix type occurs in only one prefix block. By Section 2.2, selection during phase \(i\) gives conditional expected remaining prefix welfare at most \(\delta_i\). Independently of the selection time and type, filler welfare is at most \(1/m\).</p><p>It follows that, for every \(r\),<br>\[
+\mathbb E[W(\nu_r)]
+\le\sum_{i=1}^r p_i\delta_i+\frac1m.
+\]<br>Here and below, expectations include the geometric variables and the policy’s private randomness.</p><h3>5. Bounding the offline benchmark</h3><p>Let<br>\[
+Z=\sum_{i=1}^{\ell}\sum_{j=1}^N D_{i,j}
+\]<br>be the total proposed length of all phases, before truncation.</p><p>The definition of \(\ell\) gives \(2^\ell\le m/(16N)\). Thus<br>\[
+\mathbb E[Z]
+=\frac{N(2^\ell-1)}m\le\frac1{16}.
+\]<br>Independence and \(\operatorname{Var}(D_{i,j})=\delta_i^2/2\) give<br>\[
+\operatorname{Var}(Z)
+=\frac N2\sum_{i=1}^{\ell}\delta_i^2
+=\frac{N(4^\ell-1)}{6m^2}
+\le\frac1{1536N}.
+\]<br>Chebyshev’s inequality therefore yields<br>\[
+\Pr(Z&gt;1/2)
+\le\frac{1/(1536N)}{(7/16)^2}
+=\frac1{294N}.
+\]</p><p>For each phase \(r\),<br>\[
+\Pr\!\left(\max_{1\le j\le N}G_{r,j}&lt;h\right)
+=\left(1-2^{-(h-1)}\right)^N
+\le e^{-N2^{-(h-1)}}
+\le e^{-2\sqrt N}.
+\]<br>The last inequality follows from \(2^h\le\sqrt N\).</p><p>On the event that \(Z\le1/2\) and \(\max_jG_{r,j}\ge h\), no phase is truncated, and phase \(r\) contains a block of length at least \(\varepsilon_rh\). Hence the offline benchmark \(M_r=\max_a\mu_a(\nu_r)\) satisfies<br>\[
+M_r\ge\frac{h\delta_r}{2}.
+\]</p><p>Writing<br>\[
+\eta=\frac1{294N}+e^{-2\sqrt N},
+\]<br>this benchmark lower bound fails with probability at most \(\eta\), uniformly in \(r\).</p><h3>6. Averaging normalized payoffs</h3><p>Always \(0\le W(\nu_r)\le M_r\). Using the benchmark lower bound on its good event, and the bound one on the complementary event, gives<br>\[
+\mathbb E\!\left[\frac{W(\nu_r)}{M_r}\right]
+\le\frac{2\,\mathbb E[W(\nu_r)]}{h\delta_r}+\eta.
+\]<br>Substituting the online-welfare bound and using \(\delta_i/\delta_r=2^{i-r}\),<br>\[
+\mathbb E\!\left[\frac{W(\nu_r)}{M_r}\right]
+\le
+\frac2h\left(\sum_{i=1}^r p_i2^{i-r}+2^{-(r-1)}\right)+\eta.
+\]</p><p>Sum this inequality over \(r\). The geometric sums satisfy<br>\[
+\sum_{r=1}^{\ell}\sum_{i=1}^r p_i2^{i-r}
+=\sum_{i=1}^{\ell}p_i\sum_{r=i}^{\ell}2^{i-r}
+\le2\sum_i p_i\le2,
+\]<br>and \(\sum_{r=1}^{\ell}2^{-(r-1)}\le2\). Consequently,<br>\[
+\frac1\ell\sum_{r=1}^{\ell}
+\mathbb E\!\left[\frac{W(\nu_r)}{M_r}\right]
+\le\frac8{\ell h}+\eta.
+\]</p><p>Equivalently, choose \(r\) uniformly before running the policy. Its expected normalized payoff under this oblivious schedule distribution is at most the displayed bound. Averaging therefore supplies a fixed admissible schedule on which the policy’s expected ratio is at most that bound.</p><p>Since<br>\[
+N=\Theta(\sqrt m),\qquad
+\ell=\Theta(\log m),\qquad
+h=\Theta(\log m),\qquad
+\eta=O(m^{-1/2}),
+\]<br>every policy has a fixed schedule witnessing<br>\[
+\rho_m=O\!\left(\frac1{(\log m)^2}\right).
+\]</p><h3>7. Admissibility, encoding, and conclusion</h3><p>Every prefix boundary is a multiple of \(1/(2m)\). After the cutoff, every filler length is a multiple of \(1/(2m^2)\). Thus all interval lengths and induced masses are rational.</p><p>The filler gives every type positive mass, so the hard instances have<br>\[
+\tau=m,\qquad q\le N\ell+m=O(m),\qquad L=O(m\log m).
+\]<br>Although the auxiliary geometric variables are unbounded, the cutoff makes the resulting schedule distribution finite: only finitely many prefix lengths on the stated grid can occur.</p><p>The lower-bound policy uses only \(m\) and the observed history. Its real-valued exponential stopping rule is permitted by the problem’s absence of computational restrictions; no finite bit-operation running time is asserted.</p><p>The proved lower and upper bounds together settle the target:<br>\[
+\rho_m=\Theta\!\left(\frac1{(\log m)^2}\right).
+\]</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The argument establishes the claimed asymptotic order, \(\rho_m=\Theta(1/(\log m)^2)\). I found no major or minor mathematical issues. The stopping-time residual bound and the coupling across different prefix lengths both withstand scrutiny.</p><ul><li><b>Observation model and admissibility.</b></li></ul><p>The cumulative masses \(x_a(s)\) are determined by the observed history. Neither the lower-bound policy nor the postponement construction requires knowledge of future types, interval lengths, support, or final masses.</p><p>The upper-bound distribution is oblivious: all geometric variables and the prefix endpoint \(r\) are chosen independently of the policy’s private randomness. Coupling different runs with the same private randomness is an analytical device; it does not grant the policy additional information.</p><ul><li><b>Lower bound for a fixed scale.</b></li></ul><p>For \(b&gt;0\), each \(z_a\) is continuous and nondecreasing. Moreover, \(S\) is strictly increasing: on every constant interval, the current type’s cumulative mass increases, and its exponential contribution has strictly positive derivative. Thus the threshold rule is an adapted stopping rule.</p><p>Under the hypothesis \(\theta\le M\), the estimate<br>\[
+   S(1)\ge \frac{e^{M/b}-1}{m}\ge \frac{2m-1}{m}&gt;1
+   \]<br>is correct for every \(m\ge2\). Together with \(S(0)=0\), continuity and strict increase establish the existence and uniqueness of \(t_*&lt;1\).</p><p>The identity<br>\[
+   \Pr(T\le s,\ C=a)=z_a(s),\qquad s\le t_*,
+   \]<br>is valid. The uniform threshold assigns probability equal to the increase of \(S\), and increases during intervals of type \(a\) are precisely increases of \(z_a\). There are finitely many interval boundaries, each corresponding to a single threshold value, so boundary selections have probability zero.</p><p>The expected-welfare calculation is also correct. Nonnegative integration permits exchanging expectation and integration, and \(dx_a(s)\) records exactly the time spent on type \(a\). The displayed antiderivative gives<br>\[
+   \frac1m\sum_a\left[b\left(e^{x_a(t_*)/b}-1\right)-x_a(t_*)\right]
+   =b-\frac{t_*}{m}.
+   \]</p><p>Jensen’s inequality is applied with equal weights to the convex exponential function. Its hypotheses are satisfied, and \(S(t_*)=1\) indeed gives the average exponential value \(2\). Therefore \(t_*/m\le b\ln2\), yielding the stated positive lower bound because \(1-\ln2&gt;0\).</p><ul><li><b>Guessing the scale.</b></li></ul><p>The scale list covers the full range \(M\in[1/m,1]\), including both endpoints. Some listed scale satisfies<br>\[
+   M/2&lt;\theta_j\le M.
+   \]<br>The guarantee for that scale contributes with probability \(1/J\); all other scales contribute nonnegative welfare. Consequently, the constant and denominator in<br>\[
+   \mathbb E[W]\ge \frac{(1-\ln2)M}{2J\ln(2m)}
+   \]<br>are correct. This proves the claimed lower bound uniformly over all admissible schedules.</p><ul><li><b>Postponing selection.</b></li></ul><p>The postponement construction preserves welfare pathwise. Between the original decision and the next occurrence of its chosen type, that type contributes no welfare. If no occurrence follows, the original policy also earns zero.</p><p>The chosen type is already determined by the observations and private randomness at the original stopping time. Waiting for its next observed occurrence is therefore admissible. Finite piecewise-constant schedules ensure that any such future occurrence has a first starting time.</p><ul><li><b>Geometric residual bound.</b></li></ul><p>The stated geometric distribution has mean \(2\) and variance \(2\). At elapsed time \(k\varepsilon+v\), with \(0\le v&lt;\varepsilon\), observing the block still running establishes \(G\ge k+1\). Conditional on this event, \(G-k\) has the original geometric distribution.</p><p>The argument correctly addresses selection at a stopping time. Within a grid cell, the observed block history supplies no further information about its geometric continuation. Earlier blocks and private randomness are independent of that continuation. Thus a decision based on those observations cannot bias the unobserved residual beyond the survival conditioning already accounted for.</p><p>The conditional expected residual is consequently \(2\varepsilon-v\le2\varepsilon\). Right-continuity handles grid boundaries as stated: a selection of the continuing block observes survival into the next cell. Truncating at the deterministic cutoff can only decrease the residual.</p><ul><li><b>Hard-instance construction and coupling.</b></li></ul><p>For sufficiently large \(m\), the parameters provide positive \(\ell,h\) and enough distinct prefix types, with \(N\ell\le m-1\). The reserved type \(m\) therefore distinguishes the start of filler from every prefix type.</p><p>For \(i\le r\), the histories on \(\nu_r\) and \(\nu_\ell\) coincide throughout prefix phase \(i\). Their histories may differ at the endpoint where the shorter prefix ends, but that endpoint belongs to the following interval, not to the preceding phase. This causes no error in the equality of phase-selection probabilities.</p><p>An early cutoff also preserves the coupling: schedules containing the relevant phase share its history up to the common cutoff. Phases never reached contribute zero selection probability.</p><p>Since there is at most one selection, \(\sum_i p_i\le1\). A selected prefix type appears in only one prefix block, whose expected residual is bounded by \(\delta_i\). Its entire filler mass is at most \(1/m\). Selection during filler satisfies the same filler bound. Hence<br>\[
+   \mathbb E[W(\nu_r)]\le\sum_{i=1}^r p_i\delta_i+\frac1m
+   \]<br>follows without requiring independence between selection and block survival.</p><ul><li><b>Offline benchmark estimates.</b></li></ul><p>The mean and variance calculations for \(Z\) are correct:<br>\[
+   \mathbb E[Z]=\frac{N(2^\ell-1)}m,\qquad
+   \operatorname{Var}(Z)=\frac{N(4^\ell-1)}{6m^2}.
+   \]<br>Independence justifies summing variances. The definition of \(\ell\) gives the stated bounds.</p><p>Chebyshev’s inequality applies to this finite-variance sum. The deviation from its mean to \(1/2\) is at least \(7/16\), and the numerical constant checks:<br>\[
+   \frac{1/1536}{(7/16)^2}=\frac1{294}.
+   \]</p><p>The maximum-block estimate uses the correct geometric tail,<br>\[
+   \Pr(G\ge h)=2^{-(h-1)}.
+   \]<br>Independence within the phase gives the displayed product. The exponential bound and \(2^h\le\sqrt N\) yield the stated failure probability.</p><p>On the specified good event, all relevant proposed blocks fit before the cutoff, including the equality case \(Z=1/2\). A phase-\(r\) block then has mass at least \(h\delta_r/2\). The failure bound \(\eta\) follows by a union bound; independence between the two good-event conditions is unnecessary.</p><ul><li><b>Normalized-payoff averaging.</b></li></ul><p>Pathwise, \(0\le W(\nu_r)\le M_r\). Splitting according to the benchmark good event therefore justifies<br>\[
+   \mathbb E\!\left[\frac{W(\nu_r)}{M_r}\right]
+   \le \frac{2\mathbb E[W(\nu_r)]}{h\delta_r}+\eta.
+   \]<br>This step does not incorrectly replace an expectation of a ratio by a ratio of expectations.</p><p>Both geometric sums are bounded by \(2\), giving the constant \(8/(\ell h)\). Averaging over schedules consequently supplies a fixed schedule with the claimed bound on the policy’s expected ratio.</p><p>The asymptotic estimates \(\ell,h=\Theta(\log m)\) and \(\eta=O(m^{-1/2})\) are correct. All constants are independent of the policy, so taking the supremum over policies proves the upper bound.</p><ul><li><b>Rational encoding and scope.</b></li></ul><p>Prefix boundaries lie on the \(1/(2m)\) grid, including the cutoff. Filler lengths lie on the \(1/(2m^2)\) grid and are positive. Thus every type has positive mass, \(\tau=m\), and both interval lengths and induced masses have logarithmic binary encoding length.</p><p>The bounds \(q\le N\ell+m=O(m)\) and \(L=O(m\log m)\) are justified. Truncation leaves only finitely many possible output schedules despite the unbounded auxiliary geometric variables.</p><p>No computational running time is asserted for the exponential policy, consistent with the unrestricted policy model. The proof settles the competitive ratio but does not establish a polynomial-time or hardness classification. The cited finite-sequence result is explicitly contextual and is not needed for either bound.</p><p>No additional clarification is needed to verify the argument.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

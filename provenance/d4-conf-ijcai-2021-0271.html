@@ -1,0 +1,515 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ijcai-2021-0271 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ijcai-2021-0271 <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2021-0271)</span></h1>
+<p class="banner">NEW RESULT — continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> The promised vector-SEBB allocation problem is NP-hard. For the prescribed pilot/production protocol and reported radius, the necessary and sufficient worst-case query budget up to universal constants is $\Theta(K+qH^2/\varepsilon^2+\sqrt{qc}\,J^{3/2}/\varepsilon)$, with $q,c,H,J$ defined above.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 6.1 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(\tau\) types with rational masses \(\mu\), a differentiable coalition-value function \(F\) with \(F(0)=0\), a gradient oracle on the path \(\lambda\mu\), a partition of \([0,1]\) with known coordinate range bounds, and a query budget \(B\), estimate \(\Phi_t=\int_0^1 \partial_t F(\lambda\mu)\,d\lambda\) for every type. Using iid samples of \(\lambda\) within the path intervals, find an allocation of the \(B\) queries that minimizes a valid vector-SEBB confidence radius, and return the estimate, radius, and aggregate allocations \(\mu_t\hat\Phi_t\); characterize the query budget needed to reach a specified radius.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is specified by its support: the list of \(\tau\) types with positive binary-rational masses \(\mu_t\), normalized by \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types; the number of gradient coordinates is \(m=\tau\).<br>Let \(F\) be continuously differentiable on a neighborhood of \([0,\mu]\), with \(F(0)=0\); values and derivatives may have either sign. A gradient query at \(\lambda\mu\) returns all coordinates of \(g(\lambda)=\nabla F(\lambda\mu)\). Define \(\Phi_t=\int_0^1g_t(\lambda)\,d\lambda\).<br>Input includes a rational partition \(0=a_0&lt;\cdots&lt;a_K=1\), weights \(w_i=a_i-a_{i-1}\), rational bounds \(\ell_{it}\le g_t(\lambda)\le u_{it}\) on interval \(i\), widths \(D_{it}=u_{it}-\ell_{it}\ge0\), confidence parameter \(\delta\in(0,1)\), and integer budget \(B\ge4K\).<br>Each query samples \(\lambda\) uniformly within its chosen interval, independently of other draws. Spend \(2K\) queries on two pilot draws per interval and let \(v_{it}\) be their unbiased coordinate sample variances. Choose integer production counts \(n_i\ge2\) with \(\sum_i n_i=B-2K\), using the pilot data; production draws are independent of the pilot.<br>For any nonnegative variance table \(s\), put \(p=\delta/\tau\), \(\alpha_t=\frac4{17}\sum_iw_i^2D_{it}^2/n_i\), \(\beta_t=\log(3/p)\max_i(w_i^2D_{it}^2/n_i^2)\), and \(\gamma_t=2\sum_iw_i^2(n_i-1)s_{it}/n_i^2+\log(6K/p)\sum_iw_i^2D_{it}^2/n_i^2+\beta_t\).<br>Define the vector-SEBB radius by \(R(n,s)^2=\log(6/p)\sum_t[\alpha_t+(\sqrt{\beta_t}+\sqrt{\gamma_t})^2]\). Allocation means global minimization of the planning criterion \(R(n,v)\), holding the pilot variances fixed.<br>From production samples, form interval means \(\bar g_i\), unbiased variances \(s_{it}\), estimates \(\hat\Phi_t=\sum_iw_i\bar g_{it}\), and aggregate allocations \(\mu_t\hat\Phi_t\); the reported radius must satisfy \(\Pr(\|\hat\Phi-\Phi\|_2\le R(n,s))\ge1-\delta\).<br>Use an ideal sampling and gradient-oracle model, counting queries separately from arithmetic. For numerical allocation, input rational \(r\ge0\) and \(\eta&gt;0\), with the promise that the minimum planning radius is at most \(r\) or at least \(r+\eta\); \(L\) is the total bit length of the rational inputs and supplied pilot statistics. State running times in \(m,\tau,K,B,L\), and \(\log(1/\eta)\).</p><p>Is this promised vector-SEBB allocation problem solvable in polynomial time, or is it NP-hard?<br>What query budget is necessary and sufficient, in the worst case over admissible \(F\), to obtain a reported radius at most a specified \(\varepsilon&gt;0\) with probability at least \(1-\delta\)?</p><p>For finite vector-valued strata, a vector-SEBB concentration bound is known; the accompanying sequential method minimizes a one-step forecast with variances held fixed, without establishing global allocation optimality. [Burgess and Chapman](https://www.ijcai.org/proceedings/2021/0011.pdf)<br>No result settling this specific continuous allocation problem was verified.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the positive support masses to sum to one and identified the gradient dimension with the support size.</li><li>Strengthened differentiability to continuous differentiability on a neighborhood of the coalition box so the path integrals are well-defined; allowed signed values and gradients.</li><li>Specified positive-length rational intervals, uniform independent draws, full-vector gradient queries, and nonnegative coordinate range widths.</li><li>Specified Euclidean error for the per-type vector and an explicit confidence parameter; aggregate allocations are mass-weighted estimates.</li><li>Resolved the undefined empirical allocation objective using pilot variances held fixed, following the discrete method&#x27;s forecasting convention; requested global minimization rather than assuming the sequential method achieves it.</li><li>Separated pilot and production samples so data-dependent planning does not itself invalidate the production confidence statement; counted both phases against the budget and required two samples per interval in each phase.</li><li>Specified the with-replacement vector-SEBB expression, using unbiased production variances and a coordinate-adjusted probability parameter.</li><li>Used a separated-threshold promise and an ideal sampling and gradient-oracle model to make numerical allocation complexity precise without assuming a finite representation of an arbitrary differentiable function.</li><li>Interpreted the requested budget characterization as a worst-case probabilistic guarantee on the reported radius.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Results</h3><p>The promised numerical allocation problem is <b>NP-hard</b>, even when every pilot variance is zero and $B$ is linear in $K$.</p><p>For the prescribed reported radius $R(n,s)$, the necessary and sufficient worst-case query budget, up to universal multiplicative constants, is<br>$$
+\Theta\left(
+K+
+\frac{qH^2}{\varepsilon^2}
++
+\frac{\sqrt{qc}\,J^{3/2}}{\varepsilon}
+\right),
+$$<br>where<br>$$
+q=\log\frac{6\tau}{\delta},
+\qquad
+c=\log\frac{6K\tau}{\delta},
+\qquad
+d_i=w_i\sqrt{\sum_{t=1}^{\tau}D_{it}^2},
+$$<br>and<br>$$
+H=\sum_{i=1}^K d_i,
+\qquad
+J=\sum_{i=1}^K d_i^{2/3}.
+$$</p><p>Explicit necessary and sufficient finite-budget inequalities are proved below. The sufficient inequality makes $R(n,s)\le\varepsilon$ for <b>every</b> production outcome consistent with the stated bounds.</p><p>All logarithms are natural. We assume the bounds admit at least one admissible $F$. If every width is zero, the radius is identically zero, and the prescribed protocol requires exactly $4K$ queries.</p><h3>1. Validity of the continuous, pilot-dependent confidence radius</h3><p>Let $\mathcal P$ denote all pilot data. Conditional on $\mathcal P$, the chosen counts $n_i$ are fixed, and the production draws remain independent uniform draws within their respective intervals.</p><p>For coordinate $t$, the mean in interval $i$ is<br>$$
+\theta_{it}
+=
+\frac{1}{w_i}
+\int_{a_{i-1}}^{a_i}g_t(\lambda)\,d\lambda.
+$$<br>Consequently,<br>$$
+\mathbb E[\hat\Phi_t\mid\mathcal P]
+=
+\sum_iw_i\theta_{it}
+=
+\Phi_t.
+$$</p><p>We now justify applying the finite-stratum bound to these continuous distributions. The finite vector-SEBB theorem, with sampling with replacement, positive weights $w_i$, coordinate widths $D_{it}$, unbiased sample variances, and coordinate failure parameter $p=\delta/\tau$, gives the radius in the question: the replacement factors are both $1/n_i$. See the multidimensional extension in [Burgess and Chapman](https://www.ijcai.org/proceedings/2021/0011.pdf).</p><p>Fix the pilot data and hence the counts. For each positive integer $M$, replace the uniform distribution in interval $i$ by the uniform distribution on its $M$ midpoint values of $g$. Couple a continuous production draw $\lambda$ with the midpoint of the cell containing it.</p><p>Because $F$ is continuously differentiable, $g$ is continuous and therefore uniformly continuous on $[0,1]$. For the finitely many production draws, this coupling gives almost-sure convergence of:</p><ul><li>every sampled gradient vector;</li><li>every interval sample mean and unbiased variance;</li><li>the stratified estimate and its target;</li><li>the radius, since its defining operations are continuous.</li></ul><p>Every finite approximation obeys the original coordinate bounds, and sampling remains independent across draws. The finite theorem therefore applies to each approximation.</p><p>Write $E_M$ for the norm of the approximation’s estimation error and $R_M$ for its radius. Their almost-sure limits are $E$ and $R$. If $E&gt;R$, then eventually $E_M&gt;R_M$, so<br>$$
+\mathbf 1_{\{E&gt;R\}}
+\le
+\liminf_{M\to\infty}\mathbf 1_{\{E_M&gt;R_M\}}.
+$$<br>Fatou’s lemma gives<br>$$
+\Pr(E&gt;R\mid\mathcal P)
+\le
+\liminf_{M\to\infty}\Pr(E_M&gt;R_M\mid\mathcal P)
+\le\delta.
+$$<br>Averaging over the pilot data proves<br>$$
+\Pr\!\left(\|\hat\Phi-\Phi\|_2\le R(n,s)\right)\ge1-\delta.
+$$</p><p>This argument permits arbitrary dependence among coordinates of a sampled vector. It also permits either sign of the gradient values.</p><p>The aggregate allocations have the expected target:<br>$$
+\sum_t\mu_t\Phi_t
+=
+\int_0^1\nabla F(\lambda\mu)\cdot\mu\,d\lambda
+=
+F(\mu).
+$$<br>Moreover, on the confidence event,<br>$$
+\left\|
+(\mu_t\hat\Phi_t)_t-(\mu_t\Phi_t)_t
+\right\|_2
+\le
+\left(\max_t\mu_t\right)R(n,s).
+$$</p><h3>2. NP-hardness of global allocation</h3><h3>2.1 Source problem and construction</h3><p>We reduce from CLIQUE on regular simple graphs. This problem is NP-complete; the restriction follows, for example, by complementing cubic instances of INDEPENDENT SET. The regular-graph statement is recorded as Proposition 17 of [Fomin, Golovach, Strømme, and Thilikos](https://link.springer.com/article/10.1007/s00453-020-00677-8).</p><p>Let $G$ be a $d$-regular graph on $K$ vertices, with edge set $E$, and let the requested clique size satisfy $2\le k\le K$. Discarding the trivial cases preserves NP-hardness.</p><p>Create one stratum per vertex, with<br>$$
+a_i=\frac{i}{K},
+\qquad
+w_i=\frac1K.
+$$<br>Set<br>$$
+B=4K+k,
+\qquad
+\delta=\frac12,
+\qquad
+M=10K.
+$$</p><p>Use one coordinate per edge and one additional coordinate per vertex. Pad with zero-width coordinates until the coordinate count $\tau$ is a power of two. Thus<br>$$
+m=\tau,
+\qquad
+K+|E|\le\tau&lt;2(K+|E|)\le2K^2.
+$$<br>Assign every supported type mass $1/\tau$. These masses are positive dyadic rationals and sum to one.</p><p>All lower bounds are zero. Choose the upper bounds as follows:</p><ul><li>For an edge coordinate associated with $\{u,v\}$, its width is $K$ in strata $u,v$ and zero elsewhere.</li><li>For the additional coordinate associated with vertex $i$, its width is $KM$ in stratum $i$ and zero elsewhere.</li><li>Padding coordinates have width zero everywhere.</li></ul><p>Supply pilot variances $v_{it}=0$. These statistics are realizable: the admissible function $F\equiv0$ produces them deterministically. The bounds need not be tight.</p><p>For this construction, put<br>$$
+a=\frac4{17},
+\qquad
+q=\log(12\tau),
+\qquad
+b=\log(6\tau),
+\qquad
+c=\log(12K\tau).
+$$<br>We minimize the normalized squared objective<br>$$
+\mathcal J(n)=\frac{R(n,0)^2}{q}.
+$$</p><h3>2.2 The additional coordinates force counts to be two or three</h3><p>A coordinate supported only in stratum $i$, with $w_iD_{it}=M$, contributes<br>$$
+M^2f(n_i)
+$$<br>to $\mathcal J$, where<br>$$
+f(x)=\frac ax+\frac h{x^2},
+\qquad
+h=\left(\sqrt b+\sqrt{c+b}\right)^2.
+$$<br>Since<br>$$
+f&#x27;&#x27;(x)=\frac{2a}{x^3}+\frac{6h}{x^4}&gt;0,
+$$<br>its consecutive decrements decrease as $x$ increases. In particular,<br>$$
+f(2)-2f(3)+f(4)
+=
+\frac a{12}+\frac{13h}{144}
+\ge
+\frac{13c}{144}.
+$$</p><p>An edge coordinate with endpoint counts $x,y$ contributes<br>$$
+e(x,y)
+=
+a\left(\frac1x+\frac1y\right)
++
+\left(
+\frac{\sqrt b}{\min(x,y)}
++
+\sqrt{
+c\left(\frac1{x^2}+\frac1{y^2}\right)
++
+\frac b{\min(x,y)^2}
+}
+\right)^2.
+$$<br>This expression decreases in either count. For $x,y\ge2$,<br>$$
+0\le e(x,y)\le e(2,2)
+\le a+c+b
+\le3c.
+$$</p><p>The production budget is<br>$$
+\sum_i n_i=B-2K=2K+k.
+$$<br>If some count $n_u\ge4$, another count must equal two: otherwise the total would exceed $3K$, whereas $2K+k\le3K$.</p><p>Transfer one sample from such a stratum $u$ to a stratum $v$ with count two. The additional-coordinate contribution decreases by at least<br>$$
+M^2\frac{13c}{144}.
+$$<br>The total edge-coordinate contribution can increase by at most<br>$$
+|E|\,e(2,2)\le\frac32K^2c.
+$$<br>But<br>$$
+M^2\frac{13c}{144}
+=
+\frac{325}{36}K^2c
+&gt;
+\frac32K^2c.
+$$<br>The transfer strictly decreases the objective.</p><p>Therefore every global minimizer satisfies<br>$$
+n_i\in\{2,3\},
+$$<br>with exactly $k$ strata receiving three samples.</p><h3>2.3 The remaining objective encodes a clique</h3><p>Write<br>$$
+e_{22}=e(2,2),
+\qquad
+e_{23}=e(2,3),
+\qquad
+e_{33}=e(3,3).
+$$<br>Direct substitution gives<br>$$
+e_{22}
+=
+a+\frac{\left(\sqrt b+\sqrt{2c+b}\right)^2}{4},
+$$<br>$$
+e_{33}
+=
+\frac{2a}{3}
++\frac{\left(\sqrt b+\sqrt{2c+b}\right)^2}{9},
+$$<br>and<br>$$
+e_{23}
+=
+\frac{5a}{6}
++\frac{\left(3\sqrt b+\sqrt{13c+9b}\right)^2}{36}.
+$$</p><p>Define the interaction coefficient<br>$$
+\lambda=e_{22}-2e_{23}+e_{33}.
+$$<br>Expanding the preceding expressions yields<br>$$
+\lambda
+=
+\frac{\sqrt b}{18}
+\left(
+13\sqrt{2c+b}
+-
+6\sqrt{13c+9b}
+-
+5\sqrt b
+\right).
+$$<br>Both quantities in the following comparison are positive, and<br>$$
+36(13c+9b)-169(2c+b)=130c+155b&gt;0.
+$$<br>Hence<br>$$
+6\sqrt{13c+9b}&gt;13\sqrt{2c+b},
+$$<br>which proves<br>$$
+\lambda&lt;-\frac{5b}{18}&lt;0.
+$$</p><p>Let $S$ be the $k$ vertices whose strata receive three samples, and let $e_G(S)$ be the number of edges induced by $S$. Regularity gives exactly<br>$$
+dk-2e_G(S)
+$$<br>edges with one endpoint in $S$, and<br>$$
+|E|-dk+e_G(S)
+$$<br>edges with neither endpoint in $S$.</p><p>The additional-coordinate contribution is independent of $S$. Therefore<br>$$
+\mathcal J(n)=T_0+\lambda e_G(S),
+$$<br>where<br>$$
+T_0
+=
+M^2\bigl((K-k)f(2)+kf(3)\bigr)
++
+|E|e_{22}
++
+dk(e_{23}-e_{22}).
+$$<br>Since $\lambda&lt;0$, global minimization maximizes $e_G(S)$.</p><p>Let<br>$$
+C_k=\binom{k}{2},
+\qquad
+Z=q(T_0+\lambda C_k),
+\qquad
+\kappa=-\lambda.
+$$<br>If $G$ has a $k$-clique, then<br>$$
+\min_n R(n,0)^2=Z.
+$$<br>If it has no $k$-clique, then every $k$-vertex set has at most $C_k-1$ edges, so<br>$$
+\min_n R(n,0)^2\ge Z+q\kappa.
+$$</p><h3>2.4 The gap is large enough for the numerical promise</h3><p>We verify positivity and polynomial bounds before taking square roots.</p><p>Because every $e_{xy}$ above is at most $3c$,<br>$$
+|\lambda|\le12c.
+$$<br>Also $f(3)\ge c/9$. Consequently,<br>$$
+\frac Zq
+\ge
+\frac{100}{9}K^3c-9K^2c
+&gt;0.
+$$</p><p>For every feasible count vector,<br>$$
+f(n_i)\le f(2)\le2c.
+$$<br>Using the edge bound,<br>$$
+R(n,0)^2
+\le
+202qcK^3.
+$$<br>Our choice of $\tau$ implies<br>$$
+q\le c\le\log(24K^3)\le4K
+\qquad(K\ge2).
+$$<br>Thus every feasible radius is at most<br>$$
+U=100K^3.
+$$</p><p>Moreover,<br>$$
+q\kappa&gt;\frac{5qb}{18}&gt;\frac14.
+$$<br>Writing $\rho=\min_nR(n,0)$, a no-instance therefore satisfies<br>$$
+\rho-\sqrt Z
+=
+\frac{\rho^2-Z}{\rho+\sqrt Z}
+\ge
+\frac{q\kappa}{2U}
+&gt;
+\frac1{8U}.
+$$<br>Set<br>$$
+G_0=\frac1{8U}.
+$$</p><p>Compute a rational $r$ satisfying<br>$$
+\sqrt Z\le r\le\sqrt Z+\frac{G_0}{4},
+$$<br>and set<br>$$
+\eta=\frac{G_0}{2}.
+$$<br>Then:</p><ul><li>A clique gives $\min_nR(n,0)\le r$.</li><li>Absence of a clique gives $\min_nR(n,0)\ge r+\eta$.</li></ul><p>Certified evaluation of the displayed logarithms and square roots constructs $r$ in polynomial time. Their arguments and the radius are polynomially bounded in $K$, and the required precision is only $O(\log K)$ bits beyond the integer part. In particular,<br>$$
+\frac1\eta=1600K^3.
+$$</p><p>The constructed input has<br>$$
+m=\tau=O(K^2),
+\qquad
+B=O(K),
+\qquad
+L=\operatorname{poly}(K),
+\qquad
+\log(1/\eta)=O(\log K).
+$$<br>This proves NP-hardness of the promised numerical problem. Unless $\mathrm P=\mathrm{NP}$, it has no algorithm polynomial in all the parameters requested in the question.</p><h3>3. Necessary query budget</h3><p>For any feasible count vector, define<br>$$
+A(n)=\sum_i\frac{d_i^2}{n_i},
+\qquad
+C(n)=\sum_i\frac{d_i^2}{n_i^2},
+\qquad
+N=\sum_i n_i=B-2K.
+$$</p><p>For every nonnegative variance table $s$, the radius satisfies<br>$$
+R(n,s)^2
+\ge
+q\left(\frac4{17}A(n)+cC(n)\right).
+$$<br>Indeed, summing the $\alpha_t$ terms gives $(4/17)A(n)$, and summing just the width-sum terms in $\gamma_t$ gives $cC(n)$. All remaining terms are nonnegative.</p><p>Cauchy–Schwarz gives<br>$$
+H^2
+=
+\left(
+\sum_i\frac{d_i}{\sqrt{n_i}}\sqrt{n_i}
+\right)^2
+\le A(n)N.
+$$<br>Hölder’s inequality, with exponents $3$ and $3/2$, gives<br>$$
+J
+=
+\sum_i
+\left(\frac{d_i^2}{n_i^2}\right)^{1/3}
+n_i^{2/3}
+\le C(n)^{1/3}N^{2/3}.
+$$<br>Hence<br>$$
+A(n)\ge\frac{H^2}{N},
+\qquad
+C(n)\ge\frac{J^3}{N^2}.
+$$</p><p>It follows that every reported radius obeys the deterministic inequality<br>$$
+R(n,s)^2
+\ge
+\frac{4qH^2}{17N}
++
+\frac{qcJ^3}{N^2}.
+$$</p><p>Thus even positive probability of reporting a radius at most $\varepsilon$ requires<br>$$
+\frac{4qH^2}{17(B-2K)}
++
+\frac{qcJ^3}{(B-2K)^2}
+\le\varepsilon^2.
+$$<br>In particular, the following conditions are necessary:<br>$$
+B\ge4K,
+$$<br>$$
+B-2K\ge\frac{4qH^2}{17\varepsilon^2},
+$$<br>and<br>$$
+B-2K\ge
+\frac{\sqrt{qc}\,J^{3/2}}{\varepsilon}.
+$$</p><p>These lower bounds hold for every admissible $F$, every pilot outcome, and every production outcome.</p><h3>4. Sufficient query budget for globally optimal pilot allocation</h3><h3>4.1 Deterministic bounds on sample variances</h3><p>For $n$ observations in an interval of width $D$, their biased empirical variance is at most $D^2/4$. To verify this, let $\bar x$ be their mean. The inequality<br>$$
+(x-\ell)(u-x)\ge0
+$$<br>implies<br>$$
+\frac1n\sum_jx_j^2-\bar x^2
+\le
+(\bar x-\ell)(u-\bar x)
+\le\frac{D^2}{4}.
+$$<br>Therefore their unbiased variance satisfies<br>$$
+s\le\frac{n}{n-1}\frac{D^2}{4}.
+$$</p><p>For the two pilot observations, the unbiased variance is<br>$$
+v=\frac{(x_1-x_2)^2}{2}\le\frac{D^2}{2}.
+$$</p><p>Let<br>$$
+A_t(n)=\sum_i\frac{w_i^2D_{it}^2}{n_i},
+\qquad
+C_t(n)=\sum_i\frac{w_i^2D_{it}^2}{n_i^2},
+$$<br>and put<br>$$
+b=\log\frac{3\tau}{\delta}.
+$$<br>Since $b\le c$, the pilot bounds imply<br>$$
+\gamma_t(n,v)
+\le A_t(n)+cC_t(n)+\beta_t(n),
+$$<br>and<br>$$
+\beta_t(n)\le bC_t(n).
+$$<br>Using $(\sqrt x+\sqrt y)^2\le2x+2y$, we obtain<br>$$
+R(n,v)^2
+\le
+q\left(\frac{38}{17}A(n)+6cC(n)\right).
+$$</p><h3>4.2 Comparing production and planning radii</h3><p>The production variance bound gives<br>$$
+2\sum_iw_i^2\frac{(n_i-1)s_{it}}{n_i^2}
+\le\frac12A_t(n).
+$$<br>Because the pilot variances are nonnegative,<br>$$
+\gamma_t(n,s)\le\gamma_t(n,v)+\frac12A_t(n).
+$$</p><p>For fixed $\beta\ge0$, define<br>$$
+h_\beta(x)=(\sqrt\beta+\sqrt x)^2.
+$$<br>On $x\ge\beta$, increasing $x$ by $z\ge0$ increases $h_\beta(x)$ by at most $2z$: for positive $x$, its derivative is<br>$$
+1+\sqrt{\beta/x}\le2,
+$$<br>and the case $\beta=0$ is immediate.</p><p>Both planning and production $\gamma_t$ contain $\beta_t$. It follows that<br>$$
+R(n,s)^2\le R(n,v)^2+qA(n).
+$$<br>Since<br>$$
+R(n,v)^2\ge\frac{4q}{17}A(n),
+$$<br>we conclude<br>$$
+R(n,s)^2\le\frac{21}{4}R(n,v)^2.
+$$</p><p>This comparison is deterministic and holds for every feasible count vector.</p><h3>4.3 A feasible allocation provides an upper bound on the optimum</h3><p>Assume $H&gt;0$; otherwise all widths are zero. Define benchmark counts<br>$$
+n_i^{(0)}
+=
+2+
+\left\lceil
+\frac{24qHd_i}{\varepsilon^2}
++
+\frac{8\sqrt{qc}\,J^{1/2}d_i^{2/3}}{\varepsilon}
+\right\rceil.
+$$<br>They satisfy<br>$$
+\sum_i n_i^{(0)}
+\le
+3K+
+\frac{24qH^2}{\varepsilon^2}
++
+\frac{8\sqrt{qc}\,J^{3/2}}{\varepsilon}.
+$$</p><p>Suppose the total budget obeys<br>$$
+B\ge
+\left\lceil
+5K+
+\frac{24qH^2}{\varepsilon^2}
++
+\frac{8\sqrt{qc}\,J^{3/2}}{\varepsilon}
+\right\rceil.
+$$<br>The benchmark counts fit within the production budget $B-2K$. Add any unused production samples to obtain a feasible vector $\tilde n$.</p><p>For strata with $d_i&gt;0$, the defining lower bounds on $\tilde n_i$ imply<br>$$
+A(\tilde n)\le\frac{\varepsilon^2}{24q}
+$$<br>and<br>$$
+C(\tilde n)\le\frac{\varepsilon^2}{64qc}.
+$$<br>Zero-width strata contribute zero to both sums.</p><p>Let $n^\star$ be any global minimizer of the pilot planning criterion. Its defining optimality gives<br>$$
+R(n^\star,v)^2
+\le
+R(\tilde n,v)^2.
+$$<br>Applying the preceding inequalities,<br>$$
+\begin{aligned}
+R(n^\star,s)^2
+&amp;\le
+\frac{21}{4}R(n^\star,v)^2\\
+&amp;\le
+\frac{21}{4}q
+\left(
+\frac{38}{17}A(\tilde n)+6cC(\tilde n)
+\right)\\
+&amp;\le
+\frac{21}{4}
+\left(
+\frac{38}{17\cdot24}+\frac6{64}
+\right)\varepsilon^2\\
+&amp;=
+\frac{2135}{2176}\varepsilon^2
+&lt;
+\varepsilon^2.
+\end{aligned}
+$$</p><p>Therefore the displayed budget is sufficient for every admissible $F$ and every sample outcome. Combining this deterministic radius bound with Section 1 gives<br>$$
+\Pr\!\left(
+\|\hat\Phi-\Phi\|_2\le R(n^\star,s)\le\varepsilon
+\right)\ge1-\delta.
+$$</p><p>The lower and upper bounds prove the query order stated at the beginning. Global optimality is used here to compare against the benchmark allocation; finding that optimizer remains NP-hard.</p><p>For example, if $w_i=1/K$ and $D_{it}=D$ for every stratum and coordinate, then<br>$$
+H=\sqrt{\tau}\,D,
+\qquad
+J^{3/2}=\sqrt{K\tau}\,D,
+$$<br>and the query order becomes<br>$$
+\Theta\left(
+K+
+\frac{q\tau D^2}{\varepsilon^2}
++
+\frac{D\sqrt{qcK\tau}}{\varepsilon}
+\right).
+$$<br>The widths are essential parameters: unrestricted widths preclude a uniform budget depending only on $\tau,K,\delta,\varepsilon$.</p><h3>5. Arithmetic running times</h3><p>The protocol uses exactly $B$ gradient queries. Reading the returned vectors and maintaining pilot and production statistics takes $O(mB)$ ideal arithmetic operations. Computing the estimates and aggregate allocations takes another $O(mK)$ operations.</p><p>For the supplied rational planning data, a fixed count vector’s radius can be evaluated to absolute error at most $\eta/8$ in<br>$$
+O(mK)\,
+\operatorname{poly}\left(
+L+\log B+\log(mK+1)+\log^+(1/\eta)
+\right)
+$$<br>bit operations, where<br>$$
+\log^+(x)=\max\{0,\log x\}.
+$$<br>The coordinate maxima involve rational quantities and can be compared exactly. The logarithms and square roots admit certified rational approximations in polynomial time. Their arguments, intermediate magnitudes, and required absolute precision have bit bounds polynomial in the displayed parameters.</p><p>There are exactly<br>$$
+C_B
+=
+\binom{B-3K-1}{K-1}
+$$<br>feasible production count vectors: subtracting two from every count leaves $B-4K$ samples to distribute among $K$ strata.</p><p>Enumerating these vectors and evaluating each radius to error $\eta/8$ solves the promised decision problem. If $\tilde\rho$ is the smallest evaluated radius, compare it with $r+\eta/2$. In the lower alternative,<br>$$
+\tilde\rho\le r+\eta/8;
+$$<br>in the upper alternative,<br>$$
+\tilde\rho\ge r+7\eta/8.
+$$<br>Thus the comparison is correct.</p><p>The resulting allocation decision time is<br>$$
+C_B\,O(mK)\,
+\operatorname{poly}\left(
+L+\log B+\log(mK+1)+\log^+(1/\eta)
+\right).
+$$<br>The same enumeration produces an additively accurate minimizer. The NP-hardness reduction rules out a general polynomial running time in $m,\tau,K,B,L,\log^+(1/\eta)$ unless $\mathrm P=\mathrm{NP}$.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The argument resolves the assigned problem: the promised numerical allocation problem is NP-hard, and the prescribed reported radius has the claimed necessary and sufficient worst-case query order, up to universal constants. I found no major or minor issues requiring repair.</p><ul><li><b>The continuous confidence argument is valid.</b></li></ul><p>Conditional on the pilot data, the production counts are fixed and production samples remain independent. Thus the stated conditional expectation is correct:<br>$$
+   \mathbb E[\hat\Phi_t\mid\mathcal P]=\Phi_t.
+   $$</p><p>The cited finite result has the required coordinate formulas and failure probability $\tau p$. Specifically, Theorem 6.1 uses the replacement factors $\Omega=\Psi=1/n_i$, which yield precisely the $\alpha_t,\beta_t,\gamma_t$ in the task after substituting unbiased production variances. Positive stratum weights, bounded coordinates, and independent sampling satisfy its hypotheses. Coordinate independence is unnecessary. These formulas can be checked in [Burgess and Chapman, Theorem 6.1](https://www.ijcai.org/proceedings/2021/0011.pdf).</p><p>The midpoint approximation preserves coordinate bounds and independence. Continuity of $g$ on the compact interval gives uniform continuity, so the sampled vectors, statistics, targets, and radii converge under the proposed coupling.</p><p>The use of the strict failure event is appropriate: if $E&gt;R$, convergence implies $E_M&gt;R_M$ eventually. Therefore the indicator inequality and the application of Fatou’s lemma have the correct direction. Averaging the conditional bound gives the requested unconditional confidence guarantee.</p><p>The chain-rule calculation establishing<br>$$
+   \sum_t\mu_t\Phi_t=F(\mu)
+   $$<br>correctly uses $F(0)=0$. The aggregate-vector error bound follows from the operator norm of the diagonal matrix with entries $\mu_t$.</p><ul><li><b>The hardness source and constructed input are valid.</b></li></ul><p>CLIQUE on regular simple graphs is NP-complete, as stated in [Fomin et al., Proposition 17](https://link.springer.com/article/10.1007/s00453-020-00677-8). Restricting to $2\le k\le K$ removes only polynomially decidable cases.</p><p>The partition, bounds, budget, masses, and supplied variances satisfy the task’s requirements. In particular:<br>$$
+   B=4K+k\ge4K,
+   \qquad
+   m=\tau,
+   \qquad
+   \mu_t=\frac1\tau.
+   $$<br>Padding to a power of two makes the masses dyadic. The zero pilot variances are realizable by the admissible function $F\equiv0$. Tight bounds are not required, so this realization does not invalidate the reduction.</p><ul><li><b>The additional coordinates correctly force counts into $\{2,3\}$.</b></li></ul><p>Substitution into the objective gives the displayed single-stratum contribution $M^2f(n_i)$. Both the derivative calculation and the discrete decrement calculation are correct:<br>$$
+   f&#x27;&#x27;(x)&gt;0,
+   \qquad
+   f(2)-2f(3)+f(4)
+   =
+   \frac a{12}+\frac{13h}{144}
+   \ge\frac{13c}{144}.
+   $$</p><p>The edge contribution $e(x,y)$ is correctly derived and decreases in each count. The uniform upper bound<br>$$
+   e(x,y)\le e(2,2)\le a+c+b\le3c
+   $$<br>is valid in the stated range.</p><p>If a count is at least four, the budget forces another count to equal two. Convexity gives the claimed minimum decrease in the additional-coordinate contribution when transferring a sample between these strata. The bound on the possible increase of all edge contributions is conservative but valid. With $M=10K$, the decrease strictly dominates that increase.</p><p>Consequently, every global minimizer has exactly $k$ counts equal to three and all other counts equal to two.</p><ul><li><b>The clique-encoding calculation is correct.</b></li></ul><p>The expressions for $e_{22},e_{23},e_{33}$ agree with direct substitution. Expanding them gives the stated interaction coefficient:<br>$$
+   \lambda
+   =
+   \frac{\sqrt b}{18}
+   \left(
+   13\sqrt{2c+b}
+   -
+   6\sqrt{13c+9b}
+   -
+   5\sqrt b
+   \right).
+   $$</p><p>The comparison of squared positive quantities is correct:<br>$$
+   36(13c+9b)-169(2c+b)=130c+155b&gt;0.
+   $$<br>It establishes $\lambda&lt;-5b/18&lt;0$.</p><p>Regularity gives the stated numbers of edges with zero, one, and two endpoints in $S$. Substitution therefore yields<br>$$
+   \mathcal J(n)=T_0+\lambda e_G(S).
+   $$<br>Since $\lambda&lt;0$, minimizing this expression maximizes the number of induced edges. The distinction between a clique and a nonclique produces the claimed squared-radius gap.</p><ul><li><b>The reduction satisfies the numerical promise with polynomial encoding size.</b></li></ul><p>The lower bound establishing $Z&gt;0$ is valid. The negative terms in its expression are bounded sufficiently conservatively by the stated estimates.</p><p>The upper bound<br>$$
+   R(n,0)^2\le202qcK^3
+   $$<br>and the subsequent universal radius bound $U=100K^3$ are valid for $K\ge2$. Since $Z$ is at most the actual optimum squared radius, $\sqrt Z$ also lies below this bound.</p><p>Hence the denominator in<br>$$
+   \rho-\sqrt Z
+   =
+   \frac{\rho^2-Z}{\rho+\sqrt Z}
+   $$<br>is at most $2U$. The asserted gap follows from $q\kappa&gt;1/4$.</p><p>The chosen one-sided approximation to $\sqrt Z$ and<br>$$
+   \eta=\frac1{16U}
+   $$<br>correctly place every constructed instance into one of the two promised alternatives. In particular,<br>$$
+   \frac1\eta=1600K^3.
+   $$</p><p>Computing certified approximations to the logarithms and square roots requires only polynomial precision and time. Thus the reduction proves hardness even when $B$ is linear in $K$, rather than relying on a large binary-encoded budget.</p><ul><li><b>The necessary query-budget inequalities are correct and deterministic.</b></li></ul><p>Dropping nonnegative terms gives<br>$$
+   R(n,s)^2\ge q\left(\frac4{17}A(n)+cC(n)\right).
+   $$</p><p>The applications of Cauchy–Schwarz and Hölder use the correct factors and exponents, yielding<br>$$
+   A(n)\ge\frac{H^2}{N},
+   \qquad
+   C(n)\ge\frac{J^3}{N^2}.
+   $$</p><p>Therefore the displayed necessary inequality holds for every feasible count vector and every nonnegative variance table. Its necessity does not depend on constructing an adversarial function or a particular sampling outcome.</p><ul><li><b>The sufficient budget applies to the required global pilot allocation.</b></li></ul><p>The empirical variance bounds are correct for arbitrary signed observations within the supplied intervals. They imply the stated planning-radius upper bound:<br>$$
+   R(n,v)^2
+   \le
+   q\left(\frac{38}{17}A(n)+6cC(n)\right).
+   $$</p><p>The production-to-planning comparison is also valid. Both relevant $\gamma_t$ values are at least $\beta_t$, and the derivative bound for $h_\beta$ applies throughout the required domain. This gives<br>$$
+   R(n,s)^2
+   \le R(n,v)^2+qA(n)
+   \le\frac{21}{4}R(n,v)^2.
+   $$</p><p>The benchmark counts fit the stated sufficient budget. Their lower bounds give exactly<br>$$
+   A(\tilde n)\le\frac{\varepsilon^2}{24q},
+   \qquad
+   C(\tilde n)\le\frac{\varepsilon^2}{64qc}.
+   $$<br>Zero-width strata contribute nothing to these sums.</p><p>Global optimality is used in the correct place, to compare the planning objective at $n^\star$ against the benchmark. The final constant is correct:<br>$$
+   \frac{21}{4}
+   \left(
+   \frac{38}{17\cdot24}+\frac6{64}
+   \right)
+   =
+   \frac{2135}{2176}&lt;1.
+   $$</p><p>Thus the sufficient budget guarantees the radius threshold for every outcome. Combining this with the confidence argument gives the claimed joint event.</p><ul><li><b>The query order, edge cases, and running times are consistent.</b></li></ul><p>The necessary bounds control each of the three terms in the claimed query order, while the sufficient bound controls their sum with universal constants. This establishes the stated $\Theta$ result.</p><p>If every width is zero, every production coordinate is constant within its stratum, the estimate is exact, and the radius vanishes. The protocol still requires $4K$ queries. The assumption that at least one admissible $F$ exists appropriately excludes an empty worst-case class.</p><p>The equal-width example evaluates $H$ and $J^{3/2}$ correctly.</p><p>The number of feasible count vectors is correctly obtained by distributing $B-4K$ nonnegative excess samples:<br>$$
+   C_B=\binom{B-3K-1}{K-1}.
+   $$<br>This formula also covers $K=1$ and $B=4K$.</p><p>The fixed-vector evaluation bound and enumeration procedure solve the promised decision problem. The evaluation error margins justify comparison with $r+\eta/2$. Enumeration yields an additive approximation to a minimizing allocation, as claimed; the write-up does not assert that finite-precision evaluation identifies an exact optimizer.</p><p>Query costs and arithmetic costs are distinguished correctly. The hardness conclusion concerns global planning allocation and does not confuse it with the cited sequential one-step method.</p><p>No repair feedback is required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

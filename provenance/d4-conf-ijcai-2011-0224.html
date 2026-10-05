@@ -1,0 +1,123 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ijcai-2011-0224 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ijcai-2011-0224 <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2011-0224)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> Exact computation is polynomial-time in \(m,\tau,L\). Both guarantees hold; coalition utility gain is at most \(\eta/(m+1)\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Corollary 4.6 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given fixed \(k\), rational \(\alpha,\eta&gt;0\), and a finite-support rational society \(\mu\) over complete types \((u,r)\), where \(u\) records a voter’s true utility type and \(r\in\Sigma_k\) is their current reported ranking, let \(\nu_r=\sum_u\mu_{u,r}\). For each candidate \(j\), let \(d_j(\nu)\) be the minimum mass of reports that must change to make \(j\) win plurality under the paper’s tie-breaking rule; transfers must preserve \(u\) and respect the available mass of each type. Can one compute the exact lottery \(G(j)=[1-\rho d_j(\nu)]_+/\sum_\ell[1-\rho d_\ell(\nu)]_+\), with \(\rho=\eta/[k(k+1)\alpha^2]\), in time polynomial in \(k,\tau,L\), and establish that every supported outcome is within mass \(1/\rho\) of a plurality win and no coalition of mass at most \(\alpha\) can increase its integrated expected true utility by more than \(\eta\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Fix \(m=k\ge2\) candidates, strict reported rankings \(r\in\Sigma_k\), and binary rational parameters \(0&lt;\alpha&lt;1\) and \(\eta&gt;0\). A true utility type is a vector \(u\in\mathbb Q^k\cap[0,1]^k\); true utilities remain fixed when reports change.<br>A society is given by its support: the list of its \(\tau\) types \((u,r)\) with positive binary rational masses \(\mu_{u,r}\), summing to \(1\). Here \(\tau\) is the support size, not the number of possible types; \(L\) is the total input bit length, including utilities and parameters. State running times in \(m,\tau,L\).<br>Write \(\nu_r=\sum_u\mu_{u,r}\). Use plurality with the smallest candidate index winning ties.<br>A report change is a nonnegative real transfer array \(x_{u,r,s}\) satisfying \(\sum_s x_{u,r,s}=\mu_{u,r}\), where destination rankings \(s\in\Sigma_k\) need not occur in the input. Its changed mass is \(\sum_{u,r}\sum_{s\ne r}x_{u,r,s}\), and its resulting report masses are \(\nu&#x27;_s=\sum_{u,r}x_{u,r,s}\).<br>Define \(d_j(\nu)\) as the infimum changed mass over transfers making \(j\) the plurality winner. Set \(\rho=\eta/[k(k+1)\alpha^2]\) and \(G_\mu(j)=\max\{1-\rho d_j(\nu),0\}/\sum_{\ell=1}^k\max\{1-\rho d_\ell(\nu),0\}\).<br>A coalition selects masses \(0\le c_{u,r}\le\mu_{u,r}\) with \(\sum_{u,r}c_{u,r}\le\alpha\), redistributes only those reports while preserving each true utility type, and leaves all other reports fixed. Its integrated expected utility under a lottery \(G\) is \(U_c(G)=\sum_{u,r}c_{u,r}\sum_{j=1}^k u_jG(j)\).</p><p>Is exact computation of \(G_\mu\) possible in time polynomial in \(m,\tau,L\), or is it NP-hard?<br>Does this lottery always have both guarantees: every \(j\) with \(G_\mu(j)&gt;0\) can be made a plurality winner by changing mass at most \(1/\rho\), and every coalition deviation producing \(\mu&#x27;\) satisfies \(U_c(G_{\mu&#x27;})-U_c(G_\mu)\le\eta\)?</p><p>For finite electorates and fixed \(k\), the analogous lottery is polynomial-time computable for efficiently computable rules invariant under voter permutations; a related discrete construction also bounds total coalition utility gain ([Birrell–Pass](https://www.cs.cornell.edu/~rafael/papers/IJCAI11.pdf)).<br>No result settling this exact continuous formulation was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized total society mass to one and restricted the coalition bound to 0&lt;alpha&lt;1, matching the discrete restriction that the protected coalition size is below the electorate size.</li><li>Represented true utility types by binary rational outcome-utility vectors in [0,1]^k, evaluated unchanged after deviations; current reports may be arbitrary strict rankings, and utility ties are permitted.</li><li>Selected smallest-index tie-breaking because both supplied and full versions allow an unspecified deterministic tie-breaking rule.</li><li>Replaced minimum by infimum: deterministic tie-breaking can make a candidate&#x27;s winning region nonclosed, so a minimum changed mass need not exist.</li><li>Allowed divisible real transfers to any strict ranking, including rankings absent from the input support; transfers preserve true utility types and available source masses.</li><li>Defined coalition membership as selectable submass of each complete type and coalition utility as an unnormalized integral over that selected mass.</li><li>Set m=k, required at least two candidates, and included all utilities and rational parameters in the input bit length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>Exact computation is possible in time polynomial in \(m,\tau,L\), even when \(m\) varies. Both guarantees hold. In fact, every admissible coalition deviation satisfies the stronger bound</p><p>\[
+U_c(G_{\mu&#x27;})-U_c(G_\mu)\le \frac{\eta}{m+1}.
+\]</p><p>The proof below accounts explicitly for divisible masses, unsupported destination rankings, and possibly unattained winning-cost infima.</p><h3>1. Report changes reduce to transport of first-place masses</h3><p>Write \(p_i=\sum_{(u,r):\,r\text{ ranks }i\text{ first}}\mu_{u,r}\). Thus \(p\) belongs to the probability simplex \(\Delta_m\), and plurality depends only on \(p\).</p><p>For \(p,z\in\Delta_m\), define their total variation distance by</p><p>\[
+\delta(p,z)=\frac12\sum_{i=1}^m|p_i-z_i|
+=\sum_{i=1}^m(p_i-z_i)_+,
+\]</p><p>where \(a_+=\max\{a,0\}\).</p><p><b>Transport lemma.</b> Starting from the given society, the minimum changed report mass needed to obtain first-place masses \(z\) is exactly \(\delta(p,z)\). This is achievable while preserving true utilities.</p><p><b>Proof.</b> In any transfer, the mass whose original and destination rankings both place \(i\) first is at most \(\min\{p_i,z_i\}\). Consequently, at least</p><p>\[
+1-\sum_i\min\{p_i,z_i\}=\delta(p,z)
+\]</p><p>changes its first-place candidate. Every such transfer changes its ranking, proving the lower bound.</p><p>For achievability, put \(a_i=(p_i-z_i)_+\), \(b_i=(z_i-p_i)_+\), and \(h=\sum_i a_i=\sum_i b_i\). If \(h=0\), leave all reports unchanged.</p><p>Otherwise, for every surplus candidate \(i\), select the fraction \(a_i/p_i\) of each input type whose ranking places \(i\) first. Redistribute each selected portion among deficit candidates \(j\) in proportions \(b_j/h\), using any fixed ranking placing \(j\) first. Surplus and deficit candidates are distinct, so all selected reports change. Each transfer retains its source utility vector. The resulting first-place masses are \(z\), and the changed mass is exactly \(h=\delta(p,z)\). \(\square\)</p><h3>2. Winning-cost infima and tie-breaking</h3><p>Define the closed weak-winner region</p><p>\[
+W_j=\{z\in\Delta_m:z_j\ge z_i\text{ for every }i\}.
+\]</p><p>Under the prescribed tie-breaking, the actual winner region additionally requires \(z_j&gt;z_i\) whenever \(i&lt;j\).</p><p><b>Claim.</b> The winning-cost infimum is</p><p>\[
+d_j(p)=\min_{z\in W_j}\delta(p,z).
+\]</p><p><b>Proof.</b> The minimum exists because \(W_j\) is nonempty and compact and \(\delta(p,\cdot)\) is continuous. Every profile where \(j\) actually wins lies in \(W_j\), so the transport lemma gives the lower bound.</p><p>Conversely, let \(z\in W_j\) attain the displayed minimum. Let \(e_j\) assign all mass to candidate \(j\), and, for \(0&lt;\varepsilon&lt;1\), put \(z^\varepsilon=(1-\varepsilon)z+\varepsilon e_j\). For every \(i\ne j\),</p><p>\[
+z^\varepsilon_j-z^\varepsilon_i
+=(1-\varepsilon)(z_j-z_i)+\varepsilon&gt;0.
+\]</p><p>Thus \(j\) is the unique plurality winner. Moreover,</p><p>\[
+\delta(p,z^\varepsilon)
+\le \delta(p,z)+\delta(z,z^\varepsilon)
+=\delta(p,z)+\varepsilon\delta(z,e_j)
+\le \delta(p,z)+\varepsilon.
+\]</p><p>The transport lemma realizes these profiles, and letting \(\varepsilon\) approach zero proves the upper bound on the infimum. \(\square\)</p><p>In particular, the infimum depends only on first-place masses, although its attainment can depend on tie-breaking.</p><h3>3. An explicit formula for every distance</h3><p>Fix \(j\), and define, for \(t\ge0\),</p><p>\[
+F_j(t)=\sum_{i\ne j}(p_i-p_j-t)_+.
+\]</p><p>The function \(F_j(t)-t\) is continuous and strictly decreasing. Its value at zero is nonnegative, and \(F_j(1-p_j)=0\). Hence there is a unique \(t_j\in[0,1-p_j]\) satisfying \(F_j(t_j)=t_j\).</p><p><b>Claim.</b> We have \(d_j(p)=t_j\).</p><p><b>Proof.</b> Let \(z\in W_j\), and set \(t=\delta(p,z)\). Each coordinate changes by at most \(t\), so \(z_j\le p_j+t\). Since \(z_i\le z_j\),</p><p>\[
+(p_i-p_j-t)_+\le(p_i-z_i)_+.
+\]</p><p>Summing over \(i\ne j\) gives \(F_j(t)\le t\). Strict decrease of \(F_j(t)-t\) therefore implies \(t\ge t_j\).</p><p>For the reverse inequality, define</p><p>\[
+z_j=p_j+t_j,\qquad
+z_i=p_i-(p_i-p_j-t_j)_+=\min\{p_i,p_j+t_j\}\quad(i\ne j).
+\]</p><p>All coordinates are nonnegative, and</p><p>\[
+\sum_i z_i=1+t_j-F_j(t_j)=1.
+\]</p><p>Also \(z_j\ge z_i\), so \(z\in W_j\). Candidate \(j\) gains mass \(t_j\), and all other candidates together lose exactly \(F_j(t_j)=t_j\). Therefore \(\delta(p,z)=t_j\), proving the claim. \(\square\)</p><p>To compute this root exactly, observe that</p><p>\[
+F_j(t)=
+\max_{S\subseteq[m]\setminus\{j\}}
+\left(\sum_{i\in S}p_i-|S|p_j-|S|t\right).
+\]</p><p>Consequently, \(F_j(t)\le t\) is equivalent to</p><p>\[
+t\ge
+\frac{\sum_{i\in S}p_i-|S|p_j}{|S|+1}
+\quad\text{for every }S\subseteq[m]\setminus\{j\}.
+\]</p><p>For a fixed cardinality, the largest numerator uses the largest available scores. Let \(b_{j,1}\ge\cdots\ge b_{j,m-1}\) be the scores excluding \(p_j\), and let \(B_{j,q}=\sum_{h=1}^q b_{j,h}\), with \(B_{j,0}=0\). We obtain the formula</p><p>\[
+\boxed{
+d_j(p)=
+\max_{0\le q\le m-1}
+\frac{B_{j,q}-q p_j}{q+1}.
+}
+\]</p><p>The term for \(q=0\) is zero, so the maximum is always nonnegative.</p><h3>4. Exact computation and bit complexity</h3><p>Aggregate the first-place masses and sort them once. For each candidate \(j\), traverse this sorted list while skipping \(j\), calculate its prefix sums, and evaluate the formula above. This uses \(O(\tau+m^2+m\log m)\) arithmetic operations, in addition to reading the input.</p><p>Here is an explicit polynomial bound on the required bit operations.</p><p>Index the support by \(t\), and write \(\mu_t=A_t/B_t\) with positive integer denominators. Set \(D=\prod_t B_t\). Its bit length is \(O(L)\), and each first-place mass can be represented as \(p_i=n_i/D\), where \(0\le n_i\le D\).</p><p>The distance formula then represents each optimum as</p><p>\[
+d_j=\frac{N_j}{D h_j},
+\qquad N_j\ge0,\qquad 1\le h_j\le m,
+\]</p><p>with \(N_j\) of bit length \(O(L+\log m)\). These representations are obtained by comparing the prefix-sum fractions exactly.</p><p>Write \(\rho=A/B\), where \(A,B\) are positive integers of bit length \(O(L+\log m)\). Let \(Q=m!\), and define integer weights</p><p>\[
+W_j=
+\max\{BDh_j-AN_j,0\}\frac{Q}{h_j}.
+\]</p><p>Because \(h_j\) divides \(Q\),</p><p>\[
+\frac{W_j}{BDQ}=\max\{1-\rho d_j,0\}.
+\]</p><p>Thus the exact output is</p><p>\[
+G_\mu(j)=\frac{W_j}{\sum_{\ell=1}^mW_\ell}.
+\]</p><p>The denominator is positive: the current plurality winner has \(d_j=0\), hence unnormalized weight one.</p><p>All integers used here have bit length \(O(L+m\log(m+1))\). Using ordinary quadratic-time integer arithmetic gives, for example, the valid bound</p><p>\[
+O\!\left(
+L+(\tau+m^2)\bigl(L+m\log(m+1)\bigr)^2
+\right)
+\]</p><p>bit operations. No enumeration of the \(m!\) rankings is required; \(m!\) above is merely a common-denominator integer.</p><h3>5. Both guarantees</h3><h3>Supported candidates are attainable within the stated budget</h3><p>If \(G_\mu(j)&gt;0\), then \(1-\rho d_j&gt;0\), so \(d_j&lt;1/\rho\).</p><p>Choose \(0&lt;\varepsilon&lt;\min\{1,1/\rho-d_j\}\). Section 2 and the transport lemma provide an actual report change making \(j\) the unique winner at cost at most \(d_j+\varepsilon&lt;1/\rho\).</p><p>Thus the first guarantee holds despite possible nonattainment of \(d_j\).</p><h3>Coalition gain is bounded</h3><p>First, distances to the fixed set \(W_j\) are Lipschitz:</p><p>\[
+|d_j(p)-d_j(q)|\le\delta(p,q).
+\]</p><p>Indeed, if \(z\in W_j\) minimizes the distance from \(q\), the triangle inequality gives \(d_j(p)\le\delta(p,q)+d_j(q)\); interchange \(p\) and \(q\) for the reverse bound.</p><p>Let \(w_j(p)=(1-\rho d_j(p))_+\) and \(Z(p)=\sum_jw_j(p)\). The positive-part function is Lipschitz with constant one, so</p><p>\[
+|w_j(p)-w_j(q)|\le\rho\delta(p,q).
+\]</p><p>Also \(Z(p)\ge1\) for every profile. Set \(A_0=\sum_j|w_j(q)-w_j(p)|\). Normalization therefore satisfies</p><p>\[
+\begin{aligned}
+\sum_j|G_q(j)-G_p(j)|
+&amp;\le
+\frac{A_0+|Z(q)-Z(p)|}{Z(q)}\\
+&amp;\le 2A_0.
+\end{aligned}
+\]</p><p>Hence</p><p>\[
+\delta(G_p,G_q)\le A_0\le m\rho\delta(p,q).
+\]</p><p>Now consider an admissible coalition. Write \(c=\sum_{u,r}c_{u,r}\le\alpha\), and let \(p&#x27;\) be the resulting first-place masses. Only selected mass can change reports, so the transport lower bound implies \(\delta(p,p&#x27;)\le c\).</p><p>Define its aggregate candidate utilities by \(a_j=\sum_{u,r}c_{u,r}u_j\). Because true utilities remain fixed and lie in \([0,1]\), these same coefficients describe its utility before and after the deviation, and \(0\le a_j\le c\). Therefore</p><p>\[
+\begin{aligned}
+U_c(G_{\mu&#x27;})-U_c(G_\mu)
+&amp;=\sum_j a_j\bigl(G_{\mu&#x27;}(j)-G_\mu(j)\bigr)\\
+&amp;\le c\sum_{j:\,G_{\mu&#x27;}(j)&gt;G_\mu(j)}
+\bigl(G_{\mu&#x27;}(j)-G_\mu(j)\bigr)\\
+&amp;=c\,\delta(G_\mu,G_{\mu&#x27;})\\
+&amp;\le m\rho c^2\\
+&amp;\le m\rho\alpha^2
+=\frac{\eta}{m+1}
+\le\eta.
+\end{aligned}
+\]</p><p>This proves the second guarantee for every admissible deviation.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s claim is <b>proved</b>. The distance formula, exact polynomial-time computation, and both guarantees are correct as written. The stronger coalition bound is also justified. I found no major or minor mathematical issues.</p><ul><li><b>Reduction to first-place mass transport.</b></li></ul><p>Plurality depends only on the vector \(p\) of first-place masses. The transport lemma correctly identifies the minimum changed report mass for reaching any \(z\in\Delta_m\) as \(\delta(p,z)\).</p><p>The lower bound is valid: mass retaining first-place candidate \(i\) cannot exceed \(\min\{p_i,z_i\}\), and every change of first-place candidate necessarily changes the ranking.</p><p>The construction attains the bound. A surplus candidate has \(p_i&gt;0\), so the fraction \(a_i/p_i\) is defined and lies in \([0,1]\). When \(h&gt;0\), the proportions \(b_j/h\) sum to one. Surplus and deficit candidates are distinct, ensuring every selected portion changes its ranking. Unsupported destination rankings are permitted by the task, and each transfer preserves its source utility vector. The case \(h=0\) is explicitly handled.</p><ul><li><b>Tie-breaking and winning-cost infima.</b></li></ul><p>The actual winner region is described correctly: candidate \(j\) must strictly exceed every lower-index candidate and may tie higher-index candidates.</p><p>The closed region \(W_j\) is nonempty and compact, so the continuous distance function attains its minimum there. Since the actual winner region is contained in \(W_j\), this minimum is a lower bound on the winning-cost infimum.</p><p>The perturbation \(z^\varepsilon=(1-\varepsilon)z+\varepsilon e_j\) remains in the simplex and makes \(j\) the unique winner. The displayed coordinate differences and distance bound are correct. Consequently, actual winning profiles approach the closed-region minimum arbitrarily closely. This establishes the claimed equality of infima without assuming that the actual winning cost is attained.</p><ul><li><b>Existence and characterization of the root.</b></li></ul><p>Each summand of \(F_j\) is continuous and nonincreasing; subtracting \(t\) makes \(F_j(t)-t\) strictly decreasing. At \(t=0\), its value is nonnegative. At \(t=1-p_j\), every summand vanishes because \(p_i\le1\), and the difference is nonpositive. Thus the asserted unique root exists, including the endpoint cases.</p><p>For the lower bound, \(\delta(p,z)=t\) bounds each coordinate’s absolute change by \(t\), so \(z_j\le p_j+t\). Together with \(z_i\le z_j\), this justifies the positive-part inequality. Summation gives \(F_j(t)\le t\), and strict decrease yields \(t\ge t_j\).</p><p>The proposed attaining vector is nonnegative, sums to one by the root equation, and belongs to \(W_j\). Candidate \(j\) gains exactly \(t_j\), while the remaining candidates lose that same total mass. Its total variation distance is therefore exactly \(t_j\). The identity \(d_j(p)=t_j\) follows.</p><ul><li><b>Exact prefix-sum formula.</b></li></ul><p>The subset expression for \(F_j(t)\) is correct: maximizing over subsets includes exactly the positive contributions, with zero contributions immaterial.</p><p>Rearranging each subset inequality gives the stated denominator \(|S|+1\). For a fixed cardinality \(q\), the largest numerator uses the \(q\) largest scores excluding \(j\). The \(q=0\) term supplies zero, covering cases in which all nonempty-subset expressions are negative.</p><p>These observations justify the displayed maximum formula exactly. No subsets or destination rankings need to be enumerated.</p><ul><li><b>Algorithm and bit complexity.</b></li></ul><p>Aggregation, one sort, and one prefix-sum traversal per candidate give the stated arithmetic-operation bound.</p><p>The product denominator \(D\) has bit length \(O(L)\), since the denominator encodings are included in the input length. The common-denominator numerators \(n_i\) satisfy \(0\le n_i\le D\). The selected distance fraction has denominator \(Dh_j\), with \(1\le h_j\le m\), and numerator bit length \(O(L+\log m)\).</p><p>Computing \(\rho\) from the binary rational parameters preserves the claimed polynomial bit bound. The factorial \(Q=m!\) has bit length \(O(m\log(m+1))\), and every \(h_j\) divides it. The integer-weight identity is algebraically correct, so normalizing the \(W_j\) produces the exact lottery.</p><p>The normalization denominator is positive because the current plurality winner has winning cost zero and hence unnormalized weight one.</p><p>The stated bit-operation bound covers aggregation, exact fraction comparisons, factorial construction, integer weights, and normalization using ordinary quadratic-time integer arithmetic. Sorting is absorbed by the \(m^2\) term for \(m\ge2\). Reading the utility coordinates and full rankings is covered by the input-reading term. The algorithm is polynomial in \(m,\tau,L\).</p><ul><li><b>Attainability of every supported candidate.</b></li></ul><p>Positive lottery weight implies the strict inequality \(d_j&lt;1/\rho\). Hence the specified positive \(\varepsilon\) exists.</p><p>The earlier perturbation and transport construction produce an actual winning report change with cost at most \(d_j+\varepsilon&lt;1/\rho\). This proves the requested weak budget bound and correctly handles potentially unattained infima.</p><ul><li><b>Coalition utility guarantee.</b></li></ul><p>The distance-to-\(W_j\) Lipschitz inequality follows from the triangle inequality and the established minimum characterization. Applying the positive-part function gives the stated weight bound.</p><p>The normalization estimate uses a valid decomposition, \(|Z(q)-Z(p)|\le A_0\), and \(Z(q)\ge1\). The conversion from the lottery’s \(L^1\) difference to total variation correctly includes the factor \(1/2\), yielding \(\delta(G_p,G_q)\le m\rho\delta(p,q)\).</p><p>A coalition of selected mass \(c\) changes at most that mass, so the transport lower bound gives \(\delta(p,p&#x27;)\le c\). Fixed true utilities ensure that the same coefficients \(a_j\) describe utility before and after the deviation, with \(0\le a_j\le c\).</p><p>Bounding the positive lottery changes gives exactly the displayed utility estimate. The final substitution is correct because \(m=k\):<br>\(m\rho\alpha^2=\eta/(m+1)\le\eta\).</p><p>These arguments apply to real-valued deviations: the geometric and utility estimates do not require the resulting masses to remain rational.</p><p>No additional clarification or repair is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

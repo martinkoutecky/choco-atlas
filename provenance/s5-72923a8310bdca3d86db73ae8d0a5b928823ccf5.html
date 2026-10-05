@@ -1,0 +1,284 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-72923a8310bdca3d86db73ae8d0a5b928823ccf5 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-72923a8310bdca3d86db73ae8d0a5b928823ccf5 <span style="font-weight:normal;color:#8a7350">(s5-72923a8310bdca3d86db73ae8d0a5b928823ccf5)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2.2 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>There exists an efﬁcient algorithm to calcu- late the agents’ actions.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a connected type graph \(H=(T,F)\), positive rational masses \(\mu_t\) summing to one, and independent aggregate observations \(Z_t\mid\theta\sim N(\theta,\sigma^2/\mu_t)\), compute a type’s exact posterior action at round \(k\) under the paper’s common uniform prior, returning coefficients \(a_{tu}^{(k)}\) such that \(X_t(k)=\sum_{u\in T}a_{tu}^{(k)}Z_u\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list of \(\tau\) types with positive binary-rational masses \(\mu_t\) summing to \(1\); \(\tau\) counts supported types, not possible types.<br>Input includes a connected undirected simple graph \(H=(T,F)\), with \(T\) the support and \(m=|F|\), a designated type \(t\), a unary-encoded round \(k\geq0\), and a known positive binary-rational variance scale \(\sigma^2\). Let \(L\) be the total input bit length.<br>Conditional on an unknown \(\theta\in\mathbb R\), each type receives one observation \(Z_t\sim N(\theta,\sigma^2/\mu_t)\), independently across types. All types know the graph, masses, and observation model and share the improper uniform prior on \(\mathbb R\).<br>Communication is synchronous and exact, with full memory: \(X_t(0)=Z_t\), and \(X_t(j)=\mathbb E[\theta\mid Z_t,\{X_u(i):\{t,u\}\in F,\ 0\leq i&lt;j\}]\). Interpret this posterior by normalizing the likelihood against Lebesgue measure.<br>Compute the exact coefficients \(a_{tu}^{(k)}\) in \(X_t(k)=\sum_{u\in T}a_{tu}^{(k)}Z_u\), output as binary rationals; observation realizations are not input.</p><p>Does this coefficient-computation problem admit a polynomial-time algorithm in \(m,\tau,L,k\) in the bit model, or is it NP-hard?</p><p>For finite equal-variance agents, Mossel, Olsman, and Tamuz establish a polynomial arithmetic-operation bound in network size, linear in the round ([source](https://arxiv.org/pdf/1002.0747v3)).<br>Their computation model uses exact real arithmetic at unit cost; that bound does not establish polynomial bit complexity for the rational-mass problem above.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Restored synchronous communication, round-zero private observations, full observation history, and common knowledge of the graph and signal model.</li><li>Specified a nonempty support and a connected undirected simple graph; defined m as its edge count.</li><li>Specified the common variance scale as a known positive binary rational.</li><li>Chose unary encoding for the nonnegative round, consistent with the anchor&#x27;s running-time dependence on the round.</li><li>Specified bit-model computation, exact binary-rational coefficient output, and total input bit length L; observation realizations are unnecessary input.</li><li>Interpreted the improper uniform prior through likelihood normalization against Lebesgue measure.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Rigorous partial progress</h3><p>The unrestricted classification remains unresolved here. I prove new polynomial-bit-complexity results for arbitrary positive rational masses on distance-regular graphs and on graphs formed by joining cliques at articulation vertices. More generally, I give a polynomial-time, graph-only test characterizing when every estimate is the mass-weighted average over its current graph ball.</p><p>These results do not establish a polynomial denominator bound on arbitrary graphs or an $\mathrm{NP}$-hardness reduction.</p><p>“Binary-rational output” is interpreted as an integer numerator and a positive integer denominator, both written in binary. Even dyadic input masses can produce coefficients without finite binary expansions, as the example below shows.</p><h3>1. Posterior characterization and locality</h3><p>Put $n=\tau$, identify coefficient vectors with columns in $\mathbb R^n$, and define<br>$$
+D=\operatorname{diag}(1/\mu_u:u\in T),
+\qquad
+W=\operatorname{diag}(\mu_u:u\in T).
+$$<br>Let $e_v$ denote the coordinate vector associated with vertex $v$. Define its information space at round $j$ by<br>$$
+U_v(j)=\operatorname{span}\bigl(
+\{e_v\}\cup
+\{a_u(i):u\in N(v),\ 0\leq i&lt;j\}
+\bigr).
+$$</p><p><b>Lemma 1.</b> Every estimate has a rational coefficient vector $a_v(j)$ satisfying $\mathbf 1^{\mathsf T}a_v(j)=1$. It is the unique minimizer of<br>$$
+V(a)=a^{\mathsf T}Da
+$$<br>over<br>$$
+a\in U_v(j),
+\qquad
+\mathbf 1^{\mathsf T}a=1.
+$$<br>The coefficients do not depend on $\sigma^2$.</p><p><b>Proof.</b> At round $0$, the coefficient vector is $e_v$. Suppose all earlier coefficient vectors are rational and have coordinate sum $1$.</p><p>Select linearly independent rows from the coefficient vectors of the observations available to $v$, and place them in a matrix $A$ with $r$ rows. This selection preserves the information: every discarded observation is a known linear combination of the retained observations. We have<br>$$
+A\mathbf 1=\mathbf 1_r.
+$$<br>Conditional on $\theta$, the retained observation vector $Y=AZ$ has distribution<br>$$
+Y\mid\theta\sim N(\theta\mathbf 1_r,\sigma^2 C),
+\qquad
+C=ADA^{\mathsf T}.
+$$<br>The matrix $C$ is positive definite because $D$ is positive definite and $A$ has full row rank.</p><p>Set<br>$$
+d=\mathbf 1_r^{\mathsf T}C^{-1}\mathbf 1_r&gt;0,
+\qquad
+x=\frac{\mathbf 1_r^{\mathsf T}C^{-1}Y}{d}.
+$$<br>Completing the square gives<br>$$
+(Y-\theta\mathbf 1_r)^{\mathsf T}C^{-1}(Y-\theta\mathbf 1_r)
+=
+d(\theta-x)^2+Y^{\mathsf T}C^{-1}Y-dx^2.
+$$<br>Thus normalizing the likelihood against Lebesgue measure gives the proper posterior<br>$$
+N(x,\sigma^2/d).
+$$<br>Its mean has coefficient vector<br>$$
+a_v(j)=
+\frac{A^{\mathsf T}C^{-1}\mathbf 1_r}
+{\mathbf 1_r^{\mathsf T}C^{-1}\mathbf 1_r}.
+$$<br>This vector is rational, has coordinate sum $1$, and is independent of $\sigma^2$.</p><p>Every vector in $U_v(j)$ has the form $A^{\mathsf T}\lambda$. Its coordinate sum is $\mathbf 1_r^{\mathsf T}\lambda$, and its variance objective is $\lambda^{\mathsf T}C\lambda$. Positive definiteness of $C$ makes this objective strictly convex. Its unique constrained minimum occurs at<br>$$
+\lambda=
+\frac{C^{-1}\mathbf 1_r}
+{\mathbf 1_r^{\mathsf T}C^{-1}\mathbf 1_r},
+$$<br>which gives the displayed posterior vector. This completes the induction. $\square$</p><p>For $S\subseteq T$, write<br>$$
+M(S)=\sum_{u\in S}\mu_u.
+$$<br>For a vertex $v$ and integer $j\geq0$, let<br>$$
+B_v(j)=\{u:\operatorname{dist}_H(v,u)\leq j\}.
+$$</p><p><b>Lemma 2.</b> Every coefficient vector $a_v(j)$ is supported in $B_v(j)$. For every nonempty $S$, the unique minimum-variance unbiased vector supported in $S$ is<br>$$
+g_S(u)=
+\begin{cases}
+\mu_u/M(S),&amp;u\in S,\\
+0,&amp;u\notin S.
+\end{cases}
+$$</p><p><b>Proof.</b> Locality follows by induction. A neighbor’s report $a_u(i)$ available at round $j$ is supported in $B_u(i)$, and<br>$$
+B_u(i)\subseteq B_v(j)
+\qquad
+(u\in N(v),\ i&lt;j).
+$$<br>Lemma 1 places $a_v(j)$ in the span of these reports and $e_v$.</p><p>For an unbiased vector supported in $S$, Cauchy–Schwarz gives<br>$$
+1=
+\left(\sum_{u\in S}a_u\right)^2
+\leq
+M(S)\sum_{u\in S}\frac{a_u^2}{\mu_u}.
+$$<br>Equality holds precisely when $a_u$ is proportional to $\mu_u$ on $S$. The normalization determines the proportionality constant as $1/M(S)$. $\square$</p><p>Consequently, to prove that an estimate equals the weighted average on its ball, it suffices to prove that this average belongs to its information space.</p><h3>2. A graph-only characterization of exact ball averaging</h3><p>Let $b_v(j)\in\{0,1\}^n$ be the indicator vector of $B_v(j)$. Define the proposed ball-average coefficient vector<br>$$
+g_v(j)=\frac{Wb_v(j)}{M(B_v(j))}.
+$$</p><p>Let $\delta$ be the diameter of $H$. For each vertex $v$ and each $1\leq j\leq\delta$, consider the following condition:<br>$$
+b_v(j)\in
+\operatorname{span}_{\mathbb Q}
+\bigl(
+\{e_v\}\cup
+\{b_u(i):u\in N(v),\ 0\leq i&lt;j\}
+\bigr).
+$$<br>Call this condition $\mathcal R(v,j)$.</p><p><b>Theorem 3.</b> The following are equivalent:</p><ul><li>Every condition $\mathcal R(v,j)$ holds.</li><li>For every choice of positive masses summing to $1$, every vertex and round satisfy</li></ul><p>$$
+   a_v(j)=g_v(j).
+   $$</p><ul><li>There exists one choice of positive masses summing to $1$ for which the preceding equality holds at every vertex through round $\delta$.</li></ul><p>Moreover, these equivalent conditions can be tested in polynomial bit time using only the graph.</p><p><b>Proof.</b> Suppose that all estimates through round $j-1$ are ball averages. Since all normalizing masses are nonzero, their scalar factors do not affect spans. Also, $We_v=\mu_v e_v$. Therefore<br>$$
+U_v(j)=W\operatorname{span}_{\mathbb R}
+\bigl(
+\{e_v\}\cup
+\{b_u(i):u\in N(v),\ 0\leq i&lt;j\}
+\bigr).
+$$<br>The matrix $W$ is invertible. Hence<br>$$
+g_v(j)\in U_v(j)
+\quad\Longleftrightarrow\quad
+\mathcal R(v,j).
+$$<br>Here membership over $\mathbb R$ and over $\mathbb Q$ is equivalent: both are characterized by equality of the ranks of rational matrices.</p><p>If $\mathcal R(v,j)$ holds, Lemma 2 shows that $g_v(j)$ is the unique minimum-variance unbiased vector supported in $B_v(j)$. Locality and Lemma 1 therefore give<br>$$
+a_v(j)=g_v(j).
+$$<br>Starting from $g_v(0)=e_v$, induction proves that condition 1 implies ball averaging through round $\delta$, for every positive mass vector.</p><p>At round $\delta$, every ball is $T$, so every estimate has coefficient vector $\mu$. This vector is the unique global minimum-variance unbiased vector by Lemma 2. Information spaces are nested, and each type’s previously computed estimate belongs to its retained information space. Thus all later estimates remain $\mu$. This proves condition 2.</p><p>Condition 2 implies condition 3 immediately. Conversely, if condition 3 holds, the displayed information-space identity applies at each round through $\delta$. The actual coefficient vector belongs to $U_v(j)$, so $g_v(j)\in U_v(j)$ and $\mathcal R(v,j)$ holds. Thus condition 3 implies condition 1.</p><p>For the algorithm, compute all graph distances by breadth-first searches. Each membership test is a rank comparison between a $0$–$1$ matrix and the matrix obtained by appending $b_v(j)^{\mathsf T}$. Each matrix has $n$ columns and at most<br>$$
+1+\deg(v)j\leq 1+(n-1)^2
+$$<br>rows. There are at most $n(n-1)$ tests.</p><p>Exact rank computation has polynomial bit complexity here. During elimination, Schur-complement entries can be represented as ratios of minors of the original integer matrix. Every minor has order at most $n$, and its determinant has absolute value at most $n!$ by the determinant expansion. Thus these numerators and denominators have $O(n\log(n+1))$ bits, and polynomially many exact arithmetic operations suffice. $\square$</p><p>There is also a useful consequence for graphs that fail the test.</p><p><b>Corollary 4.</b> The first round at which some type departs from ball averaging is independent of the positive masses.</p><p><b>Proof.</b> Let $q$ be the first round with a failed condition $\mathcal R(v,q)$. All earlier conditions pass, so the proof of Theorem 3 gives ball averaging through round $q-1$ for every positive mass vector. At round $q$, the failed membership makes $g_v(q)$ infeasible for every such vector. Thus the actual estimate differs from the ball average at that vertex. If no condition fails through the diameter, ball averaging holds forever. $\square$</p><p>This characterization concerns ball averaging, not polynomial computability in general. Failure of the test is not a hardness certificate.</p><h3>3. Bit complexity whenever the graph test succeeds</h3><p><b>Proposition 5.</b> On every graph satisfying Theorem 3, the requested coefficients can be computed in polynomial bit time. Every coefficient has numerator and denominator bit length $O(L)$.</p><p><b>Proof.</b> Write the input masses as $\mu_u=p_u/q_u$, with positive integer numerators and denominators. Define<br>$$
+Q=\prod_{u\in T}q_u,
+\qquad
+w_u=p_uQ/q_u.
+$$<br>These are integers, their bit lengths are $O(L)$, and normalization gives<br>$$
+\sum_{u\in T}w_u=Q.
+$$<br>For a ball $B=B_t(k)$, every nonzero output coefficient is<br>$$
+a_{tu}^{(k)}=\frac{w_u}{\sum_{x\in B}w_x}.
+$$<br>Both numerator and denominator are positive integers at most $Q$. Reduction to lowest terms cannot increase their bit lengths.</p><p>A breadth-first search determines the ball. Integer summation and greatest-common-divisor computations then produce the reduced coefficients in polynomial bit time. For $k\geq\delta$, the answer is simply the mass vector. The graph test itself is polynomial by Theorem 3. $\square$</p><p>The following two sections prove that substantial graph families pass this test.</p><h3>4. Distance-regular graphs with arbitrary masses</h3><p>A connected graph is <b>distance-regular</b> if it is $d$-regular and, for every ordered pair $(x,y)$ at distance $i$, the numbers of neighbors of $y$ at distances $i-1$, $i$, and $i+1$ from $x$ depend only on $i$. Denote these numbers by $c_i,a_i,b_i$, respectively. Thus<br>$$
+c_i+a_i+b_i=d,
+\qquad
+c_0=a_0=0,
+\qquad
+b_0=d.
+$$</p><p>For $0\leq i&lt;\delta$, we have $c_{i+1}&gt;0$: a shortest path between vertices at distance $i+1$ supplies a neighbor that decreases their distance.</p><p><b>Theorem 6.</b> On a distance-regular graph, for arbitrary positive masses,<br>$$
+X_v(j)=
+\frac{\sum_{x\in B_v(j)}\mu_xZ_x}
+{M(B_v(j))}
+$$<br>for every vertex and every round. Therefore exact coefficient computation has polynomial bit complexity.</p><p><b>Proof.</b> Define the unnormalized ball totals<br>$$
+P_v(r)=\sum_{x\in B_v(r)}\mu_xZ_x,
+\qquad
+P_v(-1)=0.
+$$<br>Fix $0\leq r&lt;\delta$. Count the multiplicity of a signal $\mu_xZ_x$ in<br>$$
+\sum_{u\in N(v)}P_u(r).
+$$</p><p>If $\operatorname{dist}(v,x)\leq r-1$, all $d$ neighbors of $v$ have distance at most $r$ from $x$.</p><p>If $\operatorname{dist}(v,x)=r$, apply distance-regularity to the ordered pair $(x,v)$. Exactly $c_r+a_r=d-b_r$ neighbors of $v$ have distance at most $r$ from $x$.</p><p>If $\operatorname{dist}(v,x)=r+1$, exactly $c_{r+1}$ neighbors of $v$ have distance at most $r$ from $x$.</p><p>More distant signals contribute zero. Consequently,<br>$$
+\begin{aligned}
+\sum_{u\in N(v)}P_u(r)
+={}&amp;dP_v(r-1)
++(d-b_r)\bigl(P_v(r)-P_v(r-1)\bigr)\\
+&amp;+c_{r+1}\bigl(P_v(r+1)-P_v(r)\bigr).
+\end{aligned}
+$$<br>Rearranging gives the exact identity<br>$$
+P_v(r+1)=
+\frac{
+\sum_{u\in N(v)}P_u(r)
+-(d-b_r-c_{r+1})P_v(r)
+-b_rP_v(r-1)
+}{c_{r+1}}.
+$$</p><p>Now induct on $r$. At round $0$, the asserted formula holds. Assume it holds through round $r$ at every vertex. At round $r+1$, vertex $v$ receives $X_u(r)$ and hence can compute<br>$$
+P_u(r)=M(B_u(r))X_u(r)
+$$<br>for each neighbor. Its own earlier totals $P_v(r)$ and $P_v(r-1)$ are linear functions of retained information. The recurrence therefore makes $P_v(r+1)$ available.</p><p>Dividing by $M(B_v(r+1))$ gives a feasible ball-average coefficient vector. Lemmas 1 and 2 identify this vector with the actual posterior estimate. Induction reaches round $\delta$, when all estimates equal the global weighted average. They remain there afterward.</p><p>The single-vertex case is immediate. Polynomial bit complexity follows from Proposition 5. $\square$</p><p>For example, the $h$-dimensional hypercube satisfies<br>$$
+c_i=i,\qquad a_i=0,\qquad b_i=h-i:
+$$<br>flipping one of the $i$ differing coordinates decreases distance, and flipping one of the other coordinates increases it. Thus this theorem applies even when its masses are unequal and destroy the symmetry of the observation variances.</p><p>The cited paper proves the equal-variance result for distance-transitive graphs. The argument above independently establishes the stated arbitrary-mass result using intersection counts. [Mossel–Olsman–Tamuz](https://arxiv.org/pdf/1002.0747v3)</p><h3>5. Trees of cliques with arbitrary masses</h3><p>Consider a family $\mathcal C$ of vertex subsets, each of size at least $2$, with the following properties:</p><ul><li>Two distinct vertices are adjacent in $H$ exactly when they belong to a common member of $\mathcal C$.</li><li>The bipartite incidence graph with vertex classes $T$ and $\mathcal C$, and edges $vC$ whenever $v\in C$, is a tree.</li></ul><p>This explicitly defines the class used here; these graphs are commonly called block graphs. It includes trees and complete graphs.</p><p><b>Theorem 7.</b> On every graph in this class, for arbitrary positive masses,<br>$$
+X_v(j)=
+\frac{\sum_{x\in B_v(j)}\mu_xZ_x}
+{M(B_v(j))}
+$$<br>for every vertex and round. Exact coefficient computation therefore has polynomial bit complexity.</p><p><b>Proof.</b> Retain the notation<br>$$
+P_v(r)=\sum_{x\in B_v(r)}\mu_xZ_x,
+\qquad P_v(-1)=0.
+$$</p><p>Fix a clique $C\in\mathcal C$. Removing its node from the incidence tree leaves components indexed by $w\in C$. Let $T_{w,C}$ be the set of type vertices in the component containing $w$, and define<br>$$
+R_{w,C}(r)=
+\sum_{\substack{x\in T_{w,C}\\
+\operatorname{dist}_H(w,x)\leq r}}\mu_xZ_x,
+\qquad
+R_{w,C}(-1)=0.
+$$</p><p>Graph distance equals half the length of the corresponding path in the incidence tree. Indeed, a graph edge gives a two-edge incidence path, while the unique incidence path gives a graph path of half its length. In particular, for distinct $v,w\in C$ and $x\in T_{w,C}$,<br>$$
+\operatorname{dist}_H(v,x)=1+\operatorname{dist}_H(w,x).
+$$</p><p>For $v\in C$, let $Q_{v,C}(r)$ be the part of $P_v(r)$ lying outside $T_{v,C}$. Then<br>$$
+Q_{v,C}(r)=\sum_{w\in C\setminus\{v\}}R_{w,C}(r-1)
+\qquad (r\geq1),
+$$<br>and set $Q_{v,C}(0)=Q_{v,C}(-1)=0$. We also have<br>$$
+P_v(r)=R_{v,C}(r)+Q_{v,C}(r).
+$$</p><p>Put $h=|C|-1$. For $u\in C\setminus\{v\}$ and $j\geq1$, the component decomposition gives<br>$$
+P_u(j-1)
+=
+R_{u,C}(j-1)
++\sum_{w\in C\setminus\{u\}}R_{w,C}(j-2).
+$$<br>Summing over these $h$ choices of $u$ gives<br>$$
+\sum_{u\in C\setminus\{v\}}P_u(j-1)
+=
+Q_{v,C}(j)
++(h-1)Q_{v,C}(j-1)
++hR_{v,C}(j-2).
+$$<br>The multiplicities are explicit: each component indexed by $w\neq v$ appears once in the first sum and $h-1$ times in the second; the component indexed by $v$ appears $h$ times in the second. Hence<br>$$
+\begin{aligned}
+Q_{v,C}(j)
+={}&amp;\sum_{u\in C\setminus\{v\}}P_u(j-1)
+-(h-1)Q_{v,C}(j-1)\\
+&amp;-h\bigl(P_v(j-2)-Q_{v,C}(j-2)\bigr).
+\end{aligned}
+$$<br>This identity also holds at $j=1$ under the stated zero conventions.</p><p>Inductively suppose that, through round $j-1$, every estimate is its ball average and every type has reconstructed its earlier directional totals $Q_{v,C}$. At round $j$, each $u\in C\setminus\{v\}$ is a neighbor of $v$, so its report supplies $P_u(j-1)$ after multiplication by the known ball mass. All other terms in the recurrence are retained information. Thus $v$ can reconstruct $Q_{v,C}(j)$ for every incident clique $C$.</p><p>The branches through the incident clique nodes partition all vertices other than $v$, so<br>$$
+P_v(j)=\mu_vZ_v+\sum_{\substack{C\in\mathcal C\\v\in C}}Q_{v,C}(j).
+$$<br>Therefore its ball total, and hence its normalized ball average, is available. Lemmas 1 and 2 show that the posterior chooses this average.</p><p>At round $0$, the ball-average formula holds and every directional total is zero, establishing the induction base. The single-vertex graph is immediate separately. Polynomial bit complexity follows from Proposition 5. $\square$</p><p>No clique decomposition needs to be supplied as extra input for the coefficient algorithm: the graph-only test of Theorem 3 already certifies the ball formula on every graph covered by this theorem.</p><h3>6. A limitation: ball averaging fails even on a small chordal graph</h3><p>The preceding results do not extend to all graphs with simple clique decompositions.</p><p>Consider vertices $0,\ldots,5$ and edges<br>$$
+F=
+\bigl\{
+\{0,1\},\{0,2\},\{1,2\},
+\{1,3\},\{1,4\},\{2,4\},\{2,5\}
+\bigr\}.
+$$<br>Take the dyadic masses<br>$$
+\mu=\frac18(1,1,1,1,1,3).
+$$<br>The graph is connected and chordal. Vertices $3$ and $5$ are leaves; the remaining four vertices induce two triangles sharing edge $\{1,2\}$, and their only four-cycle has that edge as a chord.</p><p>At round $1$,<br>$$
+X_1(1)=\frac{Z_0+Z_1+Z_2+Z_3+Z_4}{5},
+$$<br>and<br>$$
+X_2(1)=\frac{Z_0+Z_1+Z_2+Z_4+3Z_5}{7}.
+$$<br>Thus vertex $0$’s round-$2$ information is equivalent to<br>$$
+Z_0,\quad Z_1,\quad Z_2,\quad Z_3+Z_4,\quad Z_4+3Z_5.
+$$<br>Its feasible coefficient vectors have the form<br>$$
+(\alpha_0,\alpha_1,\alpha_2,\beta,\beta+\gamma,3\gamma),
+$$<br>with unbiasedness constraint<br>$$
+\alpha_0+\alpha_1+\alpha_2+2\beta+4\gamma=1.
+$$<br>The objective, divided by $8$, is<br>$$
+\alpha_0^2+\alpha_1^2+\alpha_2^2
++\beta^2+(\beta+\gamma)^2+3\gamma^2.
+$$<br>For fixed $\alpha_0+\alpha_1+\alpha_2$, the first three terms are uniquely minimized when all three coordinates equal some $r$. The remaining strictly convex problem is therefore<br>$$
+\text{minimize }3r^2+2\beta^2+2\beta\gamma+4\gamma^2,
+\qquad
+3r+2\beta+4\gamma=1.
+$$<br>The Lagrange equations are<br>$$
+6r=3\lambda,\qquad
+4\beta+2\gamma=2\lambda,\qquad
+2\beta+8\gamma=4\lambda.
+$$<br>They give<br>$$
+r=\lambda/2,\qquad
+\beta=2\lambda/7,\qquad
+\gamma=3\lambda/7.
+$$<br>The constraint then gives $\lambda=14/53$, so<br>$$
+a_0(2)=\frac1{53}(7,7,7,4,10,18).
+$$<br>Strict convexity proves that this stationary point is the unique optimum.</p><p>Here $B_0(2)=T$, but the resulting vector differs from the global weighted average $\mu$. The graph-only obstruction is equally direct: outside coordinates $0,1,2$, the two neighbor-ball indicators restrict to<br>$$
+(1,1,0),\qquad (0,1,1).
+$$<br>Their span does not contain $(1,1,1)$, because matching the first and third coordinates forces the middle coordinate to equal $2$. Thus $\mathcal R(0,2)$ fails.</p><p>This example limits the ball reconstruction method. Its denominator $53$ is not an asymptotic output-size lower bound.</p><h3>7. The precise remaining bit-complexity question</h3><p>For completeness, the denominator characterization from the notes can be established directly.</p><p><b>Proposition 8.</b> The unrestricted problem admits a polynomial-time bit algorithm if and only if all requested reduced coefficient denominators have a uniform polynomial bound on their bit lengths in the input length.</p><p><b>Proof.</b> Necessity follows from explicit output length.</p><p>For sufficiency, assume such a bound. Since $e_v$ is always feasible in Lemma 1,<br>$$
+V(a_v(j))\leq 1/\mu_v.
+$$<br>Consequently, for every coordinate,<br>$$
+\frac{|a_{v,u}(j)|^2}{\mu_u}\leq 1/\mu_v.
+$$<br>Every input mass satisfies $\mu_u\leq1$ and $\mu_v\geq2^{-L}$, so<br>$$
+|a_{v,u}(j)|\leq2^{L/2}.
+$$<br>If a coefficient is written in reduced form as $p/q$, a polynomial bound on the bit length of $q$ therefore also bounds the bit length of $p$ polynomially.</p><p>Every intermediate vector in a round-by-round simulation is itself the requested output of an instance obtained by changing the designated type and replacing $k$ by some $j\leq k$. These instances have length $O(L)$ because the round is unary encoded. The uniform hypothesis therefore bounds all intermediate coefficient heights polynomially.</p><p>At each vertex, retain at most $n$ linearly independent original observation rows as a basis of its memory. To advance one round, append the latest neighbor rows and select an independent subset. Then apply the covariance formula in Lemma 1.</p><p>These rank computations and linear solves have polynomial bit complexity when their entries have polynomial height. Explicitly, clearing denominators produces integer matrices whose entry lengths are polynomial in $n$ and the coefficient heights. The determinant expansion bounds every minor’s bit length polynomially in the matrix dimensions and entry lengths; exact elimination uses ratios of such minors. Thus each update takes polynomial bit time.</p><p>There are $nk$ updates, and all required intermediate heights are polynomially bounded. The complete simulation is therefore polynomial in $m,n,L,k$. $\square$</p><p>The new results prove the required denominator bound, indeed an $O(L)$ bound, on every graph passing the graph-only test. They leave unrestricted coefficient growth unbounded by a polynomial in this argument. No $\mathrm{NP}$-hardness conclusion follows from failure of that test.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Introduction and Section 7: unrestricted complexity classification: The output proves restricted polynomial-time results and a conditional denominator-bound equivalence, but supplies neither an unrestricted polynomial bit algorithm nor an $\mathrm{NP}$-hardness reduction. This is an acknowledged limitation, not a false step in the partial proofs.</li></ul>
+<div class="pre"><p>The correct adjudication is <b>partial</b>. The output establishes substantial, rigorous results for restricted graph classes and a conditional characterization of polynomial bit complexity. It does <b>not</b> resolve the unrestricted problem in <code>USER_TASK</code>.</p><p>I found no false central step or substantive mathematical gap in the partial results. The major outstanding issue is the missing unrestricted complexity classification, which the prover explicitly acknowledges.</p><ul><li><b>Output representation and scope</b></li></ul><p>Interpreting “binary-rational output” as an integer numerator and a positive integer denominator, both encoded in binary, is appropriate for the intended exact rational computation problem. The example in Section 6 correctly demonstrates that dyadic masses can yield coefficients with non-dyadic denominators.</p><p>The discussion consistently concerns supported types, with $n=\tau$. It does not substitute the number of possible types for the support size.</p><p>The assertions about arbitrary positive masses can be read within the task’s rational-input domain. The linear-algebra arguments also remain valid for positive real masses, except that rationality of the resulting coefficients is then no longer asserted.</p><ul><li><b>Lemma 1: posterior characterization</b></li></ul><p>The induction and likelihood calculation are correct.</p><ul><li>Every retained observation row has coordinate sum $1$, so $A\mathbf 1=\mathbf 1_r$.</li><li>Removing linearly dependent observation rows preserves information because their values are known linear combinations of retained observations.</li><li>Full row rank of $A$ and positive definiteness of $D$ imply positive definiteness of $C=ADA^{\mathsf T}$.</li><li>There is at least one retained row because the private observation $Z_v$ is always available. Consequently,</li></ul><p>$$
+     d=\mathbf 1_r^{\mathsf T}C^{-1}\mathbf 1_r&gt;0.
+     $$</p><ul><li>The completed-square identity is correct. Normalizing against Lebesgue measure therefore gives a proper posterior with mean $x$ and variance $\sigma^2/d$.</li><li>The displayed coefficient formula has coordinate sum $1$ and is rational when the input masses and retained coefficient rows are rational.</li><li>The constrained quadratic minimization gives precisely the same coefficient vector.</li></ul><p>The scale $\sigma^2$ cancels from the posterior mean, as claimed. No observation realizations are required to compute the coefficients.</p><p><b>Finding:</b> correct.</p><ul><li><b>Lemma 2: locality and the optimal supported average</b></li></ul><p>The locality induction respects the synchronous timing. If $u$ is a neighbor of $v$ and $i&lt;j$, then every coordinate in $a_u(i)$ lies at distance at most<br>$$
+   i+1\leq j
+   $$<br>from $v$. Taking linear combinations cannot introduce coordinates outside $B_v(j)$.</p><p>The Cauchy–Schwarz inequality is applied correctly, including for coefficient vectors with negative entries. Its equality condition gives a vector proportional to the positive masses on $S$, and the unbiasedness constraint fixes the proportionality constant.</p><p>Thus $g_S$ is the unique minimum-variance unbiased vector supported in $S$.</p><p><b>Finding:</b> correct.</p><ul><li><b>Theorem 3: graph-only characterization</b></li></ul><p>The crucial information-space identity is valid under the induction hypothesis:<br>$$
+   U_v(j)=W\operatorname{span}_{\mathbb R}
+   \bigl(\{e_v\}\cup\{b_u(i):u\in N(v),\ 0\leq i&lt;j\}\bigr).
+   $$<br>Positive masses ensure that all normalization factors are nonzero and that $W$ is invertible. The identity also handles the private observation because $We_v=\mu_v e_v$.</p><p>Membership of $g_v(j)$ in this space is consequently equivalent to membership of $b_v(j)$ in the corresponding indicator span. Rational and real membership agree because the matrices involved have rational entries and membership is determined by ranks.</p><p>All three implications are justified:</p><ul><li>Condition 1 gives ball averaging inductively through round $\delta$.</li><li>At round $\delta$, every ball is $T$, so the coefficient vector is $\mu$.</li><li>Earlier estimates remain available as linear combinations of retained information. Hence $\mu$ remains feasible thereafter and remains the unique global optimum.</li><li>Condition 2 immediately implies condition 3.</li><li>Under condition 3, actual estimates belong to their information spaces, forcing every required indicator membership.</li></ul><p>The polynomial-time test is also justified. There are at most $n(n-1)$ rank tests, with polynomial-size integer matrices. The bound $n!$ on absolute values of minors yields polynomial bit lengths, and exact elimination using ratios of minors gives polynomial bit complexity.</p><p>For $n=1$, there are no membership tests, and the asserted conclusion is the private observation at every round.</p><p><b>Finding:</b> correct. This characterizes ball averaging, not unrestricted polynomial computability.</p><ul><li><b>Corollary 4: independence of the first failure round</b></li></ul><p>Before the first failed condition, Theorem 3’s induction gives ball averaging for every admissible mass vector. At the failed condition, the proposed ball-average vector is outside the information space for every positive mass vector.</p><p>Therefore the first departure round is independent of the masses. The statement properly includes the possibility that no departure ever occurs.</p><p><b>Finding:</b> correct.</p><ul><li><b>Proposition 5: bit complexity on passing graphs</b></li></ul><p>The common-denominator construction is correct:<br>$$
+   Q=\prod_{u\in T}q_u,\qquad w_u=p_uQ/q_u.
+   $$<br>Because the denominator encodings are part of the input, $Q$ has bit length $O(L)$. Normalization implies<br>$$
+   \sum_{u\in T}w_u=Q,
+   $$<br>so every positive $w_u$ and every ball sum are at most $Q$.</p><p>The coefficient formula therefore has numerator and denominator bit lengths $O(L)$ before reduction, and reduction cannot increase them. Breadth-first search, integer summation, and greatest-common-divisor computations give the claimed polynomial bit algorithm.</p><p>This covers $k=0$, singleton graphs, and rounds beyond the diameter.</p><p><b>Finding:</b> correct for graphs satisfying Theorem 3.</p><ul><li><b>Theorem 6: distance-regular graphs</b></li></ul><p>The multiplicity calculation is correct. For a signal at distance at most $r-1$, exactly $d$ neighbor totals contain it. At distance $r$, the multiplicity is $d-b_r$. At distance $r+1$, it is $c_{r+1}$. More distant signals contribute zero.</p><p>Expanding the displayed identity gives<br>$$
+   \sum_{u\in N(v)}P_u(r)
+   =
+   b_rP_v(r-1)
+   +(d-b_r-c_{r+1})P_v(r)
+   +c_{r+1}P_v(r+1),
+   $$<br>which rearranges to the stated recurrence.</p><p>The divisor $c_{r+1}$ is positive for every recurrence used. At $r=0$, the convention $P_v(-1)=0$ is sufficient. At round $r+1$, neighbor totals at round $r$ are available, while the vertex’s earlier totals are functions of retained information. The recurrence therefore proves feasibility of the proposed average without assuming access to unavailable signals.</p><p>Lemmas 1 and 2 then identify the feasible average with the actual posterior estimate. The hypercube intersection counts are also correct.</p><p>The contextual attribution to the equal-variance distance-transitive result agrees with the cited paper; the arbitrary-mass argument is supplied independently here. [Mossel–Olsman–Tamuz](https://arxiv.org/pdf/1002.0747v3)</p><p><b>Finding:</b> correct.</p><ul><li><b>Theorem 7: trees of cliques</b></li></ul><p>The explicit incidence-tree hypothesis is sufficient for the component decomposition used in the proof. Graph distance equals half the incidence-tree path length, and the stated distance identity across a clique follows.</p><p>The directional-total recurrence has the correct multiplicities. Writing $h=|C|-1$:</p><ul><li>Each component indexed by $w\neq v$ appears once at radius $j-1$.</li><li>It appears $h-1$ times at radius $j-2$.</li><li>The component indexed by $v$ appears $h$ times at radius $j-2$.</li></ul><p>These counts give exactly the displayed recurrence for $Q_{v,C}(j)$. It remains valid when $h=1$. At $j=1$, all negative-radius terms vanish under the stated conventions.</p><p>The induction tracks both ball averages and reconstructed directional totals, so all terms used at round $j$ are available. The incident branches partition the vertices other than $v$, justifying the final reconstruction of $P_v(j)$.</p><p>The singleton case is handled separately. A supplied clique decomposition is unnecessary for the coefficient algorithm because the graph-only test certifies the ball formula.</p><p><b>Finding:</b> correct.</p><ul><li><b>Section 6: chordal counterexample</b></li></ul><p>The graph is connected and chordal as described. The round-$1$ neighbor estimates and the reduction of vertex $0$’s round-$2$ information are correct.</p><p>The feasible coefficient form<br>$$
+   (\alpha_0,\alpha_1,\alpha_2,\beta,\beta+\gamma,3\gamma)
+   $$<br>and its unbiasedness constraint correctly represent that information space.</p><p>Dividing the variance objective by $8$ gives the displayed quadratic. The Lagrange equations are correct, and their solution satisfies<br>$$
+   r=\frac7{53},\qquad
+   \beta=\frac4{53},\qquad
+   \gamma=\frac6{53},\qquad
+   \lambda=\frac{14}{53}.
+   $$<br>Substitution gives<br>$$
+   3r+2\beta+4\gamma=1
+   $$<br>and zero residual in each Lagrange equation. Hence the resulting vector is<br>$$
+   a_0(2)=\frac1{53}(7,7,7,4,10,18),
+   $$<br>as claimed. Strict convexity ensures uniqueness.</p><p>The indicator-span obstruction is also correct: matching the first and third coordinates of $(1,1,1)$ forces both spanning coefficients to equal $1$, making the middle coordinate $2$.</p><p><b>Finding:</b> correct. This refutes universal ball averaging on chordal graphs, but establishes neither superpolynomial coefficient growth nor hardness.</p><ul><li><b>Proposition 8: denominator-bound equivalence</b></li></ul><p>Necessity follows from explicit output length.</p><p>The sufficiency argument correctly controls numerators as well as denominators. Since $e_v$ is feasible,<br>$$
+    V(a_v(j))\leq\frac1{\mu_v}.
+    $$<br>Each summand in the variance objective is nonnegative, so<br>$$
+    |a_{v,u}(j)|^2\leq\frac{\mu_u}{\mu_v}.
+    $$<br>Under the stated binary numerator-and-denominator encoding, $\mu_u\leq1$ and $\mu_v\geq2^{-L}$. Thus<br>$$
+    |a_{v,u}(j)|\leq2^{L/2}.
+    $$<br>A polynomial bound on reduced denominator bit lengths therefore yields a polynomial bound on numerator bit lengths.</p><p>The hypothesis is uniform over all instances. Changing the designated vertex and replacing unary $k$ by $j\leq k$ gives instances of length $O(L)$, so the bound applies to all coefficient vectors needed during simulation.</p><p>Retaining an independent subset of available observation rows preserves the information space. These retained rows are actual observation coefficient rows, so they inherit the hypothesized height bound. Clearing denominators and using determinant bounds gives polynomial bit complexity for the rank computations and covariance solves.</p><p>There are $nk$ updates. Therefore the conditional polynomial-time conclusion follows.</p><p><b>Finding:</b> correct. The proposition does not establish its denominator-bound hypothesis on unrestricted graphs.</p><ul><li><b>Outstanding issue and actionable feedback</b></li></ul><p><b>Major — unrestricted classification remains unresolved.</b> The graph-only test, the two graph families, and the explicit obstruction do not establish either a polynomial bit algorithm or $\mathrm{NP}$-hardness for arbitrary connected graphs.</p><p>No repair is required for the substantive partial results. To resolve <code>USER_TASK</code>, the next submission must supply either:</p><ul><li>A proved uniform polynomial bound on reduced coefficient denominator bit lengths for all allowed graphs, masses, designated types, and unary rounds, making Proposition 8 unconditional; or</li><li>A valid hardness reduction for the exact coefficient-computation problem under the specified encoding.</li></ul><p>A family with superpolynomial explicit output length would obstruct a polynomial-time explicit-output algorithm, but would not by itself establish $\mathrm{NP}$-hardness.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

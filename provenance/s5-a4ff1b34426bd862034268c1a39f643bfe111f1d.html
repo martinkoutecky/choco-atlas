@@ -1,0 +1,202 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-a4ff1b34426bd862034268c1a39f643bfe111f1d — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-a4ff1b34426bd862034268c1a39f643bfe111f1d <span style="font-weight:normal;color:#8a7350">(s5-a4ff1b34426bd862034268c1a39f643bfe111f1d)</span></h1>
+<p class="banner">NEW RESULT — continuous: hard · adversarial review: proved · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> $\mathrm{NP}$-hard under polynomial-time many-one reductions, even with $m=2$, dyadic masses, and utilities of degree at most $3$.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>The greedy swap-based algorithm always terminates in finite time. On termination, it either: (i) outputs a stable matching (no blocking pair remains), or (ii) detects a repeated matching, and therefore certifies a cycle.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given colleges \(C\), a finite set of student types \(\Theta\) with rational masses \(\nu_\theta\), type preference orders, rational per-capita capacities \(\kappa_c\), continuous utilities \(U_c\) over assigned type masses, and a feasible rational initial assignment, does the fixed-order blocking-mass refinement reach a state with no blocking move or repeat an exact state after finitely many updates? For a finite computational encoding, take the \(U_c\) to be rational polynomials; at each step choose the first blocking type, source, and destination, then a feasible mass transfer maximizing the receiving college’s utility gain, with fixed lexicographic tie-breaking.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive binary-rational masses \(\nu_\theta\), normalized by \(\sum_\theta\nu_\theta=1\). Here \(\tau\) is the support size, not the number of possible types. There are \(m\geq1\) colleges, nonnegative rational capacities \(\kappa_c\), and strict type rankings over \(C\cup\{\bot\}\), where \(\bot\) means unmatched.<br>An assignment has real coordinates \(x_{\theta j}\geq0\), with \(\sum_{j\in C\cup\{\bot\}}x_{\theta j}=\nu_\theta\) and \(\sum_\theta x_{\theta c}\leq\kappa_c\). The initial assignment is rational. Each college evaluates its assigned vector \(x_c\) using an arbitrary real-valued rational polynomial \(U_c\), encoded as a list of monomials with binary coefficients and exponents. Let \(L\) be the total input bit length; measure running times in \(m,\tau,L\).<br>For an incoming type \(\theta\), source \(j\in C\cup\{\bot\}\), and destination \(c\in C\) ranked strictly above \(j\), let \(h=\kappa_c-\sum_\eta x_{\eta c}\). A feasible move transfers \(a\in[0,x_{\theta j}]\) from \(j\) to \(c\), and expels \(b=\max\{0,a-h\}\) of one incumbent type \(\eta\) from \(c\) to \(\bot\), subject to \(b\leq x_{\eta c}\). All other coordinates stay unchanged; the source and expelled mass need not consent.<br>The triple \((\theta,j,c)\) is blocking if some feasible move has \(a&gt;0\) and strictly increases \(U_c\). At each update, select the first blocking triple in fixed index order, maximize \(U_c(x&#x27;_c)-U_c(x_c)\) over its feasible moves, and break ties by the lexicographically smallest \((\eta,a)\). Include \(a=0\) in this maximization. Amounts and subsequent states are exact real numbers, without rounding.<br>Stop when no blocking triple exists or the entire assignment equals an earlier assignment exactly; impose no iteration cutoff.</p><p>Is deciding whether this refinement stops after finitely many updates, from the supplied initial assignment, solvable in polynomial time in \(m,\tau,L\), or is it NP-hard?</p><p>For finite students, deterministic refinement stops at a matching without blocking pairs or a repeated matching after at most \(|\mathcal M|+1\) updates, where \(\mathcal M\) is the set of feasible matchings; this bound can be exponential in the student count. [Discrete termination result](https://arxiv.org/html/2511.02533v1).<br>No result settling this exact continuous decision problem was identified in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized total student mass to one so that capacities have the stated per-capita interpretation; allowed nonnegative capacities and nonempty college and type sets.</li><li>Included unmatched mass explicitly and used strict total rankings including the unmatched option; imposed no individual-rationality restriction on the supplied feasible initial assignment.</li><li>Restored displacement of an incumbent type to the unmatched pool, together with removal of incoming mass from its source. Expulsion is limited to one incumbent type and exactly the capacity overflow, providing a mass analogue of adding one student and dropping one incumbent when necessary.</li><li>Required strict receiving-college utility improvement for every blocking move, including admissions into vacancies, following the stated mutual-improvement interpretation and permission for colleges to leave seats empty.</li><li>Allowed arbitrary real-valued polynomial utilities without positivity, monotonicity, or utility normalization, as the general discrete setting imposes none.</li><li>Specified sparse polynomial encoding with binary exponents and included all input data in the bit length.</li><li>Optimized over a closed feasible domain including zero transfer, with lexicographically smallest incumbent-type index and transfer amount resolving ties; allowed exact real subsequent states rather than restricting updates to rational amounts.</li><li>Removed the pseudocode&#x27;s iteration cutoff and treated exact equality of the complete assignment as repetition, following the termination claim.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Finite termination is $\mathrm{NP}$-hard</h3><p>I prove $\mathrm{NP}$-hardness by a polynomial-time many-one reduction from $3$-SAT. The construction uses only two colleges and utilities of degree at most three.</p><p>I interpret “fixed index order” as lexicographic order of the input indices. The construction works for any fixed ordering of the three index fields.</p><h3>1. A known Boolean computation construction</h3><p>Let $G=(V,E)$ be an undirected graph with positive rational edge weights $w_{ij}$. For a Boolean vector $q\in\{0,1\}^{V}$, define its cut value by</p><p>$$
+F(q)=\sum_{\{i,j\}\in E}w_{ij}(q_i+q_j-2q_iq_j).
+$$</p><p>An improving flip changes one bit and strictly increases $F$. A maximal improving-flip sequence ends when no improving flip exists. Such sequences are finite, because $F$ strictly increases on the finite set of Boolean vectors.</p><p>We use the following known construction:</p><p><b>Forced-simulation fact.</b> Given a $3$-CNF formula $\varphi$, one can construct, in polynomial time, a positively rational-weighted graph $G$, an initial Boolean vector $q^0$, and a designated vertex $v_*$ such that every maximal improving-flip sequence starting from $q^0$ ends at a vector $q^*$ satisfying</p><p>$$
+q^*_{v_*}=1
+\quad\Longleftrightarrow\quad
+\varphi\text{ is satisfiable}.
+$$</p><p>This follows from the forced simulation in [Tscheuschner, *The Complexity of Local Max-Cut*, Theorem 3.5.22 and the proof of Theorem 3.7.1, pp. 85–91](https://digital.ub.uni-paderborn.de/hsx/download/pdf/442308). The construction forces every maximal flip sequence to have the prescribed simulation as its projection; designated terminal colors encode the simulated machine’s terminal configuration.</p><p>To check applicability, choose a fixed deterministic machine that enumerates all truth assignments, checks $\varphi$, and halts with an output bit indicating satisfiability. It uses linear space after constant-factor input padding. Include that output bit in its configuration encoding. The published simulation runs for more steps than there are machine configurations, treating halting configurations as absorbing. Because this machine always halts, the designated terminal bit is its correct output. The resulting graph and binary encodings of its rational weights have polynomial size.</p><p>The universal quantifier over improving-flip sequences will accommodate the refinement’s prescribed priority rule.</p><h3>2. Society, rankings, and initial assignment</h3><p>Write $V=\{1,\ldots,n\}$, where $n\geq1$. Let</p><p>$$
+k=\left\lceil\log_2(4n+8)\right\rceil,
+\qquad
+\delta=2^{-k}.
+$$</p><p>There are two colleges, $A$ and $B$, with capacities</p><p>$$
+\kappa_A=n\delta,
+\qquad
+\kappa_B=1.
+$$</p><p>For every vertex $i$, introduce two types $\theta_{i,0}$ and $\theta_{i,1}$, each of mass $\delta$. Introduce two additional types $\alpha,\beta$, also of mass $\delta$, and a filler type of mass</p><p>$$
+1-(2n+2)\delta.
+$$</p><p>The filler mass is positive, since</p><p>$$
+(2n+2)\delta
+\leq
+\frac{2n+2}{4n+8}
+&lt;
+\frac12.
+$$</p><p>Thus the support size is $\tau=2n+3$, and all masses are positive dyadic rationals summing to one.</p><p>Designate</p><p>$$
+\sigma=\theta_{v_*,1}.
+$$</p><p>The strict rankings are:</p><p>| Types | Ranking |<br>|---|---|<br>| Boolean types other than $\sigma$ | $A\succ\bot\succ B$ |<br>| $\sigma$ | $A\succ B\succ\bot$ |<br>| $\alpha,\beta$ | $B\succ\bot\succ A$ |<br>| Filler | $\bot\succ A\succ B$ |</p><p>Initially, for every vertex $i$, assign the entire mass of $\theta_{i,q_i^0}$ to $A$ and leave $\theta_{i,1-q_i^0}$ unmatched. All other types are unmatched. College $B$ is empty.</p><p>Call an assignment <b>Boolean at $A$</b> if, for every $i$, exactly one of $\theta_{i,0},\theta_{i,1}$ has its entire mass $\delta$ at $A$. Such an assignment encodes a Boolean vector $q$. College $A$ is then full.</p><h3>3. A quadratic utility that implements exact improving flips</h3><p>For the Boolean-type coordinates at $A$, write</p><p>$$
+r_{i,b}=\frac{x_{\theta_{i,b},A}}{\delta}.
+$$</p><p>Extend $F$ to real arguments using the same polynomial, and put</p><p>$$
+W=\sum_{\{i,j\}\in E}w_{ij},
+\qquad
+M=W+1.
+$$</p><p>Define</p><p>$$
+U_A(x_A)
+=
+F(r_{1,1},\ldots,r_{n,1})
+-
+M\sum_{i=1}^{n}(r_{i,0}+r_{i,1}-1)^2
++
+3M\sum_{i=1}^{n}\sum_{b=0}^{1}(r_{i,b}^2-r_{i,b}).
+$$</p><p>This utility ignores the remaining type coordinates.</p><p>At a Boolean assignment, both added sums vanish, so</p><p>$$
+U_A(x_A)=F(q).
+$$</p><h3>3.1 Strict convexity along every relevant move</h3><p>Denote the displayed polynomial in $r$ by $V(r)$. For any direction $v\in\mathbb R^{2n}$,</p><p>$$
+\begin{aligned}
+D^2V(r)[v,v]
+={}&amp;
+-4\sum_{\{i,j\}\in E}w_{ij}v_{i,1}v_{j,1}\\
+&amp;-2M\sum_i(v_{i,0}+v_{i,1})^2
++6M\sum_{i,b}v_{i,b}^2.
+\end{aligned}
+$$</p><p>For each edge,</p><p>$$
+-4w_{ij}v_{i,1}v_{j,1}
+\geq
+-2w_{ij}(v_{i,1}^2+v_{j,1}^2).
+$$</p><p>Each weighted vertex degree is at most $W$. Consequently, the edge contribution is at least $-2W\|v\|^2$. Also,</p><p>$$
+-2M\sum_i(v_{i,0}+v_{i,1})^2
+\geq
+-4M\|v\|^2.
+$$</p><p>Therefore</p><p>$$
+D^2V(r)[v,v]
+\geq
+(6M-4M-2W)\|v\|^2
+=
+2\|v\|^2.
+$$</p><p>Thus $V$ is strictly convex.</p><p>At a Boolean assignment, any positive admission into $A$ must expel an occupied Boolean type: $A$ is full, and all other types have zero enrollment there. The incoming missing type has available mass $\delta$, as does every possible occupied incumbent.</p><p>For each such incumbent, the feasible interval is exactly $[0,\delta]$. Writing $t=a/\delta$, the move follows the affine path</p><p>$$
+r(t)=r+t e_{\mathrm{in}}-t e_{\mathrm{out}},
+\qquad
+0\leq t\leq1.
+$$</p><p>Its utility gain is strictly convex in $t$. Hence its maximum occurs at an endpoint, and no interior amount maximizes it.</p><h3>3.2 Only a correct Boolean swap can block</h3><p>Suppose the incoming type is $\theta_{i,1-q_i}$.</p><p>If the expelled type is its occupied counterpart $\theta_{i,q_i}$, the endpoint $t=1$ is precisely the assignment obtained by flipping bit $i$. Its gain is</p><p>$$
+F(q^{(i)})-F(q),
+$$</p><p>where $q^{(i)}$ denotes $q$ with bit $i$ flipped.</p><p>If instead an occupied type from another pair is expelled, the endpoint has one pair sum equal to two and another equal to zero. Thus the pair penalty contributes $-2M$. Every coordinate is still zero or one, so the last sum remains zero. Both the original and new vectors of coordinates $r_{i,1}$ are Boolean, whose cut values lie in $[0,W]$. The endpoint gain is therefore at most</p><p>$$
+W-2M&lt;0.
+$$</p><p>Strict convexity makes every positive interior amount on this incorrect path have negative gain as well: its gain is strictly below the interpolation between gain zero at $t=0$ and a negative gain at $t=1$.</p><p>For the correct counterpart, strict convexity similarly gives:</p><ul><li>If the Boolean flip gain is positive, the unique maximizing amount is $a=\delta$.</li><li>If that gain is nonpositive, no positive amount gives a positive gain.</li></ul><p>It follows that every blocking admission into $A$ corresponds exactly to an improving Boolean flip. Its uniquely selected incumbent is the counterpart type, and its uniquely maximizing amount is $\delta$. Thus the refinement’s incumbent and amount tie-breaks are respected.</p><p>Every such update preserves the Boolean form of the assignment at $A$.</p><h3>4. A cubic utility that activates an infinite trajectory</h3><p>At $B$, write</p><p>$$
+t=x_{\sigma B},
+\qquad
+z_1=x_{\alpha B},
+\qquad
+z_2=x_{\beta B},
+\qquad
+p=\frac{\delta}{4}.
+$$</p><p>Define</p><p>$$
+U_B(x_B)
+=
+t\left[
+1-z_1^2-z_2^2+z_1z_2+p(z_1+z_2)
+\right].
+$$</p><p>This is a rational polynomial of degree three.</p><p>When $t=0$, the utility is identically zero as $\alpha$ or $\beta$ moves. Hence neither oscillator type blocks.</p><p>When $B$ is empty and $\sigma$ is unmatched, admitting amount $a$ of $\sigma$ gives utility gain $a$. There is no capacity restriction or expulsion. Exact maximization uniquely selects</p><p>$$
+a=\delta.
+$$</p><p>After this admission, $t=\delta$, and admissions of the two oscillator types maximize</p><p>$$
+-z_1^2-z_2^2+z_1z_2+p(z_1+z_2).
+$$</p><p>Only $\sigma,\alpha,\beta$ can reach $B$ under the rankings. Their total mass is $3\delta&lt;1$, so all these admissions fit without expulsion.</p><h3>5. Priority prevents premature activation</h3><p>Index $A$ before $B$. Put all Boolean types before $\alpha,\beta$, put $\sigma$ last among the Boolean types, and put $\alpha$ before $\beta$. Place the filler last.</p><p>Before activation, every potentially blocking Boolean move has source $\bot$ and destination $A$. The activation triple is</p><p>$$
+(\sigma,\bot,B).
+$$</p><p>Every Boolean admission precedes this activation triple: its type index is at most that of $\sigma$, its source is the same, and its destination index is smaller. This also holds for any fixed lexicographic ordering of the three fields.</p><p>Before activation:</p><ul><li>Neither oscillator type blocks, because $t=0$.</li><li>The filler has no eligible move from its current location.</li><li>No Boolean type other than $\sigma$ can enter $B$.</li><li>The type $\sigma$ cannot move from $A$ to $B$, because it prefers $A$.</li></ul><p>Consequently, whenever an improving Boolean flip exists, the refinement performs one before any activation.</p><p>The updates at $A$ therefore form a maximal improving-flip sequence starting at $q^0$. This phase is finite, and its assignment never repeats, because $F(q)$ strictly increases.</p><p>Let $q^*$ be its terminal Boolean vector. The forced-simulation fact gives</p><p>$$
+q^*_{v_*}=1
+\quad\Longleftrightarrow\quad
+\varphi\text{ is satisfiable}.
+$$</p><h3>6. Satisfiable formulas produce finite stopping</h3><p>Suppose $\varphi$ is satisfiable. Then $q^*_{v_*}=1$, so the entire mass of $\sigma$ is assigned to $A$.</p><p>No admission into $A$ blocks, by terminality of the Boolean flip sequence and Section 3. The activation triple has zero source mass. The type $\sigma$ cannot move from $A$ to $B$. Finally, $t=0$ makes all oscillator gains zero.</p><p>Thus no blocking triple remains. The refinement stops after finitely many updates.</p><h3>7. Unsatisfiable formulas produce exact nontermination</h3><p>Suppose $\varphi$ is unsatisfiable. Then $q^*_{v_*}=0$, so $\sigma$ is entirely unmatched. The activation triple blocks and moves its entire mass to $B$.</p><p>This transfer leaves $x_A$ unchanged. It also cannot create a blocking admission into $A$: the only changed possible source is $\sigma$, whose mass is now at $B$ rather than $\bot$. Transferring an amount from either source to $A$ has the same feasible destination changes and utility gains. These were already nonpositive at the terminal Boolean assignment.</p><p>Therefore $A$ remains fixed. The subsequent updates involve only $\alpha,\beta$, with $t=\delta$ fixed.</p><h3>7.1 Exact oscillator maximization</h3><p>If coordinate $z_i$ increases by $a$, with the other coordinate denoted $z_\ell$, its gain is</p><p>$$
+\delta\left[a(p-2z_i+z_\ell)-a^2\right].
+$$</p><p>Set</p><p>$$
+g_i=p-2z_i+z_\ell.
+$$</p><p>When $g_i&gt;0$ and $g_i/2$ is feasible, the unique maximizing amount is</p><p>$$
+a=\frac{g_i}{2},
+$$</p><p>with positive gain $\delta g_i^2/4$. When $g_i\leq0$, no positive amount gives positive gain.</p><p>Initially $z_1=z_2=0$. Both gradients equal $p$, so the priority rule updates $\alpha$ first, giving $z_1=p/2$.</p><h3>7.2 An invariant proving infinitely many updates</h3><p>After oscillator update $r\geq1$, let $i$ be the type just updated and $\ell$ the other type. I claim</p><p>$$
+p-z_i=p\,2^{-r},
+\qquad
+p-z_\ell=p\,2^{-(r-1)}.
+$$</p><p>The first update establishes the claim.</p><p>Assuming it after update $r$, substitution gives</p><p>$$
+g_i=0,
+\qquad
+g_\ell=3p\,2^{-r}&gt;0.
+$$</p><p>Thus only the other oscillator type blocks, and its unique maximizing amount is</p><p>$$
+a=3p\,2^{-(r+1)}.
+$$</p><p>Its new deficit is</p><p>$$
+p\,2^{-(r-1)}-3p\,2^{-(r+1)}
+=
+p\,2^{-(r+1)}.
+$$</p><p>This proves the invariant at the next update.</p><p>Every resulting coordinate is strictly below $p&lt;\delta$, so the amount is available at its unmatched source. It also fits into $B$ without expulsion, as established in Section 4.</p><p>Hence a blocking triple exists after every finite oscillator update. Each update strictly increases one oscillator coordinate and leaves the other unchanged, so no assignment repeats during this phase. No assignment in this phase equals an earlier preactivation assignment, because its $\sigma$ enrollment at $B$ is $\delta$, whereas that enrollment was previously zero.</p><p>Neither stopping condition ever occurs.</p><h3>8. Polynomial size and conclusion</h3><p>The society has</p><p>$$
+m=2,
+\qquad
+\tau=2n+3.
+$$</p><p>The number $\delta$ and all masses and capacities have $O(\log n)$ bits. The quadratic utility at $A$ expands into $O(n+|E|)$ monomials; the cubic utility at $B$ has constantly many monomials.</p><p>Summing the rational edge weights and scaling by $\delta^{-1}$ or $\delta^{-2}$ require only polynomially many bits and polynomial-time rational arithmetic. All exponents are at most three. Thus the complete refinement instance has size polynomial in $|\varphi|$ and is constructible in polynomial time.</p><p>We have proved the exact equivalence</p><p>$$
+\varphi\text{ is satisfiable}
+\quad\Longleftrightarrow\quad
+\text{the constructed refinement stops after finitely many updates}.
+$$</p><p>This establishes $\mathrm{NP}$-hardness. In particular, a polynomial-time algorithm in $m,\tau,L$ would imply $\mathrm{P}=\mathrm{NP}$.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><p><b>Result: proved.</b> The reduction establishes $\mathrm{NP}$-hardness of deciding finite stopping under the stated refinement rule. The cited simulation result supports the required universal quantifier over maximal improving-flip sequences. The continuous construction, maximization calculations, priority argument, and exact nontermination argument are correct.</p><p>No major or minor issues requiring repair were identified.</p><h3>1. The forced-simulation fact</h3><p>This is the principal external dependency, and it is supported by the cited source.</p><p>Tscheuschner’s Theorem 3.5.22 applies to a Boolean circuit, its constituent graph, an ordinary initial partition, and a polynomial-time computable generalized pivot rule. It constructs a graph and initial partition such that <b>every final improving-flip sequence</b> projects onto the prescribed sequence. Here “final” means ending at a local optimum, so it matches the prover’s maximal-sequence quantifier. The proof of Theorem 3.7.1 supplies the machine simulation and initial partition; terminal configuration coordinates retain their encoded colors after enforcement. The source’s graph convention requires positive rational edge weights. These points support the asserted forced-simulation consequence. [Tscheuschner, *The Complexity of Local Max-Cut*, printed pages 15–16, 57, and 85–91](https://digital.ub.uni-paderborn.de/hsx/download/pdf/442308).</p><p>The application to the chosen machine is valid:</p><ul><li>Enumerating truth assignments and checking the formula requires only linear space in its input length, after the stated padding.</li><li>The machine always halts and records satisfiability in a configuration bit.</li><li>The simulation exceeds the configuration bound and treats halting configurations as absorbing.</li><li>Consequently, its designated terminal configuration bit is the satisfiability bit.</li><li>The source’s polynomial-time construction supplies polynomial graph size and polynomial binary encoding length.</li></ul><p>The prover needs a consequence of the cited simulation construction, rather than merely the complexity classification in Theorem 3.7.1. Its explanation identifies that consequence correctly.</p><h3>2. Validity of the society instance</h3><p>The normalization and positivity calculations are correct. From</p><p>$$
+\delta=2^{-\lceil\log_2(4n+8)\rceil}
+$$</p><p>one obtains</p><p>$$
+(2n+2)\delta
+\leq
+\frac{2n+2}{4n+8}
+&lt;
+\frac12.
+$$</p><p>Thus every listed type has positive dyadic mass, including the filler, and the masses sum to one. The support size is indeed</p><p>$$
+\tau=2n+3.
+$$</p><p>Initially, college $A$ receives exactly $n$ masses of size $\delta$, meeting its capacity $n\delta$. College $B$ is empty. All remaining mass is unmatched. The assignment is rational and feasible, and all stated rankings are strict.</p><p>The construction therefore meets the input requirements, including the interpretation of $\tau$ as support size.</p><h3>3. The utility at $A$</h3><h3>3.1 Hessian calculation</h3><p>The displayed second directional derivative is correct. In particular, the mixed cut term contributes</p><p>$$
+-4\sum_{\{i,j\}\in E}w_{ij}v_{i,1}v_{j,1}.
+$$</p><p>The edgewise inequality and the weighted-degree bound imply an edge contribution of at least</p><p>$$
+-2W\|v\|^2.
+$$</p><p>The pair penalty contributes at least $-4M\|v\|^2$, while the final quadratic term contributes $6M\|v\|^2$. Since $M=W+1$,</p><p>$$
+D^2V(r)[v,v]\geq 2\|v\|^2.
+$$</p><p>Strict convexity follows. The calculation also remains valid when the graph has no edges.</p><h3>3.2 Feasible moves and endpoint maximization</h3><p>At a Boolean assignment, $A$ is full. A positive admission therefore has $b=a$ and must expel a type with positive enrollment at $A$. Those incumbents are exactly the occupied Boolean types.</p><p>Before activation, every missing Boolean type has unmatched source mass $\delta$. Each occupied incumbent also has mass $\delta$, so the feasible amount interval for each such incumbent is precisely $[0,\delta]$.</p><p>The affine move direction is nonzero. Consequently, utility gain is strictly convex along this interval, and no interior amount can maximize it. Including $a=0$ is fully consistent with this argument.</p><h3>3.3 Correct and incorrect swaps</h3><p>Expelling the incoming type’s counterpart produces exactly one Boolean bit flip. Both added utility terms vanish at the original and resulting Boolean assignments, so the gain is exactly</p><p>$$
+F(q^{(i)})-F(q).
+$$</p><p>Expelling an occupied type from another pair produces pair sums $2$ and $0$. The pair penalty changes by $-2M$, and the final quadratic sum remains zero. The cut contribution changes by at most $W$, giving</p><p>$$
+W-2M&lt;0.
+$$</p><p>Strict convexity then excludes every positive interior amount on an incorrect-swap path.</p><p>For the counterpart path, a positive endpoint gain gives the unique maximizing amount $\delta$. A nonpositive endpoint gain excludes every strictly improving positive amount.</p><p>Thus blocking admissions to $A$ coincide exactly with improving Boolean flips. For a blocking triple, both its incumbent and its maximizing amount are uniquely determined. Boolean form is preserved.</p><h3>4. Activation and priority</h3><p>Before activation, the rankings and current locations exclude all positive-source eligible moves except Boolean admissions to $A$, the possible admission of $\sigma$ to $B$, and oscillator admissions whose gain is zero.</p><p>The priority comparison is valid for every lexicographic ordering of the three fields:</p><ul><li>A competing Boolean admission has type index no larger than that of $\sigma$.</li><li>Its source is the same, namely $\bot$.</li><li>Its destination $A$ precedes $B$.</li></ul><p>For a different Boolean type, both the type and destination comparisons favor its admission. For $\sigma$ itself, only the destination differs, again favoring $A$.</p><p>Therefore activation cannot occur while an improving Boolean flip exists. The Boolean phase is a maximal improving-flip sequence. It is finite, and assignments cannot repeat during it because $F$ strictly increases.</p><p>The terminal-bit conclusion from Section 1 is consequently applicable to the actual prescribed trajectory.</p><h3>5. The satisfiable branch</h3><p>If the formula is satisfiable, $\sigma$ is entirely at $A$ when the Boolean phase ends.</p><p>There are then no blocking admissions to $A$. The activation triple has zero unmatched source mass, and the ranking prevents $\sigma$ from moving from $A$ to $B$. Since $t=0$, oscillator admissions have zero utility gain.</p><p>The stated stopping conclusion follows: no blocking triple remains.</p><h3>6. The unsatisfiable branch</h3><p>If the formula is unsatisfiable, $\sigma$ is entirely unmatched at the terminal Boolean assignment. With $B$ empty, admitting amount $a$ changes its utility by $a$, so exact maximization selects $a=\delta$.</p><p>The capacity claim is correct:</p><p>$$
+3\delta&lt;1.
+$$</p><p>Only $\sigma,\alpha,\beta$ can enter $B$ along the constructed trajectory, so their admissions never require expulsion.</p><p>Activation leaves $A$ unchanged. The newly possible source for $\sigma$ is $B$, but admissions from that source induce the same destination changes and gains already tested from $\bot$. Hence $A$ remains nonblocking throughout the subsequent phase.</p><p>There is no overlooked positive-source move affecting another college.</p><h3>7. Exact oscillator dynamics</h3><p>The admission-gain calculation is correct:</p><p>$$
+\Delta U_B
+=
+\delta\left[a(p-2z_i+z_\ell)-a^2\right].
+$$</p><p>For $g_i=p-2z_i+z_\ell&gt;0$, the unique unconstrained maximizing amount is $g_i/2$, with gain $\delta g_i^2/4$. For $g_i\leq0$, no positive amount improves utility.</p><p>Initially both gradients equal $p$. The index order selects $\alpha$, producing $z_1=p/2$, as claimed.</p><p>The invariant is correct:</p><p>$$
+p-z_i=p\,2^{-r},
+\qquad
+p-z_\ell=p\,2^{-(r-1)}.
+$$</p><p>Substitution yields exactly</p><p>$$
+g_i=0,
+\qquad
+g_\ell=3p\,2^{-r}.
+$$</p><p>The next maximizing amount and new deficit are therefore the displayed values</p><p>$$
+a=3p\,2^{-(r+1)},
+\qquad
+p-z_\ell^{\mathrm{new}}=p\,2^{-(r+1)}.
+$$</p><p>The invariant establishes feasibility as well as continued blocking: each updated coordinate remains below $p&lt;\delta$, so the maximizing amount is within the remaining unmatched mass. Capacity at $B$ remains slack.</p><p>Every oscillator update strictly increases one coordinate. Thus no assignment repeats within this phase. Enrollment $x_{\sigma B}=\delta$ also distinguishes every postactivation state from every preactivation state. This includes the activation state itself.</p><p>Neither stopping condition occurs after activation.</p><h3>8. Encoding size and reduction direction</h3><p>The encoding claims are correct:</p><ul><li>Masses, capacities, and initial coordinates have polynomial binary length.</li><li>Expanding $U_A$ uses $O(n+|E|)$ monomials.</li><li>$U_B$ has constantly many monomials.</li><li>Rational summation and scaling preserve polynomial bit length.</li><li>Utility degrees are at most three.</li></ul><p>The construction is therefore a polynomial-time many-one reduction. Its direction is correct: satisfiable formulas produce finite stopping, while unsatisfiable formulas produce infinite trajectories without repetition.</p><p>Accordingly, the claimed equivalence and $\mathrm{NP}$-hardness conclusion follow. No membership claim for a complexity class is needed.</p><h3>Actionable feedback</h3><p>No repair is required. The external simulation dependency was checked, and the remaining steps withstand direct verification.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

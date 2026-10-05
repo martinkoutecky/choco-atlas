@@ -1,0 +1,77 @@
+<!doctype html><html><head><meta charset="utf-8"><title>k-Majority Digraphs and the Hardness of Voting with a Constant Number of Voters — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>k-Majority Digraphs and the Hardness of Voting with a Constant Number of Voters <span style="font-weight:normal;color:#8a7350">(s5-8c7d049747acd40205a51b793280c88c953b6555)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\)-hard, already for support size \(\tau\leq 7\); polynomial-time solvability would imply \(\mathrm{P}=\mathrm{NP}\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5 — class: hardness</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), ranking types \(T\subseteq\mathcal L(C)\), and rational masses \(\mu_t\ge0\) with \(\sum_{t\in T}\mu_t=1\), compute a linear order \(\rho\) minimizing \(D_\mu(\rho)=\sum_{t\in T}\mu_t\lvert\{\{a,b\}\subseteq C:\rho\text{ and }t\text{ disagree on }a,b\}\rvert\); equivalently, decide whether a designated candidate \(c^\star\) is first in some optimal ranking.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) be a nonempty candidate set with \(m=|C|\). A society is given by its support: a list \(T\) of \(\tau\) distinct strict linear orders over \(C\), each with positive binary-rational mass \(\mu_t\), where \(\sum_{t\in T}\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types; \(L\) is the total input bit length. State running times in \(m,\tau,L\).<br>For a strict linear order \(\rho\), define \(D_\mu(\rho)=\sum_{t\in T}\mu_t d_{\mathrm{KT}}(\rho,t)\), using Kendall tau distance. The computational problem is to return any minimizing order; optimal ties require no prescribed tie-breaking.</p><p>Is finding an order minimizing \(D_\mu\) solvable in polynomial time in \(m,\tau,L\), or is it \(\mathrm{NP}\)-hard?</p><p>Discrete Kemeny ranking computation is \(\mathrm{NP}\)-hard already for seven voters. Binary-weighted Kemeny winner membership is \(\Delta_2^p\)-complete ([Fitzsimmons–Hemaspaandra](https://mathcs.holycross.edu/~zfitzsim/papers/Fitzsimmons-Hemaspaandra2019_Article_High-multiplicityElectionProbl.pdf)). The rational-mass formulation is an equivalent normalization of weighted Kemeny aggregation, so this target is already settled rather than open.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Discard zero-mass entries so the input lists precisely the positive support.</li><li>Require a nonempty candidate set and strict complete input and output rankings; allow any optimal output.</li><li>Use total input bit length for L.</li><li>Retain ranking optimization as the primary problem; winner membership is a distinct decision problem, not an interchangeable specification.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Conclusion</h3><p>Finding an order minimizing \(D_\mu\) is \(\mathrm{NP}\)-hard, already on instances with \(\tau\leq 7\). Consequently, a running time polynomial in \(m,\tau,L\) would imply \(\mathrm{P}=\mathrm{NP}\).</p><p>Here, “binary-rational” means that the numerator and denominator are encoded in binary, as in the stated normalization of weighted Kemeny aggregation.</p><h3>Reduction from seven-voter Kemeny aggregation</h3><p>We use the given theorem that computing an optimal Kemeny ranking is \(\mathrm{NP}\)-hard for seven voters. This theorem concerns strict linear orders and the same Kendall tau objective; see the [seven-voter hardness result](https://www.dominik-peters.de/posters/kemeny.pdf).</p><p>Let such an instance consist of seven orders \(v_1,\ldots,v_7\) over \(C\). Its objective is<br>\[
+K(\rho)=\sum_{i=1}^{7}d_{\mathrm{KT}}(\rho,v_i).
+\]<br>Kendall tau distance counts unordered candidate pairs whose relative order differs between its two arguments.</p><p>Let \(T\) contain precisely the distinct orders appearing among the seven votes. For each \(t\in T\), define<br>\[
+k_t=\bigl|\{i:v_i=t\}\bigr|,
+\qquad
+\mu_t=\frac{k_t}{7}.
+\]<br>Then \(\tau=|T|\leq 7\), every mass is positive, and<br>\[
+\sum_{t\in T}\mu_t=\frac{\sum_{t\in T}k_t}{7}=1.
+\]<br>Thus the construction satisfies every input requirement, including distinct support orders.</p><p>For every output order \(\rho\),<br>\[
+D_\mu(\rho)
+=\sum_{t\in T}\frac{k_t}{7}d_{\mathrm{KT}}(\rho,t)
+=\frac{1}{7}\sum_{i=1}^{7}d_{\mathrm{KT}}(\rho,v_i)
+=\frac{K(\rho)}{7}.
+\]<br>Multiplication by a positive constant preserves all comparisons and ties. Hence the minimizing orders for the constructed instance are exactly the optimal rankings for the original instance.</p><p>After labeling candidates by integers, comparing and grouping seven orders takes \(O(m\log(m+1))\) bit operations. The constructed input has<br>\[
+\tau\leq 7,
+\qquad
+L=O(m\log(m+1)),
+\]<br>because each mass has constant encoding length. An algorithm polynomial in \(m,\tau,L\) would therefore compute seven-voter Kemeny rankings in polynomial time. This proves the claimed hardness. Arbitrary optimal tie-breaking causes no difficulty: every returned minimizer solves the original instance.</p><h3>Exact equivalence and arithmetic costs</h3><p>The equivalence with binary-weighted Kemeny aggregation also holds for general support sizes.</p><p>For positive integer weights \(w_t\), let \(W=\sum_t w_t\) and set \(\mu_t=w_t/W\). Then<br>\[
+D_\mu(\rho)=\frac{1}{W}\sum_t w_t d_{\mathrm{KT}}(\rho,t),
+\]<br>so normalization preserves precisely the minimizing orders. The binary length of \(W\), and the total size of the normalized instance, are polynomial in the weighted input length.</p><p>Conversely, write each input mass as \(\mu_t=a_t/b_t\), with positive integers \(a_t,b_t\), and define<br>\[
+Q=\prod_{t\in T}b_t,
+\qquad
+w_t=a_t(Q/b_t).
+\]<br>These are positive integer weights satisfying<br>\[
+\sum_t w_t=Q,
+\qquad
+Q D_\mu(\rho)=\sum_t w_t d_{\mathrm{KT}}(\rho,t).
+\]<br>The binary length of \(Q\) is \(O(L)\), since the denominator encodings together occupy at most \(L\) bits. Thus clearing denominators requires polynomial time and produces weights of polynomial encoding length; no voters need to be expanded.</p><p>For an explicit conservative bound, put<br>\[
+B=L+\lceil 2\log_2(m+1)\rceil+3.
+\]<br>Using elementary integer arithmetic, denominator clearing and exact evaluation of one proposed order take<br>\[
+O(\tau m^2 B^2)
+\]<br>bit operations: each distance can be counted by examining all candidate pairs, and every integer score is at most \(Q\binom{m}{2}\), with \(O(B)\) bits. Enumerating all orders therefore gives an exact algorithm in<br>\[
+O(m!\,\tau m^2 B^2)
+\]<br>bit operations.</p><p>Finally, [Fitzsimmons–Hemaspaandra, Theorem 18](https://mathcs.holycross.edu/~zfitzsim/papers/Fitzsimmons-Hemaspaandra2019_Article_High-multiplicityElectionProbl.pdf) establishes \(\Delta_2^p\)-completeness of binary-weighted Kemeny winner membership. That is a separate decision problem. The direct reduction above establishes hardness of returning <b>any</b> minimizing order without imposing a tie-breaking rule.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verdict</h3><p>The output resolves the assigned problem correctly: finding any minimizing order is \(\mathrm{NP}\)-hard, already when \(\tau\leq 7\). The reduction preserves the complete set of optimal orders and has polynomial encoding size. No major or minor mathematical issues were found.</p><h3>Step-by-step verification</h3><h3>1. Interpretation and cited hardness theorem</h3><p>The prover explicitly interprets “binary-rational” as a rational number whose numerator and denominator are encoded in binary. This agrees with the task’s intended normalization of weighted Kemeny aggregation. Under this interpretation, the constructed masses \(k_t/7\) are admissible.</p><p>The seven-voter hardness theorem is supplied by <code>USER_TASK</code>. The cited [Peters poster](https://www.dominik-peters.de/posters/kemeny.pdf) also identifies the input as strict preference rankings and the output as an optimal consensus ranking minimizing Kendall tau distance. Thus the source problem matches the objective and domain used in the reduction.</p><p>No additional theorem about winner membership is needed for the main hardness conclusion.</p><h3>2. Construction of a valid support instance</h3><p>Grouping identical votes produces precisely the distinct orders required by the support representation.</p><p>For every retained order \(t\), its multiplicity satisfies \(1\leq k_t\leq 7\), so \(\mu_t=k_t/7\) is positive. Every original vote belongs to exactly one group, giving \(\sum_t k_t=7\) and hence \(\sum_t\mu_t=1\).</p><p>The support is nonempty and satisfies \(1\leq\tau\leq7\). Repeated votes cause no violation of the distinct-support requirement.</p><h3>3. Objective identity and preservation of minimizers</h3><p>The displayed calculation<br>\[
+D_\mu(\rho)=\frac{K(\rho)}7
+\]<br>is correct for every strict linear order \(\rho\): each distinct vote contributes its original multiplicity after grouping.</p><p>The factor \(1/7\) is strictly positive and independent of \(\rho\). Therefore every comparison of objective values, including equality, is preserved. The constructed and original instances have exactly the same minimizing orders.</p><p>Consequently, an algorithm returning any minimizer solves the source search problem. The argument does not assume unique optima or prescribed tie-breaking.</p><h3>4. Reduction time and encoding size</h3><p>After candidates are represented by integer labels, each vote requires \(O(m\log(m+1))\) bits. Comparing a constant number of seven votes therefore fits the stated \(O(m\log(m+1))\) bit-operation bound.</p><p>Each constructed mass has constant encoding length, and there are at most seven support orders. Thus the claimed output size \(L=O(m\log(m+1))\) is valid.</p><p>An algorithm polynomial in \(m,\tau,L\) would consequently run in polynomial time on the constructed seven-voter instances. The stated implication that such an algorithm would yield \(\mathrm{P}=\mathrm{NP}\) follows from the supplied hardness theorem.</p><h3>5. Equivalence with integer-weighted aggregation</h3><p>For positive integer weights, normalization by \(W=\sum_t w_t&gt;0\) preserves all minimizing orders. The bit length of the sum and the total encoding size of the resulting fractions are polynomial in the weighted input length.</p><p>In the reverse direction, every denominator \(b_t\) divides \(Q=\prod_t b_t\), so each \(w_t=a_t(Q/b_t)\) is a positive integer. The input normalization gives \(\sum_t w_t=Q\), and the stated scaled-objective identity follows.</p><p>The bit length of \(Q\) is \(O(L)\). Although its numerical value can be large, its binary representation and the representations of the constructed weights remain polynomial in size. No explicit voter expansion is required.</p><h3>6. Arithmetic and exhaustive-search bounds</h3><p>The proposed parameter \(B\) bounds the bit lengths needed for denominator clearing and score evaluation. In particular, positivity and \(\sum_t w_t=Q\) imply that every weighted score is at most \(Q\binom m2\).</p><p>Elementary multiplication and exact division on these integers fit \(O(B^2)\) bit operations per operation. Computing distances by examining candidate pairs and performing the weighted arithmetic fits the conservative bound \(O(\tau m^2B^2)\).</p><p>Enumerating all \(m!\) orders therefore fits \(O(m!\,\tau m^2B^2)\). The nonempty-candidate boundary case \(m=1\) causes no difficulty: its unique order has score zero, and the bounds remain valid.</p><h3>7. Winner-membership citation</h3><p>[Fitzsimmons–Hemaspaandra, Theorem 18](https://mathcs.holycross.edu/~zfitzsim/papers/Fitzsimmons-Hemaspaandra2019_Article_High-multiplicityElectionProbl.pdf) states \(\Delta_2^p\)-completeness of weighted and high-multiplicity Kemeny winner membership.</p><p>The prover correctly treats this as a separate decision problem. It does not incorrectly infer that an arbitrary optimal-ranking output directly decides whether every specified candidate can head some optimum.</p><h3>Required clarification or repair</h3><p>None. The main reduction and the supplementary encoding and arithmetic claims are verifiable as written.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

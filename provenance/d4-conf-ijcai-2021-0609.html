@@ -1,0 +1,265 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ijcai-2021-0609 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ijcai-2021-0609 <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2021-0609)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1. — class: other</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>There exists time-step $t_{conv}$ such that $\forall t &gt; t_{conv}: r_{start}^n(t) = r_{start}^n(t_{conv})$, where $r_{start}^n(t)$ denotes the starting resource $r_{start}$ of agent $n$ at the stage game of time-step $t$.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational masses \(\mu_t\) on finitely many base types, rational per-capita capacities \(q_r\), and rational utilities and ALMA-Learning parameters, consider integer-sized populations with \(N\mu_t\) agents of type \(t\) and \(Nq_r\) unit-capacity appointments of class \(r\). Define the fluid limit of the empirical law of complete learner states, including reward histories, loss estimates, and starting resources, under the paper’s stochastic updates. Does the limiting process have a vanishing mass of agents who change starting class at some round \(s\ge H\) as \(H\to\infty\), independently of integer rounding; and, when it does, can an algorithm compute a horizon \(H(\varepsilon)\) after which that mass is at most \(\varepsilon\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational; \(\tau\) is the support size, not the number of possible types. There are \(m\ge2\) appointment classes, with rational \(\mu_t,q_r&gt;0\), \(\sum_t\mu_t=\sum_rq_r=1\), and rational utilities \(u_t(r)\in[0,1]\). Every type can access every class; its distinct class utilities are separated by an input rational \(\delta&gt;0\).<br>Parameters are a history length \(\ell\ge1\) and rational \(0&lt;\alpha\le1\), \(\beta&gt;0\), \(0&lt;\eta&lt;1/2\). Let \(L\) be the total input bit length. State algorithmic running times in \(m,\tau,L,\ell\) and the accuracy parameter.<br>For each \(N\), use integer type counts \(a_t^{(N)}\) and class capacities \(k_r^{(N)}\), both totaling \(N\), with \(a_t^{(N)}/N\to\mu_t\) and \(k_r^{(N)}/N\to q_r\). Appointments are distinct unit-capacity copies \((r,j)\), \(1\le j\le k_r^{(N)}\), with utility \(u_t(r)\). Order them by decreasing utility, breaking ties by class index and then copy index.<br>Each agent stores, separately for every appointment \(a\), a FIFO reward history of capacity \(\ell\), its mean \(v_a\), a loss estimate \(d_a\), and a starting appointment \(b\). Initially the history is the singleton \([u_t(a)]\), \(d_a=u_t(a)-u_t(a_{\mathrm{next}})\), with terminal successor utility zero, and \(b\) maximizes \(v_a\). Every maximization uses the fixed appointment order to break ties.<br>Each learning round resets all appointments to free and runs synchronous contention to completion. Agents initially attempt \(b\); an unclaimed appointment with exactly one requester is permanently assigned for that round. Requesters colliding with other requesters or an existing holder independently yield with probability \(p(d)=(\min\{1-\eta,\max\{\eta,1-d\}\})^\beta\); otherwise they retry. Holders retain their appointments.<br>A yielding agent scans the fixed appointment order cyclically, starting at its first entry after its first yield in that round. Each scan tick advances its pointer once; if the inspected appointment has neither a holder nor a current requester, the agent attempts it on the next tick. All observations refer to the beginning of the tick; all Bernoulli draws are independent across agents, ticks, and rounds.<br>If an agent wins \(w\), append \(u_t(w)\) only to the history of its previous start \(b\), discard the oldest entry if needed, and recompute \(v_b\). Update \(d_b\leftarrow(1-\alpha)d_b+\alpha(u_t(b)-u_t(w))\) only when \(u_t(b)&gt;u_t(w)\). Replace \(b\) by a maximizer of \(v_a\) only when \(w\ne b\), including when the two appointments have the same class.<br>To compare complete states across population sizes, encode each agent&#x27;s arrays by their default entries \(([u_t(r)],u_t(r),0)\) plus a finite table containing every class&#x27;s final copy and every appointment ever used as a start. Preserve table-entry identities over rounds, store all histories and losses and the current-start pointer, and mark a copy by \((r,j/k_r^{(N)},j,k_r^{(N)}-j)\). Use the usual topology for normalized coordinates and one-point compactifications for the integer coordinates; table structure and identities are discrete. This encoding reconstructs the entire finite-population learner state.<br>A fluid limit means that, for every finite number of learning rounds, the empirical distribution of these complete state trajectories converges weakly in probability to consistent deterministic laws, yielding a trajectory law \(\nu\). Define \(A(H)=\nu\{\exists s\ge H:C_{s+1}\ne C_s\}\), where \(C_s\) is the starting appointment&#x27;s class before round \(s\); take the population limit before the infinite-round tail.<br>Does a fluid limit independent of the integer approximations exist for every admissible input, and does it satisfy \(A(H)\to0\), or can either property fail?<br>On inputs for which both properties hold, can an algorithm compute, for every rational \(0&lt;\varepsilon&lt;1\), a finite \(H(\varepsilon)\) with \(A(H(\varepsilon))\le\varepsilon\), or can effective convergence fail?<br>The published finite-population convergence theorem asserts eventual almost-sure stabilization of every agent&#x27;s starting appointment; it supplies no effective learning horizon ([Danassis, Wiedemair and Faltings](https://arxiv.org/pdf/2105.04027)).<br>The underlying finite ALMA contention procedure has a published polynomial expected convergence bound depending on its extreme back-off probabilities ([Danassis, Filos-Ratsikas and Faltings](https://www.ijcai.org/proceedings/2019/0031.pdf)). No result settling this complete-state fluid-limit question was found.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized total agent mass and total capacity to one, preserving the equal numbers of agents and resources used in the convergence argument.</li><li>Allowed every type to access every appointment, ensuring that a completed assignment exists rather than leaving subset feasibility undefined.</li><li>Applied positive utility separation to distinct class utilities; identical appointment copies necessarily tie and use a fixed deterministic order.</li><li>Made copies distinct resources with separate learner arrays, rather than pooling their histories or losses by class.</li><li>Specified class-index and copy-index tie-breaking for preference order and reward maximization.</li><li>Initialized each history with one utility observation, as in the pseudocode, and set the missing terminal successor utility to zero.</li><li>Restricted learning parameters to nondegenerate domains and distinguished history length from input bit length and back-off clipping from requested accuracy.</li><li>Specified synchronous contention, beginning-of-tick observations, persistent holders, collision with occupied appointments, and independent random draws.</li><li>Retained the conditional positive-loss update and appointment-identity test for recomputing the starting resource, including moves within a class.</li><li>Specified a complete-state encoding and topology that retain exceptional per-appointment records and their identities as the number of copies grows.</li><li>Defined the fluid limit through empirical finite-horizon trajectory laws converging in probability, and defined tail mass as agents making at least one later class change.</li><li>Allowed all integer approximation sequences with the prescribed limiting proportions and equal total counts; took the population limit before the infinite learning-time limit.</li><li>Asked for horizon computation under the convergence promise, without imposing an unsupported polynomial-time requirement.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial solution</h3><p>I prove a new existence result for a nontrivial class of inputs: <b>if all types have the same appointment order and every utility is at most $\eta$, then the complete-state fluid limit exists and is independent of the integer approximations.</b> In this limit, successive winning classes are independent, with probabilities $q_r$.</p><p>I also re-prove the general fixed-horizon invariant from the notes. It implies that <b>every fluid limit, whenever it exists, satisfies $A(H)=0$ for every $H\ge 1$</b>. Thus the promised effective-horizon problem has the constant solution $H(\varepsilon)=1$.</p><p>Universal fluid-limit existence remains unresolved.</p><h3>1. Finite contention rounds terminate almost surely</h3><p>For any stored loss, clipping gives<br>$$
+p_-=\eta^\beta\le p(d)\le (1-\eta)^\beta=p_+.
+$$<br>Both endpoints lie strictly between zero and one. Consequently, with<br>$$
+c=\min\{p_-,1-p_+\}&gt;0,
+$$<br>every prescribed yield or retry outcome has conditional probability at least $c$.</p><p>Here is a uniform positive-probability route to obtaining another holder from any unfinished contention state.</p><p>If an unheld appointment has multiple requesters, prescribe that exactly one retries and all others yield. On the next tick, the remaining requester acquires it. No scanner can introduce another requester on that tick: its preceding observation saw a nonempty requester set.</p><p>If no unheld appointment has requesters, prescribe yielding by agents colliding with holders. Any already scheduled requests at appointments that have just acquired holders are cleared within two ticks unless an unheld request appears sooner. Otherwise, unassigned agents scan. There is an unheld appointment, because holders and assigned agents are in one-to-one correspondence and some agent remains unassigned. Within one full scan, either an unheld request appears or a scanner schedules such a request. A singleton acquires the appointment; a collision is resolved by the preceding prescription.</p><p>Thus $B=N+6$ ticks suffice for a prescribed route to another holder. At most $NB$ Bernoulli outcomes are prescribed, so the conditional probability of progress within this block is at least $c^{NB}$. The probability of no progress in $j$ successive blocks is therefore at most<br>$$
+(1-c^{NB})^j.
+$$<br>Every additional holder is obtained almost surely. Since holders never leave and only $N$ appointments exist, the round terminates almost surely.</p><p>Taking a countable intersection establishes simultaneous termination of all learning rounds. No published contention bound is needed for this argument.</p><h3>2. A fixed-horizon invariant for every admissible input</h3><p>For type $t$, define<br>$$
+U_t=\max_{1\le r\le m}u_t(r),
+$$<br>and let $r_t$ be the first class attaining this maximum in the prescribed appointment order.</p><p>Fix an integer $H\ge 1$. Positivity of every $q_r$ implies that, along any admissible capacity sequence, eventually<br>$$
+k_r^{(N)}\ge H+2
+\qquad\text{for every }r.
+$$<br>Work at such a population size. For a particular type-$t$ agent, write $z_i$ for its reward in round $i$.</p><p><b>Invariant.</b> Before round $s$, for $1\le s\le H+1$, its start is<br>$$
+b_s=(r_t,j_s),
+\qquad
+j_s=1+\#\{i&lt;s:z_i&lt;U_t\}.
+$$<br>The current-start history contains only $U_t$, and its loss is zero. Every previously abandoned start has mean strictly below $U_t$.</p><p><b>Proof.</b> Initially the first maximizer is $(r_t,1)$. Its history is $[U_t]$, and its loss is zero because its successor is another copy of class $r_t$.</p><p>Suppose the invariant holds before round $s$. Every history entry at every appointment is an actual utility or an initial utility, hence is at most $U_t$.</p><p>If $z_s=U_t$, appending the reward preserves the current mean $U_t$, and no loss update occurs. If maximization is triggered, the current copy remains its first maximizer: all earlier copies in class $r_t$ were abandoned with strictly smaller means, while every other appointment attaining mean $U_t$ follows the current copy. Thus the start does not change.</p><p>If $z_s&lt;U_t$, the appended reward survives FIFO truncation, including when $\ell=1$. The updated mean is strictly below $U_t$. Moreover, the winner differs from the start, so maximization is triggered. Previously abandoned copies still have strictly smaller means, since only the current start was updated. The next copy $(r_t,j_s+1)$ is untouched, has mean $U_t$, and is the first maximizer.</p><p>The new start has singleton history $[U_t]$ and zero loss. The capacity assumption ensures that it is not the final copy of its class. This proves the induction. $\square$</p><p>In particular, within this horizon:</p><ul><li>every suboptimal reward advances the starting-copy index by exactly one;</li><li>abandoned copies are never revisited;</li><li>an abandoned copy receives exactly one loss update, leaving loss $\alpha(U_t-z_s)$;</li><li>every starting appointment belongs to class $r_t$.</li></ul><p>These conclusions allow utility ties and require no quantitative use of $\delta$.</p><h3>3. Conditional class stabilization and an effective horizon</h3><p>Assume that a complete-state fluid limit $\nu$ exists.</p><p>For each fixed $s$, Section 2 shows that, eventually in population size, every type-$t$ agent has starting class $r_t$ before round $s$. Type and starting class are discrete coordinates of the encoded state. Passing to the assumed weak limit therefore gives<br>$$
+\nu\{C_s=r_t\mid t\}=1.
+$$<br>Since $\mu_t&gt;0$, this conditioning is legitimate.</p><p>Intersecting these probability-one statements over the finitely many types and countably many rounds yields<br>$$
+\nu\{C_s=r_t\text{ for every }s\mid t\}=1.
+$$<br>Consequently,<br>$$
+A(H)=0
+\qquad\text{for every }H\ge 1.
+$$<br>This first takes the population limit at each fixed horizon and only afterward considers the infinite-round trajectory law.</p><p>An algorithm on the promised domain can therefore return<br>$$
+H(\varepsilon)=1.
+$$<br>If $b_\varepsilon$ denotes the bit length of $\varepsilon$, its running time is $O(L+b_\varepsilon)$ including input reading, and constant after reading. There is no additional dependence on $m,\tau,\ell$, or $1/\varepsilon$. The algorithm need not decide whether the fluid-limit promise holds.</p><h3>4. New existence theorem: common order and constant back-off</h3><p>Consider the following additional hypotheses:</p><ul><li>Every type has the same class order, including the stipulated tie-breaking. Equivalently, one permutation $\pi$ satisfies</li></ul><p>$$
+   u_t(\pi(1))\ge\cdots\ge u_t(\pi(m))
+   $$<br>for every type, with tied classes appearing in their prescribed class-index order.</p><ul><li>Every utility satisfies</li></ul><p>$$
+   0\le u_t(r)\le\eta.
+   $$</p><p>These hypotheses permit strictly ordered utilities and distinct utility vectors.</p><p>Every initial loss is a difference of consecutive utilities, or the terminal utility. Hence it belongs to $[0,\eta]$. Every subsequent loss update is a convex combination of the previous loss and a positive utility difference, both in $[0,\eta]$. Thus, at every population size and every round,<br>$$
+0\le d_a\le\eta.
+$$<br>It follows that all back-off probabilities equal the same constant<br>$$
+p(d_a)=p=(1-\eta)^\beta\in(0,1).
+$$</p><p>All agents also have the same scan order. After their first yield in a round, their contention behavior therefore depends on their random draws and the shared contention state, but not on their type, learning histories, losses, or previous start.</p><p>The following lemma makes this observation quantitative.</p><h3>5. A one-round decorrelation lemma</h3><p>Suppose a contention round has $N$ agents and $N$ appointments, with class capacities $k_r$. Assume that all agents have the same scan order and the same constant yield probability $p\in(0,1)$.</p><p>Give each agent one of $K$ labels. A label may encode an arbitrary previous history, but it specifies the agent’s initial starting appointment. Let $n_\lambda$ be the number with label $\lambda$, and suppose there are at most $G$ distinct starting appointments. Let $X_{\lambda r}$ count label-$\lambda$ agents ultimately assigned class $r$.</p><p><b>Lemma.</b> For fixed $K,G,p$, uniformly over label counts, initial starts and capacities,<br>$$
+\max_{\lambda,r}
+\left|
+\frac{X_{\lambda r}}N
+-
+\frac{n_\lambda}N\frac{k_r}N
+\right|
+\xrightarrow{\mathbb P}0.
+$$</p><p>More explicitly, put $\theta=1-p$. For all sufficiently large $N$ and every $\rho&gt;0$,<br>$$
+\begin{aligned}
+&amp;\mathbb P\left\{
+\max_{\lambda,r}
+\left|
+\frac{X_{\lambda r}}N
+-
+\frac{n_\lambda}N\frac{k_r}N
+\right|&gt;\rho
+\right\}\\
+&amp;\quad\le
+G(1+N)\exp\left(-\frac{N^{1/4}}2\right)
++\frac6\rho\left(GN^{-1/2}+\theta^{-1}N^{-1/4}\right)
++\frac{4Km}{N\rho^2}.
+\end{aligned}
+$$</p><h3>Proof: initial collision groups</h3><p>Because contention rules do not use agent identities, randomly permuting the initial labels over agent identities does not change the distribution of the empirical output counts. We may therefore assume that their placement is uniform, independently of all random tapes.</p><p>Pre-generate independent geometric variables $Y_i$, with<br>$$
+\mathbb P(Y_i&gt;T)=\theta^T.
+$$<br>These specify the tick of an agent’s first yield if it continues colliding at its initial start. Use separate independent random tapes for its behavior after that yield. If it acquires its initial start earlier, unused draws are simply ignored. This construction has the required law of independent Bernoulli draws.</p><p>Set<br>$$
+T_N=\left\lfloor
+\frac{\log N}{4(-\log\theta)}
+\right\rfloor.
+$$<br>Then<br>$$
+N^{-1/4}\le\theta^{T_N}\le\theta^{-1}N^{-1/4}.
+$$</p><p>Call an initial-start group <b>large</b> if its size is at least $\sqrt N$, and <b>small</b> otherwise. The total size of small groups is at most $G\sqrt N$.</p><p>Let $F_N$ be the event that each large group contains at least two agents with $Y_i&gt;T_N$. On this event, those agents remain requesters throughout the first $T_N$ collision ticks. Thus every large initial appointment stays unheld and has at least two requesters throughout that interval. In particular, every member of a large group with $Y_i\le T_N$ actually first yields at tick $Y_i$.</p><p>For a large group of size $n$, its number of such persistent requesters is binomial with mean<br>$$
+n\theta^{T_N}\ge N^{1/4}.
+$$<br>Writing $s=\theta^{T_N}$ and using $n\ge 2$,<br>$$
+\begin{aligned}
+\mathbb P\{\operatorname{Bin}(n,s)\le 1\}
+&amp;=(1-s)^n+ns(1-s)^{n-1}\\
+&amp;\le e^{-ns}+ns\,e^{-s(n-1)}\\
+&amp;\le(1+N)e^{-ns/2}\\
+&amp;\le(1+N)\exp(-N^{1/4}/2).
+\end{aligned}
+$$<br>A union bound gives<br>$$
+\mathbb P(F_N^c)
+\le G(1+N)\exp(-N^{1/4}/2).
+$$</p><p>Exclude all agents from small groups and all large-group agents with $Y_i&gt;T_N$. Let $D$ be the excluded count. Then<br>$$
+\mathbb E[D]
+\le G\sqrt N+N\theta^{T_N}
+\le G\sqrt N+\theta^{-1}N^{3/4}.
+$$</p><h3>Proof: permutation symmetry of the remaining agents</h3><p>Let $E$ be the set of nonexcluded agents, so $|E|=N-D$. On $F_N$, every agent in $E$ has yielded by tick $T_N$.</p><p>Condition on all random tapes, the excluded agents’ identities and labels, and the event $F_N$. The remaining labels are uniformly distributed over $E$, subject to their remaining counts.</p><p>Any permutation of these remaining labels leaves the entire mechanical contention trajectory unchanged:</p><ul><li>Before an agent’s first yield, its initial appointment has at least two persistent excluded requesters. It therefore collides until its pre-generated yield tick, regardless of which remaining label it receives.</li><li>Every large initial appointment remains visibly requested throughout the first $T_N$ ticks. Changing the numbers of its other requesters does not change a scanner’s availability observation.</li><li>After first yielding, all remaining agents use the same scan order and yield probability, and their behavior no longer uses their label or initial start.</li><li>Excluded agents’ starts and random tapes are fixed.</li></ul><p>It follows that the winning class of each agent identity is fixed under these label permutations. This conclusion concerns the complete round, whose almost-sure termination was established in Section 1.</p><p>Let $e_\lambda$ be the number of remaining labels $\lambda$, and let $K_r$ be the number of agents in $E$ winning class $r$. If $|E|&gt;0$, the count $X^E_{\lambda r}$ is therefore hypergeometric, with conditional mean<br>$$
+M_{\lambda r}=\frac{e_\lambda K_r}{|E|}
+$$<br>and conditional variance at most $N$. If $E$ is empty, set both quantities to zero.</p><h3>Proof: comparison with the product counts</h3><p>Write<br>$$
+d_\lambda=n_\lambda-e_\lambda,
+\qquad
+d_r=k_r-K_r.
+$$<br>Both quantities are between zero and $D$. When $|E|&gt;0$,<br>$$
+\left|
+\frac{K_r}{|E|}-\frac{k_r}{N}
+\right|
+=
+\frac{|Dk_r/N-d_r|}{|E|}
+\le\frac D{|E|}.
+$$<br>Consequently,<br>$$
+\left|
+M_{\lambda r}-\frac{n_\lambda k_r}{N}
+\right|
+\le
+e_\lambda\frac D{|E|}
++d_\lambda\frac{k_r}{N}
+\le 2D.
+$$<br>Adding the excluded label-$\lambda$, class-$r$ winners gives<br>$$
+\left|
+X_{\lambda r}-\frac{n_\lambda k_r}{N}
+\right|
+\le |X^E_{\lambda r}-M_{\lambda r}|+3D.
+$$<br>This also holds when $E$ is empty.</p><p>Conditional Chebyshev inequalities and a union bound give<br>$$
+\mathbb P\left(
+F_N\cap
+\left\{\max_{\lambda,r}
+|X^E_{\lambda r}-M_{\lambda r}|&gt;\frac{\rho N}{2}
+\right\}
+\right)
+\le\frac{4Km}{N\rho^2}.
+$$<br>Markov’s inequality gives<br>$$
+\mathbb P\{D&gt;\rho N/6\}
+\le
+\frac6\rho
+\left(GN^{-1/2}+\theta^{-1}N^{-1/4}\right).
+$$<br>Combining these estimates proves the displayed bound and the lemma. $\square$</p><h3>6. Complete-state fluid-limit existence under the additional hypotheses</h3><p>Assume the hypotheses of Section 4. The common first class is<br>$$
+r_*=\pi(1).
+$$</p><p>Fix $H$. For sufficiently large populations, Section 2 applies through round $H$, and every initial start in round $s\le H$ is among<br>$$
+(r_*,1),\ldots,(r_*,s).
+$$</p><p>Label an agent before round $s$ by its type and its previous winning-class word<br>$$
+(t,r_1,\ldots,r_{s-1}).
+$$<br>There are at most<br>$$
+K_s=\tau m^{s-1}
+$$<br>labels. Such a label determines its complete previous learner-state trajectory and its current start. There are at most $s$ distinct starts.</p><p>Let<br>$$
+P_{N,s}(t,r_1,\ldots,r_s)
+$$<br>be the empirical fraction with that type and winning-class word. Conditional on the entire past, future draws are independent. The lemma applies uniformly with $G\le s$, giving<br>$$
+P_{N,s}(t,r_1,\ldots,r_s)
+-
+P_{N,s-1}(t,r_1,\ldots,r_{s-1})
+\frac{k_{r_s}^{(N)}}N
+\xrightarrow{\mathbb P}0.
+$$<br>The base case is<br>$$
+P_{N,0}(t)=\frac{a_t^{(N)}}N\longrightarrow\mu_t.
+$$<br>Induction, using $k_r^{(N)}/N\to q_r$, now yields<br>$$
+P_{N,H}(t,r_1,\ldots,r_H)
+\xrightarrow{\mathbb P}
+\mu_t\prod_{i=1}^H q_{r_i}.
+$$<br>All finitely many coordinates converge jointly.</p><h3>Reconstruction of complete learner trajectories</h3><p>For fixed type and winning-class word, the rewards are<br>$$
+z_i=u_t(r_i).
+$$<br>Section 2 determines every starting-copy index. A current copy accumulates only optimal rewards until its first suboptimal reward. Upon abandonment, its history is the FIFO truncation of those optimal entries followed by that suboptimal reward, and its loss becomes<br>$$
+\alpha(U_t-z_i).
+$$<br>Other nonfinal, unused copies retain their defaults. Final-copy initial losses are determined by the next class in the fixed order, or by terminal successor utility zero.</p><p>Thus the word determines the complete encoded trajectory.</p><p>At a fixed horizon, every starting-copy index $j$ is fixed independently of $N$. Its mark converges to<br>$$
+(r_*,0,j,\infty).
+$$<br>The final copy of class $r$ has mark converging to<br>$$
+(r,1,\infty,0).
+$$<br>The relevant table structures and entry identities are fixed for each word once capacities exceed $H+1$. Histories, means, losses and pointers are determined exactly as above. Hence each finite-population trajectory atom converges to a deterministic atom $x_{t,r_1,\ldots,r_H}$, independently of the capacity approximation.</p><p>The empirical trajectory measure is a mixture of these finitely many atoms. Its weights converge in probability to the deterministic product weights. Therefore it converges weakly in probability to<br>$$
+\nu_H
+=
+\sum_{t=1}^{\tau}
+\sum_{(r_1,\ldots,r_H)\in\{1,\ldots,m\}^H}
+\mu_t\prod_{i=1}^Hq_{r_i}\,
+\delta_{x_{t,r_1,\ldots,r_H}}.
+$$</p><p>These laws are consistent. Explicitly, choose a type with distribution $(\mu_t)$ and, independently, an infinite sequence of independent classes with distribution $(q_r)$. Apply the learner-state reconstruction to each finite prefix. This constructs the required trajectory law $\nu$.</p><p><b>Proven conclusion.</b> Under the hypotheses of Section 4, the complete-state fluid limit exists, is deterministic and independent of the integer approximations. Conditional on type, its winning classes are independent with probabilities $q_r$.</p><h3>7. Algorithmic consequences</h3><p>The general promised-horizon algorithm remains<br>$$
+H(\varepsilon)=1,
+$$<br>with running time $O(L+b_\varepsilon)$ including reading.</p><p>For the additional class of inputs in Section 4, the complete fluid law through any supplied finite horizon $H$ is also exactly computable. Enumerate type and class words, assign each weight<br>$$
+\mu_t\prod_{i=1}^Hq_{r_i},
+$$<br>and construct its limiting complete-state trajectory as in Section 6. Coincident atoms may remain as separate mixture terms.</p><p>Here is a conservative bit-complexity bound using schoolbook arithmetic. Put<br>$$
+h=\min\{\ell,H+1\}.
+$$<br>Checking the common orders and constructing the exact finite-horizon mixture takes<br>$$
+O\left(
+\tau m\log(m+1)(L+1)^2
++
+\tau m^H(m+H+1)H^3h
+\bigl(L+\log(H+2)+1\bigr)^2
+\right).
+$$<br>To justify the bound:</p><ul><li>Each trajectory has $H+1$ boundaries, at most $m+H+1$ table entries per boundary, and histories of length at most $h$.</li><li>The invariant restricts each nondefault history to repeated optimal utilities and at most one suboptimal utility. Its means and losses have bit length $O(L+\log(H+2))$.</li><li>Each product weight has bit length $O((H+1)L)$; $H$ schoolbook multiplications are covered by the displayed bound.</li><li>There are at most $\tau m^H$ mixture terms.</li></ul><p>The mixture is exact, so this computation requires no numerical accuracy parameter. This is not an algorithm for computing limiting weights on arbitrary admissible inputs.</p><h3>8. A strictly ordered example with infinite starting-copy motion</h3><p>Take<br>$$
+m=2,\qquad \tau=1,\qquad q_1=q_2=\frac12,
+$$<br>and<br>$$
+u(1)=\frac18,\qquad u(2)=0,\qquad
+\eta=\frac14,\qquad
+\delta=\frac18,\qquad
+\alpha=\beta=1.
+$$<br>Any $\ell\ge1$ is allowed. This is admissible, with strictly distinct class utilities, and satisfies Section 4.</p><p>In its fluid limit, the winning classes are independent fair draws. Section 2 gives the starting-copy index before round $s$ as<br>$$
+j_s=1+\sum_{i&lt;s}\mathbf 1_{\{R_i=2\}}.
+$$<br>In particular,<br>$$
+j_s\ \text{has distribution}\ 
+1+\operatorname{Bin}(s-1,1/2).
+$$</p><p>For any fixed $h$, the probability of never winning class $2$ after round $h$ is<br>$$
+\lim_{n\to\infty}2^{-n}=0.
+$$<br>A countable union over $h$ shows that class $2$ is won infinitely often almost surely. Therefore the starting-copy index increases infinitely often almost surely, while the starting class is always class $1$ and<br>$$
+A(H)=0
+\qquad\text{for every }H\ge1.
+$$</p><p>Thus class stabilization and appointment-identity stabilization differ sharply in this population-first limit. The cited [finite-population learning theorem](https://arxiv.org/pdf/2105.04027) cannot by itself establish appointment stabilization in that limit. Likewise, the [finite contention-time bound](https://www.ijcai.org/proceedings/2019/0031.pdf) does not supply the concentration argument proved here.</p><h3>9. What remains open</h3><p>The argument proves complete-state fluid-limit existence for all common-order inputs whose utilities lie in $[0,\eta]$. It does not establish existence when scan orders differ, or when contention probabilities depend on losses.</p><p>For arbitrary admissible inputs, neither universal deterministic, approximation-independent existence nor an admissible counterexample is proved here. That is the remaining target question. Conditional class stabilization and the promised effective-horizon question are settled by Sections 2–3.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 4–6 and 9: scope of the fluid-limit existence result: The existence proof applies only to common-order inputs with $u_t(r)\le\eta$. The output neither proves deterministic, approximation-independent complete-state fluid-limit existence for every admissible input nor provides an admissible counterexample. This is an explicitly acknowledged scope limitation, not an error in the restricted proof.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial, with sound substantive progress.</b> The fixed-horizon invariant establishes class stabilization and the constant effective horizon whenever a complete-state fluid limit exists. The additional existence theorem is supported by the decorrelation and reconstruction arguments. However, the output explicitly leaves universal existence unresolved and provides no counterexample to it, so it does not settle the entire <code>USER_TASK</code>.</p><p>I found no false central step or mathematical gap in the results actually proved.</p><h3>1. Almost-sure termination of finite contention rounds</h3><p>The clipping bounds are correct:<br>$$
+0&lt;\eta^\beta\le p(d)\le(1-\eta)^\beta&lt;1.
+$$<br>Thus every prescribed yield or retry has conditional probability at least<br>$$
+c=\min\{\eta^\beta,1-(1-\eta)^\beta\}&gt;0.
+$$</p><p>The proposed progress route respects the synchronous observation rule:</p><ul><li>At an unheld appointment with multiple requesters, prescribing exactly one retry leaves a singleton for the following tick. Scanners observing the preceding nonempty requester set cannot schedule a new request there.</li><li>If no unheld appointment has requesters, yielding clears requests against holders. An unassigned scanner reaches an unheld appointment within a full scan unless progress occurs sooner.</li><li>Once an unheld request appears, either it becomes a singleton holder or the preceding collision prescription applies.</li></ul><p>The block length<br>$$
+B=N+6
+$$<br>allows the full scan and the additional scheduling, clearing, and collision-resolution ticks. At most $NB$ Bernoulli outcomes occur within a block, so the probability lower bound $c^{NB}$ is valid.</p><p>The geometric failure estimate proves almost-sure acquisition of another holder. Iterating over the finitely many remaining appointments proves termination of the round. The countable intersection over learning rounds is legitimate.</p><p><b>Assessment:</b> correct. This argument establishes termination, without claiming an efficient contention bound.</p><h3>2. Fixed-horizon invariant</h3><p>For a fixed horizon, positivity of each $q_r$ indeed implies that eventually<br>$$
+k_r^{(N)}\ge H+2
+$$<br>for every class.</p><p>The invariant correctly uses appointment copies rather than treating a class as one learning option.</p><h3>Initialization</h3><p>The first maximizer is the first copy of the earliest maximum-utility class. Its successor is another copy of that class, so its initial loss is zero. The capacity condition guarantees this successor exists.</p><h3>Optimal reward</h3><p>When $z_s=U_t$, appending the reward preserves the current mean and loss. Even if winning a different appointment triggers maximization, the current start remains the earliest maximizer:</p><ul><li>previously abandoned copies have strictly smaller means;</li><li>later copies follow the current copy;</li><li>other maximum-utility classes follow $r_t$ under the stipulated tie-breaking.</li></ul><p>This also handles ties between classes.</p><h3>Suboptimal reward</h3><p>When $z_s&lt;U_t$, the newly appended reward survives FIFO truncation even for $\ell=1$. Therefore the updated mean is strictly below $U_t$.</p><p>The winner cannot equal the current start, so maximization is triggered. Previously abandoned starts retain their smaller means, and the next untouched copy is the earliest remaining maximizer. Its initial history is the singleton $[U_t]$, and its loss is zero because it is not final within the stated invariant horizon.</p><p>The index formula<br>$$
+j_s=1+\#\{i&lt;s:z_i&lt;U_t\}
+$$<br>therefore follows. The claims about abandonment, loss updates, and absence of revisits also follow.</p><p><b>Assessment:</b> correct, including the FIFO edge case and utility ties.</p><h3>3. Conditional stabilization and effective horizon</h3><p>For each fixed round, the invariant eventually places every type-$t$ agent’s start in class $r_t$. Type and starting class are discrete coordinates of the supplied encoding, so this property passes to an assumed weak limit.</p><p>Because there are finitely many types and countably many rounds, intersecting the resulting probability-one events is valid. Consequently,<br>$$
+A(H)=0
+\qquad\text{for every }H\ge1.
+$$</p><p>This argument correctly respects the required order of limits. It does not infer a uniform finite-population learning horizon.</p><p>The promised-domain algorithm<br>$$
+H(\varepsilon)=1
+$$<br>is therefore valid. Its stated running time<br>$$
+O(L+b_\varepsilon)
+$$<br>including input reading is appropriate, and it need not recognize whether the promise holds.</p><p><b>Assessment:</b> correct. Conditional on fluid-limit existence, neither class-tail convergence nor effective convergence can fail.</p><h3>4. Constant back-off under the additional hypotheses</h3><p>Under the restriction<br>$$
+0\le u_t(r)\le\eta,
+$$<br>all initial losses belong to $[0,\eta]$. Every performed update is a convex combination of a previous loss in this interval and a positive utility difference in this interval. Hence the interval is preserved.</p><p>It follows that<br>$$
+p(d)=(1-\eta)^\beta
+$$<br>for every stored loss.</p><p>Common appointment order and constant back-off remove the stated dependence on type, history, and previous start after first yield.</p><p><b>Assessment:</b> correct.</p><h3>5. One-round decorrelation lemma</h3><p>This is the main nontrivial probabilistic argument. Its conditioning and symmetry are valid.</p><h3>Persistent initial requesters</h3><p>For $\theta=1-p$, the chosen cutoff satisfies<br>$$
+N^{-1/4}\le\theta^{T_N}\le\theta^{-1}N^{-1/4}.
+$$</p><p>On $F_N$, each large initial group has at least two agents whose first-yield variables exceed $T_N$. Those agents prevent singleton assignment throughout the relevant interval. Consequently, each nonexcluded agent actually yields at its prescribed tick.</p><p>The binomial estimate is correct. In particular, $n\ge2$ gives<br>$$
+s(n-1)\ge\frac{ns}{2},
+$$<br>and $ns\le N$ justifies the displayed factor $1+N$. The union bound and the estimate<br>$$
+\mathbb E[D]\le G\sqrt N+\theta^{-1}N^{3/4}
+$$<br>are also correct.</p><h3>Conditional label symmetry</h3><p>Randomizing initial labels is legitimate because agent identities do not affect the rules and random tapes are independent and identically distributed.</p><p>After conditioning on excluded identities and labels, all remaining labels belong to large groups, and all remaining agents have first-yield variables at most $T_N$. Permuting those labels preserves exclusion and $F_N$.</p><p>The persistent excluded requesters ensure that these permutations do not change:</p><ul><li>whether a remaining initial requester is colliding;</li><li>whether a scanner sees an initial appointment as requested;</li><li>the behavior after first yield, when labels no longer affect contention.</li></ul><p>Thus the mechanical winning classes are fixed under the admissible label permutations. The resulting count is hypergeometric with the stated conditional mean. The variance bound by $N$ is sufficient.</p><h3>Error bound</h3><p>The comparison with product counts correctly yields<br>$$
+\left|X_{\lambda r}-\frac{n_\lambda k_r}{N}\right|
+\le
+|X^E_{\lambda r}-M_{\lambda r}|+3D.
+$$</p><p>The thresholds $\rho N/2$ and $\rho N/6$ produce the constants in the displayed Chebyshev and Markov bounds. For fixed input parameters, these bounds tend to zero.</p><p><b>Assessment:</b> correct. In particular, the proof does not incorrectly assume independence between final assignments and labels; it establishes the required conditional symmetry.</p><h3>6. Complete-state fluid-limit construction</h3><p>At each fixed horizon, the invariant bounds the number of possible starts independently of population size. Labels consisting of type and previous winning-class word determine the learner trajectory and current start.</p><p>Fresh randomness permits conditional application of the uniform decorrelation bound. Induction therefore gives<br>$$
+P_{N,H}(t,r_1,\ldots,r_H)
+\xrightarrow{\mathbb P}
+\mu_t\prod_{i=1}^Hq_{r_i}.
+$$</p><p>The reconstruction accounts for every part of the specified learner encoding:</p><ul><li>histories at current and abandoned starts;</li><li>losses and means;</li><li>untouched default entries;</li><li>final-copy entries;</li><li>persistent table identities and current-start pointers.</li></ul><p>At fixed horizon, used starting-copy indices remain bounded, while final-copy indices diverge. Their asserted limiting marks match the specified coordinate topology. Table structures stabilize once capacities are sufficiently large.</p><p>Finite mixtures with convergent weights and convergent atoms therefore converge weakly in probability. The explicit construction using an infinite class sequence supplies consistent trajectory laws.</p><p><b>Assessment:</b> correct. The restricted theorem proves deterministic, approximation-independent complete-state fluid-limit existence.</p><h3>7. Computation and example</h3><p>The exact finite-horizon mixture algorithm follows from the reconstruction. Its exponential dependence on the supplied horizon is openly stated.</p><p>The history-length bound<br>$$
+h=\min\{\ell,H+1\}
+$$<br>is correct. The claimed bit sizes for histories, means, losses, and product weights support the conservative arithmetic bound.</p><p>The example satisfies the input restrictions. Its starting-copy index has the stated binomial distribution and increases infinitely often almost surely, while its starting class remains fixed.</p><p><b>Assessment:</b> correct. The example demonstrates infinite appointment-copy motion; it is not a counterexample to either property asked about in <code>USER_TASK</code>.</p><h3>8. Remaining issue and actionable feedback</h3><p><b>Major scope issue — universal fluid-limit existence remains unresolved.</b></p><p>Sections 4–6 require common appointment order and utilities bounded by $\eta$. They establish neither existence for every admissible input nor an admissible example where existence fails.</p><p>This limitation is explicitly acknowledged and does not invalidate the restricted theorem. Nevertheless, it prevents the output from resolving the full task.</p><p>To complete the task, the prover must supply either a verified argument covering all admissible inputs or a verified admissible counterexample to deterministic, approximation-independent fluid-limit existence. Additional exposition alone cannot close this gap.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

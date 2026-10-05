@@ -1,0 +1,102 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-bd1548f00ec8887539b7cdc1df39edb080964eea — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-bd1548f00ec8887539b7cdc1df39edb080964eea <span style="font-weight:normal;color:#8a7350">(s5-bd1548f00ec8887539b7cdc1df39edb080964eea)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\mathsf{NP}\)-complete</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 10 — class: hardness</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m,k\), a finite set of types with approval sets \(A_t\), positive rational masses \(\mu_t\) summing to \(1\), and proposed utilities \(\alpha_t\), does there exist a size-\(k\) committee \(W\) inducing \(\alpha_t=1\) exactly when \(A_t\cap W\ne\emptyset\), such that no coalition choosing masses \(q_t\in[0,\mu_t]\) can propose an integral committee \(W&#x27;\) with \(|W&#x27;|\le k\sum_t q_t\) and strictly improve every participating type, meaning \(s_t(W&#x27;)&gt;\alpha_t\) whenever \(q_t&gt;0\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) be a set of \(m\ge 1\) candidates and \(1\le k\le m\) an integer. A society is given by its support: a list of \(\tau\ge 1\) types, each with an approval set \(A_t\subseteq C\) (possibly empty) and a positive binary rational mass \(\mu_t\), with \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible approval sets.<br>The input also gives nonnegative binary rational proposed utilities \(\alpha_t\). For any integral committee \(S\subseteq C\), define the approval Chamberlin–Courant utility \(s_t(S)=\min\{|A_t\cap S|,1\}\).<br>A feasible committee is an integral set \(W\subseteq C\) with \(|W|=k\) and \(s_t(W)=\alpha_t\) for every type; utilities outside \(\{0,1\}\) therefore make the instance infeasible. No score maximization or tie-breaking is required.<br>A blocking coalition chooses real masses \(q_t\in[0,\mu_t]\) with \(\sum_tq_t&gt;0\) and an integral committee \(W&#x27;\subseteq C\) satisfying \(|W&#x27;|\le k\sum_tq_t\) and \(s_t(W&#x27;)&gt;\alpha_t\) for every type with \(q_t&gt;0\).<br>Decide whether a feasible committee exists whose induced utilities admit no blocking coalition. State running times in \(m,\tau,k\), and the total input bit length \(L\).</p><p>Is this continuous core-membership decision problem in \(\mathsf{P}\), or is it \(\mathsf{NP}\)-hard?</p><p>For explicitly listed discrete voters, the corresponding utility-vector core-membership problem is \(\mathsf{NP}\)-complete. With a witnessing committee supplied, discrete membership is polynomial-time decidable through justified representation; a discrete core utility vector can also be constructed in polynomial time.<br>These discrete results do not establish a classification for the support-encoded mass problem above.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Defined the omitted score s_t as binary approval Chamberlin–Courant utility.</li><li>Required equality between every proposed utility and its induced score, rather than only the stated condition for utility 1.</li><li>Encoded proposed utilities as nonnegative binary rationals; values outside {0,1} are infeasible.</li><li>Restricted the committee-size domain to integers 1 ≤ k ≤ m and required a nonempty society.</li><li>Excluded zero-mass coalitions from blocking, resolving the vacuous strict-improvement condition that would otherwise make every instance fail.</li><li>Allowed real coalition masses and empty approval sets; retained integral committees and the weak proportional entitlement bound.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The problem is \(\mathsf{NP}\)-complete.</p><p>When all proposed utilities equal \(1\), blocking is impossible and feasibility is already a covering problem. The reduction below also establishes hardness with both utility values, equal positive masses, and nonempty approval sets of size at most \(3\).</p><h3>1. Exact characterization of blocking</h3><p>First reject any instance with some \(\alpha_t\notin\{0,1\}\), since no committee can realize that utility.</p><p>Henceforth define<br>\(
+U=\{t:\alpha_t=0\},
+\qquad
+r_c=\sum_{\substack{t\in U\\c\in A_t}}\mu_t
+\)<br>for each candidate \(c\). Thus \(r_c\) is the approval mass of \(c\) among types assigned utility \(0\).</p><p><b>Lemma.</b> The proposed utility vector admits no blocking coalition if and only if<br>\(
+r_c&lt;1/k
+\)<br>for every candidate \(c\).</p><p><b>Proof.</b> Suppose \(r_c\ge 1/k\). Choose \(W&#x27;=\{c\}\), and set \(q_t=\mu_t\) for every \(t\in U\) approving \(c\), with all other \(q_t=0\). Their total mass is \(r_c&gt;0\), every participating type improves from \(0\) to \(1\), and<br>\(
+|W&#x27;|=1\le kr_c.
+\)<br>This is a blocking coalition.</p><p>Conversely, suppose every \(r_c&lt;1/k\), and assume that \((q,W&#x27;)\) blocks. A participating type must belong to \(U\), because utility \(1\) cannot be strictly improved. Moreover, each participating type approves a member of \(W&#x27;\). In particular, \(W&#x27;\ne\varnothing\). Consequently,<br>\(
+\displaystyle
+\sum_tq_t
+\le
+\sum_{\substack{t\in U\\A_t\cap W&#x27;\ne\varnothing}}\mu_t
+\le
+\sum_{c\in W&#x27;}r_c
+&lt;
+\frac{|W&#x27;|}{k}.
+\)<br>The middle inequality counts every type on its left at least once on its right. The final strict inequality follows from the hypothesis for every member of the nonempty committee \(W&#x27;\). This contradicts the budget requirement \(|W&#x27;|\le k\sum_tq_t\). ∎</p><p>Thus stability depends only on the proposed utilities and can be checked without finding a feasible committee. Equality at the threshold permits blocking.</p><h3>2. Feasibility and computational upper bounds</h3><p>Let<br>\(
+P=\{t:\alpha_t=1\},
+\qquad
+F=\bigcup_{t\in U}A_t,
+\qquad
+E=C\setminus F.
+\)</p><p>A committee realizes the proposed vector exactly when it has size \(k\), lies in \(E\), and intersects every \(A_t\) with \(t\in P\).</p><p>Equivalently, feasibility holds precisely when:</p><ul><li>\(|E|\ge k\);</li><li>some \(T\subseteq E\), with \(|T|\le k\), intersects every approval set indexed by \(P\).</li></ul><p>Indeed, a feasible committee provides such a \(T\). Conversely, any such \(T\) can be extended to size \(k\) using candidates from \(E\); extension preserves every required utility.</p><p><b>Membership in \(\mathsf{NP}\).</b> When such a \(T\) exists, there is one with \(|T|\le\min(k,|P|)\): retain one selected representative for each positive-utility type. A certificate lists these candidates. One verifies their eligibility, all required intersections, and \(|E|\ge k\), then checks the lemma’s inequalities. All these checks take polynomial time in \(L\).</p><p>For completeness, the rational comparisons require no numerical approximation. Write \(\mu_t=a_t/b_t\), and take<br>\(
+D=\prod_t b_t,
+\qquad
+w_t=a_t(D/b_t).
+\)<br>The relevant inequalities become the integer comparisons<br>\(
+k\sum_{\substack{t\in U\\c\in A_t}}w_t&lt;D.
+\)<br>The binary lengths of \(D\), the \(w_t\), and their sums are \(O(L)\). Processing the explicitly encoded approval incidences with schoolbook integer arithmetic gives a conservative polynomial bound \(O(L^3)\).</p><p>Two deterministic running-time bounds are also available:</p><ul><li><b>Committee enumeration:</b> after stability preprocessing, enumerate the size-\(k\) subsets of \(E\) and check their intersections. A conservative bit-operation bound is</li></ul><p>\(
+  O\!\left(L^3+\binom{m}{k}k\tau L\right).
+  \)</p><ul><li><b>Dynamic programming over types:</b> put \(p=|P|\le\tau\). Represent each eligible candidate by the subset of \(P\) that approves it. Process candidates successively, maintaining the minimum number selected for each exact union of covered types. For a candidate with mask \(B\), each state \(R\) either remains \(R\), or moves to \(R\cup B\) at cost one. Induction on the processed candidates proves that these states give the minimum covering cardinality. Feasibility then follows from the characterization above. A conservative bound, accounting for masks and counters, is</li></ul><p>\(
+  O\!\left(L^3+m2^p\bigl(\tau+\log(m+1)\bigr)\right).
+  \)</p><p>In particular, the problem is fixed-parameter tractable in the support size \(\tau\).</p><h3>3. Hardness with equal masses and both utility values</h3><p>We reduce from the standard \(\mathsf{NP}\)-complete problem \(3\)-SAT; its NP-completeness is stated in [CMU’s lecture on NP-completeness](https://www.cs.cmu.edu/~fp/courses/flac/lectures/lecture33.html).</p><p>Let the formula have variables \(x_1,\ldots,x_n\), where \(n\ge1\). Remove tautological clauses, repeated literals within clauses, and duplicate clauses. This preserves satisfiability. Denote the remaining clauses by \(K_1,\ldots,K_h\); each has between one and three literals.</p><p>Construct candidates<br>\(
+C=\{c_i^+,c_i^-:1\le i\le n\}\cup\{d\},
+\qquad k=n.
+\)</p><p>There are the following types:</p><ul><li>For each variable \(x_i\), a type approving \(\{c_i^+,c_i^-\}\), with proposed utility \(1\).</li><li>For each clause \(K_j\), a type approving the candidates corresponding to its literals, with proposed utility \(1\). A positive literal \(x_i\) corresponds to \(c_i^+\), and a negative literal corresponds to \(c_i^-\).</li><li>One type approving \(\{d\}\), with proposed utility \(0\).</li></ul><p>Assign every type mass<br>\(
+\mu_t=\frac1{n+h+1}.
+\)</p><p>The constructed instance has<br>\(
+m=2n+1,\qquad
+\tau=n+h+1,\qquad
+k=n.
+\)<br>Its encoding length and construction time are polynomial in the formula’s encoding length. All masses are positive binary rationals and sum to \(1\). The approval sets are nonempty and have size at most \(3\). The preprocessing also ensures that these approval sets are distinct, if support types are required to have distinct approval sets.</p><p><b>Stability holds for every constructed instance.</b> The only type assigned utility \(0\) approves \(d\). Hence<br>\(
+r_d=\frac1{n+h+1}&lt;\frac1n=\frac1k,
+\qquad
+r_{c_i^+}=r_{c_i^-}=0.
+\)<br>The lemma therefore excludes every blocking coalition.</p><p>It remains to establish the feasibility equivalence.</p><p><b>If the formula is satisfiable</b>, choose \(c_i^+\) when \(x_i\) is true and \(c_i^-\) when it is false. This selects exactly \(n=k\) candidates. Every variable type is covered, every clause type is covered by a true literal, and \(d\) is excluded. Thus the committee realizes all proposed utilities and is stable.</p><p><b>If the constructed instance has a feasible committee</b>, its utility-\(0\) type forces \(d\) to be excluded. Each variable type requires at least one candidate from its pair. These \(n\) pairs are disjoint, and the committee has exactly \(n\) members, so it contains exactly one candidate from each pair. Define \(x_i\) to be true precisely when \(c_i^+\) is selected. Every clause type is covered, so every clause has a true literal. The formula is satisfiable.</p><p>This is a polynomial many-one reduction, proving \(\mathsf{NP}\)-hardness. Together with membership in \(\mathsf{NP}\), it proves \(\mathsf{NP}\)-completeness. Thus an unrestricted polynomial-time algorithm would imply \(\mathsf{P}=\mathsf{NP}\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s claim is <b>correct</b>: the stated continuous problem is \(\mathsf{NP}\)-complete. The argument establishes both membership in \(\mathsf{NP}\) and hardness for the specified support encoding. I found no major or minor mathematical issues.</p><ul><li><b>Domain restrictions and proposed utilities.</b></li></ul><p>Rejecting any instance with \(\alpha_t\notin\{0,1\}\) is correct: approval Chamberlin–Courant utilities take only those two values. All subsequent arguments explicitly assume this restriction. The supplied conditions \(k\ge1\) and positive masses justify the divisions and positivity assertions used below.</p><ul><li><b>Characterization of blocking.</b></li></ul><p>Both directions of the lemma are valid.</p><p>If \(r_c\ge1/k\), the proposed coalition uses masses within their permitted intervals and has positive total mass. Every participating type has proposed utility \(0\) and approves \(c\), so its utility strictly increases to \(1\). The singleton committee satisfies its budget, including when \(r_c=1/k\).</p><p>Conversely, a participating type must have proposed utility \(0\), and must approve at least one selected candidate. Positive coalition mass therefore forces \(W&#x27;\ne\varnothing\). Each inequality in<br>\[
+   \sum_tq_t
+   \le
+   \sum_{\substack{t\in U\\A_t\cap W&#x27;\ne\varnothing}}\mu_t
+   \le
+   \sum_{c\in W&#x27;}r_c
+   &lt;
+   \frac{|W&#x27;|}{k}
+   \]<br>is justified: the first uses \(q_t\le\mu_t\); the second permits repeated counting; the third sums strict inequalities over a nonempty set. This contradicts the blocking budget.</p><p>Thus the lemma correctly handles real coalition masses and the strict threshold. It does not rely on discretizing the electorate.</p><ul><li><b>Feasibility characterization.</b></li></ul><p>Every selected candidate must lie outside the union of approval sets belonging to utility-\(0\) types. Every utility-\(1\) type must approve at least one selected candidate. These conditions, together with committee size \(k\), are exactly the required utilities.</p><p>The equivalent covering formulation is also correct. The condition \(|E|\ge k\) ensures that a covering set of size at most \(k\) can be extended to exactly \(k\) distinct eligible candidates. Such extension preserves all required utilities.</p><p>Empty approval sets are handled correctly: an empty positive-utility approval set makes covering impossible, whereas an empty zero-utility approval set imposes no additional restriction. The formulation also handles an empty set \(P\).</p><ul><li><b>Membership in \(\mathsf{NP}\) and rational arithmetic.</b></li></ul><p>The certificate argument is sound. From any covering committee, retaining one representative for each positive-utility type produces a covering subset of size at most \(\min(k,|P|)\). Eligibility, coverage, extendability, and stability are polynomially verifiable.</p><p>The common-denominator construction gives exact integer comparisons. Since the sum of denominator bit lengths is bounded by the input length, the product \(D\) has \(O(L)\) bits. The quantities \(w_t\), their relevant sums, and the products with \(k\) also have \(O(L)\) bits. The stated conservative bound \(O(L^3)\) is sufficient for the arithmetic and incidence checks.</p><ul><li><b>Deterministic algorithms and running times.</b></li></ul><p>Committee enumeration examines all relevant size-\(k\) committees. Its stated bound<br>\[
+   O\!\left(L^3+\binom{m}{k}k\tau L\right)
+   \]<br>is a valid conservative bound.</p><p>The dynamic program correctly records the minimum number of processed candidates realizing each exact coverage union. Omitting or selecting the next candidate gives precisely the two stated transitions. The full-coverage state, together with \(|E|\ge k\), decides feasibility.</p><p>Its stated bound<br>\[
+   O\!\left(L^3+m2^p\bigl(\tau+\log(m+1)\bigr)\right)
+   \]<br>accounts conservatively for masks and counters. Since \(p\le\tau\), the claimed fixed-parameter tractability in support size follows. Neither exponential algorithm is presented as an unrestricted polynomial-time algorithm.</p><ul><li><b>Hardness reduction.</b></li></ul><p>The invoked theorem—that standard \(3\)-SAT is \(\mathsf{NP}\)-complete—is correctly identified; the [cited CMU lecture](https://www.cs.cmu.edu/~fp/courses/flac/lectures/lecture33.html) explicitly states it.</p><p>Removing tautological clauses, repeated literals, and duplicate clauses preserves satisfiability. Starting from standard \(3\)-SAT, every surviving clause is nonempty and contains at most three literals. The construction satisfies \(1\le k\le m\), uses positive rational masses summing to \(1\), and has polynomial encoding length.</p><p>The claim about distinct approval sets is correct: variable types contain complementary literal pairs, while surviving clause types contain no complementary pair; duplicate clauses have been removed; the singleton \(\{d\}\) is separate from all literal sets.</p><p>Stability holds because the only zero-utility approval mass is<br>\[
+   r_d=\frac1{n+h+1}&lt;\frac1n=\frac1k.
+   \]<br>This inequality remains strict when \(h=0\).</p><p>A satisfying assignment yields the stated feasible committee. Conversely, a feasible committee excludes \(d\) and must cover all \(n\) disjoint variable pairs using exactly \(n\) candidates. It therefore selects exactly one literal candidate per variable. Clause coverage then makes the resulting assignment satisfy every clause.</p><p>Both directions of the reduction are established. The reduction proves hardness even under the advertised restrictions, and the membership argument completes the \(\mathsf{NP}\)-completeness classification.</p><p>No additional clarification is needed to make the mathematical argument verifiable.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

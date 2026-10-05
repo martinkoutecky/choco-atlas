@@ -1,0 +1,410 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-3465546faa2917483cfa58209227ea858ab495bb — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-3465546faa2917483cfa58209227ea858ab495bb <span style="font-weight:normal;color:#8a7350">(s5-3465546faa2917483cfa58209227ea858ab495bb)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.1 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite rational type support \((\mu_t,a_t,F_t)\), with \(\sum_t\mu_t a_t=1\) and each \(F_t\) a finite rational-support i.i.d. value law, fix a target type \(t^\star\) and horizon \(H\). For \(n\) agents with \(n\mu_t\) agents of type \(t\), each having fair share \(a_t/n\), run DMMF for \(\lfloor nH\rfloor\) rounds from zero allocations, with uniform tie breaking. Do the target agent’s maximin expected total utilities converge as \(n\to\infty\), when it may choose any nonanticipating request policy and the other agents may use any joint nonanticipating request policies based on public history; if so, compute the limiting value and give an \(\varepsilon\)-optimal target policy and matching adversarial strategy or upper-bound certificate.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is specified by its support: \(\tau\) types of positive binary-rational mass \(\mu_t\), with \(\sum_t\mu_t=1\); \(\tau\) counts listed types, not possible types. Type \(t\) has a positive rational weight \(a_t\) and a finitely supported law \(F_t\) on nonnegative rational values, with rational probabilities and \(\sum_t\mu_ta_t=1\). Let \(m\) count all listed value atoms and \(L\) be the total input bit length.<br>Fix a target type \(t^\star\) and positive rational horizon \(H\). For each integer \(n\geq2\) with every \(n\mu_t\) integral, create \(n\mu_t\) agents of type \(t\), each with share \(\alpha_i=a_t/n\), and designate one agent of type \(t^\star\) as the target. Values are independent across agents and rounds, with law \(F_t\).<br>Run \(T_n=\lfloor nH\rfloor\) rounds from allocation counts \(A_i(0)=0\). Requests are simultaneous binary decisions; if any agent requests, DMMF allocates the item to a requester minimizing \((A_i(r-1)+1)/\alpha_i\), breaking ties uniformly with fresh independent randomness. Otherwise no allocation occurs. Only the winner&#x27;s count increases, and its utility is its current value.<br>Public history contains past requests and winners. The target may randomize using its own values through the current round and public history; the opposing coalition may use arbitrary joint randomized policies using its members&#x27; values through the current round and public history. Neither side observes the other side&#x27;s current values, requests, or private randomization before choosing requests; future values are unavailable.<br>Define \(G_n=\sup_\pi\inf_\sigma\mathbb E_{\pi,\sigma}[\sum_{r=1}^{T_n}V_\star(r)\mathbf1\{\star\text{ wins }r\}]\), over these policies; utility is total utility without further normalization.</p><p>Does \(G_n\) converge along all admissible \(n\to\infty\)? If so, is computing its limit to additive rational accuracy \(\varepsilon&gt;0\), together with an asymptotically \(\varepsilon\)-optimal target policy and a matching adversarial strategy or upper-bound certificate, polynomial-time in \(m,\tau,L,1/\varepsilon\), or NP-hard? State running times in these quantities and \(H\), whose binary encoding is included in \(L\).</p><p>For finite-agent DMMF with i.i.d. values, independently requesting according to a maximizer of \(v^\star(\beta)=\max_{\rho:\operatorname{supp}(F)\to[0,1],\ \mathbb E\rho(V)\leq\beta}\mathbb E[V\rho(V)]\) guarantees at least \(\frac{\alpha}{\alpha+(1-\alpha)\beta}v^\star(\beta)T-\frac{v^\star(\beta)}{\alpha+\beta}\) expected utility for every \(\beta\in(0,1]\), against arbitrary opponents. [Source](https://arxiv.org/html/2310.08881v4)<br>Long-run allocation rates under fixed independent request probabilities have also been characterized for finite populations; this does not settle the adaptive maximin population limit above. [Source](https://arxiv.org/html/2501.14916) No result settling this exact limit problem was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized population masses to sum to one, as required for n agents with n times each type&#x27;s mass; retained the separate weighted-share normalization.</li><li>Required positive rational weights, a positive rational horizon, and nonnegative rational values with rational atom probabilities.</li><li>Restricted the population limit to integers for which all type counts are integral, and designated one target agent rather than aggregating its type.</li><li>Used the prospective allocation count A_i+1 in the DMMF priority, as specified by the discrete mechanism.</li><li>Made values independent across agents as well as rounds, following the discrete model.</li><li>Specified simultaneous requests, public past requests and winners, private current values, and coalition access to its members&#x27; private information; excluded observation of the target&#x27;s current request before acting.</li><li>Allowed private randomized policies and fresh independent uniform tie breaking.</li><li>Defined maximin as the supremum over target policies followed by the infimum over coalition policies, using unnormalized expected total utility.</li><li>Made computation mean additive rational approximation, defined m as the total number of listed value atoms, and included the horizon&#x27;s binary encoding in L.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial resolution: all target laws through the second-allocation boundary</h3><p>I prove convergence and give matching strategies for <b>every finitely supported target law when $H\leq C_2$</b>, where $C_2$ is an explicitly computable boundary defined below. This includes the previously unresolved case of general target laws in the first tied interval.</p><p>The unrestricted problem for $H&gt;C_2$ remains open here. In particular, the results below do not establish a general polynomial-time algorithm or an NP-hardness classification.</p><h3>1. Definitions and the proved limit</h3><p>Write<br>$$
+a=a_{t^\star},
+\qquad
+v=\max\operatorname{supp}(F_{t^\star}).
+$$</p><p>Zero-probability listed atoms can first be discarded. If $v=0$, then $G_n=0$ for every admissible $n$ and every horizon. Henceforth assume $v&gt;0$, and put<br>$$
+p=\Pr(V_\star=v)&gt;0.
+$$</p><p>For $k\geq1$, define<br>$$
+b_t(k)=\left\lceil\frac{k a_t}{a}\right\rceil-1,
+\qquad
+C_k=\sum_t\mu_t b_t(k),
+$$<br>and define<br>$$
+D=\sum_{t:\,a_t/a\in\mathbb Z_{&gt;0}}\mu_t.
+$$</p><p>In particular, $D\geq\mu_{t^\star}&gt;0$.</p><p>Define the target-law function<br>$$
+g(u)=\mathbb E[(V_\star-u)_+],
+\qquad 0\leq u\leq v.
+$$</p><p>Let $\phi:[0,\infty)\to[0,v)$ be the unique function satisfying<br>$$
+\phi(0)=0,
+\qquad
+\phi&#x27;(y)=g(\phi(y)).
+$$</p><p>Its existence and the estimates used below are proved in Section 3.</p><p><b>Theorem.</b> Along all admissible population sizes, if $H\leq C_2$, then<br>$$
+\lim_{n\to\infty}G_n=
+\begin{cases}
+0,
+&amp; H\leq C_1,\\[4pt]
+\displaystyle
+\phi\!\left(\log\frac{D}{C_1+D-H}\right),
+&amp; C_1&lt;H&lt;C_1+D,\\[8pt]
+v,
+&amp; C_1+D\leq H\leq C_2.
+\end{cases}
+$$</p><p>These intervals are correctly ordered:<br>$$
+C_1+D\leq C_2.
+$$</p><p>In the interior interval, write<br>$$
+q=C_1+D-H&gt;0.
+$$</p><p>For every admissible $n$ for which $T_n&gt;nC_1$, the following explicit estimate holds:<br>$$
+\phi\!\left(\log\frac Dq\right)-\frac{2v}{nq}
+\leq G_n
+\leq
+\phi\!\left(\log\frac Dq\right).
+$$</p><p>Thus convergence in this interval has a quantitative bound against arbitrary adaptive coalitions.</p><h3>2. Token counts and upper certificates</h3><p>An agent of type $t$ with allocation count $A$ has next priority<br>$$
+\frac{A+1}{a_t},
+$$<br>after cancelling the common factor $n$ from DMMF priorities.</p><p>Call its allocation with index $j$ its $j$-th token. The priority of that token is $j/a_t$.</p><h3>2.1 Strict tokens and the second-allocation boundary</h3><p>A type-$t$ token has priority strictly below the target’s $k$-th priority exactly when<br>$$
+j&lt;\frac{k a_t}{a}.
+$$</p><p>There are therefore exactly $b_t(k)$ such tokens per type-$t$ agent.</p><p>Suppose every opponent requests in a round in which the target receives its $k$-th allocation. Every type-$t$ opponent must then have count at least $b_t(k)$; otherwise that opponent would have strictly smaller priority.</p><p>Excluding the target removes $b_{t^\star}(k)=k-1$ from the population’s strict-token count. Adding the target’s own previous $k-1$ allocations gives<br>$$
+\sum_i A_i(r-1)\geq nC_k.
+$$</p><p>Since at most one allocation occurs per round,<br>$$
+r\geq nC_k+1.
+$$</p><p>This argument requires universal opponent requesting only in the prospective target-winning round.</p><p>Consequently, against opponents who always request:</p><ul><li>the target cannot win when $H\leq C_1$;</li><li>the target can win at most once when $H\leq C_2$.</li></ul><p>Each allocation has value at most $v$, so these give upper certificates $0$ and $v$, respectively.</p><p>For an integer ratio $\ell=a_t/a$,<br>$$
+b_t(2)-b_t(1)=\ell\geq1.
+$$</p><p>For every other ratio, this difference is nonnegative. Summing over types proves<br>$$
+C_2-C_1\geq D.
+$$</p><h3>2.2 A general upper bound</h3><p>For completeness, define<br>$$
+K(H)=\max\bigl(\{0\}\cup\{k\geq1:C_k&lt;H\}\bigr).
+$$</p><p>The same coalition strategy proves<br>$$
+0\leq G_n\leq vK(H)
+$$<br>for every horizon.</p><p>The maximum is finite, since<br>$$
+\frac{k}{a}-1\leq C_k&lt;\frac{k}{a}.
+$$</p><p>Here the inequalities follow from<br>$$
+x-1\leq\lceil x\rceil-1&lt;x,
+$$<br>together with $\sum_t\mu_t=1$ and $\sum_t\mu_ta_t=1$. In particular,<br>$$
+K(H)\leq\left\lceil a(H+1)\right\rceil-1.
+$$</p><p>Also, $C_{k+1}-C_k\geq\mu_{t^\star}&gt;0$, because the target type’s contribution increases by $\mu_{t^\star}$ and all other contributions are nondecreasing.</p><h3>3. The scalar flow and its estimates</h3><p>For $0\leq u&lt;v$,<br>$$
+p(v-u)\leq g(u)\leq v-u.
+$$</p><p>The lower inequality uses the maximum-value atom. The upper inequality holds pointwise because $(V_\star-u)_+\leq v-u$.</p><p>The function $g$ is continuous, nonincreasing, and $1$-Lipschitz. Indeed,<br>$$
+\bigl|(x-u)_+-(x-w)_+\bigr|\leq|u-w|
+$$<br>for every $x$, and taking expectations proves the Lipschitz assertion.</p><p>Define<br>$$
+S(u)=\int_0^u\frac{dz}{g(z)},
+\qquad 0\leq u&lt;v.
+$$</p><p>This is continuous and strictly increasing, with $S(0)=0$. Moreover,<br>$$
+S(u)\geq\int_0^u\frac{dz}{v-z}
+=\log\frac{v}{v-u},
+$$<br>so $S(u)\to\infty$ as $u\uparrow v$.</p><p>Thus $S$ has an inverse $\phi:[0,\infty)\to[0,v)$. Since $S&#x27;(u)=1/g(u)&gt;0$, differentiation of the inverse gives<br>$$
+\phi&#x27;(y)=g(\phi(y)).
+$$</p><p>This also proves uniqueness: any solution taking values in $[0,v)$ satisfies<br>$$
+\frac{d}{dy}S(\phi(y))=1
+$$<br>and hence $S(\phi(y))=y$.</p><p>The bounds on $g$ give<br>$$
+v(1-e^{-py})\leq\phi(y)\leq v(1-e^{-y}),
+$$<br>and in particular<br>$$
+0\leq v-\phi(y)\leq ve^{-py}.
+$$</p><p>Also, $\phi$ is $v$-Lipschitz because $\phi&#x27;=g(\phi)\leq v$.</p><h3>3.1 Two flow inequalities</h3><p>Let<br>$$
+q(y)=g(\phi(y)).
+$$</p><p>Because $g$ is piecewise affine, with slopes in $[-1,0]$, the function $q$ is absolutely continuous and satisfies, almost everywhere,<br>$$
+-q(y)\leq q&#x27;(y)\leq0.
+$$</p><p>Therefore, for $y_1=y_0+\Delta$ with $\Delta\geq0$,<br>$$
+q(y_0)e^{-\Delta}\leq q(y_1)\leq q(y_0).
+$$</p><p>Integrating the corresponding bounds between $y_0$ and $y_1$ yields<br>$$
+q(y_0)(1-e^{-\Delta})
+\leq
+\phi(y_1)-\phi(y_0)
+\leq
+q(y_1)(e^\Delta-1).
+$$</p><p>Both inequalities will be used below.</p><h3>4. A first-allocation guarantee against arbitrary coalitions</h3><p>Until the target’s first allocation, its priority is $1/a$.</p><p>Count the opponents’ unconsumed tokens as follows:</p><ul><li>$b$: tokens with priority strictly below $1/a$;</li><li>$d$: tokens with priority equal to $1/a$.</li></ul><p>A tied token is counted even if its owner must first receive earlier strict tokens.</p><p>Initially these counts are<br>$$
+B=nC_1,
+\qquad
+d=nD-1.
+$$</p><p>Both are integers for admissible $n$. Set<br>$$
+N=d+1.
+$$</p><p>For a state with $h$ rounds remaining, set<br>$$
+s=h-b.
+$$</p><p>If $s\leq0$, define its potential to be zero. If<br>$$
+0&lt;s&lt;N,
+$$<br>define<br>$$
+U(b,d,h)=\phi\!\left(\log\frac{N}{N-s}\right).
+$$</p><p>Consider the following target policy:</p><ul><li>Before its first allocation, abstain when $s\leq0$.</li><li>When $0&lt;s&lt;N$, request exactly when</li></ul><p>$$
+   V_\star&gt;U(b,d,h).
+   $$</p><ul><li>After its first allocation, abstain.</li></ul><p>The quantities $b,d,h$ are available from the public allocation history.</p><p><b>Lemma.</b> Suppose initially $0&lt;s_0&lt;N_0$, and put<br>$$
+R_0=N_0-s_0\geq1.
+$$</p><p>The policy above guarantees expected utility at least<br>$$
+\phi\!\left(\log\frac{N_0}{R_0}\right)-\frac{v}{R_0}
+$$<br>against every allowed coalition policy.</p><h3>Proof</h3><p>Before a target win, a round changes the resources in one of three ways:</p><ul><li>A strict opponent token is allocated: $b$ and $h$ decrease by one.</li><li>A tied opponent token is allocated: $d$ and $h$ decrease by one.</li><li>No strict or tied token is allocated: only $h$ decreases among the counted quantities.</li></ul><p>Thus, while $s&gt;0$, the quantity<br>$$
+R=N-s
+$$<br>stays constant in the first two cases and increases by one in the third. In particular, $R\geq R_0$ throughout.</p><p>Condition on the public history and on the coalition’s current private information and requester set. The target’s current value still has law $F_{t^\star}$, because current values are independent and the coalition cannot observe the target’s current value before choosing requests.</p><p>We prove a one-round inequality for earned utility plus continuation potential.</p><p>If $s\leq0$, the potential is zero and the target abstains. All possible continuation potentials are also zero, so there is no loss.</p><p>Now suppose $s&gt;0$, and write $U=U(b,d,h)$.</p><h3>Case 1: some strict opponent requests</h3><p>A strict opponent wins with certainty. Both $b$ and $h$ decrease by one, so $s,N,R$ and the potential remain unchanged.</p><h3>Case 2: no strict opponent requests, and $z\geq1$ tied opponents request</h3><p>Here $z\leq d=N-1$. If the target does not win, one tied token is consumed. The continuation potential is<br>$$
+U&#x27;=\phi\!\left(\log\frac{N-1}{R}\right).
+$$</p><p>Let $\delta=U-U&#x27;\geq0$. Conditional on the current target value, requesting wins with probability $1/(z+1)$. Therefore the expected reward plus continuation potential is<br>$$
+U&#x27;+\frac{1}{z+1}
+\mathbb E[(V_\star-U&#x27;)\mathbf1\{V_\star&gt;U\}].
+$$</p><p>Since $U&#x27;\leq U$,<br>$$
+\mathbb E[(V_\star-U&#x27;)\mathbf1\{V_\star&gt;U\}]
+\geq g(U).
+$$</p><p>The displayed expectation is consequently at least<br>$$
+U&#x27;+\frac{g(U)}{N}.
+$$</p><p>Apply the upper flow inequality with<br>$$
+\Delta=\log\frac{N}{N-1}.
+$$</p><p>It gives<br>$$
+\delta\leq g(U)(e^\Delta-1)
+=\frac{g(U)}{N-1}.
+$$</p><p>Hence the expected reward plus continuation potential is at least<br>$$
+U-\frac{g(U)}{N(N-1)}
+\geq
+U-\frac{v}{N(N-1)}.
+$$</p><h3>Case 3: no strict or tied opponent requests</h3><p>Whenever the target requests, it wins. On abstention, no counted token is consumed. The continuation potential is<br>$$
+U_0=\phi\!\left(\log\frac{N}{R+1}\right).
+$$</p><p>The expected reward plus continuation potential is at least<br>$$
+U_0+g(U).
+$$</p><p>The upper flow inequality, now with<br>$$
+\Delta=\log\frac{R+1}{R},
+$$<br>gives<br>$$
+U-U_0\leq\frac{g(U)}{R}.
+$$</p><p>Since $R\geq1$,<br>$$
+U_0+g(U)\geq U.
+$$</p><h3>Summing the losses</h3><p>Only Case 2 incurs the proved loss. Every charged round has $N\geq R_0+1$.</p><p>On a failure in such a round, $N$ decreases by one. On a success, the target stops. Thus the values of $N$ in charged rounds are distinct, even if the final charged round is a target win. Pathwise, the sum of charges is at most<br>$$
+v\sum_{j=R_0+1}^{N_0}\frac1{j(j-1)}
+=
+v\left(\frac1{R_0}-\frac1{N_0}\right)
+\leq\frac v{R_0}.
+$$</p><p>Iterating the conditional inequalities proves that final expected utility is at least initial potential minus this bound. The terminal potential is zero. This proves the lemma. $\square$</p><h3>5. A matching asymptotic upper strategy</h3><p>Suppose<br>$$
+C_1&lt;H&lt;C_1+D.
+$$</p><p>Write<br>$$
+T=\lfloor nH\rfloor,
+\qquad
+B=nC_1,
+\qquad
+N=nD,
+\qquad
+s=T-B,
+\qquad
+R=N-s.
+$$</p><p>For $s&gt;0$, we have $s&lt;N$ and $R\geq1$.</p><p>Use this coalition strategy:</p><ul><li>For the first $B$ rounds, request with one opponent whose next token is strict, and with no other opponent.</li><li>Afterwards, until the target first wins, request with every opponent whose next token is tied.</li><li>After the target first wins, have every opponent request.</li></ul><p>The first phase is feasible: whenever an unconsumed strict token remains, its owner’s next token is strict. It blocks the target and consumes one strict token.</p><p>At its end, all tied tokens are available. There are $N-1$ of them.</p><p>After the target first wins, a second target win would require round number at least $nC_2+1$ by Section 2. But<br>$$
+T&lt;n(C_1+D)\leq nC_2.
+$$</p><p>Thus the target can receive at most one allocation under this strategy.</p><h3>5.1 The target’s optimal payoff against this strategy</h3><p>Let $W(N,s)$ denote its optimal expected remaining payoff with $N-1$ tied opponents and $s$ rounds remaining, where $0\leq s&lt;N$. Then<br>$$
+W(N,0)=0
+$$<br>and, for $1\leq s&lt;N$,<br>$$
+W(N,s)
+=
+W(N-1,s-1)
++\frac1N g(W(N-1,s-1)).
+$$</p><p>To justify the recurrence, let $w=W(N-1,s-1)$. If the target requests at value $x$, it wins with probability $1/N$, earning $x$ and ending its utility opportunities. On failure, an opponent consumes a tied token and continuation value is $w$. Abstaining also consumes one tied token and gives continuation value $w$.</p><p>The improvement from requesting is therefore $(x-w)/N$, and maximizing separately for each current value gives the recurrence.</p><p>The identity of the opponent winner does not affect continuation: that opponent’s tied token is exhausted, all remaining tied tokens have equal priority, and after a target win the coalition uses universal requesting. Future target values are independent of all previous private histories. These observations justify the same bound for arbitrary randomized target policies.</p><p>There is no zero-tied-opponent transition in this recurrence: $s&lt;N$ implies at least one tied opponent in every active round. At the excluded endpoint $s=N$, zero tied opponents can occur only in the terminal round; an abstention then consumes no opponent token. The endpoint will be treated separately below.</p><h3>5.2 Bounding the recurrence by the flow</h3><p>Define<br>$$
+U(N,s)=\phi\!\left(\log\frac{N}{N-s}\right).
+$$</p><p>I claim<br>$$
+W(N,s)\leq U(N,s).
+$$</p><p>Let<br>$$
+\mathcal T_N(w)=w+\frac{g(w)}N.
+$$</p><p>This map is nondecreasing: for $x\leq y$, the Lipschitz property gives<br>$$
+\mathcal T_N(y)-\mathcal T_N(x)
+\geq
+\left(1-\frac1N\right)(y-x)\geq0.
+$$</p><p>Put $R=N-s$. The lower flow inequality, with<br>$$
+\Delta=\log\frac{N}{N-1},
+$$<br>gives<br>$$
+U(N,s)-U(N-1,s-1)
+\geq
+\frac1N g(U(N-1,s-1)).
+$$</p><p>Equivalently,<br>$$
+\mathcal T_N(U(N-1,s-1))\leq U(N,s).
+$$</p><p>Induction from $s=0$, using monotonicity of $\mathcal T_N$, now proves the claim.</p><p>Combining this coalition certificate with the lower lemma yields the finite-population bounds<br>$$
+U(N,s)-\frac vR
+\leq G_n\leq U(N,s).
+$$</p><p>The coalition strategy need not be exactly minimax at finite $n$; the argument proves its asymptotic tightness.</p><h3>6. Convergence and the endpoint regions</h3><h3>6.1 Interior of the first tied interval</h3><p>Let<br>$$
+q=C_1+D-H&gt;0.
+$$</p><p>Because $B$ and $N$ are integers,<br>$$
+R=n(C_1+D)-\lfloor nH\rfloor
+=nq+\theta_n,
+\qquad
+0\leq\theta_n&lt;1.
+$$</p><p>Consequently,<br>$$
+U(N,s)=
+\phi\!\left(\log\frac{D}{q+\theta_n/n}\right).
+$$</p><p>By continuity,<br>$$
+U(N,s)\longrightarrow
+\phi\!\left(\log\frac Dq\right).
+$$</p><p>More quantitatively,<br>$$
+0\leq
+\log\frac Dq-
+\log\frac{D}{q+\theta_n/n}
+=
+\log\left(1+\frac{\theta_n}{nq}\right)
+\leq\frac1{nq}.
+$$</p><p>Since $\phi$ is $v$-Lipschitz and $R\geq nq$, Section 5 gives<br>$$
+\phi\!\left(\log\frac Dq\right)-\frac{2v}{nq}
+\leq G_n
+\leq
+\phi\!\left(\log\frac Dq\right).
+$$</p><p>This proves both convergence and the stated quantitative estimate.</p><h3>6.2 The zero region</h3><p>If $H\leq C_1$, the universal-requesting certificate prevents every target allocation. Nonnegativity of values gives<br>$$
+G_n=0.
+$$</p><h3>6.3 The maximum-value region</h3><p>Suppose<br>$$
+C_1+D\leq H\leq C_2.
+$$</p><p>The upper certificate gives $G_n\leq v$.</p><p>For the lower bound, let $N=nD$, assume $N\geq4$, and choose<br>$$
+R=\lceil\sqrt N\rceil,
+\qquad
+T&#x27;=nC_1+N-R.
+$$</p><p>Since $T&#x27;\leq n(C_1+D)\leq T_n$, the first $T&#x27;$ rounds are available.</p><p>Apply Section 4 to the virtual target values<br>$$
+\widehat V=v\mathbf1\{V_\star=v\}.
+$$</p><p>This virtual law has<br>$$
+\widehat g(u)=p(v-u),
+\qquad
+\widehat\phi(y)=v(1-e^{-py}).
+$$</p><p>The policy in Section 4 for this law is simply to request exactly at the maximum actual value, until the first allocation. Its guarantee over the first $T&#x27;$ rounds is<br>$$
+v\left[1-\left(\frac RN\right)^p\right]-\frac vR.
+$$</p><p>The guarantee applies against every coalition, including coalitions planning for the longer horizon. Thus<br>$$
+v-v\left(\frac RN\right)^p-\frac vR
+\leq G_n\leq v.
+$$</p><p>Both error terms tend to zero. This proves the maximum-value region, including the endpoint $H=C_1+D$, without making an incorrect zero-tied-token transition.</p><h3>7. Examples</h3><h3>7.1 Bernoulli target values</h3><p>For values supported on $\{0,v\}$, with maximum-value probability $p$,<br>$$
+g(u)=p(v-u),
+\qquad
+\phi(y)=v(1-e^{-py}).
+$$</p><p>Hence the interior formula becomes<br>$$
+\lim_nG_n
+=
+v\left[
+1-\left(\frac{C_1+D-H}{D}\right)^p
+\right].
+$$</p><h3>7.2 Two positive target values</h3><p>Consider one type, with $\mu_1=a_1=1$, and target values $1$ and $2$, each with probability $1/2$. Here<br>$$
+C_1=0,
+\qquad
+D=1,
+\qquad
+C_2=1.
+$$</p><p>The surplus function is<br>$$
+g(u)=
+\begin{cases}
+\frac32-u,&amp;0\leq u\leq1,\\[2pt]
+1-\frac u2,&amp;1\leq u\leq2.
+\end{cases}
+$$</p><p>Solving the two affine differential equations gives<br>$$
+\phi(y)=
+\begin{cases}
+\frac32(1-e^{-y}),&amp;0\leq y\leq\log3,\\[2pt]
+2-e^{-(y-\log3)/2},&amp;y\geq\log3.
+\end{cases}
+$$</p><p>Therefore<br>$$
+\lim_nG_n=
+\begin{cases}
+\frac32H,&amp;0&lt;H\leq\frac23,\\[2pt]
+2-\sqrt{3(1-H)},&amp;\frac23&lt;H&lt;1,\\[2pt]
+2,&amp;H=1.
+\end{cases}
+$$</p><p>This illustrates why requesting only at the maximum value does not generally attain the limit inside the first tied interval.</p><h3>8. Computation and asymptotically optimal policies</h3><p>Let $\ell_\varepsilon$ denote the encoding length of the rational accuracy. Dependence on this length is necessary to read the accuracy input.</p><h3>8.1 Rational preprocessing</h3><p>Computing $v,p,C_1,C_2,D$ and identifying the proved region requires<br>$$
+\operatorname{poly}(m,\tau,L)
+$$<br>bit operations.</p><p>No iteration through the numerical value of $H$ is required. Its contribution is through its binary encoding in $L$.</p><p>The general certificate $vK(H)$ is also polynomial-time computable. Strict monotonicity of $C_k$ and the bound<br>$$
+K(H)\leq\left\lceil a(H+1)\right\rceil-1
+$$<br>permit binary search with $O(L)$ evaluations of $C_k$.</p><h3>8.2 Certified evaluation of the scalar flow</h3><p>Here is an explicit approximation method, including error propagation through the potentially large value $v$.</p><p>Normalize values by setting<br>$$
+X=V_\star/v,
+\qquad
+\gamma(w)=\mathbb E[(X-w)_+],
+\qquad
+\psi(y)=\phi(y)/v.
+$$</p><p>Then $X\in[0,1]$, $\psi&#x27;=\gamma(\psi)$, and<br>$$
+S_0(w)=\int_0^w\frac{dz}{\gamma(z)}
+$$<br>is the inverse of $\psi$.</p><p>Between successive normalized value atoms,<br>$$
+\gamma(z)=Q-Pz,
+$$<br>where $P$ is the probability above that interval and $Q$ is the corresponding probability-weighted value sum. Therefore each interval contributes<br>$$
+\int_l^r\frac{dz}{Q-Pz}
+=
+\frac1P\log\frac{Q-Pl}{Q-Pr}.
+$$</p><p>For every interval below $1$, $P\geq p$. Thus $S_0(w)$ is a sum of at most $m$ explicitly computable logarithmic terms.</p><p>Suppose a normalized error $\delta\in(0,1)$ is desired.</p><ul><li>Approximate $y$ to error at most $\delta/16$.</li><li>At each bisection point $w&lt;1$, approximate $S_0(w)$ to error at most $\delta/16$. It suffices to approximate every logarithm to error</li></ul><p>$$
+  \xi=\frac{\delta p}{16(m+1)},
+  $$<br>because the sum of errors after division by the tail probabilities is at most $\delta/16$.</p><ul><li>If the two computed quantities differ by at most $\delta/4$, return $w$. Their true difference is then at most $3\delta/8$.</li><li>Otherwise their order is certified, and the appropriate half-interval is retained.</li></ul><p>The implication<br>$$
+|w-\psi(y)|\leq|S_0(w)-y|
+$$<br>holds because $\gamma\leq1$, so $S_0&#x27;\geq1$. Thus the stopping rule gives error below $\delta/2$. If it has not triggered, after<br>$$
+\left\lceil\log_2\frac4\delta\right\rceil
+$$<br>bisections the bracket itself has sufficient width.</p><p>For clarity, the logarithms can be evaluated without an unproved numerical oracle. For a positive rational $r$, write<br>$$
+r=2^k u,
+\qquad
+1\leq u&lt;2.
+$$</p><p>With $z=(u-1)/(u+1)$,<br>$$
+\log u
+=
+2\sum_{j=0}^{J-1}\frac{z^{2j+1}}{2j+1}
++\mathcal R_J,
+\qquad
+|\mathcal R_J|\leq3\cdot3^{-2J}.
+$$</p><p>The same series evaluates $\log2$ using $z=1/3$. To approximate $\log r=k\log2+\log u$ to error $\xi$, approximate each component logarithm to error at most<br>$$
+\frac{\xi}{2(|k|+1)}.
+$$</p><p>It suffices to take<br>$$
+J=O\!\left(\log\frac{|k|+1}{\xi}\right).
+$$</p><p>All summands are rational. Exact rational arithmetic has polynomial bit cost: there are polynomially many terms, and their numerator and denominator lengths are polynomial in the input length and working precision.</p><p>The bisection points have denominator lengths $O(\log(1/\delta))$. The maximum atom has probability $p$, so at these points<br>$$
+\gamma(w)\geq p(1-w).
+$$</p><p>Consequently, every positive rational entering a logarithm has polynomial encoding length. Also, $\log(1/p)=O(L)$.</p><p>To compute the limit to additive error $\varepsilon&lt;v$, choose<br>$$
+\delta=\varepsilon/v.
+$$</p><p>A normalized error at most $\delta/2$ becomes an absolute error at most $\varepsilon/2$. If $\varepsilon\geq v$, returning zero already meets the requested accuracy.</p><p>This proves a bit running time of<br>$$
+\operatorname{poly}(m,\tau,L+\ell_\varepsilon)
+$$<br>for the limit in the proved regions.</p><h3>8.3 A finite-precision target policy</h3><p>The exact threshold policy from Section 4 already gives an asymptotically optimal mathematical policy. A finite-precision implementation can be made asymptotically $\varepsilon$-optimal.</p><p>In the interior interval, set<br>$$
+\eta=\frac{\varepsilon}{2(T_n+1)}.
+$$</p><p>At every active state compute a certified lower threshold $\ell$ satisfying<br>$$
+U-\eta\leq\ell\leq U,
+$$<br>and request when $V_\star&gt;\ell$.</p><p>Such a threshold follows from an approximation to $U$ with error at most $\eta/2$, by subtracting $\eta/2$ and clipping at zero.</p><p>Relative to the exact policy, the additional requests have values in $(\ell,U]$. Every relevant continuation potential is at most $U$. Therefore an additional request can reduce the one-round expected reward plus continuation potential by at most $\eta$. It never suppresses a request of the exact policy.</p><p>Repeating the proof of Section 4 gives expected utility at least<br>$$
+U(N,s)-\frac vR-\eta T_n
+\geq
+U(N,s)-\frac vR-\frac{\varepsilon}{2}.
+$$</p><p>Since $G_n\leq U(N,s)$,<br>$$
+G_n-\mathbb E[\text{utility of this policy}]
+\leq
+\frac vR+\frac{\varepsilon}{2}.
+$$</p><p>For every fixed society and interior horizon, this is at most $\varepsilon$ for all sufficiently large admissible $n$.</p><p>The threshold computation per round has bit running time<br>$$
+\operatorname{poly}(m,\tau,L+\ell_\varepsilon+\log n),
+$$<br>because $T_n$ has bit length $O(L+\log n)$.</p><p>In the zero region the target abstains. In the maximum-value region it requests exactly at value $v$ until its first allocation. Section 6 proves asymptotic optimality of that policy.</p><h3>8.4 Coalition implementation and dependence on the horizon</h3><p>The matching coalition strategies have succinct descriptions computable in<br>$$
+\operatorname{poly}(m,\tau,L+\ell_\varepsilon)
+$$<br>time:</p><ul><li>universal requesting in the zero and maximum-value regions;</li><li>strict-token exhaustion, then universal requesting among tied opponents, then universal requesting after the target wins, in the interior interval.</li></ul><p>A direct implementation scans the population each round. Counts and priority comparisons have bit lengths polynomial in $L+\log n$. Including target threshold evaluation, executing both strategies takes<br>$$
+O\!\left(
+nT_n\,\operatorname{poly}(L+\log n)
++
+T_n\,\operatorname{poly}(m,\tau,L+\ell_\varepsilon+\log n)
+\right)
+$$<br>bit operations.</p><p>Thus execution depends on the numerical horizon through $T_n=\lfloor nH\rfloor$. Computing the limit and constructing the strategy descriptions depends on $H$ only through its binary encoding.</p><p>The sufficient population size need not be polynomial in the input length. For example, the interior error bound involves $v/q$, and the maximum-value endpoint estimate involves the possibly very small probability $p$. No polynomial population threshold is claimed.</p><h3>9. What remains unresolved</h3><p>The proof establishes the entire region $H\leq C_2$ for arbitrary finite target laws. It uses a first-allocation potential and a coalition certificate that rules out a second target allocation.</p><p>For $H&gt;C_2$, that certificate no longer reduces the payoff to one allocation. A matching analysis must account for the target’s successive priorities and the coalition’s remaining tokens across multiple target wins. The arguments above do not provide that analysis.</p><p>For arbitrary horizons they give only bounds. In particular,<br>$$
+\liminf_nG_n\geq v
+\qquad\text{when }H\geq C_1+D,
+$$<br>whereas<br>$$
+\limsup_nG_n\leq vK(H).
+$$</p><p>These generally differ.</p><p>Opponent value laws do not supply additional restrictions on the coalition: it may ignore its actual values and privately generate, round by round, independent virtual values having any other desired opponent laws. Feeding those virtual values into a policy reproduces its relevant interaction distribution. Simulation in both directions shows that, with the target law fixed, changing opponent value laws does not change $G_n$. This observation does not itself settle the multiple-allocation problem.</p><p>Accordingly, neither unrestricted convergence nor the unrestricted computational classification is proved here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Sections 6.3 and 8.3: identification of the maximum-value policy: The policy in Section 4 abstains when $s\leq0$, whereas the endpoint policy is described as requesting at every maximum-value observation until the first allocation. These descriptions can differ before the virtual horizon ends. Specify whether the abstention rule is retained, or justify that dropping it preserves the guarantee.</li><li><b>major</b> — Section 9: unrestricted horizons: For $H&gt;C_2$, the output does not establish convergence of $G_n$, the requested computational classification, or matching asymptotically optimal target policies and adversarial strategies or certificates. This is an explicitly acknowledged limitation of scope, rather than a false proof step.</li></ul>
+<div class="pre"><p>The output establishes substantial progress for $H\leq C_2$, subject to one minor clarification about the endpoint policy. It does <b>not</b> resolve the unrestricted USER_TASK: convergence and computational complexity for $H&gt;C_2$ remain open in this write-up. I found no false central mathematical step.</p><h3>1. Scope and definitions</h3><p>The definitions of $b_t(k)$, $C_k$, and $D$ correctly count strict and tied tokens relative to the target’s allocation priorities.</p><p>Discarding zero-probability atoms makes $p=\Pr(V_\star=v)&gt;0$ valid when $v&gt;0$. The separate treatment of $v=0$ is correct and resolves that degenerate case for every horizon.</p><p>For admissible $n$, the quantities $nC_k$ and $nD$ are integers: each is a sum of integral type-population counts multiplied by integer token counts.</p><p>The output explicitly limits its theorem to $H\leq C_2$. That restriction is material, since USER_TASK asks about arbitrary positive rational horizons.</p><h3>2. Token counts and upper certificates</h3><h3>Strict-token obstruction</h3><p>The equivalence between strict priority and<br>$$
+j&lt;\frac{k a_t}{a}
+$$<br>is correct. The number of positive integer indices satisfying this inequality is exactly<br>$$
+b_t(k)=\left\lceil\frac{k a_t}{a}\right\rceil-1.
+$$</p><p>If every opponent requests in a target-winning round, every opponent must already have exhausted its strict tokens. Excluding the target subtracts $k-1$ from the population count, while the target’s previous allocations add exactly $k-1$. Thus<br>$$
+\sum_i A_i(r-1)\geq nC_k
+$$<br>and consequently<br>$$
+r\geq nC_k+1.
+$$</p><p>The argument indeed requires universal opponent requesting only in that prospective winning round. This matters for the strategy in Section 5, which switches to universal requesting after the first target win.</p><p>The resulting certificates are valid:</p><ul><li>$H\leq C_1$ prevents every target win.</li><li>$H\leq C_2$ prevents a second target win.</li></ul><p>The boundary ordering<br>$$
+C_1+D\leq C_2
+$$<br>also checks out: integer-ratio types contribute at least one additional strict token per agent, and all other contributions are nonnegative.</p><h3>General upper bound</h3><p>The estimates<br>$$
+\frac{k}{a}-1\leq C_k&lt;\frac{k}{a}
+$$<br>follow correctly from the normalization assumptions. They imply finiteness of $K(H)$ and the stated bound<br>$$
+K(H)\leq\left\lceil a(H+1)\right\rceil-1.
+$$</p><p>Strict monotonicity of $C_k$ follows from the positive mass of the target type. The general certificate $G_n\leq vK(H)$ is valid, but does not establish convergence.</p><h3>3. Scalar flow</h3><p>The bounds<br>$$
+p(v-u)\leq g(u)\leq v-u
+$$<br>and the continuity, monotonicity, and Lipschitz claims are correct on the stated domain.</p><p>The integral construction of $S$ verifies existence of $\phi$ on all nonnegative arguments. Its divergence as $u$ approaches $v$ ensures that the inverse has the claimed range. The inverse differentiation and uniqueness argument have their hypotheses satisfied.</p><p>The exponential bounds on $\phi$ and its $v$-Lipschitz property are correct.</p><p>For the flow inequalities, the piecewise affine structure of $g$ justifies absolute continuity and the almost-everywhere bound<br>$$
+-q(y)\leq q&#x27;(y)\leq0.
+$$<br>Both integrated inequalities in Section 3.1 have the correct directions and constants.</p><h3>4. First-allocation guarantee against adaptive coalitions</h3><p>The resource accounting is correct. Before a target win, consuming a strict token preserves $s$ and $N$, consuming a tied token decreases both by one, and consuming neither decreases only $s$. Consequently, $R=N-s$ cannot decrease.</p><p>Although the policy definition does not specify the case $s\geq N$, this is harmless under the lemma’s initial conditions: $R\geq R_0\geq1$ prevents that case from being reached.</p><p>The conditional independence argument is valid for this policy. The target’s current value remains independent of public history and the coalition’s current private information and requester set. The coalition’s inability to observe that current value is essential and is supplied by USER_TASK.</p><p>The three one-round cases check out:</p><ul><li>A requesting strict opponent blocks the target and preserves the potential.</li><li>With $z$ requesting tied opponents, the target’s conditional winning probability is $1/(z+1)$. The payoff expression, its lower bound using $g(U)$, and the loss bound $v/[N(N-1)]$ are correct.</li><li>With no requesting strict or tied opponent, a target request wins. The continuation expression remains valid even if a higher-priority-number opponent wins when the target abstains, because that allocation consumes no counted token.</li></ul><p>The loss summation is also valid. Each charged failure decreases $N$, and a charged success ends the policy. Therefore charged values of $N$ are distinct. The telescoping sum gives the stated bound $v/R_0$.</p><p>The terminal potential is zero, so the conditional inequalities establish the lemma’s claimed guarantee.</p><h3>5. Matching upper strategy and recurrence</h3><p>The strict-token exhaustion phase is feasible: whenever an unconsumed strict token exists, some opponent’s next token is strict.</p><p>After exhaustion, all tied tokens are available. Following a target win, universal requesting invokes the valid second-allocation obstruction. Hence, throughout the interior interval, the target has at most one utility-producing allocation under this strategy.</p><p>The recurrence<br>$$
+W(N,s)=W(N-1,s-1)+\frac1N g(W(N-1,s-1))
+$$<br>correctly compares requesting and abstaining. Its use for arbitrary randomized target policies is justified by independence of future values and the equivalence of the remaining tied contestants.</p><p>The restriction $s&lt;N$ correctly avoids a transition with no tied opponent.</p><p>The monotonicity of $\mathcal T_N$ and the lower flow inequality establish<br>$$
+W(N,s)\leq U(N,s).
+$$</p><p>Combining this with Section 4 correctly yields<br>$$
+U(N,s)-\frac vR\leq G_n\leq U(N,s).
+$$</p><h3>6. Convergence and endpoints</h3><p>The floor correction<br>$$
+R=nq+\theta_n,\qquad 0\leq\theta_n&lt;1
+$$<br>is correct. The logarithmic estimate and the Lipschitz bound give exactly the claimed interior error:<br>$$
+\phi\!\left(\log\frac Dq\right)-\frac{2v}{nq}
+\leq G_n\leq
+\phi\!\left(\log\frac Dq\right).
+$$</p><p>The zero region is fully justified.</p><p>For the maximum-value region, $T&#x27;$ is an integer and is available within $T_n$. With $N\geq4$, the selected $R$ satisfies the lemma’s initial conditions. The virtual-law flow and both vanishing error terms are correct.</p><p><b>Minor issue — policy identification.</b> Section 6.3 says that the Section 4 policy for the virtual law is “simply to request exactly at the maximum actual value, until the first allocation.” Section 4 additionally requires abstention when $s\leq0$. That state can occur before the virtual horizon ends under an arbitrary coalition, so the descriptions are not literally identical. Section 8.3 repeats the unconditional maximum-value description.</p><p>Minimum clarification: specify whether the Section 4 abstention rule is retained, or explicitly justify why dropping it preserves the claimed guarantee. This is a routine policy-comparison clarification; it does not undermine the scalar or token analysis.</p><p>The two examples have correct formulas, breakpoints, and endpoint values.</p><h3>7. Computational claims</h3><p>The rational preprocessing and binary search for $K(H)$ have polynomial bit complexity as claimed. The numerical size of the search range does not require iteration through that range.</p><p>The normalized piecewise integration formula is correct. Below the maximum normalized atom, the tail probability satisfies $P\geq p$, supporting the stated error budget.</p><p>The bisection stopping rule correctly certifies normalized error. The logarithm series and its remainder bound are valid for the specified argument range. Its rational arithmetic has polynomial bit cost at the required precision.</p><p>Thus the claimed polynomial-time limit evaluation is supported <b>within the proved regions</b>, including its explicit dependence on the accuracy’s encoding length.</p><p>The finite-precision threshold argument correctly bounds the additional one-round loss by $\eta$, and therefore the cumulative loss by $\eta T_n$. The stated per-round and execution complexity bounds are consistent with the implementation described.</p><p>The output appropriately distinguishes polynomial-time construction of strategy descriptions from execution over a population and horizon. It also correctly avoids claiming a polynomial population size sufficient for convergence.</p><h3>8. Unrestricted task and remaining content</h3><p><b>Major issue — incomplete coverage of USER_TASK.</b> For $H&gt;C_2$, the output supplies bounds but neither proves convergence nor determines the requested computational classification. It also does not produce matching asymptotically optimal policies and certificates in that region. The prover acknowledges this limitation; it is incompleteness, not a concealed error.</p><p>Minimum additional work needed: settle unrestricted convergence and the requested algorithmic or hardness classification, with the corresponding policy and certificate guarantees. Nothing in the present first-allocation argument establishes those conclusions.</p><p>The observation that opponent value laws can be replaced by privately simulated laws is consistent with the permitted arbitrary joint randomized policies. It removes a possible restriction on coalition behavior but does not resolve the multiple-allocation analysis.</p><p>Overall, the restricted result is sound in substance and worth retaining. The appropriate adjudication of the entire submission is <b>partial</b>.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

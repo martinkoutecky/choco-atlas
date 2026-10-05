@@ -1,0 +1,87 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-242268f7b5080ca08d53f2c12b666631add4d288 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-242268f7b5080ca08d53f2c12b666631add4d288 <span style="font-weight:normal;color:#8a7350">(s5-242268f7b5080ca08d53f2c12b666631add4d288)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> polynomial-time solvable</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 6 — class: other</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>\cite{tandd} For any $n\ge 3$, the Eq.~\ref{def: orthogonal} orthogonal projection of $\mathbf d_A^n\in \mathbb R_A^{n\choose2}$ to $\mathbb{ST}_A^n$, which is $\mathbf d^n_{A, st}$, is equivalent to the Borda Count.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\ge3\) candidates and \(\tau\) strict-ranking types with positive binary-rational masses \(\mu_t\) summing to \(1\), define \(d_\mu(i,j)=\sum_{t:\,i\succ_t j}\mu_t-\frac12\). Compute the orthogonal projection \(y\) of \(d_\mu\) onto the strongly transitive vectors, where \(y_{ij}=p_i-p_j\); return \(y\) and the resulting Borda ranking, including ties.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(m\ge3\) candidates form a society given by its support: a list of \(\tau\ge1\) distinct strict-ranking types, each with positive binary-rational mass \(\mu_t\), with \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible rankings; \(L\) is the total binary input length.<br>For \(i\ne j\), define \(d_\mu(i,j)=\sum_{t:\,i\succ_t j}\mu_t-\tfrac12\). Use coordinates indexed by \(i&lt;j\), with the standard Euclidean inner product.<br>The strongly transitive subspace is \(\mathcal S=\{(p_i-p_j)_{i&lt;j}:p\in\mathbb R^m\}\). Let \(y\) be the orthogonal projection of \(d_\mu\) onto \(\mathcal S\).<br>The computational problem is to return all coordinates of \(y\) as exact rationals and the mass-weighted Borda ranking, retaining all equal-score ties.</p><p>Can this problem be solved in time polynomial in \(m,\tau,L\), or is it NP-hard?</p><p>Known results: For finite electorates, projection onto the strongly transitive subspace yields the Borda ranking, including ties. The underlying projection equivalence also covers arbitrary real pairwise vectors; the supplied result asserts no bit-complexity classification.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified the standard Euclidean inner product on the unordered-pair coordinates, as dictated by the supplied orthogonal-projection definition.</li><li>Specified exact rational output for the projection, resolving the computational precision convention.</li><li>Defined L as the total binary input length and interpreted Borda scores using the given masses, retaining ties without tie-breaking.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The problem is <b>polynomial-time solvable</b> in \(m,\tau,L\). The projection has the explicit formula<br>\[
+y_{ij}=\frac{B_i-B_j}{m}\qquad(i&lt;j),
+\]<br>where \(B_i\) is candidate \(i\)’s mass-weighted Borda score. Both the projection and every Borda tie can be computed using exact integer arithmetic.</p><h3>1. Weighted Borda scores and pairwise row sums</h3><p>Use the Borda convention that a candidate receives one point for each candidate ranked below it. Let \(b_t(i)\in\{0,\ldots,m-1\}\) denote this score in ranking type \(t\), and define<br>\[
+B_i=\sum_{t=1}^{\tau}\mu_t b_t(i).
+\]</p><p>Extend the given pairwise vector antisymmetrically by setting \(d_{ji}=-d_{ij}\) for \(i&lt;j\). Because every ranking is strict and the masses sum to one, this extension satisfies<br>\[
+d_{ij}=\sum_{t:\,i\succ_t j}\mu_t-\frac12
+\]<br>for every distinct \(i,j\).</p><p>Define \(r_i=\sum_{j\ne i}d_{ij}\). Interchanging the finite sums gives<br>\[
+r_i
+=\sum_{t=1}^{\tau}\mu_t\sum_{j\ne i}\mathbf 1_{\{i\succ_t j\}}
+-\frac{m-1}{2}
+=B_i-\frac{m-1}{2}.
+\]</p><p>Antisymmetry also gives \(\sum_i r_i=0\), since each unordered pair contributes two opposite terms.</p><h3>2. Exact formula for the orthogonal projection</h3><p>Set \(p_i=r_i/m\), so that \(\sum_i p_i=0\), and define \(y_{ij}=p_i-p_j\) for \(i&lt;j\). By construction, \(y\in\mathcal S\).</p><p>For an arbitrary \(q\in\mathbb R^m\), the corresponding vector in \(\mathcal S\) has coordinates \(q_i-q_j\). Regrouping each edge’s contributions at its two endpoints yields<br>\[
+\begin{aligned}
+\sum_{i&lt;j}\bigl(d_{ij}-(p_i-p_j)\bigr)(q_i-q_j)
+&amp;=\sum_i q_i\sum_{j\ne i}\bigl(d_{ij}-(p_i-p_j)\bigr)\\
+&amp;=\sum_i q_i\left(r_i-mp_i+\sum_jp_j\right)\\
+&amp;=0.
+\end{aligned}
+\]<br>The last equality follows from \(mp_i=r_i\) and \(\sum_jp_j=0\).</p><p>Thus \(d-y\) is orthogonal to \(\mathcal S\). For any \(z\in\mathcal S\), orthogonality gives<br>\[
+\|d-z\|^2=\|d-y\|^2+\|y-z\|^2.
+\]<br>Consequently, \(y\) is the unique orthogonal projection. Substituting the expression for \(r_i\) proves<br>\[
+y_{ij}=\frac{r_i-r_j}{m}=\frac{B_i-B_j}{m}.
+\]</p><p>In particular, \(p_i&gt;p_j\) exactly when \(B_i&gt;B_j\), and \(p_i=p_j\) exactly when \(B_i=B_j\). Sorting the Borda scores in decreasing order therefore gives the projection-induced ranking with all ties retained.</p><h3>3. Exact algorithm and bit complexity</h3><p>Write each input mass as \(\mu_t=a_t/b_t\), with positive integers \(a_t,b_t\) encoded in binary. The argument covers general binary-encoded rationals and hence also dyadic rationals.</p><p>Choose the common denominator<br>\[
+D=\prod_{t=1}^{\tau}b_t,
+\qquad
+w_t=a_t(D/b_t).
+\]<br>Every \(w_t\) is an integer. Moreover, positivity and normalization imply \(\sum_t w_t=D\).</p><p>Compute the integer score numerators<br>\[
+N_i=\sum_{t=1}^{\tau}w_t b_t(i).
+\]<br>Then \(B_i=N_i/D\). The algorithm outputs each coordinate as the exact rational<br>\[
+y_{ij}=\frac{N_i-N_j}{mD},
+\]<br>and sorts the integers \(N_i\) in decreasing order, grouping equal values into ties.</p><p>To bound the arithmetic sizes, the total encoding length of the denominators is at most \(L\), so<br>\[
+\log_2 D=\sum_t\log_2 b_t\le L.
+\]<br>Also, \(0&lt;w_t\le D\) and<br>\[
+0\le N_i\le(m-1)D.
+\]<br>Therefore all score accumulators, coordinate numerators, and coordinate denominators have \(O(L+\log m)\) bits. The positive partial sums used to compute each \(N_i\) satisfy the same bound.</p><p>Reading the rankings and accumulating the scores requires \(O(m\tau)\) arithmetic operations. Producing the coordinates requires \(O(m^2)\) further operations, and sorting requires \(O(m\log m)\) exact integer comparisons. Computing \(D\) and the weights requires \(O(\tau)\) integer multiplications and exact divisions. All these operations take polynomial time in the stated bit lengths. If reduced fractions are desired, computing a greatest common divisor for each output coordinate also takes polynomial time.</p><p>The total output length is \(O(m^2(L+\log m))\) bits, plus the ranking representation. Thus the algorithm runs in time polynomial in \(m,\tau,L\) and returns precisely the requested exact output.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The output fully resolves the assigned problem. The projection formula, exact treatment of ties, and polynomial bit-complexity argument are correct. No major or minor mathematical issues were found.</p><h3>1. Weighted Borda scores and row sums</h3><p>The convention \(b_t(i)\in\{0,\ldots,m-1\}\), counting candidates below \(i\), precisely defines the requested mass-weighted Borda scores.</p><p>The antisymmetric extension is valid: strict rankings ensure that exactly one of \(i\succ_t j\) and \(j\succ_t i\) holds, and normalization gives<br>\[
+\sum_{t:\,j\succ_t i}\mu_t-\frac12
+=-\left(\sum_{t:\,i\succ_t j}\mu_t-\frac12\right).
+\]</p><p>The finite-sum interchange correctly establishes<br>\[
+r_i=B_i-\frac{m-1}{2}.
+\]<br>Likewise, \(\sum_i r_i=0\) follows by cancellation over unordered pairs. These steps require no additional assumptions.</p><h3>2. Orthogonal projection</h3><p>The constructed vector belongs to \(\mathcal S\) by definition. The endpoint regrouping uses exactly the standard Euclidean inner product on coordinates indexed by \(i&lt;j\); there is no missing factor of two.</p><p>The inner row sum is correct because<br>\[
+\sum_{j\ne i}(p_i-p_j)=mp_i-\sum_jp_j.
+\]<br>Thus \(p_i=r_i/m\) and \(\sum_jp_j=0\) make the residual orthogonal to every vector in \(\mathcal S\).</p><p>The displayed norm identity correctly establishes that \(y\) uniquely minimizes the distance to \(d\) over \(\mathcal S\). Substitution then gives<br>\[
+y_{ij}=\frac{B_i-B_j}{m}.
+\]<br>The proof is self-contained and does not rely on an unstated version of the supplied projection-equivalence result.</p><h3>3. Ranking and ties</h3><p>Subtracting the same constant from every Borda score and dividing by the positive integer \(m\) preserves all strict comparisons and equalities. Therefore sorting the Borda scores in decreasing order and grouping equal scores returns precisely the requested ranking.</p><p>This also handles complete ties and individual zero projection coordinates without exceptional treatment.</p><h3>4. Exact arithmetic and bit complexity</h3><p>The common-denominator construction is valid for binary-encoded numerator-denominator rationals, including dyadic rationals. Each division \(D/b_t\) is exact, and normalization gives \(\sum_t w_t=D\).</p><p>The bounds<br>\[
+0&lt;w_t\le D,\qquad 0\le N_i\le(m-1)D
+\]<br>are correct. Positivity also ensures that intermediate score accumulators obey the same upper bound.</p><p>The denominator-length estimate \(\log_2D\le L\) is valid. Consequently, the score numerators, signed coordinate numerators, and denominators \(mD\) have \(O(L+\log m)\) bits. Intermediate products in forming \(D\) and the weights also remain polynomially bounded: partial denominator products do not exceed \(D\), and \(a_t\le b_t\) follows from \(0&lt;\mu_t\le1\).</p><p>The stated operation counts are sufficient. Computing positional Borda scores from each ranking takes \(O(m)\) operations per type; coordinate production and sorting have the claimed bounds. Integer multiplication, exact division, comparison, and optional fraction reduction all take polynomial time at these bit lengths.</p><p>Unreduced fractions are valid exact rational outputs. The asserted total output-length bound is also correct.</p><h3>5. Verdict and repair feedback</h3><p>The algorithm returns every requested coordinate and retains every equal-score tie in polynomial time in \(m,\tau,L\). No additional clarification, missing lemma, or repair is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

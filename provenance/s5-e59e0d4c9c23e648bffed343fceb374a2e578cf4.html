@@ -1,0 +1,168 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Competing Bandits in Matching Markets — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Competing Bandits in Matching Markets <span style="font-weight:normal;color:#8a7350">(s5-e59e0d4c9c23e648bffed343fceb374a2e578cf4)</span></h1>
+<p class="banner">NEW RESULT — continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\text{-hard}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite initial type set \(\Theta\) with rational masses \(\mu\), computably represented sub-Gaussian reward kernels, arm-capacity shares \(b_j\), type priorities, horizon \(n\), and threshold \(B\), evolve mass \(\nu_s(\theta,h)\) over private histories under the paper’s UCB rankings and capacity-constrained continuum Gale–Shapley matching, and decide whether expected aggregate agent-pessimal stable regret \(R^-_\mu(n)\le B\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of \(\tau\) types \(\Theta\) with positive masses \(\mu_\theta\), each a binary rational, with \(\sum_\theta\mu_\theta=1\). Here \(\tau\) is the support size, not the number of possible types.<br>There are \(m\ge2\) arms with positive binary-rational capacity shares \(b_j\) satisfying \(\sum_j b_j\ge1\), and each arm has a strict priority ordering of the types. Every arm and agent finds every potential partner acceptable.<br>For each \((\theta,j)\), an explicit finite table specifies a reward distribution \(P_{\theta j}\) with rational outcomes and rational probabilities, promised to be \(1\)-sub-Gaussian. Its mean \(r_{\theta j}\) may have either sign; each type&#x27;s arm means are pairwise distinct. Rewards are fresh independent draws conditional on type and assigned arm.<br>Within each type, agents have a persistent label \(u\in[0,1]\), with initial mass \(\mu_\theta\,du\). Each arm orders agents first by its type priority and then by increasing label. Labels resolve priorities only; they convey no reward information.<br>A private history \(h\) records an agent&#x27;s past assigned arms and rewards. Initially all histories are empty. Before round \(s\), rank arms by decreasing \(U_j(h,s)=+\infty\) if \(T_j(h)=0\), and otherwise \(U_j(h,s)=\widehat r_j(h)+\sqrt{3\log s/(2T_j(h))}\); ties favor smaller arm indices. Here \(T_j\) and \(\widehat r_j\) are that history&#x27;s sample count and empirical mean.<br>In each round use agent-proposing continuum deferred acceptance: proposing mass applies down its ranking, and each arm retains its highest-priority mass up to capacity, rejecting the rest. A stable assignment has no positive mass preferring an arm with slack or with positive mass of lower-priority occupants. Assignments are understood up to null sets.<br>Maintain the joint mass over \((\theta,u,h)\), append each assignment and split its mass according to \(P_{\theta j}\); \(\nu_s(\theta,h)\) is its label marginal. Agents use only their own histories. Let \(x_{sj}\) be the total type-by-label-by-history mass assigned to arm \(j\) in round \(s\).<br>Using true mean rankings and the same capacities and priorities, let \(M^-\) be the arm-proposing stable assignment, and set \(V^-=\sum_\theta\mu_\theta\int_0^1 r_{\theta,M^-(\theta,u)}\,du\). Define \(R^-_\mu(n)=nV^- -\sum_{s=1}^n\sum_{\theta,j}r_{\theta j}\,x_{sj}(\theta)\), where \(x_{sj}(\theta)\) denotes the type-\(\theta\) component of the assigned mass.<br>The input includes a unary horizon \(n\ge1\) and a binary-rational threshold \(B\), of either sign; \(L\) is the total input bit length.</p><p>Is deciding whether \(R^-_\mu(n)\le B\) in \(\mathrm P\), with running time polynomial in \(m,\tau,n,L\), or is it \(\mathrm{NP}\)-hard?</p><p>For finite agents with sufficient arms, centralized UCB with agent-proposing Gale–Shapley has a problem-dependent \(O(\log n)\) upper bound on each agent&#x27;s expected agent-pessimal stable regret. This is a regret guarantee, not an exact regret-evaluation complexity result. [Source](https://arxiv.org/pdf/1906.05363v2)<br>No result settling the continuum exact-threshold problem specified above was identified in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The reward representation was unspecified. Chose explicit finite tables of rational outcomes and probabilities, a concrete subclass of computably represented kernels; retained the 1-sub-Gaussian promise and allowed signed rewards.</li><li>Normalized total society mass to one and required positive capacities with total capacity at least one, carrying over the sufficient-supply condition.</li><li>Required distinct arm means for each type to obtain strict true preferences; declared all partners acceptable.</li><li>Type priorities do not distinguish agents within a type. Added persistent uniform labels as strict priority refinements, and retained their joint distribution with private histories.</li><li>Specified agent-proposing deferred acceptance for each learning round and arm-proposing deferred acceptance for the true agent-pessimal benchmark.</li><li>Resolved the malformed sample-count denominator and time indexing in the displayed UCB formula by using the pre-round empirical mean and arm-specific count with the current round&#x27;s logarithm; initialized unsampled indices to infinity and fixed index ties.</li><li>Specified independent stationary reward draws, empty initial histories, and exact distributional mass splitting rather than shared observations.</li><li>Chose unary encoding of the horizon so polynomial dependence on the number of rounds has its ordinary complexity meaning; allowed a signed rational threshold.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Exact regret-threshold complexity</h3><p><b>The decision problem is \(\mathrm{NP}\)-hard under polynomial-time many-one reductions</b>, even when \(\tau=1\), \(m=2\), and \(b_1=b_2=1\). The reduction below uses only dyadic reward outcomes, probabilities, and threshold. It therefore also applies if “binary rational” is interpreted as requiring dyadic rationals.</p><h3>1. Encoding SUBSET SUM by an odd-length zero sum</h3><p>We reduce from the classical \(\mathrm{NP}\)-complete SUBSET SUM problem: given positive integers \(a_1,\ldots,a_N\) and a nonnegative integer \(T\), decide whether some subset sums to \(T\). This is the equality-form knapsack problem in [Karp’s original paper](https://link.springer.com/chapter/10.1007/978-1-4684-2001-2_9).</p><p>Append a zero item if necessary so that \(N\) is even and \(N\ge2\). This does not change feasibility. Define</p><p>\[
+k=N+1,\qquad H=1+T+\sum_{i=1}^N a_i,\qquad Q=4kH+1.
+\]</p><p>Thus \(k\ge3\) is odd. For each item define two positive integers</p><p>\[
+v_{i,0}=Q^i,\qquad v_{i,1}=Q^i+a_i,
+\]</p><p>and define a target integer</p><p>\[
+v_*=\sum_{i=1}^N Q^i+T.
+\]</p><p>Start with the multiset containing both signs of every \(v_{i,0}\), \(v_{i,1}\), and \(v_*\). It has \(4N+2\) entries. Let \(D\) be the least power of two at least \(4N+2\), and pad the multiset to size \(D\) using equally many additional copies of \(v_{1,0}\) and \(-v_{1,0}\).</p><p>Let \(Z\) be a uniform draw from these \(D\) entries. Its distribution is symmetric about zero. For independent draws \(Z_1,\ldots,Z_k\), write</p><p>\[
+S=\sum_{\ell=1}^k Z_\ell,\qquad p_0=\Pr(S=0).
+\]</p><p><b>Lemma.</b> The SUBSET SUM instance is feasible if and only if \(p_0&gt;0\). Moreover, feasibility implies \(p_0\ge D^{-k}\).</p><p><b>Proof.</b> A feasible subset gives a zero sum of exactly \(k\) entries: choose \(v_{i,1}\) for its selected items, \(v_{i,0}\) for the other items, and \(-v_*\). This ordered sequence has probability \(D^{-k}\).</p><p>Conversely, suppose exactly \(k\) entries sum to zero. Regard padding entries as belonging to the \(v_{1,0}\) category. Let \(\alpha_{i,0}\), \(\alpha_{i,1}\), and \(\beta\) denote signed occurrence counts: positive occurrences minus negative occurrences. Put</p><p>\[
+c_i=\alpha_{i,0}+\alpha_{i,1},\qquad z=-\beta.
+\]</p><p>The zero-sum equation becomes</p><p>\[
+0=\sum_{i=1}^N(c_i-z)Q^i+e,
+\qquad
+e=\sum_{i=1}^N\alpha_{i,1}a_i-zT.
+\]</p><p>There are only \(k\) occurrences, so</p><p>\[
+|e|\le k\max\{a_1,\ldots,a_N,T\}&lt;Q,
+\qquad |c_i-z|\le k&lt;Q.
+\]</p><p>Reducing the equation modulo \(Q\) gives \(e=0\). Dividing by \(Q\) and repeatedly reducing modulo \(Q\) then gives</p><p>\[
+c_i=z\quad\text{for every }i.
+\]</p><p>If \(z=0\), each item category has equally many positive and negative occurrences, and the target category does too. Every category consequently contains an even number of occurrences, contradicting the odd total \(k\).</p><p>Thus \(z\ne0\). The number of occurrences is at least the sum of the absolute signed counts:</p><p>\[
+k\ge|\beta|+\sum_{i=1}^N|c_i|
+=(N+1)|z|=k|z|.
+\]</p><p>Hence \(|z|=1\). Each of the \(N\) item categories and the target category must occur exactly once. Every item occurrence has sign \(z\), and the target occurrence has sign \(-z\). Since \(e=0\), the items using \(v_{i,1}\) satisfy</p><p>\[
+\sum_{\{i:\,v_{i,1}\text{ was used}\}}a_i=T.
+\]</p><p>This proves the lemma. \(\square\)</p><h3>2. Constructing the bandit instance</h3><p>Let \(W\) be the largest absolute entry in the multiset. Choose the least integer \(q\) such that</p><p>\[
+2^q\ge64k^2W,
+\qquad \varepsilon=2^{-q}.
+\]</p><p>The stochastic reward will be \(Y=\varepsilon Z\). It satisfies</p><p>\[
+\mathbb E Y=0,\qquad |Y|\le\varepsilon W\le\frac{1}{64k^2}.
+\]</p><p>For positive integers \(t\), define</p><p>\[
+A_t=\sqrt{\frac{3\log(t+2)}{2}}
+\left(1-\frac{1}{\sqrt t}\right).
+\]</p><p>Choose a dyadic rational \(c\) satisfying</p><p>\[
+\left|c+A_k+\frac{\varepsilon}{2k}\right|
+\le\frac{\varepsilon}{8k}.
+\]</p><p>Section 6 proves that such a \(c\) can be computed in polynomial time. In particular,</p><p>\[
+-\frac{5\varepsilon}{8k}
+\le c+A_k\le
+-\frac{3\varepsilon}{8k},
+\]</p><p>so \(c+A_k\) lies strictly between \(-\varepsilon/k\) and zero, and \(c&lt;0\).</p><p>Construct the society as follows:</p><ul><li>There is one type, of mass \(1\).</li><li>There are two arms, each of capacity \(1\).</li><li>Arm \(1\) gives reward \(Y\); arm \(2\) gives deterministic reward \(c\).</li><li>The horizon is \(n=k+2\).</li><li>Writing \(\Delta=-c&gt;0\), set the threshold to</li></ul><p>\[
+  B=\Delta\left(\frac32-\frac{1}{2D^k}\right).
+  \]</p><p>Repeated reward outcomes are merged in the explicit table. Their probabilities are integer multiples of \(D^{-1}\), hence dyadic.</p><h3>3. Checking the model’s promises and benchmark</h3><p>The arm means are \(r_{\theta1}=0\) and \(r_{\theta2}=c&lt;0\), so they are distinct.</p><p>Both reward distributions are \(1\)-sub-Gaussian. The deterministic distribution has centered moment-generating function equal to \(1\). For the symmetric, mean-zero variable \(Y\), the inequality \(\cosh x\le e^{x^2/2}\) gives, for every real \(\lambda\),</p><p>\[
+\mathbb E e^{\lambda Y}
+=\mathbb E\cosh(\lambda Y)
+\le e^{\lambda^2(\varepsilon W)^2/2}
+\le e^{\lambda^2/2}.
+\]</p><p>Here the first inequality follows term by term from \((2j)!\ge2^j j!\).</p><p>In every learning round, the mass proposing to either arm is at most the total mass \(1\), which equals that arm’s capacity. Thus all first proposals are accepted. Deferred acceptance assigns each history to its highest-ranked arm, and labels never affect an assignment.</p><p>Under true means, everyone prefers arm \(1\). Any assignment placing positive mass at arm \(2\) leaves slack at arm \(1\), and is therefore unstable. Consequently the unique true stable assignment places everyone at arm \(1\), including the arm-proposing assignment. Hence</p><p>\[
+V^-=0.
+\]</p><h3>4. Proving the UCB sampling schedule</h3><p>Round \(1\) assigns everyone to arm \(1\), because both indices are infinite and the index tie favors arm \(1\). Round \(2\) assigns everyone to the unpulled arm \(2\).</p><p>Suppose that before round \(s=t+2\), arm \(1\) has been sampled \(t\) times and arm \(2\) once. Let \(\overline Y_t\) be the empirical mean of the arm-\(1\) samples. The index difference is</p><p>\[
+U_1-U_2
+=
+\overline Y_t-
+\left[
+c+\sqrt{\frac{3\log(t+2)}2}
+\left(1-\frac1{\sqrt t}\right)
+\right]
+=\overline Y_t-(c+A_t).
+\]</p><p>We first show that arm \(1\) is selected for every \(t&lt;k\).</p><p>Both factors defining \(A_t\) are nonnegative and increasing. Moreover,</p><p>\[
+A_k-A_{k-1}
+\ge
+\sqrt{\frac{3\log(k+1)}2}
+\left(\frac1{\sqrt{k-1}}-\frac1{\sqrt k}\right)
+&gt;
+\frac1{2k^{3/2}}
+\ge\frac1{2k^2}.
+\]</p><p>For the strict inequality, the square-root factor exceeds \(1\), since \(k+1\ge4\), and</p><p>\[
+\frac1{\sqrt{k-1}}-\frac1{\sqrt k}
+=
+\frac1{\sqrt{k-1}\sqrt k(\sqrt k+\sqrt{k-1})}
+&gt;\frac1{2k^{3/2}}.
+\]</p><p>Therefore, for \(1\le t&lt;k\),</p><p>\[
+c+A_t
+\le c+A_k-(A_k-A_{k-1})
+&lt;-\frac1{2k^2}.
+\]</p><p>Every possible empirical mean satisfies</p><p>\[
+\overline Y_t\ge-\varepsilon W
+\ge-\frac1{64k^2}
+&gt;-\frac1{2k^2}.
+\]</p><p>Thus \(U_1&gt;U_2\). Induction proves that rounds \(3,\ldots,k+1\) all select arm \(1\).</p><p>Before the final round \(n=k+2\), everyone has consequently received exactly \(k\) independent arm-\(1\) draws and one arm-\(2\) draw. Now</p><p>\[
+\overline Y_k=\frac{\varepsilon S}{k}.
+\]</p><p>Because \(S\) is an integer and \(c+A_k\) lies strictly between \(-\varepsilon/k\) and zero, the final assignment is exactly</p><p>\[
+\text{arm }1\ \Longleftrightarrow\ S\ge0,
+\qquad
+\text{arm }2\ \Longleftrightarrow\ S&lt;0.
+\]</p><p>All comparisons after initialization are strict.</p><h3>5. Exact regret and reduction correctness</h3><p>By the prescribed mass splitting, an ordered sequence of the \(k\) stochastic draws has precisely its product probability as mass. Thus the final mass assigned to arm \(2\) is \(\Pr(S&lt;0)\). This uses the exact history-mass recursion, without any approximation or population-limit argument.</p><p>The distribution of \(S\) is symmetric, so</p><p>\[
+\Pr(S&lt;0)=\frac{1-p_0}{2}.
+\]</p><p>Before the final round, arm \(2\) was selected exactly once, contributing mean reward \(c\); all other assignments contributed mean reward zero. The final round contributes \(c\Pr(S&lt;0)\). Since \(V^-=0\),</p><p>\[
+R^-_\mu(n)
+=-c\bigl(1+\Pr(S&lt;0)\bigr)
+=\Delta\left(\frac32-\frac{p_0}{2}\right).
+\]</p><p>Consequently,</p><p>\[
+R^-_\mu(n)\le B
+\quad\Longleftrightarrow\quad
+p_0\ge D^{-k}
+\quad\Longleftrightarrow\quad
+\text{the SUBSET SUM instance is feasible}.
+\]</p><p>The last equivalence is exactly the lemma from Section 1.</p><h3>6. Polynomial-time construction and encoding length</h3><p>Let \(\ell\) denote the source-instance bit length. Padding adds at most one item, and \(k\) is polynomially bounded in \(\ell\). The integers \(H\) and \(Q\) have polynomial bit length, and</p><p>\[
+\log_2 W=O(N\log_2 Q).
+\]</p><p>Hence \(q\), the reward-outcome encoding lengths, and the table’s total encoding length are polynomial in \(\ell\). Also \(D=O(N)\), and the unary horizon \(n=k+2\) has polynomial length.</p><p>It remains to justify computing \(c\). Logarithms and square roots here can be approximated with certified rational intervals in polynomial time at the required precision. Explicitly, with</p><p>\[
+\rho=\frac{k+1}{k+3},
+\]</p><p>we have</p><p>\[
+\log(k+2)
+=2\sum_{j=0}^{\infty}\frac{\rho^{2j+1}}{2j+1}.
+\]</p><p>After the first \(J\) terms, the positive remainder is at most</p><p>\[
+\frac{2\rho^{2J+1}}{1-\rho^2}
+\le 2(k+3)e^{-4J/(k+3)}.
+\]</p><p>For precision \(2^{-p}\), taking \(J=(k+3)(p+k+3)\) suffices. The partial sum and the geometric remainder bound are rational and have polynomial encoding length. Square roots of the resulting rational interval endpoints, and of \(k\), admit certified approximations by rational bisection.</p><p>For completeness, write</p><p>\[
+A_k=a(1-b^{-1}),
+\qquad
+a=\sqrt{\frac{3\log(k+2)}2},\qquad b=\sqrt k.
+\]</p><p>Both \(a\) and \(b\) lie between \(1\) and \(k+2\). If they are approximated within \(\delta&lt;1/2\), the resulting error in \(A_k\) is at most \((2k+5)\delta\): the reciprocal error is at most \(2\delta\), and the error from the first factor is at most \(\delta\). Thus precision \(p=O(q+\log k)\) suffices to approximate \(A_k\) within \(\varepsilon/(32k)\). Rounding the resulting approximation of \(-A_k-\varepsilon/(2k)\) to a dyadic grid of spacing at most \(\varepsilon/(32k)\) produces the required \(c\).</p><p>This construction requires no exact comparison involving a transcendental number. The dyadic rational \(c\) has polynomial bit length. Finally, \(D\) is a power of two, so \(B\) is dyadic and has encoding length bounded by the encoding length of \(c\) plus \(O(k\log D)\).</p><p>The construction is therefore a polynomial-time many-one reduction, proving the stated \(\mathrm{NP}\)-hardness. A polynomial-time algorithm for the requested exact threshold problem would imply \(\mathrm P=\mathrm{NP}\). No membership claim for the full problem is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><p><b>The proof establishes the claimed \(\mathrm{NP}\)-hardness.</b> The reduction satisfies the model’s promises, its zero-sum lemma is valid, and its UCB schedule yields the stated exact regret. I found no major or minor mathematical issues requiring repair.</p><h3>1. Source problem and scope</h3><p>The source problem is binary-encoded SUBSET SUM with positive integer items and a nonnegative integer target. Its standard \(\mathrm{NP}\)-hardness applies to precisely this equality decision problem; the positive-integer formulation is also explicitly described in [Polak, Rohwedder, and Węgrzycki](https://arxiv.org/html/2105.04035).</p><p>Appending a zero item preserves feasibility. It need not preserve positivity of the intermediate item list: the subsequent construction only requires nonnegative items, and every encoded multiset entry remains strictly positive before its sign is attached.</p><p>The claimed restricted target instances have \(\tau=1\), \(m=2\), and capacities \(b_1=b_2=1\). These satisfy the task’s capacity conditions. With one type, each arm’s strict ordering of types is automatically specified.</p><h3>2. Odd-length zero-sum encoding</h3><p><b>Forward implication: correct.</b> A feasible subset determines one positive entry for each item and one negative target entry. Their sum is zero, and their number is exactly \(N+1=k\). Each specified multiset entry has draw probability at least \(D^{-1}\), giving the claimed lower bound \(p_0\ge D^{-k}\).</p><p><b>Coefficient bounds: correct.</b> Each occurrence contributes at most \(\max\{a_1,\ldots,a_N,T\}\) in absolute value to \(e\). Consequently,<br>\[
+|e|\le k\max\{a_1,\ldots,a_N,T\}&lt;Q.
+\]<br>Similarly, each occurrence contributes at most one in absolute value to any particular coefficient \(c_i-z\), so \(|c_i-z|\le k&lt;Q\).</p><p><b>Extraction of coefficients: correct.</b> Reducing the integer equation modulo \(Q\), together with \(|e|&lt;Q\), forces \(e=0\). Successive division and reduction then force every \(c_i-z\) to vanish. This remains valid for negative coefficients; the strict absolute-value bounds exclude nonzero multiples of \(Q\).</p><p><b>Oddness argument: correct.</b> If \(z=0\), the signed count in each aggregate item category and in the target category is zero. Each category therefore contains an even number of occurrences. This contradicts the odd total \(k\).</p><p><b>Occurrence-budget argument: correct.</b> Once \(z\ne0\), the displayed inequality<br>\[
+k\ge |\beta|+\sum_i|c_i|=k|z|
+\]<br>forces \(|z|=1\). The \(N+1=k\) categories each require at least one occurrence, so each occurs exactly once. The signs and the equality \(e=0\) then give exactly the claimed subset-sum solution.</p><p><b>Padding and duplicate outcomes cause no failure.</b> Padding copies belong to the stipulated item category. A zero item makes its two variants numerically identical, but either variant contributes zero to the subset sum. Merging repeated outcomes therefore preserves both the zero-sum event and its probability.</p><p>The lemma, including its probability lower bound, is established.</p><h3>3. Target-instance promises and benchmark</h3><p><b>Reward tables: valid.</b> Scaling integer entries by \(\varepsilon=2^{-q}\) gives dyadic outcomes. Uniform sampling from a power-of-two-sized multiset gives dyadic probabilities, including after duplicates are merged.</p><p><b>Distinct means: established.</b> Symmetry gives arm \(1\) mean zero. The chosen interval for \(c+A_k\), together with \(A_k&gt;0\), gives \(c&lt;0\). Thus the two means are distinct.</p><p><b>Sub-Gaussian promise: established.</b> The stated coefficient comparison proves \(\cosh x\le e^{x^2/2}\). Symmetry and the bound \(|Y|\le\varepsilon W\le1/(64k^2)\) then give the required centered moment-generating-function bound for every real parameter. The deterministic arm also satisfies the promise regardless of its mean.</p><p><b>Learning assignments: correctly simplified.</b> Each arm can accommodate the entire society. Hence no first-choice proposal is rejected, and labels and priorities cannot affect assignments.</p><p><b>Benchmark: correct.</b> Any positive mass assigned to arm \(2\) leaves positive slack at arm \(1\), which everyone strictly prefers under true means. Such an assignment is unstable. Assigning everyone to arm \(1\) is stable, so it is the unique stable assignment up to null sets and gives \(V^-=0\).</p><h3>4. UCB schedule</h3><p><b>Initialization: correct.</b> Round \(1\) chooses arm \(1\) by the index tie rule. Round \(2\) chooses the still-unpulled arm \(2\).</p><p><b>Index difference: correct.</b> Given counts \(t\) and \(1\) before round \(t+2\), the empirical reward of arm \(2\) is exactly \(c\). Subtracting the two exploration bonuses yields precisely<br>\[
+U_1-U_2=\overline Y_t-(c+A_t).
+\]</p><p><b>Monotonicity and separation bound: correct.</b> Both factors defining \(A_t\) are nonnegative and increasing. The lower bound on \(A_k-A_{k-1}\) follows from retaining the increment of the second factor. The reciprocal-square-root identity and the bound on the logarithmic factor give the stated strict inequality. Its comparison with \(1/(2k^2)\) is valid for \(k\ge3\).</p><p><b>Induction: correct.</b> For every \(t&lt;k\), the comparison boundary is below \(-1/(2k^2)\), whereas every possible empirical mean is at least \(-1/(64k^2)\). Thus every history selects arm \(1\) in rounds \(3,\ldots,k+1\).</p><p><b>Final comparison: exact.</b> Before round \(k+2\), there are exactly \(k\) arm-\(1\) observations and one arm-\(2\) observation. Since \(S\) is integral and<br>\[
+-\varepsilon/k&lt;c+A_k&lt;0,
+\]<br>the final choice is arm \(1\) exactly when \(S\ge0\). In particular, \(S=0\) is handled correctly. All comparisons after initialization are strict.</p><h3>5. Exact mass and regret calculation</h3><p>The task’s prescribed history-mass splitting gives the product distribution of the \(k\) stochastic observations. Consequently, the final mass assigned to arm \(2\) is exactly \(\Pr(S&lt;0)\).</p><p>Symmetry gives<br>\[
+\Pr(S&lt;0)=\frac{1-p_0}{2}.
+\]<br>There is one earlier assignment to arm \(2\); every other earlier assignment has mean reward zero. The regret calculation therefore correctly yields<br>\[
+R^-_\mu(n)=\Delta\left(\frac32-\frac{p_0}{2}\right).
+\]</p><p>Because \(\Delta&gt;0\), comparison with the constructed threshold preserves the claimed direction:<br>\[
+R^-_\mu(n)\le B
+\quad\Longleftrightarrow\quad
+p_0\ge D^{-k}.
+\]<br>The lemma makes this equivalent to source-instance feasibility. Thus both yes and no instances are mapped correctly.</p><h3>6. Polynomial-time numerical construction</h3><p><b>Integer encoding lengths: correct.</b> The powers of \(Q\), the target entry, and \(W\) have polynomial bit length. Hence \(q\) is polynomially bounded. There are only linearly many table entries, and the unary horizon is polynomially bounded.</p><p><b>Logarithm approximation: correct.</b> The series parameter satisfies \(0&lt;\rho&lt;1\). The stated geometric remainder bounds the omitted positive terms. Substitution of the proposed \(J\) makes the remainder at most \(2^{-p}\). Both the number of terms and their rational encoding lengths are polynomial in the required parameters.</p><p><b>Square roots and error propagation: sufficient.</b> Rational bisection supplies certified square-root approximations in polynomial time. The displayed error bound \((2k+5)\delta\) correctly accounts for the reciprocal and product errors. Precision \(p=O(q+\log k)\) is sufficient.</p><p><b>Dyadic rounding: sufficient.</b> The approximation and grid errors fit within the required tolerance \(\varepsilon/(8k)\). Thus \(c\) can be constructed without deciding an exact transcendental comparison.</p><p><b>Threshold encoding: correct.</b> Since \(D\) is a power of two, both \(D^{-k}\) and \(B\) are dyadic, with polynomial encoding length.</p><p>The construction is a polynomial-time many-one reduction in the ordinary bit model.</p><h3>7. Adjudication and feedback</h3><p>The output resolves the assigned complexity question by proving hardness, even with one supported type and two arms. It makes no unsupported membership claim. Its conclusion about a polynomial-time algorithm implying \(\mathrm P=\mathrm{NP}\) follows from the reduction.</p><p>No additional lemma, clarification, or mathematical repair is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

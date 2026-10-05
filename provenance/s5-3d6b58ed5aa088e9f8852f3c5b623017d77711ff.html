@@ -1,0 +1,120 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-3d6b58ed5aa088e9f8852f3c5b623017d77711ff — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-3d6b58ed5aa088e9f8852f3c5b623017d77711ff <span style="font-weight:normal;color:#8a7350">(s5-3d6b58ed5aa088e9f8852f3c5b623017d77711ff)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable in \(\tau\) and \(L\); the unique maximizing vector is rational and computable exactly.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 3.3 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite support \(S\) of municipality types with rational masses \(\mu_t&gt;0\) summing to \(1\), each type’s rational shock \(\theta_t\), threshold \(T_t\), political cost \(\omega_{T,t}\), and consent cap \(\bar b_t\), common rational \(\omega_b,c&gt;0\), and rational per-district treasury supply \(R\), compute an exact maximizing vector \((b_t)_{t\in S}\) for \(\sum_{t\in S}\mu_t(\omega_b\theta_t b_t-\omega_{T,t}b_t-\tfrac{c}{2}b_t^2)\), subject to \(0\le b_t\le\bar b_t\), \(b_t=0\) when \(\theta_t&lt;T_t\), and \(\sum_{t\in S}\mu_t b_t\le R\). Determine the bit complexity in support size and input length.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a nonempty list \(S\) of \(\tau\) municipality types with positive binary rational masses \(\mu_t\), where \(\sum_{t\in S}\mu_t=1\). Here \(\tau=|S|\) is the support size, not the number of possible types.<br>Each type has binary rational shock \(\theta_t\ge0\), admissibility threshold \(T_t\ge0\), political cost \(\omega_{T,t}\ge0\), and finite consent cap \(\bar b_t\ge0\). Common binary rational parameters satisfy \(\omega_b,c&gt;0\), and treasury supply satisfies \(R\ge0\).<br>Choose a real bailout amount \(b_t\) per municipality of type \(t\). Maximize \(\sum_{t\in S}\mu_t(\omega_b\theta_t b_t-\omega_{T,t}b_t-\tfrac c2 b_t^2)\), subject to \(0\le b_t\le\bar b_t\), \(b_t=0\) whenever \(\theta_t&lt;T_t\), and \(\sum_{t\in S}\mu_t b_t\le R\). Equality \(\theta_t=T_t\) permits a bailout; caps are supplied institutional constraints.<br>Let \(L\) be the total binary input length. There is no separate \(m\) parameter in this model.</p><p>Is computing an exact maximizing vector for this mass allocation problem possible in polynomial time in \(\tau\) and \(L\), or is it \(\mathrm{NP}\)-hard?</p><p>For a single municipality without a shared treasury constraint, the optimum is zero below its admissibility threshold and otherwise has a closed-form clipped affine expression, giving polynomial-time exact computation on rational inputs. [Source](https://arxiv.org/html/2508.08693v1).<br>No exact bit-complexity result for the normalized mass allocation problem was verified.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Restricted shocks, thresholds, political costs, and caps to nonnegative rationals, following the primitive domains. Their finite list implicitly admits a common finite shock-domain bound containing all shocks and thresholds.</li><li>Required nonnegative treasury supply; zero supply and zero consent caps remain allowed.</li><li>Interpreted each bailout variable as a real per-municipality amount shared by its type, with mass-weighted welfare and treasury usage.</li><li>Treated consent caps as supplied finite institutional constraints rather than requiring reconstruction from representative votes.</li><li>Gave inadmissibility precedence over the displayed clipped formula, following the explicit optimization constraint; equality at the threshold remains admissible.</li><li>Defined total binary input length and omitted an independent m parameter because this model has no such dimension.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p><b>The exact maximizing vector is computable in polynomial time in \(\tau\) and \(L\).</b> It is unique and has rational coordinates of polynomial encoding length.</p><p>The cited paper gives the clipped affine rule for a single municipality in Section 3.7. [Source](https://arxiv.org/html/2508.08693v1). The argument below proves the exact bit-complexity result for the stated mass allocation problem.</p><h3>1. Incorporating admissibility</h3><p>For every supported type \(t\), define</p><p>\[
+a_t=\omega_b\theta_t-\omega_{T,t},
+\qquad
+u_t=
+\begin{cases}
+\bar b_t,&amp;\theta_t\ge T_t,\\
+0,&amp;\theta_t&lt;T_t.
+\end{cases}
+\]</p><p>Thus equality at the admissibility threshold is included. The problem becomes maximizing</p><p>\[
+U(b)=\sum_{t\in S}\mu_t\left(a_tb_t-\frac c2b_t^2\right)
+\]</p><p>subject to \(0\le b_t\le u_t\) and \(G(b)\le R\), where</p><p>\[
+G(b)=\sum_{t\in S}\mu_tb_t.
+\]</p><p>The feasible set is nonempty because it contains the zero vector. It is compact because every cap is finite. Consequently, continuity of \(U\) guarantees existence of a maximizer.</p><p>Moreover, \(U\) is strictly concave: for distinct vectors \(x,y\) and \(0&lt;\alpha&lt;1\),</p><p>\[
+U(\alpha x+(1-\alpha)y)
+-\alpha U(x)-(1-\alpha)U(y)
+=
+\frac c2\alpha(1-\alpha)
+\sum_{t\in S}\mu_t(x_t-y_t)^2&gt;0.
+\]</p><p>The strict inequality follows from \(c&gt;0\), every \(\mu_t&gt;0\), and \(x\ne y\). Since the feasible set is convex, its maximizer is unique.</p><h3>2. A sufficient optimality certificate</h3><p>For a nonnegative rational or real number \(\lambda\), define</p><p>\[
+b_t(\lambda)
+=
+\min\left\{u_t,\,
+\max\left\{0,\frac{a_t-\lambda}{c}\right\}\right\},
+\qquad
+F(\lambda)=\sum_{t\in S}\mu_tb_t(\lambda).
+\]</p><p>For each type, \(b_t(\lambda)\) uniquely maximizes</p><p>\[
+\mu_t\left((a_t-\lambda)z-\frac c2z^2\right)
+\]</p><p>over \(0\le z\le u_t\). Indeed, its derivative is \(\mu_t(a_t-\lambda-cz)\), its second derivative is strictly negative, and clipping its unrestricted maximizer gives the displayed formula.</p><p>Therefore \(b(\lambda)\) maximizes \(U(b)-\lambda G(b)\) over the box constraints.</p><p><b>Certificate.</b> If</p><p>\[
+F(\lambda)\le R,
+\qquad
+\lambda(R-F(\lambda))=0,
+\]</p><p>then \(b(\lambda)\) is the unique solution of the original problem.</p><p>To prove this, let \(x\) be any feasible vector. Box optimality gives</p><p>\[
+U(x)-\lambda G(x)
+\le
+U(b(\lambda))-\lambda F(\lambda).
+\]</p><p>Using \(G(x)\le R\), \(\lambda\ge0\), and the certificate conditions,</p><p>\[
+U(x)
+\le U(b(\lambda))+\lambda(G(x)-F(\lambda))
+\le U(b(\lambda))+\lambda(R-F(\lambda))
+=U(b(\lambda)).
+\]</p><p>This proves optimality; uniqueness follows from Section 1. No constraint qualification or necessity theorem for multipliers is needed.</p><h3>3. Computing a certificate exactly</h3><p>If \(R=0\), positivity of all masses and nonnegativity of all coordinates force \(b_t=0\) for every type. Return that vector.</p><p>Suppose henceforth that \(R&gt;0\).</p><p>If \(F(0)\le R\), return \(b(0)\). The certificate holds with \(\lambda=0\).</p><p>It remains to handle \(F(0)&gt;R&gt;0\). Define</p><p>\[
+M=\max\left(\{0\}\cup\{a_t:t\in S\}\right).
+\]</p><p>Here \(M&gt;0\), since otherwise \(F(0)=0\). Also \(F(M)=0\).</p><p>Each \(b_t(\lambda)\) is continuous and nonincreasing. If \(u_t&gt;0\), its only possible changes of affine formula occur at</p><p>\[
+a_t-cu_t
+\quad\text{and}\quad
+a_t.
+\]</p><p>Indeed, it equals its cap when \(\lambda\le a_t-cu_t\), equals \((a_t-\lambda)/c\) between the two breakpoints, and equals zero when \(\lambda\ge a_t\). Types with \(u_t=0\) contribute zero everywhere.</p><p>Form a list consisting of \(0\), \(M\), and all these breakpoints that lie strictly between \(0\) and \(M\). Remove duplicates and sort:</p><p>\[
+0=q_0&lt;q_1&lt;\cdots&lt;q_k=M.
+\]</p><p>There are at most \(2\tau+2\) listed values. The function \(F\) is continuous, nonincreasing, and affine on every closed interval \([q_j,q_{j+1}]\): each summand is affine on the open interval, and continuity extends that formula to its endpoints.</p><p>Evaluate \(F(q_j)\) exactly at every listed value.</p><p>If \(F(q_j)=R\), return \(b(q_j)\). Otherwise, because \(F(q_0)&gt;R&gt;F(q_k)\), some consecutive pair \(x=q_j\), \(y=q_{j+1}\) satisfies</p><p>\[
+F(x)&gt;R&gt;F(y).
+\]</p><p>Define</p><p>\[
+\lambda
+=
+x+
+\frac{F(x)-R}{F(x)-F(y)}(y-x).
+\]</p><p>The denominator is positive, and the fraction lies strictly between zero and one. Thus \(x&lt;\lambda&lt;y\). Affineness gives</p><p>\[
+F(\lambda)
+=
+F(x)+\frac{\lambda-x}{y-x}(F(y)-F(x))
+=R.
+\]</p><p>Consequently, this \(\lambda\) satisfies the certificate, and the algorithm returns the exact maximizing vector \(b(\lambda)\).</p><p>This procedure handles coincident breakpoints and flat segments explicitly: duplicate breakpoints are removed, and interpolation is performed only between endpoints with strictly different demand values.</p><h3>4. Exact bit complexity</h3><p>Represent each rational as a binary numerator and a positive binary denominator. All comparisons and arithmetic below use this exact representation.</p><p>Every input rational has encoding length at most \(L\). The quantities \(a_t\), \(u_t\), \(a_t-cu_t\), and \(M\) involve only a fixed number of arithmetic operations on input rationals. Their encoding lengths are therefore \(O(L)\).</p><p>For any listed breakpoint \(q_j\), each coordinate \(b_t(q_j)\), and then each product \(\mu_tb_t(q_j)\), also has encoding length \(O(L)\).</p><p>To bound the size of their sum, consider \(n\) rationals \(p_i/d_i\), with each numerator and denominator having at most \(B\) bits. Their sum can be written with denominator</p><p>\[
+D=\prod_{i=1}^{n}d_i
+\]</p><p>and numerator</p><p>\[
+P=\sum_{i=1}^{n}p_i\prod_{\ell\ne i}d_\ell.
+\]</p><p>These integers have \(O(nB+\log(n+1))\) bits: the denominator is a product of \(n\) \(B\)-bit integers, and the numerator is a sum of \(n\) products of that same bounded size. Reducing the fraction cannot increase these lengths.</p><p>Applying this observation to \(F(q_j)\), every endpoint demand has encoding length</p><p>\[
+O(\tau L+\log(\tau+1)).
+\]</p><p>The interpolation formula uses a fixed number of operations on endpoint demands, breakpoints, and \(R\). Hence the computed \(\lambda\) has polynomial encoding length. Each final coordinate \(b_t(\lambda)\) does as well.</p><p>Sorting requires \(O(\tau\log(\tau+1))\) exact rational comparisons. Evaluating demand at all breakpoints requires \(O(\tau^2)\) rational arithmetic operations. Interpolation and construction of the output require \(O(\tau)\) additional operations. Exact integer arithmetic, division, comparison, and fraction reduction all take polynomial time in the operand lengths. Thus the total bit complexity is polynomial in \(\tau\) and \(L\).</p><p>The algorithm operates solely on the supplied support list.</p><h3>5. Exact output may require a non-dyadic rational</h3><p>Even dyadic inputs need not produce dyadic optimal coordinates. For example, take two types with</p><p>\[
+(\mu_1,\mu_2)=\left(\frac14,\frac34\right),
+\quad
+(\theta_1,\theta_2)=(1,3),
+\quad
+T_1=T_2=\omega_{T,1}=\omega_{T,2}=0,
+\]</p><p>and \(\omega_b=c=1\), \(\bar b_1=\bar b_2=3\), \(R=\frac12\).</p><p>At \(\lambda=\frac73\), the clipped formula gives</p><p>\[
+b_1=0,
+\qquad
+b_2=\frac23,
+\qquad
+F(\lambda)=\frac34\cdot\frac23=\frac12.
+\]</p><p>The certificate proves that this is the unique optimum. Exact output therefore uses rational numerator-denominator encodings; a finite binary fractional expansion is not always available.</p><p>The polynomial-time alternative is established. An NP-hardness result under polynomial-time reductions would consequently imply \(\mathrm P=\mathrm{NP}\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verdict</h3><p><b>The prover resolves the task correctly.</b> The output establishes a polynomial-time algorithm for computing the exact, unique maximizing vector, with rational coordinates of polynomial encoding length. No major or minor mathematical issues were found.</p><h3>Step-by-step verification</h3><h3>1. Admissibility, existence, and uniqueness</h3><p>The replacement of the original constraints by effective caps \(u_t\) is exact:</p><ul><li>When \(\theta_t&lt;T_t\), setting \(u_t=0\) forces \(b_t=0\).</li><li>When \(\theta_t\ge T_t\), the original consent cap applies. Equality at the threshold is handled correctly.</li></ul><p>The feasible set contains zero, is closed and bounded because every cap is finite, and is convex. The polynomial objective is continuous, so the stated existence argument applies.</p><p>The strict-concavity identity is correct. Its right-hand side is strictly positive for distinct vectors because \(c&gt;0\) and every supported mass is positive. Consequently, the maximizer over the convex feasible set is unique. Zero caps and a feasible set consisting of a single point do not invalidate this conclusion.</p><p><b>Assessment:</b> Correct and complete.</p><h3>2. Optimality certificate</h3><p>For each coordinate, the stated derivative and second derivative are correct. Since \(\mu_t&gt;0\), maximizing the coordinate objective over its interval gives exactly the displayed clipped affine formula. When \(u_t=0\), the interval is a singleton and the same formula remains valid.</p><p>Separability then correctly establishes box optimality of \(b(\lambda)\) for \(U-\lambda G\).</p><p>Every inequality in the certificate proof has the correct direction. In particular, the use of \(G(x)\le R\) requires \(\lambda\ge0\), which is explicitly assumed. Complementarity eliminates the remaining term. Feasibility follows from the clipping formula and \(F(\lambda)\le R\).</p><p>The argument proves sufficiency directly and does not rely on an unstated multiplier-existence theorem.</p><p><b>Assessment:</b> Correct and complete.</p><h3>3. Exact construction of a certificate</h3><p>All branches are justified.</p><ul><li><b>\(R=0\):</b> Positive masses and nonnegative coordinates force every feasible coordinate to be zero.</li></ul><ul><li><b>\(R&gt;0\) and \(F(0)\le R\):</b> The returned vector satisfies the certificate with \(\lambda=0\), including the equality case.</li></ul><ul><li><b>\(F(0)&gt;R&gt;0\):</b> This implies \(M&gt;0\). Since \(M\ge a_t\) for every type, the clipped formula gives \(F(M)=0\).</li></ul><p>The breakpoint locations are correct. For \(u_t&gt;0\), the cap, affine, and zero pieces meet continuously at \(a_t-cu_t\) and \(a_t\). Coordinates with zero caps contribute nothing.</p><p>There are at most \(2\tau+2\) listed values. Removing duplicates yields strictly increasing endpoints. No summand changes formula inside a resulting interval, and continuity justifies extending its affine formula to both endpoints.</p><p>If no endpoint equals \(R\), the endpoint inequalities and monotonicity guarantee a consecutive pair satisfying \(F(x)&gt;R&gt;F(y)\). The interpolation denominator is strictly positive. The resulting multiplier lies inside the interval, is nonnegative, and satisfies \(F(\lambda)=R\) by the stated affine calculation.</p><p>Coincident breakpoints, flat segments, negative coefficients, and breakpoints outside the search range are all handled correctly.</p><p><b>Assessment:</b> Correct and complete.</p><h3>4. Exact bit complexity</h3><p>The bit-length bounds are valid for the stated binary rational representation.</p><ul><li>Each coefficient and breakpoint uses a fixed number of arithmetic operations on input rationals, so its encoding length is \(O(L)\).</li><li>At a listed breakpoint, each clipped coordinate and each weighted coordinate also has encoding length \(O(L)\).</li><li>The displayed common-denominator expression correctly bounds an endpoint demand by \(O(\tau L+\log(\tau+1))\) bits. Signs and cancellation cannot increase that upper bound.</li><li>Interpolation uses a fixed number of rational operations on polynomial-length operands, with a denominator already proved nonzero. Thus the multiplier and final coordinates have polynomial encoding length.</li></ul><p>The proof counts polynomially many comparisons and arithmetic operations. Its allowance for fraction reduction suffices to keep intermediate representations polynomially bounded; partial demand sums satisfy the same sum bound. Standard exact integer arithmetic and greatest-common-divisor algorithms run in polynomial time in these operand lengths.</p><p>The algorithm processes only the supplied support list. It introduces neither enumeration of unsupported types nor a separate municipality-count parameter.</p><p><b>Assessment:</b> Correct and complete. This establishes exact bit complexity, not merely a polynomial arithmetic-operation count.</p><h3>5. Non-dyadic example</h3><p>The example satisfies the input assumptions. Its coefficients are \(a_1=1\) and \(a_2=3\). At \(\lambda=7/3\), clipping gives \(b_1=0\) and \(b_2=2/3\), and the weighted demand is \(1/2\).</p><p>The certificate therefore applies and proves uniqueness. The conclusion that dyadic inputs can require a non-dyadic exact output is correct.</p><p><b>Assessment:</b> Correct.</p><h3>6. Source and final complexity conclusion</h3><p>The cited [Section 3.7](https://arxiv.org/html/2508.08693v1#S3.SS7) contains the single-municipality clipped affine rule. The submitted proof independently derives the coordinate rule and the shared-treasury algorithm, so its correctness does not depend on importing a theorem from that paper.</p><p>The polynomial-time conclusion follows from the verified algorithm and encoding bounds. The closing statement about NP-hardness has the conventional interpretation of polynomial-time reductions to exact optimization: such hardness would imply \(\mathrm P=\mathrm{NP}\).</p><h3>Issues and required feedback</h3><p>No unjustified mathematical steps, incorrect computations, missing hypotheses, or unresolved edge cases were found. No additional clarification is needed to make the argument verifiable.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

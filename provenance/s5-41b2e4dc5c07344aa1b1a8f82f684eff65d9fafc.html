@@ -1,0 +1,177 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Two-Sided Fairness in Many-to-One Matching — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Two-Sided Fairness in Many-to-One Matching <span style="font-weight:normal;color:#8a7350">(s5-41b2e4dc5c07344aa1b1a8f82f684eff65d9fafc)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.2 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>\Cref{alg:main} returns an allocation that satisfies team-justified SD-EF1, participant-justified EF, balancedness, and PO (and therefore swap stability).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite teams \(T\), a finite set of complete applicant types \(\Theta\), a rational distribution \(\mu\in\Delta(\Theta)\), an integer population scale \(M\), weak team rankings over types, and weak type rankings over teams, compute a rational mass allocation \(x_{it}\ge0\) with \(\sum_i x_{it}=M\mu_t\). Require balancedness, \(\lfloor M/n\rfloor\le\sum_t x_{it}\le\lceil M/n\rceil\), participant-justified EF, and team-justified SD-EF1: for every \(i\ne j\), define \(b_{ij,t}=x_{jt}\) when \(i\succsim_t j\) and \(b_{ij,t}=0\) otherwise, and require some \(z_{ij}\) with \(0\le z_{ij,t}\le b_{ij,t}\), \(\sum_t z_{ij,t}\le1\), and \(x_i\succsim_i^{\mathrm{SD}} b_{ij}-z_{ij}\). The allocation must also be Pareto optimal among mass allocations.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(T=[m]\) be a nonempty set of teams. A society is given by its support: the list \(\Theta\) of its \(\tau\) types with positive binary rational masses \(\mu_t\), summing to \(1\); \(\tau\) is the support size, not the number of possible types. Each type specifies a complete weak ranking of teams, and each team has a complete weak ranking of types; ties remain ties and all assignments are acceptable.<br>Let \(M\ge1\) be an integer encoded in binary, and let \(L\) be the total input bit length, including masses, rankings, and \(M\). An allocation is a nonnegative matrix \(x\) satisfying \(\sum_i x_{it}=M\mu_t\).<br>For nonnegative type bundles, define \(a\succsim_i^{\mathrm{SD}}b\) by \(\sum_{t\succsim_i s}a_t\ge\sum_{t\succsim_i s}b_t\) for every \(s\in\Theta\), including the lowest rank; bundles are not normalized.<br>Balancedness requires \(\lfloor M/m\rfloor\le\sum_t x_{it}\le\lceil M/m\rceil\) for every team \(i\).<br>Participant-justified EF means that no \(i\ne j\) and types \(t,s\) satisfy \(x_{it}&gt;0\), \(x_{js}&gt;0\), \(j\succ_t i\), and \(t\succ_j s\).<br>Team-justified SD-EF1 requires, for every \(i\ne j\), \(b_{ij,t}=x_{jt}\mathbf{1}[i\succsim_t j]\) and some nonnegative vector \(z_{ij}\le b_{ij}\) with \(\sum_t z_{ij,t}\le1\) and \(x_i\succsim_i^{\mathrm{SD}}b_{ij}-z_{ij}\).<br>Teams compare their bundles by the SD relation above; types compare their allocation columns by SD over teams. An allocation is Pareto optimal if no other nonnegative real allocation with the same type totals weakly improves every team and type in these relations and strictly improves at least one; strict improvement means weak dominance without reverse dominance. Comparisons range over all allocations, without imposing fairness or balancedness.<br>Compute a rational allocation satisfying these conditions, or report that none exists.</p><p>Is this mass allocation problem solvable in polynomial time in \(m,\tau,L\), or is it NP-hard?</p><p>For indivisible participants, a polynomial-time algorithm always returns a balanced, participant-justified EF, team-justified SD-EF1, Pareto-optimal allocation, allowing ties. [Verified discrete result](https://arxiv.org/html/2509.24111v1).<br>No result settling this precise mass allocation problem was found in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The number of teams is denoted by m instead of n; the positive population scale M is binary encoded and included in the total input bit length L.</li><li>Participant-justified EF is interpreted pointwise on positive assigned masses, preserving strict envy and strict team preference from the discrete definition.</li><li>Team SD uses unnormalized cumulative masses, including the total-mass inequality, preserving the discrete comparison of unequal-sized bundles.</li><li>The undefined participant side of mass Pareto comparisons is interpreted by SD over each type&#x27;s allocation across teams; strict improvement is dominance without reverse dominance.</li><li>Pareto optimality ranges over all real mass allocations conserving type totals, without requiring competing allocations to satisfy fairness or balancedness.</li><li>Because continuous existence is not established by the discrete result, the computational problem permits reporting nonexistence.</li><li>The domains are nonempty teams and support, positive integer population scale, normalized positive support masses, and complete weak preferences with all assignments acceptable.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial results: a polynomial-time algorithm when types rank teams strictly</h3><p>I do not settle the general computational classification. I prove the following nontrivial special case:</p><p><b>Theorem.</b> If every type strictly ranks the teams, the required allocation can be computed in $\operatorname{poly}(m,\tau,L)$ time. Teams may have arbitrary weak rankings of types. The algorithm returns equal team totals and exact team-justified SD envy-freeness, so the deletion vectors can all be zero.</p><p>The proof also establishes two results for arbitrary weak rankings:</p><ul><li>Participant-justified envy-freeness is preserved by every weak Pareto improvement.</li><li>A balanced, participant-justified envy-free, unrestricted Pareto-optimal allocation can be computed in polynomial time. This construction does not generally guarantee team-justified SD-EF1.</li></ul><p>All comparisons below use the original rankings, including their ties.</p><h3>1. Prefix notation and the deletion condition</h3><p>Put $q_t=M\mu_t$, and define the allocation space</p><p>$$
+K=\left\{x\in\mathbb R_{\ge0}^{m\tau}:
+\sum_i x_{it}=q_t\ \text{for every }t\right\}.
+$$</p><p>For each team $i$, let $\mathcal H_i$ contain the prefixes ending at its indifference classes, including $\Theta$. For each type $t$, let $\mathcal G_t$ contain the corresponding prefixes of teams, including $T$.</p><p>Write</p><p>$$
+x_i(H)=\sum_{t\in H}x_{it},
+\qquad
+x_t(G)=\sum_{i\in G}x_{it}.
+$$</p><p>These prefix sums characterize the task’s SD relations.</p><p><b>Lemma 1.</b> For nonnegative bundles $a,b$ and $\varepsilon\ge0$, there exists $0\le z\le b$ satisfying</p><p>$$
+\sum_t z_t\le\varepsilon,
+\qquad
+a\succsim_i^{\mathrm{SD}}b-z
+$$</p><p>if and only if</p><p>$$
+b(H)-a(H)\le\varepsilon
+\qquad\text{for every }H\in\mathcal H_i.
+$$</p><p><b>Proof.</b> A deletion witness implies</p><p>$$
+b(H)-a(H)\le z(H)\le\varepsilon.
+$$</p><p>Conversely, remove mass from $b$ starting with the best indifference class, then proceeding downward, until $\varepsilon$ mass has been removed or $b$ is exhausted. Every tested prefix ends at a complete indifference class, so this construction gives</p><p>$$
+z(H)=\min\{\varepsilon,b(H)\}.
+$$</p><p>Consequently,</p><p>$$
+(b-z)(H)=\max\{0,b(H)-\varepsilon\}\le a(H).
+$$</p><p>The last inequality follows from the assumed prefix bound and $a(H)\ge0$. This proves SD dominance. $\square$</p><p>Thus the task’s team-justified SD-EF1 condition is equivalent to</p><p>$$
+b_{ij}(H)-x_i(H)\le1
+\qquad
+\text{for every }i\ne j,\ H\in\mathcal H_i.
+$$</p><p>Exact team-justified SD envy-freeness is the same system with right-hand side zero.</p><h3>2. Participant fairness survives Pareto improvements</h3><p>Call $y\in K$ a <b>weak improvement</b> of $x\in K$ when every team and type weakly SD prefers $y$ to $x$. Strict improvement is not required in this definition.</p><p>First, every weak improvement preserves each team’s total. Indeed, the full-set team prefixes imply</p><p>$$
+\sum_t y_{it}\ge\sum_t x_{it}
+\qquad\text{for every }i.
+$$</p><p>Both sides sum over teams to $M$. Therefore every inequality is an equality. Denote these common team totals by $d_i$.</p><p><b>Lemma 2.</b> Suppose $x$ is participant-justified envy-free and $y$ is a weak improvement of $x$. Then $y$ is participant-justified envy-free.</p><p><b>Proof.</b> Suppose otherwise. There are $i\ne j$ and types $t,s$ such that</p><p>$$
+y_{it}&gt;0,\qquad y_{js}&gt;0,\qquad
+j\succ_t i,\qquad t\succ_j s.
+$$</p><p>Define the type prefix</p><p>$$
+G=\{k\in T:k\succsim_t j\}.
+$$</p><p>Since $i\notin G$,</p><p>$$
+y_t(G)\le q_t-y_{it}&lt;q_t.
+$$</p><p>Type SD dominance gives</p><p>$$
+x_t(G)\le y_t(G)&lt;q_t.
+$$</p><p>Hence some $k\notin G$ satisfies $x_{kt}&gt;0$. Completeness of the weak ranking implies $j\succ_t k$.</p><p>Now define the team prefix</p><p>$$
+H=\{u\in\Theta:u\succsim_j t\}.
+$$</p><p>Every type $u$ with $x_{ju}&gt;0$ must belong to $H$. Otherwise $t\succ_j u$, and the positive cells $x_{kt}$ and $x_{ju}$ would violate participant-justified envy-freeness of $x$. Therefore</p><p>$$
+x_j(H)=d_j.
+$$</p><p>Team SD dominance and preservation of team totals imply</p><p>$$
+d_j=x_j(H)\le y_j(H)\le\sum_u y_{ju}=d_j.
+$$</p><p>Thus all positive mass in team $j$’s new bundle belongs to $H$. But $t\succ_j s$ means $s\notin H$, contradicting $y_{js}&gt;0$. $\square$</p><p>This lemma requires no strictness assumption on either side’s rankings. The inclusion of full-set prefixes is essential to the proof.</p><h3>3. A polynomial-time participant-fair starting allocation</h3><p>We use the following established stable-allocation theorem.</p><p><b>Known theorem.</b> For finite bipartite sets with strict preferences, positive vertex quotas, and nonnegative edge capacities, a stable allocation exists and can be computed using polynomially many arithmetic operations. If $a_{it}$ is below its edge capacity, stability means that either type $t$ fills its quota entirely with teams ranked at least as high as $i$, or team $i$ fills its quota entirely with types ranked at least as high as $t$. This is the inductive algorithm of [Baïou and Balinski, corrected paper, Section 2 and Theorem 2](https://pubsonline.informs.org/doi/pdf/10.1287/moor.27.4.662.302).</p><p>Here is the reduction, including its bit complexity.</p><p>Write $\mu_t=p_t/d_t$ with positive integers $p_t,d_t$, and set</p><p>$$
+D=m\prod_{t\in\Theta}d_t.
+$$</p><p>Then</p><p>$$
+Q_t=Dq_t=DM\mu_t,
+\qquad
+C=\frac{DM}{m},
+\qquad
+U=D(M+1)
+$$</p><p>are positive integers. Moreover,</p><p>$$
+\sum_t Q_t=mC=DM.
+$$</p><p>Create a complete bipartite stable-allocation instance between types and teams. Give type $t$ quota $Q_t$, every team quota $C$, and every edge capacity $U$.</p><p>Refine each original weak ranking to an arbitrary strict ranking that preserves all original strict comparisons. These refinements are used only to obtain the starting allocation.</p><p>All hypotheses of the known theorem hold: the sets are finite, the preferences are complete and strict after refinement, and quotas and capacities are positive. Let $a$ be its stable allocation.</p><h3>3.1 Every quota is filled</h3><p>Let</p><p>$$
+F=\sum_{i,t}a_{it}.
+$$</p><p>If $F&lt;DM$, some type $t$ and some team $i$ both have unfilled quotas. Their edge is unsaturated, because</p><p>$$
+a_{it}\le F&lt;DM&lt;U.
+$$</p><p>Neither endpoint can fill its quota using the relevant preference prefix, since even its total allocation is below quota. This contradicts stability.</p><p>Therefore $F=DM$. Since all type and team totals are bounded above by their quotas, and both sets of quotas sum to $DM$, every quota is filled.</p><p>Define</p><p>$$
+x^0_{it}=\frac{a_{it}}D.
+$$</p><p>Then $x^0\in K$ and</p><p>$$
+\sum_t x^0_{it}=\frac Mm
+\qquad\text{for every }i.
+$$</p><h3>3.2 Original participant-justified envy-freeness holds</h3><p>Suppose $x^0$ had a forbidden configuration</p><p>$$
+x^0_{it}&gt;0,\qquad x^0_{js}&gt;0,\qquad
+j\succ_t i,\qquad t\succ_j s.
+$$</p><p>The refinements preserve both strict comparisons. Consequently, type $t$’s refined prefix through team $j$ misses the positive mass $a_{it}$ and is below $Q_t$. Likewise, team $j$’s refined prefix through type $t$ misses $a_{js}$ and is below $C$.</p><p>Also $a_{jt}\le DM&lt;U$, so the edge $(j,t)$ is unsaturated. Both alternatives in the stability condition fail, a contradiction.</p><p>Thus $x^0$ is participant-justified envy-free under the original rankings.</p><h3>3.3 Bit complexity</h3><p>The denominator satisfies</p><p>$$
+\log D\le\log m+\sum_t\log d_t=O(L+\log m).
+$$</p><p>Hence $Q_t$, $C$, and $U$ have polynomial bit length.</p><p>The cited inductive algorithm forms allocation updates using addition, subtraction, minima, and comparisons of quotas, capacities, and residual quantities. On integer input these quantities remain integers; allocation coordinates are bounded by the quotas and capacities. Thus its polynomial arithmetic-operation bound yields polynomial bit complexity here.</p><p>The construction uses only $m\tau$ edges. It never expands a quota into individual participants. The rational allocation $x^0$ also has polynomial encoding length.</p><h3>4. Achieving unrestricted Pareto optimality by one linear program</h3><p>This step works for arbitrary original weak rankings.</p><p>Let $A$ be the matrix whose rows compute every team prefix and every type prefix. There are at most $2m\tau$ rows, and its entries belong to $\{0,1\}$.</p><p>By definition, $v$ Pareto dominates $y$ precisely when</p><p>$$
+Av\ge Ay,\qquad Av\ne Ay.
+$$</p><p>Solve the rational linear program</p><p>$$
+\max_y\ \mathbf1^\top Ay
+$$</p><p>subject to</p><p>$$
+y\in K,\qquad Ay\ge Ax^0.
+$$</p><p>Its feasible set contains $x^0$ and is bounded, because $0\le y_{it}\le q_t$. It has polynomially many variables and constraints and polynomial input bit length. Standard polynomial-time rational linear programming therefore returns a rational optimizer $y$ of polynomial encoding length.</p><p>Every feasible $y$ weakly improves $x^0$. Hence Lemma 2 makes it participant-justified envy-free, and its team totals remain $M/m$.</p><p><b>Proposition 3.</b> Every optimizer of this program is Pareto optimal against all allocations in $K$.</p><p><b>Proof.</b> Suppose $v\in K$ Pareto dominated an optimizer $y$. Then</p><p>$$
+Av\ge Ay\ge Ax^0,
+$$</p><p>so $v$ would also be feasible for the program. At least one component of $Av-Ay$ is positive and none is negative. Therefore</p><p>$$
+\mathbf1^\top Av&gt;\mathbf1^\top Ay,
+$$</p><p>contradicting optimality. $\square$</p><p>In particular, this is unrestricted Pareto optimality: the argument imposes no fairness or balancedness restriction on a hypothetical dominator.</p><p>We have proved:</p><p><b>Theorem 4.</b> For arbitrary weak rankings, a rational allocation with equal team totals, participant-justified envy-freeness, and unrestricted Pareto optimality can be computed in $\operatorname{poly}(m,\tau,L)$ time.</p><h3>5. Team fairness: only tied type preferences can cause the remaining deficit</h3><p>For distinct teams $i,j$, define</p><p>$$
+E_{ij}=\{t\in\Theta:i\sim_t j\}.
+$$</p><p>These are the types indifferent between the two teams.</p><p><b>Lemma 5.</b> Let $x$ be participant-justified envy-free, and put $d_i=\sum_t x_{it}$. For every $H\in\mathcal H_i$, if</p><p>$$
+x_i(H)&lt;d_i,
+$$</p><p>then</p><p>$$
+b_{ij}(H)=x_j(H\cap E_{ij}).
+$$</p><p><b>Proof.</b> Suppose a type $t\in H$ satisfies $x_{jt}&gt;0$ and $i\succ_t j$.</p><p>Participant-justified envy-freeness implies that every type $s$ with $x_{is}&gt;0$ satisfies $s\succsim_i t$: otherwise $t\succ_i s$, giving a forbidden pair.</p><p>Because $H$ is a ranking prefix containing $t$, it contains every type weakly preferred to $t$. Thus every positive coordinate of $x_i$ belongs to $H$, implying $x_i(H)=d_i$, a contradiction.</p><p>Therefore no type assigned positively to $j$ within $H$ strictly prefers $i$ to $j$. Among such types, those satisfying $i\succsim_t j$ are exactly those in $E_{ij}$. $\square$</p><p>This gives an exact characterization of the remaining fairness constraints.</p><p><b>Corollary 6.</b></p><ul><li>If $x$ is balanced and participant-justified envy-free, then team-justified SD-EF1 is equivalent to</li></ul><p>$$
+   x_j(H\cap E_{ij})-x_i(H)\le1
+   \qquad
+   \text{for every }i\ne j,\ H\in\mathcal H_i.
+   $$</p><ul><li>If $x$ has equal team totals and is participant-justified envy-free, then exact team-justified SD envy-freeness is equivalent to</li></ul><p>$$
+   x_j(H\cap E_{ij})\le x_i(H)
+   \qquad
+   \text{for every }i\ne j,\ H\in\mathcal H_i.
+   $$</p><p><b>Proof.</b> Necessity follows because $H\cap E_{ij}$ contributes a subbundle of $b_{ij}$.</p><p>For sufficiency, fix a tested prefix $H$. If $x_i(H)&lt;d_i$, Lemma 5 identifies the entire justified comparison prefix with its tied-type part, giving the desired inequality.</p><p>Otherwise $x_i(H)=d_i$, and</p><p>$$
+b_{ij}(H)-x_i(H)\le d_j-d_i.
+$$</p><p>Balancedness gives $d_j-d_i\le1$, proving the first assertion using Lemma 1. Equal team totals give $d_j-d_i=0$, proving the second. $\square$</p><h3>Consequence for strict type rankings</h3><p>If every type ranks teams strictly, then $E_{ij}=\varnothing$ whenever $i\ne j$. Thus the inequalities in Corollary 6(2) hold automatically:</p><p>$$
+x_j(H\cap E_{ij})=0\le x_i(H).
+$$</p><p>Apply this to the polynomial-time allocation from Theorem 4. It has team totals $M/m$, which lie between $\lfloor M/m\rfloor$ and $\lceil M/m\rceil$. It is participant-justified envy-free and unrestricted Pareto optimal, and it satisfies</p><p>$$
+x_i\succsim_i^{\mathrm{SD}}b_{ij}
+\qquad\text{for every }i\ne j.
+$$</p><p>Taking $z_{ij}=0$ proves the theorem stated at the beginning.</p><h3>6. A verified obstruction to extending this construction directly</h3><p>Theorem 4 cannot simply be asserted to satisfy team fairness when types tie teams.</p><p>Take two teams and two types $a,b$, with</p><p>$$
+M=4,\qquad \mu_a=\mu_b=\frac12.
+$$</p><p>Both teams rank $a\succ b$, while both types are indifferent between the teams. Consider the allocation, with columns ordered as $a,b$,</p><p>$$
+x=
+\begin{pmatrix}
+2&amp;0\\
+0&amp;2
+\end{pmatrix}.
+$$</p><p>It is balanced. Participant-justified envy-freeness is automatic because no type strictly prefers one team to another.</p><p>It is also unrestricted Pareto optimal. Any weak improvement must preserve the team totals. Team $1$’s top-prefix mass must remain at least $2$, and the entire supply of $a$ is $2$. Hence the improvement must retain both units of $a$ at team $1$. The remaining totals then force every other coordinate to remain unchanged.</p><p>Nevertheless, team-justified SD-EF1 fails from team $2$ toward team $1$. Both types are indifferent between teams, so $b_{21}=x_1$. For every allowable deletion vector,</p><p>$$
+(b_{21}-z_{21})_a=2-z_{21,a}\ge1,
+$$</p><p>whereas $x_{2a}=0$. The top-prefix SD inequality fails.</p><p>Moreover, refining both types’ preferences to $1\succ2$ makes this allocation the unique stable starting allocation. If any positive mass of $a$ were assigned to team $2$, equal quotas would force positive mass of $b$ at team $1$, creating a blocking pair between type $a$ and team $1$. Since this starting allocation is already Pareto optimal, the improvement program cannot repair its team-fairness violation.</p><p>The instance itself has a valid fair allocation:</p><p>$$
+\widehat x=
+\begin{pmatrix}
+1&amp;1\\
+1&amp;1
+\end{pmatrix}.
+$$</p><p>Its bundles are identical, so exact team-justified SD envy-freeness holds. Any Pareto dominator must give each team at least one unit of $a$; the total supply forces equality for both, after which all coordinates are fixed. Thus $\widehat x$ is also Pareto optimal.</p><h3>7. What remains open</h3><p>The general polynomial-time-versus-hardness question remains unsettled by these arguments.</p><p>The new results resolve the case of strict type rankings, while allowing all team-side ties. They also isolate the missing requirement for general rankings: after participant fairness and equal totals hold, justified team envy is governed entirely by types indifferent between the compared teams.</p><p>A general algorithm must handle those tied-type inequalities together with unrestricted Pareto optimality. The construction above supplies neither such an algorithm nor a hardness reduction.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 5–7; completeness relative to USER_TASK: The polynomial-time construction does not guarantee team-justified SD-EF1 when types tie teams; Section 6 demonstrates an actual failure. No general algorithm with a nonexistence decision procedure or hardness reduction is supplied. This is an acknowledged scope limitation, not an error in the proved partial results.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: correct partial progress; the general task remains unresolved.</b> The strict-type special case is established, as are the two stated results for arbitrary weak rankings. I found no mathematical error in these arguments. The output explicitly acknowledges that it does not classify the general problem.</p><p>The sole major issue is completeness relative to <code>USER_TASK</code>: the construction does not enforce team-justified SD-EF1 when types tie teams, and no general algorithm or hardness reduction is supplied.</p><h3>1. Prefix notation and Lemma 1</h3><p><b>Verified.</b> Prefixes ending at complete indifference classes characterize precisely the SD relations in the task. Including the full-set prefix correctly retains comparisons of total bundle mass.</p><p>For necessity, the deletion witness gives, for every tested prefix,<br>$$
+b(H)-a(H)\le z(H)\le \sum_t z_t\le\varepsilon.
+$$</p><p>For sufficiency, the described removal order yields<br>$$
+z(H)=\min\{\varepsilon,b(H)\}.
+$$<br>This remains true if removal stops inside an indifference class: a tested prefix contains that entire class, so it contains all mass removed before the stopping point. If the bundle is exhausted, the identity also holds.</p><p>The resulting expression<br>$$
+(b-z)(H)=\max\{0,b(H)-\varepsilon\}
+$$<br>is bounded by $a(H)$ using the assumed deficit bound and nonnegativity. The construction satisfies both $z\le b$ and the deletion budget.</p><p>Consequently, the stated linear inequalities are exactly equivalent to team-justified SD-EF1. The equivalence with right-hand side zero also follows.</p><p><b>Issues: none.</b></p><h3>2. Preservation of participant-justified envy-freeness</h3><p><b>Verified.</b> Full-set team dominance gives a nonnegative change in every team total. Since both allocations have total mass $M$, all these changes must vanish. This uses comparisons over unrestricted allocations exactly as required by the task.</p><p>In Lemma 2, the proposed violation in $y$ implies<br>$$
+x_t(G)\le y_t(G)&lt;q_t.
+$$<br>Hence some positive assignment of type $t$ in $x$ lies outside $G$. Completeness of the weak ranking gives $j\succ_t k$ for that team $k$. Also, $k\ne j$, since $j\in G$.</p><p>Participant fairness of $x$ then forces every type positively assigned to $j$ to lie in $H$: an assignment outside $H$ would produce the forbidden configuration with the positive cell $x_{kt}$. This justifies $x_j(H)=d_j$.</p><p>Dominance and preservation of team totals force $y_j(H)=d_j$, contradicting the positive assignment of $s$ outside $H$.</p><p>No step breaks when either side has ties.</p><p><b>Issues: none.</b></p><h3>3. Stable-allocation construction and complexity</h3><h3>Cited theorem</h3><p><b>Verified against the cited source.</b> The corrected paper defines stability through the same unsaturated-edge prefix condition used in the output. Section 2 supplies the inductive algorithm; Theorem 2 bounds its allocation changes, and Corollary 1 establishes existence for positive quotas and nonnegative capacities. Its updates use the arithmetic operations described by the prover. See [Baïou and Balinski, corrected paper](https://pubsonline.informs.org/doi/pdf/10.1287/moor.27.4.662.302).</p><p>The citation does not confuse this algorithm with the potentially inefficient row-greedy algorithm.</p><h3>Scaling and hypotheses</h3><p><b>Verified.</b> Because every $d_t$ divides $D$, and $m$ divides $D$, the quantities<br>$$
+Q_t=DM\mu_t,\qquad C=\frac{DM}{m},\qquad U=D(M+1)
+$$<br>are positive integers. Their quota sums agree:<br>$$
+\sum_t Q_t=mC=DM.
+$$</p><p>The instance is finite and complete. Strict refinements preserve all original strict comparisons. Thus the stated theorem applies.</p><h3>Filling quotas</h3><p><b>Verified.</b> If $F&lt;DM$, quota-sum equality ensures an underfilled vertex on each side. Their edge is unsaturated because $a_{it}\le F&lt;U$. Each endpoint&#x27;s relevant prefix is below quota because its entire allocation is below quota. This contradicts stability.</p><p>At $F=DM$, the upper quota bounds and equality of aggregate quotas force every individual quota to be filled.</p><h3>Participant fairness under original rankings</h3><p><b>Verified.</b> A forbidden original configuration remains a pair of strict comparisons after refinement. The two positive cells omitted by the relevant prefixes make both prefixes strictly below quota. The proposed blocking edge is unsaturated because its allocation is at most $DM&lt;U$. Stability therefore excludes the configuration.</p><h3>Bit complexity</h3><p><b>Verified.</b> The product defining $D$ may be numerically large, but its bit length satisfies<br>$$
+\log D\le \log m+\sum_t\log d_t.
+$$<br>Thus all scaled input quantities have polynomial bit length.</p><p>Integer initialization and the stated operations preserve integrality. Allocation coordinates and residual quantities are bounded by input quotas, capacities, or sums of polynomially many such quantities. Their bit lengths therefore remain polynomial. Combined with the polynomial arithmetic-operation bound, this establishes polynomial bit complexity without expanding masses into individual participants.</p><p><b>Issues: none.</b></p><h3>4. Linear programming and unrestricted Pareto optimality</h3><p><b>Verified.</b> The matrix $A$ records every distinct prefix comparison relevant to both sides. It has at most $2m\tau$ rows. For $v,y\in K$, the condition<br>$$
+Av\ge Ay,\qquad Av\ne Ay
+$$<br>matches the task&#x27;s definition of Pareto dominance: some agent has a strict prefix improvement, while all agents weakly improve.</p><p>The program is nonempty, bounded, and rational, with polynomial dimensions and coefficient bit lengths. The invoked standard rational linear-programming result supports computing an exact rational optimizer of polynomial encoding length.</p><p>Every feasible allocation weakly improves $x^0$, so Lemma 2 preserves participant fairness. Its team totals remain $M/m$.</p><p>Proposition 3 correctly proves unrestricted Pareto optimality. Any dominator in $K$ would remain feasible and strictly increase the sum of all prefix coordinates. No fairness or balancedness condition is imposed on that hypothetical dominator.</p><p><b>Issues: none.</b></p><h3>5. Tied-type characterization and strict-type theorem</h3><h3>Lemma 5</h3><p><b>Verified.</b> A positive assignment to $j$ of a type $t\in H$ strictly preferring $i$ would, by participant fairness, force every positive assignment at $i$ to be weakly preferred to $t$. Since $H$ contains all such types, this would imply $x_i(H)=d_i$, contrary to the hypothesis.</p><p>Thus every positive justified contribution within $H$ comes from a type indifferent between $i$ and $j$. This proves the stated equality.</p><h3>Corollary 6</h3><p><b>Verified.</b> Necessity follows from nonnegativity and the inclusion of the tied-type subbundle in $b_{ij}$.</p><p>For sufficiency, the two cases exhaust all possibilities because $x_i(H)\le d_i$. In the full-prefix-mass case,<br>$$
+b_{ij}(H)-x_i(H)\le d_j-d_i.
+$$<br>Balancedness gives<br>$$
+d_j-d_i\le \left\lceil\frac Mm\right\rceil-\left\lfloor\frac Mm\right\rfloor\le1.
+$$<br>Equal totals give zero instead. These are precisely the required bounds.</p><h3>Strict-type consequence</h3><p><b>Verified.</b> Strict rankings give $E_{ij}=\varnothing$ for distinct teams, making every tied-type inequality automatic. Applying Corollary 6 to the allocation from Theorem 4 establishes exact justified SD envy-freeness.</p><p>Equal totals $M/m$ satisfy balancedness, and taking every deletion vector equal to zero satisfies SD-EF1. Rationality and polynomial running time were established earlier.</p><p>The argument also covers $m=1$, when all pairwise fairness requirements are vacuous, and $\tau=1$. Positive masses and $M\ge1$ ensure the quotas used in the construction are positive.</p><p><b>Issues: none.</b></p><h3>6. Obstruction example</h3><p><b>Verified.</b> The diagonal allocation has team totals $2$ and the required type totals. Participant fairness is vacuous because the types have no strict team comparisons.</p><p>Its Pareto-optimality argument is correct: any weak improvement preserves team totals, and team $1$ must retain the entire supply of $a$. All remaining coordinates are consequently fixed.</p><p>The SD-EF1 failure is also correct. The deletion budget implies<br>$$
+z_{21,a}\le1,
+$$<br>so the compared top-prefix mass remains at least $1$, while team $2$ has none.</p><p>Under the specified refinements, any positive assignment of $a$ to team $2$ forces positive assignment of $b$ to team $1$ and produces the claimed blocking pair. Together with filled quotas, this establishes uniqueness of the starting allocation. Its Pareto optimality prevents the improvement program from changing it.</p><p>The proposed equal-bundle allocation is feasible and participant-fair. Its identical bundles establish exact justified envy-freeness, and the prefix-supply argument establishes Pareto optimality.</p><p>This example demonstrates failure of the particular construction. It does not establish nonexistence or hardness, and the prover does not claim otherwise.</p><p><b>Issues: none.</b></p><h3>7. Scope limitation and actionable feedback</h3><p><b>Major completeness issue — Sections 5–7.</b> The general task permits tied type rankings. The established algorithm does not enforce the tied-type inequalities required for team fairness, and Section 6 shows that its output can actually violate SD-EF1. The output supplies no alternative general algorithm, nonexistence decision procedure, or hardness reduction.</p><p>No additional clarification is needed to verify the partial results. Settling <code>USER_TASK</code> requires new mathematics: either a general polynomial-time procedure satisfying all conditions, including correct handling of nonexistence, or a hardness result under an explicit reduction notion. The existing example cannot serve as that hardness result.</p><p>The direction is <b>promising</b> because the proved results isolate a precise remaining constraint and establish a substantial special case. The adjudicated complexity status of the general continuous problem remains <b>unresolved</b>.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

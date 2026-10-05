@@ -1,0 +1,399 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-atal-2017-0025 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-atal-2017-0025 <span style="font-weight:normal;color:#8a7350">(d4-conf-atal-2017-0025)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>There is an $\epsilon &gt; 0$ such that any $\epsilon$-approximate streaming algorithm for Approval-CC or Approval-M needs $\Omega(m)$ space.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(C\), \(k\), \(\epsilon\), and a one-pass stream of binary-rational records \((A_i,w_i)\) with approval types \(A_i\subseteq C\) and total mass \(1\), what is the minimum space for a randomized algorithm that outputs, with high probability, a size-\(k\) committee \(S\) that wins in some society \(\nu\) satisfying \(\tfrac12\lVert\mu-\nu\rVert_1\le\epsilon\)? Here \(S\) wins when it maximizes its continuous Monroe score, defined by assigning each type’s mass to committee members with each member receiving exactly \(1/k\) mass.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) be a known candidate set, \(m=|C|\geq1\), \(1\leq k\leq m\), and \(0&lt;\epsilon&lt;1\) a binary rational. Approval types are arbitrary subsets of \(C\), including the empty set.<br>A society is given by its support: the list of its \(\tau\) types with positive mass, each mass a binary rational, summing to \(1\). Here \(\tau\) is the support size, not the number \(2^m\) of possible types. The support records arrive once, in arbitrary order; \(L\) is the total input bit length.<br>For a society \(\rho\) and a size-\(k\) committee \(S\), define its continuous Monroe score by \(M_\rho(S)=\max_x\sum_{A\subseteq C}\sum_{c\in S\cap A}x_{A,c}\), subject to \(x_{A,c}\geq0\), \(\sum_{c\in S}x_{A,c}=\rho(A)\), and \(\sum_{A\subseteq C}x_{A,c}=1/k\) for every \(c\in S\). Type masses may be split, and assignment to unapproved candidates is allowed.<br>A committee wins if it maximizes this score among all size-\(k\) committees; ties count as wins. It is \(\epsilon\)-winning for \(\mu\) if it wins for some probability distribution \(\nu\) on all approval types with \(\frac12\sum_{A\subseteq C}|\mu(A)-\nu(A)|\leq\epsilon\); new types may receive mass.<br>The algorithm must output such a committee after one pass with probability at least \(1-\delta\), where the binary-rational confidence parameter satisfies \(0&lt;\delta&lt;1/2\). Space means worst-case working memory in bits; the input is read-only and the final output is write-only. Computation time is unrestricted, but any time bounds are stated in \(m,\tau,L,k,\epsilon^{-1},\delta^{-1}\).</p><p>What is the asymptotically minimum space \(s(m,\tau,L,k,\epsilon,\delta)\) for this randomized streaming problem, as characterized by upper and lower bounds?</p><p>For discrete Approval-M, changing at most an \(\epsilon\) fraction of ballots defines approximate winning; a linear space lower bound \(\Omega(m)\) is established for some fixed positive \(\epsilon\), already for \(k=1\), and an upper bound \(O(\epsilon^{-2}k^3m\log m)\) is reported. [Source](https://www.ifaamas.org/Proceedings/aamas2017/pdfs/p15.pdf)<br>No result settling the optimal space for the exact distributional model above was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The anchor proves a streaming-space lower bound rather than NP-hardness; classified it as other and retained a space-complexity target.</li><li>Interpreted the mandatory support representation as one positive-mass record per distinct approval type, arriving in arbitrary order.</li><li>Replaced the voter-count-dependent high-probability convention with an explicit failure parameter delta, since normalized masses supply no voter count.</li><li>Allowed empty approval sets, fractional splitting of each type, assignment to unapproved candidates, and all tied maximizing committees.</li><li>Allowed the nearby society to put mass on types absent from the input, reflecting unrestricted ballot replacement; its masses may be real.</li><li>Specified bit space, total input bit length, read-only input, write-only final output, and unrestricted computation time, matching the anchor&#x27;s focus on memory.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial characterization, with stronger accuracy-dependent lower bounds</h3><p>The general minimum space remains unresolved. The following bounds are proved directly for the stated distributional model.</p><p>All logarithms below are base two, except $\ln$. Candidates are indexed by $C=\{1,\ldots,m\}$. Input-length estimates for the lower-bound families use characteristic vectors for approval types and binary numerator–denominator encodings for rational masses.</p><p>The upper bounds are<br>$$
+s\leq O(L+m)
+$$<br>and<br>$$
+s\leq O\!\left(\tau\left[m+\log(1/\epsilon)\right]+\log L\right).
+$$<br>For $k=1$, there are also the bounds<br>$$
+s\leq O\!\left(m\left[\log(\tau+1)+\log(1/\epsilon)\right]+\log L\right)
+$$<br>deterministically, and<br>$$
+s\leq O\!\left(
+m\left[1+\log(1/\epsilon)+\log\log(m/\delta)\right]+\log L
+\right)
+$$<br>randomly. The minimum of the applicable upper bounds may be taken.</p><p>The new lower bounds establish that the factor $\log(1/\epsilon)$ can be necessary:</p><ul><li>For $k=1$, fixed $\delta&lt;1/2$, and explicit families with $\tau=\Theta(r)$, $\epsilon=2^{-2r-7}$, $1\leq r\leq m$, and $L=\Theta(mr)$, the optimum space is</li></ul><p>$$
+  \Theta(mr)=\Theta\!\left(m\log(1/\epsilon)\right).
+  $$</p><ul><li>A second family gives the same tight bound for arbitrarily large accuracy precision, using $\tau=m+1$ support types.</li><li>The first construction extends to larger committees and proves an accuracy-dependent lower bound with at most $k+r+2$ support types.</li></ul><p>These are bounds on specified parameter families, not a matching characterization for every parameter tuple.</p><p>The [cited Approval-M paper](https://www.ifaamas.org/Proceedings/aamas2017/pdfs/p15.pdf) studies discrete ballot changes. No transfer of its upper bound to the present model is assumed here.</p><h3>1. Score formula and a necessary condition for approximate winning</h3><p>For $T\subseteq C$, define<br>$$
+N(T)=\{A\subseteq C:A\cap T\neq\varnothing\},
+\qquad
+p_\rho(T)=\rho(N(T)).
+$$</p><p><b>Proposition 1.</b> For every distribution $\rho$ and every size-$k$ committee $S$,<br>$$
+M_\rho(S)=
+\min_{T\subseteq S}
+\left(p_\rho(T)+\frac{k-|T|}{k}\right).
+$$</p><p><b>Proof.</b> Construct a finite network with a source, one vertex for each approval type, one vertex for each member of $S$, and a sink. Give the source-to-type edge capacity $\rho(A)$, each approved type-to-candidate edge capacity $2$, and each candidate-to-sink edge capacity $1/k$.</p><p>A feasible flow is an approved partial assignment satisfying row and column upper bounds. It extends to a full assignment: remaining row masses and column capacities have equal total, and all type–candidate assignments are permitted. Conversely, the approved portion of a full assignment is a feasible flow. Thus maximum flow equals the Monroe score.</p><p>A cut of capacity $1$ exists. Consequently, no minimum cut crosses a capacity-$2$ edge. If $T$ is the set of committee candidates on the sink side, every type intersecting $T$ must also be on that side. For this fixed $T$, placing exactly those types on the sink side minimizes capacity and gives<br>$$
+p_\rho(T)+\frac{k-|T|}{k}.
+$$<br>The finite max-flow/min-cut theorem applies because all capacities are nonnegative. Minimizing over $T$ proves the formula. $\square$</p><p>Write<br>$$
+d_{\mathrm{TV}}(\mu,\nu)=
+\frac12\sum_{A\subseteq C}|\mu(A)-\nu(A)|,
+\qquad
+M_\mu^*=\max_{|R|=k}M_\mu(R).
+$$</p><p><b>Corollary 2.</b> For every committee $S$,<br>$$
+|M_\mu(S)-M_\nu(S)|
+\leq d_{\mathrm{TV}}(\mu,\nu).
+$$<br>In particular, every $\epsilon$-winning committee satisfies<br>$$
+M_\mu^*-M_\mu(S)\leq 2\epsilon.
+$$</p><p><b>Proof.</b> Every event probability changes by at most total variation distance. Apply this to each $N(T)$ in Proposition 1; taking a minimum preserves the uniform error bound.</p><p>If $S$ wins for $\nu$ with $d_{\mathrm{TV}}(\mu,\nu)\leq\epsilon$, then, for every $R$,<br>$$
+M_\mu(R)
+\leq M_\nu(R)+\epsilon
+\leq M_\nu(S)+\epsilon
+\leq M_\mu(S)+2\epsilon.
+$$<br>Taking the maximum over $R$ proves the second assertion. $\square$</p><p>Only this necessary condition is used in the lower bounds.</p><h3>2. Deterministic upper bounds</h3><h3>2.1 Exact storage</h3><p>Store the input and enumerate all committees and the subsets appearing in Proposition 1.</p><p>The product of all input mass denominators has bit length $O(L)$. Using this common denominator and then incorporating the factor $k$, exact score calculations and comparisons require $O(L+\log k)$ arithmetic bits. They can be performed one type at a time without storing a separate converted numerator for every type.</p><p>Committee enumeration uses $O(m)$ bits. Therefore exact winner determination uses<br>$$
+O(L+m)
+$$<br>working bits. Its output is valid for every $\epsilon$ and $\delta$.</p><h3>2.2 A finite-precision parsing lemma</h3><p><b>Lemma 3.</b> A binary-encoded rational $w\in[0,1]$ can be read once and rounded to an integer $q$ satisfying<br>$$
+0\leq \frac q{2^b}\leq w,
+\qquad
+w-\frac q{2^b}\leq \frac2{2^b},
+$$<br>using $O(b+\log L)$ bits.</p><p><b>Proof.</b> Write $w=p/d$. Retain the leading $h=b+4$ bits of each integer and count their bit lengths. Truncating the numerator downward and the denominator upward gives integers, represented by a leading significand and an exponent, satisfying<br>$$
+p_-\leq p,\qquad d_+\geq d.
+$$<br>If an integer has more than $h$ bits, its relative approximation error is at most $2^{1-h}$; shorter integers are retained exactly. Since $p/d\leq1$,<br>$$
+0\leq \frac pd-\frac{p_-}{d_+}
+\leq 2^{2-h}.
+$$<br>Rounding $2^bp_-/d_+$ downward contributes less than $2^{-b}$ additional error, proving the stated bound.</p><p>Significands use $O(b)$ bits and bit-length counters use $O(\log L)$ bits. If the exponent difference makes the ratio smaller than $2^{-b}$, return zero. Otherwise the shifts needed for the calculation have length $O(b)$. Thus no full-precision input integer must be retained. $\square$</p><p>A conservative dyadic estimate of $\epsilon$ within a constant factor can be obtained by the same leading-bit method. Its full encoding need not be stored.</p><h3>2.3 Rounded support storage, without knowing $\tau$</h3><p>Choose a power of two $D_0\geq32/\epsilon$. For record $i\geq1$, use<br>$$
+D_i=D_0\,2^{2\lceil\log(i+1)\rceil}.
+$$<br>These denominators are nondecreasing powers of two. Apply Lemma 3 to obtain a rounded mass<br>$$
+r_i=\frac{q_i}{D_i}\leq w_i,
+\qquad
+w_i-r_i\leq \frac2{D_i}.
+$$<br>Because $D_i\geq D_0(i+1)^2$,<br>$$
+R:=1-\sum_{i=1}^{\tau}r_i
+\leq \frac2{D_0}\sum_{i=1}^{\infty}\frac1{(i+1)^2}
+\leq \frac2{D_0}
+\leq \frac{\epsilon}{16}.
+$$<br>The series bound follows by comparing its terms with the integral of $x^{-2}$ from $1$ to infinity.</p><p>Define $\nu$ by retaining every rounded mass and placing the residual $R$ on the empty approval type. Downward rounding gives<br>$$
+d_{\mathrm{TV}}(\mu,\nu)
+=\sum_{A\neq\varnothing}\bigl(\mu(A)-r_A\bigr)
+\leq R.
+$$</p><p>Store each type and its rounded mass. Whenever $D_i$ increases, rescale earlier stored integers to the new denominator. The final denominator has bit length<br>$$
+b_\tau=O\!\left(\log(\tau+1)+\log(1/\epsilon)\right).
+$$<br>After the pass, compute an exact winner for $\nu$ using Proposition 1. The distribution $\nu$ is its required witness.</p><p>The space is<br>$$
+O\!\left(
+\tau\left[m+\log(\tau+1)+\log(1/\epsilon)\right]+\log L
+\right).
+$$<br>Since distinct support types satisfy $\tau\leq2^m$, this is<br>$$
+O\!\left(\tau\left[m+\log(1/\epsilon)\right]+\log L\right).
+$$</p><h3>2.4 A smaller deterministic algorithm for $k=1$</h3><p>When $k=1$, the score of candidate $c$ is its approval probability<br>$$
+p_\rho(c)=\rho(\{A:c\in A\}).
+$$</p><p>Use the preceding rounding scheme, but retain only the $m$ approval sums. All counters use the current common denominator and are rescaled when it increases. An arriving type can be held in an $m$-bit buffer while its mass is parsed.</p><p>The final counters are exactly the approval probabilities for the rounded witness distribution $\nu$; its residual empty mass contributes nothing. Return a candidate maximizing its counter.</p><p>Consequently, the deterministic space bound is<br>$$
+O\!\left(
+m\left[\log(\tau+1)+\log(1/\epsilon)\right]+\log L
+\right).
+$$<br>The algorithm does not need $\tau$ in advance.</p><h3>3. A support-independent randomized upper bound for $k=1$</h3><p>The following bound can be smaller when $\tau$ is large.</p><p><b>Lemma 4.</b> If<br>$$
+g=\max_d p_\mu(d)-p_\mu(c),
+$$<br>then $c$ wins for a distribution at total variation distance at most $g$ from $\mu$.</p><p><b>Proof.</b> Since $g\leq1-p_\mu(c)$, take mass $g$ from types not approving $c$ and move it to $\{c\}$. Candidate $c$ gains approval mass $g$, while every other candidate’s approval mass weakly decreases. Thus $c$ becomes a winner. The total variation change is at most $g$. $\square$</p><p>Choose a power of two<br>$$
+D\geq16\,2^m/\epsilon
+$$<br>and round every input mass downward using Lemma 3 with this denominator. Put the residual mass on the empty type. The resulting distribution $\nu$ satisfies<br>$$
+d_{\mathrm{TV}}(\mu,\nu)\leq \frac{2\tau}{D}\leq\frac{\epsilon}{8}.
+$$</p><p>Take<br>$$
+N\geq8\epsilon^{-2}\ln(2m/\delta)
+$$<br>with $N=O(\epsilon^{-2}\log(m/\delta))$. Conservative dyadic estimates of the parameters suffice to choose such an integer.</p><p>The approval counts of $N$ independent samples from $\nu$ can be generated during the pass. Initially let $n=N$ and $B=D$. On a record of rounded integer mass $q_A$, draw<br>$$
+J_A\sim\operatorname{Binomial}(n,q_A/B),
+$$<br>add $J_A$ to the counters of all candidates in $A$, and update<br>$$
+n\leftarrow n-J_A,\qquad B\leftarrow B-q_A.
+$$<br>Remaining samples at the end belong to the residual empty category.</p><p>This is exactly conditional multinomial sampling: conditional on avoiding earlier categories, each remaining independent sample has current-category probability $q_A/B$. Cases $q_A=0$ and $q_A=B$ are deterministic. Exact rational Bernoulli draws, and hence binomial draws, can be implemented by rejection sampling using $O(\log D+\log N)$ bits.</p><p>Let $\widehat p(c)$ be a sampled approval frequency. For each fixed candidate, the $N$ indicators are independent Bernoulli variables. Hoeffding’s inequality gives<br>$$
+\Pr\!\left(
+|\widehat p(c)-p_\nu(c)|&gt;\epsilon/4
+\right)
+\leq 2e^{-N\epsilon^2/8}.
+$$<br>A union bound over the $m$ candidates shows that, with probability at least $1-\delta$,<br>$$
+|\widehat p(c)-p_\mu(c)|\leq3\epsilon/8
+\quad\text{for every }c.
+$$<br>If $c$ maximizes $\widehat p$ and $d$ maximizes $p_\mu$, then<br>$$
+p_\mu(d)-p_\mu(c)\leq3\epsilon/4.
+$$<br>Lemma 4 makes $c$ $\epsilon$-winning.</p><p>There are $m$ counters bounded by $N$, one type buffer, and $O(\log D+\log L)$ parsing and sampling bits. Therefore space is<br>$$
+O\!\left(
+m\left[1+\log(1/\epsilon)+\log\log(m/\delta)\right]+\log L
+\right).
+$$<br>Rejection sampling has bounded workspace and finite expected running time. The overall expected running time is polynomial in the parameters allowed in the question.</p><h3>4. An information lemma for the lower bounds</h3><p>We use an elementary one-way communication bound.</p><p><b>Lemma 5.</b> Suppose Alice holds a uniformly random string<br>$$
+X=(X_1,\ldots,X_q)\in\{0,1\}^q
+$$<br>and sends a state $Z$ of at most $s$ bits. Bob, given an index $j$, the prefix $X_1,\ldots,X_{j-1}$, and public randomness, estimates $X_j$ with error at most $\delta$ for every input and index. Then<br>$$
+s\geq q\bigl(1-h_2(\delta)\bigr)-1,
+$$<br>where<br>$$
+h_2(u)=-u\log u-(1-u)\log(1-u).
+$$</p><p><b>Proof.</b> Let $R$ denote public randomness, independent of $X$. For each $j$, let $E_j$ indicate estimation error. Given $Z,R,X_1,\ldots,X_{j-1}$, the bit $X_j$ is determined by the estimate and $E_j$. Hence<br>$$
+H(X_j\mid Z,R,X_1,\ldots,X_{j-1})
+\leq H(E_j)
+\leq h_2(\delta).
+$$<br>The last inequality uses $\Pr(E_j=1)\leq\delta&lt;1/2$.</p><p>By the entropy chain rule,<br>$$
+H(X\mid Z,R)\leq qh_2(\delta).
+$$<br>Since $H(X\mid R)=q$,<br>$$
+I(X;Z\mid R)\geq q(1-h_2(\delta)).
+$$<br>A variable-length state of at most $s$ bits has fewer than $2^{s+1}$ possible values, so $H(Z\mid R)\leq s+1$. This proves the result. $\square$</p><p>For a streaming reduction, Alice processes an initial segment and sends the complete retained state. Bob processes the remaining records and decodes the output. Independent public random tapes for the two segments reproduce the algorithm’s randomness.</p><h3>5. Lower bounds encoding accuracy in approval types</h3><h3>5.1 Construction for $k=1$</h3><p>Fix an integer $r\geq1$. Put<br>$$
+b=\lceil\log r\rceil,
+\qquad
+n=m-b-2,
+$$<br>and assume $n\geq1$.</p><p>Use signal candidates $c_1,\ldots,c_n$, candidates $d,z$, and $b$ marker candidates. Assign each row $j\in\{1,\ldots,r\}$ a distinct marker subset $G_j$.</p><p>Alice holds $nr$ bits $x_{j,\ell}$. She supplies $r$ records<br>$$
+A_j=\{z\}\cup G_j\cup\{c_\ell:x_{j,\ell}=1\},
+\qquad
+w_j=4^{-(j+1)}.
+$$<br>Their total mass is<br>$$
+W=\sum_{j=1}^r w_j&lt;\frac1{12}.
+$$<br>The types are distinct because their marker subsets are distinct.</p><p>Bob asks for bit $x_{t,i}$ and knows all earlier bits in row-major order. In particular, he knows<br>$$
+P=\sum_{j&lt;t}w_jx_{j,i}.
+$$<br>Set<br>$$
+D=P+\frac{w_t}{2},
+\qquad
+u=\frac{1-W-D}{2},
+\qquad
+v=\frac{1-W+D}{2}.
+$$<br>Bob supplies two records:<br>$$
+\{c_i\}\text{ with mass }u,
+\qquad
+\{d\}\text{ with mass }v.
+$$<br>Because $0&lt;D&lt;W$, both masses are positive. All masses are dyadic and sum to $1$. These two types are distinct from Alice’s types because every Alice type contains $z$. Thus<br>$$
+\tau=r+2.
+$$</p><p>Let<br>$$
+T=\sum_{j&gt;t}w_jx_{j,i}.
+$$<br>The geometric weights satisfy<br>$$
+0\leq T&lt;\frac{w_t}{3}.
+$$<br>The approval-score difference between $c_i$ and $d$ is<br>$$
+p_\mu(c_i)-p_\mu(d)
+=P+w_tx_{t,i}+T+u-v
+=w_tx_{t,i}+T-\frac{w_t}{2}.
+$$<br>Therefore:</p><ul><li>If $x_{t,i}=0$, then $d$ beats $c_i$ by more than $w_t/6$.</li><li>If $x_{t,i}=1$, then $c_i$ beats $d$ by at least $w_t/2$.</li></ul><p>Every other candidate has approval probability at most $W&lt;1/12$. Meanwhile,<br>$$
+u\geq\frac{1-2W}{2}&gt;\frac5{12},
+\qquad
+v&gt;\frac5{12}.
+$$<br>Thus every candidate other than the better of $c_i,d$ has score deficit at least $w_r/6$.</p><p>If<br>$$
+\epsilon&lt;\frac{w_r}{12},
+$$<br>Corollary 2 forces every successful output to be $c_i$ exactly when $x_{t,i}=1$. Applying Lemma 5 yields<br>$$
+s\geq
+\left(m-\lceil\log r\rceil-2\right)
+r\bigl(1-h_2(\delta)\bigr)-1.
+$$</p><h3>5.2 A tight family</h3><p>Choose<br>$$
+\epsilon_r=\frac{w_r}{32}=2^{-2r-7}.
+$$<br>For $m\geq16$ and $1\leq r\leq m$,<br>$$
+m-\lceil\log r\rceil-2\geq m/2.
+$$<br>For fixed $\delta&lt;1/2$, the lower bound is consequently $\Omega(mr)$.</p><p>The type vectors contribute $\Theta(mr)$ input bits. The dyadic masses contribute $O(r^2)$ bits, and Bob’s two masses have $O(r)$-bit encodings. Since $r\leq m$,<br>$$
+L=\Theta(mr).
+$$<br>Exact storage gives the matching $O(mr)$ upper bound. Hence, on these explicit families,<br>$$
+s=\Theta(mr)
+=\Theta\!\left(m\log(1/\epsilon_r)\right).
+$$</p><p>This also proves an $\Omega(m\tau)$ lower bound on families where the accuracy is exponentially small in the support size.</p><h3>5.3 Extension to larger committees</h3><p>Let<br>$$
+\alpha=2^{-\lceil\log k\rceil},
+\qquad
+\frac1{2k}\leq\alpha\leq\frac1k.
+$$<br>Introduce $k-1$ anchor candidates $a_1,\ldots,a_{k-1}$. Give each singleton anchor type mass $\alpha$, and give the all-anchor type mass $1-k\alpha$ when this is positive.</p><p>The total anchor mass is $1-\alpha$. The anchors can all receive approved mass $1/k$: after assigning the singleton masses, the remaining required mass is<br>$$
+(k-1)\left(\frac1k-\alpha\right),
+$$<br>which is at most $1-k\alpha$, since the difference is $1/k-\alpha\geq0$.</p><p>Multiply every signal mass in the preceding construction by $\alpha$. Its total mass is then $\alpha$. The full distribution still sums to $1$.</p><p>For a committee containing all anchors and one signal candidate $c$, its score is exactly<br>$$
+\frac{k-1}{k}+\alpha p(c),
+$$<br>where $p(c)$ is its approval probability in the normalized signal distribution. Indeed, anchor capacities can all be filled, and the signal contribution is at most $\alpha\leq1/k$.</p><p>For $k\geq2$, a committee omitting an anchor has score at most<br>$$
+\frac{k-2}{k}+\alpha
+\leq\frac{k-1}{k}.
+$$<br>The best committee with all anchors scores more than<br>$$
+\frac{k-1}{k}+\frac{5\alpha}{12}.
+$$<br>Consequently, under<br>$$
+\epsilon&lt;\frac{\alpha w_r}{12},
+$$<br>every successful committee contains all anchors and chooses the correct one of $c_i,d$.</p><p>There are now<br>$$
+n=m-k-\lceil\log r\rceil-1
+$$<br>variable signal candidates. When $n\geq1$, Lemma 5 proves<br>$$
+s\geq
+\left(m-k-\lceil\log r\rceil-1\right)
+r\bigl(1-h_2(\delta)\bigr)-1.
+$$<br>The support size is at most $k+r+2$. In particular, with<br>$$
+\epsilon=\frac{\alpha w_r}{32},
+$$<br>the construction encodes accuracy precision satisfying<br>$$
+\log(1/\epsilon)=2r+7+\lceil\log k\rceil.
+$$</p><p>This establishes a stronger accuracy-dependent lower bound for general $k$, but does not match a general upper bound.</p><h3>6. Lower bounds encoding arbitrarily high precision in masses</h3><p>The preceding tight family assumes $r\leq m$. A second construction removes this restriction for $k=1$.</p><p>Let $m\geq3$, put $n=m-2$, and use candidates<br>$$
+c_1,\ldots,c_n,z,d.
+$$<br>Set<br>$$
+\beta=2^{-\lceil\log n\rceil-6},
+\qquad
+\lambda_j=\beta4^{-j},
+\qquad
+\eta=\beta4^{-(r+1)},
+\qquad
+W=\frac1{16}.
+$$</p><p>Alice holds $nr$ bits $x_{i,j}$. For each $i$, she supplies type $\{c_i,z\}$ with mass<br>$$
+a_i=\beta+\eta+\sum_{j=1}^r\lambda_jx_{i,j}.
+$$<br>She also supplies $\{z\}$ with mass<br>$$
+W-\sum_{i=1}^n a_i.
+$$<br>All these masses are positive. Indeed,<br>$$
+a_i&lt;\frac32\beta,
+\qquad
+n\beta\leq\frac1{64},
+$$<br>so<br>$$
+\sum_i a_i&lt;\frac3{128}&lt;W.
+$$<br>Alice’s segment always has total mass $W$, and $z$ has approval probability $W$.</p><p>Bob asks for bit $x_{i,t}$ and knows earlier bits in candidate-major order. He knows<br>$$
+P=\beta+\eta+\sum_{j&lt;t}\lambda_jx_{i,j}.
+$$<br>Define<br>$$
+D=P+\frac{\lambda_t}{2},
+\qquad
+u=\frac{1-W-D}{2},
+\qquad
+v=\frac{1-W+D}{2}.
+$$<br>Bob supplies $\{c_i\}$ with mass $u$ and $\{d\}$ with mass $v$.</p><p>Since $0&lt;D&lt;W$, both Bob masses exceed $7/16$. Every unqueried candidate has approval probability at most $W$. The queried score difference is<br>$$
+p_\mu(c_i)-p_\mu(d)
+=\lambda_tx_{i,t}
++\sum_{j&gt;t}\lambda_jx_{i,j}
+-\frac{\lambda_t}{2}.
+$$<br>The same geometric-tail calculation gives the correct sign with magnitude at least $\lambda_r/6$. Thus, if<br>$$
+\epsilon&lt;\frac{\lambda_r}{12},
+$$<br>every successful output identifies $x_{i,t}$. Lemma 5 proves<br>$$
+s\geq(m-2)r\bigl(1-h_2(\delta)\bigr)-1.
+$$</p><p>The support types are distinct and number exactly<br>$$
+\tau=n+3=m+1.
+$$<br>The constant $\eta$ ensures that each $a_i$, expressed over the denominator of $\eta$, has odd numerator: its numerator is congruent to $1$ modulo $4$. Therefore each such mass has binary encoding length $\Theta(r+\log n)$ even after reduction.</p><p>With characteristic-vector type encodings,<br>$$
+L=\Theta(m^2+mr).
+$$<br>Choose<br>$$
+\epsilon=\frac{\lambda_r}{32}
+=2^{-\lceil\log n\rceil-2r-11}.
+$$<br>For $r\geq m$ and fixed $\delta&lt;1/2$,<br>$$
+L=\Theta(mr),
+\qquad
+\log(1/\epsilon)=\Theta(r).
+$$<br>The lower bound and exact-storage upper bound therefore match:<br>$$
+s=\Theta(mr)
+=\Theta\!\left(m\log(1/\epsilon)\right).
+$$</p><p>Thus the accuracy-dependent lower bound persists for arbitrarily high rational precision, without increasing support beyond $m+1$.</p><h3>7. Constant-accuracy lower bounds and easy regimes</h3><h3>7.1 A linear lower bound with two signal types</h3><p>For completeness, a simpler construction gives stronger constant-accuracy thresholds.</p><p>For $k=1$, use candidates $c_1,\ldots,c_{m-1},d$. Alice supplies<br>$$
+A(x)=\{d\}\cup\{c_j:x_j=1\}
+$$<br>with mass $5/8$. Bob, querying $i$, supplies $\{c_i\}$ with mass $3/8$.</p><p>If $x_i=1$, candidate $c_i$ scores $1$ and all others score at most $5/8$. If $x_i=0$, candidate $c_i$ scores $3/8$ while $d$ scores $5/8$. For<br>$$
+\epsilon&lt;1/8,
+$$<br>Corollary 2 forces a successful output to equal $c_i$ exactly when $x_i=1$.</p><p>Lemma 5, which remains applicable when Bob does not need his prefix, gives<br>$$
+s\geq(m-1)(1-h_2(\delta))-1.
+$$<br>Here $\tau=2$ and $L=\Theta(m)$. For fixed $\epsilon&lt;1/8$ and fixed $\delta&lt;1/2$, exact storage proves the matching $\Theta(m)$ bound.</p><p>Adding the anchors of Section 5.3 and scaling these two signal masses by $\alpha$ gives<br>$$
+s\geq(m-k)(1-h_2(\delta))-1
+$$<br>for<br>$$
+\epsilon&lt;1/(16k),
+$$<br>using at most $k+2$ support types. The two relevant signal-score deficits are at least $\alpha/4$, and<br>$$
+2\epsilon&lt;\frac1{8k}\leq\frac{\alpha}{4}.
+$$<br>Committees omitting anchors are excluded by the anchor-score bound already proved.</p><h3>7.2 A sharp universal perturbation radius</h3><p>If $k=m$, the unique committee can be output with $O(\log m)$ working bits.</p><p>There is also an easy accuracy regime.</p><p><b>Proposition 6.</b> Every predetermined size-$k$ committee is valid for every society when<br>$$
+\epsilon\geq\frac{k}{k+1}.
+$$<br>For $m&gt;k$, this universal radius is sharp.</p><p><b>Proof of the upper bound.</b> For a fixed committee $S$, let $\sigma_S$ put mass $1/k$ on each singleton $\{c\}$ with $c\in S$. Set<br>$$
+t=\frac{k}{k+1},
+\qquad
+\nu=(1-t)\mu+t\sigma_S.
+$$<br>Then $d_{\mathrm{TV}}(\mu,\nu)\leq t$. Assign the singleton component to its corresponding members of $S$ and distribute the remaining component equally. This gives $M_\nu(S)\geq t$.</p><p>Any different committee $R$ receives approved mass at most<br>$$
+1-t+\frac{t|R\cap S|}{k}
+\leq1-t+\frac{t(k-1)}{k}
+=t.
+$$<br>Hence $S$ wins. $\square$</p><p><b>Proof of sharpness.</b> Choose $b\notin S$ and let $\mu$ be concentrated on $\{b\}$. Suppose $d_{\mathrm{TV}}(\mu,\nu)=t&lt;k/(k+1)$. Then<br>$$
+\nu(\{b\})\geq1-t,
+\qquad
+M_\nu(S)\leq t.
+$$<br>In an optimal approved partial assignment to $S$, some member $c$ receives approved mass<br>$$
+q_c\leq M_\nu(S)/k\leq t/k.
+$$<br>Replace $c$ by $b$, retain all other approved assignments, and assign $\{b\}$ mass to $b$ up to its quota. This is feasible because the retained approved assignment uses no $\{b\}$ mass. The resulting score is at least<br>$$
+M_\nu(S)-q_c+\min\{\nu(\{b\}),1/k\}.
+$$<br>Both $1-t$ and $1/k$ are strictly greater than $t/k$. Thus the replacement committee strictly beats $S$. No distance smaller than $k/(k+1)$ suffices. $\square$</p><p>The upper-bound algorithm in this regime ignores the society and outputs a predetermined committee using $O(\log m)$ working bits.</p><h3>8. What remains unresolved</h3><p>The proved bounds now settle several substantial families, including families requiring<br>$$
+\Theta\!\left(m\log(1/\epsilon)\right)
+$$<br>space. They still do not determine the minimum space for arbitrary $(m,\tau,L,k,\epsilon,\delta)$.</p><p>For general $k$, score sampling alone leaves a genuine missing implication. Proposition 1 and Hoeffding’s inequality provide simultaneous score approximation from samples, but an approximately optimal score has not here been converted into the required nearby-distribution winner guarantee.</p><p>In particular, the point-mass society used in Proposition 6 has<br>$$
+M_\mu^*-M_\mu(S)=1/k
+$$<br>for a committee excluding $b$, while its winner distance is $k/(k+1)$. Any universal linear conversion must therefore have factor at least<br>$$
+\frac{k^2}{k+1}.
+$$</p><p>A simple proposed repair—mixing toward equal singleton mass on $S$—also fails to close arbitrarily small score gaps. Here is an exact example.</p><p>Let $k=2$, $C=\{a,b,c\}$, $S=\{b,c\}$, and $0&lt;g&lt;1/12$. Give masses<br>$$
+\mu(\varnothing)=\frac1{10},\qquad
+\mu(\{a\})=\frac1{10},\qquad
+\mu(\{b\})=\frac3{10}+g,\qquad
+\mu(\{a,c\})=\frac12-g.
+$$<br>Proposition 1 gives<br>$$
+M_\mu(S)=\frac45,\qquad
+M_\mu(\{a,b\})=\frac45+g,\qquad
+M_\mu(\{a,c\})=\frac35-g.
+$$<br>Moving mass $g$ from the empty type to $\{c\}$ makes $S$ a winner, so its winner distance is at most $g$.</p><p>Nevertheless, for<br>$$
+\nu_t=(1-t)\mu+t\sigma_S,
+$$<br>Proposition 1 gives<br>$$
+M_{\nu_t}(S)=\frac45+\frac t5.
+$$<br>For $R=\{a,b\}$, its four cut values are<br>$$
+1,\qquad
+\frac12+(1-t)\left(\frac35-g\right),\qquad
+(1-t)\left(\frac45+g\right)+t,\qquad
+\frac9{10}-\frac{2t}{5}.
+$$<br>Every one is strictly greater than $4/5+t/5$ when $0\leq t&lt;1/6$. For the second value, the difference is<br>$$
+\frac3{10}-g-t\left(\frac45-g\right)
+&gt;
+\frac3{10}-\frac1{12}-\frac{2}{15}
+=\frac1{12}.
+$$<br>The other differences are respectively<br>$$
+\frac{1-t}{5},\qquad
+(1-t)g,\qquad
+\frac1{10}-\frac{3t}{5}.
+$$<br>Thus this particular mixing method needs a constant mixing amount even as $g$ tends to zero. This does not refute a better perturbation construction; it explains why that method cannot supply the missing general upper bound.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Opening characterization and Section 8: The requested asymptotically minimum space for arbitrary $(m,\tau,L,k,\epsilon,\delta)$ is not established. Matching bounds are proved only for specified families, and the general parameter dependence remains unresolved.</li><li><b>minor</b> — Sections 2.3 and 3: choices of $D_0$ and $D$: The stated lower bounds on $D_0$ and $D$ do not alone imply the denominator bit-length upper bounds used in the space analysis. Specify the smallest admissible powers of two, or explicitly require choices within a constant factor of the thresholds.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: correct and substantial partial progress, but the requested general minimum-space characterization is not established.</b> The score formula, streaming upper bounds, communication lower bounds, and perturbation examples withstand verification. I found no false central step.</p><p>The main unresolved issue is acknowledged by the prover: matching bounds are obtained only on specified parameter families. There is also one minor precision-choice omission in the upper-bound presentation.</p><h3>1. Scope and relation to the task</h3><p>The output addresses the correct distributional model:</p><ul><li>Approval types may include the empty set.</li><li>Masses may be split among candidates.</li><li>Unapproved assignments are permitted.</li><li>Perturbations may introduce new types.</li><li>Ties count as wins.</li><li>The algorithms process the support records once.</li><li>The lower bounds concern working memory, with unrestricted computation time.</li></ul><p>The distinction from the cited discrete model is accurate. That paper defines approximate winning through changing ballots; the output does not assume its upper bound transfers to the distributional setting. See [Definition 1 in the cited paper](https://www.ifaamas.org/Proceedings/aamas2017/pdfs/p15.pdf).</p><p>Nevertheless, the output explicitly leaves the minimum space for arbitrary parameter tuples unresolved. Its bounds should therefore be accepted as a partial characterization, not as a complete answer to the requested minimum-space question.</p><h3>2. Score formula and perturbation necessity</h3><h3>Proposition 1</h3><p>The network argument is correct.</p><p>The approved part of any feasible full assignment is a feasible flow. Conversely, the unused row masses and column capacities of a feasible flow have equal total. Because unapproved assignments are permitted, extending that flow to a full assignment is valid.</p><p>The cut analysis is also correct:</p><ul><li>A cut of capacity $1$ exists.</li><li>A minimum cut cannot cross an edge of capacity $2$.</li><li>If $T$ consists of committee candidates on the sink side, every type approving a member of $T$ must lie on that side.</li><li>Placing exactly those types there minimizes the cut capacity for fixed $T$.</li></ul><p>This yields precisely the claimed formula:<br>$$
+M_\rho(S)=\min_{T\subseteq S}
+\left(p_\rho(T)+\frac{k-|T|}{k}\right).
+$$</p><p>The network is finite and its capacities are nonnegative, so the stated max-flow/min-cut application is valid. Zero-mass types and the empty type cause no problem.</p><h3>Corollary 2</h3><p>Both conclusions follow correctly.</p><p>Each event probability changes by at most total variation distance, and taking a minimum preserves a common additive error bound. The subsequent comparison with a winner under $\nu$ correctly gives<br>$$
+M_\mu^*-M_\mu(S)\leq 2\epsilon.
+$$</p><p>The lower bounds use this only as a necessary condition. They do not incorrectly treat it as sufficient.</p><h3>3. Deterministic upper bounds</h3><h3>Exact storage</h3><p>The bound<br>$$
+O(L+m)
+$$<br>is justified.</p><p>The product of the mass denominators has bit length $O(L)$. Incorporating $k$ adds $O(\log k)$ bits. Exact event sums, score comparisons, and committee enumeration fit the claimed workspace.</p><p>The algorithm may revisit its stored copy after the pass; this does not violate the one-pass restriction on the original stream.</p><h3>Lemma 3</h3><p>The parsing argument is sound.</p><p>With $h=b+4$, the combined numerator and denominator truncation error is bounded by<br>$$
+2^{2-h}=\frac14\,2^{-b}.
+$$<br>The final downward rounding contributes less than $2^{-b}$. Their sum is smaller than the stated allowance $2\,2^{-b}$.</p><p>Leading significands and bit-length counters fit in $O(b+\log L)$ bits. The zero numerator and integers shorter than $h$ bits are compatible with the described procedure.</p><h3>Rounded support storage</h3><p>The accumulated rounding loss is bounded correctly:<br>$$
+R\leq
+\frac{2}{D_0}\sum_{i=1}^{\infty}\frac{1}{(i+1)^2}
+\leq \frac{2}{D_0}
+\leq \frac{\epsilon}{16}.
+$$</p><p>Moving that loss to the empty type gives a probability distribution. If the empty type already occurs, its retained mass and the residual are combined. The claimed total variation expression correctly excludes that type.</p><p>Returning an exact winner of this rounded distribution directly supplies the required witness. No score-to-winner conversion is needed.</p><p>The simplification using<br>$$
+\tau\leq 2^m
+$$<br>is legitimate because $\tau$ counts distinct support types.</p><p><b>Minor issue:</b> The instruction “Choose a power of two $D_0\geq32/\epsilon$” supplies only a lower bound. The subsequent denominator-length bound also requires $D_0$ to be chosen within a constant factor of that threshold. This is an expositional omission.</p><p><b>Minimum clarification:</b> Specify the smallest admissible power of two, or explicitly require a constant-factor choice.</p><h3>Deterministic algorithm for $k=1$</h3><p>The approval counters are exactly the approval probabilities of the rounded witness distribution. Its residual empty mass contributes nothing.</p><p>The type buffer, common denominator, counters, and parsing workspace fit<br>$$
+O\!\left(
+m\left[\log(\tau+1)+\log(1/\epsilon)\right]+\log L
+\right).
+$$</p><p>The changing denominator and record counter allow the algorithm to operate without knowing $\tau$ beforehand.</p><h3>4. Randomized upper bound for $k=1$</h3><h3>Lemma 4</h3><p>The perturbation argument is valid.</p><p>There is enough mass outside the event “approves $c$” because<br>$$
+g\leq 1-p_\mu(c).
+$$<br>Moving mass $g$ from those types to $\{c\}$ increases $c$’s approval probability by $g$ and cannot increase another candidate’s approval probability. Thus $c$ becomes a winner within the claimed distance.</p><h3>Rounding and sampling</h3><p>The rounding error satisfies<br>$$
+d_{\mathrm{TV}}(\mu,\nu)
+\leq\frac{2\tau}{D}
+\leq\frac{\epsilon}{8}.
+$$</p><p>The sequential binomial procedure has the stated conditional multinomial distribution. Its denominator $B$ is the remaining rounded mass, including the residual category. The deterministic boundary cases are consistent with that interpretation.</p><p>Exact rational sampling with bounded workspace and finite expected running time is compatible with the stated unrestricted-time model.</p><p>The Hoeffding calculation is correct:<br>$$
+2e^{-N\epsilon^2/8}\leq\frac{\delta}{m}.
+$$<br>After the union bound and rounding error, every approval estimate differs from its original probability by at most $3\epsilon/8$. Maximizing the estimates therefore gives deficit at most $3\epsilon/4$, which is sufficient through Lemma 4.</p><p>The counter and auxiliary-memory accounting yields the stated bound. The polynomial expected-time claim is consistent with the described sampling procedure and applies to this algorithm.</p><p><b>Minor issue:</b> As with $D_0$, the instruction $D\geq16\,2^m/\epsilon$ needs an accompanying upper-size choice to justify the asserted workspace.</p><p><b>Minimum clarification:</b> Specify the smallest admissible power of two, or another constant-factor choice. This is the same precision-choice issue as in the deterministic construction.</p><h3>5. Information lemma and streaming reduction</h3><p>Lemma 5 is correct.</p><p>The estimator is determined by the retained state, public randomness, and supplied prefix. Its estimate together with the error bit determines the queried bit. The conditional entropy bound, entropy chain rule, and mutual-information comparison are valid.</p><p>The assumption $\delta&lt;1/2$ justifies using the monotonicity of binary entropy on the relevant interval. The variable-length-state allowance correctly yields the additive subtraction of $1$.</p><p>Sending the complete retained streaming state is a valid one-way reduction. Independent public random tapes for the two segments reproduce fresh algorithmic randomness; any retained random information belongs to the transmitted state.</p><h3>6. Accuracy-dependent lower bounds</h3><h3>Construction in Section 5.1</h3><p>The distribution and decoding conditions are correct.</p><p>Distinct marker subsets make Alice’s types distinct, and $z$ separates them from Bob’s types. The mass sum satisfies<br>$$
+W=\frac{1}{12}\left(1-4^{-r}\right)&lt;\frac{1}{12}.
+$$</p><p>The inequalities $0&lt;D&lt;W$ ensure positivity of Bob’s masses, which complete the total mass to $1$.</p><p>The geometric tail satisfies<br>$$
+T&lt;\frac{w_t}{3}.
+$$<br>Consequently, the score difference has the stated sign, with deficit greater than $w_t/6$ in the zero case and at least $w_t/2$ in the one case.</p><p>All other candidates remain far below the two queried contenders. Under<br>$$
+\epsilon&lt;\frac{w_r}{12},
+$$<br>their deficits and the queried loser’s deficit exceed $2\epsilon$. Corollary 2 therefore forces the claimed decoding.</p><p>The information lower bound follows with the stated number of encoded bits.</p><h3>Tight family in Section 5.2</h3><p>The chosen accuracy is correct:<br>$$
+\frac{w_r}{32}=2^{-2r-7}.
+$$</p><p>Under the detailed restriction $m\geq16$ and $r\leq m$, the number of signal candidates is at least $m/2$. With fixed $\delta&lt;1/2$, this gives $\Omega(mr)$.</p><p>The characteristic vectors contribute $\Theta(mr)$ bits, and the mass encodings contribute $O(r^2)$. Since $r\leq m$, the total is indeed $\Theta(mr)$. Exact storage supplies the matching upper bound.</p><p>This establishes the claimed tight family, not a bound for arbitrary support size and accuracy.</p><h3>Extension to larger committees</h3><p>The anchor construction is valid.</p><p>The singleton masses and all-anchor mass total $1-\alpha$. The inequality<br>$$
+(k-1)\left(\frac1k-\alpha\right)\leq 1-k\alpha
+$$<br>correctly establishes that all anchor quotas can be filled with approved mass.</p><p>A committee containing every anchor and one signal candidate has exactly the stated score. A committee omitting an anchor satisfies the stated upper bound because its present anchors contribute at most $(k-2)/k$, while all signal types together contribute at most $\alpha$.</p><p>The condition<br>$$
+\epsilon&lt;\frac{\alpha w_r}{12}
+$$<br>excludes both an incorrect signal choice and an omitted anchor. The candidate count, support bound, and accuracy-precision identity are consistent.</p><h3>7. High precision encoded in masses</h3><p>Section 6 is correct.</p><p>The inequalities<br>$$
+a_i&lt;\frac32\beta,\qquad n\beta\leq\frac1{64}
+$$<br>ensure that the filler mass is positive. Alice’s total mass is always $W$, independently of her encoded bits.</p><p>Bob’s threshold uses only the supplied prefix. The geometric-tail argument gives the required score separation. Other candidates have approval probability at most $W$ and cannot provide unintended successful outputs.</p><p>The support count is exactly $m+1$.</p><p>The numerator congruence modulo $4$ is also correct. It prevents cancellation of the power-of-two denominator in each $a_i$, justifying the claimed mass-encoding lengths.</p><p>Thus<br>$$
+L=\Theta(m^2+mr).
+$$<br>For $r\geq m$, the claimed tight $\Theta(mr)$ family and its equivalent accuracy-dependent expression follow.</p><h3>8. Constant accuracy and easy regimes</h3><h3>Two-type construction</h3><p>The two records are always distinct because Alice’s type contains $d$ and Bob’s does not.</p><p>When the queried bit is one, the queried candidate is uniquely best. When it is zero, its deficit is $1/4$. Therefore $\epsilon&lt;1/8$ gives exactly the required decoding distinction, even if other candidates tie with $d$.</p><p>The anchored extension has the claimed scaled deficits and valid accuracy threshold.</p><h3>Proposition 6</h3><p>The universal perturbation bound and sharpness proof are correct.</p><p>For the upper bound, the proposed assignment to $S$ is feasible. Every different committee satisfies the stated upper score bound, so ties correctly suffice.</p><p>For sharpness, replacing a least-contributing committee member preserves the other approved assignments. Those assignments consume no mass of $\{b\}$. Both inequalities needed for a strict improvement hold:<br>$$
+1-t&gt;\frac{t}{k},
+\qquad
+\frac1k&gt;\frac{t}{k}.
+$$</p><p>Thus the universal radius is sharp for $m&gt;k$. The unique-committee case $k=m$ is handled separately.</p><h3>9. Final counterexample and unresolved characterization</h3><p>The point-mass comparison is correct:<br>$$
+M_\mu^*-M_\mu(S)=\frac1k,
+$$<br>while the winner distance is $k/(k+1)$. The stated necessary factor for a universal linear conversion follows.</p><p>The three-candidate example also checks out. Its initial committee scores, the successful move from the empty type to $\{c\}$, and the four cut values under singleton mixing are all correct. Each listed difference is strictly positive for $0\leq t&lt;1/6$.</p><p>This example establishes the failure of that particular mixing procedure. The prover correctly avoids claiming that it disproves other perturbation constructions.</p><p><b>Major incompleteness relative to the task:</b> The output does not determine the asymptotically minimum space for general parameter tuples. The dependence on support size, committee size, accuracy, input length, and confidence is not matched outside the specified families.</p><p>This is a missing result, not an error in the proved constructions. A further round would need matching bounds with explicit parameter ranges, or an explicitly narrower target. Resolving only the denominator-choice wording would leave this substantive limitation unchanged.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

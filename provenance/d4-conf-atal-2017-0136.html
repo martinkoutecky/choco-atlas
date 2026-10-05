@@ -1,0 +1,458 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-atal-2017-0136 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-atal-2017-0136 <span style="font-weight:normal;color:#8a7350">(d4-conf-atal-2017-0136)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 11 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For $\epsilon&lt; 1/16$, and for large enough $m$, any deterministic protocol for Approval-winner-tracking uses at least $\Omega\left(\frac{mk}{\epsilon}\cdot\log\left(\frac{n}{k}\right)\right)$ bits of communication.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>For \(m\) candidates and \(k\) sites, take a globally ordered stream of at most \(r\) updates \((s,A,q)\), where \(s\) is a site, \(A\subseteq C\) is an approval ballot, and \(q&gt;0\) is a binary rational encoded in at most \(L\) bits. At each prefix, let \(\lambda(A)\) be the total mass of ballot type \(A\), \(M=\sum_A\lambda(A)\), and \(\mu(A)=\lambda(A)/M\). A candidate \(c\) is an \(\epsilon\)-winner if some nonnegative mass measure \(\nu\), with \(\sum_A\nu(A)\le\epsilon M\), makes \(c\) maximize approval score in \(\lambda+\nu\). What is the minimum worst-case communication, in bits, of a deterministic protocol that reports an \(\epsilon\)-winner after every update, as a function of \(m,k,\epsilon,r,L\) and the total-mass bound \(N\)? In particular, for \(\epsilon&lt;1/16\) and sufficiently large \(m\), does the lower bound \(\Omega((mk/\epsilon)\log(r/k))\) hold on rational-mass streams?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) contain \(m\ge2\) candidates; there are \(k\ge1\) sites and one center, connected by private bidirectional links in a star. Public parameters are \(r\ge1\), \(L\ge1\), rational \(N&gt;0\), and rational \(0&lt;\epsilon&lt;1\).<br>An adversary supplies at most \(r\) globally ordered insertions \((s,A,q)\), with \(s\in\{1,\ldots,k\}\), \(A\subseteq C\), and positive rational \(q\) whose binary numerator-denominator encoding has at most \(L\) bits; cumulative mass never exceeds \(N\). Only site \(s\) observes this insertion.<br>A society is represented by its support: the list of its \(\tau\) approval types with positive mass, each mass a binary rational. Here these lists are maintained locally from insertions; the center is not given the global support. \(\tau\) denotes actual support size, not \(2^m\).<br>At a nonempty prefix, write \(\lambda(A)\) for cumulative mass, \(M=\sum_{A\subseteq C}\lambda(A)\), and \(\mu(A)=\lambda(A)/M\). Total mass is not normalized to one. Approval uses these masses, and every score maximizer is a co-winner.<br>A candidate \(c\) is an \(\epsilon\)-winner if some nonnegative real mass measure \(\nu\) on all approval types satisfies \(\sum_A\nu(A)\le\epsilon M\) and makes \(c\) a co-winner in \(\lambda+\nu\); added types need not belong to the existing support.<br>Protocols are deterministic, with unrestricted local computation. Communication triggered by an insertion finishes before the next insertion; sites can initiate communication upon an insertion or received message, and the center upon a received message. There are no accessible clocks, public update counters, or free notifications of insertions.<br>After every insertion, the center&#x27;s maintained answer must be an \(\epsilon\)-winner, available without further communication. Cost is the worst-case total number of transmitted bits in both directions; local output is free. Express running times, if supplied, in \(m,\tau,L,r,k\) and the encoding lengths of \(\epsilon,N\).<br>What is the asymptotically minimum worst-case communication \(B(m,k,\epsilon,r,L,N)\)?<br>For \(\epsilon&lt;1/16\) and sufficiently large \(m\), does \(B=\Omega((mk/\epsilon)\log(r/k))\) hold on rational-mass streams, or can it fail, and in which parameter regimes?<br>For unit-voter streams, deterministic Approval-winner tracking has a verified lower bound \(\Omega((mk/\epsilon)\log(n/k))\) bits under these approximation conditions, and a deterministic upper bound \(O((mk/\epsilon)\log(k/\epsilon)\log n)\) bits. [Source](https://www.cs.columbia.edu/~arnoldf/papers/FT19.pdf).<br>No result settling the stated rational-mass communication problem was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified the private star network, local visibility of insertions, instantaneous processing between insertions, and maintained answers requiring no query communication.</li><li>Excluded clocks, public update counters, and free insertion notifications; adopted event-triggered communication to make the globally ordered stream an external order rather than shared information.</li><li>Made all stream bounds public, took N to be a positive rational upper bound on cumulative mass, and specified binary numerator-denominator encoding for arbitrary rational update masses.</li><li>Restricted correctness to nonempty prefixes, retained unnormalized cumulative mass, allowed empty approval ballots, and treated tied score maximizers as co-winners.</li><li>Allowed hypothetical added mass to be real and to use any approval type, including types absent from the current support.</li><li>Applied the support representation convention locally without giving the center the global society, which would change the communication problem.</li><li>Made the lower-bound question explicitly parameter-sensitive because the independent update, mass, and encoding bounds need not support every discrete asymptotic regime.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Rigorous partial solution</h3><p>The proposed lower bound is <b>not uniform over the stated parameters</b>. The declared insertion limit can substantially exceed the feasible horizon; very small $\epsilon$ causes finite-horizon saturation; and the single-site case has much lower communication.</p><p>The general optimum remains open. The results below strengthen the supplied notes in two ways:</p><ul><li>Masses can be communicated through a public multiplicative discretization, improving the cost of transmitting each insertion.</li><li>The finite-horizon lower bound holds for every $k\ge2$ and every feasible horizon of at least two insertions. This gives a matching bound in a saturation regime.</li></ul><p>I also determine the optimum for at most two insertions when the mass cap permits every pair of admissible masses.</p><h3>1. Definitions and feasible horizon</h3><p>Let $\mathcal Q_L$ be the finite set of positive rationals admitted by the stipulated encoding. If $\mathcal Q_L$ is empty, or its minimum exceeds $N$, there are no legal insertions and $B=0$.</p><p>Otherwise, define<br>$$
+a=\min\mathcal Q_L,\qquad
+b=\max\mathcal Q_L,\qquad
+R=\min\{r,\lfloor N/a\rfloor\},\qquad
+W=\min\{N,Rb\}.
+$$</p><p>Every insertion has mass at least $a$, so every legal stream has at most $R$ insertions. Conversely, $R$ repetitions of mass $a$ are legal. Thus $R$ is exactly the maximum feasible insertion count. At every nonempty prefix,<br>$$
+a\le M\le W.
+$$</p><p>All logarithms below have base two. Under the usual binary numerator-denominator encoding,<br>$$
+2^{-L}\le a\le b\le2^L,
+\qquad
+|\mathcal Q_L|\le2^{L+1}.
+$$<br>Using the exact alphabet $\mathcal Q_L$ avoids dependence on minor encoding conventions.</p><p>Fix a public ordering of candidates and an initial candidate $c_0$ stored at the center. No running-time bound is asserted: the protocols use unrestricted local computation, as permitted by the task.</p><h3>2. Exact characterization of an $\epsilon$-winner</h3><p>For a mass measure $\lambda$, write<br>$$
+S_\lambda(c)=\sum_{A\ni c}\lambda(A),
+\qquad
+S_\lambda^*=\max_{d\in C}S_\lambda(d).
+$$</p><p><b>Lemma 1.</b> A candidate $c$ is an $\epsilon$-winner if and only if<br>$$
+S_\lambda^*-S_\lambda(c)\le\epsilon M.
+$$</p><p><b>Proof.</b> Suppose added mass $\nu$, of total mass $T\le\epsilon M$, makes $c$ a co-winner. For every $d$,<br>$$
+S_\lambda(d)-S_\lambda(c)
+\le S_\nu(c)-S_\nu(d)
+\le T.
+$$<br>Taking the maximum over $d$ proves necessity.</p><p>Conversely, add mass $S_\lambda^*-S_\lambda(c)$ to the approval type $\{c\}$. This makes $c$ a co-winner and uses at most $\epsilon M$ mass. The definition permits this type whether or not it belongs to the existing support. $\square$</p><h3>3. General upper bounds</h3><h3>3.1. Communicating rounded masses</h3><p>Define the individually feasible mass alphabet<br>$$
+\mathcal Q=\{q\in\mathcal Q_L:q\le N\}.
+$$<br>Set<br>$$
+\beta=1+\epsilon/2.
+$$</p><p>Partition $\mathcal Q$ into the occupied intervals<br>$$
+[a\beta^j,a\beta^{j+1}),
+\qquad j=0,1,\ldots.
+$$<br>Let $J$ be the number of occupied intervals. In each occupied interval, choose its smallest member as the public representative.</p><p>Upon an insertion $(s,A,q)$, site $s$ sends:</p><ul><li>the $m$-bit characteristic vector of $A$;</li><li>the rank of $q$&#x27;s occupied interval among the $J$ occupied intervals.</li></ul><p>The center replaces $q$ by the corresponding representative $\widehat q$ and maintains an exact maximizer of the resulting rounded election $\widehat\lambda$.</p><p>For every insertion,<br>$$
+\widehat q\le q&lt;\beta\widehat q,
+$$<br>so<br>$$
+0\le q-\widehat q
+&lt;
+\left(1-\frac1\beta\right)q
+&lt;
+\frac{\epsilon q}{2}.
+$$<br>Consequently, at every prefix, the total rounding loss satisfies<br>$$
+E=M-\widehat M&lt;\frac{\epsilon M}{2}.
+$$</p><p>If $c$ maximizes the rounded scores, then, for every $d$,<br>$$
+S_\lambda(d)-S_\lambda(c)
+\le S_{\widehat\lambda}(d)+E-S_{\widehat\lambda}(c)
+\le E.
+$$<br>Lemma 1 proves correctness.</p><p>The link identifies the inserting site. The message itself supplies the notification of the insertion, so the protocol uses no free notifications. Its cost is<br>$$
+B=O\!\left(R\bigl(m+\log(2+J)\bigr)\right).
+$$</p><p>Moreover,<br>$$
+J\le|\mathcal Q_L|
+$$<br>and<br>$$
+J\le1+\frac{\log(b/a)}{\log(1+\epsilon/2)}.
+$$<br>For $0&lt;\epsilon&lt;1$, the usual encoding bounds therefore give<br>$$
+\log(2+J)
+=
+O\!\left(
+\min\left\{
+L,\,
+\log(2+L)+\log(1/\epsilon)
+\right\}
+\right).
+$$</p><p>Define<br>$$
+D=
+\min\left\{
+L,\,
+\log(2+L)+\log(1/\epsilon)
+\right\}.
+$$</p><p>We have proved the improved general bound<br>$$
+\boxed{B=O\!\left(R(m+D)\right).}
+$$</p><p>In particular, for fixed $\epsilon$, communicating a mass requires only $O(\log(2+L))$ bits in this protocol.</p><h3>3.2. Simulating virtual unit voters</h3><p>The deterministic unit-voter protocol supplied in the task has bit communication<br>$$
+O\!\left(
+\frac{mk}{\eta}
+\log(2k/\eta)\log(2+n)
+\right)
+$$<br>at approximation parameter $\eta$. Its deterministic bit bound is discussed in Section 5.2 of [Filtser–Talmon, *Distributed monitoring of election winners*](https://www.cs.columbia.edu/~arnoldf/papers/FT19.pdf).</p><p>Set<br>$$
+h=\frac{\epsilon a}{4},
+\qquad
+\eta=\frac{\epsilon}{2}.
+$$<br>Locally replace an insertion of mass $q$ by $\lfloor q/h\rfloor$ virtual unit voters with the same approval set.</p><p>Let $\widetilde\lambda$ be the virtual election scaled by $h$. Each insertion loses less than $h$, and<br>$$
+h=\frac{\epsilon a}{4}\le\frac{\epsilon q}{4}.
+$$<br>Thus<br>$$
+0\le E=M-\widetilde M\le\frac{\epsilon M}{4}.
+$$</p><p>If the simulated protocol returns $c$, then<br>$$
+\begin{aligned}
+S_\lambda^*-S_\lambda(c)
+&amp;\le S_{\widetilde\lambda}^*-S_{\widetilde\lambda}(c)+E\\
+&amp;\le\frac{\epsilon}{2}\widetilde M+E\\
+&amp;\le\frac{3\epsilon M}{4}.
+\end{aligned}
+$$<br>Lemma 1 again proves correctness.</p><p>Every actual insertion produces virtual voters because $q/h\ge4/\epsilon$. Their total number is at most<br>$$
+\frac{W}{h}=\frac{4W}{\epsilon a}.
+$$<br>Therefore<br>$$
+B=
+O\!\left(
+\frac{mk}{\epsilon}
+\log(2k/\epsilon)
+\log\!\left(2+\frac{W}{\epsilon a}\right)
+\right).
+$$</p><p>The virtual insertions are local computation. All simulated communication completes before the next actual insertion, and the center receives only messages generated by the simulated protocol.</p><p>Since the protocol choice depends only on public parameters, the two bounds combine to give<br>$$
+\boxed{
+B=
+O\!\left(
+\min\left\{
+R(m+D),\,
+\frac{mk}{\epsilon}
+\log(2k/\epsilon)
+\log\!\left(2+\frac{W}{\epsilon a}\right)
+\right\}
+\right).
+}
+$$</p><h3>3.3. One site</h3><p>When $k=1$, the site knows the entire election. It mirrors the center&#x27;s current candidate, initially $c_0$. Whenever this candidate ceases to be an $\epsilon$-winner, the site sends the name of an exact maximizer.</p><p>Suppose a report occurs at mass $M_0$, followed by another report after additional mass $\Delta$. The previously reported candidate&#x27;s deficit can increase by at most $\Delta$: every competitor gains at most $\Delta$, while its own score cannot decrease. A new report therefore requires<br>$$
+\Delta&gt;\epsilon(M_0+\Delta),
+$$<br>and hence<br>$$
+M_0+\Delta&gt;\frac{M_0}{1-\epsilon}.
+$$</p><p>The first report occurs at mass at least $a$, and no prefix exceeds $W$. Thus<br>$$
+\boxed{
+B(m,1,\epsilon,r,L,N)
+=
+O\!\left(
+\log m\cdot
+\min\left\{
+R,\,
+1+\frac{\log(W/a)}
+{\log(1/(1-\epsilon))}
+\right\}
+\right).
+}
+$$</p><p>This includes the bound $O(R\log m)$.</p><h3>4. A communication lemma for weighted phases</h3><p>The lower bounds use a fixed schedule of blocks, each involving one active site.</p><h3>4.1. Serialization and transcript rectangles</h3><p>For clarity, use the following serialization convention in the communication reduction.</p><p>The public block order identifies the active site. Only that site receives insertions during the block. A fixed delivery order serializes messages initiated by the active site and all resulting messages. Center-to-site recipients are determined by the simulated center&#x27;s state and message history; site-to-center messages have a fixed recipient. Thus sender and recipient identities do not need to be transmitted as arbitrary site labels.</p><p>Encode a nonempty original message by doubling its payload bits and adding a terminator. Add completion indicators for activated handlers and one marker when the active site finishes its whole block. The number of handler activations is at most the number of original messages plus the number of blocks. This gives total overhead<br>$$
+O(\text{original transmitted bits}+\text{number of blocks}).
+$$</p><p>A block may contain many unit insertions. The active site processes them locally; only one block-completion marker is required. These markers belong to the reduction and are never delivered to the simulated tracking protocol. Similarly, validation messages below do not modify its state.</p><p>Under this convention, the next transmitting role is determined by the public schedule and transcript. A fixed deterministic transcript consequently defines a rectangle in the sites&#x27; private inputs: replacing each site&#x27;s input by another input consistent with that transcript preserves the transcript. This follows inductively, because each transmitted bit depends only on that site&#x27;s input and its preceding received history.</p><h3>4.2. Hard approval arrays</h3><p>Use an even number $K=2p$ of sites. There is a code<br>$$
+\mathcal E\subseteq\{0,1\}^p
+$$<br>with pairwise Hamming distance greater than $p/4$ and<br>$$
+|\mathcal E|\ge2^{\gamma p},
+\qquad
+\gamma=1-H_2(1/4)&gt;0,
+$$<br>where<br>$$
+H_2(u)=-u\log u-(1-u)\log(1-u).
+$$</p><p>To prove this, greedily select strings and remove Hamming balls of radius $\lfloor p/4\rfloor$. Each ball contains at most<br>$$
+\sum_{j=0}^{\lfloor p/4\rfloor}\binom pj
+\le2^{H_2(1/4)p}
+$$<br>strings. For the last inequality, put $u=1/4$. For every integer $j\le p/4$,<br>$$
+u^j(1-u)^{p-j}
+\ge u^{p/4}(1-u)^{3p/4}.
+$$<br>Apply this inequality to the corresponding terms in the binomial expansion of $(u+(1-u))^p=1$. The greedy packing bound follows.</p><p>For each candidate and each of $t$ phases, independently choose a codeword. In site pair $j$, assign its $j$th bit to the first site and the complementary bit to the second. Every candidate is therefore approved by exactly $p$ sites in each phase.</p><p>There are at least<br>$$
+|\mathcal E|^{mt}\ge2^{\gamma mpt}
+$$<br>such arrays.</p><p>Consider two different arrays. At some phase-candidate coordinate their codewords differ in $d&gt;p/4$ positions. Mix the arrays by selecting each site&#x27;s entire input from one of the two arrays, choosing an approving row whenever possible at that coordinate. The selected candidate then has<br>$$
+p+d&gt;\frac{5p}{4}
+$$<br>approving sites.</p><p>Consequently, these arrays form a fooling family for the promise problem:</p><ul><li>negative inputs have at most $p$ approvals at every phase-candidate coordinate;</li><li>positive inputs have more than $5p/4$ approvals at some coordinate.</li></ul><p>If two members of the family shared a transcript of a correct deterministic protocol, their positive mixed input would share that transcript, contradicting correctness. Counting transcripts gives a lower bound<br>$$
+\Omega(mKt)
+$$<br>bits.</p><h3>4.3. Realizing the arrays as elections</h3><p>Let $q_s&gt;0$ be the public aggregate block mass in phase $s$, and define<br>$$
+x_1=0,
+\qquad
+x_{s+1}=x_s+q_s.
+$$</p><p>In phase $s$:</p><ul><li>Each of the $K$ sites inserts aggregate mass $q_s$ approving its private set $A_{j,s}$.</li><li>The reduction inspects the center&#x27;s maintained candidate.</li><li>Each site inserts aggregate mass $q_s$ approving $C\setminus A_{j,s}$.</li></ul><p>A block can be one weighted insertion or several equal-weight insertions.</p><p>At the beginning of phase $s$, every site has total mass $2x_s$, and every candidate has local score $x_s$. The complementary block restores this invariant with $x_s$ replaced by $x_{s+1}$.</p><p>At the inspected prefix, if candidate $c$ has $h_c$ current approving sites, then<br>$$
+S(c)=Kx_s+h_cq_s,
+\qquad
+M=K(2x_s+q_s).
+$$</p><p>Assume<br>$$
+\frac{q_s}{4}&gt;2\epsilon(2x_s+q_s).
+$$<br>If some candidate has more than $5p/4$ approvals, its score exceeds that of every candidate with at most $p$ approvals by more than<br>$$
+\frac{pq_s}{4}
+&gt;
+\epsilon K(2x_s+q_s)
+=
+\epsilon M.
+$$<br>Thus an $\epsilon$-winner must have more than $p$ approvals.</p><p>The reduction broadcasts the maintained candidate&#x27;s name and collects its membership bit from every site. A negative input never yields more than $p$ memberships; a positive input necessarily does so at its relevant phase.</p><p>Validation and block markers cost<br>$$
+O\!\left(t(K+\log m)\right)
+$$<br>bits, in addition to a constant multiple of the tracking communication. For sufficiently large $m$, this overhead is absorbed by the fooling-family lower bound.</p><p>We have proved:</p><p><b>Lemma 2.</b> If $t$ phases are legally realizable and satisfy<br>$$
+\frac{q_s}{4}&gt;2\epsilon(2x_s+q_s)
+$$<br>in every phase, then<br>$$
+B=\Omega(mKt)
+$$<br>for sufficiently large $m$.</p><h3>5. A lower bound for every nontrivial feasible horizon</h3><p>Assume<br>$$
+k\ge2,\qquad R\ge2,\qquad 0&lt;\epsilon&lt;1/16.
+$$</p><p><b>Theorem 3.</b> For sufficiently large $m$,<br>$$
+\boxed{
+B=
+\Omega\!\left(
+\frac{mk}{\epsilon}
+\log\!\left(1+\frac{\epsilon R}{k}\right)
+\right).
+}
+$$</p><p><b>Proof for a fixed even number of sites.</b> First use $K\le k$ even, with $R\ge2K$. Implement every elementary insertion with mass $a$. Set<br>$$
+q_1=a,
+\qquad
+q_s=a\left\lceil\frac{32\epsilon x_s}{a}\right\rceil
+\quad(s\ge2).
+$$<br>These are aggregate block masses; the elementary insertions all have the admissible mass $a$.</p><p>For phase one, Lemma 2&#x27;s inequality follows from $\epsilon&lt;1/16$. For subsequent phases,<br>$$
+q_s\ge32\epsilon x_s,
+$$<br>so<br>$$
+\begin{aligned}
+q_s(1/4-2\epsilon)-4\epsilon x_s
+&amp;\ge
+32\epsilon x_s(1/4-2\epsilon)-4\epsilon x_s\\
+&amp;=
+4\epsilon x_s(1-16\epsilon)&gt;0.
+\end{aligned}
+$$<br>This is the required inequality.</p><p>Writing $u_s=x_s/a$ gives<br>$$
+u_{s+1}\le(1+32\epsilon)u_s+1,
+\qquad u_1=0.
+$$<br>Induction yields<br>$$
+u_{t+1}
+\le
+\frac{(1+32\epsilon)^t-1}{32\epsilon}.
+$$<br>Both approval and complementary blocks together use $2Ku_{t+1}$ insertions. Therefore choose<br>$$
+t=
+\left\lfloor
+\frac{\log(1+16\epsilon R/K)}
+{\log(1+32\epsilon)}
+\right\rfloor.
+$$<br>The construction uses at most $R$ insertions and hence mass at most $Ra\le N$.</p><p>Because $R\ge2K$, the expression being floored is at least one, so its floor is at least half its value. Also $\log(1+32\epsilon)=O(\epsilon)$. Lemma 2 gives<br>$$
+B=
+\Omega\!\left(
+\frac{mK}{\epsilon}
+\log\!\left(1+\frac{\epsilon R}{K}\right)
+\right).
+$$</p><p><b>Choosing the number of active sites.</b> For $R\ge4$, take<br>$$
+K=
+2\left\lfloor
+\frac{\min\{k,R/2\}}2
+\right\rfloor.
+$$<br>Then $R\ge2K$ and<br>$$
+K\ge\frac12\min\{k,R/2\}.
+$$</p><p>If $k\le R/2$, then $K\ge k/2$, and the last lower bound is at least a constant multiple of the claimed bound.</p><p>If $k&gt;R/2$, then $K\ge R/4$ and<br>$$
+\frac{\epsilon R}{K}\le4\epsilon&lt;1/4.
+$$<br>Using $\log(1+z)\ge z/((1+z)\ln2)$, the lower bound is $\Omega(mR)$. This implies the claimed bound because<br>$$
+\frac{k}{\epsilon}\log(1+\epsilon R/k)
+\le\frac{R}{\ln2}.
+$$</p><p>For $R=2$ or $R=3$, it remains to prove $\Omega(m)$ communication. Two sites insert mass $a$, approving respectively $U$ and $V$. If $U\cap V$ is nonempty, every $\epsilon$-winner lies in the intersection: such candidates have score $2a$, while all others have score at most $a$, and<br>$$
+a&gt;2\epsilon a.
+$$</p><p>Thus the tracker, followed by candidate-membership validation, decides whether $U\cap V$ is empty. The $2^m$ pairs<br>$$
+(U,C\setminus U)
+$$<br>form a fooling family for this decision problem: for distinct $U,U&#x27;$, at least one crossed pair has nonempty intersection. Hence the decision problem requires at least $m-O(1)$ bits. Validation and serialization add only $O(\log m)$ bits, proving $B=\Omega(m)$.</p><p>For $R\in\{2,3\}$, the claimed expression is $O(mR)=O(m)$, completing the proof. $\square$</p><h3>A matching saturation regime</h3><p>For $0\le z\le1$, $\log(1+z)$ is bounded above and below by positive constant multiples of $z$. Therefore, if<br>$$
+k\ge2,\qquad R\ge2,\qquad
+\frac{\epsilon R}{k}\le1,
+$$<br>Theorem 3 gives $B=\Omega(mR)$.</p><p>Combining this with Section 3.1 proves:<br>$$
+\boxed{
+B=\Theta(mR)
+\quad\text{if}\quad
+\frac{\epsilon R}{k}\le1
+\ \text{and}\ D=O(m),
+}
+$$<br>for $\epsilon&lt;1/16$ and sufficiently large $m$.</p><p>This resolves a substantial regime of simultaneous parameter growth.</p><h3>6. Exact optimum for at most two insertions</h3><p>Assume<br>$$
+r=2,\qquad k\ge2,\qquad
+N\ge2b,\qquad
+0&lt;\epsilon&lt;1/16.
+$$<br>The mass-cap condition ensures that every pair of admissible masses is legal.</p><p>Define<br>$$
+\rho=\frac{1+\epsilon}{1-\epsilon}.
+$$<br>Let $P$ be the maximum cardinality of a subset of $\mathcal Q_L$ whose elements, in increasing order, have consecutive ratios strictly greater than $\rho$.</p><p><b>Theorem 4.</b> For sufficiently large $m$,<br>$$
+\boxed{B=\Theta\!\left(m+\log(2+P)\right).}
+$$</p><h3>Upper bound</h3><p>Use the multiplicative-grid protocol from Section 3.1. We show that its number of occupied bins satisfies<br>$$
+J\le8P.
+$$</p><p>Greedily select the smallest remaining mass $q$, remove all remaining masses in $[q,\rho q]$, and repeat. The selected masses form a $\rho$-separated set, so their number is at most $P$. Their removal intervals cover $\mathcal Q_L$.</p><p>Each such interval intersects at most<br>$$
+\left\lceil
+\frac{\log\rho}{\log(1+\epsilon/2)}
+\right\rceil+2
+$$<br>grid bins. For $\epsilon&lt;1/16$,<br>$$
+\ln\rho\le\frac{2\epsilon}{1-\epsilon},
+\qquad
+\ln(1+\epsilon/2)\ge\frac{\epsilon}{2+\epsilon}.
+$$<br>Their ratio is less than $5$, so eight bins suffice. Hence $J\le8P$.</p><p>There are at most two insertion messages, giving<br>$$
+B=O(m+\log(2+P)).
+$$</p><h3>Lower bound from approval sets</h3><p>The two-insertion intersection construction in Theorem 3 is legal because $N\ge2b\ge2a$. It gives<br>$$
+B=\Omega(m).
+$$</p><h3>Lower bound from mass precision</h3><p>Choose separated masses<br>$$
+q_1&lt;\cdots&lt;q_P.
+$$<br>Fix two candidates $c,d$. Site one inserts $(\{c\},x)$, followed by site two inserting $(\{d\},y)$.</p><p>For $i&lt;j$, separation gives<br>$$
+q_j-q_i&gt;\epsilon(q_i+q_j).
+$$<br>Thus $d$ is the unique $\epsilon$-winner on $(x,y)=(q_i,q_j)$, while $c$ is the unique $\epsilon$-winner on $(q_j,q_i)$.</p><p>Consider the $P$ diagonal inputs $(q_i,q_i)$. If two diagonals shared a transcript, the rectangle property would give that same transcript on both crossed inputs. The center would return the same candidate on those inputs, contradicting their different unique $\epsilon$-winners.</p><p>Consequently there are at least $P$ transcripts. Serialization adds only constant overhead for the two insertion blocks, yielding<br>$$
+B=\Omega(\log P)-O(1).
+$$</p><p>Combining the two lower bounds proves the theorem. $\square$</p><h3>Explicit dependence on the encoding budget</h3><p>Under the usual binary numerator-denominator encoding, for sufficiently large $L$,<br>$$
+\log(2+P)
+=
+\Theta\!\left(
+\min\{L,\log(2+L)+\log(1/\epsilon)\}
+\right).
+$$</p><p>The upper bound follows from $P\le|\mathcal Q_L|$ and<br>$$
+(P-1)\log\rho&lt;\log(b/a)=O(L),
+$$<br>with $\log\rho$ bounded below by a positive constant multiple of $\epsilon$.</p><p>For the lower bound, powers of two with exponents between zero and a sufficiently small constant multiple of $L$ are admissible. Their ratios are $2&gt;\rho$, giving<br>$$
+P=\Omega(L).
+$$</p><p>Also choose $d=\lfloor cL\rfloor$ for a sufficiently small fixed $c&gt;0$. The dyadic rationals<br>$$
+\frac{j}{2^d},
+\qquad
+2^d\le j\le2^{d+1},
+$$<br>are admissible. Set<br>$$
+h=\lfloor4\epsilon2^d\rfloor+1.
+$$<br>Taking every $h$th numerator gives a set of size<br>$$
+\Omega\!\left(\min\{2^d,1/\epsilon\}\right).
+$$<br>Distinct selected masses differ by more than $4\epsilon$. Since both lie in $[1,2]$, their difference exceeds $\epsilon$ times their sum, which is equivalent to ratio greater than $\rho$.</p><p>These constructions give both<br>$$
+\log(2+P)=\Omega(\log(2+L))
+$$<br>and<br>$$
+\log(2+P)=\Omega(\min\{L,\log(1/\epsilon)\}).
+$$<br>Together they imply the asserted lower bound.</p><p>Thus Theorem 4 becomes<br>$$
+\boxed{
+B=
+\Theta\!\left(
+m+\min\{L,\log(2+L)+\log(1/\epsilon)\}
+\right)
+}
+$$<br>in this two-insertion regime.</p><h3>7. When the proposed lower bound holds or fails</h3><h3>A sufficient regime where it holds</h3><p>Assume<br>$$
+k\ge2,\qquad
+N\ge ra,\qquad
+r/k\ge\epsilon^{-2},\qquad
+0&lt;\epsilon&lt;1/16.
+$$<br>Then $R=r$. Writing $y=r/k$, we have $\epsilon y\ge\sqrt y$, so<br>$$
+\log(1+\epsilon y)\ge\frac12\log y.
+$$<br>Theorem 3 consequently proves<br>$$
+\boxed{
+B=\Omega\!\left(
+\frac{mk}{\epsilon}\log(r/k)
+\right).
+}
+$$</p><p>These are sufficient conditions, not a characterization of all regimes.</p><h3>Failure through the mass cap</h3><p>If $R=1$, the observing site sends the name of any approved candidate when needed. If its approval set is empty, the initial candidate remains a winner. Thus communication is $O(\log m)$.</p><p>Conversely, singleton approval sets at one fixed site force $m$ different answers, since $\epsilon&lt;1$. Transcript counting gives $\Omega(\log m)$. Therefore<br>$$
+\boxed{B=\Theta(\log m)\quad\text{when }R=1.}
+$$<br>The declared $r$ can be arbitrarily large.</p><p>The failure persists with a growing feasible horizon. Fix $k=2$, $\epsilon=1/32$, and constant $L$ admitting a positive rational. Set<br>$$
+N=a\lfloor\log r\rfloor.
+$$<br>Then $R=\lfloor\log r\rfloor$. The virtual-voter upper bound gives $O(m\log R)$, while Theorem 3 gives $\Omega(m\log R)$. Hence<br>$$
+B=\Theta(m\log\log r).
+$$<br>The proposed expression has order $m\log r$, exceeding the optimum by an unbounded factor.</p><p>More generally, for fixed $k\ge2$, fixed $\epsilon&lt;1/16$, and fixed admissible $L$, as $R$ tends to infinity,<br>$$
+B=\Theta(m\log R)
+$$<br>for sufficiently large $m$.</p><h3>Failure through finite-horizon saturation</h3><p>Fix $k=2$ and constant admissible $L$, and take<br>$$
+N=ra,\qquad \epsilon=r^{-2}.
+$$<br>Then $R=r$ and $D=O(1)$. Section 3.1 gives $B=O(mr)$, and the saturation regime gives the matching lower bound:<br>$$
+B=\Theta(mr).
+$$<br>The proposed expression is<br>$$
+\Theta(mr^2\log r),
+$$<br>so it fails by an unbounded factor.</p><p>This obstruction already occurs when every insertion has the same mass. The supplied unit-voter formula therefore also requires a parameter regime; it cannot be uniform over arbitrarily small $\epsilon$ and finite horizons.</p><h3>Failure with one site</h3><p>Fix $\epsilon=1/32$, constant admissible $L$, $N=ra$, and $k=1$. Then $W/a=O(r)$, so Section 3.3 gives<br>$$
+B=O(\log m\log r).
+$$<br>For example, with $m=r^2$, this is $O((\log r)^2)$, while the proposed expression has order $r^2\log r$.</p><p>Thus the single-site exception is intrinsic to the stated model.</p><h3>8. Rational masses can sustain linearly many hard phases</h3><p>The mass cap alone does not force logarithmic dependence on the insertion count.</p><p>Fix<br>$$
+k=2,\qquad
+\epsilon=1/32,\qquad
+N=2,\qquad
+L=\Theta(r).
+$$<br>Then, for sufficiently large $m$,<br>$$
+\boxed{B=\Theta(mr).}
+$$</p><p>To prove the lower bound, let $c_0$ be a fixed encoding constant such that $2^{-u}$ has encoding length at most $c_0(u+1)$. Choose<br>$$
+t=
+\min\left\{
+\lfloor r/4\rfloor,\,
+\lfloor L/(2c_0)\rfloor
+\right\}.
+$$<br>For sufficiently large parameters, $t=\Theta(r)$ and all masses below are admissible.</p><p>Use Lemma 2 with<br>$$
+q_1=2^{-t},
+\qquad
+q_s=2^{s-2-t}\quad(s\ge2).
+$$<br>The recurrence gives<br>$$
+x_s=q_s\quad(s\ge2),
+\qquad
+x_{t+1}=1/2.
+$$<br>There are four insertions per phase, so the insertion count is $4t\le r$. The final mass is<br>$$
+2Kx_{t+1}=2,
+$$<br>and every preceding prefix has smaller mass.</p><p>For phase one, Lemma 2&#x27;s inequality holds directly. For every subsequent phase,<br>$$
+\frac{q_s}{4}=\frac{x_s}{4}
+&gt;
+\frac{3x_s}{16}
+=
+2\epsilon(2x_s+q_s).
+$$<br>Thus $B=\Omega(mt)=\Omega(mr)$.</p><p>For the upper bound, $a\ge2^{-L}$ and $W\le2$. The virtual-voter protocol, with fixed $k$ and $\epsilon$, costs<br>$$
+O(m(L+1))=O(mr).
+$$</p><p>This example shows why rational-mass tracking cannot generally be described solely by the logarithmic horizon dependence of equal-weight streams.</p><h3>9. Remaining open questions</h3><p>The general upper and lower bounds do not match for arbitrary simultaneous growth of the parameters. In particular, outside the saturation and special regimes proved above, the necessity of the factors involving $k$, $\epsilon$, and the available mass range remains undetermined.</p><p>The main unresolved target is the asymptotically minimum value of $B(m,k,\epsilon,r,L,N)$ in full generality. The proposed lower bound has been proved in a concrete sufficient regime and disproved as a uniform assertion, but its complete regime characterization remains open.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 9 and the general optimum requested by USER_TASK: The output explicitly leaves the asymptotically minimum value of $B(m,k,\epsilon,r,L,N)$ unresolved outside the matching special regimes. This is acknowledged incompleteness, rather than a false claim of a complete solution.</li><li><b>minor</b> — Section 4.1, serialization overhead: The message-count accounting requires every transmitted message to contain at least one charged bit. State this natural communication convention explicitly; otherwise the number of messages is not bounded by the transmitted bits.</li><li><b>minor</b> — Sections 4.1 and 4.3, handler markers and validation: Specify that the reduction uses a public broadcast transcript, and precisely which handler completions receive markers. The claimed activation count must exclude separately marking silent insertion handlers within a block, and the validation cost uses public broadcasting rather than separate private-link transmissions.</li><li><b>minor</b> — Section 1 and the explicit encoding-dependent claims in Sections 6 and 8: Specify the combined binary numerator-denominator encoding convention and its fixed overhead. The alphabet-based bounds are clear, but the explicit dependence on $L$ and the admissibility of the displayed mass families rely on that convention.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: correct and substantial partial progress, with minor clarification issues.</b> I found no false central mathematical step in the stated constructions. The output establishes upper bounds, lower bounds, several matching regimes, and counterexamples to the proposed uniform lower bound. It does <b>not</b> determine the asymptotically minimum communication for all parameters, and explicitly acknowledges this.</p><p>The lower-bound verification uses the natural convention that every transmitted message contains at least one charged bit. That convention, and the precise interpretation of the serialization procedure, should be stated explicitly.</p><h3>1. Feasible horizon and encoding bounds</h3><p>The definitions<br>$$
+a=\min\mathcal Q_L,\qquad
+R=\min\{r,\lfloor N/a\rfloor\}
+$$<br>correctly identify the maximum feasible insertion count when legal insertions exist.</p><p>Both directions are justified:</p><ul><li>Every insertion consumes at least mass $a$, so the insertion count cannot exceed $R$.</li><li>A stream consisting of $R$ insertions of mass $a$ is legal.</li></ul><p>The prefix bounds<br>$$
+a\le M\le W=\min\{N,Rb\}
+$$<br>are also correct. The argument does not require $W$ itself to be attainable.</p><p>The claims<br>$$
+2^{-L}\le a\le b\le2^L,\qquad
+|\mathcal Q_L|\le2^{L+1}
+$$<br>are valid under the usual interpretation that the combined binary encoding of numerator and denominator has length at most $L$.</p><p><b>Minor issue:</b> the precise encoding convention is not specified. The alphabet-based results avoid this ambiguity, but the explicit dependence on $L$, especially the admissibility constructions in Sections 6 and 8, requires an explicit convention.</p><p><b>Minimum clarification:</b> specify how numerator, denominator, and any separators contribute to encoding length, and state that the encoding constants are fixed independently of the public parameters.</p><h3>2. Characterization of an approximate winner</h3><p>Lemma 1 is correct.</p><p>For necessity, the displayed inequality<br>$$
+S_\lambda(d)-S_\lambda(c)
+\le S_\nu(c)-S_\nu(d)
+\le \sum_A\nu(A)
+$$<br>uses precisely the co-winner condition and nonnegativity of the added measure.</p><p>For sufficiency, adding the deficit to the singleton type $\{c\}$ raises only $c$’s score. The added mass is nonnegative and satisfies the budget exactly when<br>$$
+S_\lambda^*-S_\lambda(c)\le\epsilon M.
+$$</p><p>The construction respects the permission to add types outside the current support. No normalization assumption is introduced.</p><h3>3. Upper bounds</h3><h3>Rounded-mass protocol</h3><p>The representative of an occupied interval satisfies<br>$$
+\widehat q\le q&lt;\beta\widehat q,
+\qquad
+\beta=1+\epsilon/2.
+$$<br>Consequently, the stated rounding loss bound is correct:<br>$$
+0\le q-\widehat q&lt;\frac{\epsilon q}{2}.
+$$</p><p>At every prefix, the loss of any candidate’s score is at most the total mass loss $E$. Therefore, a maximizer of the rounded scores has original deficit at most $E$. This proves correctness through Lemma 1.</p><p>The protocol sends a message on every insertion and obtains the site identity from the link, so it does not rely on free insertion notifications.</p><p>The bounds on occupied intervals and the resulting communication bound<br>$$
+B=O\!\left(R(m+D)\right)
+$$<br>are correct under the stated usual encoding interpretation. The center need not know the actual global support beforehand.</p><h3>Virtual-unit-voter protocol</h3><p>The rounding calculation is correct. Each insertion loses less than<br>$$
+h=\frac{\epsilon a}{4}\le\frac{\epsilon q}{4},
+$$<br>so<br>$$
+E\le\frac{\epsilon M}{4}.
+$$</p><p>The transfer of the approximate-winner guarantee correctly gives<br>$$
+S_\lambda^*-S_\lambda(c)
+\le\frac{\epsilon}{2}\widetilde M+E
+\le\frac{3\epsilon M}{4}.
+$$</p><p>Every insertion generates at least one virtual voter, and the total number is bounded by<br>$$
+\frac{4W}{\epsilon a}.
+$$</p><p>The cited deterministic unit-voter upper bound is the one supplied in the task and discussed in Section 5.2 of the [Filtser–Talmon paper](https://www.cs.columbia.edu/~arnoldf/papers/FT19.pdf). The paper’s model excludes accessible clocks, and its checkpoint construction triggers center actions through received count updates. The simulation therefore respects the relevant triggering restrictions.</p><p>The two public-parameter-dependent protocol choices can legitimately be combined by taking the smaller bound.</p><h3>Single-site protocol</h3><p>The site can determine whether the center’s current candidate is an $\epsilon$-winner because it holds the entire election.</p><p>Between two reports, the previous exact winner’s deficit increases by at most the added mass $\Delta$. Hence the necessary condition for another report,<br>$$
+\Delta&gt;\epsilon(M_0+\Delta),
+$$<br>and the resulting multiplicative growth condition are correct.</p><p>The report-count and bit bounds follow. The first report and the possibility of no reports are handled by the additive constant.</p><h3>4. Communication reduction</h3><h3>Serialization</h3><p>The intended reduction is reasonable: communication is serialized into a public transcript while the simulated tracking protocol receives only its original messages. Public block-completion markers do not give the tracker forbidden notifications.</p><p>Two details need clarification.</p><p><b>Minor issue: nonempty-message convention.</b> The overhead bound uses the fact that the number of original messages is bounded by the original transmitted bits. This requires every message to contain at least one charged bit. The task does not explicitly state this convention.</p><p>Without it, arbitrarily many empty messages would invalidate that particular accounting argument. Under the natural standard convention, this is an expositional issue rather than a mathematical obstruction.</p><p><b>Minimum clarification:</b> state the positive-length message convention used in the communication model.</p><p><b>Minor issue: handler counting and reduction model.</b> The sentence bounding handler activations by messages plus blocks is not literally valid if every insertion-triggered handler is counted separately. The following paragraph evidently intends to process silent insertions internally within a block, but the accounting should say so explicitly.</p><p>Also, the validation cost<br>$$
+O\!\left(t(K+\log m)\right)
+$$<br>uses a public broadcast reduction. Sending the candidate separately over all private tracking links would have a different cost.</p><p><b>Minimum clarification:</b> specify that the reduction operates with a public broadcast transcript, and identify precisely which handler completions receive markers. Explicitly explain that silent insertion processing receives no separate marker.</p><p>Subject to these conventions, the transcript-rectangle argument is valid: a site’s actions depend on its own input and received history, while the center has no private stream input.</p><h3>Hard approval arrays</h3><p>The code construction is correct. The entropy estimate bounds the Hamming-ball volume, and greedy packing gives the claimed exponential code size, including small positive values of $p$.</p><p>Complementary site pairs give exactly $p$ approvals for every candidate in every phase.</p><p>For two different arrays, mixing entire site inputs at a differing phase-candidate coordinate produces<br>$$
+p+d&gt;\frac{5p}{4}
+$$<br>approvals. The mixing is compatible with rectangle arguments because each site contributes its entire private input from one of the two arrays.</p><p>The resulting fooling-family count establishes<br>$$
+\Omega(mKt)
+$$<br>communication in the serialized reduction.</p><h3>Election realization</h3><p>The phase invariant, inspected-prefix scores, and total mass are correct:<br>$$
+S(c)=Kx_s+h_cq_s,\qquad
+M=K(2x_s+q_s).
+$$</p><p>The phase condition guarantees that a candidate with more than $5p/4$ approvals exceeds every candidate with at most $p$ approvals by more than $\epsilon M$.</p><p>Validation therefore distinguishes negative inputs from promised positive inputs. Intermediate inputs outside the promise cause no problem.</p><p>For sufficiently large $m$, the stated validation and marker overhead is absorbed by the fooling-family bound. Lemma 2 follows, subject to the serialization clarifications above.</p><h3>5. Finite-horizon lower bound</h3><p>The phase construction satisfies the required inequality. The critical computation is correct:<br>$$
+32\epsilon x_s(1/4-2\epsilon)-4\epsilon x_s
+=
+4\epsilon x_s(1-16\epsilon)&gt;0.
+$$</p><p>The recurrence and its geometric bound are correct. The chosen phase count ensures<br>$$
+2Ku_{t+1}\le R,
+$$<br>so the elementary insertions are legal both in count and total mass.</p><p>The floor estimate applies because $R\ge2K$ makes the unfloored expression at least one.</p><p>The choice of an even active-site count handles both ranges of $k$ correctly. In the range $k&gt;R/2$, the logarithmic estimate yields $\Omega(mR)$, which implies the stated bound.</p><p>For $R\in\{2,3\}$, the intersection reduction is valid. A nonempty intersection forces every approximate winner into it, and the displayed complementary pairs form a fooling family.</p><p>Thus Theorem 3 is established under the clarified communication conventions.</p><p>The saturation conclusion<br>$$
+B=\Theta(mR)
+$$<br>also follows under its stated conditions, including $D=O(m)$.</p><h3>6. Two-insertion optimum</h3><p>The upper-bound covering argument is correct. Greedy removal intervals cover the mass alphabet, and each interval meets only a constant number of multiplicative bins. The asserted constant of eight is sufficient.</p><p>For the precision lower bound, separated masses satisfy<br>$$
+q_j-q_i&gt;\epsilon(q_i+q_j).
+$$<br>The two crossed inputs consequently have different unique $\epsilon$-winners. The diagonal-input rectangle argument therefore forces at least $P$ transcripts.</p><p>The approval-set lower bound and precision lower bound combine correctly to yield<br>$$
+B=\Theta\!\left(m+\log(2+P)\right).
+$$</p><p>The explicit encoding dependence is also correct for the usual combined numerator-denominator encoding:</p><ul><li>Powers of two supply the claimed dependence on the encoding range.</li><li>The dyadic construction has the stated separation and cardinality.</li><li>The two lower estimates combine to give the displayed minimum expression.</li></ul><p>The only clarification needed here is the encoding convention already identified.</p><h3>7. Regimes where the proposed bound holds or fails</h3><p>The sufficient regime is correctly derived. With $R=r$ and $r/k\ge\epsilon^{-2}$,<br>$$
+\log(1+\epsilon r/k)\ge\frac12\log(r/k),
+$$<br>so Theorem 3 implies the proposed lower bound.</p><p>The failure examples are valid:</p><ul><li><b>Feasible horizon equal to one:</b> the communication is $\Theta(\log m)$ even when the declared insertion bound is arbitrarily large.</li><li><b>Mass-limited growing horizon:</b> the matching bounds give the claimed $\Theta(m\log\log r)$ behavior.</li><li><b>Finite-horizon saturation:</b> the example has communication $\Theta(mr)$ while the proposed expression is asymptotically larger.</li><li><b>One site:</b> the report protocol gives the stated smaller communication bound.</li></ul><p>These examples genuinely disprove uniformity over the parameters. They do not rely on an unintended degenerate interpretation.</p><p>The observation that the unit-voter lower-bound formula also requires a parameter regime is consistent with the finite-horizon upper bound.</p><h3>8. Linearly many weighted phases</h3><p>The geometric masses satisfy the claimed recurrence:<br>$$
+x_s=q_s\quad(s\ge2),\qquad
+x_{t+1}=1/2.
+$$</p><p>There are four insertions per phase, and the final mass is exactly $2$. The phase inequality at $\epsilon=1/32$ is correctly checked.</p><p>With the stated ordinary encoding convention, the choice of $t$ makes the masses admissible and gives $t=\Theta(r)$.</p><p>The upper bound follows from $a\ge2^{-L}$ and $W\le2$. Thus the stated<br>$$
+B=\Theta(mr)
+$$<br>example is established.</p><h3>9. What remains unresolved</h3><p><b>Major scope issue:</b> the task asks for the asymptotically minimum communication in general. The output leaves unmatched upper and lower bounds outside its special regimes.</p><p>This is acknowledged incompleteness, not an erroneous claim of a complete solution. The established results remain useful and support another round.</p><p><b>Minimum additional work:</b> settle the unmatched parameter regimes before claiming a general asymptotic formula. Merely clarifying the existing arguments cannot supply that missing result.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

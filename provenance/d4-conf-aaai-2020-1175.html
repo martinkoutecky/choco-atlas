@@ -1,0 +1,329 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2020-1175 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2020-1175 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2020-1175)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.1 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite set of types \(T\) with rational shares \(\mu_t\), a block-structured cascade model with a finite shared environment \(\Omega\) and rational prior, a seeding budget \(\beta\), and \(q\) rounds, determine the infimum ratio of expected adopted mass under adaptive greedy to that under non-adaptive greedy. In each round, each policy chooses a type-mass vector \(\Delta x\geq 0\) with \(\sum_t\Delta x_t\leq\beta/q\) and \(x+\Delta x\leq\mu\), maximizing expected marginal adoption; adaptive greedy conditions on the observed type-level adoption profile under full feedback, or the type-level exposure profile under myopic feedback, while non-adaptive greedy uses the prior.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of \(\tau\) types \(T\) with positive binary-rational masses \(\mu_t\), normalized by \(\sum_t\mu_t=1\); \(\tau\) is the support size, not the number of possible types.<br>Define a block cascade by a simple directed graph \(G=(T,E)\) and an explicitly listed finite environment \(\Omega\) with positive rational prior \(p\). Each \(\omega\) specifies live edges \(E_\omega\subseteq E\); incoming live-edge sets at distinct types are independent under \(p\). Sample \(\omega\) once for the entire seeding process.<br>A type block has coordinates \(z\in[0,1]\) with mass measure \(\mu_t\,dz\). Seeding mass \(x_t\) seeds its prefix \(z\leq x_t/\mu_t\); a live edge transmits adoption between equal coordinates. Thus final adopted mass at type \(v\) is \(a_v(x,\omega)=\mu_v\max_{t:\,t\leadsto_\omega v}x_t/\mu_t\), allowing paths of length zero, and total adoption is \(A(x,\omega)=\sum_v a_v(x,\omega)\).<br>Full feedback reveals the vector \(a(x,\omega)\) after diffusion finishes. Myopic feedback reveals \(e(x,\omega)\), defined by the same formula using only paths of length at most one. Policies retain the complete history of actions and feedback; neither feedback directly reveals \(\omega\).<br>Let \(q\geq1\) be an integer and \(0&lt;\beta\leq1\) a rational budget. Starting at \(x=0\), each greedy policy performs \(q\) rounds, choosing a real vector \(\Delta x\geq0\) with \(\sum_t\Delta x_t\leq\beta/q\) and \(x+\Delta x\leq\mu\) that maximizes the expected marginal \(A(x+\Delta x,\omega)-A(x,\omega)\). Adaptive greedy uses the posterior given its history; non-adaptive greedy always uses the prior. Both break ties by the lexicographically greatest increment in a fixed type order.<br>Write \(X_b^g(\omega)\) for adaptive greedy&#x27;s final vector under feedback \(b\in\{\mathrm{full},\mathrm{myopic}\}\), and \(x^g\) for non-adaptive greedy&#x27;s final vector. Any running times are measured in \(m=|E|\), \(\tau\), \(|\Omega|\), \(q\), and total input bit length \(L\).</p><p>What is the sharp universal lower bound \(\gamma_b=\inf_{\mathcal I}\mathbb E_\omega[A(X_b^g(\omega),\omega)]/\mathbb E_\omega[A(x^g,\omega)]\) for each feedback model \(b\), where \(\mathcal I\) ranges over all admissible instances, including all budgets and round counts?</p><p>For finite-agent triggering cascades, the corresponding infimum is exactly \(1-1/e\) under both feedback models, including the independent cascade and linear threshold subclasses; adaptive greedy also guarantees \(1-1/e\) of the optimal non-adaptive influence. [Chen–Peng–Schoenebeck–Tao](https://arxiv.org/pdf/1911.08164).<br>No result settling this specific mass-cascade ratio was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The block cascade was undefined; chose a nonatomic live-edge lift with aligned coordinates, prefix seeding, and propagation along equal coordinates.</li><li>Normalized shares to total mass one and restricted the budget to a positive rational at most one; allowed every type to be seeded and counted seeded mass in adoption.</li><li>Carried over independence of incoming triggering sets across types; the explicitly listed environment is sampled once and retained across rounds.</li><li>Made profile feedback precise: full feedback reports final adopted masses, while myopic feedback reports masses reached within one edge, including seeds; conditioning uses the complete observation history.</li><li>Specified real-valued increments and a common lexicographic tie-breaking rule in a fixed type order.</li><li>Interpreted the infimum as ranging over instances, budgets, and round counts, matching the anchor&#x27;s universal ratio rather than evaluating a single instance.</li><li>Defined m as the number of graph edges and L as total input bit length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial solution: new lower bounds and a sharp special case</h3><p>The sharp infima for unrestricted instances remain unresolved. The following results are proved here for both feedback models.</p><ul><li>If every type fits within one round’s allowance, adaptive greedy achieves at least $1-e^{-1/2}$ of the optimal non-adaptive value.</li><li>If all type masses are equal and one round’s allowance is an integer multiple of that common mass, the infimum of the adaptive-to-non-adaptive greedy ratio is exactly $1-1/e$.</li><li>In the second case, a stronger finite-round bound against non-adaptive greedy is</li></ul><p>$$
+   1-\left(1-\frac{2}{q}\right)\left(1-\frac1q\right)^{q-2}
+   $$<br>for $q\geq2$.</p><p>The upper-bound construction for the second result also establishes<br>$$
+0\leq\gamma_{\mathrm{full}}\leq1-\frac1e,
+\qquad
+0\leq\gamma_{\mathrm{myopic}}\leq1-\frac1e
+$$<br>for the unrestricted problem. The lower bounds proved below have additional hypotheses.</p><h3>1. Basic properties and the shape of greedy actions</h3><p>Set<br>$$
+c=\frac{\beta}{q},
+\qquad
+F(x)=\mathbb E_\omega[A(x,\omega)].
+$$<br>For an environment $\omega$, write $R_\omega(t)$ for the types reachable from $t$, including $t$.</p><p>For each destination $v$, adoption is its mass multiplied by a maximum of linear functions:<br>$$
+a_v(x,\omega)
+=
+\mu_v\max_{t:\,v\in R_\omega(t)}\frac{x_t}{\mu_t}.
+$$<br>Consequently, $A(x,\omega)$ is continuous, coordinatewise nondecreasing, and convex in $x$. These properties also hold for every posterior expectation of $A$.</p><p>Every round has a compact feasible increment polytope. Its continuous objective therefore attains a maximum. Successively maximizing coordinates within the compact set of objective maximizers produces the unique prescribed lexicographically greatest maximizer.</p><h3>Lemma 1: convex maximization with the prescribed tie rule</h3><p>The lexicographically greatest maximizer of a convex function over a polytope is a vertex.</p><p><b>Proof.</b> Let $d$ be that maximizer, and express it as a convex combination of vertices:<br>$$
+d=\sum_j\lambda_jv_j,
+\qquad
+\lambda_j&gt;0,
+\qquad
+\sum_j\lambda_j=1.
+$$<br>Convexity gives<br>$$
+f(d)\leq\sum_j\lambda_jf(v_j)\leq f(d).
+$$<br>Thus every $v_j$ in this combination is also an objective maximizer and is lexicographically at most $d$.</p><p>If some $v_j$ differs from $d$, let $\ell$ be the earliest coordinate at which any of these vertices differs from $d$. All preceding coordinates agree with $d$. At coordinate $\ell$, every differing vertex must have a smaller coordinate, by lexicographic maximality. Their weighted average cannot equal $d_\ell$, a contradiction. Hence every $v_j=d$, so $d$ is a vertex. $\square$</p><p>Both greedy policies spend exactly $c$ in every round. Before round $i$, remaining capacity is at least<br>$$
+1-(i-1)c\geq c.
+$$<br>If an optimal increment spent less than $c$, one could increase a coordinate while remaining feasible. Monotonicity would preserve objective optimality, while the increment would become lexicographically greater. This contradicts the tie rule.</p><p>A vertex of<br>$$
+\left\{d:0\leq d_t\leq u_t,\ \sum_t d_t\leq c\right\}
+$$<br>has at most one coordinate strictly between $0$ and $u_t$. Indeed, two such coordinates could be perturbed in opposite directions by a sufficiently small amount, expressing the point as the midpoint of two distinct feasible points.</p><p>Thus a greedy round fills some remaining type capacities and has at most one additional partial coordinate. The same vertex statement applies to the global non-adaptive optimization polytope<br>$$
+P_\beta=\left\{y:0\leq y\leq\mu,\ \sum_t y_t\leq\beta\right\}.
+$$</p><p>Finally, every feasible adoption value is at most $1$, and paths of length zero give<br>$$
+A(x,\omega)\geq\sum_t x_t.
+$$<br>Both final greedy vectors therefore have adoption at least $\beta&gt;0$, so their ratio is well-defined.</p><h3>2. A comparison lemma using whole type blocks</h3><p>For a subset $B\subseteq T$, define its full seeding vector by<br>$$
+s^B_t=
+\begin{cases}
+\mu_t,&amp;t\in B,\\
+0,&amp;t\notin B.
+\end{cases}
+$$<br>Write $x\vee s^B$ for coordinatewise maximum.</p><h3>Lemma 2: comparison with a partition into feasible blocks</h3><p>Let $y$ be a fixed feasible non-adaptive vector. Suppose there is a set $S\subseteq T$ such that<br>$$
+y\leq s^S,
+$$<br>and a partition<br>$$
+S=B_1\mathbin{\dot\cup}\cdots\mathbin{\dot\cup}B_r
+$$<br>satisfying<br>$$
+\sum_{t\in B_j}\mu_t\leq c
+\qquad
+\text{for every }j.
+$$<br>Then adaptive greedy, under either feedback model, satisfies<br>$$
+\mathbb E[A(X_b^g,\omega)]
+\geq
+\left[1-\left(1-\frac1r\right)^q\right]F(y).
+$$</p><p><b>Proof.</b> Fix a feasible $x$ and an environment $\omega$. Let<br>$$
+\rho_v=\frac{a_v(x,\omega)}{\mu_v}.
+$$<br>For each block $B_j$, define $C_{jv}$ to be $1$ if some type in $B_j$ reaches $v$, and $0$ otherwise. Fully seeding $B_j$ raises adoption at a reached destination to its full mass. Therefore<br>$$
+A(x\vee s^{B_j},\omega)-A(x,\omega)
+=
+\sum_v\mu_v(1-\rho_v)C_{jv}.
+$$</p><p>Since $y\leq s^S$, a destination adopted under $y$ must be reachable from some type in $S$. If $\sum_jC_{jv}\geq1$, then<br>$$
+\rho_v+(1-\rho_v)\sum_jC_{jv}\geq1.
+$$<br>If $\sum_jC_{jv}=0$, its adoption under $y$ is zero. Summing these destination-wise inequalities proves<br>$$
+A(y,\omega)
+\leq
+A(x,\omega)
++
+\sum_{j=1}^r
+\left[A(x\vee s^{B_j},\omega)-A(x,\omega)\right].
+$$</p><p>After any adaptive history, each operation $x\mapsto x\vee s^{B_j}$ is an available comparison action: its increment is nonnegative, respects capacities, and costs at most<br>$$
+\sum_{t\in B_j}\mu_t\leq c.
+$$<br>Conditional greedy optimality and the preceding inequality consequently imply<br>$$
+\mathbb E[A(X_{i+1},\omega)-A(X_i,\omega)\mid H_i]
+\geq
+\frac{
+\mathbb E[A(y,\omega)-A(X_i,\omega)\mid H_i]
+}{r}.
+$$<br>Here $H_i$ denotes the complete history after $i$ rounds. The argument does not require $A(X_i,\omega)$ to be observed.</p><p>Put<br>$$
+a_i=\mathbb E[A(X_i,\omega)].
+$$<br>Taking expectations gives<br>$$
+a_{i+1}\geq
+\left(1-\frac1r\right)a_i+\frac{F(y)}r.
+$$<br>Starting from $a_0=0$ and iterating proves the claim. $\square$</p><p>This lemma uses no independence assumption beyond the existence of the given probability distribution. In particular, it applies to every admissible instance in the task.</p><h3>3. New lower bound when every type fits in one round</h3><h3>Theorem 3</h3><p>Suppose<br>$$
+\max_t\mu_t\leq c=\frac{\beta}{q}.
+$$<br>Let<br>$$
+F^*=\max_{y\in P_\beta}F(y)
+$$<br>be the optimal non-adaptive value. Then, for either feedback model,<br>$$
+\mathbb E[A(X_b^g,\omega)]
+\geq
+\left[1-\left(1-\frac1{2q}\right)^q\right]F^*
+\geq
+(1-e^{-1/2})F^*.
+$$<br>The same lower bounds therefore hold for the ratio against non-adaptive greedy.</p><p><b>Proof.</b> Choose the lexicographically greatest maximizer $y^*$ of $F$ over $P_\beta$. Lemma 1 makes it a vertex, so it fully seeds a set $S$ and has at most one additional partially seeded type $t$.</p><p>The fully seeded types have total mass at most $\beta=qc$. We partition them into groups of mass at most $c$ by the following procedure: process them in any order, adding types to the current group until the next type would exceed $c$, then start a new group. Each type fits because $\mu_t\leq c$.</p><p>Let $W_j$ denote the mass of group $j$. Consecutive groups satisfy<br>$$
+W_j+W_{j+1}&gt;c:
+$$<br>the first type in group $j+1$ did not fit in group $j$.</p><p>There cannot be $2q$ or more groups. Otherwise, pairing the first $2q$ consecutive groups would give<br>$$
+\sum_jW_j
+\geq
+\sum_{\ell=1}^q(W_{2\ell-1}+W_{2\ell})
+&gt;
+qc,
+$$<br>contrary to the mass bound on $S$. Hence $S$ requires at most $2q-1$ groups.</p><p>If $y^*$ has a partial type, add that type as one further singleton group. Its full mass is at most $c$. We have thus found a full seeding vector dominating $y^*$, partitioned into at most $2q$ round-feasible blocks.</p><p>Lemma 2, with empty blocks added if necessary, yields<br>$$
+\mathbb E[A(X_b^g,\omega)]
+\geq
+\left[1-\left(1-\frac1{2q}\right)^q\right]F^*.
+$$<br>Finally, $1-u\leq e^{-u}$ gives<br>$$
+\left(1-\frac1{2q}\right)^q\leq e^{-1/2}.
+$$<br>Since $F(x^g)\leq F^*$, the ratio assertion follows. $\square$</p><p>This covers a regime where capacities can bind repeatedly and masses need not be equal. Its hypothesis does not cover types whose mass exceeds a round’s allowance.</p><h3>4. Equal masses with an aligned round allowance</h3><p>Assume now that all masses equal<br>$$
+\mu_t=\frac1\tau,
+$$<br>and that, for an integer $K\geq1$,<br>$$
+c=\frac K\tau,
+\qquad
+\beta=\frac{qK}{\tau}\leq1.
+$$</p><h3>Theorem 4: lower bounds in the aligned equal-mass case</h3><p>For either feedback model,<br>$$
+\mathbb E[A(X_b^g,\omega)]
+\geq
+\left[1-\left(1-\frac1q\right)^q\right]F^*.
+$$<br>Against non-adaptive greedy, for $q\geq2$,<br>$$
+\frac{\mathbb E[A(X_b^g,\omega)]}{F(x^g)}
+\geq
+1-\left(1-\frac2q\right)\left(1-\frac1q\right)^{q-2}.
+$$<br>For $q=1$, the ratio is $1$.</p><p><b>Proof.</b> We first establish that each round fully seeds exactly $K$ previously unseeded types.</p><p>Inductively, suppose the current vector has coordinates either $0$ or $1/\tau$. By Lemma 1, the chosen increment is a vertex and has at most one partial coordinate. It spends exactly $K/\tau$. All full increment coordinates contribute integer multiples of $1/\tau$, so a single strictly partial coordinate cannot complete that total. Thus there is no partial coordinate, proving the induction.</p><p>Likewise, a lexicographically greatest global optimizer over $P_\beta$ spends exactly $qK/\tau$ and is a vertex. It therefore fully seeds a set of exactly $qK$ types. Partitioning that set into $q$ sets of $K$ types and applying Lemma 2 proves the first bound.</p><p>For the stronger comparison, define the realized whole-block coverage function<br>$$
+f_\omega(S)=A(s^S,\omega).
+$$<br>It is monotone and submodular: a destination contributes its mass precisely when at least one member of $S$ reaches it. In particular, adding a fixed set of seeds has no larger marginal at a larger base set.</p><p>Let $N_i$ be the non-adaptive seed set after $i$ rounds, and set<br>$$
+g_i=\mathbb E[f_\omega(N_i)-f_\omega(N_{i-1})].
+$$<br>These gains are nonincreasing. To verify this, let $C_{i+1}=N_{i+1}\setminus N_i$. Submodularity and prior greedy optimality give<br>$$
+\begin{aligned}
+g_{i+1}
+&amp;\leq
+\mathbb E[f_\omega(N_{i-1}\cup C_{i+1})-f_\omega(N_{i-1})]\\
+&amp;\leq g_i.
+\end{aligned}
+$$<br>The comparison batch $C_{i+1}$ is feasible at round $i$, since it consists of $K$ types not yet seeded there. Consequently, for $q\geq2$,<br>$$
+F(s^{N_2})=g_1+g_2
+\geq
+\frac2q\sum_{i=1}^qg_i
+=
+\frac2qF(x^g).
+$$</p><p>Both policies take the same first action. After any first-round history, adaptive greedy can choose the fixed second non-adaptive batch. Conditional optimality and averaging therefore give<br>$$
+a_2\geq F(s^{N_2})\geq\frac2qF(x^g),
+$$<br>where $a_i$ denotes adaptive expected adoption after $i$ rounds.</p><p>Partition the fixed final set $N_q$ into its $q$ non-adaptive batches. The proof of Lemma 2 gives, at every subsequent round,<br>$$
+a_{i+1}\geq
+\left(1-\frac1q\right)a_i+\frac{F(x^g)}q.
+$$<br>Iterating from the displayed bound on $a_2$ yields<br>$$
+a_q\geq
+\left[
+1-\left(1-\frac2q\right)\left(1-\frac1q\right)^{q-2}
+\right]F(x^g).
+$$<br>For one round, both policies use the same prior and tie rule and hence coincide. $\square$</p><h3>5. An equal-mass family approaching $1-1/e$</h3><p>We now construct admissible aligned equal-mass instances whose ratios converge to $1-1/e$. This proves sharpness within the class of Section 4 and supplies the unrestricted upper bound.</p><h3>5.1 Integer leaf counts</h3><p>Let $k$ tend to infinity through integers, and put<br>$$
+M=k^4,\qquad H=k^3,\qquad \varepsilon=\frac1k.
+$$<br>Define<br>$$
+Q_1=M-H+1,
+$$<br>and, for $i=2,\ldots,k$,<br>$$
+h_i=\left\lfloor\frac{Q_{i-1}}k\right\rfloor+1,
+\qquad
+Q_i=Q_{i-1}-h_i.
+$$</p><p>There are $k$ columns of leaves. In the first row, column $1$ has $H-1$ leaves, while every other column has $H$ leaves. In row $i\geq2$, every column has $h_i$ leaves. Finally, the residual part of column $1$ has $Q_k$ leaves, and every other residual column part has $Q_k-1$ leaves.</p><p>Each column has exactly $M$ leaves. Indeed,<br>$$
+\sum_{i=2}^kh_i=Q_1-Q_k,
+$$<br>so the total for column $1$ is<br>$$
+H-1+(Q_1-Q_k)+Q_k=M,
+$$<br>and for another column it is<br>$$
+H+(Q_1-Q_k)+(Q_k-1)=M.
+$$</p><p>Let $a=1-1/k$. Write<br>$$
+h_i=\frac{Q_{i-1}}k+\theta_i,
+\qquad 0&lt;\theta_i\leq1.
+$$<br>Solving the recurrence gives<br>$$
+Q_k
+=
+a^kM+a^{k-1}
+-
+\sum_{i=2}^ka^{k-i}\theta_i.
+$$<br>Hence<br>$$
+\left|\frac{Q_k}{M}-a^k\right|
+\leq\frac{k+1}{M},
+\qquad
+\frac{Q_k}{M}\longrightarrow e^{-1}.
+$$<br>The analogous formula for each $Q_i$, with $i\leq k$, shows that all $Q_i&gt;1$ for sufficiently large $k$. Thus all listed leaf counts are positive.</p><p>Also,<br>$$
+h_2\leq H-\frac Hk+\frac1k+1&lt;H
+$$<br>for sufficiently large $k$. Since the positive $h_i$ make the $Q_i$ decrease, the sequence $h_i$ is nonincreasing. In particular,<br>$$
+kh_i&lt;M
+\qquad(i\geq2).
+$$</p><h3>5.2 Types, masses, graph, and environments</h3><p>Introduce sources<br>$$
+s,u_1,\ldots,u_k,v_1,\ldots,v_k,
+$$<br>the column leaves just described, $2M$ private leaves, and one gate leaf $t$.</p><p>The number of these types is<br>$$
+N_0=(k+2)M+2k+2.
+$$<br>Choose a power of two $N\geq N_0$, and add $N-N_0$ isolated types. Give every type mass $1/N$. These masses are positive dyadic rationals and sum to $1$.</p><p>Set<br>$$
+q=k+1,\qquad c=\frac1N,\qquad\beta=\frac{k+1}{N}.
+$$<br>Thus each round fully seeds exactly one type.</p><p>The deterministically live edges are:</p><ul><li>$s$ to each private leaf;</li><li>$u_j$ to every leaf in column $j$;</li><li>$v_i$ to every leaf in row $i$.</li></ul><p>The gate has two incoming edges, $s\to t$ and $v_1\to t$. There are two environments:</p><ul><li>with probability $\varepsilon$, only $s\to t$ is live;</li><li>with probability $1-\varepsilon$, only $v_1\to t$ is live.</li></ul><p>Only the gate’s incoming live-edge set is random. All other incoming sets are deterministic, so independence across distinct target types holds. Both environment probabilities are positive rational numbers.</p><p>Every edge runs from a source to a leaf. Therefore all paths of positive length have length one, and full and myopic feedback coincide.</p><p>Choose the type order with<br>$$
+v_1,v_2,\ldots,v_k
+$$<br>preceding all the $u_j$, and with the $v_i$ in their displayed order. Other positions can be arbitrary.</p><p>We compare gains in units of the common mass $1/N$. An unseeded source contributes its own unit in addition to its newly adopted leaves. Directly seeding a leaf or isolated type has gain at most one unit.</p><h3>5.3 Non-adaptive greedy</h3><p>Initially, the leaf gains are<br>$$
+\begin{aligned}
+s &amp;: 2M+\varepsilon,\\
+u_j &amp;: M,\\
+v_1 &amp;: M-1+(1-\varepsilon)=M-\varepsilon,\\
+v_i &amp;: kh_i&lt;M\qquad(i\geq2).
+\end{aligned}
+$$<br>Thus both policies first seed $s$.</p><p>After any number of column sources have been seeded, every remaining column source still has leaf gain $M$. The prior marginal gate contribution to $v_1$ is $1-\varepsilon$, and its remaining row contains at most $M-1$ leaves. Every other row source has fewer than $M$ leaves. Non-adaptive greedy therefore seeds all $k$ column sources.</p><p>Its expected adopted mass is<br>$$
+F(x^g)
+=
+\frac{2M+kM+\varepsilon+(k+1)}N.
+$$</p><h3>5.4 Adaptive greedy</h3><p>The feedback after seeding $s$ identifies the environment.</p><p>If the gate adopts, its incoming edge from $v_1$ is absent. All row sources have leaf gain less than $M$, so adaptive greedy seeds all column sources.</p><p>If the gate does not adopt, $v_1\to t$ is known to be live. The leaf gain of $v_1$ is then<br>$$
+M-1+1=M.
+$$<br>It ties with the column sources and wins by the specified type order.</p><p>Suppose subsequently that $v_1,\ldots,v_{i-1}$ have been seeded, with $i\geq2$. Column $1$ has $Q_{i-1}$ unadopted leaves, and every other column has $Q_{i-1}-1$. The best column-source leaf gain is therefore $Q_{i-1}$. However,<br>$$
+kh_i
+=
+k\left(\left\lfloor\frac{Q_{i-1}}k\right\rfloor+1\right)
+&gt;
+Q_{i-1}.
+$$<br>Thus a row source wins. The row sizes are nonincreasing, and the tie order selects $v_i$. Inductively, adaptive greedy seeds every row source in this branch.</p><p>The total number of row leaves is<br>$$
+B_k
+=
+kM-\left[Q_k+(k-1)(Q_k-1)\right]
+=
+kM-kQ_k+k-1.
+$$<br>The gate is adopted in both adaptive branches. Consequently,<br>$$
+\mathbb E[A(X_b^g,\omega)]
+=
+\frac{2M+1+(1-\varepsilon)B_k+\varepsilon kM+(k+1)}N
+$$<br>for both feedback models.</p><h3>5.5 Limiting ratio and sharpness</h3><p>The ratio is<br>$$
+\rho_k
+=
+\frac{2M+1+(1-\varepsilon)(kM-kQ_k+k-1)+\varepsilon kM+(k+1)}
+     {2M+kM+\varepsilon+(k+1)}.
+$$<br>Divide numerator and denominator by $kM$. Using<br>$$
+\varepsilon\longrightarrow0,
+\qquad
+\frac{Q_k}{M}\longrightarrow e^{-1},
+\qquad
+\frac{2M}{kM}\longrightarrow0,
+$$<br>we obtain<br>$$
+\rho_k\longrightarrow1-e^{-1}.
+$$</p><p>These instances belong to the aligned equal-mass class with $K=1$. Theorem 4 gives a lower bound of at least $1-1/e$ throughout that class, because<br>$$
+\left(1-\frac1q\right)^q\leq e^{-1}.
+$$<br>The construction proves the matching upper bound. Therefore the infimum within the aligned equal-mass class is exactly $1-1/e$ under each feedback model.</p><h3>6. What remains unresolved</h3><p>For unrestricted instances, the construction proves<br>$$
+\gamma_b\leq1-\frac1e.
+$$<br>Nonnegativity proves $\gamma_b\geq0$. The stronger lower bounds above apply to specified subclasses.</p><p>The principal unresolved case has types larger than $c=\beta/q$, which may be seeded partially over several rounds. Lemma 2 cannot directly compare against a fully seeded such type: that operation is infeasible in one round. Dividing it into smaller increments does not preserve the comparison inequality, because adoption is convex along a single type’s seeding coordinate.</p><p>Thus neither unrestricted sharp infimum is determined by this argument.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 6 and the unrestricted target in USER_TASK: Neither unrestricted sharp infimum is determined. The established universal bounds are only $0\leq\gamma_b\leq1-1/e$; every proved positive lower bound has additional mass hypotheses. Completing the assigned target requires a sharp unrestricted result for each feedback model.</li><li><b>minor</b> — Lemma 2: domain of the block count: The lemma should explicitly require $r\geq1$. Its hypotheses otherwise permit $y=0$, $S=\varnothing$, and an empty partition with $r=0$, for which the displayed bound and recurrence are undefined. Allowing a positive number of blocks, including empty blocks, resolves this omission and leaves all subsequent applications valid.</li></ul>
+<div class="pre"><h3>Overall assessment</h3><p><b>The output establishes correct partial results, but does not determine either unrestricted sharp infimum requested in <code>USER_TASK</code>.</b> Its admission that the unrestricted problem remains unresolved is accurate.</p><p>The lower bounds under additional mass hypotheses, the sharper finite-round comparison, and the construction approaching $1-1/e$ are sound. I found no false central step. There is one minor domain omission in Lemma 2.</p><h3>Step-by-step verification</h3><h3>1. Basic properties and greedy actions</h3><p><b>Adoption is continuous, monotone, and convex: correct.</b> For fixed $\omega$ and destination $v$, the reachability set is fixed and nonempty because it includes $v$. Thus<br>$$
+a_v(x,\omega)=\mu_v\max_{t:\,v\in R_\omega(t)}\frac{x_t}{\mu_t}
+$$<br>is a positive multiple of a maximum of finitely many linear functions. Summation and expectation preserve the stated properties. This also applies to a fixed posterior.</p><p><b>Existence and uniqueness under the tie rule: correct.</b> Each feasible increment set is compact and nonempty. The objective is continuous, so its maximizer set is compact and nonempty. Successive coordinate maximization over that set defines a unique lexicographically greatest point.</p><p><b>Lemma 1: correct.</b> The convexity inequalities force every vertex with positive weight in the representation of $d$ to attain the same maximum objective value. At the earliest coordinate where any such vertex differs from $d$, all preceding coordinates agree with $d$, and every differing coordinate must be smaller by lexicographic maximality. Their weighted average cannot equal the corresponding coordinate of $d$. This establishes that $d$ is a vertex.</p><p><b>Exact spending in each round: correct.</b> Before round $i$, total remaining capacity is at least<br>$$
+1-(i-1)c\geq c,
+$$<br>using $qc=\beta\leq1$. An increment spending less than $c$ therefore leaves some coordinate that can be increased. Monotonicity, together with objective maximality, makes the increased increment another objective maximizer; its lexicographic improvement contradicts the tie rule.</p><p><b>At most one partial coordinate: correct.</b> Two coordinates strictly between their respective bounds permit opposite perturbations preserving their sum and feasibility. Such a point cannot be a vertex. This argument applies to both the round polytope and the global optimization polytope.</p><p><b>Positive denominator: correct.</b> Feasibility gives $A(x,\omega)\leq1$, while length-zero paths give<br>$$
+A(x,\omega)\geq\sum_t x_t.
+$$<br>Both policies spend total mass $\beta&gt;0$, so the ratio is well-defined.</p><h3>2. Whole-block comparison lemma</h3><p><b>The whole-block marginal formula is correct.</b> For feasible $x$, one has $0\leq\rho_v\leq1$. If a member of $B_j$ reaches $v$, fully seeding that member makes adoption at $v$ equal to $\mu_v$. Otherwise, the operation does not change adoption there. Hence<br>$$
+A(x\vee s^{B_j},\omega)-A(x,\omega)
+=
+\sum_v\mu_v(1-\rho_v)C_{jv}.
+$$</p><p><b>The comparison inequality is correct.</b> If no member of $S$ reaches $v$, then $y\leq s^S$ implies adoption under $y$ at $v$ is zero. Otherwise,<br>$$
+\rho_v+(1-\rho_v)\sum_j C_{jv}\geq1,
+$$<br>which bounds the adoption fraction under $y$. Summing over destinations yields the displayed comparison.</p><p><b>Conditional greedy comparison is correct.</b> Each operation $x\mapsto x\vee s^{B_j}$ costs at most the full mass of $B_j$, hence at most $c$. It is an admissible comparison action after every history. Conditional optimality therefore bounds the greedy marginal by the average of these comparison marginals.</p><p>The proof does not require the current total adoption to be observed. It uses conditional expectations given the complete history, which are valid under either feedback model.</p><p><b>The recurrence and its solution are correct, provided $r\geq1$.</b> Since $y$ is fixed, the law of total expectation gives<br>$$
+a_{i+1}\geq
+\left(1-\frac1r\right)a_i+\frac{F(y)}r.
+$$<br>Starting from $a_0=0$ gives the claimed bound.</p><p><b>Minor issue:</b> Lemma 2 does not explicitly require $r\geq1$. Its hypotheses allow $y=0$ and $S=\varnothing$, for which an empty partition can have $r=0$, making the displayed expressions undefined. The minimum clarification is to state that the partition has a positive number of blocks, with empty blocks permitted. All subsequent applications already use positive block counts.</p><p>The statement that this lemma does not require independence is correct.</p><h3>3. Lower bound when every type fits in one round</h3><p><b>The optimizer structure is correct.</b> Compactness gives a global maximizer, and Lemma 1 gives a vertex with fully seeded coordinates and at most one partial coordinate.</p><p><b>The grouping argument is correct.</b> Under $\mu_t\leq c$, every processed type fits in an individual group. When a new group starts, its first type failed to fit in the preceding group, so<br>$$
+W_j+W_{j+1}&gt;c.
+$$<br>If there were at least $2q$ groups, pairing the first $2q$ would force their total mass to exceed $qc=\beta$, contradicting feasibility.</p><p>Adding the possible partially seeded type as a singleton produces a full-block vector dominating the optimizer, with at most $2q$ feasible blocks. Padding with empty blocks permits application of Lemma 2 with exactly $2q$ blocks.</p><p><b>Both resulting bounds are correct:</b><br>$$
+\mathbb E[A(X_b^g,\omega)]
+\geq
+\left[1-\left(1-\frac1{2q}\right)^q\right]F^*
+\geq
+(1-e^{-1/2})F^*.
+$$<br>The exponential inequality is used within its valid range. Since $F(x^g)\leq F^*$, the comparison against non-adaptive greedy follows.</p><p>This theorem does not apply to arbitrary instances: its hypothesis excludes every type whose mass exceeds $c$.</p><h3>4. Equal masses with aligned round allowance</h3><p><b>Whole-type actions: correct.</b> Assuming the current coordinates are either zero or $1/\tau$, each remaining positive capacity is $1/\tau$. A vertex has at most one partial increment coordinate, and exact spending is $K/\tau$. Full coordinates contribute integer multiples of $1/\tau$, so a single strictly partial coordinate cannot complete the required total.</p><p>The induction begins at zero and establishes that every round seeds exactly $K$ previously unseeded types.</p><p>The same reasoning applies to the global optimizer, with exact budget spending justified by the earlier monotonicity and lexicographic argument. It seeds exactly $qK$ types. Partitioning these into $q$ batches establishes the first bound.</p><p><b>Submodularity and decreasing non-adaptive gains: correct.</b> For fixed $\omega$, each destination contributes its mass when the seed set intersects its set of reaching types. This is a coverage function, so adding a fixed batch has no greater marginal at a larger seed set.</p><p>The next non-adaptive batch consists of $K$ types still unseeded at the preceding round, so it is a feasible comparison there. Consequently,<br>$$
+g_{i+1}\leq g_i.
+$$<br>For a nonincreasing sequence of $q$ gains, the first two gains have sum at least $2/q$ of the total, giving<br>$$
+F(s^{N_2})\geq\frac2qF(x^g).
+$$</p><p><b>The adaptive second-round comparison is correct.</b> Both policies have the same first action. The fixed second non-adaptive batch remains feasible after every first-round feedback history. Conditional greedy optimality and averaging therefore give<br>$$
+a_2\geq F(s^{N_2}).
+$$</p><p><b>The finite-round bound is correct.</b> Applying the whole-block recurrence to the fixed final non-adaptive seed set and iterating from $a_2$ gives<br>$$
+a_q\geq
+\left[
+1-\left(1-\frac2q\right)
+\left(1-\frac1q\right)^{q-2}
+\right]F(x^g).
+$$<br>At $q=2$, the expression equals $1$ and the argument applies directly. At $q=1$, both policies use the same prior and tie rule, so the ratio is exactly $1$.</p><h3>5. Construction approaching $1-1/e$</h3><h3>Integer counts</h3><p><b>The column totals are correct.</b> The recurrence telescopes as stated, giving exactly $M$ leaves in every column.</p><p><b>The recurrence solution is correct.</b> With $a=1-1/k$ and<br>$$
+h_i=\frac{Q_{i-1}}k+\theta_i,
+\qquad 0&lt;\theta_i\leq1,
+$$<br>the displayed formula<br>$$
+Q_k=a^kM+a^{k-1}
+-\sum_{i=2}^k a^{k-i}\theta_i
+$$<br>follows from the recurrence. Its stated error bound is valid, and therefore<br>$$
+\frac{Q_k}{M}\longrightarrow e^{-1}.
+$$</p><p>The analogous recurrence formula supports positivity of the residual counts for sufficiently large $k$: its leading term remains of order $M$, while the rounding correction is at most of order $k$.</p><p>The bound on $h_2$ is correct. Since $Q_i$ decreases, the floor expression defining $h_i$ is nonincreasing. Thus $h_i&lt;H$ and $kh_i&lt;M$ for all relevant rows once $k$ is sufficiently large.</p><h3>Admissibility</h3><p><b>The type count is correct:</b><br>$$
+N_0=(k+2)M+2k+2.
+$$<br>Padding to a power of two produces positive dyadic masses summing to one. The parameters satisfy<br>$$
+q=k+1,\qquad c=\frac1N,\qquad
+\beta=\frac{k+1}{N}\leq1.
+$$</p><p>The graph is simple. The two environments have positive rational probabilities for sufficiently large $k$. Only the incoming set at the gate is random; every other incoming set is deterministic. Hence incoming sets at distinct types are independent.</p><p>Every edge goes from a source to a leaf, so no positive-length path exceeds length one. Full and myopic feedback coincide throughout these instances.</p><h3>Non-adaptive choices</h3><p><b>The initial gains are correct.</b> The first row has $kH-1=M-1$ column leaves. The gate contributes its appropriate expected marginal, producing the stated initial gains.</p><p>All unseeded sources contribute the same additional unit for their own adoption. This common contribution does not alter source comparisons. The source $s$ strictly wins the first round.</p><p>After seeding $s$, each remaining column source retains $M$ unadopted column leaves. The prior marginal gate contribution of $v_1$ is $1-\varepsilon$, so its total leaf gain is at most $M-\varepsilon&lt;M$. Every other row source also has fewer than $M$ remaining leaves. Non-adaptive greedy therefore seeds all columns.</p><p>The denominator<br>$$
+F(x^g)=
+\frac{2M+kM+\varepsilon+(k+1)}N
+$$<br>correctly counts private leaves, column leaves, expected gate adoption, and seeded sources.</p><h3>Adaptive choices</h3><p><b>The first feedback identifies the environment.</b> After seeding $s$, the gate adopts exactly when its incoming edge from $s$ is live.</p><p>In that branch, the gate offers no further marginal gain, and columns strictly beat rows.</p><p>In the other branch, $v_1$ has $M-1$ row leaves plus the gate, tying the column sources at leaf gain $M$. The prescribed order selects $v_1$.</p><p>After rows through $i-1$ have been selected, the remaining column counts are exactly $Q_{i-1}$ and $Q_{i-1}-1$. The inequality<br>$$
+kh_i&gt;Q_{i-1}
+$$<br>is strict by the definition of $h_i$. Remaining row sizes are nonincreasing, and the stated tie order selects $v_i$. Thus the induction establishing selection of every row is valid.</p><p><b>The final counts are correct:</b><br>$$
+B_k=kM-kQ_k+k-1.
+$$<br>The gate adopts in both adaptive branches, so the expected numerator is correctly stated.</p><h3>Limit and sharpness</h3><p>Dividing the ratio by $kM$ gives the claimed limit $1-e^{-1}$. The private-leaf and source terms vanish at that scale, while the uncovered column fraction converges to $e^{-1}$.</p><p>Together with Theorem 4, this proves that the infimum in the aligned equal-mass subclass is exactly $1-1/e$ under both feedback models. Because these are admissible unrestricted instances, the construction also proves<br>$$
+\gamma_b\leq1-\frac1e.
+$$</p><h3>6. What remains unproved</h3><p><b>Major completeness issue:</b> neither unrestricted sharp infimum is determined.</p><p>The output proves only<br>$$
+0\leq\gamma_b\leq1-\frac1e
+$$<br>universally. Its positive lower bounds have additional hypotheses. In particular, no established comparison covers arbitrary types larger than a round allowance.</p><p>The discussion of this obstruction accurately identifies a limitation of Lemma 2. It does not constitute a universal lower bound or a matching construction below the established upper bound.</p><p>The minimum substantive completion needed is a proof determining the unrestricted infimum for each feedback model. Merely clarifying the existing exposition cannot supply this missing result. The prover correctly labels its current contribution as partial.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

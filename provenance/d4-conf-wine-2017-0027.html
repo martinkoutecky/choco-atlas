@@ -1,0 +1,365 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-wine-2017-0027 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-wine-2017-0027 <span style="font-weight:normal;color:#8a7350">(d4-conf-wine-2017-0027)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.3 — class: other</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational \(B,p,\varepsilon&gt;0\) and a finite-support rational distribution \(\mu\) over types \(t=(\alpha_t,\delta_t)\), with rational \(0&lt;\alpha_t,\delta_t&lt;1\) and common share success probability \(p\), compute a finite-support rational payout sequence \(x_i\ge0\), \(\sum_i x_i\le B\), whose welfare \(p\sum_t\mu_t\sum_{i\ge0}\delta_t^i x_i^{\alpha_t}\) is within \(\varepsilon\) of the supremum over feasible payout sequences.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\ge1\) types with positive mass, each with its mass as a binary rational. Here \(\tau\) is the support size, not the number of possible types. Types are \(t=(\alpha_t,\delta_t)\), with rational \(0&lt;\alpha_t,\delta_t&lt;1\), and masses satisfy \(\sum_t\mu_t=1\).<br>Inputs also include binary rationals \(B,\varepsilon&gt;0\) and a common share success probability \(0&lt;p\le1\). Let \(L\) be the total input bit length; there is no candidate-count parameter \(m\).<br>A fixed payout rule assigns the same amount \(x_i\) to a share whenever a successful share occurs \(i\) submissions later, including its own success at \(i=0\). Successes are independent with probability \(p\); payouts are amounts, and the rule cannot depend on type or history.<br>Feasible rules are real sequences \(x=(x_i)_{i\ge0}\) with \(x_i\ge0\) and \(\sum_{i\ge0}x_i\le B\). Define \(W(x)=p\sum_t\mu_t\sum_{i\ge0}\delta_t^i x_i^{\alpha_t}\), with \(0^{\alpha_t}=0\), and \(W^*=\sup_{x\text{ feasible}}W(x)\).<br>The computational problem is to output a feasible finite-support rational rule satisfying \(W(x)\ge W^*-\varepsilon\), encoded as a list of nonzero entries with binary indices and binary rational amounts; all omitted entries are zero.</p><p>Is this additive approximation problem solvable in time polynomial in \(\tau\) and \(L\), or is it NP-hard?</p><p>For the original homogeneous model, an optimal geometric fixed payout rule is steady-state optimal among pure pools; this is an optimality characterization, not a bit-complexity bound. [Source](https://arxiv.org/pdf/1703.03846)<br>No result settling the stated heterogeneous, explicitly encoded approximation problem was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Restricted p to 0&lt;p&lt;=1 because it is a success probability.</li><li>Normalized the distribution to total mass one and required nonempty support.</li><li>Interpreted payouts as amounts rather than fractions of B, with the current successful share included at index zero.</li><li>Made the supremum range over all feasible real infinite sequences, while requiring the output to have finite rational support.</li><li>Specified an explicit sparse output encoding with binary indices, binary rational amounts, and zero omitted entries.</li><li>Included epsilon and all other rational inputs in L, so polynomial time refers to binary input length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Status and additional progress</h3><p>The stated problem is <b>not solvable in polynomial time</b>, because some inputs require exponentially many explicitly listed payouts. This does not, by itself, establish NP-hardness.</p><p>In addition to reproving that obstruction, I establish the following upper bound:</p><blockquote><b>Proven upper bound.</b> Let<br>$$
+&gt; d=\min_t(1-\delta_t).
+&gt; $$<br>There is a feasible finite-support rational approximation computable in<br>$$
+&gt; N\,\operatorname{poly}(\tau,L+\log N)
+&gt; $$<br>bit operations, where<br>$$
+&gt; N=O\!\left(\frac{L}{d}\right).
+&gt; $$<br>Each output amount has $O(L+\log N)$ bits. Consequently, the problem has a worst-case $2^{O(L)}$-time algorithm. On any subclass satisfying $d\ge 1/q(L)$ for a fixed polynomial $q$, it is polynomial-time solvable.</blockquote><p>Thus the worst-case exponential lower and upper bounds are established. <b>NP-hardness remains unresolved.</b></p><p>For the algorithmic upper bound, I use the intended finite-input convention that the supplied probability $p$ is also a binary rational. The lower bound uses $p=1$.</p><h3>2. Exponential output is necessary</h3><p>Consider one type with mass $1$, exponent $\alpha=\tfrac12$, discount $\delta=q\in(0,1)$, and $p=1$. Then<br>$$
+W(x)=\sum_{i\ge0}q^i\sqrt{x_i}.
+$$</p><p>Cauchy–Schwarz applied to finite partial sums, followed by passage to the limit, gives<br>$$
+W(x)\le
+\left(\sum_{i\ge0}q^{2i}\right)^{1/2}
+\left(\sum_{i\ge0}x_i\right)^{1/2}
+\le
+\sqrt{\frac{B}{1-q^2}}.
+$$<br>The feasible rule<br>$$
+x_i=B(1-q^2)q^{2i}
+$$<br>attains this bound. Therefore<br>$$
+W^*=\sqrt{\frac{B}{1-q^2}}.
+$$</p><p>Suppose a rule has at most $k$ nonzero entries. Order its nonzero indices as<br>$$
+i_0&lt;i_1&lt;\cdots&lt;i_{r-1},
+\qquad r\le k.
+$$<br>Since $i_j\ge j$,<br>$$
+\sum_{j=0}^{r-1}q^{2i_j}
+\le
+\sum_{j=0}^{k-1}q^{2j}.
+$$<br>Another application of Cauchy–Schwarz yields<br>$$
+W(x)\le
+\sqrt{\frac{B(1-q^{2k})}{1-q^2}}.
+$$<br>This bound is attained by the rational rule<br>$$
+x_i=
+\frac{Bq^{2i}}{\sum_{j=0}^{k-1}q^{2j}}
+\quad(0\le i&lt;k),
+$$<br>with all remaining entries zero. In particular, large binary indices cannot improve the support-constrained optimum.</p><p>Now choose, for each integer $n\ge1$,<br>$$
+q_n=1-2^{-n},
+\qquad
+B_n=1-q_n^2,
+\qquad
+\varepsilon=\frac14.
+$$<br>All these inputs are dyadic rationals, and their total encoding length satisfies $L_n=\Theta(n)$. The optimum is $W^*=1$, while every rule with at most $k$ nonzero entries satisfies<br>$$
+W(x)\le\sqrt{1-q_n^{2k}}.
+$$<br>An acceptable output must therefore satisfy<br>$$
+q_n^{2k}\le\frac7{16},
+$$<br>and hence<br>$$
+k\ge
+\frac{\log(16/7)}{2[-\log q_n]}.
+$$</p><p>For $0&lt;s\le\tfrac12$,<br>$$
+-\log(1-s)
+=
+\int_0^s\frac{du}{1-u}
+\le 2s.
+$$<br>Substituting $s=2^{-n}$ gives<br>$$
+k\ge \frac{\log(16/7)}4\,2^n.
+$$</p><p>Thus every acceptable output on this family contains $2^{\Omega(L_n)}$ explicitly listed entries. Writing those entries already requires exponential time. This proves the unconditional failure of polynomial-time solvability for the prescribed encoding.</p><h3>3. A uniformly controlled finite horizon</h3><p>Define<br>$$
+C=\max\{1,B\},
+\qquad
+d=\min_t(1-\delta_t),
+\qquad
+U=\frac{C}{d}.
+$$<br>Feasibility implies $x_i\le B$. Since $0&lt;\alpha_t&lt;1$,<br>$$
+B^{\alpha_t}\le C.
+$$<br>Using $p\le1$ and $\sum_t\mu_t=1$, we obtain<br>$$
+W(x)
+\le
+p\sum_t\mu_t\frac{B^{\alpha_t}}{1-\delta_t}
+\le U.
+$$<br>In particular, $W^*$ is finite. If $\varepsilon\ge U$, the zero rule is acceptable. Henceforth assume $\varepsilon&lt;U$.</p><p>Let $H$ be the least positive integer satisfying<br>$$
+U2^{-H}\le\frac{\varepsilon}{8},
+$$<br>and set<br>$$
+R=\left\lceil\frac1d\right\rceil,
+\qquad
+N=HR.
+$$<br>These quantities are computable by rational arithmetic and comparisons with powers of two.</p><p>To bound the tail, observe that<br>$$
+(1-d)^{-R}
+=
+\left(1+\frac{d}{1-d}\right)^R
+\ge 1+Rd
+\ge2,
+$$<br>where the first inequality follows from the binomial expansion. Consequently,<br>$$
+(1-d)^N\le2^{-H}.
+$$</p><p>For every feasible rule,<br>$$
+\begin{aligned}
+W(x)-p\sum_t\mu_t\sum_{i=0}^{N-1}\delta_t^i x_i^{\alpha_t}
+&amp;\le
+p\sum_t\mu_t B^{\alpha_t}
+\frac{\delta_t^N}{1-\delta_t}\\
+&amp;\le U(1-d)^N\\
+&amp;\le\frac{\varepsilon}{8}.
+\end{aligned}
+$$</p><p>Define<br>$$
+f_i(u)=p\sum_t\mu_t\delta_t^i u^{\alpha_t},
+\qquad
+F(x)=\sum_{i=0}^{N-1}f_i(x_i).
+$$<br>Let $V_N$ denote the maximum of $F$ over nonnegative vectors with total payout at most $B$. This maximum exists because the feasible set is compact and $F$ is continuous.</p><p>Every $f_i$ is strictly increasing. Thus a maximizing vector uses the full budget:<br>$$
+\sum_{i=0}^{N-1}x_i=B.
+$$<br>The uniform tail bound proves<br>$$
+V_N\le W^*\le V_N+\frac{\varepsilon}{8}.
+$$</p><p>Under binary rational encoding,<br>$$
+d\ge2^{-O(L)},
+\qquad
+U\le2^{O(L)},
+\qquad
+\varepsilon\ge2^{-O(L)}.
+$$<br>Therefore<br>$$
+H=O(L),
+\qquad
+N=O\!\left(\frac{L}{d}\right),
+\qquad
+\log N=O(L).
+$$</p><p>It remains to solve this finite problem with precision depending polynomially on the input bit length.</p><h3>4. A positive floor and stable marginal equations</h3><h3>4.1. Enforcing a small positive floor</h3><p>Set<br>$$
+\gamma=\frac{\varepsilon}{8U},
+\qquad
+a=\frac{\gamma B}{N}.
+$$<br>Then $0&lt;\gamma&lt;\tfrac18$ and $Na=\gamma B&lt;B$.</p><p>Let $V_a$ be the maximum of $F$ on<br>$$
+\mathcal K_a=
+\left\{
+x\in[a,B]^N:
+\sum_{i=0}^{N-1}x_i=B
+\right\}.
+$$<br>This set is nonempty and compact.</p><p>Take a vector $v$ attaining $V_N$, and define<br>$$
+y_i=(1-\gamma)v_i+a.
+$$<br>Then $y\in\mathcal K_a$. For every type and coordinate,<br>$$
+y_i^{\alpha_t}
+\ge
+(1-\gamma)^{\alpha_t}v_i^{\alpha_t}
+\ge
+(1-\gamma)v_i^{\alpha_t}.
+$$<br>The last inequality holds because $0&lt;1-\gamma&lt;1$ and $\alpha_t&lt;1$. Hence<br>$$
+V_a\ge(1-\gamma)V_N
+\ge V_N-\frac{\varepsilon}{8},
+$$<br>using $V_N\le U$.</p><h3>4.2. Adding a small quadratic penalty</h3><p>Set<br>$$
+\kappa=\frac{\varepsilon}{8B^2},
+\qquad
+G(x)=F(x)-\frac{\kappa}{2}\sum_{i=0}^{N-1}x_i^2.
+$$<br>Let $z^*$ maximize $G$ on $\mathcal K_a$.</p><p>If $v^*$ maximizes $F$ on $\mathcal K_a$, then<br>$$
+G(z^*)\ge G(v^*).
+$$<br>Every vector in $\mathcal K_a$ satisfies<br>$$
+\sum_i x_i^2\le\left(\sum_i x_i\right)^2=B^2.
+$$<br>It follows that<br>$$
+F(z^*)\ge V_a-\frac{\kappa B^2}{2}
+=
+V_a-\frac{\varepsilon}{16}.
+$$</p><p>The penalty makes the marginal equations uniformly stable. Define<br>$$
+D_i(u)=f_i&#x27;(u)-\kappa u.
+$$<br>For $u&gt;0$,<br>$$
+f_i&#x27;(u)
+=
+p\sum_t\mu_t\alpha_t\delta_t^i u^{\alpha_t-1},
+$$<br>and<br>$$
+f_i&#x27;&#x27;(u)
+=
+p\sum_t\mu_t\alpha_t(\alpha_t-1)\delta_t^i u^{\alpha_t-2}&lt;0.
+$$<br>Therefore<br>$$
+D_i&#x27;(u)\le-\kappa.
+$$</p><p>Also, for $u\in[a,B]$,<br>$$
+0&lt;f_i&#x27;(u)\le\max\{1,a^{-1}\}&lt;M,
+\qquad
+M=1+a^{-1}.
+$$<br>Indeed, $u^{\alpha_t-1}\le1$ when $a\ge1$, and $u^{\alpha_t-1}\le a^{-1}$ when $a&lt;1$.</p><h3>4.3. Reduction to one scalar multiplier</h3><p>For a real number $\lambda$, let $z_i(\lambda)$ be the unique maximizer on $[a,B]$ of<br>$$
+f_i(u)-\frac{\kappa}{2}u^2-\lambda u.
+$$<br>Equivalently,<br>$$
+z_i(\lambda)=
+\begin{cases}
+a,&amp;D_i(a)\le\lambda,\\
+B,&amp;D_i(B)\ge\lambda,\\
+\text{the unique }u\in(a,B)\text{ with }D_i(u)=\lambda,
+&amp; D_i(B)&lt;\lambda&lt;D_i(a).
+\end{cases}
+$$</p><p>These functions are nonincreasing and satisfy<br>$$
+|z_i(\lambda)-z_i(\lambda&#x27;)|
+\le\frac{|\lambda-\lambda&#x27;|}{\kappa}.
+$$<br>Here is a proof including the endpoint cases. Suppose $\lambda&lt;\lambda&#x27;$ and write $z=z_i(\lambda)$, $z&#x27;=z_i(\lambda&#x27;)$. Adding the two maximizing inequalities gives<br>$$
+(\lambda&#x27;-\lambda)(z-z&#x27;)\ge0,
+$$<br>so $z\ge z&#x27;$. If $z&gt;z&#x27;$, the first-order inequalities at the two constrained maximizers give<br>$$
+D_i(z)\ge\lambda,
+\qquad
+D_i(z&#x27;)\le\lambda&#x27;.
+$$<br>Consequently,<br>$$
+\kappa(z-z&#x27;)
+\le D_i(z&#x27;)-D_i(z)
+\le\lambda&#x27;-\lambda.
+$$</p><p>Put<br>$$
+S(\lambda)=\sum_{i=0}^{N-1}z_i(\lambda).
+$$<br>The preceding bound implies that $S$ is continuous. At<br>$$
+\lambda_-=-\kappa B,
+\qquad
+\lambda_+=M,
+$$<br>we have<br>$$
+S(\lambda_-)=NB,
+\qquad
+S(\lambda_+)=Na&lt;B.
+$$<br>The first equality follows from $D_i(B)&gt;-\kappa B$; the second follows from $D_i(a)&lt;M$.</p><p>Since $N&gt;1$, the intermediate value theorem supplies $\lambda^*\in[\lambda_-,\lambda_+]$ with<br>$$
+S(\lambda^*)=B.
+$$<br>The vector $z(\lambda^*)$ maximizes $G$ on $\mathcal K_a$. To verify this directly, coordinate optimality gives, for every $v_i\in[a,B]$,<br>$$
+\bigl(D_i(z_i(\lambda^*))-\lambda^*\bigr)
+\bigl(v_i-z_i(\lambda^*)\bigr)\le0.
+$$<br>Concavity supplies the supporting-line inequality. Summing it over coordinates, the multiplier contribution vanishes because both vectors have total payout $B$. Thus<br>$$
+G(v)\le G(z(\lambda^*)).
+$$<br>We may therefore take $z^*=z(\lambda^*)$.</p><h3>5. Certified rational bisection</h3><p>Define the coordinate accuracy<br>$$
+s=\frac{\varepsilon}{64NM}.
+$$</p><h3>5.1. Computing a coordinate within error $s$</h3><p>For rational $\lambda$, one can compute a rational $y_i\in[a,B]$ satisfying<br>$$
+|y_i-z_i(\lambda)|\le s
+$$<br>by bisection on $[a,B]$.</p><p>At each midpoint $u$, evaluate $D_i(u)$ with absolute error at most<br>$$
+\eta=\frac{\kappa s}{4}.
+$$<br>Such evaluations are justified in Section 6.</p><p>If the computed value exceeds $\lambda+\eta$, then the true value exceeds $\lambda$, so the maximizer lies to the right. If the computed value is below $\lambda-\eta$, the maximizer lies to the left.</p><p>Otherwise,<br>$$
+|D_i(u)-\lambda|\le2\eta=\frac{\kappa s}{2}.
+$$<br>The bound $D_i&#x27;\le-\kappa$ then implies<br>$$
+|u-z_i(\lambda)|\le\frac{s}{2},
+$$<br>including when the maximizer is an endpoint. For example, if $z_i(\lambda)=a$, then<br>$$
+\lambda-D_i(u)
+\ge D_i(a)-D_i(u)
+\ge\kappa(u-a).
+$$<br>The case $z_i(\lambda)=B$ is analogous.</p><p>If this residual stopping condition never occurs, stop once the enclosing interval has width at most $2s$ and return its midpoint. The number of iterations is<br>$$
+O\!\left(1+\log\max\{1,B/s\}\right).
+$$</p><h3>5.2. Computing the multiplier</h3><p>Maintain a bracket $[\ell,r]$ containing $\lambda^*$, initially $[\lambda_-,\lambda_+]$.</p><p>At its midpoint $\lambda$, compute the rational coordinates $y_i$ above and their exact sum<br>$$
+S_y=\sum_i y_i.
+$$<br>Since<br>$$
+|S_y-S(\lambda)|\le Ns,
+$$<br>the following updates are certified:</p><ul><li>If $S_y&gt;B+Ns$, then $S(\lambda)&gt;B$, so replace $\ell$ by $\lambda$.</li><li>If $S_y&lt;B-Ns$, then $S(\lambda)&lt;B$, so replace $r$ by $\lambda$.</li><li>Otherwise, accept $y$.</li></ul><p>If the bracket reaches width at most $\kappa s$, compute $y$ at its midpoint and accept it. Thus the number of outer iterations is at most<br>$$
+O\!\left(
+1+\log\max\left\{1,\frac{M+\kappa B}{\kappa s}\right\}
+\right).
+$$</p><h3>5.3. Exact budget correction</h3><p>Correct the accepted rational vector $y$ to a rational vector $x\in\mathcal K_a$.</p><p>If its sum exceeds $B$, decrease coordinates, preserving their lower bound $a$, until the excess is removed. There is enough removable mass because $Na&lt;B$. If its sum is below $B$, increase coordinates, preserving the upper bound $B$, until the deficit is removed. The total available capacity is $NB-S_y\ge B-S_y$.</p><p>This can be done sequentially, using exact rational arithmetic, and satisfies<br>$$
+\|x-y\|_1=|S_y-B|.
+$$</p><p>If acceptance occurred because $|S_y-B|\le Ns$, then<br>$$
+|S(\lambda)-B|\le2Ns.
+$$<br>All coordinates of $z(\lambda)-z(\lambda^*)$ have the same sign, by monotonicity. Therefore<br>$$
+\|z(\lambda)-z^*\|_1
+=
+|S(\lambda)-B|
+\le2Ns.
+$$<br>Together with $\|y-z(\lambda)\|_1\le Ns$ and the budget correction, this gives<br>$$
+\|x-z^*\|_1\le4Ns.
+$$</p><p>If acceptance occurred because the bracket width is at most $\kappa s$, then<br>$$
+|\lambda-\lambda^*|\le\frac{\kappa s}{2},
+$$<br>so<br>$$
+\|y-z^*\|_1\le\frac32Ns.
+$$<br>The budget correction adds at most another $\tfrac32Ns$. Thus the same bound $\|x-z^*\|_1\le4Ns$ holds in both cases.</p><p>Since $f_i&#x27;$ is bounded by $M$ on $[a,B]$, integration of the derivative gives<br>$$
+|F(x)-F(z^*)|
+\le M\|x-z^*\|_1
+\le4NMs
+=\frac{\varepsilon}{16}.
+$$</p><p>Combining all losses,<br>$$
+\begin{aligned}
+F(x)
+&amp;\ge V_a-\frac{\varepsilon}{16}-\frac{\varepsilon}{16}\\
+&amp;\ge V_N-\frac{\varepsilon}{4}\\
+&amp;\ge W^*-\frac{3\varepsilon}{8}.
+\end{aligned}
+$$<br>Extending $x$ by zeros at indices $i\ge N$ therefore gives an acceptable rule. It is rational, has finite support, and uses exactly the budget $B$.</p><h3>6. Bit complexity</h3><p>The bisection procedure uses certified approximations to rational powers. The following details ensure that it does not assume a real-arithmetic oracle.</p><h3>6.1. Evaluating rational powers</h3><p>Let $r&gt;0$ have binary encoding length at most $K$, let $\beta\in[-1,0]$ be rational with encoding length at most $K$, and let $Q\ge1$. A rational approximation to $r^\beta$ with absolute error at most $2^{-Q}$ can be computed in time polynomial in $K+Q$.</p><p>To justify this, write<br>$$
+r=2^e v,
+\qquad
+1\le v&lt;2,
+\qquad
+|e|=O(K).
+$$<br>For<br>$$
+w=\frac{v-1}{v+1},
+$$<br>we have $0\le w&lt;\tfrac13$ and<br>$$
+\log v
+=
+2\sum_{j=0}^{\infty}\frac{w^{2j+1}}{2j+1}.
+$$<br>After $m$ terms, the error is at most<br>$$
+2\sum_{j=m}^{\infty}|w|^{2j+1}
+\le\frac34\,9^{-m}.
+$$<br>The same series with $w=\tfrac13$ evaluates $\log2$. Hence $\log r=e\log2+\log v$ can be approximated to any prescribed binary precision with polynomially many rational operations and polynomial intermediate bit length.</p><p>Next use<br>$$
+r^\beta=\exp(\beta\log r).
+$$<br>The exponent has magnitude $O(K)$. Its approximation needs only $Q+O(K+\log K)$ bits of absolute precision, because the derivative of the exponential on this range is bounded by $2^{O(K)}$.</p><p>To evaluate the exponential, divide its argument by a power of two until its magnitude is at most $1$. Approximate the resulting exponential by its Taylor series, then repeatedly square. The number of squarings is $O(\log(K+1))$, and the Taylor remainder decreases at least geometrically with the number of terms. Using $Q+O(K+\log K)$ bits of initial accuracy controls the final error: for positive $A,B$,<br>$$
+|A^m-B^m|
+\le m\max\{A,B\}^{m-1}|A-B|.
+$$<br>Here $m=O(K+1)$ and the initial values are bounded by a constant. Exact rational evaluation of the finite series and subsequent squarings has polynomial bit complexity.</p><p>This argument applies even when the denominator of $\beta$ is exponentially large in its bit length.</p><h3>6.2. Evaluating discounted coefficients</h3><p>For $0&lt;\delta&lt;1$ and a binary integer $i$, the value $\delta^i$ can be approximated to absolute error $2^{-Q}$ in time polynomial in<br>$$
+L+\log(i+1)+Q.
+$$<br>Use repeated squaring and binary exponentiation, rounding intermediate values to a sufficiently fine dyadic grid.</p><p>All factors remain in $[0,1]$. Squaring propagates an error $e$ to at most $2e$ plus the rounding error, while multiplication propagates at most the sum of its two input errors plus the rounding error. Consequently, choosing<br>$$
+Q+O(\log(i+1))
+$$<br>fractional bits controls the final absolute error. Only $O(\log(i+1))$ multiplications are needed.</p><h3>6.3. Evaluating the marginals</h3><p>At every coordinate-bisection point $u\in[a,B]$,<br>$$
+u^{\alpha_t-1}\le M.
+$$<br>Approximate each $\delta_t^i$ and each $u^{\alpha_t-1}$ to absolute error at most<br>$$
+\zeta=
+\min\left\{1,\frac{\eta}{4\tau(M+2)}\right\}.
+$$<br>The resulting error in each product is at most $(M+2)\zeta$. Since $p\mu_t\alpha_t\le1$, summing over types gives an error at most $\eta/4$, and hence at most $\eta$. The term $-\kappa u$ is rational and can be handled exactly.</p><p>Thus every derivative evaluation required by Section 5 has polynomial bit complexity in the input lengths and requested precision.</p><h3>6.4. Sizes and total running time</h3><p>The rational quantities<br>$$
+a,\ \kappa,\ M,\ s,\ \lambda_-,\ \lambda_+
+$$<br>have $O(L+\log N)$ bits. The logarithmic iteration bounds in Section 5 are also $O(L+\log N)$.</p><p>Coordinate outputs are midpoints obtained by at most $O(L+\log N)$ bisections of $[a,B]$. Their denominators therefore divide one common denominator whose bit length is $O(L+\log N)$. The exact budget correction preserves that denominator. Since every final amount lies in $[a,B]$, each amount has $O(L+\log N)$ bits.</p><p>Each outer iteration performs $N$ coordinate computations, each involving polynomially many arithmetic operations and power evaluations. The total running time is consequently<br>$$
+N\,\operatorname{poly}(\tau,L+\log N),
+$$<br>and the explicit output length is<br>$$
+O\bigl(N(L+\log N)\bigr).
+$$</p><p>Because $\log N=O(L)$ and $N\le2^{O(L)}$, this proves the claimed $2^{O(L)}$ worst-case upper bound.</p><p>If $d\ge1/q(L)$ for a fixed polynomial $q$, then<br>$$
+N=O(Lq(L)),
+$$<br>and the same algorithm runs in polynomial time.</p><h3>7. Remaining classification question</h3><p>The following conclusions are proved:</p><ul><li>The required explicit output prevents polynomial-time solvability on unrestricted inputs, already when $\tau=1$.</li><li>General heterogeneous inputs admit a $2^{O(L)}$-time algorithm with polynomially many bits per listed payout.</li><li>A polynomial lower bound on the discount gaps suffices for polynomial-time solvability.</li></ul><p>These results provide no reduction establishing NP-hardness. Some instances have no polynomial-length valid output, so a hardness claim must specify how a polynomial-time reduction accesses potentially exponentially long oracle answers. Establishing or refuting NP-hardness under such a specified reduction remains open here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 1 and 7: coverage of the requested complexity classification: The output establishes an unconditional exponential output-size obstruction to polynomial-time solvability, but supplies no NP-hardness reduction or resolution of the NP-hardness question. This is acknowledged incompleteness, not an error in the proved bounds.</li></ul>
+<div class="pre"><h3>Overall assessment</h3><p>The mathematical arguments establish the claimed exponential output-size obstruction and the algorithmic upper bound. I found no false central step or substantive gap in either argument.</p><p>The answer is nevertheless <b>partial relative to the requested complexity classification</b>: it proves that polynomial-time solvability is impossible for the prescribed explicit output format, but it does not establish NP-hardness. The prover explicitly acknowledges this limitation. An output-length lower bound is not an NP-hardness reduction.</p><h3>Step-by-step verification</h3><h3>1. Input convention</h3><p>The upper bound assumes that $p$ is a binary rational included in the input length $L$. The task specifies a common probability $p$ without explicitly specifying its encoding.</p><p>This is the natural finite-input interpretation, and the prover states it explicitly. Under the requested verification standard, this is an acceptable clarification. The lower bound uses $p=1$ and does not depend on the ambiguity.</p><h3>2. Homogeneous optimum and support-constrained bound</h3><p>For $\alpha=\tfrac12$, $\delta=q$, and $p=1$, the Cauchy–Schwarz bound<br>$$
+W(x)\le \sqrt{\frac{B}{1-q^2}}
+$$<br>is valid. Passing from finite partial sums to the infinite sum is justified because the summands are nonnegative and the bounds are uniform.</p><p>The proposed geometric rule is feasible: its entries are nonnegative and sum to $B$. Substitution attains the displayed bound, so the formula for $W^*$ is correct.</p><p>For a rule with at most $k$ nonzero entries, the ordered indices satisfy $i_j\ge j$. Consequently, the stated comparison of geometric sums and the second Cauchy–Schwarz application are valid:<br>$$
+W(x)\le
+\sqrt{\frac{B(1-q^{2k})}{1-q^2}}.
+$$<br>For positive integer $k$, the displayed rational allocation on the first $k$ indices attains this bound. Thus the assertion that large binary indices cannot improve this support-constrained optimum is justified.</p><h3>3. Exponential output-size obstruction</h3><p>For the specified family,<br>$$
+q_n=1-2^{-n},
+\qquad
+B_n=1-q_n^2,
+$$<br>all parameters satisfy the task’s restrictions, and their total binary encoding length is $\Theta(n)$.</p><p>The optimum equals $1$. Requiring welfare at least $\tfrac34$ implies<br>$$
+q_n^{2k}\le\frac7{16}.
+$$<br>Taking logarithms gives the stated lower bound on $k$, with the inequality direction correct.</p><p>The integral estimate<br>$$
+-\log(1-s)\le2s
+\qquad
+\left(0&lt;s\le\tfrac12\right)
+$$<br>is correct, including the endpoint relevant to $n=1$. Therefore<br>$$
+k\ge\frac{\log(16/7)}4\,2^n.
+$$<br>Every acceptable output must contain exponentially many explicitly listed entries. This establishes an unconditional obstruction to polynomial-time output generation under the required encoding.</p><p>It does <b>not</b> establish NP-hardness, and the prover does not claim otherwise.</p><h3>4. Uniform finite horizon</h3><p>The bound $x_i\le B$ follows from feasibility, and<br>$$
+B^{\alpha_t}\le\max\{1,B\}
+$$<br>holds for every permitted exponent. The resulting bound $W(x)\le U$ is valid.</p><p>The zero-rule case $\varepsilon\ge U$ is correctly handled.</p><p>For the remaining case, $d\in(0,1)$ and $R$ is a positive integer, so the binomial estimate used to establish<br>$$
+(1-d)^N\le2^{-H}
+$$<br>has its hypotheses satisfied.</p><p>The tail estimate is uniform over all feasible rules and has the claimed constant $\varepsilon/8$. Compactness and continuity justify existence of the finite-dimensional maximum. Strict monotonicity justifies full budget use.</p><p>The comparison<br>$$
+V_N\le W^*\le V_N+\frac{\varepsilon}{8}
+$$<br>follows from zero extension and the uniform truncation bound.</p><p>The binary rational size estimates imply $H=O(L)$, $N=O(L/d)$, and $\log N=O(L)$ as claimed.</p><h3>5. Positive floor and quadratic penalty</h3><p>The floor construction satisfies $Na=\gamma B&lt;B$. The transformed maximizing vector has total budget $B$ and coordinates in $[a,B]$.</p><p>The exponent inequality used in the floor-loss estimate is valid for every $0&lt;\alpha_t&lt;1$. Thus the loss of at most $\varepsilon/8$ is justified.</p><p>The penalty comparison uses the valid inequality<br>$$
+\sum_i x_i^2\le B^2.
+$$<br>Its resulting loss is exactly $\varepsilon/16$.</p><p>The derivative formulas are correct, and positivity of the weights and the restrictions on the exponents imply strict concavity. In particular,<br>$$
+D_i&#x27;(u)\le-\kappa.
+$$<br>The upper bound on $f_i&#x27;$ over $[a,B]$ also holds in both cases $a&lt;1$ and $a\ge1$.</p><h3>6. Scalar multiplier characterization</h3><p>Each coordinate objective is strictly concave on a compact interval, so its unique maximizer exists. The three-case characterization is correct.</p><p>The monotonicity argument follows from the maximizing inequalities. In the Lipschitz argument, when $z&gt;z&#x27;$, the first maximizer cannot be the lower endpoint and the second cannot be the upper endpoint. The stated first-order inequalities therefore hold, including the remaining endpoint cases. The bound<br>$$
+|z_i(\lambda)-z_i(\lambda&#x27;)|
+\le\frac{|\lambda-\lambda&#x27;|}{\kappa}
+$$<br>is justified.</p><p>The endpoint values of $S$ are correct. The assertion $N&gt;1$ follows from $\varepsilon&lt;U$, which forces $H\ge4$. Continuity and the intermediate value theorem therefore provide the required multiplier.</p><p>The coordinate optimality inequalities and the concave supporting-line inequality establish global optimality on $\mathcal K_a$. The multiplier terms cancel because both vectors have total budget $B$.</p><h3>7. Certified bisection and budget correction</h3><p>The coordinate-bisection comparisons correctly account for evaluation error. The residual stopping condition and the slope bound give the stated coordinate accuracy, including clipped endpoint maximizers.</p><p>The outer comparisons correctly account for the aggregate coordinate error $Ns$, so they preserve a bracket containing the selected multiplier.</p><p>Exact budget correction is feasible in both directions. Its total change in the $\ell_1$ norm equals the budget discrepancy.</p><p>Both acceptance cases yield<br>$$
+\|x-z^*\|_1\le4Ns.
+$$<br>For the residual acceptance case, monotonicity ensures that all coordinate differences between the two multiplier vectors have the same sign, justifying the equality between their $\ell_1$ distance and their total-mass discrepancy.</p><p>The derivative bound then gives a welfare loss of at most $\varepsilon/16$. Combining the three finite-dimensional losses and the tail loss gives<br>$$
+F(x)\ge W^*-\frac{3\varepsilon}{8},
+$$<br>which is stronger than the requested guarantee. Zero extension produces a feasible finite-support rational rule.</p><h3>8. Bit complexity</h3><p>The rational-power evaluation argument supplies an algorithm rather than assuming an exact real-arithmetic oracle.</p><p>The logarithm-series remainder constant is correct. Range reduction bounds the exponential argument by $O(K)$, and the stated additional precision controls error amplification. Exact rational evaluation of the finite series and subsequent squarings has polynomial intermediate bit length.</p><p>For discounted coefficients, repeated squaring with the stated additional precision controls error propagation in polynomial time in the binary index length.</p><p>The marginal product-error estimate is valid:<br>$$
+\text{product error}\le(M+2)\zeta.
+$$<br>The chosen $\zeta$ makes the aggregate error no greater than the required tolerance.</p><p>The bisection endpoints share a common rational denominator, and the bounded number of midpoint operations enlarges its bit length by only $O(L+\log N)$. Budget correction preserves a suitable common denominator containing that of $B$. Consequently, the claimed bit bound per output amount is justified.</p><p>The total running time<br>$$
+N\,\operatorname{poly}(\tau,L+\log N)
+$$<br>follows. Since $\tau$ is bounded by the explicit input length and $N\le2^{O(L)}$, the worst-case upper bound is valid. The polynomial-time result under a fixed inverse-polynomial lower bound on $d$ is also valid.</p><h3>Issue and minimum required follow-up</h3><p><b>Major task-completion issue — Sections 1 and 7:</b> The NP-hardness classification remains unanswered. This is an acknowledged limitation, not a mathematical error in the established bounds.</p><p>To complete that part of the task, the prover must specify the reduction notion and how it handles potentially exponential oracle outputs, then supply the corresponding hardness argument or another resolution of the hardness question. No repair to the output-size lower bound or the upper-bound algorithm is required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

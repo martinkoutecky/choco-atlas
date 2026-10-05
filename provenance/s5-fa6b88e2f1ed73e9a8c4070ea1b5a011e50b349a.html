@@ -1,0 +1,270 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-fa6b88e2f1ed73e9a8c4070ea1b5a011e50b349a — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-fa6b88e2f1ed73e9a8c4070ea1b5a011e50b349a <span style="font-weight:normal;color:#8a7350">(s5-fa6b88e2f1ed73e9a8c4070ea1b5a011e50b349a)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For any initial allocation x and any matching M, the edge-balancing dynamics converge to a ﬁxed point.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite role graph \(G_T=(T,E)\), rational type masses \(\mu_t&gt;0\) with \(\sum_{t\in T}\mu_t=1\), edge values \(w\), a fixed matching \(M\) with \(\mu_t=\mu_u\) for each \(tu\in M\), and an initial per-capita allocation \(x^0\), can one compute an allocation \(y\) such that every matched pair&#x27;s clipped balancing update changes either endpoint by at most \(\varepsilon\), and what is the worst-case update complexity in \(|T|\), \(|E|\), the input bit length, and \(\varepsilon\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list of \(\tau\) types with positive binary rational masses \(\mu_t\), summing to \(1\); \(\tau\) is the support size, not the number of possible types.<br>The input includes a finite simple undirected role graph \(G_T=(T,E)\), with \(m=|E|\), positive integer edge values \(w_{tu}\), and an arbitrary fixed matching \(M\) satisfying \(\mu_t=\mu_u\) for every \(tu\in M\).<br>All members of a type receive the same per-capita allocation. Matching \(tu\) pairs the entire masses of those types; its value is per pair. A valid allocation satisfies \(x_t\geq0\), \(x_t+x_u=w_{tu}\) on \(M\), and \(x_t=0\) for unmatched types.<br>Given a valid binary rational initial allocation \(x^0\) and binary rational tolerance \(\varepsilon&gt;0\), define \(\alpha_t(x)=\max(\{0\}\cup\{w_{tv}-x_v:tv\in E\setminus M\})\).<br>For \(tu\in M\), the clipped balancing update \(B_{tu}\) replaces \(x_t\) by \(\min\{w_{tu},\max\{0,(w_{tu}+\alpha_t(x)-\alpha_u(x))/2\}\}\) and \(x_u\) by \(w_{tu}-(B_{tu}x)_t\), leaving other coordinates unchanged. This rule applies even when \(w_{tu}-\alpha_t(x)-\alpha_u(x)&lt;0\).<br>Seek a valid rational allocation \(y\) with \(\|B_{tu}y-y\|_\infty\leq\varepsilon\) for every \(tu\in M\). For update complexity, start at \(x^0\), repeatedly choose any edge violating this inequality and apply its full update, stopping when none violates it.<br>Let \(L\) be the total binary input length and \(W=\max(\{1\}\cup\{w_e:e\in E\})\); measure update counts over all permitted edge choices and running times in \(\tau,m,L\) and the stated accuracy parameters.</p><p>Is computing such an allocation \(y\) polynomial-time solvable in \(\tau,m,L\), or NP-hard?<br>Is the worst-case update count polynomial in \(\tau,m,L,\max\{1,W/\varepsilon\}\), or can it be superpolynomial in these quantities?</p><p>For finite-agent networks, arbitrary sequential clipped updates converge to a fixed point under non-starvation; a thresholded variant has an exponential upper bound \(O((W/\varepsilon)2^{|V|+|E|})\). [Azar et al.](https://www.nikhildevanur.com/pubs/edgebalancing.pdf)<br>Polynomial convergence is established for a synchronous, damped variant of edge balancing. [Bayati et al.](https://www.columbia.edu/~yk2577/BargainingExchangeNetworks.pdf)<br>No result specifically addressing this distribution-over-types formulation was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified a simple undirected graph and positive integer edge values, following the discrete model; values are encoded in binary.</li><li>Required the initial and output allocations to be nonnegative, to split each matched edge&#x27;s value exactly, and to give unmatched types zero.</li><li>Interpreted allocations and edge values per capita and per paired exchange, respectively; a matched role edge pairs the entire equal masses.</li><li>Defined outside options using only edges outside the fixed matching, with zero available when there is no alternative; masses do not weight these per-capita options.</li><li>Retained balancing with negative surplus and specified clipping explicitly, without assuming a stable or balanced outcome exists.</li><li>Specified positive binary rational tolerance and exact sequential updates; only edges whose update exceeds the tolerance are eligible, removing arbitrary delays from the update count.</li><li>Separated polynomial time in binary input length from a polynomial update bound in the scale-sensitive accuracy parameter W/epsilon; defined W to cover empty graphs.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Proven results and remaining question</h3><p>The allocation-computation problem is <b>polynomial-time solvable in $\tau,m,L$</b>: an exact rational fixed point can be computed by a polynomial-size linear program.</p><p>For arbitrary sequential full updates, I prove the uniform bound<br>$$
+O\!\left(2^{\tau+m}\max\{1,W/\varepsilon\}\right).
+$$<br>I do <b>not</b> settle whether the general worst-case update count is polynomial or can be superpolynomial.</p><p>The additional progress is two polynomial update bounds:</p><ul><li>On a bipartite role graph, every permitted trajectory starting from a subsolution or supersolution is monotone and takes fewer than $|M|W/\varepsilon$ updates. This includes the two extreme allocations.</li><li>For equal-value paths and cycles, every permitted trajectory, from any valid initial allocation, takes fewer than $|M|(W/\varepsilon)^2$ updates. A more general sufficient condition is proved below.</li></ul><p>All arguments are given here independently of the notes. If $M=\varnothing$, validity forces the zero allocation and no updates occur; henceforth the nontrivial case is $M\neq\varnothing$.</p><h3>1. Feasible allocations and the change produced by an update</h3><p>Write $k=|M|$ and $N=\tau+m$. The feasible set is<br>$$
+P=\left\{
+x\in\mathbb R^\tau:
+x_t\geq0,\quad
+x_t+x_u=w_{tu}\ \text{for }tu\in M,\quad
+x_t=0\ \text{for unmatched }t
+\right\}.
+$$</p><p>Because $M$ is a matching, equal splitting on each matched edge gives a feasible allocation. Every matched coordinate is bounded by its matched-edge value, so<br>$$
+0\leq x_t\leq W
+\qquad(x\in P).
+$$<br>Thus $P$ is a nonempty compact rational polytope. Every balancing update preserves $P$.</p><p>For a matched vertex $t$, define<br>$$
+r_t(x)=x_t-\alpha_t(x).
+$$<br>The definition of the outside option gives the useful identity<br>$$
+r_t(x)=
+\min\left(
+\{x_t\}\cup
+\{x_t+x_v-w_{tv}:tv\in E\setminus M\}
+\right).
+$$</p><p>Fix $tu\in M$. The outside options $\alpha_t$ and $\alpha_u$ do not change when only $x_t,x_u$ change: the graph is simple, and the edge $tu$ is excluded from their outside options. The unconstrained balancing target for $x_t$ therefore differs from its current value by<br>$$
+\frac{w_{tu}+\alpha_t(x)-\alpha_u(x)}2-x_t
+=
+\frac{r_u(x)-r_t(x)}2.
+$$</p><p>Suppose the clipped update increases $x_t$ by $d&gt;0$ and decreases $x_u$ by $d$. Clipping can only shorten the positive unconstrained displacement, so<br>$$
+r_u(x)-r_t(x)\geq2d.
+$$<br>Also,<br>$$
+\|B_{tu}x-x\|_\infty=d.
+$$</p><h3>2. A self-contained potential inequality</h3><p>Introduce a multiset of $N$ affine functions, retaining repeated values:<br>$$
+\{\ell_j(x):1\leq j\leq N\}
+=
+\{x_t:t\in T\}
+\cup
+\{x_t+x_u-w_{tu}:tu\in E\}.
+$$<br>Sort their values as<br>$$
+s_1(x)\leq\cdots\leq s_N(x),
+$$<br>and define<br>$$
+\Phi(x)=\sum_{i=1}^N2^{-i}s_i(x).
+$$</p><p><b>Lemma.</b> Every balancing update satisfies<br>$$
+\Phi(B_{tu}x)-\Phi(x)
+\geq
+2^{-N}\|B_{tu}x-x\|_\infty.
+$$</p><p><b>Proof.</b> A zero update needs no argument. Otherwise, exchange the names $t,u$ if necessary so that $x_t$ increases by $d&gt;0$.</p><p>Parameterize the segment joining the two allocations by<br>$$
+x(h)=x+h(e_t-e_u),
+\qquad 0\leq h\leq d,
+$$<br>where $e_t$ is the coordinate unit vector at $t$.</p><p>The changing slack functions divide into two disjoint groups:</p><ul><li>The increasing group consists of $x_t$ and the nonmatching edge slacks incident to $t$; each increases at rate $1$.</li><li>The decreasing group consists of $x_u$ and the nonmatching edge slacks incident to $u$; each decreases at rate $1$.</li></ul><p>These groups are disjoint because the only edge joining $t$ and $u$ is their matched edge, whose slack stays zero. All remaining functions are constant.</p><p>Put $a=r_t(x)$ and $b=r_u(x)$. By the identity in Section 1, the minimum values in the increasing and decreasing groups at parameter $h$ are, respectively,<br>$$
+a+h,\qquad b-h.
+$$<br>Since $b-a\geq2d$, for every $0\leq h&lt;d$,<br>$$
+a+h&lt;b-h.
+$$</p><p>There are only finitely many crossing parameters between nonidentical affine functions. On each intervening open interval, the sorted potential is affine. Let $q$ be the first rank occupied by an increasing function. No decreasing function precedes rank $q$, because the minimum increasing value is strictly below every decreasing value. Hence, on that interval,<br>$$
+\frac{d}{dh}\Phi(x(h))
+\geq
+2^{-q}-\sum_{i=q+1}^N2^{-i}
+=
+2^{-N}.
+$$<br>Additional increasing functions only improve this lower bound. Functions that coincide throughout an interval have equal slopes, so their ordering causes no difficulty.</p><p>The sorted potential is continuous and piecewise affine. Integrating the displayed derivative bound gives<br>$$
+\Phi(x(d))-\Phi(x(0))\geq2^{-N}d,
+$$<br>which proves the lemma. $\square$</p><p>This is the sorted-slack potential used in the cited convergence analysis; that paper also obtains an exponential thresholded-update bound. [Azar et al., Section 4](https://www.nikhildevanur.com/pubs/edgebalancing.pdf)</p><h3>3. Polynomial-time computation of an exact rational fixed point</h3><p>For $1\leq q\leq N$, put<br>$$
+S_q(x)=\sum_{i=1}^q s_i(x).
+$$<br>The sum of the $q$ smallest values has the representation<br>$$
+S_q(x)=
+\max_{a\in\mathbb R}
+\left(
+qa-\sum_{j=1}^N\max\{a-\ell_j(x),0\}
+\right).
+$$</p><p>Indeed, for any $a$,<br>$$
+\sum_{j=1}^N\max\{a-s_j(x),0\}
+\geq
+\sum_{j=1}^q(a-s_j(x)),
+$$<br>which proves that the expression is at most $S_q(x)$. Equality holds at $a=s_q(x)$, including when values are tied.</p><p>The potential can be written as<br>$$
+\Phi(x)=
+2^{-N}S_N(x)
++
+\sum_{q=1}^{N-1}2^{-(q+1)}S_q(x).
+$$<br>To check this, the coefficient of $s_i(x)$ on the right is<br>$$
+2^{-N}+\sum_{q=i}^{N-1}2^{-(q+1)}=2^{-i}.
+$$</p><p>Every slack lies in $[-W,2W]$. Consider the linear program with variables $x$, $a_q$, and $z_{qj}$:<br>$$
+\text{maximize}\quad
+2^{-N}\sum_{j=1}^N\ell_j(x)
++
+\sum_{q=1}^{N-1}2^{-(q+1)}
+\left(qa_q-\sum_{j=1}^Nz_{qj}\right),
+$$<br>subject to<br>$$
+x\in P,
+$$<br>$$
+-W\leq a_q\leq2W
+\qquad(1\leq q&lt;N),
+$$<br>and<br>$$
+0\leq z_{qj}\leq3W,\qquad
+z_{qj}\geq a_q-\ell_j(x)
+\qquad(1\leq q&lt;N,\ 1\leq j\leq N).
+$$</p><p>For a fixed $x$, any feasible auxiliary variables give an objective at most $\Phi(x)$, by the preceding representation of $S_q$. Equality is attained simultaneously for all $q$ by choosing<br>$$
+a_q=s_q(x),\qquad
+z_{qj}=\max\{s_q(x)-\ell_j(x),0\}.
+$$<br>These choices satisfy the bounds because all slacks lie in $[-W,2W]$. Consequently, the allocation component of every optimal LP solution maximizes $\Phi$ over $P$.</p><p>The LP has $O(\tau+N^2)$ variables and constraints. All coefficients have polynomial binary encoding length: the coefficients $2^{-q}$ require $O(N)$ bits, and $W$ has encoding length bounded by the input length. Its feasible region is nonempty and bounded.</p><p>The standard polynomial-time theorem for rational linear programming therefore computes an exact rational optimizer of polynomial encoding length in polynomial time.</p><p>Let $y$ be its allocation component. If some matched-edge update changed $y$, the lemma would imply<br>$$
+\Phi(B_{tu}y)&gt;\Phi(y).
+$$<br>But $B_{tu}y\in P$, contradicting maximality. Thus<br>$$
+B_{tu}y=y
+\qquad\text{for every }tu\in M.
+$$</p><p>This proves polynomial-time solvability of the requested allocation problem, independently of $x^0$ and without dependence on $W/\varepsilon$.</p><h3>4. General sequential-update bound</h3><p>Every permitted update has displacement strictly greater than $\varepsilon$. By the lemma, it increases $\Phi$ by strictly more than $2^{-N}\varepsilon$.</p><p>Because every slack lies in $[-W,2W]$,<br>$$
+-W(1-2^{-N})
+\leq\Phi(x)\leq
+2W(1-2^{-N}).
+$$<br>The entire possible range of the potential is therefore less than $3W$.</p><p>If $K&gt;0$ permitted updates occur, telescoping gives<br>$$
+K\,2^{-N}\varepsilon
+&lt;
+\Phi(x^K)-\Phi(x^0)
+&lt;
+3W.
+$$<br>Hence<br>$$
+K&lt;3\,2^{\tau+m}\frac{W}{\varepsilon}.
+$$</p><p>This bounds every finite prefix, and therefore excludes an infinite permitted trajectory. It holds for every permitted edge-choice sequence, without a fairness assumption. It proves an exponential upper bound, but neither alternative in the requested general classification.</p><h3>5. Polynomial bound for monotone bipartite trajectories</h3><p>Assume the role graph is bipartite, with parts $A,B$. Index the matched edges as<br>$$
+a_i b_i\in M,\qquad a_i\in A,\quad b_i\in B,
+$$<br>and write<br>$$
+c_i=w_{a_i b_i},\qquad
+z_i=x_{a_i},\qquad x_{b_i}=c_i-z_i.
+$$<br>Thus the feasible coordinates satisfy $0\leq z_i\leq c_i$.</p><p>Let $F_i(z)$ be the balancing target for $z_i$:<br>$$
+F_i(z)=
+\min\left\{c_i,\max\left\{0,
+\frac{c_i+\alpha_{a_i}(z)-\alpha_{b_i}(z)}2
+\right\}\right\}.
+$$</p><p>Every term in $\alpha_{a_i}$ arising from a matched neighbor $b_j$ has the form<br>$$
+w_{a_i b_j}-c_j+z_j,
+$$<br>and terms arising from unmatched neighbors are constant. Therefore $\alpha_{a_i}$ is coordinatewise nondecreasing.</p><p>Similarly, the nonconstant terms in $\alpha_{b_i}$ have the form<br>$$
+w_{b_i a_j}-z_j,
+$$<br>so $\alpha_{b_i}$ is coordinatewise nonincreasing. It follows that every $F_i$ is coordinatewise nondecreasing.</p><p>Call $z$ a <b>subsolution</b> if<br>$$
+z_i\leq F_i(z)\qquad\text{for every }i.
+$$</p><p>Suppose $z$ is a subsolution and coordinate $i$ is updated, producing $z&#x27;$. Then $z&#x27;\geq z$. For $j\neq i$, monotonicity gives<br>$$
+F_j(z&#x27;)\geq F_j(z)\geq z_j=z&#x27;_j.
+$$<br>For $j=i$,<br>$$
+F_i(z&#x27;)\geq F_i(z)=z&#x27;_i.
+$$<br>Thus $z&#x27;$ remains a subsolution. By induction, every subsequent update increases its chosen coordinate.</p><p>Each permitted update increases $\sum_i z_i$ by more than $\varepsilon$, while its total possible increase is at most $\sum_i c_i$. Consequently, whenever $K&gt;0$,<br>$$
+K&lt;\frac{\sum_i c_i}{\varepsilon}
+\leq\frac{kW}{\varepsilon}.
+$$</p><p>The reversed argument applies to a <b>supersolution</b>, defined by $z_i\geq F_i(z)$: every update decreases its coordinate and the same bound holds.</p><p>In particular, $z=0$ is always a subsolution, and $z_i=c_i$ for all $i$ is always a supersolution. Thus both extreme allocations have this polynomial update bound for every permitted schedule.</p><p><b>Limitation.</b> An arbitrary valid initial allocation need not be a subsolution or a supersolution. This argument does not bound arbitrary bipartite trajectories.</p><h3>6. Polynomial bound from a quadratic energy</h3><p>Here is a different condition allowing an arbitrary valid initial allocation.</p><p>Assume:</p><ul><li>Every matched vertex has at most one incident edge in $E\setminus M$.</li><li>For every nonmatching edge joining two matched vertices $t,v$,</li></ul><p>$$
+   w_{tv}\geq\max\{c_t,c_v\},
+   $$<br>where $c_t$ denotes the value of the matched edge incident to $t$.</p><p>These conditions hold when the role graph has maximum degree at most $2$ and all edge values are equal. They therefore cover equal-value paths and cycles with arbitrary matchings.</p><p>Under these assumptions, a matched vertex $t$ with an outside neighbor $v$ satisfies<br>$$
+\alpha_t(x)=w_{tv}-x_v.
+$$<br>For matched $v$, this follows from $x_v\leq c_v\leq w_{tv}$; for unmatched $v$, it follows from $x_v=0$. A matched vertex without an outside neighbor has $\alpha_t=0$.</p><p>Let $D$ be the set of matched vertices without an outside neighbor. Let $H$ be the set of nonmatching edges with at least one matched endpoint. Define<br>$$
+Q(x)=
+\frac12\sum_{t\in D}x_t^2
++
+\frac12\sum_{tv\in H}(x_t+x_v-w_{tv})^2.
+$$</p><p>Every matched vertex participates in exactly one term of this energy. For a matched edge $tu$, its two endpoints participate in distinct terms, because $tu\notin H$.</p><p>Consider a feasible displacement $x+h(e_t-e_u)$. The term involving $t$ has its unsquared expression increased by $h$; that expression initially equals $r_t(x)$. The corresponding expression involving $u$ initially equals $r_u(x)$ and decreases by $h$. Hence<br>$$
+Q(x+h(e_t-e_u))
+=
+Q(x)+(r_t(x)-r_u(x))h+h^2.
+$$<br>The feasible interval is<br>$$
+-x_t\leq h\leq x_u.
+$$<br>The unconstrained minimizer is $(r_u-r_t)/2$. By Section 1, clipping this minimizer to the feasible interval gives exactly the stipulated balancing update.</p><p>Let $d$ denote its signed displacement. Since $d$ minimizes this convex quadratic on an interval containing $0$, its first-order optimality condition gives<br>$$
+\bigl(r_t-r_u+2d\bigr)(-d)\geq0.
+$$<br>Therefore<br>$$
+Q(x)-Q(B_{tu}x)
+=
+-(r_t-r_u)d-d^2
+\geq d^2.
+$$<br>Every permitted update consequently decreases $Q$ by more than $\varepsilon^2$.</p><p>It remains to bound $Q$. Each vertex expression is in $[0,W]$. Each edge expression in $H$ has absolute value at most $W$:</p><ul><li>If both endpoints are matched, $0\leq x_t+x_v\leq2w_{tv}$ by the weight assumption, so the expression lies in $[-w_{tv},w_{tv}]$.</li><li>If one endpoint is unmatched, the expression is $x_t-w_{tv}$, with both quantities in $[0,W]$.</li></ul><p>There are at most $2k$ energy terms: every term contains at least one matched vertex, and distinct terms contain disjoint sets of matched vertices. Thus<br>$$
+0\leq Q(x)\leq kW^2.
+$$</p><p>Telescoping over $K&gt;0$ permitted updates now gives<br>$$
+K\varepsilon^2&lt;Q(x^0)\leq kW^2,
+$$<br>and therefore<br>$$
+K&lt;k\left(\frac W\varepsilon\right)^2.
+$$</p><p>This bound holds for every permitted schedule and every valid initial allocation under the two stated structural assumptions.</p><h3>7. Why the quadratic argument does not extend directly</h3><p>The same energy can increase when a matched vertex has several outside edges.</p><p>For an explicit valid example, take eight types<br>$$
+t,u,v_1,v_1&#x27;,v_2,v_2&#x27;,q,q&#x27;
+$$<br>with mass $1/8$ each. All edge values are $1$. Let<br>$$
+M=\{tu,v_1v_1&#x27;,v_2v_2&#x27;,qq&#x27;\},
+$$<br>and let the nonmatching edges be<br>$$
+tv_1,\quad tv_2,\quad uq.
+$$<br>Choose the valid initial allocation<br>$$
+(x_t,x_u)=\left(\frac12,\frac12\right),
+$$<br>$$
+(x_{v_1},x_{v_1&#x27;})=\left(\frac9{10},\frac1{10}\right),
+\qquad
+(x_{v_2},x_{v_2&#x27;})=\left(\frac1{10},\frac9{10}\right),
+$$<br>$$
+(x_q,x_{q&#x27;})=\left(\frac12,\frac12\right).
+$$</p><p>The outside options are<br>$$
+\alpha_t=\frac9{10},\qquad \alpha_u=\frac12,
+$$<br>so updating $tu$ increases $x_t$ by $1/5$. The three nonmatching edge slacks change from<br>$$
+\left(\frac25,-\frac25,0\right)
+\quad\text{to}\quad
+\left(\frac35,-\frac15,-\frac15\right).
+$$<br>All vertex terms in the proposed energy remain unchanged. Its change is therefore<br>$$
+\frac12\left[
+\left(\frac35\right)^2+
+\left(-\frac15\right)^2+
+\left(-\frac15\right)^2-
+\left(\frac25\right)^2-
+\left(-\frac25\right)^2
+\right]
+=
+\frac3{50}&gt;0.
+$$</p><p>Thus this quadratic energy is not a general decreasing potential. The example is an obstruction to that proof method, not a superpolynomial lower bound.</p><h3>8. Masses and the unresolved general classification</h3><p>The masses do not enter the outside options, updates, or stopping condition. Their matching-endpoint equality condition ensures admissibility of the society representation but does not alter a valid trajectory.</p><p>Conversely, any finite-vertex instance in the stipulated integer-weight class can be represented by one type per vertex with uniform mass. If masses are required to be dyadic, pad with isolated unmatched vertices to the next power-of-two size and use uniform dyadic masses. The padding introduces fewer than twice as many vertices and changes no outside option or trajectory on the original vertices.</p><p>Therefore the type formulation retains the general finite-graph update-count problem. The LP settles allocation computation, and the two additional arguments settle substantial restricted classes of sequential trajectories. A polynomial upper bound or a superpolynomial lower-bound family for arbitrary graphs, initial allocations, and permitted schedules remains unproved here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Opening summary and Sections 4–8: general worst-case update-count classification: The requested classification is unresolved. The proved exponential upper bound and restricted polynomial bounds establish neither a polynomial bound for all permitted trajectories nor a superpolynomial lower-bound family in $\tau,m,L,\max\{1,W/\varepsilon\}$. This is acknowledged incompleteness, not a false proof step.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial, with the stated proofs correct.</b> The prover establishes polynomial-time computation of an exact rational fixed point, the exponential upper bound for arbitrary permitted update schedules, and the two restricted polynomial update bounds. It does <b>not</b> resolve whether the general worst-case update count is polynomial or can be superpolynomial.</p><p>I found no false mathematical step or substantive proof gap in the results actually claimed as proved. The outstanding issue is the explicitly acknowledged incompleteness on the second question.</p><h3>1. Feasibility and update displacement</h3><p>The feasible-set argument is correct.</p><p>Because $M$ is a matching, the matched-edge equalities involve disjoint coordinate pairs. Equal splitting, with zero allocation on unmatched types, therefore gives a feasible point. Nonnegativity and the matched-edge equality imply that each matched coordinate lies between zero and its matched-edge value. Thus $P$ is nonempty, compact, and rational, and every coordinate satisfies $0\leq x_t\leq W$.</p><p>Clipping ensures that the updated coordinates remain nonnegative and sum to their matched-edge value. Consequently, every update preserves $P$.</p><p>The identity<br>$$
+r_t(x)=\min\left(\{x_t\}\cup
+\{x_t+x_v-w_{tv}:tv\in E\setminus M\}\right)
+$$<br>follows directly from the definition of $\alpha_t$, including when there are no nonmatching neighbors.</p><p>The claimed invariance of $\alpha_t$ and $\alpha_u$ during an update of $tu$ is valid: the graph has no loops, and the only edge joining these endpoints is excluded from their outside options.</p><p>The unconstrained displacement is correctly computed as<br>$$
+\frac{r_u(x)-r_t(x)}2.
+$$<br>If the actual displacement increases $x_t$ by $d&gt;0$, clipping can only reduce that positive displacement. Hence $r_u-r_t\geq 2d$. Only the two matched coordinates change, by opposite amounts, so the infinity norm of the update is exactly $d$.</p><p><b>Finding:</b> correct, including boundary clipping and negative-surplus cases.</p><h3>2. Sorted-slack potential inequality</h3><p>The potential proof is rigorous.</p><p>There are exactly $N=\tau+m$ slack functions, counted with multiplicity. During the parameterized update:</p><ul><li>Every function in the increasing group has slope $1$.</li><li>Every function in the decreasing group has slope $-1$.</li><li>Every remaining function has slope zero.</li></ul><p>The two changing groups are disjoint. In particular, their common matched edge has constant slack zero and belongs to neither group.</p><p>Their minimum values are correctly identified as $a+h$ and $b-h$. From $b-a\geq 2d$, one obtains<br>$$
+a+h&lt;b-h\qquad(0\leq h&lt;d).
+$$<br>Thus, on each interval with a fixed sorted ordering, no decreasing function precedes the first increasing function.</p><p>The derivative estimate is correct:<br>$$
+2^{-q}-\sum_{i=q+1}^{N}2^{-i}=2^{-N}.
+$$<br>It remains valid when some later ranks contain constant or increasing functions, because assigning slope $-1$ to all later ranks only lowers the estimate.</p><p>The treatment of ties is adequate. Identical affine functions have identical slopes; nonidentical functions have only finitely many crossings. The possible equality at $h=d$ does not affect integration. Continuity and piecewise affinity therefore justify the claimed inequality<br>$$
+\Phi(B_{tu}x)-\Phi(x)
+\geq 2^{-N}\|B_{tu}x-x\|_\infty.
+$$</p><p>The attribution of this sorted-slack potential to Section 4 of [Azar et al.](https://www.nikhildevanur.com/pubs/edgebalancing.pdf) is accurate. The present argument establishes the needed inequality independently.</p><p><b>Finding:</b> correct; no missing assumption about stability, matching optimality, or fairness.</p><h3>3. Exact fixed-point computation by linear programming</h3><p>The linear-programming construction is correct.</p><h3>Order-statistic representation</h3><p>The formula for $S_q$ is valid. The displayed inequality bounds the auxiliary expression above by $S_q$, and choosing $a=s_q(x)$ attains equality, including with tied values.</p><p>The decomposition of $\Phi$ is also correct: the resulting coefficient of each $s_i$ is $2^{-i}$.</p><h3>Auxiliary constraints</h3><p>For every $x\in P$, all slack values lie in $[-W,2W]$. Consequently, the proposed attaining choices satisfy<br>$$
+-W\leq a_q\leq 2W,\qquad
+0\leq z_{qj}\leq 3W.
+$$</p><p>For any feasible auxiliary variables, the constraints on $z_{qj}$ ensure that the objective is at most $\Phi(x)$. Conversely, the stated choices attain $\Phi(x)$ for each fixed $x$. This verifies that the allocation component of every LP optimizer maximizes $\Phi$ over $P$.</p><h3>Encoding and the invoked theorem</h3><p>The relevant rational-linear-programming theorem is that a nonempty bounded LP with rational data admits an exact rational optimal solution of polynomial encoding length, computable in time polynomial in the encoded LP length.</p><p>Its hypotheses are satisfied as written:</p><ul><li>All constraints and objective coefficients are rational.</li><li>The feasible region is nonempty.</li><li>All variables are bounded.</li><li>The number of variables and constraints is polynomial in $\tau+m$.</li><li>The denominators $2^q$ require only $O(N)$ bits.</li><li>The encoding length of $W$ is bounded by $L$.</li></ul><p>Thus the theorem is applied appropriately. The exponentially small coefficients do not cause an exponential encoding length.</p><h3>Fixed-point conclusion</h3><p>If an update changed the optimizer’s allocation component, the potential lemma would yield a strictly larger potential at another feasible allocation. This contradicts optimality.</p><p>Therefore the returned rational allocation satisfies<br>$$
+B_{tu}y=y\qquad(tu\in M),
+$$<br>which is stronger than the requested approximate condition.</p><p><b>Finding:</b> the allocation-computation question is fully resolved in polynomial time. No update-count bound is needed for this algorithm.</p><h3>4. General sequential-update upper bound</h3><p>The telescoping argument and constants are correct.</p><p>Every permitted update has displacement strictly greater than $\varepsilon$, so its potential increase is strictly greater than $2^{-N}\varepsilon$.</p><p>The stated potential range follows from<br>$$
+\sum_{i=1}^{N}2^{-i}=1-2^{-N}.
+$$<br>Its width is $3W(1-2^{-N})&lt;3W$. Thus any positive-length permitted prefix satisfies<br>$$
+K&lt;3\,2^{\tau+m}\frac{W}{\varepsilon}.
+$$</p><p>Because this bound applies to every finite prefix, it excludes an infinite permitted trajectory. No fairness assumption is necessary.</p><p>The bound is consistent with the stated formulation using $\max\{1,W/\varepsilon\}$. If $\varepsilon\geq W$, no update can violate the stopping inequality, since every matched coordinate displacement is at most $W$.</p><p><b>Finding:</b> the exponential upper bound is proved. It supplies neither a polynomial upper bound nor a superpolynomial lower bound.</p><h3>5. Monotone bipartite trajectories</h3><p>The bipartite argument is correct within its stated scope.</p><p>The expressions for nonconstant outside-option terms have the correct signs. Taking maxima, subtracting the coordinatewise nonincreasing outside option, and clipping preserve the asserted coordinatewise monotonicity of $F_i$.</p><p>The proof that a coordinate update preserves the subsolution property is valid for both the updated coordinate and every other coordinate. The supersolution argument follows by reversing these inequalities.</p><p>Each permitted update changes the coordinate sum monotonically by more than $\varepsilon$. Its available total change is at most $\sum_i c_i$, giving<br>$$
+K&lt;\frac{\sum_i c_i}{\varepsilon}
+\leq\frac{|M|W}{\varepsilon}.
+$$</p><p>The two extreme allocations satisfy the respective subsolution and supersolution inequalities because $0\leq F_i(z)\leq c_i$.</p><p><b>Finding:</b> correct. The prover appropriately excludes arbitrary bipartite initial allocations from this conclusion.</p><h3>6. Quadratic-energy bound</h3><p>The structural hypotheses are sufficient for the energy argument.</p><p>Each matched vertex has either no outside neighbor or exactly one. When its outside neighbor is matched, the weight hypothesis ensures $w_{tv}-x_v\geq0$. When the neighbor is unmatched, its allocation is zero. Thus the claimed formula for $\alpha_t$ is valid.</p><p>Each matched vertex occurs in exactly one energy term. The endpoints of a matched edge occur in distinct terms, because the graph is simple and their connecting edge is excluded from $H$.</p><p>The quadratic expansion<br>$$
+Q(x+h(e_t-e_u))
+=
+Q(x)+(r_t-r_u)h+h^2
+$$<br>has the correct linear and quadratic coefficients. The feasible interval is exactly $[-x_t,x_u]$, and its constrained minimizer gives the prescribed clipped update.</p><p>The stated optimality inequality has the correct sign and yields<br>$$
+Q(x)-Q(B_{tu}x)\geq d^2.
+$$</p><p>The energy bound is also correct. Every squared expression has absolute value at most $W$, and there are at most $2|M|$ terms because distinct terms contain disjoint sets of matched vertices. Therefore<br>$$
+0\leq Q(x)\leq |M|W^2,
+$$<br>and telescoping gives the claimed bound<br>$$
+K&lt;|M|\left(\frac W\varepsilon\right)^2.
+$$</p><p>Maximum degree at most two and equal edge values do satisfy both structural assumptions, irrespective of the matching.</p><p><b>Finding:</b> correct for every permitted schedule and valid initial allocation under the stated hypotheses.</p><h3>7. Counterexample to the unrestricted quadratic potential</h3><p>The example is valid, and its computation checks out.</p><p>The allocation is nonnegative and sums to one on each matched edge. Uniform masses satisfy the matching-endpoint mass requirement.</p><p>The outside options are $\alpha_t=9/10$ and $\alpha_u=1/2$, so the updated allocation on $tu$ is $(7/10,3/10)$. The three listed slack changes are correct.</p><p>The unchanged vertex terms contribute nothing to the energy difference. Recomputing the changed edge terms gives<br>$$
+\frac12\left(\frac{11}{25}-\frac8{25}\right)=\frac3{50}&gt;0.
+$$</p><p><b>Finding:</b> this refutes unrestricted decrease of that quadratic energy. As the prover states, it is not a superpolynomial update-count example.</p><h3>8. Mass representation and scope</h3><p>The masses do not appear in the allocation constraints beyond input admissibility, or in the update and stopping formulas. Their irrelevance to a valid trajectory is correctly stated.</p><p>The uniform-mass representation of finite graphs is valid. Padding with isolated unmatched vertices, when needed for dyadic uniform masses, preserves all original outside options and updates and increases the representation size only linearly.</p><p>The case $M=\varnothing$ is correctly handled separately: validity forces the zero allocation and there are no updates.</p><p><b>Finding:</b> no representation-dependent complexity distinction is established or needed.</p><h3>Outstanding issue and actionable feedback</h3><p><b>Major — incomplete resolution of the general update-count question.</b> Sections 4–8 establish termination and restricted polynomial bounds, but leave the requested polynomial-versus-superpolynomial classification unresolved. This is an acknowledged scope gap, not an invalid inference.</p><p>To finish the assigned task, the prover must provide either a polynomial upper bound covering all valid instances, initial allocations, and permitted schedules, or a superpolynomial lower-bound family measured against the specified parameters. Expositional clarification alone cannot supply this missing result.</p><p>The existing proofs require no mathematical repair. The overall result is partial because one of the two requested classifications remains open in this output.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,314 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Majority Opinion Diffusion in Social Networks: An Adversarial Approach — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Majority Opinion Diffusion in Social Networks: An Adversarial Approach <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2021-1450)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 6.1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Let $\mathcal{A}$ be a polynomial-time $\beta$-approximation algorithm for the MI problem. Then, $\beta&gt;n^{1-\zeta}$ for any $\zeta&gt;0$ unless P=NP.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite typed base graph \(H=(T,E_H)\), rational type masses \(\mu_i\) summing to \(1\), rational black and white seed masses \(b,w\), and horizon \(t\), form the atomless complete blow-up in which type \(i\) has mass \(\mu_i\) and each base edge induces all-to-all interaction between its two type masses. Choose \(x_i^B,x_i^W\ge0\) with \(x_i^B+x_i^W\le\mu_i\), \(\sum_i x_i^B=b\), and \(\sum_i x_i^W=w\); run majority diffusion for \(t\) rounds with aggregate half-splitting on ties, and minimize the resulting white mass \(\Phi_t\), or approximate its optimum.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational; \(\tau\) is the support size, not the number of possible types. Input comprises a simple undirected graph \(H=(T,E_H)\), where \(|T|=\tau\) and \(m=|E_H|\), masses \(\mu_i&gt;0\) with \(\sum_i\mu_i=1\), rational budgets \(b,w&gt;0\) with \(b+w\le1\), and a binary-encoded integer horizon \(t\ge1\). Let \(L\) be the total input bit length.<br>Each type is an atomless population of mass \(\mu_i\); adjacent types interact all-to-all, with no interactions within a type. Choose real seed masses \(x_i^B,x_i^W\ge0\) satisfying \(x_i^B+x_i^W\le\mu_i\), \(\sum_i x_i^B=b\), and \(\sum_i x_i^W=w\); the remaining mass is uncolored.<br>Colors are permanent. Updates are synchronous: writing \(B_i(r),W_i(r)\) for colored masses after round \(r\), each type compares \(\sum_{j:\{i,j\}\in E_H}B_j(r)\) and \(\sum_{j:\{i,j\}\in E_H}W_j(r)\). If their sum is zero, its uncolored mass remains uncolored; otherwise, all of that mass adopts the larger color in round \(r+1\), or splits equally between colors on a tie.<br>Define \(\Phi_t(x)=\sum_i W_i(t)\), including white seeds, and \(\mathrm{OPT}=\inf_x\Phi_t(x)\) over feasible real allocations. A multiplicative \(\beta\)-approximation returns a feasible rational allocation with \(\Phi_t(x)\le\beta\mathrm{OPT}\).</p><p>For each fixed \(0&lt;\zeta&lt;1\), does this continuous Minimum Influence problem admit a polynomial-time \(\tau^{1-\zeta}\)-approximation, or is achieving that factor NP-hard? State running times in \(m,\tau,L\) and their dependence on \(t\) and \(\zeta\).</p><p>For discrete graphs with \(n\) vertices, minimizing expected white count with prescribed positive black and white seed counts admits no polynomial-time \(n^{1-\zeta}\)-approximation unless \(\mathrm{P}=\mathrm{NP}\), already for \(t=2\). [Verified discrete result](https://arxiv.org/pdf/2012.03143).<br>No result settling this exact atomless, aggregate-half-splitting approximation problem was identified in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Treat the anchor as approximation hardness and preserve its multiplicative approximation question rather than ask about exact optimization.</li><li>Replace discrete population size n in the approximation factor by the explicitly represented support size τ.</li><li>Take H to be simple and undirected, with independent type populations and no within-type interactions; disconnected graphs are allowed.</li><li>Require positive seed budgets b,w, feasibility b+w≤1, and a positive integer horizon, matching the discrete Minimum Influence domain; impose no strong-attacker fraction restrictions.</li><li>Restore permanent colors, synchronous updates, comparison of colored neighbor masses only, and the requirement of positive colored neighbor mass before adoption.</li><li>Count all white mass after t rounds, including seeds, and interpret aggregate half-splitting as deterministic division of newly colored mass.</li><li>Allow real seed allocations, define the optimum as an infimum to avoid assuming attainment, and require computational approximations to return feasible rational allocations.</li><li>Encode the horizon in binary, define m as the number of base edges and L as total input bit length, and restrict the approximation exponent to fixed 0&lt;ζ&lt;1.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and new partial results</h3><p>I do not resolve whether a polynomial-time $\tau^{1-\zeta}$-approximation exists or whether achieving that factor is NP-hard.</p><p>The following results advance the general continuous problem:</p><ul><li>A feasible rational $(2\tau+1)$-approximation can be computed in polynomial time, independently of how small the budgets are.</li><li>Optimizing at an arbitrary horizon reduces, within a factor approaching $2$, to optimizing at horizon $1$.</li><li>A two-type example shows that this factor $2$ cannot be replaced by a smaller universal constant.</li></ul><p>The first approximation factor is still linear in $\tau$, so it does not settle the requested question for any fixed $0&lt;\zeta&lt;1$.</p><h3>Definitions and elementary bounds</h3><p>Let $\mathcal F$ be the set of feasible seed allocations. For $x\in\mathcal F$, write<br>$$
+s_i=x_i^B+x_i^W,
+\qquad
+u_i=\mu_i-s_i.
+$$<br>Thus $u_i$ is the initially uncolored mass of type $i$.</p><p>Define the initial neighboring colored mass and neighboring color difference by<br>$$
+C_i(x)=\sum_{j\in N_H(i)}(x_j^B+x_j^W),
+\qquad
+D_i(x)=\sum_{j\in N_H(i)}(x_j^B-x_j^W).
+$$<br>In round $1$, the residual mass $u_i$ remains uncolored if $C_i(x)=0$. Otherwise it becomes black when $D_i(x)&gt;0$, becomes white when $D_i(x)&lt;0$, and splits equally when $D_i(x)=0$.</p><p>For each integer $r\ge1$, define<br>$$
+a_r=\inf_{x\in\mathcal F}\Phi_r(x).
+$$<br>The target quantity is $a_t=\mathrm{OPT}$.</p><p>Because seed colors are permanent,<br>$$
+w\le \Phi_r(x)\le 1-b.
+$$<br>In particular,<br>$$
+w\le a_r\le1-b.
+$$</p><p>The feasible set is nonempty: the proportional allocation<br>$$
+x_i^B=b\mu_i,
+\qquad
+x_i^W=w\mu_i
+$$<br>satisfies all constraints.</p><h3>Exact polynomial-time cases</h3><p>If $b&gt;w$, this proportional allocation is optimal. Indeed, every nonisolated type has<br>$$
+D_i(x)=(b-w)\sum_{j\in N_H(i)}\mu_j&gt;0.
+$$<br>Its residual mass becomes black in round $1$. Isolated types acquire no additional color. Consequently,<br>$$
+\Phi_t(x)=w=\mathrm{OPT}.
+$$</p><p>If $b+w=1$, the residual masses are nonnegative and sum to zero. Hence every feasible allocation has objective $w$.</p><p>There is also an exact case that allows $b\le w$. Suppose the total mass of isolated types is at least $w$. Place all white seeds on isolated types, respecting their capacities, and then set<br>$$
+x_i^B=\frac{b}{1-w}\bigl(\mu_i-x_i^W\bigr).
+$$<br>The denominator is positive because $b&gt;0$ and $b+w\le1$. The black seeds sum to $b$, and the capacity constraints hold because $b/(1-w)\le1$. Every nonisolated type receives positive black seed mass and no white seed mass. Thus no additional white mass appears, and again $\mathrm{OPT}=w$.</p><p>These constructions require $O(\tau)$ rational arithmetic operations and $\operatorname{poly}(L,\tau)$ bit operations. Their only dependence on $t$ is through reading the input.</p><h3>A perturbation that finishes coloring in one round</h3><h3>Lemma</h3><p>For every feasible allocation $x$ and every real $\eta&gt;0$, there is a feasible allocation $x&#x27;$ such that every nonisolated type is fully colored after round $1$ and<br>$$
+\Phi_t(x&#x27;)=\Phi_1(x&#x27;)
+\le 2\Phi_1(x)-w+\eta
+$$<br>for every $t\ge1$.</p><p>If $x$ and $\eta$ are rational, such an $x&#x27;$ can be computed using polynomially many bit operations in their encoding lengths and $L,m,\tau$, and its encoding length is polynomially bounded.</p><h3>Proof</h3><p>Keep the white seeds fixed. Define another black allocation by<br>$$
+z_i=\frac{b}{1-w}\bigl(\mu_i-x_i^W\bigr).
+$$<br>It satisfies<br>$$
+0\le z_i\le\mu_i-x_i^W,
+\qquad
+\sum_i z_i=b.
+$$<br>For $0&lt;\lambda&lt;1$, set<br>$$
+x_i^B(\lambda)=(1-\lambda)x_i^B+\lambda z_i,
+\qquad
+x_i^W(\lambda)=x_i^W.
+$$<br>This allocation is feasible by convexity.</p><p>Every type has positive colored seed mass under this allocation. If $x_i^W&gt;0$, its white seeds suffice. If $x_i^W=0$, then<br>$$
+z_i=\frac{b}{1-w}\mu_i&gt;0,
+$$<br>so $x_i^B(\lambda)&gt;0$. Therefore every nonisolated type sees positive colored mass initially and exhausts its residual mass in round $1$. Isolated types never change. This proves<br>$$
+\Phi_t(x(\lambda))=\Phi_1(x(\lambda))
+$$<br>for every $t\ge1$.</p><p>Let<br>$$
+v_i=z_i-x_i^B.
+$$<br>The neighboring difference under the perturbation is<br>$$
+D_i(x(\lambda))
+=
+D_i(x)+\lambda\sum_{j\in N_H(i)}v_j.
+$$<br>There are finitely many types. Thus, for sufficiently small positive $\lambda$, every initially nonzero $D_i(x)$ retains its sign.</p><p>We consider the initially zero differences separately.</p><p>If $C_i(x)=0$ and $i$ is nonisolated, every neighbor originally has zero black and white seed mass. Every such neighbor receives positive black mass under the perturbation, while its white seed mass remains zero. Hence<br>$$
+D_i(x(\lambda))&gt;0.
+$$<br>The residual of $i$ therefore becomes black and contributes no additional white mass.</p><p>If $C_i(x)&gt;0$ and $D_i(x)=0$, the perturbed residual can contribute at most all of its mass to white. Originally it contributed exactly half its mass.</p><p>Let<br>$$
+I_-=\{i:D_i(x)&lt;0\},
+\qquad
+I_0=\{i:C_i(x)&gt;0,\ D_i(x)=0\}.
+$$<br>For sufficiently small $\lambda$,<br>$$
+\Phi_1(x(\lambda))
+\le
+w+\sum_{i\in I_-}u_i(\lambda)
++\sum_{i\in I_0}u_i(\lambda),
+$$<br>where<br>$$
+u_i(\lambda)=u_i-\lambda v_i.
+$$<br>Since $z$ and $x^B$ are nonnegative vectors with the same sum $b$,<br>$$
+\sum_i |v_i|
+\le
+\sum_i z_i+\sum_i x_i^B
+=2b.
+$$<br>Consequently,<br>$$
+\Phi_1(x(\lambda))
+\le
+w+\sum_{i\in I_-}u_i+\sum_{i\in I_0}u_i+2\lambda b.
+$$<br>The original round-one objective is<br>$$
+\Phi_1(x)
+=
+w+\sum_{i\in I_-}u_i
++\frac12\sum_{i\in I_0}u_i.
+$$<br>Combining these expressions gives<br>$$
+\Phi_1(x(\lambda))
+\le
+2\Phi_1(x)-w-\sum_{i\in I_-}u_i+2\lambda b
+\le
+2\Phi_1(x)-w+2\lambda b.
+$$<br>Choosing $\lambda$ sufficiently small makes the last term at most $\eta$.</p><p>For the rational construction, define<br>$$
+M=\max_i\left|\sum_{j\in N_H(i)}v_j\right|.
+$$<br>If some $D_i(x)$ is nonzero, let<br>$$
+\gamma=\min_{i:D_i(x)\ne0}|D_i(x)|;
+$$<br>otherwise set $\gamma=1$. The rational choice<br>$$
+\lambda=
+\min\left\{
+\frac12,\,
+\frac{\gamma}{2(1+M)},\,
+\frac{\eta}{2(1+b)}
+\right\}
+$$<br>preserves all initially nonzero signs and satisfies $2\lambda b\le\eta$.</p><p>All quantities require $O(m+\tau)$ rational arithmetic operations. Their encoding lengths remain polynomial in the input and allocation lengths. This proves the computational statement. $\square$</p><h3>Consequences for the horizon</h3><p>For every $t\ge1$,<br>$$
+a_1\le a_t\le2a_1-w.
+$$</p><p>The first inequality follows from $\Phi_1(x)\le\Phi_t(x)$ for every allocation. For the second, the lemma gives, for every feasible $x$ and every $\eta&gt;0$,<br>$$
+a_t\le2\Phi_1(x)-w+\eta.
+$$<br>Taking the infimum over $x$ and then letting $\eta$ decrease to zero proves the claim. This argument does not assume that either infimum is attained.</p><p>More algorithmically, suppose an algorithm returns a rational allocation $x$ satisfying<br>$$
+\Phi_1(x)\le\beta a_1.
+$$<br>Applying the lemma with $\eta=\varepsilon w$, for rational $\varepsilon&gt;0$, returns a rational allocation satisfying<br>$$
+\Phi_t(x&#x27;)
+\le
+2\beta a_1-w+\varepsilon w
+\le
+(2\beta+\varepsilon)a_t.
+$$<br>The additional work is polynomial in $m,\tau,L$, the encoding length of $x$, and the encoding length of $\varepsilon$. It has no numerical dependence on $t$.</p><p>Thus a strong approximation result for horizon $1$ would transfer to every horizon with only a constant loss.</p><h3>A polynomial-time approximation independent of budget size</h3><p>The next argument yields a polynomial-time approximation whose factor is linear in the support size.</p><p>Let<br>$$
+T_{\mathrm{ni}}=\{i:N_H(i)\ne\varnothing\},
+\qquad
+q=|T_{\mathrm{ni}}|.
+$$<br>If $q=0$, every allocation has objective $w$. Hence assume $q&gt;0$.</p><h3>Protecting a specified set by linear programming</h3><p>For $A\subseteq T_{\mathrm{ni}}$, consider the condition<br>$$
+\exists x\in\mathcal F
+\quad\text{such that}\quad
+D_i(x)&gt;0
+\quad\text{for every }i\in A.
+$$<br>Call this condition $\mathcal B(A)$.</p><p>It is testable by rational linear programming. Introduce a variable $\delta$, impose the original allocation constraints and<br>$$
+D_i(x)\ge\delta
+\quad(i\in A),
+\qquad
+0\le\delta\le1,
+$$<br>and maximize $\delta$.</p><p>The condition $\mathcal B(A)$ holds exactly when this program is feasible and its optimum is positive. Indeed, finitely many strict inequalities satisfied by one allocation have a positive common margin. Conversely, a positive feasible margin satisfies all the strict inequalities.</p><p>When $\mathcal B(A)$ holds, the program supplies a rational allocation of polynomial encoding length. Every type in $A$ sees a strictly black initial majority, so its residual becomes permanently black in round $1$. Therefore, writing<br>$$
+R=T_{\mathrm{ni}}\setminus A,
+$$<br>the allocation satisfies<br>$$
+\Phi_t(x)
+\le
+w+\sum_{i\in R}u_i
+\le
+w+\sum_{i\in R}\mu_i
+$$<br>for every $t\ge1$.</p><p>The standard polynomial-time theorem for rational linear programming applies here: there are $2\tau+1$ variables, $O(\tau)$ constraints, rational coefficients of polynomial encoding length, and bounded variables.</p><h3>An infeasible protection condition gives a lower bound</h3><p><b>Proposition.</b> If $A\subseteq T_{\mathrm{ni}}$ is nonempty and $\mathcal B(A)$ fails, then<br>$$
+\mathrm{OPT}
+\ge
+\frac{\min_{i\in A}\mu_i+w-b}{2}.
+$$</p><p><b>Proof.</b> Fix any feasible allocation $x$.</p><p>Suppose every $i\in A$ satisfies either $D_i(x)&gt;0$ or $C_i(x)=0$. The perturbation lemma preserves the former strict inequalities and turns the latter comparisons strictly black. It would therefore produce an allocation witnessing $\mathcal B(A)$, a contradiction.</p><p>Thus some $i\in A$ has<br>$$
+C_i(x)&gt;0,
+\qquad
+D_i(x)\le0.
+$$<br>At least half of its residual becomes white in round $1$. Permanence gives<br>$$
+\Phi_t(x)\ge w+\frac{u_i}{2}.
+$$<br>Also,<br>$$
+x_i^B+x_i^W\le b+w,
+$$<br>because the two seed totals are $b$ and $w$. Consequently,<br>$$
+\Phi_t(x)
+\ge
+w+\frac{\mu_i-(b+w)}2
+=
+\frac{\mu_i+w-b}{2}
+\ge
+\frac{\min_{j\in A}\mu_j+w-b}{2}.
+$$<br>This holds for every feasible $x$, so it also holds for their infimum. $\square$</p><h3>Algorithm and approximation guarantee</h3><p>Handle $b&gt;w$ by the exact proportional construction. For the remaining case $b\le w$, order the nonisolated types by nondecreasing mass:<br>$$
+\mu_{i_1}\le\mu_{i_2}\le\cdots\le\mu_{i_q}.
+$$<br>For $0\le k\le q$, define<br>$$
+R_k=\{i_1,\ldots,i_k\},
+\qquad
+A_k=T_{\mathrm{ni}}\setminus R_k.
+$$<br>Find the smallest $k$ for which $\mathcal B(A_k)$ holds, and return a rational witness from its linear program.</p><p>Such a $k$ exists because $A_q$ is empty. The tests are monotone: removing protection constraints cannot destroy feasibility.</p><p>If $k=0$, every nonisolated residual becomes black in round $1$, so the returned allocation has objective $w$ and is optimal.</p><p>Suppose $k&gt;0$. Since $\mathcal B(A_{k-1})$ fails, the proposition gives<br>$$
+\mathrm{OPT}
+\ge
+\frac{\mu_{i_k}+w-b}{2}
+\ge
+\frac{\mu_{i_k}}2,
+$$<br>where the last inequality uses $b\le w$.</p><p>The returned allocation protects all types outside $R_k$, so<br>$$
+\begin{aligned}
+\Phi_t(x)
+&amp;\le w+\sum_{j=1}^k\mu_{i_j}\\
+&amp;\le w+k\mu_{i_k}\\
+&amp;\le \mathrm{OPT}+2k\,\mathrm{OPT}\\
+&amp;=(2k+1)\mathrm{OPT}.
+\end{aligned}
+$$<br>Here $w\le\mathrm{OPT}$ was used in the third line.</p><p>Hence the algorithm is a<br>$$
+(2k+1)\text{-approximation},
+\qquad
+k\le q\le\tau,
+$$<br>and in particular a $(2\tau+1)$-approximation.</p><p>It also provides explicit instance-specific bounds when $k&gt;0$:<br>$$
+\max\left\{
+w,\,
+\frac{\mu_{i_k}+w-b}{2}
+\right\}
+\le
+\mathrm{OPT}
+\le
+\Phi_t(x)
+\le
+w+\sum_{j=1}^k\mu_{i_j}.
+$$</p><h3>Running time</h3><p>Sorting takes $O(\tau\log\tau)$ rational comparisons. Binary search finds the smallest feasible $k$ using $O(\log(\tau+1))$ linear-programming calls. Thus the total bit running time is<br>$$
+O\!\left(\log(\tau+1)\operatorname{poly}(m,\tau,L)\right).
+$$<br>The output is rational and has polynomial encoding length.</p><p>The construction does not simulate the dynamics and has no numerical dependence on $t$. It has no dependence on $\zeta$, because its proved approximation factor is $(2\tau+1)$ rather than the requested $\tau^{1-\zeta}$.</p><h3>The factor-two horizon reduction is sharp</h3><p>Consider two types joined by one edge, with<br>$$
+\mu_1=\frac14,
+\qquad
+\mu_2=\frac34,
+\qquad
+b=w=\delta,
+\qquad
+0&lt;\delta&lt;\frac1{16}.
+$$<br>The budgets can be chosen dyadic.</p><p>We prove<br>$$
+a_1=\delta+\frac18,
+\qquad
+a_t=\frac14-\delta
+\quad(t\ge2).
+$$</p><p>Let<br>$$
+d_i=x_i^B-x_i^W.
+$$<br>Since $b=w$,<br>$$
+d_1+d_2=0.
+$$</p><h3>Strictly opposite differences</h3><p>If $d_1&gt;0$, then $d_2&lt;0$. Both types have positive initial colored mass. Type $1$ adopts white and type $2$ adopts black in round $1$, so<br>$$
+\Phi_t(x)
+=
+\delta+\frac14-s_1
+\quad(t\ge1).
+$$<br>Moreover,<br>$$
+s_1=x_1^B+x_1^W&lt;2x_1^B\le2\delta.
+$$<br>Thus<br>$$
+\Phi_t(x)&gt;\frac14-\delta.
+$$<br>This bound is approached by<br>$$
+x_1^B=\delta,\qquad
+x_1^W=\delta-\eta,\qquad
+x_2^B=0,\qquad
+x_2^W=\eta,
+$$<br>as positive $\eta$ decreases to zero. These allocations are feasible and have objective<br>$$
+\frac14-\delta+\eta.
+$$</p><p>If $d_1&lt;0$, the symmetric calculation gives<br>$$
+\Phi_t(x)&gt;\frac34-\delta,
+$$<br>with that value approachable.</p><h3>Zero differences</h3><p>The remaining case has $d_1=d_2=0$.</p><p>If both types have positive seed mass, both residuals split in round $1$, giving<br>$$
+\Phi_1(x)=\frac12.
+$$</p><p>If type $1$ has no seeds, all seeds lie on type $2$. In round $1$, type $1$ splits equally and type $2$ retains its residual. Therefore<br>$$
+\Phi_1(x)=\delta+\frac18.
+$$<br>In round $2$, type $2$ sees equal positive black and white masses and splits its residual. Hence $\Phi_t(x)=1/2$ for every $t\ge2$.</p><p>If type $2$ has no seeds, the corresponding round-one value is<br>$$
+\delta+\frac38,
+$$<br>and the value from round $2$ onward is again $1/2$.</p><p>These cases are exhaustive. Since $\delta&lt;1/16$,<br>$$
+\delta+\frac18&lt;\frac14-\delta.
+$$<br>It follows that<br>$$
+a_1=\delta+\frac18,
+\qquad
+a_t=\frac14-\delta
+\quad(t\ge2).
+$$<br>In particular,<br>$$
+\frac{a_2}{a_1}
+=
+\frac{\frac14-\delta}{\frac18+\delta}
+\longrightarrow2
+$$<br>as $\delta$ decreases to zero.</p><p>Thus no universal inequality $a_t\le c\,a_1$ with $c&lt;2$ is valid. This example also has an unattained infimum at every horizon $t\ge2$.</p><h3>Evaluation and binary-encoded horizons</h3><p>Each type’s residual mass can change only once: its first update with positive neighboring colored mass colors all of that residual.</p><p>Every state-changing round therefore exhausts the residual of at least one previously unexhausted type. There are at most $\tau$ such types. If a round makes no change, the deterministic update starts the following round from the same state and can never restart.</p><p>Consequently, the process is fixed after round $\tau$, and<br>$$
+\Phi_t(x)=\Phi_{\min\{t,\tau\}}(x).
+$$</p><p>For a rational allocation of total encoding length $K$, direct evaluation uses<br>$$
+O\!\left((m+\tau)\min\{t,\tau\}\right)
+$$<br>rational arithmetic operations and<br>$$
+O\!\left((m+\tau)\min\{t,\tau\}\operatorname{poly}(L+K)\right)
+$$<br>bit operations. Each type’s colored masses are its seeds plus either none, all, or half of its original residual, so their encoding lengths remain polynomially bounded.</p><h3>What remains open</h3><p>The polynomial-time approximation proved here has a linear factor. It does not imply a $\tau^{1-\zeta}$-approximation for any fixed positive $\zeta$.</p><p>The horizon reduction identifies horizon $1$ as a useful target for further work: a sufficiently strong approximation there transfers to all horizons with a constant loss. However, the present argument neither supplies the requested sublinear factor at horizon $1$ nor proves hardness for it under arbitrary fractional seeding.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Overall resolution; opening status statement and What remains open: The requested classification for each fixed $0&lt;\zeta&lt;1$ remains unresolved. The proved $(2\tau+1)$-approximation does not establish a $\tau^{1-\zeta}$-approximation, and no hardness argument for that factor is supplied. This is acknowledged assignment-level incompleteness, not an error in the proved partial results.</li></ul>
+<div class="pre"><p>The output is <b>correct as a collection of partial results</b>, but it does not resolve the assigned approximation question. I found no false central step or substantive gap in the proofs presented. The blocking issue is the explicitly acknowledged absence of either a polynomial-time $\tau^{1-\zeta}$-approximation or a hardness result for that factor.</p><ul><li><b>Definitions, feasibility, and elementary bounds</b></li></ul><p>The definitions of $C_i(x)$ and $D_i(x)$ correctly describe the first-round update, including the distinction between an active tie and zero neighboring colored mass.</p><p>The bounds<br>$$
+   w\le\Phi_r(x)\le1-b
+   $$<br>follow from permanence of the seeds and conservation of total mass. Taking infima preserves these bounds.</p><p>The proportional allocation is feasible: its totals are $b$ and $w$, and its typewise total is $(b+w)\mu_i\le\mu_i$. Thus the feasible set is nonempty.</p><p><b>Assessment:</b> Correct.</p><ul><li><b>Exact polynomial-time cases</b></li></ul><p>When $b&gt;w$, positivity of every supported mass implies that every nonisolated type has strictly positive initial neighboring black-minus-white difference under the proportional allocation. All its residual becomes black in the first round. Isolated types never change, so the objective is exactly $w$, attaining the universal lower bound.</p><p>When $b+w=1$, the residual masses are nonnegative and sum to zero, so each residual is zero. Every feasible allocation therefore has objective $w$.</p><p>For the isolated-mass construction, placing all white seeds on isolated types is possible under the stated capacity assumption. The proposed black allocation has total $b$ and respects capacities because<br>$$
+   0&lt;\frac{b}{1-w}\le1.
+   $$<br>Every nonisolated type has zero white seed mass and positive black seed mass. Consequently, every nonisolated type sees a positive black majority, and no additional white mass appears.</p><p>The stated arithmetic and bit-complexity bounds are consistent with these constructions. Identifying isolated vertices also requires inspecting the graph representation, which is covered by the polynomial bit-time bound.</p><p><b>Assessment:</b> Correct.</p><ul><li><b>Perturbation lemma: feasibility and completion after one round</b></li></ul><p>The vector $z$ satisfies the black budget and the capacities remaining after fixing the white seeds. Convex interpolation between $x^B$ and $z$ therefore preserves feasibility.</p><p>Every type receives positive total seed mass after perturbation: an existing positive white seed remains positive, and a type with no white seeds receives positive black mass through $z$. Thus every nonisolated type sees positive neighboring colored mass initially and exhausts its residual in the first round.</p><p>Isolated types remain unchanged. Consequently,<br>$$
+   \Phi_t(x(\lambda))=\Phi_1(x(\lambda))
+   $$<br>for every $t\ge1$.</p><p><b>Assessment:</b> Correct, including types whose original seed mass or residual mass is zero.</p><ul><li><b>Perturbation lemma: objective bound</b></li></ul><p>The neighboring differences depend affinely on $\lambda$, so finitely many initially nonzero differences retain their signs for sufficiently small positive $\lambda$.</p><p>The treatment of initially zero differences is also correct:</p><ul><li>If $C_i(x)=0$ for a nonisolated type, each neighbor originally has zero seeds of both colors. The perturbation gives those neighbors positive black seeds and leaves their white seeds zero, making the comparison strictly black.</li><li>If $C_i(x)&gt;0$ and $D_i(x)=0$, the original white contribution is half the residual, whereas the perturbed contribution is at most the entire perturbed residual.</li></ul><p>The bound<br>$$
+   \sum_i|z_i-x_i^B|\le2b
+   $$<br>is valid because both nonnegative vectors have total $b$. The subsequent calculation correctly yields<br>$$
+   \Phi_1(x(\lambda))
+   \le2\Phi_1(x)-w+2\lambda b.
+   $$</p><p>The explicit rational choice of $\lambda$ is positive and at most $\tfrac12$. Moreover,<br>$$
+   \lambda M\le\frac{\gamma M}{2(1+M)}&lt;\frac{\gamma}{2},
+   $$<br>so every initially nonzero difference retains its sign. Its final term also satisfies $2\lambda b\le\eta$.</p><p>Rational sums, comparisons, and the stated divisions have polynomial encoding length in the original input, allocation, and $\eta$ encodings. The arithmetic-operation count is consistent with scanning the adjacency lists.</p><p><b>Assessment:</b> Correct for both real existence and rational construction.</p><ul><li><b>Consequences for the horizon</b></li></ul><p>Permanence gives $\Phi_1(x)\le\Phi_t(x)$ pointwise, hence $a_1\le a_t$.</p><p>The perturbation lemma applies to every feasible real allocation and every positive $\eta$. Taking the infimum and then letting $\eta$ tend to zero correctly proves<br>$$
+   a_t\le2a_1-w.
+   $$<br>This does not require either infimum to be attained.</p><p>The algorithmic transfer is also valid. From<br>$$
+   \Phi_t(x&#x27;)\le2\beta a_1-w+\varepsilon w,
+   $$<br>the inequalities $a_1\le a_t$ and $w\le a_t$ imply the stated $(2\beta+\varepsilon)$ guarantee. The additional work depends on the encoding of $\varepsilon$, rather than on its numerical magnitude through repeated simulation.</p><p><b>Assessment:</b> Correct. The transfer preserves a constant loss; it does not itself establish the requested factor.</p><ul><li><b>Linear-programming protection test</b></li></ul><p>For nonempty $A$, existence of one allocation satisfying all finitely many strict inequalities is equivalent to existence of a positive common margin. Conversely, a positive feasible $\delta$ directly certifies those inequalities.</p><p>The upper bound $\delta\le1$ does not invalidate this equivalence: neighboring black-minus-white differences cannot exceed the total black budget, which is at most $1$.</p><p>For empty $A$, the allocation constraints remain feasible and $\delta=1$ is available, correctly making the protection condition true.</p><p>The invoked rational linear-programming result applies: the program has rational coefficients, polynomial description length, a nonempty bounded feasible region, and a bounded objective. Exact optimization permits testing whether its optimum is positive and obtaining a rational witness of polynomial encoding length.</p><p>Protected types acquire no additional white mass. Isolated types acquire none either. Therefore<br>$$
+   \Phi_t(x)\le w+\sum_{i\in T_{\mathrm{ni}}\setminus A}u_i
+   $$<br>is valid at every horizon.</p><p><b>Assessment:</b> Correct.</p><ul><li><b>Lower bound from failed protection</b></li></ul><p>The contradiction argument correctly uses properties established in the perturbation proof: existing strictly black comparisons survive, while zero-neighbor comparisons at nonisolated types become strictly black.</p><p>Thus failure of protection forces, for every feasible allocation, some type in $A$ with positive neighboring colored mass and a nonpositive difference. At least half its residual becomes white immediately.</p><p>The bound $x_i^B+x_i^W\le b+w$ follows from nonnegativity and the two global seed totals. Consequently, the displayed lower bound follows with the correct constant:<br>$$
+   \mathrm{OPT}\ge\frac{\min_{i\in A}\mu_i+w-b}{2}.
+   $$<br>It remains valid when its right-hand side is negative, although then it is uninformative. The algorithm uses it in the regime $b\le w$, where the required positive mass bound follows.</p><p><b>Assessment:</b> Correct.</p><ul><li><b>Approximation algorithm and running time</b></li></ul><p>Protection feasibility is monotone under removing constraints, and the empty protection set is feasible. Hence the smallest successful index exists and can be located by binary search.</p><p>For $k&gt;0$, the minimum mass in $A_{k-1}$ is exactly $\mu_{i_k}$, including when masses are equal. The lower-bound proposition therefore gives<br>$$
+   \mathrm{OPT}\ge\frac{\mu_{i_k}}2.
+   $$<br>Combining this with $w\le\mathrm{OPT}$ verifies every step of<br>$$
+   \Phi_t(x)\le w+k\mu_{i_k}\le(2k+1)\mathrm{OPT}.
+   $$</p><p>The $k=0$ case is optimal. The separate edgeless case is also correct.</p><p>Sorting and logarithmically many polynomial-time linear-programming calls justify the stated polynomial bit running time. The algorithm returns a feasible rational allocation of polynomial encoding length and does not need to simulate the horizon.</p><p><b>Assessment:</b> The $(2\tau+1)$ guarantee is established. It is linear and does not supply the requested sublinear guarantee.</p><ul><li><b>Two-type sharpness example</b></li></ul><p>The example satisfies all input conditions. Equal budgets imply $d_1+d_2=0$, so the sign cases are exhaustive.</p><p>When $d_1&gt;0$, both types have positive seeds, and their residuals become white and black, respectively. The calculation<br>$$
+   \Phi_t(x)=\delta+\frac14-s_1&gt;\frac14-\delta
+   $$<br>is correct. The displayed approaching allocations are feasible for sufficiently small positive $\eta$, specifically $0&lt;\eta&lt;\delta$, as intended by the limiting statement.</p><p>The opposite-sign case gives the claimed larger bound by exchanging the type roles.</p><p>When both differences vanish, positive seed mass in both types produces total white mass $\tfrac12$ after one round. Concentrating all seeds in one type gives exactly the stated first-round values, followed by $\tfrac12$ from the second round onward.</p><p>The restriction $\delta&lt;\tfrac1{16}$ correctly ensures<br>$$
+   \delta+\frac18&lt;\frac14-\delta.
+   $$<br>Hence the claimed infima, the limiting ratio $2$, and nonattainment for horizons at least $2$ all follow.</p><p><b>Assessment:</b> Correct. This establishes sharpness of the universal horizon-comparison constant, not approximation hardness.</p><ul><li><b>Evaluation with a binary-encoded horizon</b></li></ul><p>A type’s residual is either unchanged or exhausted completely at its first active update. Each state-changing round therefore exhausts at least one previously unexhausted residual.</p><p>A round with no change cannot be followed by a later change, since the update is deterministic and receives the same state. These facts justify stabilization by round $\tau$ and<br>$$
+    \Phi_t(x)=\Phi_{\min\{t,\tau\}}(x).
+    $$</p><p>The stated evaluation-operation count follows from summing neighboring masses each round. The bit-length assertion is valid because each colored mass is a seed mass plus zero, half, or all of its original residual.</p><p><b>Assessment:</b> Correct.</p><p>The output makes genuine progress: it establishes exact special cases, a polynomial-time linear-factor approximation, a sharp horizon comparison, and polynomial-time evaluation despite binary horizon encoding. It consistently identifies these as partial results.</p><p>The only major issue is <b>assignment-level incompleteness</b>. The minimum additional material needed to settle the assignment is a proved approximation guarantee at the requested factor, with the specified complexity dependence, or a hardness argument valid for arbitrary real seed allocations and aggregate half splitting. Clarification alone cannot supply either result.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

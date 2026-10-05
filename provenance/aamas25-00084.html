@@ -1,0 +1,245 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Learning Real-Life Approval Elections — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Learning Real-Life Approval Elections <span style="font-weight:normal;color:#8a7350">(aamas25-00084)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.8 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>There is a polynomial-time algorithm that given an election 𝐸= (𝐶,𝑉) and an integer 𝑡∈[|𝐶|] finds the parameters of a 𝑡-parameter IAM that maximizes the probability of generating 𝐸.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), \(t\le |C|\), and an explicitly represented rational distribution \(\mu\) over approval-ballot types \(A\subseteq C\), choose a partition \(C=C_1\mathbin{\dot\cup}\cdots\mathbin{\dot\cup}C_t\) and probabilities \(p_1,\ldots,p_t\in[0,1]\) maximizing \(\sum_{A\subseteq C}\mu_A\sum_{j=1}^{t}\left(|A\cap C_j|\ln p_j+|C_j\setminus A|\ln(1-p_j)\right)\), and return an optimal partition and parameter vector.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) be a candidate set with \(m\geq1\), and let \(1\leq t\leq m\) be an input integer. A society is given by its support \(S\): the list of the \(\tau\) approval types \(A\subseteq C\) with positive mass, each mass \(\mu_A\) a binary rational, with \(\sum_{A\in S}\mu_A=1\). Here \(\tau=|S|\) is the support size, not the number of possible approval types; let \(L\) be the total input bit length.<br>A feasible model consists of a partition \(C=C_1\mathbin{\dot\cup}\cdots\mathbin{\dot\cup}C_t\) into nonempty groups and probabilities \(p_j\in[0,1]\); probabilities for different groups may coincide. Each candidate in \(C_j\) is approved independently with probability \(p_j\).<br>The optimization problem returns a partition and parameter vector maximizing \(F=\sum_{A\in S}\mu_A\sum_{j=1}^{t}\bigl(|A\cap C_j|\ln p_j+|C_j\setminus A|\ln(1-p_j)\bigr)\). Use \(0\ln0=0\), and interpret a positive coefficient times \(\ln0\) as \(-\infty\). Any maximizer is acceptable; optimal probabilities are returned exactly as binary rationals.</p><p>Is this exact optimization problem solvable in polynomial time in \(m,\tau,t,L\) in the Turing bit model, or is it NP-hard?</p><p>For an explicitly listed finite electorate, maximum-likelihood fitting of a single independent approval model with at most \(t\) approval probabilities is polynomial-time solvable. [Faliszewski et al.](https://www.ifaamas.org/Proceedings/aamas2025/pdfs/p704.pdf)<br>Rationally weighted fitting is known to be equivalent to fitting an induced finite electorate; the verified result does not establish a polynomial bound in the binary weight length. [Faliszewski et al., extended version](https://arxiv.org/html/2601.18651v1)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Made the intended domain explicit: at least one candidate and an integer t between 1 and m.</li><li>Required nonempty partition groups, consistent with the discrete group-probability definition; allowed coincident probabilities because the model permits at most t distinct probabilities.</li><li>Made distribution normalization and positive support masses explicit; empty and full approval ballots remain allowed.</li><li>Specified the endpoint conventions for logarithms so probabilities zero and one remain admissible.</li><li>Specified exact rational parameter output, arbitrary choice among maximizers, and Turing bit complexity rather than unit-cost real arithmetic.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Status and scope</h3><p><b>The unrestricted exact complexity classification remains unresolved here.</b> I do not obtain either a polynomial-time algorithm or an NP-hardness reduction.</p><p>I prove three further results beyond the verified structural reduction:</p><ul><li>Arbitrary rational candidate marginals can be realized by a society with at most $m+1$ nested approval types.</li><li>Equality of the optimized scores of two given partitions is decidable in polynomial time, even when $t$ is unrestricted.</li><li>For unrestricted inputs, arbitrarily accurate additive approximation—and relative approximation of the optimal clustering loss—is possible in polynomial bit time.</li></ul><p>I also give a precise conditional polynomial-time result and re-establish the exact special cases used below.</p><p>Throughout, a binary rational means a rational whose numerator and denominator are encoded in binary.</p><h3>2. Reduction to candidate marginals</h3><p>For each candidate $c$, define its marginal approval probability by<br>$$
+q_c=\sum_{\substack{A\in S\\c\in A}}\mu_A.
+$$<br>Let $D$ be the product of the denominators of all input masses. Its binary length is at most $L+1$, and every $Dq_c$ is an integer. Thus $D$ and all marginals can be computed using polynomial-time rational arithmetic.</p><p>Interchanging the finite sums in the objective gives<br>$$
+F=\sum_{j=1}^{t}\sum_{c\in C_j}
+\bigl(q_c\ln p_j+(1-q_c)\ln(1-p_j)\bigr).
+$$<br>This identity respects the endpoint conventions: the coefficient of $\ln 0$ is positive in the original expression exactly when its aggregated coefficient is positive.</p><p>For a nonempty group $B$, write<br>$$
+n_B=|B|,
+\qquad
+s_B=\sum_{c\in B}q_c.
+$$<br>Its contribution at parameter $p$ is<br>$$
+s_B\ln p+(n_B-s_B)\ln(1-p).
+$$<br>If $0&lt;s_B&lt;n_B$, its derivative is<br>$$
+\frac{s_B-n_Bp}{p(1-p)}.
+$$<br>Consequently, its unique maximizer is $p=s_B/n_B$. If $s_B=0$, the contribution is $n_B\ln(1-p)$ and uniquely maximized at $p=0$. If $s_B=n_B$, it is uniquely maximized at $p=1$.</p><p>Define<br>$$
+f(x)=x\ln x+(1-x)\ln(1-x),
+\qquad
+f(0)=f(1)=0.
+$$<br>For a partition $\mathcal P$, its optimized score is therefore<br>$$
+W(\mathcal P)=\sum_{B\in\mathcal P}w(B),
+\qquad
+w(B)=n_Bf\!\left(\frac{s_B}{n_B}\right).
+$$<br>Every partition has an attained finite optimized score. Since there are finitely many partitions, a global optimum exists.</p><p>Moreover, if<br>$$
+a_B=\sum_{c\in B}Dq_c,
+$$<br>then its optimal parameter is<br>$$
+p_B=\frac{a_B}{n_BD}.
+$$<br>Both numerator and denominator have binary length $O(L+\log m)$. Thus the exact output parameters always have polynomial-size encodings.</p><h3>3. Sorted intervals and the dynamic program</h3><p>Order the candidates so that<br>$$
+q_1\leq q_2\leq\cdots\leq q_m.
+$$</p><p><b>Lemma.</b> Some optimal partition consists of exactly $t$ nonempty intervals of this order.</p><p><b>Proof.</b> Take an optimal partition, and order its groups by their means. Suppose groups $B,E$ have sizes $n,r$ and means $u\leq v$, but contain marginals $x\in B$ and $y\in E$ with $x&gt;y$.</p><p>Put $\delta=x-y&gt;0$. Swapping these candidates changes the means to<br>$$
+u-\frac{\delta}{n},
+\qquad
+v+\frac{\delta}{r}.
+$$<br>Both remain in $[0,1]$, since they are means of actual groups.</p><p>Consider<br>$$
+g(z)=nf\!\left(u-\frac zn\right)
++rf\!\left(v+\frac zr\right),
+\qquad
+0\leq z\leq\delta.
+$$<br>The initial means are interior: $x&gt;0$ implies $u&gt;0$, and $y&lt;1$ implies $v&lt;1$; together with $u\leq v$, this gives $0&lt;u\leq v&lt;1$. For $0&lt;z&lt;\delta$, the interpolated means are also interior.</p><p>On $(0,1)$,<br>$$
+f&#x27;(x)=\ln\frac{x}{1-x},
+\qquad
+f&#x27;&#x27;(x)=\frac{1}{x(1-x)}&gt;0.
+$$<br>Thus<br>$$
+g&#x27;(z)=
+f&#x27;\!\left(v+\frac zr\right)
+-
+f&#x27;\!\left(u-\frac zn\right)&gt;0,
+$$<br>because the difference between the two arguments is<br>$$
+(v-u)+z\left(\frac1r+\frac1n\right)&gt;0.
+$$<br>Continuity at the endpoints gives $g(\delta)&gt;g(0)$, contradicting optimality.</p><p>Hence an earlier group cannot contain a marginal strictly larger than one in a later group. Candidates with equal marginals can be reassigned among their tied positions without changing group sizes or sums. This represents the groups as intervals in the fixed sorted order. $\square$</p><p>For an interval, define<br>$$
+w(a,b)=(b-a+1)f\!\left(
+\frac{\sum_{i=a}^{b}q_i}{b-a+1}
+\right).
+$$<br>Let $V(i,j)$ be the best score for the first $i$ candidates partitioned into $j$ nonempty intervals. Then<br>$$
+V(i,j)=
+\max_{j-1\leq h&lt;i}
+\bigl(V(h,j-1)+w(h+1,i)\bigr),
+$$<br>with $V(0,0)=0$ and invalid states assigned $-\infty$.</p><p>Every interval partition has a last interval, so every feasible solution occurs in a transition. Conversely, every valid transition constructs a feasible partition. Additivity proves optimal substructure.</p><p>There are $O(tm)$ states and $O(tm^2)$ transitions. This is the same combinatorial recurrence underlying the finite-electorate algorithm in [Faliszewski et al., Theorem 4.9](https://arxiv.org/html/2601.18651v1). Its transition count alone does not establish polynomial bit complexity.</p><h3>4. Exact score representation and polynomial-time equality testing</h3><p>For a group $B$, put<br>$$
+b_B=n_BD-a_B.
+$$<br>Direct substitution gives<br>$$
+Dw(B)=
+a_B\ln a_B+b_B\ln b_B-n_BD\ln(n_BD),
+$$<br>where a term with zero coefficient is omitted. Therefore<br>$$
+\exp(DW(\mathcal P))
+=
+\prod_{B\in\mathcal P}
+\frac{a_B^{a_B}b_B^{b_B}}
+{(n_BD)^{n_BD}},
+$$<br>again omitting zero-exponent factors.</p><p>Comparing two partition scores is equivalent to comparing two products of positive integer powers after cross-multiplication. There are at most $6t$ factors in total, and every base and exponent is at most $mD$.</p><p>This proves a polynomial-time Turing reduction of exact optimization to general product-of-powers comparison. It proves no reduction in the reverse direction.</p><h3>Polynomial-time equality testing</h3><p><b>Proposition.</b> Given two partitions, whether their optimized scores are equal can be decided in polynomial time in the original input length and the partition encodings.</p><p><b>Proof.</b> It suffices to decide whether<br>$$
+X=\prod_i x_i^{u_i}
+\quad\text{and}\quad
+Y=\prod_j y_j^{v_j}
+$$<br>are equal, where all bases and exponents are positive binary integers. Discard bases equal to $1$.</p><p>If a left base $a$ and a right base $c$ have<br>$$
+g=\gcd(a,c)&gt;1,
+$$<br>and corresponding exponents $u,v$, use<br>$$
+\frac{a^u}{c^v}
+=
+\frac{(a/g)^u}{(c/g)^v}g^{u-v}.
+$$<br>Replace the two bases by $a/g,c/g$, discarding unit bases. If $u&gt;v$, append $g^{u-v}$ on the left; if $v&gt;u$, append $g^{v-u}$ on the right. If $u=v$, append nothing. This preserves $X/Y$.</p><p>To bound the number of steps, consider the product of all current bases on both sides, without their exponents. At each step this product decreases by a factor $g$ if $u\neq v$, and by $g^2$ if $u=v$. It therefore decreases by at least a factor $2$.</p><p>Consequently, the number of steps is at most the sum of the binary lengths of the initial bases. Each step adds at most one factor. No base exceeds the initial maximum base, and no exponent exceeds the initial maximum exponent: new exponents are differences of existing positive exponents. All intermediate encodings therefore have polynomial size, and each gcd and update takes polynomial time.</p><p>At termination, every left base is coprime to every right base. Hence the represented integers $X,Y$ are coprime. They are equal exactly when both equal $1$, equivalently when both factor lists are empty. $\square$</p><p>Thus exact ties can be recognized efficiently. The unresolved arithmetic operation is determining the order of unequal scores.</p><h3>5. Uniform polynomial-time additive approximation</h3><p><b>Theorem.</b> Given the society, $t$, and a rational $0&lt;\varepsilon\leq1$, one can compute a feasible partition and its exact rational group means satisfying<br>$$
+F\geq F^*-\varepsilon
+$$<br>in time polynomial in $m,\tau,t,L$ and the encoding length of $\varepsilon$. The precision required depends logarithmically on $1/\varepsilon$.</p><p>Here $F^*$ denotes the exact optimum.</p><h3>Computing logarithms with certified error</h3><p>First, let $x\in(0,1]$ be rational, with numerator and denominator at most $2^B$. Choose an integer $0\leq k\leq B$ such that<br>$$
+1\leq z=2^kx&lt;2.
+$$<br>Then<br>$$
+\ln x=\ln z-k\ln2.
+$$<br>For $1\leq z\leq2$, set<br>$$
+r=\frac{z-1}{z+1},
+\qquad
+0\leq r\leq\frac13.
+$$<br>The convergent series is<br>$$
+\ln z=
+2\sum_{\ell=0}^{\infty}\frac{r^{2\ell+1}}{2\ell+1}.
+$$<br>After $N$ terms, its remainder satisfies<br>$$
+0\leq
+2\sum_{\ell=N}^{\infty}\frac{r^{2\ell+1}}{2\ell+1}
+\leq
+\frac{2r^{2N+1}}{1-r^2}
+\leq
+\frac34\,9^{-N}.
+$$<br>The same formula computes $\ln2$, using $r=1/3$. Thus the resulting approximation to $\ln x$ has error at most<br>$$
+(k+1)9^{-N}.
+$$<br>Choosing<br>$$
+N=O\!\left(\log(B+1)+\log\frac1\eta\right)
+$$<br>gives error at most $\eta$.</p><p>All truncated expressions are rational. Their powers, numerators, and denominators have bit lengths polynomial in $B,N$: even multiplying the denominators of all summands gives length $O(N^2B+N\log(N+1))$. Hence exact evaluation of the truncated series takes polynomial bit time.</p><h3>Approximate interval weights and exact rational dynamic programming</h3><p>Set<br>$$
+\eta=\frac{\varepsilon}{2m}.
+$$<br>For each interval $B$ with fitted probability $p_B\in(0,1)$, approximate $\ln p_B$ and $\ln(1-p_B)$ to error at most $\eta$, and define<br>$$
+\widehat w(B)=
+s_B\,\widehat{\ln p_B}
++
+(n_B-s_B)\,\widehat{\ln(1-p_B)}.
+$$<br>For $p_B\in\{0,1\}$, set $\widehat w(B)=0$, its exact score.</p><p>Since the nonnegative coefficients sum to $n_B$,<br>$$
+|\widehat w(B)-w(B)|\leq n_B\eta.
+$$<br>For every full interval partition $\mathcal P$, this implies<br>$$
+|\widehat W(\mathcal P)-W(\mathcal P)|
+\leq m\eta=\frac{\varepsilon}{2}.
+$$</p><p>Run the dynamic program using the rational weights $\widehat w$. Rational additions and comparisons are exact, and all resulting encodings have polynomial size. Let $\widehat{\mathcal P}$ maximize $\widehat W$, and let $\mathcal P^*$ be an exact optimal interval partition. Then<br>$$
+\begin{aligned}
+W(\widehat{\mathcal P})
+&amp;\geq \widehat W(\widehat{\mathcal P})-\frac{\varepsilon}{2}\\
+&amp;\geq \widehat W(\mathcal P^*)-\frac{\varepsilon}{2}\\
+&amp;\geq W(\mathcal P^*)-\varepsilon.
+\end{aligned}
+$$<br>Return $\widehat{\mathcal P}$ with its exact rational group means. This proves the theorem.</p><p>In particular, error $2^{-K}$ is achievable in time polynomial in the original input parameters and $K$.</p><h3>6. A quantitative loss bound and relative approximation</h3><p>Define the fully individualized score<br>$$
+F_{\mathrm{full}}=\sum_{c\in C}f(q_c),
+$$<br>and the clustering loss of a fitted partition by<br>$$
+\mathcal L(\mathcal P)=F_{\mathrm{full}}-W(\mathcal P).
+$$<br>Let $d$ be the number of distinct candidate marginals.</p><p><b>Proposition.</b></p><ul><li>If $t\geq d$, the optimal clustering loss is $0$, and an exact optimum is constructible in polynomial time.</li><li>If $t&lt;d$, every feasible partition has clustering loss at least $D^{-2}$.</li></ul><p><b>Proof.</b> On $(0,1)$,<br>$$
+f&#x27;&#x27;(x)=\frac1{x(1-x)}\geq4.
+$$<br>Consequently, $f(x)-2x^2$ is convex there. Its continuous extension to $[0,1]$ remains convex, by taking endpoint limits in the defining convexity inequality.</p><p>Applying Jensen’s inequality to a group $B$ with mean $u$ gives<br>$$
+\sum_{c\in B}f(q_c)-n_Bf(u)
+\geq
+2\sum_{c\in B}(q_c-u)^2.
+$$<br>Thus every group has nonnegative loss.</p><p>If $B$ contains distinct marginals $x,y$, then<br>$$
+2\bigl((x-u)^2+(y-u)^2\bigr)\geq(x-y)^2.
+$$<br>Because $Dx,Dy$ are distinct integers,<br>$$
+|x-y|\geq\frac1D.
+$$<br>Therefore this group has loss at least $D^{-2}$.</p><p>If $t&lt;d$, some group must contain two distinct marginals: otherwise each group contains only one marginal value, requiring at least $d$ groups. This proves the second assertion.</p><p>If $t\geq d$, group candidates by equal marginals and assign each group that marginal as its probability. Every group then has zero loss. If fewer than $t$ groups result, repeatedly split a nonsingleton group while retaining its probability. Such a group exists whenever the current group count is less than $t\leq m$. This constructs exactly $t$ groups with zero loss. $\square$</p><p><b>Corollary.</b> Given rational $0&lt;\delta\leq1$, a feasible model with<br>$$
+\mathcal L(\mathcal P)\leq(1+\delta)\mathcal L^*
+$$<br>can be computed in polynomial time in the input and the encoding length of $\delta$, where $\mathcal L^*$ is the minimum clustering loss.</p><p><b>Proof.</b> If $t\geq d$, return the zero-loss construction. Otherwise, use the additive approximation theorem with<br>$$
+\varepsilon=\frac{\delta}{D^2}.
+$$<br>Its precision requirement is polynomial, because<br>$$
+\log\frac1\varepsilon
+=
+2\log D+\log\frac1\delta.
+$$<br>The returned partition satisfies<br>$$
+\mathcal L(\mathcal P)
+\leq\mathcal L^*+\frac{\delta}{D^2}
+\leq(1+\delta)\mathcal L^*,
+$$<br>using $\mathcal L^*\geq D^{-2}$. $\square$</p><p>This gives a uniform approximation result for unrestricted binary weights. It does not determine the exact maximizing partition.</p><h3>7. Arbitrary marginals are realizable by nested support</h3><p><b>Theorem.</b> Given arbitrary rational numbers<br>$$
+0\leq q_1\leq\cdots\leq q_m\leq1,
+$$<br>one can construct, in polynomial time, a society having these candidate marginals and at most $m+1$ positive-mass approval types. Its support is totally ordered by inclusion.</p><p><b>Proof.</b> Set $q_0=0$. For each $1\leq i\leq m$, define<br>$$
+A_i=\{c_i,c_{i+1},\ldots,c_m\},
+\qquad
+\mu_{A_i}=q_i-q_{i-1}.
+$$<br>Also assign<br>$$
+\mu_{\varnothing}=1-q_m.
+$$<br>Delete every zero-mass type.</p><p>All retained masses are positive, and their sum is<br>$$
+\sum_{i=1}^{m}(q_i-q_{i-1})+(1-q_m)=1.
+$$<br>Candidate $c_k$ belongs exactly to the listed suffixes with $i\leq k$. Its marginal is therefore<br>$$
+\sum_{i=1}^{k}(q_i-q_{i-1})=q_k.
+$$<br>The suffixes and the empty set form a chain under inclusion.</p><p>Sorting and taking rational differences are polynomial-time operations. The approval sets require at most $O(m^2)$ bits, and the rational differences have polynomial encoding length. $\square$</p><p>Combining this construction with Section 2 proves polynomial-time equivalence between the society problem and optimization from an arbitrary rational marginal list. This equivalence already holds for societies whose support is nested and has size at most $m+1$.</p><p>Consequently, consistency constraints on marginals imposed by a society do not simplify the unrestricted problem.</p><h3>8. Exact special cases and a conditional unrestricted result</h3><h3>Unconditional exact special cases</h3><p>The following known arithmetic theorem is applicable: products of positive binary integers raised to positive binary integer powers can be compared in polynomial time when their total number of factors is bounded by a fixed constant. See [Etessami, Stewart, and Yannakakis, Proposition 3.7(2)](https://arxiv.org/pdf/1304.5429).</p><p><b>Fixed $t$.</b> Each dynamic-programming comparison has at most $6t$ factors, all with polynomial binary length. For fixed $t$, the theorem supplies polynomial-time comparisons, and hence exact optimization.</p><p><b>Fixed support size $\tau$.</b> A candidate’s marginal is determined by its incidence pattern across the $\tau$ support types, so<br>$$
+d\leq2^\tau.
+$$<br>If $t\geq d$, Section 6 constructs an exact optimum. Otherwise $t&lt;2^\tau$ is bounded by a constant, and the fixed-$t$ algorithm applies.</p><p><b>Fixed $k=m-t$.</b> An interval partition is specified by omitting exactly $k$ of the $m-1$ boundaries, giving<br>$$
+\binom{m-1}{k}
+$$<br>possibilities.</p><p>For such a partition, let $\mathcal B$ be its nonsingleton blocks. Then<br>$$
+\sum_{B\in\mathcal B}(|B|-1)=k.
+$$<br>Hence<br>$$
+|\mathcal B|\leq k,
+\qquad
+\sum_{B\in\mathcal B}|B|\leq2k.
+$$<br>Subtracting the common singleton score, the partition’s score difference is<br>$$
+\sum_{B\in\mathcal B}
+\left(w(B)-\sum_{i\in B}f(q_i)\right).
+$$<br>It contains at most $k$ block contributions and $2k$ singleton contributions. Each contribution has at most three logarithmic terms. Comparing two differences therefore requires at most $18k$ product factors. For fixed $k$, enumeration and exact comparison both take polynomial time.</p><p>These are polynomial-time results for fixed parameter values; they are not uniform polynomial bounds for unrestricted inputs.</p><h3>Conditional unrestricted polynomial time</h3><p>Here is an explicit arithmetic assumption sufficient to settle the problem positively.</p><p><b>Assumption.</b> There is an absolute constant $\kappa&gt;0$ such that, for every $r\geq1$, integers $a_i\geq2$, and nonzero integers $b_i$, if<br>$$
+\Lambda=\sum_{i=1}^{r}b_i\ln a_i\neq0,
+$$<br>then<br>$$
+|\Lambda|
+\geq
+\frac{\kappa}
+{rB\left(\prod_{i=1}^{r}a_i|b_i|\right)^2},
+\qquad
+B=\max(3,|b_1|,\ldots,|b_r|).
+$$<br>This is the parameter-$1$ case of the Lang–Waldschmidt conjecture as formulated in [Etessami, Stewart, and Yannakakis, Conjecture 3.2](https://arxiv.org/pdf/1304.5429). <b>It is an assumption, not a proved bound.</b></p><p><b>Conditional theorem.</b> Under this assumption, unrestricted exact optimization is polynomial-time solvable.</p><p><b>Proof.</b> For two interval partitions $\mathcal P,\mathcal Q$, Section 4 represents<br>$$
+D\bigl(W(\mathcal P)-W(\mathcal Q)\bigr)
+$$<br>as a linear form having at most $6t$ terms. Omit zero coefficients and bases equal to $1$. Every remaining base and absolute coefficient is at most<br>$$
+M=\max(3,mD).
+$$<br>If the scores differ, the assumption gives, for some $1\leq r\leq6t$,<br>$$
+|W(\mathcal P)-W(\mathcal Q)|
+\geq
+\frac{\kappa}{DrM^{4r+1}}
+\geq
+\frac{\kappa}{D(6t)M^{24t+1}}.
+$$<br>The binary logarithm of the reciprocal of this lower bound is<br>$$
+O\bigl(L+\log(t+1)+t(L+\log(m+1))\bigr),
+$$<br>with an additive constant depending only on $\kappa$.</p><p>Choose additive approximation error smaller than this lower bound. Section 5 then runs in polynomial time. Its returned interval partition must be exactly optimal: a strictly suboptimal interval partition would have a deficit at least the displayed lower bound. Ties between optimal partitions cause no difficulty, since any maximizer is acceptable. $\square$</p><p>In particular, an NP-hardness reduction from satisfiability to this optimization problem, under polynomial-time Turing reductions, would imply $\mathsf P=\mathsf{NP}$ if this arithmetic conjecture holds. This is a conditional implication, not a hardness obstruction proved unconditionally.</p><h3>9. Remaining open point</h3><p>The combinatorial optimization reduces to sorted interval partitioning, the output probabilities have polynomial encodings, exact ties are polynomial-time decidable, and unrestricted approximation is polynomial-time solvable to any prescribed binary precision.</p><p>What remains unproved is an unconditional method for selecting exact maxima among the structured scores<br>$$
+\sum_{B}
+n_Bf\!\left(\frac{a_B}{n_BD}\right)
+$$<br>in polynomial bit time, or an NP-hardness reduction to the optimization problem itself.</p><p>Neither the approximation results nor the reduction to general product-of-powers comparison settles that question.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 1 and 9; resolution of USER_TASK: The unrestricted exact complexity classification is explicitly left unresolved. The output establishes neither an unconditional polynomial-time exact algorithm nor NP-hardness for the assigned problem.</li><li><b>minor</b> — Section 8, conditional theorem: selection of approximation error: The precision choice uses an unspecified existential constant $\kappa$. State that a fixed positive rational lower bound for $\kappa$ is incorporated into the conditional algorithm.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Assessment: partial, with substantial correct content.</b> The output does not answer the unrestricted exact complexity question in <code>USER_TASK</code>. It explicitly acknowledges this limitation. Its structural, equality-testing, approximation, realizability, and fixed-parameter results are sound. The unrestricted polynomial-time result is valid only under the stated arithmetic assumption.</p><p>No central false mathematical step was found.</p><h3>1. Scope and target</h3><p><code>USER_TASK</code> asks for an unconditional classification of exact optimization with unrestricted binary rational weights and input parameter $t$.</p><p>The prover instead establishes several auxiliary results and a conditional classification. Consequently, neither a polynomial-time algorithm nor NP-hardness for the requested unrestricted exact problem has been established.</p><p><b>Major issue — target remains unresolved.</b> This is incompleteness relative to the assignment, rather than a contradiction in the prover’s expressly partial claim.</p><p><b>Minimum required progress:</b> supply either an unconditional polynomial-time exact algorithm with a valid bit-complexity analysis, or a valid NP-hardness reduction to this optimization problem. Clarifying the existing approximation results cannot fill this gap.</p><h3>2. Candidate marginals and fitted parameters</h3><p>The reduction in Section 2 is correct.</p><ul><li>The product $D$ of input denominators has polynomial binary length. Each $Dq_c$ is an integer, and the marginals can be computed with polynomial-size rational arithmetic.</li><li>Reordering the finite sums correctly produces the candidate-marginal objective. Nonnegative coefficients and positive support masses justify the stated treatment of endpoints.</li><li>For a nonempty group, the derivative has the asserted sign, yielding the unique interior maximizer $s_B/n_B$. The two endpoint cases also have the stated unique maximizers.</li><li>Substitution gives $w(B)=n_Bf(s_B/n_B)$.</li><li>Every fitted partition has finite score, and the finite set of partitions therefore has a maximizer.</li><li>The exact parameters $a_B/(n_BD)$ have polynomial-size encodings, including when $a_B=0$ or $a_B=n_BD$.</li></ul><p>The argument covers $m=1$, $t=1$, and marginals equal to $0$ or $1$.</p><p><b>No issue found.</b></p><h3>3. Sorted intervals and dynamic programming</h3><p>The exchange argument in Section 3 is valid.</p><p>Given the asserted inversion, the initial group means are interior. For every $0&lt;z&lt;\delta$, both interpolated means remain interior: each lies strictly between its initial interior value and its final value in $[0,1]$.</p><p>Strict monotonicity of $f&#x27;$ gives $g&#x27;(z)&gt;0$. Continuity at the endpoints then yields the strict score improvement claimed, contradicting optimality.</p><p>The absence of strict inversions implies that group membership can be made consecutive in the sorted order by rearranging equal-marginal candidates. This preserves each group’s size and sum, and hence preserves its score and nonemptiness.</p><p>The recurrence, initial state, and invalid-state convention correctly enforce exactly $t$ nonempty intervals. Its state and transition counts are correct. The cited finite-electorate recurrence matches this combinatorial structure. [Faliszewski et al., Theorem 4.9](https://arxiv.org/html/2601.18651v1)</p><p>The prover correctly distinguishes a polynomial number of transitions from polynomial Turing bit complexity.</p><p><b>No issue found.</b></p><h3>4. Score representation and equality testing</h3><p>The logarithmic score identity is correct:</p><p>$$
+Dw(B)=a_B\ln a_B+b_B\ln b_B-n_BD\ln(n_BD).
+$$</p><p>The terms involving $\ln(n_BD)$ combine with total coefficient $-n_BD$. Omitting zero-coefficient terms handles endpoint groups correctly.</p><p>Exponentiation and cross-multiplication preserve score comparisons. Two partitions contribute at most $6t$ factors, with bases and exponents bounded by $mD$.</p><p>The equality-testing algorithm is also correct:</p><ul><li>Each gcd update preserves the represented ratio.</li><li>The product of unweighted bases decreases by the stated factor.</li><li>The resulting iteration bound is polynomial in the initial encoding length.</li><li>Bases never increase, and new exponents are positive differences of existing exponents.</li><li>Searching all current cross-pairs for a nontrivial gcd remains polynomial.</li><li>At termination, the two represented positive integers are coprime, so equality holds exactly when both are $1$.</li></ul><p>This establishes equality testing, not ordering of unequal scores. The prover maintains that distinction correctly.</p><p><b>No issue found.</b></p><h3>5. Additive approximation</h3><p>The certified logarithm calculation and approximation theorem are valid.</p><p>For rational $x\in(0,1]$, the stated normalization can be chosen with $0\leq k\leq B$. The series applies throughout the required normalized range, including the separate computation of $\ln2$.</p><p>The remainder constant checks out:</p><p>$$
+\frac{2(1/3)^{2N+1}}{1-1/9}
+=\frac34\,9^{-N}.
+$$</p><p>Combining the two truncated logarithms gives the asserted error bound. The rational series evaluations have polynomial encoding length in $B$ and $N$.</p><p>For each interval, the logarithm coefficients are nonnegative and sum to its size. Thus the interval error is at most $n_B\eta$, and every full partition has error at most $\varepsilon/2$.</p><p>The three displayed inequalities correctly show that maximizing the approximate rational score returns a partition within $\varepsilon$ of the true optimum. Dynamic-programming scores sum at most $t$ polynomial-size rational weights, so their encodings remain polynomial.</p><p><b>No issue found.</b> This theorem does not certify an exact maximizer without an additional separation bound.</p><h3>6. Loss bound and relative approximation</h3><p>Section 6 is correct.</p><p>The inequality $f&#x27;&#x27;(x)\geq4$ establishes convexity of $f(x)-2x^2$ on the interior. Continuity extends convexity to the closed interval, allowing Jensen’s inequality even for endpoint marginals.</p><p>The resulting group loss bound has the correct constant. For two distinct marginals in a group,</p><p>$$
+2\bigl((x-u)^2+(y-u)^2\bigr)\geq(x-y)^2.
+$$</p><p>The common denominator gives $|x-y|\geq D^{-1}$, and therefore the asserted group loss is at least $D^{-2}$.</p><p>The counting argument for $t&lt;d$ is valid. For $t\geq d$, the equal-marginal construction and subsequent splits produce exactly $t$ nonempty zero-loss groups.</p><p>The relative approximation corollary follows with $\varepsilon=\delta/D^2$, whose encoding length is polynomial.</p><p><b>No issue found.</b> The positive lower bound on clustering loss does not provide a separation bound between distinct partition scores.</p><h3>7. Nested-support realizability</h3><p>The construction in Section 7 is correct.</p><p>The masses are nonnegative, deletion leaves only positive masses, and telescoping proves total mass $1$. Candidate membership in the suffixes gives exactly the prescribed marginal.</p><p>Repeated marginals, $q_1=0$, and $q_m=1$ are handled by deleting zero-mass types. At least one positive-mass type remains.</p><p>The support-size and encoding-size bounds are polynomial. Combined with Section 2, this proves the stated equivalence with optimization from arbitrary rational marginals.</p><p><b>No issue found.</b></p><h3>8. Exact special cases</h3><p>The arithmetic theorem is stated sufficiently precisely and is applicable: comparison of products with positive binary integer bases and exponents is polynomial-time when the numbers of factors are fixed constants. This matches the cited proposition. [Etessami, Stewart, and Yannakakis, Proposition 3.7(2)](https://arxiv.org/pdf/1304.5429)</p><ul><li><b>Fixed $t$:</b> each finite dynamic-programming alternative represents at most $t$ groups, so the comparison-factor bound applies.</li><li><b>Fixed $\tau$:</b> the bound $d\leq2^\tau$ is valid. The two branches give either the zero-loss construction or bounded $t$.</li><li><b>Fixed $k=m-t$:</b> the boundary count and nonsingleton-block bounds are correct. After subtracting the common individualized score, each partition uses at most $3k$ contributions, giving at most $18k$ factors across a comparison.</li></ul><p>For $k=0$, there is one partition, so no comparison is necessary.</p><p><b>No issue found.</b> These results do not give a uniform polynomial bound when the parameters vary with the input.</p><h3>9. Conditional unrestricted result</h3><p>The stated assumption is a valid weakened version of the parameter-$1$ instance of the cited conjecture; using $B=\max(3,|b_i|)$ only weakens its lower bound. [Etessami, Stewart, and Yannakakis, Conjecture 3.2](https://arxiv.org/pdf/1304.5429)</p><p>The conditional calculation is correct. There are at most $6t$ logarithmic terms, and each base and absolute coefficient is at most $M$. Consequently,</p><p>$$
+\prod_{i=1}^r a_i|b_i|\leq M^{2r},
+$$</p><p>which yields the displayed score-separation bound after division by $D$. Its reciprocal has polynomial logarithmic size.</p><p>An additive error strictly below that separation forces the returned partition to be optimal. The final conditional implication concerning $\mathsf P=\mathsf{NP}$ is also valid.</p><p><b>Minor clarification:</b> the instruction to choose an error below a bound involving the unspecified existential constant $\kappa$ leaves the algorithm’s fixed precision constant implicit. Specify that a fixed positive rational lower bound for $\kappa$ is incorporated into the conditional algorithm. This is an expositional issue, not additional mathematics.</p><h3>10. Actionable feedback</h3><p>Retain the proved auxiliary results and the explicit partial-status statement. Clarify the fixed constant in the conditional algorithm.</p><p>To complete the assignment, address the unconditional exact-selection problem or provide a hardness reduction. Neither efficient equality testing, arbitrarily precise approximation, nor a one-way reduction to general product-of-powers comparison establishes the requested classification.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

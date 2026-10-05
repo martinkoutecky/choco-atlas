@@ -1,0 +1,184 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-dc30490adae78d4923eada9d28f7c941b15f9c85 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-dc30490adae78d4923eada9d28f7c941b15f9c85 <span style="font-weight:normal;color:#8a7350">(s5-dc30490adae78d4923eada9d28f7c941b15f9c85)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> Deterministically solvable in time polynomial in \(m,\tau,L\), with output support at most \(\lceil16/\epsilon^2\rceil\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), \(\tau\) strict ranking types \(t_i\), rational masses \(\mu_i\ge 0\) summing to \(1\), and rational \(\epsilon\in(0,\tfrac12)\), compute a lottery \(q\) over \(C\) with support size at most \(\lceil 100/\epsilon^2\rceil\) such that, for every \(a\in C\), \(\sum_{b\in C}q_b\sum_{i=1}^{\tau}\mu_i\,\mathbf{1}[a\succ_{t_i}b]\le \tfrac12+\epsilon\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) be a nonempty candidate set of size \(m\). A society is given by its support: \(\tau\) distinct strict ranking types \(t_i\), each with positive binary-rational mass \(\mu_i\), where \(\sum_i\mu_i=1\). Here \(\tau\) counts supported types, not all possible rankings.<br>The input also includes binary-rational \(\epsilon\in(0,\tfrac12)\); let \(L\) be the total input bit length. Define \(p(a,b)=\sum_{i=1}^{\tau}\mu_i\mathbf{1}[a\succ_{t_i}b]\), with \(p(a,a)=0\).<br>Compute a rational lottery \(q\) over \(C\) satisfying \(|\{b:q_b&gt;0\}|\leq\lceil100/\epsilon^2\rceil\) and \(\sum_{b\in C}q_bp(a,b)\leq\tfrac12+\epsilon\) for every \(a\in C\).</p><p>Is this search problem solvable deterministically in time polynomial in \(m,\tau,L\), or is it NP-hard?<br>State running times in \(m,\tau,L\) and \(1/\epsilon\).</p><p>For explicitly listed equally weighted voters, lotteries satisfying these inequalities with support \((1+o(1))\pi/(8\epsilon^2)\) exist; an expected polynomial-time randomized construction is established by [Charikar, Ramakrishnan, and Wang](https://arxiv.org/html/2504.20372v3).<br>No deterministic polynomial-time resolution for the precise binary-rational support input problem above was verified.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Removed zero-mass types so that τ is exactly the positive-mass support size.</li><li>Required a nonempty candidate set and retained the strict-ranking convention p(a,a)=0.</li><li>Specified binary-rational lottery probabilities and total input bit length L.</li><li>Interpreted P as deterministic polynomial time in the binary input size; dependence on 1/ε must be reported explicitly.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Deterministic polynomial-time solution</h3><p><b>The search problem is deterministically solvable in time polynomial in \(m,\tau,L\).</b> In fact, the construction below produces support at most \(\lceil16/\epsilon^2\rceil\).</p><p>The proof uses the rank-error averaging idea in [Charikar, Ramakrishnan, and Wang](https://arxiv.org/html/2504.20372v3), together with an exact dynamic program for the conditional expectations. The dynamic program works directly with the supported ranking types and their rational masses.</p><h3>1. Compute an exact maximal lottery</h3><p>Let \(P=(p(a,b))_{a,b\in C}\), and define<br>\[
+\]<br>\(A_{ab}=p(a,b)-\tfrac12\) for \(a\ne b\), and \(A_{aa}=0\).</p><p>Because rankings are strict and the masses sum to one, \(p(a,b)+p(b,a)=1\) whenever \(a\ne b\). Consequently, \(A^\mathsf{T}=-A\).</p><p>Write \(\Delta(C)\) for the simplex of lotteries over \(C\). We first establish that the rational linear program<br>\[
+\]<br>\(x\in\Delta(C),\qquad Ax\leq0\)<br>is feasible.</p><p>Indeed, the finite zero-sum minimax theorem applies to the finite real matrix \(A\), giving<br>\[
+\]<br>\(\displaystyle
+\max_{y\in\Delta(C)}\min_{x\in\Delta(C)}y^\mathsf{T}Ax
+=
+\min_{x\in\Delta(C)}\max_{y\in\Delta(C)}y^\mathsf{T}Ax.
+\)</p><p>For every lottery \(z\), skew-symmetry gives \(z^\mathsf{T}Az=0\). Choosing \(x=y\) shows that the left-hand side is at most zero; choosing \(y=x\) shows that the right-hand side is at least zero. Thus their common value is zero, and a minimizing lottery \(x\) satisfies \(Ax\leq0\).</p><p>For this lottery,<br>\[
+\]<br>\(\displaystyle
+(Px)_a=(Ax)_a+\tfrac12(1-x_a)\leq\tfrac12
+\qquad\text{for every }a\in C.
+\)</p><p>The feasible polytope is nonempty, bounded, and rational. Standard deterministic polynomial-time algorithms for rational linear programming therefore compute a rational feasible vertex \(x\).</p><p>Set \(k=\lceil16/\epsilon^2\rceil\). If \(m\leq k\), output \(x\) immediately. Its support and inequalities already satisfy the requirements.</p><p>Henceforth assume \(k&lt;m\).</p><h3>2. A potential controlling every candidate</h3><p>For ranking type \(i\), list candidates from worst to best:<br>\[
+\]<br>\(c_{i,1},\ldots,c_{i,m}.\)</p><p>Define its nested prefix sets<br>\[
+\]<br>\(B_{i,j}=\{c_{i,1},\ldots,c_{i,j}\},\qquad 0\leq j\leq m,\)<br>where \(B_{i,0}=\varnothing\).</p><p>For any lottery \(q\), put<br>\[
+\]<br>\(\displaystyle
+D_i(q)=\max_{0\leq j\leq m}\bigl(q(B_{i,j})-x(B_{i,j})\bigr),
+\qquad
+\Phi(q)=\sum_{i=1}^{\tau}\mu_iD_i(q).
+\)</p><p>The empty prefix ensures \(D_i(q)\geq0\).</p><p>If \(a=c_{i,j}\), the candidates ranked below \(a\) are exactly \(B_{i,j-1}\). Therefore<br>\[
+\]<br>\(\displaystyle
+\sum_bq_bp(a,b)-\sum_bx_bp(a,b)
+=
+\sum_{i=1}^{\tau}\mu_i
+\bigl(q(B_{i,j_i(a)-1})-x(B_{i,j_i(a)-1})\bigr)
+\leq\Phi(q),
+\)<br>where \(j_i(a)\) denotes the position of \(a\) in type \(i\).</p><p>It follows that <b>\(\Phi(q)\leq\epsilon\) implies all the required inequalities</b>.</p><h3>3. A self-contained expectation bound</h3><p>Let \(Z_1,\ldots,Z_k\) be independent samples from \(x\), and let \(\widehat q\) be their empirical lottery. We prove<br>\[
+\]<br>\(\displaystyle \mathbb E D_i(\widehat q)\leq\frac4{\sqrt{k}}\)<br>for every type \(i\).</p><p>Fix a type and abbreviate \(f_j(z)=\mathbf1[z\in B_{i,j}]\). Let \(Z&#x27;_1,\ldots,Z&#x27;_k\) be an independent copy of the sample. Conditional Jensen’s inequality, applied to the maximum absolute coordinate, gives<br>\[
+\]<br>\(\displaystyle
+\mathbb E\max_j\left|\sum_{h=1}^{k}
+\bigl(f_j(Z_h)-\mathbb Ef_j(Z_h)\bigr)\right|
+\leq
+\mathbb E\max_j\left|\sum_{h=1}^{k}
+\bigl(f_j(Z_h)-f_j(Z&#x27;_h)\bigr)\right|.
+\)</p><p>Introduce independent uniform signs \(\sigma_h\in\{-1,1\}\). Independently swapping each pair \((Z_h,Z&#x27;_h)\) preserves its joint distribution, so the last expectation equals<br>\[
+\]<br>\(\displaystyle
+\mathbb E\max_j\left|\sum_{h=1}^{k}
+\sigma_h\bigl(f_j(Z_h)-f_j(Z&#x27;_h)\bigr)\right|.
+\)</p><p>The triangle inequality and identical distributions of the two samples bound this by<br>\[
+\]<br>\(\displaystyle
+2\,\mathbb E\max_j\left|\sum_{h=1}^{k}\sigma_hf_j(Z_h)\right|.
+\)</p><p>Condition on the \(Z_h\), and sort them from worst to best in the fixed ranking. Each prefix set selects a prefix of this sorted sample, possibly skipping some prefix lengths when candidates repeat. The reordered signs remain independent uniform signs. Consequently, the last maximum is bounded by<br>\[
+\]<br>\(\displaystyle M_k=\max_{0\leq s\leq k}|S_s|,
+\qquad S_s=\sum_{h=1}^{s}\sigma_h.
+\)</p><p>For completeness, \(\mathbb EM_k\leq2\sqrt{k}\). To see this, for \(t&gt;0\) let \(T\) be the first index with \(|S_T|\geq t\). Independence and zero mean of subsequent increments give, for each \(s\leq k\),<br>\[
+\]<br>\(\displaystyle
+\mathbb E[S_k^2\mathbf1[T=s]]
+=
+\mathbb E[(S_s^2+k-s)\mathbf1[T=s]]
+\geq t^2\Pr(T=s).
+\)</p><p>Summing and using \(\mathbb ES_k^2=k\) yields<br>\[
+\]<br>\(\displaystyle \Pr(M_k\geq t)\leq\min\{1,k/t^2\}.\)</p><p>Integration therefore gives<br>\[
+\]<br>\(\displaystyle
+\mathbb EM_k
+\leq\int_0^{\sqrt{k}}1\,dt+
+\int_{\sqrt{k}}^\infty\frac{k}{t^2}\,dt
+=2\sqrt{k}.
+\)</p><p>Combining these bounds and dividing by \(k\), we obtain<br>\[
+\]<br>\(\displaystyle
+\mathbb E D_i(\widehat q)
+\leq
+\mathbb E\max_j|\widehat q(B_{i,j})-x(B_{i,j})|
+\leq\frac4{\sqrt{k}}.
+\)</p><p>Linearity of expectation, with no independence assumption between types, now gives<br>\[
+\]<br>\(\displaystyle
+\mathbb E\Phi(\widehat q)
+\leq\sum_i\mu_i\frac4{\sqrt{k}}
+=\frac4{\sqrt{k}}
+\leq\epsilon.
+\)</p><p>The remaining task is to make this expectation argument deterministic.</p><h3>4. Compute conditional expectations exactly</h3><p>Suppose \(\ell\) sample positions have been fixed and \(r=k-\ell\) remain independent samples from \(x\).</p><p>Fix one ranking type and suppress its index. Write its order as \(c_1,\ldots,c_m\), and let<br>\[
+\]<br>\(\displaystyle
+H_j=\#\{\text{fixed samples in }B_j\},
+\qquad
+X_j=x(B_j).
+\)</p><p>If \(R_j\) counts the remaining samples in \(B_j\), the completed type error is<br>\[
+\]<br>\(\displaystyle
+D=\max_{0\leq j\leq m}
+\left(\frac{H_j+R_j}{k}-X_j\right).
+\)</p><p>We give an exact polynomial-time algorithm for its conditional expectation.</p><h3>4.1. The possible error values</h3><p>Every realization of \(D\) belongs to the rational set<br>\[
+\]<br>\(\displaystyle
+V=\{0\}\cup
+\left\{\frac{s}{k}-X_j:
+0\leq j\leq m,\ 0\leq s\leq k,\
+0\leq\frac{s}{k}-X_j\leq1\right\}.
+\)</p><p>This set has \(O(mk)\) elements. Sort its distinct elements as<br>\[
+\]<br>\(0=v_0&lt;v_1&lt;\cdots&lt;v_N.\)</p><p>It suffices to compute \(F(v)=\Pr(D\leq v)\) for each \(v\in V\), because<br>\[
+\]<br>\(\displaystyle
+\mathbb ED
+=
+\sum_{a=1}^{N}v_a\bigl(F(v_a)-F(v_{a-1})\bigr).
+\)</p><p>The omitted probability mass at zero contributes zero.</p><h3>4.2. A cumulative-count dynamic program</h3><p>Choose a common integer denominator \(d\) for \(x\), and write<br>\[
+\]<br>\(x_{c_j}=w_j/d,\qquad w_j\in\mathbb Z_{\geq0},\qquad \sum_jw_j=d.\)</p><p>For a threshold \(v\), define<br>\[
+\]<br>\(\displaystyle u_j=\lfloor k(v+X_j)\rfloor-H_j.\)</p><p>Then \(D\leq v\) holds exactly when \(R_j\leq u_j\) for every \(j\).</p><p>Initialize \(G_0(0)=1\) and \(G_0(s)=0\) for \(1\leq s\leq r\). For \(j=1,\ldots,m\), compute<br>\[
+\]<br>\(\displaystyle
+G_j(s)=
+\begin{cases}
+\displaystyle\sum_{e=0}^{s}\binom{s}{e}w_j^eG_{j-1}(s-e),
+&amp; s\leq u_j,\\
+0,&amp;s&gt;u_j,
+\end{cases}
+\qquad 0\leq s\leq r.
+\)</p><p>Here \(w_j^0=1\), including when \(w_j=0\).</p><p>To verify the recurrence explicitly, \(G_j(s)\) equals<br>\[
+\]<br>\(\displaystyle
+\sum_{\substack{e_1+\cdots+e_j=s\\
+e_1+\cdots+e_a\leq u_a\ \text{for }1\leq a\leq j}}
+\frac{s!}{e_1!\cdots e_j!}\prod_{a=1}^{j}w_a^{e_a}.
+\)</p><p>Separating \(e_j=e\) gives the recurrence, since<br>\[
+\]<br>\(\displaystyle
+\frac{s!}{e_1!\cdots e_{j-1}!e!}
+=
+\binom{s}{e}\frac{(s-e)!}{e_1!\cdots e_{j-1}!}.
+\)</p><p>At \(j=m\) and \(s=r\), these are precisely the multinomial weights of all allowed remaining sample-count vectors. Thus<br>\[
+\]<br>\(\displaystyle F(v)=\frac{G_m(r)}{d^r}.\)</p><p>This remains valid for \(r=0\) and for zero lottery coordinates.</p><p>For one threshold, the recurrence uses \(O(mk^2)\) arithmetic operations. Evaluating all \(O(mk)\) thresholds computes one type’s conditional expectation in \(O(m^2k^3)\) arithmetic operations.</p><h3>5. Deterministically choose the samples</h3><p>For a fixed sample prefix \(z_1,\ldots,z_\ell\), let<br>\[
+\]<br>\(\displaystyle
+\Psi(z_1,\ldots,z_\ell)
+=
+\mathbb E[\Phi(\widehat q)\mid Z_1=z_1,\ldots,Z_\ell=z_\ell].
+\)</p><p>Section 4 computes this quantity exactly: compute each type’s conditional expectation and take the rational weighted sum using \(\mu_i\).</p><p>For every candidate \(b\) with \(x_b&gt;0\), compute the expectation after fixing the next sample to \(b\). Independence of the remaining samples gives<br>\[
+\]<br>\(\displaystyle
+\Psi(z_1,\ldots,z_\ell)
+=
+\sum_{b:x_b&gt;0}x_b\,
+\Psi(z_1,\ldots,z_\ell,b).
+\)</p><p>Therefore at least one such \(b\) has conditional expectation at most the current one. Choose a minimizing candidate, with deterministic tie-breaking.</p><p>After \(k\) choices, there is no remaining randomness, and<br>\[
+\]<br>\(\displaystyle
+\Phi(q)=\Psi(z_1,\ldots,z_k)
+\leq\Psi(\varnothing)
+=\mathbb E\Phi(\widehat q)
+\leq\epsilon.
+\)</p><p>Output the empirical lottery<br>\[
+\]<br>\(\displaystyle q_b=\frac{\#\{h:z_h=b\}}{k}.\)</p><p>It is rational, has support at most \(k\), and Section 2 gives<br>\[
+\]<br>\(\displaystyle
+\sum_bq_bp(a,b)\leq\tfrac12+\epsilon
+\qquad\text{for every }a\in C.
+\)</p><p>Finally, \(k=\lceil16/\epsilon^2\rceil\leq\lceil100/\epsilon^2\rceil\), as required.</p><h3>6. Bit complexity and dependence on \(\epsilon\)</h3><p>The pairwise matrix can be constructed using \(O(\tau m^2)\) rational additions. A common denominator for the input masses has \(O(L)\) bits, so the resulting linear program has encoding length polynomial in \(m,\tau,L\).</p><p>We may choose the feasible vertex \(x\) so that its common denominator \(d\) has<br>\[
+\]<br>\(B=O(m(L+\log(m+1)))\)<br>bits. Indeed, clear the input-mass denominators in the constraints; their integer coefficients have \(O(L)\) bits. At a vertex, Cramer’s rule applies to \(m\) independent active constraints, whose determinants have the stated bit bound.</p><p>The dynamic program has \(0\leq G_j(s)\leq d^s\): it sums the weights of a subset of length-\(s\) strings. Hence its integers have \(O(kB)\) bits.</p><p>All type-error thresholds have denominator \(kd\), and their conditional probabilities have denominator \(d^r\). Thus a type’s conditional expectation has denominator dividing \(kd^{r+1}\). Taking the weighted sum over types adds only \(O(L)\) bits to a common denominator. Exact comparisons therefore use numbers of \(O(L+kB+\log(k+1))\) bits.</p><p>There are at most \(km\) candidate evaluations, each involving \(\tau\) type expectations. The arithmetic-operation bound is consequently<br>\[
+\]<br>\(\displaystyle O(\tau m^3k^4).\)</p><p>Using ordinary quadratic-time integer arithmetic, a sufficient bit-operation bound for the sampling branch is<br>\[
+\]<br>\(\displaystyle
+O\!\left(\tau m^5k^6(L+\log(m+1))^2\right),
+\)<br>in addition to polynomial-time preprocessing and linear programming.</p><p>Put \(h=\min\{m,\lceil16/\epsilon^2\rceil\}\). A uniform bound for the whole algorithm is<br>\[
+\]<br>\(\displaystyle
+P(m,\tau,L)+
+O\!\left(\tau m^5h^6(L+\log(m+1))^2\right),
+\)<br>where \(P\) is a polynomial covering preprocessing and linear programming.</p><p>This yields both:</p><ul><li>A bound of \(P(m,\tau,L)+O(\tau m^5\epsilon^{-12}(L+\log(m+1))^2)\).</li><li>A bound of \(P(m,\tau,L)+O(\tau m^{11}(L+\log(m+1))^2)\), polynomial in \(m,\tau,L\) alone.</li></ul><p>The second bound follows because the dynamic program runs only when \(k&lt;m\). Neither the ranking masses nor a very small binary-encoded \(\epsilon\) require expanding the society into explicitly listed voters.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s claim is <b>proved</b>. The argument establishes a deterministic algorithm polynomial in \(m,\tau,L\), with support at most \(\lceil16/\epsilon^2\rceil\). I found no mathematical gaps requiring correction.</p><ul><li><b>Exact maximal lottery: correct.</b></li></ul><p>Strict rankings and normalized masses give \(p(a,b)+p(b,a)=1\) for distinct candidates. With the separately defined zero diagonal, \(A\) is therefore skew-symmetric.</p><p>The stated finite minimax theorem applies to the finite real matrix \(A\) and the two probability simplices. For each fixed \(y\), choosing \(x=y\) bounds the inner minimum above by zero; for each fixed \(x\), choosing \(y=x\) bounds the inner maximum below by zero. Equality of the minimax values consequently forces their common value to be zero. The minimum is attained because the simplex is compact and the objective is continuous. Its minimizing lottery satisfies \(Ax\leq0\), since maximizing over \(y\) selects the largest coordinate of \(Ax\).</p><p>The identity \((Px)_a=(Ax)_a+\tfrac12(1-x_a)\) correctly accounts for \(p(a,a)=0\). Thus \(Px\leq\tfrac12\) coordinatewise.</p><p>The rational LP has a nonempty bounded feasible region. The invoked standard deterministic rational-LP result—polynomial-time computation of an exact rational feasible vertex—applies. When \(m\leq k\), returning this vertex satisfies both requirements.</p><ul><li><b>The potential controls every required inequality: correct.</b></li></ul><p>In a worst-to-best ordering, the candidates strictly below \(a=c_{i,j}\) are exactly \(B_{i,j-1}\). Accordingly, the displayed difference between the pairwise scores of \(q\) and \(x\) is correct, including the exclusion of \(a\) itself.</p><p>Each type’s prefix difference is bounded above by its \(D_i(q)\). Multiplication by the positive masses and summation preserve this inequality. Hence every candidate’s score is at most \(\tfrac12+\Phi(q)\).</p><p>The empty prefix ensures \(D_i(q)\geq0\). Every prefix difference is at most one, so the later restriction of possible error values to \([0,1]\) is also valid.</p><ul><li><b>The expectation bound and its constant: correct.</b></li></ul><p>Conditional Jensen applies because the maximum absolute coordinate is convex, and averaging the independent copy replaces each \(f_j(Z&#x27;_h)\) by its expectation.</p><p>The independent pair swaps justify introducing the independent signs. The triangle inequality then gives the factor of two; the two resulting terms have equal expectations.</p><p>After conditioning on the samples, ordering their indices by the fixed ranking preserves the independent uniform distribution of the signs. Each ranking prefix selects an initial segment of these ordered indices. Repeated candidates merely omit some possible segment lengths. Thus the maximum is bounded by \(M_k\).</p><p>For the first-crossing event \(T=s\), that event depends only on the first \(s\) increments. The remaining increments are independent, have mean zero, and have total variance \(k-s\). This verifies the displayed second-moment identity. Summing over the disjoint crossing events yields the stated tail bound, and its integration gives \(\mathbb E M_k\leq2\sqrt{k}\).</p><p>Both factors of two are therefore justified, giving \(\mathbb E D_i(\widehat q)\leq4/\sqrt{k}\). Weighted averaging requires no independence between types. Finally, \(k=\lceil16/\epsilon^2\rceil\) indeed implies \(4/\sqrt{k}\leq\epsilon\).</p><p>Although the [cited paper](https://arxiv.org/html/2504.20372v3) motivates the sampling approach, this bound is established within the submitted argument rather than assumed from that reference.</p><ul><li><b>Possible error values and expectation recovery: correct.</b></li></ul><p>In every completion, each prefix contains an integer number of samples between zero and \(k\). Its error therefore has the stated form \(s/k-X_j\). The maximum is attained at some prefix and is nonnegative, so it belongs to \(V\).</p><p>Sorting and deduplicating \(V\) gives all possible positive values, possibly with additional values having zero probability. Consequently, \(F(v_a)-F(v_{a-1})\) is exactly the probability mass at \(v_a\). The displayed expectation formula correctly omits the zero contribution.</p><ul><li><b>Conditional-expectation dynamic program: correct.</b></li></ul><p>Because \(H_j+R_j\) is integral, the threshold inequality is exactly equivalent to \(R_j\leq\lfloor k(v+X_j)\rfloor-H_j\).</p><p>The stated combinatorial interpretation of \(G_j(s)\) agrees with its initialization. Separating the count \(e_j=e\) gives precisely the binomial factor in the recurrence. Previously imposed prefix constraints remain encoded in \(G_{j-1}(s-e)\), while the new constraint is enforced by \(s\leq u_j\).</p><p>At \(j=m\) and \(s=r\), the weights are the multinomial numerators for the remaining independent draws. Division by \(d^r\) therefore gives the exact conditional probability.</p><p>The boundary cases are handled correctly:</p><ul><li>Negative \(u_j\) eliminates every nonnegative count at that prefix.</li><li>A zero weight permits only zero occurrences through the stipulated zeroth-power convention.</li><li>When \(r=0\), the recurrence checks the fixed completion and returns probability zero or one.</li><li>The omitted empty-prefix constraint is automatic because every evaluated threshold is nonnegative.</li></ul><p>There are \(O(mk)\) thresholds, each requiring \(O(mk^2)\) arithmetic operations. The resulting \(O(m^2k^3)\) bound per type is valid.</p><ul><li><b>Deterministic sample selection: correct.</b></li></ul><p>Only candidates with \(x_b&gt;0\) are considered, so every conditioning event used has positive probability. The displayed weighted-average identity is the law of total expectation.</p><p>Since the weights sum to one, at least one next choice has conditional expectation no larger than the current value. Exact minimization with deterministic tie-breaking therefore preserves the bound at every stage.</p><p>After \(k\) choices, the conditional expectation equals the realized potential. The output is a rational probability vector, its support is at most \(k\), and the potential bound supplies every required score inequality. The comparison with \(\lceil100/\epsilon^2\rceil\) is valid.</p><ul><li><b>Bit complexity and binary-encoded accuracy: correct.</b></li></ul><p>A common denominator for the masses has \(O(L)\) bits. Clearing it, together with the factor of two in \(A\), leaves integer LP coefficients of \(O(L)\) bits. The active-constraint determinant bound gives a common vertex denominator with \(B=O(m(L+\log(m+1)))\) bits, as claimed.</p><p>The dynamic-program entries count weighted subsets of strings, so \(G_j(s)\leq d^s\). Their bit lengths, and those of the intermediate recurrence arithmetic, are \(O(kB)\).</p><p>Threshold denominators divide \(kd\), probability denominators divide \(d^r\), and type-expectation denominators divide \(kd^{r+1}\). Combining the masses adds \(O(L)\) denominator bits. Exact comparisons consequently have the claimed polynomial operand lengths.</p><p>At most \(km\) candidate evaluations, each involving \(\tau\) type computations, give \(O(\tau m^3k^4)\) arithmetic operations. Quadratic integer arithmetic yields the stated sufficient bit bound \(O(\tau m^5k^6(L+\log(m+1))^2)\).</p><p>Most importantly, this computation occurs only when \(k&lt;m\). Substituting that restriction gives the stated polynomial bound in \(m,\tau,L\) alone. Computing and comparing the binary representation of \(k\) does not require iterating \(k\) times in the early-return branch. The dependence on \(1/\epsilon\) is also correctly stated.</p><p><b>Repair feedback:</b> None is needed. The output resolves the precise supported-type, binary-rational input problem; it does not require expansion into equally weighted voters.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

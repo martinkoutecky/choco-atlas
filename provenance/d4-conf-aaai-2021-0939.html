@@ -1,0 +1,390 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2021-0939 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2021-0939 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2021-0939)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), the set \(T\) of all rankings of \(C\), a rational initial distribution \(\mu\) supported on \(\tau\) types, a target candidate \(p\), a round count \(\ell\), and per-turn budgets \(b_1,b_2\), does the first campaigner have a history-dependent strategy of transfers \(x_{t,t&#x27;}\geq 0\) that guarantees \(p\) is the unique Borda winner against every legal adversarial response? In each turn, transfers must satisfy \(\sum_{t&#x27;}x_{t,t&#x27;}\leq\mu_t\) for each type \(t\), update the society by outflow and inflow, and have total Kendall-swap cost at most the acting campaigner’s budget.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) be a nonempty candidate set, \(m=|C|\), \(p\in C\), and \(T\) the set of all strict rankings of \(C\).<br>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational; \(\tau\) is the support size, not the number of possible types. Initially \(\sum_{t\in T}\mu_t=1\); unlisted rankings have zero mass but remain allowed destinations.<br>The input also contains a positive unary integer \(\ell\) and binary rational budgets \(b_1,b_2\geq0\). Let \(L\) be the total input bit length.<br>There are \(\ell\) rounds, each consisting of campaigner 1&#x27;s move followed by campaigner 2&#x27;s move; all moves are observed. Each campaigner receives its fixed budget afresh for every move, without carryover.<br>At current society \(\nu\), campaigner \(j\) chooses real transfers \(x_{t,t&#x27;}\geq0\) satisfying \(\sum_{t&#x27;}x_{t,t&#x27;}\leq\nu_t\) and \(\sum_{t,t&#x27;}d_K(t,t&#x27;)x_{t,t&#x27;}\leq b_j\), where \(d_K\) is Kendall distance. The new mass is \(\nu&#x27;_t=\nu_t-\sum_{t&#x27;}x_{t,t&#x27;}+\sum_{t&#x27;}x_{t&#x27;,t}\).<br>Transfers are simultaneous within a move; doing nothing is legal, and previously moved mass may be moved again on later moves.<br>Campaigner 1 seeks a deterministic history-dependent strategy guaranteeing that \(p\) is the unique Borda winner after campaigner 2&#x27;s final move, against every legal opposing strategy. Borda scores are weighted by mass; any tie involving \(p\) is failure.</p><p>Is this continuous strategy-existence problem in \(\mathsf P\), with running time polynomial in \(m,\tau,\ell,L\), or is it \(\mathsf{NP}\)-hard? If it is \(\mathsf{NP}\)-hard, is it nevertheless FPT parameterized by \(m+\ell\), with running time \(f(m,\ell)\operatorname{poly}(\tau,L)\)?</p><p>Convex Presburger minimization is FPT in formula symbol-count plus largest absolute coefficient; its campaigning application gives discrete algorithms FPT in \(m+\ell\). [Source](https://arxiv.org/html/2005.04455)<br>Discrete single-campaigner unit-cost Borda swap bribery with a co-winner objective is NP-complete. [Source](https://comsoc-community.org/assets/proceedings/comsoc-2018/BaumeisterHogrebeReyCOMSOC2018.pdf)<br>Continuous single-campaigner unit-cost Borda swap bribery with a co-winner objective is polynomial-time solvable; this result does not cover the alternating game above. [Source](https://arxiv.org/html/2608.25444v1)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the initial distribution to total mass one; budgets measure swaps per unit mass.</li><li>Specified strict rankings, a nonempty candidate set, nonnegative rational budgets, and a positive round count encoded in unary.</li><li>Allowed real transfers and intermediate masses; rationality is required only for the input.</li><li>Allowed every ranking as a destination, including rankings absent from the initial support.</li><li>Specified first-then-second play in every round, full observation, deterministic history-dependent strategies, and evaluation after the second campaigner&#x27;s final move.</li><li>Specified fresh per-move budgets without carryover, legal zero moves, and repeated manipulation of previously moved mass.</li><li>Used mass-weighted Borda scores and strict victory, correcting the displayed score expression that omits voter multiplicities.</li><li>Used m plus the round count as the FPT parameter because initial support size alone does not bound the number of candidates or available destination rankings.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial resolution</h3><p>The general classification as polynomial-time solvable or $\mathsf{NP}$-hard remains unresolved here. The following results are proved:</p><ul><li>The problem is FPT parameterized by $m+\ell$, independently of any hardness assumption.</li><li>Both cases $b_1=0$ and $b_2=0$ are polynomial-time solvable.</li><li>For $\ell=1$, the problem belongs to $\mathsf{NP}$.</li><li>There is an explicit, polynomial-time computable upper bound on the opposing budget beyond which victory is impossible.</li><li>Final-move safety is nonconvex even among societies whose rankings all put $p$ first. Moreover, restricting campaigner 1 to upward shifts of $p$ loses winning moves already with three candidates.</li></ul><p>All arguments below concern real, arbitrarily divisible transfers, include initially unsupported destinations, and treat ties involving $p$ as failure.</p><h3>1. Transport distance and the exact move relation</h3><p>If $m=1$, campaigner 1 always succeeds. Henceforth assume $m\geq 2$.</p><p>Let $\mathcal S$ be the simplex of societies on all rankings $T$:<br>$$
+\mathcal S=\left\{\nu\in\mathbb R_{\geq 0}^{T}:\sum_{t\in T}\nu_t=1\right\}.
+$$</p><p>A full transport matrix from $\nu$ to $\eta$ is a nonnegative matrix $Y=(y_{t,r})$ satisfying<br>$$
+\sum_r y_{t,r}=\nu_t,
+\qquad
+\sum_t y_{t,r}=\eta_r.
+$$<br>Define<br>$$
+D(\nu,\eta)=
+\min_Y\sum_{t,r}d_K(t,r)y_{t,r},
+$$<br>where the minimum ranges over such matrices. The feasible set is nonempty and compact, so the minimum is attained.</p><p>This describes exactly the legal successor societies. Given a legal partial transfer $x$, add unused source mass to its diagonal:<br>$$
+y_{t,t}=x_{t,t}+\nu_t-\sum_r x_{t,r},
+\qquad
+y_{t,r}=x_{t,r}\quad(r\neq t).
+$$<br>The added mass costs zero, and the column sums are precisely the society produced by $x$. Conversely, taking $x=Y$ realizes the column-sum society. Consequently,<br>$$
+\eta\text{ is reachable from }\nu\text{ with budget }b
+\quad\Longleftrightarrow\quad
+D(\nu,\eta)\leq b.
+$$</p><p>The function $D$ is a metric. Symmetry follows by transposing a transport matrix. For the triangle inequality, let $Y$ transport $\nu$ to $\eta$ and let $Z$ transport $\eta$ to $\xi$. For $\eta_r&gt;0$, assign joint mass<br>$$
+\frac{y_{t,r}z_{r,s}}{\eta_r}
+$$<br>to the path $t,r,s$; indices with $\eta_r=0$ contribute zero. Summing over $r$ gives a transport from $\nu$ to $\xi$. The triangle inequality for Kendall distance bounds its cost by the sum of the costs of $Y$ and $Z$. Finally, zero transport cost allows mass only on diagonal entries, and therefore implies equality of the societies.</p><p>We will also need the following exact interpolation property.</p><p><b>Lemma 1.</b> For $\nu,\eta\in\mathcal S$, put<br>$$
+\sigma_\alpha=(1-\alpha)\nu+\alpha\eta
+\qquad(0\leq\alpha\leq1).
+$$<br>Then<br>$$
+D(\sigma_\alpha,\sigma_\beta)
+=
+|\beta-\alpha|D(\nu,\eta).
+$$</p><p><b>Proof.</b> Suppose $\alpha\leq\beta$, and let $Y$ be an optimal transport from $\nu$ to $\eta$. Transport $(\beta-\alpha)Y$, and leave the remaining source mass<br>$$
+(1-\beta)\nu+\alpha\eta
+$$<br>in place. This gives<br>$$
+D(\sigma_\alpha,\sigma_\beta)
+\leq(\beta-\alpha)D(\nu,\eta).
+$$<br>The same construction bounds the distances from $\nu$ to $\sigma_\alpha$ and from $\sigma_\beta$ to $\eta$ by $\alpha D(\nu,\eta)$ and $(1-\beta)D(\nu,\eta)$. Applying the triangle inequality along these three segments forces equality in their bounds. $\square$</p><p>In particular, $q$ successive moves by one campaigner, each of budget $b$, reach exactly the societies at distance at most $qb$. Necessity follows from the triangle inequality; sufficiency follows by using the $q$ equal interpolation segments.</p><h3>2. Exact cost of a final opposing attack</h3><p>For a rival $c\neq p$, define the ranking margin<br>$$
+g_c(t)=\operatorname{pos}_t(c)-\operatorname{pos}_t(p).
+$$<br>This equals the Borda score of $p$ minus that of $c$ in ranking $t$. For a society $\nu$, write<br>$$
+M_c(\nu)=\sum_t\nu_tg_c(t),
+\qquad
+w_{c,d}(\nu)=\sum_{t:g_c(t)=d}\nu_t.
+$$<br>Possible gaps are the nonzero integers between $-(m-1)$ and $m-1$.</p><p>Let $a_c(\nu)$ be the minimum transport cost of making $c$ tie or beat $p$. Then<br>$$
+a_c(\nu)=
+\max\left\{
+0,\
+\max_{1\leq k\leq m-1}
+\frac{
+kM_c(\nu)-\sum_{d=1}^{k-1}(k-d)w_{c,d}(\nu)
+}{k+1}
+\right\}.
+$$</p><p>Here is a complete derivation.</p><p>The attack problem is the finite linear program<br>$$
+\min \sum_{t,r}d_K(t,r)y_{t,r}
+$$<br>subject to<br>$$
+y_{t,r}\geq0,\qquad
+\sum_r y_{t,r}=\nu_t,\qquad
+\sum_{t,r}g_c(r)y_{t,r}\leq0.
+$$<br>Its feasible region is compact and nonempty: all mass can be sent to a ranking with $c$ first and $p$ last. Its minimum is therefore finite and attained.</p><p>The dual has an unrestricted variable $\alpha_t$ for each source and a variable $\lambda\geq0$, with<br>$$
+\alpha_t\leq d_K(t,r)+\lambda g_c(r),
+$$<br>and objective $\sum_t\nu_t\alpha_t$. It is feasible with $\lambda=0$ and $\alpha_t=0$. Finite linear-programming strong duality consequently gives<br>$$
+a_c(\nu)=\max_{\lambda\geq0}\sum_t\nu_t h_t(\lambda),
+\qquad
+h_t(\lambda)=
+\min_r\bigl(d_K(t,r)+\lambda g_c(r)\bigr).
+$$</p><p>Fix a source ranking and write $d=g_c(t)$. A shortest adjacent-swap sequence reverses each inverted candidate pair exactly once. Each swap decreases $g_c$ by at most $1$, except a swap reversing $p$ above $c$, which decreases it by $2$. Thus<br>$$
+d-g_c(r)
+\leq
+d_K(t,r)+
+\mathbf 1_{\{d&gt;0,\ g_c(r)&lt;0\}}.
+$$</p><p>For $0\leq\lambda\leq1$, this implies<br>$$
+h_t(\lambda)=
+\begin{cases}
+\min\{\lambda d,d-\lambda\},&amp;d&gt;0,\\
+\lambda d,&amp;d&lt;0.
+\end{cases}
+$$<br>Indeed, without an advantageous reversal, the objective is at least<br>$$
+\lambda d+(1-\lambda)d_K(t,r)\geq\lambda d.
+$$<br>If $d&gt;0$ and the destination gap is $-j$, where $j\geq1$, the objective is at least<br>$$
+d+j-1-\lambda j
+=
+d-\lambda+(1-\lambda)(j-1)
+\geq d-\lambda.
+$$<br>Doing nothing attains the first bound. Moving $p$ down $d$ positions, immediately below $c$, attains the second.</p><p>For $\lambda\geq1$, the same Kendall bound and $g_c(r)\geq-(m-1)$ give<br>$$
+h_t(\lambda)
+=
+d-\mathbf 1_{\{d&gt;0\}}-(\lambda-1)(m-1).
+$$<br>To verify attainment, put $c$ first and $p$ last, preserving the relative order of the other candidates. If their original positions are $a$ and $b$, with $d=b-a$, this costs<br>$$
+m+d-2\quad\text{when }d&gt;0,
+\qquad
+m+d-1\quad\text{when }d&lt;0.
+$$<br>Substituting the destination gap $-(m-1)$ gives the displayed value.</p><p>On $[0,1]$, the dual objective therefore equals<br>$$
+F_c(\lambda)
+=
+\lambda M_c(\nu)
+-
+\sum_{d=1}^{m-1}w_{c,d}(\nu)
+\max\{0,(d+1)\lambda-d\}.
+$$<br>Its breakpoints are $k/(k+1)$, for $1\leq k\leq m-1$. Beyond the largest breakpoint its slope is<br>$$
+M_c(\nu)-\sum_{d&gt;0}(d+1)w_{c,d}(\nu)
+=
+\sum_{d&lt;0}d\,w_{c,d}(\nu)-\sum_{d&gt;0}w_{c,d}(\nu)&lt;0.
+$$<br>Strict negativity follows because the total mass is $1$ and every gap is nonzero. Beyond $1$, the slope is $-(m-1)$. Hence a maximum occurs at $0$ or one of the stated breakpoints. Substitution proves the formula.</p><p>Define the minimum cost of any failure by<br>$$
+a(\nu)=\min_{c\neq p}a_c(\nu).
+$$<br>The failure set is the finite union of closed sets<br>$$
+\{\eta:M_c(\eta)\leq0\}.
+$$<br>It is compact and nonempty, and $a(\nu)$ is exactly its distance from $\nu$.</p><p>Because attack minima are attained, safety against one final opposing move is equivalent to<br>$$
+a(\nu)&gt;b_2.
+$$<br>Equality permits a tie and is therefore failure.</p><p>For a rational society given by its support, all the displayed quantities can be computed in polynomial time in $m$ and the support encoding length. No destination enumeration is necessary.</p><h3>3. FPT parameterized by $m+\ell$</h3><p>This conclusion holds for the full alternating game.</p><p>Enumerate all $N=m!$ rankings, filling in zero mass for initially unsupported rankings. Put $R=2\ell$, and introduce a real transport matrix $Y^r$ for each move $r$. Set $\nu^0=\mu$ and, for $r\geq1$, define<br>$$
+\nu^r_t=\sum_s y^r_{s,t}.
+$$</p><p>Let $A_r$ assert<br>$$
+y^r_{s,t}\geq0,\qquad
+\sum_t y^r_{s,t}=\nu^{r-1}_s,
+$$<br>and<br>$$
+\sum_{s,t}d_K(s,t)y^r_{s,t}
+\leq
+\begin{cases}
+b_1,&amp;r\text{ odd},\\
+b_2,&amp;r\text{ even}.
+\end{cases}
+$$<br>The terminal condition is<br>$$
+W(\nu^R)=
+\bigwedge_{c\neq p}
+\left(\sum_t g_c(t)\nu^R_t&gt;0\right).
+$$</p><p>Starting with $\Phi_{R+1}=W$, define backwards<br>$$
+\Phi_r=
+\begin{cases}
+\exists Y^r\,(A_r\wedge\Phi_{r+1}),&amp;r\text{ odd},\\
+\forall Y^r\,(A_r\Rightarrow\Phi_{r+1}),&amp;r\text{ even}.
+\end{cases}
+$$</p><p>Finite-horizon backward induction proves that $\Phi_1$ is equivalent to strategy existence. At a campaigner-1 move, an existential witness chooses a legal action with a winning continuation. At a campaigner-2 move, every legal action must have a winning continuation. Later witnesses may depend on all preceding observed moves. The current society and the remaining moves determine the continuation game, so replacing partial transfers by full transport matrices does not change this predicate.</p><p>There are $RN^2$ scalar variables. The formula’s structural size depends only on $m,\ell$. Its variable coefficients are integers bounded by<br>$$
+\max\left\{1,m-1,\binom m2\right\}.
+$$<br>Long binary masses and budgets occur only as rational constants.</p><p>For completeness, real linear quantifier elimination gives the required uniform polynomial dependence on the input length. To eliminate an innermost existential scalar $z$, expand its quantifier-free subformula into disjunctive normal form, replacing equalities and negated atoms by strict or non-strict inequalities. In each conjunction, write all constraints involving $z$ as lower or upper bounds.</p><p>Such a conjunction permits a real $z$ exactly when its independent constraints hold and every lower endpoint is at most every upper endpoint, with strict comparison if either corresponding bound is strict. Necessity is immediate. For sufficiency, compare the maximum lower endpoint with the minimum upper endpoint. Distinct endpoints admit an interior point; equal endpoints are admissible exactly when all bounds there are non-strict. An absent bound family permits a sufficiently large or small value. Universal quantifiers are eliminated using<br>$$
+\forall z\,\psi=\neg\exists z\,\neg\psi.
+$$</p><p>The number of elimination steps and arithmetic operations is bounded by a function of $m,\ell$. Generated variable coefficients depend only on these parameters. Generated constants remain rational linear combinations of the input constants, with parameter-dependent coefficients. Their bit lengths are therefore at most<br>$$
+f_0(m,\ell)(L+1).
+$$<br>Exact rational arithmetic yields running time<br>$$
+f(m,\ell)\operatorname{poly}(\tau,L),
+$$<br>with a polynomial exponent independent of $m,\ell$.</p><p>Thus the requested FPT property is proved. This argument uses quantified <b>real</b> linear arithmetic; it does not apply the integer-domain [convex Presburger theorem](https://arxiv.org/html/2005.04455) to real transfers.</p><h3>4. Two polynomial-time zero-budget cases</h3><h3>4.1. Campaigner 1 has zero budget</h3><p>Suppose $b_1=0$. Its moves cannot change the society, because every transfer between distinct rankings has positive Kendall cost.</p><p>By Lemma 1, campaigner 2’s $\ell$ moves reach exactly the societies at distance at most $\ell b_2$. Hence campaigner 1 succeeds exactly when<br>$$
+a(\mu)&gt;\ell b_2.
+$$<br>Section 2 evaluates this condition in polynomial time. The strict comparison also resolves budget equality correctly.</p><h3>4.2. Campaigner 2 has zero budget</h3><p>Suppose $b_2=0$. Campaigner 2’s moves do not change the society. Lemma 1 reduces the problem to one campaigner-1 move of budget<br>$$
+B=\ell b_1.
+$$</p><p>We now prove directly that this remaining strict-winner problem has a polynomial-size LP.</p><p><b>Lemma 2.</b> If a legal transport makes $p$ the unique Borda winner, there is a transport of no greater cost whose destinations are obtained solely by shifting $p$ upward in each source ranking.</p><p><b>Proof.</b> Consider a source ranking $t$ and destination $r$, and write<br>$$
+q=d_K(t,r),\qquad a=\operatorname{pos}_t(p)-1.
+$$<br>Let $t^{(s)}$ be obtained from $t$ by shifting $p$ upward<br>$$
+s=\min\{q,a\}
+$$<br>positions, preserving all other candidates’ relative order.</p><p>The adjacent-swap argument used in Section 2, now for increases of the margin, gives<br>$$
+g_c(r)-g_c(t)
+\leq q+
+\mathbf 1_{\{\text{$c$ is above $p$ in $t$ and below $p$ in $r$}\}}.
+$$<br>If the exceptional reversal occurs and $c$ initially lies $h$ positions above $p$, the same inequality gives $q\geq h$: the destination margin is at least $1$, whereas the source margin is $-h$.</p><p>If $q&lt;a$, shifting $p$ upward $q$ positions therefore passes every rival whose reversal supplies the exceptional extra unit. Such a shift increases every margin by $q$, and by one further unit for each passed rival. Consequently,<br>$$
+g_c(t^{(s)})\geq g_c(r)
+\qquad(q&lt;a).
+$$<br>If $q\geq a$, shifting $p$ to the top passes every rival initially above it. The same inequality yields<br>$$
+g_c(t^{(s)})\geq g_c(r)-(q-a).
+$$<br>Together,<br>$$
+g_c(t^{(s)})
+\geq g_c(r)-\max\{q-a,0\}.
+$$</p><p>Apply this replacement separately to every transported source–destination mass $z_{t,r}$. Let $\eta$ be the original successful society and $\sigma$ the resulting shift-only society. Define<br>$$
+S=\sum_{t,r}z_{t,r}\min\{q,a\},
+\qquad
+E=\sum_{t,r}z_{t,r}\max\{q-a,0\}.
+$$<br>The original transport costs $S+E$, while<br>$$
+M_c(\sigma)\geq M_c(\eta)-E
+\qquad\text{for every rival }c.
+$$</p><p>Let $R$ be the total cost of shifting $p$ to the top in all the remaining mass of $\sigma$.</p><p>If $R\geq E$, perform further upward shifts of total cost exactly $E$. Arbitrary mass splitting permits this: fill available full shifts successively, splitting one mass block if necessary. Every unit of shift cost increases every Borda margin by at least one unit. The final margins are therefore at least those of $\eta$, and total cost is $S+E$.</p><p>If $R&lt;E$, shift $p$ to the top everywhere. This costs less than $S+E$ and gives margin at least $1$ against every rival.</p><p>These successive upward shifts compose into upward shifts from the original source rankings, with their costs adding exactly. This proves the lemma. $\square$</p><p>Index the supported rankings by $t_1,\ldots,t_\tau$, and let<br>$$
+a_i=\operatorname{pos}_{t_i}(p)-1.
+$$<br>For $0\leq s\leq a_i$, introduce a variable $z_{i,s}$ for mass sent to the upward shift $t_i^{(s)}$. Maximize $\delta$, subject to<br>$$
+z_{i,s}\geq0,\qquad
+\sum_{s=0}^{a_i}z_{i,s}=\mu_{t_i},
+$$<br>$$
+\sum_{i,s}s\,z_{i,s}\leq B,
+$$<br>and<br>$$
+\sum_{i,s}g_c(t_i^{(s)})z_{i,s}\geq\delta
+\quad(c\neq p),
+\qquad
+\delta\geq0.
+$$</p><p>There are at most $\tau m+1$ variables and polynomially many constraints. Whenever feasible, the feasible region is compact: transport coordinates lie in $[0,1]$, and $\delta\leq m-1$. Lemma 2 shows that a legal strict victory exists exactly when this LP is feasible and its optimum is positive. Rational linear programming therefore decides the case in polynomial time.</p><p>This proves the needed strict-winner special case directly, consistently with the supplied [continuous single-campaigner result](https://arxiv.org/html/2608.25444v1).</p><h3>5. General budget bounds and an opposing strategy</h3><p>Two efficiently checkable bounds follow from the transport metric.</p><p>First,<br>$$
+a(\mu)&gt;\ell b_2
+$$<br>is sufficient for victory: campaigner 1 does nothing, and the total opposing displacement is at most $\ell b_2$.</p><p>Second, suppose $b_2\geq b_1$, and put<br>$$
+\Delta=b_2-b_1.
+$$<br>Then<br>$$
+a(\mu)\leq\ell\Delta
+$$<br>is sufficient for campaigner 2 to force failure.</p><p>To prove the second statement, choose a failure society $\eta$ with<br>$$
+D(\mu,\eta)=a(\mu).
+$$<br>If $a(\mu)=0$, campaigner 2 can return to $\mu$ after every first-campaigner move, at cost at most $b_1\leq b_2$.</p><p>Otherwise, define a fixed sequence along the interpolation segment:<br>$$
+\sigma_r=(1-s_r)\mu+s_r\eta,
+\qquad
+s_r=\min\left\{1,\frac{r\Delta}{a(\mu)}\right\},
+\qquad
+0\leq r\leq\ell.
+$$<br>Lemma 1 gives<br>$$
+D(\sigma_{r-1},\sigma_r)\leq\Delta.
+$$<br>Suppose the previous round ended at $\sigma_{r-1}$ and campaigner 1 now produces $\rho$. Its legality gives<br>$$
+D(\sigma_{r-1},\rho)\leq b_1.
+$$<br>Consequently,<br>$$
+D(\rho,\sigma_r)
+\leq b_1+\Delta=b_2,
+$$<br>so campaigner 2 can legally move to $\sigma_r$. This defines a deterministic response at every observed move. If $a(\mu)\leq\ell\Delta$, the final society is $\eta$, which is a failure.</p><p>These are sufficient conditions in opposite directions. They are not asserted to give a complete classification when both budgets are positive.</p><h3>6. A universal obstruction from the final budget</h3><p>Define the largest possible final-move safety radius<br>$$
+R_m=\max_{\nu\in\mathcal S}\min_{c\neq p}a_c(\nu).
+$$<br>The maximum exists because each $a_c$ is a maximum of finitely many affine functions, hence continuous, and $\mathcal S$ is compact.</p><p>We prove<br>$$
+\frac{m-2}{2}+\frac1m
+\leq R_m
+\leq
+\frac1{m-1}\sum_{d=1}^{m-1}\frac{d^2}{d+1}.
+$$</p><p>For the lower bound, take the uniform society over rankings that put $p$ first. Every rival has gap distribution<br>$$
+w_{c,d}=\frac1{m-1}
+\qquad(1\leq d\leq m-1)
+$$<br>and margin $M_c=m/2$. The $k=m-1$ term of the attack formula equals<br>$$
+\frac{
+(m-1)m/2-(m-2)/2
+}{m}
+=
+\frac{m-2}{2}+\frac1m.
+$$</p><p>For the upper bound, first move $p$ to the top of every ranking, preserving the order of the rivals, and call the resulting society $\sigma$. This operation increases every individual gap.</p><p>For $0\leq\lambda\leq1$, the sourcewise dual function<br>$$
+h_d(\lambda)=
+\begin{cases}
+\lambda d,&amp;d&lt;0,\\
+\min\{\lambda d,d-\lambda\},&amp;d&gt;0
+\end{cases}
+$$<br>is nondecreasing in the nonzero gap $d$. On each sign range this follows directly; across the sign change, its negative-gap values are nonpositive and its positive-gap values are nonnegative. Since Section 2 expresses $a_c$ as a maximum over this interval,<br>$$
+a_c(\nu)\leq a_c(\sigma).
+$$</p><p>For a positive gap $d$,<br>$$
+\max_{0\leq\lambda\leq1}h_d(\lambda)
+=\frac{d^2}{d+1}.
+$$<br>The two branches meet at $\lambda=d/(d+1)$; the first increases up to that point and the second decreases afterwards. Thus<br>$$
+a_c(\sigma)
+=
+\max_\lambda\sum_t\sigma_t h_{g_c(t)}(\lambda)
+\leq
+\sum_t\sigma_t\frac{g_c(t)^2}{g_c(t)+1}.
+$$<br>In every ranking of $\sigma$, the rival gaps are exactly $1,\ldots,m-1$. Summing over rivals gives<br>$$
+\sum_{c\neq p}a_c(\sigma)
+\leq
+\sum_{d=1}^{m-1}\frac{d^2}{d+1}.
+$$<br>The minimum is at most the average, proving the upper bound.</p><p>It follows that, for every number of rounds and every first-campaigner budget,<br>$$
+b_2\geq
+\frac1{m-1}\sum_{d=1}^{m-1}\frac{d^2}{d+1}
+$$<br>makes victory impossible. Campaigner 2 can attack whichever rival witnesses this bound immediately after the final first-campaigner move.</p><h3>Exact values for two and three candidates</h3><p>The bounds coincide for $m=2$, giving<br>$$
+R_2=\frac12.
+$$</p><p>For $m=3$, promotion of $p$ to the top reduces the upper-bound calculation to a mixture of $p\succ c\succ a$ and $p\succ a\succ c$. Let $u$ be the mass of the first ranking. Then<br>$$
+a_c=\max\left\{1-\frac u2,\frac43-u\right\}=f(u),
+\qquad
+a_a=f(1-u).
+$$<br>The function $f$ is decreasing, so<br>$$
+\min\{a_c,a_a\}
+=
+f(\max\{u,1-u\})
+\leq f(1/2)=\frac56.
+$$<br>The equal mixture attains this value. Therefore<br>$$
+R_3=\frac56.
+$$<br>In particular, $b_2\geq5/6$ makes every three-candidate instance unwinnable.</p><h3>7. Two obstructions to extending single-campaigner methods</h3><h3>7.1. Upward shifts alone can miss a winning move</h3><p>Take three candidates, one round, and initial society<br>$$
+\mu=[p\succ c\succ a],
+$$<br>where $[t]$ denotes unit mass on ranking $t$. Set<br>$$
+b_1=\frac12,\qquad b_2=\frac34.
+$$</p><p>Campaigner 1 can swap $c,a$ in half the mass, obtaining<br>$$
+\nu=
+\frac12[p\succ c\succ a]
++
+\frac12[p\succ a\succ c].
+$$<br>This costs $1/2$. Against either rival, $M_c=3/2$ and $w_{c,1}=1/2$, so<br>$$
+a_c(\nu)
+=
+\max\left\{\frac34,\frac{3-1/2}{3}\right\}
+=
+\frac56&gt;\frac34.
+$$<br>Thus the move guarantees strict victory.</p><p>Every upward shift of $p$ leaves the initial society unchanged. From that society, swapping $p,c$ in half the mass costs $1/2$ and produces a tie between them. Hence no shift-only first move succeeds.</p><p>The shift-only normal form proved in Lemma 2 therefore fails for the alternating game.</p><h3>7.2. Safety remains nonconvex when every ranking puts $p$ first</h3><p>Take $C=\{p,c,a,e\}$ and define<br>$$
+\nu=
+\frac1{36}[p\succ c\succ a\succ e]
++
+\frac1{36}[p\succ c\succ e\succ a]
++
+\frac{17}{36}[p\succ a\succ c\succ e]
++
+\frac{17}{36}[p\succ e\succ c\succ a].
+$$</p><p>Against $c$,<br>$$
+M_c=\frac{35}{18},
+\qquad
+w_{c,1}=\frac1{18},
+\qquad
+w_{c,2}=\frac{17}{18}.
+$$<br>The three attack-formula terms are<br>$$
+\frac{35}{36},\qquad
+\frac{23}{18},\qquad
+\frac{43}{36}.
+$$<br>Thus $a_c(\nu)=23/18$.</p><p>Against either $a$ or $e$,<br>$$
+M_a=M_e=\frac{73}{36},
+$$<br>and the gap masses are<br>$$
+w_1=\frac{17}{36},
+\qquad
+w_2=\frac1{36},
+\qquad
+w_3=\frac12.
+$$<br>The three terms are<br>$$
+\frac{73}{72},\qquad
+\frac{43}{36},\qquad
+\frac{23}{18}.
+$$<br>Consequently,<br>$$
+a(\nu)=\frac{23}{18}.
+$$</p><p>Form two further societies by cyclically relabeling $c,a,e$. Each has the same minimum attack cost. In their average, every rival has mass $1/3$ at each positive gap $1,2,3$. Its attack cost against every rival is<br>$$
+\max\left\{1,\frac{11}{9},\frac54\right\}=\frac54.
+$$</p><p>Choose final opposing budget<br>$$
+\beta=\frac{91}{72}.
+$$<br>Each of the three societies is safe because<br>$$
+\frac{23}{18}=\frac{92}{72}&gt;\beta.
+$$<br>Their average is unsafe because<br>$$
+\frac54=\frac{90}{72}&lt;\beta.
+$$<br>A convex set contains the average of any three of its members, so this proves nonconvexity even within the face consisting entirely of rankings with $p$ first.</p><p>It also proves that symmetrizing the rivals can reduce safety, and that<br>$$
+R_4\geq\frac{23}{18}&gt;\frac54.
+$$<br>Neither nonconvexity nor this asymmetric example establishes computational hardness.</p><h3>8. One-round membership in $\mathsf{NP}$</h3><p>For completeness, the previously obtained one-round upper bound also has a self-contained proof.</p><p>Let $\ell=1$. By Section 2, a safe first-move society must, for each rival $c$, satisfy at least one inequality<br>$$
+k_cM_c-\sum_{d=1}^{k_c-1}(k_c-d)w_{c,d}
+&gt;(k_c+1)b_2,
+\qquad
+1\leq k_c\leq m-1.
+$$<br>Fix such a choice $k_c$ for each rival, and define<br>$$
+H_{k,c}(t)
+=
+kg_c(t)
+-
+(k-g_c(t))\mathbf 1_{\{1\leq g_c(t)&lt;k\}}.
+$$<br>These are integer coefficients of absolute value at most $(m-1)^2$.</p><p>Use transport variables $z_{i,t}$ from initially supported source $t_i$ to every ranking $t$. Maximize $\delta$ subject to<br>$$
+z_{i,t}\geq0,\qquad
+\sum_tz_{i,t}=\mu_{t_i},\qquad
+\sum_{i,t}d_K(t_i,t)z_{i,t}\leq b_1,
+$$<br>and<br>$$
+\sum_{i,t}H_{k_c,c}(t)z_{i,t}
+\geq(k_c+1)b_2+\delta
+\quad(c\neq p),
+\qquad
+\delta\geq0.
+$$</p><p>A winning first move gives a feasible positive $\delta$, since there are finitely many rival inequalities. Conversely, positive $\delta$ certifies safety. The feasible region, when nonempty, is compact: transport coordinates are bounded by $1$ and $\delta\leq(m-1)^2$.</p><p>If its optimum is positive, choose an optimal vertex. Let $K$ be the number of positive transport coordinates there. Together with the positive coordinate $\delta$, there are $K+1$ locally unrestricted coordinates. There are only<br>$$
+\tau+1+(m-1)=\tau+m
+$$<br>non-coordinate constraints. If $K+1&gt;\tau+m$, their active equations have a nonzero null direction on these coordinates. Sufficiently small perturbations in both directions preserve positivity and all inactive inequalities, contradicting extremality. Therefore<br>$$
+K\leq\tau+m-1.
+$$</p><p>The positive coordinates are determined by an independent square subsystem of dimension at most $\tau+m$. Its integer coefficients have polynomial magnitude and its rational right-hand sides have polynomial encoding length. Clearing denominators and applying Cramer’s rule, with the determinant bound<br>$$
+|\det A|\leq r^{r/2}(m^2)^r
+$$<br>for dimension $r$, proves polynomial encoding length for the coordinates.</p><p>A certificate can thus list at most $\tau+m-1$ source–destination pairs, their destination rankings, and rational transferred masses. A verifier checks row masses and cost, constructs the supported resulting society, and evaluates Section 2’s attack formula. All these operations take polynomial time.</p><p>Hence the one-round problem belongs to $\mathsf{NP}$. This supplies no hardness reduction.</p><h3>9. What remains open</h3><p>The FPT conclusion is established for the exact game in the question, including unrestricted real transfers and strict unique victory.</p><p>The missing step is a classification when both budgets are positive and the number of candidates is unbounded. The terminal safety condition is a conjunction, over rivals, of disjunctions of strict linear inequalities. The examples above show that neither convexity nor the single-campaigner shift-only normal form resolves these disjunctions.</p><p>A complete solution still requires either a polynomial-time algorithm for the alternating predecessor operations or a hardness reduction that remains valid under arbitrary mass splitting. The supplied discrete hardness result cannot be transferred merely by replacing voters with divisible mass.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Opening summary and Section 9: The requested general classification as polynomial-time solvable or $\mathsf{NP}$-hard is not established. The valid FPT result, zero-budget algorithms, and one-round $\mathsf{NP}$ membership do not settle that classification.</li></ul>
+<div class="pre"><p>The output is a <b>correct partial resolution</b>. Its FPT result and the stated special cases withstand verification. It does <b>not</b> settle the principal question: whether the unrestricted continuous alternating game is polynomial-time solvable or $\mathsf{NP}$-hard. The prover explicitly acknowledges this limitation.</p><p>I found no false central step or substantive mathematical gap in the results actually claimed as proved.</p><h3>1. Transport model and interpolation</h3><p>The treatment of $m=1$ is correct: with no rivals, $p$ is always the unique winner. All subsequent arguments explicitly assume $m\geq2$.</p><p>The equivalence between partial transfers and full transport matrices is exact:</p><ul><li>Adding unused source mass to the diagonal preserves nonnegativity and gives the required row sums.</li><li>The column sums reproduce the society resulting from the original simultaneous transfers.</li><li>Diagonal mass has zero cost.</li><li>Conversely, a full transport matrix is a legal transfer matrix, with every source constraint satisfied at equality.</li></ul><p>This also correctly permits initially unsupported destination rankings.</p><p>The minimum defining $D$ exists because the transport polytope is nonempty and compact. The metric argument is sound. In the gluing construction, $\eta_r=0$ forces both the corresponding incoming column and outgoing row to vanish, so omitting those indices is legitimate. Zero cost forces all positive transported mass onto the diagonal.</p><p>Lemma 1 is correct. The proposed transport has source marginal $\sigma_\alpha$, destination marginal $\sigma_\beta$, and cost at most $(\beta-\alpha)D(\nu,\eta)$. The three upper bounds along the chain from $\nu$ to $\eta$ sum to $D(\nu,\eta)$, so the triangle inequality forces equality.</p><p>Consequently, the characterization of reachability after successive moves by one campaigner is valid. It uses fresh budgets and allows mass to move again, exactly as required.</p><h3>2. Exact final-attack cost</h3><p>The margin definition has the correct sign:</p><p>$$
+g_c(t)=\operatorname{pos}_t(c)-\operatorname{pos}_t(p)
+$$</p><p>is the Borda score of $p$ minus that of $c$.</p><p>The attack LP correctly represents all transports producing a nonpositive margin against $c$. Its feasible region is compact and nonempty. The dual signs are correct: the terminal inequality produces $\lambda\geq0$ and constraints</p><p>$$
+\alpha_t\leq d_K(t,r)+\lambda g_c(r).
+$$</p><p>The stated feasibility and finiteness conditions justify finite-dimensional LP strong duality.</p><p>The adjacent-swap bound is valid. In a shortest sequence, the pair consisting of $p$ and $c$ is reversed at most once. Every other swap decreases the margin by at most one; the advantageous reversal decreases it by two.</p><p>Both sourcewise formulas check out:</p><ul><li>For $0\leq\lambda\leq1$, doing nothing and moving $p$ immediately below $c$ attain the relevant lower bounds.</li><li>For $\lambda\geq1$, placing $c$ first and $p$ last attains the stated bound. The costs $m+d-2$ and $m+d-1$ correctly account for whether the relative order of $p,c$ changes.</li></ul><p>The breakpoint calculation is correct. In particular, the slope after the final breakpoint is strictly negative because every ranking has a nonzero gap and the total mass is one. Substituting $\lambda=k/(k+1)$ gives precisely the displayed attack formula.</p><p>The minimum over rivals correctly handles the union of failure sets. Since attack minima are attained, the strict safety condition is exactly</p><p>$$
+a(\nu)&gt;b_2.
+$$</p><p>Equality is correctly treated as failure. Computing the formula from a rational supported society requires only polynomially many rational operations.</p><p><b>Assessment:</b> Section 2 is correct.</p><h3>3. FPT for the full alternating game</h3><p>The quantified formula faithfully represents the game:</p><ul><li>Existential blocks choose legal campaigner-1 moves.</li><li>Universal blocks constrain every legal campaigner-2 move.</li><li>The implications correctly discard illegal universally quantified matrices.</li><li>Later existential choices may depend on earlier observed moves.</li><li>The terminal inequalities require strict victory against every rival.</li></ul><p>Replacing partial transfers by full transports does not change strategy existence: the current society and remaining horizon determine the legal continuation game.</p><p>The variable count and coefficient bounds are correct. Enumerating all $m!$ rankings is permissible for FPT parameterized by $m+\ell$, although it does not give polynomial time for unrestricted $m$.</p><p>The real linear quantifier-elimination argument handles strict inequalities correctly. Pairwise endpoint comparisons suffice for each finite conjunction, including missing lower or upper bounds. Universal quantification is correctly reduced by negation.</p><p>The bit-complexity argument is also sound. The number of elimination operations depends only on $m,\ell$. Variable coefficients depend only on those parameters, while generated constants are rational linear combinations of input constants with parameter-dependent coefficients. Thus binary masses and budgets do not introduce a parameter-dependent polynomial exponent.</p><p>This establishes the stated running time</p><p>$$
+f(m,\ell)\operatorname{poly}(\tau,L).
+$$</p><p>The proof correctly uses real linear arithmetic rather than applying the integer-domain [Presburger minimization theorem](https://arxiv.org/html/2005.04455).</p><p><b>Assessment:</b> The requested FPT property is established independently of a hardness classification.</p><h3>4. Zero-budget cases</h3><h3>Campaigner 1 has zero budget</h3><p>A zero-cost transfer cannot move positive mass between distinct rankings. Campaigner 2 therefore has exactly the cumulative reachability described by Lemma 1. The condition</p><p>$$
+a(\mu)&gt;\ell b_2
+$$</p><p>is necessary and sufficient, including the equality boundary.</p><h3>Campaigner 2 has zero budget</h3><p>Reduction to a single transport budget $B=\ell b_1$ is valid.</p><p>Lemma 2 withstands verification. When $q&lt;a$, shifting $p$ upward by $q$ positions passes every rival whose reversal could provide the exceptional extra margin improvement. When $q\geq a$, the stated loss bound follows from the same swap inequality.</p><p>The aggregate error $E$ is handled correctly:</p><ul><li>If the remaining promotion capacity is at least $E$, arbitrary mass splitting permits spending exactly $E$ on further upward shifts.</li><li>Each unit of upward-shift cost improves every rival margin by at least one.</li><li>If that capacity is smaller than $E$, promoting $p$ everywhere gives every rival margin at least one at smaller total cost.</li></ul><p>The successive promotions compose into upward shifts from the original source rankings, with additive cost.</p><p>The resulting LP has polynomial size, rational data, and a compact feasible region whenever nonempty. Positive optimum is equivalent to strict victory. Standard polynomial-time rational LP optimization applies.</p><p><b>Assessment:</b> Both zero-budget polynomial-time results are proved.</p><h3>5. Budget bounds and opposing strategy</h3><p>The do-nothing sufficient condition follows directly from the triangle inequality.</p><p>The opposing strategy for $b_2\geq b_1$ is also valid. The chosen interpolation targets are at successive distance at most $\Delta=b_2-b_1$. After any legal campaigner-1 move, campaigner 2 can reach the next target within budget $b_2$.</p><p>The case $a(\mu)=0$ is correctly separated. Attainment implies that $\mu$ itself is a failure society, and returning to it after each first move costs at most $b_1$.</p><p>The condition</p><p>$$
+a(\mu)\leq\ell\Delta
+$$</p><p>ensures that the last target is the chosen failure society. Equality is included correctly.</p><p><b>Assessment:</b> These are sound sufficient conditions, correctly distinguished from a complete characterization.</p><h3>6. Universal final-budget obstruction</h3><p>The existence of $R_m$ follows from continuity and compactness.</p><p>The lower-bound calculation is correct. The upper-bound argument also checks out:</p><ul><li>Promoting $p$ increases every sourcewise gap.</li><li>The displayed sourcewise dual function is nondecreasing in that gap on the stated interval.</li><li>Its maximum for a positive gap $d$ is $d^2/(d+1)$.</li><li>Bounding the maximum of a sum by the sum of maxima gives the required inequality.</li><li>Summing over rivals and taking the average yields the stated universal upper bound.</li></ul><p>The resulting impossibility condition correctly includes equality.</p><p>The exact values</p><p>$$
+R_2=\frac12,\qquad R_3=\frac56
+$$</p><p>follow from the calculations provided. The reduction to two rankings for $m=3$ is justified by the preceding promotion argument.</p><p><b>Assessment:</b> The bounds and exact small-candidate values are correct.</p><h3>7. Counterexamples to proposed simplifications</h3><p>The three-candidate example is valid. Campaigner 1’s proposed move costs $1/2$ and produces attack cost $5/6$ against each rival, exceeding the opposing budget $3/4$. A shift-only move leaves the initial society unchanged, where an attack costing $1/2$ produces a tie.</p><p>The four-candidate arithmetic was independently rechecked. The attack-formula values are exactly those stated. Cyclic relabeling preserves minimum attack cost, while averaging makes each rival’s positive-gap distribution uniform. The comparison</p><p>$$
+\frac54&lt;\frac{91}{72}&lt;\frac{23}{18}
+$$</p><p>correctly proves nonconvexity.</p><p>These examples establish the claimed obstructions. They do not establish hardness, and the prover explicitly avoids that inference.</p><h3>8. One-round membership in $\mathsf{NP}$</h3><p>The disjunctive safety characterization is exact because $b_2\geq0$. The coefficients $H_{k,c}$ correctly reproduce the selected attack-formula inequalities and satisfy the stated magnitude bound.</p><p>For fixed choices of $k_c$, a positive LP optimum is equivalent to a winning first move. The feasible region is compact whenever nonempty.</p><p>The vertex-support argument is valid. A vertex with positive $\delta$ cannot have more than $\tau+m$ positive coordinates in total: otherwise the active non-coordinate constraints admit a nonzero perturbation direction supported on those coordinates. Hence</p><p>$$
+K\leq\tau+m-1.
+$$</p><p>The independent subsystem has polynomial dimension, integer coefficients bounded by $m^2$, and rational right-hand sides of polynomial encoding length. The determinant estimate is valid for that coefficient matrix; rational right-hand-side denominators preserve polynomial certificate length.</p><p>The proposed certificate need not include the choices $k_c$, because the verifier can evaluate the exact attack formula directly from the resulting supported society.</p><p><b>Assessment:</b> One-round membership in $\mathsf{NP}$ is proved. It supplies neither hardness nor an unrestricted polynomial-time algorithm.</p><h3>9. Blocking issue and actionable feedback</h3><p><b>Major issue — incomplete resolution of the principal question.</b> Sections 1–8 establish substantial results, but none classifies the unrestricted game as polynomial-time solvable or $\mathsf{NP}$-hard. FPT, polynomial zero-budget cases, and one-round membership in $\mathsf{NP}$ do not settle that classification.</p><p>No clarification alone closes this issue. The minimum additional mathematical contribution is one of the two results already identified by the prover:</p><ul><li>A polynomial-time decision algorithm for the unrestricted alternating game, with the requested input-length dependence; or</li><li>A valid hardness reduction for the stated continuous model, preserving arbitrary mass splitting, unrestricted destinations, fresh per-move budgets, and strict terminal victory.</li></ul><p>The existing FPT result can stand independently. The direction merits another round, but the primary classification remains unresolved.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

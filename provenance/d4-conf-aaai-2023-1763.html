@@ -1,0 +1,384 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2023-1763 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2023-1763 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2023-1763)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable in \(m,\tau,L,\log(1/\epsilon)\). The specified item-block dynamics have conditioning-dependent geometric convergence of the expected extrapolated gap, but can require exponentially many updates for fixed accuracy.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Given an initial iterate x0 and stepsizes η0 j = 1/Lj, ∀j satisfying (4), let xk be the random iterates gener- ated by Algorithm 1. Then, E  F(xk+1)  −F ∗≤(1 −ρ)k F(x0) −F ∗ , (7) where ρ = min n µ mLmaxθ2(A,C), 1 m o and Lmax = maxj Lj. Karimi, Nutini, and Schmidt (2016) also develop a block- coordinate method that applies to EG. Unlike their result, our result admits larger stepsizes that can vary per block, as well as a line search strategy, which is helpful for practical performance as we show in Section 8.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\) goods and \(\tau\) buyer types with rational masses \(\mu_t&gt;0\), per-capita budgets \(B_t&gt;0\), and linear valuations \(v_t\in\mathbb{Q}_{\ge 0}^m\), compute a feasible allocation \(x_t\ge 0\) with objective gap at most \(\epsilon\) for the mass-weighted EG program \( \max_x \sum_t \mu_t B_t \log(v_t^\top x_t) \), subject to \( \sum_t \mu_t x_{tj}\le 1 \) for each good. Characterize the expected convergence and running time of item-block updates in \(m\), \(\tau\), input bit length, and conditioning parameters.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive binary-rational masses \(\mu_t\), where \(\tau\) is the support size, not the number of possible types. Assume \(\sum_t\mu_t=1\), \(m,\tau\ge1\), binary-rational per-capita budgets \(B_t&gt;0\), and valuations \(v_t\in\mathbb Q_{\ge0}^m\setminus\{0\}\); each good has unit supply.<br>An allocation \(x_t\in\mathbb R_{\ge0}^m\) is per capita. Define \(X=\{x\ge0:\sum_t\mu_t x_{tj}\le1\text{ for every }j\}\), \(G(x)=\sum_t\mu_t B_t\log(v_t^\top x_t)\), and \(G^\star=\max_{x\in X}G(x)\), with \(\log0=-\infty\). The accuracy input is binary-rational \(0&lt;\epsilon&lt;1\); \(L\) is the total input bit length.<br>For item-block dynamics, put \(W=\sum_t\mu_t B_t\), \(a_t=(B_t/W)\sum_jv_{tj}\), and \(\widetilde f(x)=\sum_t h_t(v_t^\top x_t)\), where \(h_t(u)=-\mu_t B_t\log u\) for \(u\ge a_t\), and \(h_t(u)=-\mu_t B_t\log a_t-(\mu_t B_t/a_t)(u-a_t)+(\mu_t B_t/(2a_t^2))(u-a_t)^2\) otherwise.<br>Start from \(x^0_{tj}=B_t/W\). At each step independently sample an item uniformly and update only its column by \(x^+_{\cdot j}=\operatorname{Proj}_{K_\mu}(x_{\cdot j}-L_j^{-1}\nabla_{\cdot j}\widetilde f(x))\), where projection is Euclidean, \(K_\mu=\{z\ge0:\sum_t\mu_t z_t\le1\}\), and \(L_j=\max_t\mu_t B_t v_{tj}^2/a_t^2\). Leave a column unchanged when \(L_j=0\).</p><p>Is computing a rational \(x\in X\) with \(G^\star-G(x)\le\epsilon\) polynomial-time in \(m,\tau,L,\log(1/\epsilon)\), or is it NP-hard?<br>What expected convergence and bit running time do these item-block updates yield for this accuracy, in \(m,\tau,L,\epsilon\), with all conditioning dependence explicit?</p><p>For finite buyers, Nan, Gao, and Kroer establish linear convergence of the expected extrapolated objective gap for uniformly sampled item-block updates with block-specific stepsizes; the rate depends on smoothness, curvature, and a Hoffman constant. [Source](https://arxiv.org/pdf/2303.00506).<br>Gao and Kroer establish linear convergence of projected-gradient methods for finite linear Fisher markets under relaxed strong-convexity conditions. [Source](https://papers.nips.cc/paper_files/paper/2020/file/f75526659f31040afeb61cb7133e4e6d-Paper.pdf).</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the unspecified distribution to total mass one and interpreted allocations and budgets as per capita.</li><li>Excluded identically zero buyer valuations, which would make the logarithmic objective everywhere negative infinity and invalidate the utility-floor construction.</li><li>Specified positive integer dimensions, binary-rational accuracy between zero and one, an additive objective gap, and rational output allocations.</li><li>Specified independent uniform item sampling, Euclidean projection in the stated per-capita coordinates, fixed block-specific stepsizes, and proportional initialization.</li><li>Used quadratic extrapolation below proportional-allocation utility floors; corrected the constant term to match the value and derivative of the negative logarithm.</li><li>Allowed goods valued by no type and left their columns unchanged, avoiding division by a zero block smoothness constant.</li><li>Distinguished the original objective accuracy from the extrapolated objective used by the dynamics, and required bit running time in addition to expected convergence.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Answer</h3><p>The allocation problem is <b>polynomial-time solvable in \(m,\tau,L,\log(1/\epsilon)\)</b>.</p><p>The specified item-block updates satisfy a geometric bound on the <b>expected extrapolated objective gap</b>. Their rate, however, contains a numerical condition parameter that can be exponentially large in the input bit length. Indeed, even with two types, two goods, and fixed \(\epsilon=1/2\), these updates can require exponentially many iterations.</p><p>Below I prove both statements, give explicit conditioning constants, and distinguish exact rational arithmetic from an implementation with controlled rounding.</p><p>All logarithms are natural. All norms and projections are Euclidean.</p><h3>2. Preliminary facts and equivalence of the objectives</h3><p>Write</p><p>\(
+c_t=\mu_tB_t,\qquad
+S_t=\sum_jv_{tj},\qquad
+U_t=\frac{S_t}{\mu_t},\qquad
+R_t=\frac{U_t}{a_t}=\frac{W}{c_t}.
+\)</p><p>These quantities are positive. For every \(x\in X\),</p><p>\(
+0\le u_t(x):=v_t^\top x_t\le U_t,
+\)</p><p>because feasibility implies \(x_{tj}\le1/\mu_t\).</p><p>The allocation \(x^0_{tj}=B_t/W\) is feasible and satisfies \(u_t(x^0)=a_t&gt;0\). The set \(X\) is compact, and \(G\) is upper semicontinuous with the stipulated value at zero utility. Consequently, an optimum exists, and every optimum has positive utility for every type.</p><h3>Optimal utilities are at least the extrapolation thresholds</h3><p>Let \(x^\star\) maximize \(G\), and write \(u_t^\star=u_t(x^\star)\). The optimality conditions give nonnegative supply multipliers \(p_j\) satisfying</p><p>\(
+\frac{B_tv_{tj}}{u_t^\star}\le p_j,
+\)</p><p>with equality whenever \(x_{tj}^\star&gt;0\), and</p><p>\(
+p_j\left(1-\sum_t\mu_tx_{tj}^\star\right)=0.
+\)</p><p>These conditions follow either from the normal cone of the allocation polytope or from the usual convex-program optimality conditions. A strictly feasible allocation with all utilities positive exists, so the latter application is valid.</p><p>Multiplying the equality on positive coordinates by \(\mu_tx_{tj}^\star\) and summing gives</p><p>\(
+\sum_jp_j
+=\sum_jp_j\sum_t\mu_tx_{tj}^\star
+=\sum_tc_t
+=W.
+\)</p><p>Hence</p><p>\(
+\frac{B_tS_t}{u_t^\star}
+=\sum_j\frac{B_tv_{tj}}{u_t^\star}
+\le\sum_jp_j=W,
+\)</p><p>which proves</p><p>\(
+u_t^\star\ge a_t.
+\)</p><h3>The extrapolated problem has exactly the same optimizers</h3><p>Each \(h_t\) is twice continuously differentiable, with</p><p>\(
+h_t&#x27;&#x27;(u)=
+\begin{cases}
+c_t/a_t^2,&amp;0\le u&lt;a_t,\\
+c_t/u^2,&amp;u\ge a_t.
+\end{cases}
+\)</p><p>Thus \(h_t\) is strictly convex on \([0,U_t]\).</p><p>At \(x^\star\), the value and gradient of \(\widetilde f\) agree with those of \(-G\), because \(u_t^\star\ge a_t\). The first-order optimality inequality for \(-G\) therefore also holds for \(\widetilde f\). Convexity implies that \(x^\star\) minimizes \(\widetilde f\).</p><p>Strict convexity in the utility vector implies that every minimizer of \(\widetilde f\) has the same utility vector \(u^\star\). Therefore</p><p>\(
+X^\star:=\arg\min_{x\in X}\widetilde f(x)
+=\{x\in X:u(x)=u^\star\}
+=\arg\max_{x\in X}G(x),
+\)</p><p>and</p><p>\(
+\min_{x\in X}\widetilde f(x)=-G^\star.
+\)</p><p>Define the extrapolated gap by</p><p>\(
+\Delta(x)=\widetilde f(x)+G^\star.
+\)</p><p>In particular, \(\Delta(x)\ge0\).</p><p>This is the extrapolation principle used for finite Fisher markets by [Gao and Kroer](https://papers.nips.cc/paper_files/paper/2020/file/f75526659f31040afeb61cb7133e4e6d-Paper.pdf). The argument above verifies it directly for the per-capita coordinates and weighted supply constraints in this question.</p><h3>3. A polynomial-time rational optimization algorithm</h3><p>The proof in this section does not use item-block dynamics.</p><p>Let</p><p>\(
+n=m\tau,\qquad
+\mu_{\min}=\min_t\mu_t,\qquad
+B_{\min}=\min_tB_t,\qquad
+\mathcal R=\frac{n}{\mu_{\min}}.
+\)</p><p>The set \(X\) lies in the ball of radius \(\mathcal R\) centered at the origin.</p><p>Consider the rational polytope</p><p>\(
+D=\{x\in X:u_t(x)\ge a_t/2\text{ for every }t\}.
+\)</p><p>It contains every optimizer. On \(D\), minimize the normalized objective</p><p>\(
+\phi(x)=-\sum_tc_t\log\frac{u_t(x)}{a_t}.
+\)</p><p>Its gradient is rational at every rational point of \(D\). Moreover,</p><p>\(
+\|\nabla\phi(x)\|_2
+\le\|\nabla\phi(x)\|_1
+=\sum_t\frac{c_tS_t}{u_t(x)}
+\le2\sum_t\frac{c_tS_t}{a_t}
+=2W.
+\)</p><p>Thus \(\phi\) is \(2W\)-Lipschitz on \(D\).</p><h3>An explicitly bounded interior ball</h3><p>Put</p><p>\(
+z=\frac34x^0,\qquad
+r_0=\frac{B_{\min}}{4W}.
+\)</p><p>Since \(W\ge B_{\min}\), we have \(r_0\le1/4\). The ball of radius \(r_0\) about \(z\) lies in \(D\):</p><ul><li>Every coordinate of \(z\) is at least \(3r_0\).</li><li>Each weighted supply constraint has slack \(1/4\), and \(\|\mu\|_2\le1\).</li><li>The utility constraint for type \(t\) has slack \(a_t/4\), while</li></ul><p>\(
+  r_0\|v_t\|_2\le\frac{B_{\min}S_t}{4W}\le a_t/4.
+  \)</p><p>Now choose</p><p>\(
+\theta=\min\left\{\frac12,\frac{\epsilon}{24W\mathcal R}\right\},
+\qquad
+w=(1-\theta)x^\star+\theta z.
+\)</p><p>Convexity of \(D\) shows that the ball of radius \(\theta r_0\) about \(w\) lies in \(D\). Every point \(y\) in that ball satisfies</p><p>\(
+\phi(y)-\phi(x^\star)
+\le4W\mathcal R\theta+2W\theta r_0
+\le6W\mathcal R\theta
+\le\epsilon/4.
+\)</p><p>The first term uses convexity and the Lipschitz bound between \(z\) and \(x^\star\); the second uses the Lipschitz bound inside the ball.</p><h3>Ellipsoid implementation and bit complexity</h3><p>Apply the rational central-cut ellipsoid method, initially enclosing \(D\) in the ball of radius \(\mathcal R\).</p><p>At a center outside \(D\), use a violated rational linear constraint. At a center \(x\in D\), use the rational gradient cut</p><p>\(
+\nabla\phi(x)^\top(y-x)\le0.
+\)</p><p>If \(\phi(x)&gt;\phi(x^\star)+\epsilon/2\), this cut retains the entire ball constructed above: every point of that ball has smaller objective value, and the convexity inequality implies that it satisfies the cut.</p><p>The standard rational ellipsoid volume bound therefore guarantees that within</p><p>\(
+O\left(n^2\left[1+\log\frac{\mathcal R}{\theta r_0}\right]\right)
+\)</p><p>iterations, some feasible queried center has objective gap at most \(\epsilon/2\). Otherwise all cuts would retain a ball whose volume exceeds the final ellipsoid volume.</p><p>The hypotheses needed for the rational ellipsoid implementation hold:</p><ul><li>The constraint coefficients and the radius bounds have polynomial encoding length.</li><li>Feasibility can be checked exactly using rational arithmetic.</li><li>The gradient oracle is rational and computable in time polynomial in the query encoding length and input length.</li><li>Objective values can be computed to absolute error \(\epsilon/8\) in polynomial time.</li></ul><p>For the last point, each positive rational ratio \(u_t(x)/a_t\) has polynomial encoding length. Its logarithm can be evaluated by scaling into \([1,2]\) and using the convergent series</p><p>\(
+\log r
+=2\sum_{k=0}^{\infty}
+\frac{((r-1)/(r+1))^{2k+1}}{2k+1}.
+\)</p><p>On \([1,2]\), the series parameter is at most \(1/3\), so the number of terms is linear in the desired precision. The weights \(c_t\) affect the required precision only through their encoding lengths.</p><p>Return the feasible queried center with smallest approximate objective. Its true gap is at most \(3\epsilon/4\), and hence at most \(\epsilon\).</p><p>Because</p><p>\(
+\log\mathcal R,\quad
+\log(1/r_0),\quad
+\log(1/\theta)
+\)</p><p>are polynomially bounded in \(m,\tau,L,\log(1/\epsilon)\), this proves the claimed polynomial-time rational solvability.</p><h3>4. Explicit conditioning and expected convergence of the exact updates</h3><p>Define</p><p>\(
+\kappa_t=\frac{c_t}{U_t^2},
+\qquad
+\kappa=\min_t\kappa_t,
+\qquad
+\Lambda=\max_jL_j,
+\qquad
+\ell=m\Lambda.
+\)</p><p>We have \(\kappa&gt;0\) and \(\Lambda&gt;0\), because every valuation vector is nonzero. Also, throughout the feasible utility box,</p><p>\(
+\kappa_t\le h_t&#x27;&#x27;(u)\le c_t/a_t^2.
+\)</p><p>Consequently:</p><ul><li>The function \(\sum_th_t(u_t)\) is \(\kappa\)-strongly convex in the utility vector.</li><li>The stated \(L_j\) is a valid smoothness constant for block \(j\).</li><li>The full gradient of \(\widetilde f\) is \(\ell\)-Lipschitz on \(X\), since</li></ul><p>\(
+  \max_t\frac{c_t\|v_t\|_2^2}{a_t^2}\le m\Lambda.
+  \)</p><h3>A Hoffman constant and an explicit rational upper bound</h3><p>Let \(A\) be the utility matrix, so \(Ax=u(x)\), and write \(X=\{x:Cx\le d\}\), using the weighted supply constraints and nonnegativity constraints.</p><p>A relative Hoffman constant \(H\) is any constant satisfying</p><p>\(
+\operatorname{dist}(x,X^\star)
+\le H\|Ax-u^\star\|_2
+\qquad(x\in X).
+\)</p><p>Here is an input-derived upper bound that avoids leaving \(H\) unspecified.</p><p>Let \(Q\) be the product of the denominators of all \(\mu_t\) and \(v_{tj}\), and put</p><p>\(
+V=\max\{1,\max_{t,j}v_{tj}\},
+\qquad
+\overline H=Q^n(nV)^{n-1}.
+\)</p><p>Then \(H\le\overline H\).</p><p>To prove this, fix \(x\in X\), let \(z\) be its projection onto \(X^\star\), and put \(d_x=x-z\). Polyhedral projection optimality gives</p><p>\(
+d_x=A^\top\alpha+C_I^\top\beta,
+\qquad \beta\ge0,
+\)</p><p>where the constraints indexed by \(I\) are active at \(z\). Since the rows of \(A\) are independent, dependent active inequality rows can be eliminated, while maintaining nonnegative coefficients, until</p><p>\(
+M=\begin{bmatrix}A\\C_I\end{bmatrix}
+\)</p><p>has independent rows. Indeed, a dependence modulo the span of \(A\) permits subtracting a suitable multiple of that dependence from \(\beta\), eliminating at least one positive coefficient.</p><p>Writing \(\gamma=(\alpha,\beta)\), feasibility of \(x\) gives</p><p>\(
+\|d_x\|_2^2
+=\alpha^\top(Ax-u^\star)+\beta^\top C_I(x-z)
+\le\|\gamma\|_2\|Ax-u^\star\|_2.
+\)</p><p>Also,</p><p>\(
+\|d_x\|_2=\|M^\top\gamma\|_2
+\ge\sigma_{\min}(M)\|\gamma\|_2.
+\)</p><p>Thus the required bound holds with \(1/\sigma_{\min}(M)\).</p><p>If \(M\) has \(k\) rows, a nonzero \(k\)-column minor has absolute determinant at least \(Q^{-k}\). Moreover, every singular value is at most \(\|M\|_F\le nV\). Hence</p><p>\(
+\sigma_{\min}(M)
+\ge\frac{Q^{-k}}{(nV)^{k-1}},
+\)</p><p>and therefore \(1/\sigma_{\min}(M)\le\overline H\), as claimed.</p><p>In particular,</p><p>\(
+\log_2\overline H=O(n(L+\log n)).
+\)</p><p>The bound is conservative, but it is explicit, rational, and has polynomial encoding length.</p><p>In what follows, \(H\) can be any certified upper bound; choosing \(H=\overline H\) makes every constant computable from the input. Define</p><p>\(
+\lambda=\frac{\kappa}{H^2},
+\qquad
+\rho=\frac1m\min\left\{1,\frac{\lambda}{\Lambda}\right\}.
+\)</p><h3>Proof of geometric convergence</h3><p>For \(x\in X\), let \(z\) be its nearest point in \(X^\star\). Strong convexity in utilities and the Hoffman inequality imply</p><p>\(
+\widetilde f(z)
+\ge\widetilde f(x)
++\nabla\widetilde f(x)^\top(z-x)
++\frac{\lambda}{2}\|z-x\|_2^2.
+\)</p><p>For a common quadratic coefficient \(\Lambda\), define</p><p>\(
+q_\Lambda(x)=
+\min_{y\in X}
+\left\{
+\nabla\widetilde f(x)^\top(y-x)
++\frac{\Lambda}{2}\|y-x\|_2^2
+\right\}.
+\)</p><p>Taking \(y=x+s(z-x)\), where \(s=\min\{1,\lambda/\Lambda\}\), yields</p><p>\(
+q_\Lambda(x)\le-s\Delta(x).
+\)</p><p>Indeed, the previous inequality bounds the linear term by<br>\(-s\Delta(x)-s\lambda\|z-x\|_2^2/2\), and the quadratic term contributes<br>\(\Lambda s^2\|z-x\|_2^2/2\). Their squared-distance coefficient is nonpositive.</p><p>The feasible set is a product over item columns. Each exact block update minimizes its block quadratic model with coefficient \(L_j\le\Lambda\). Block smoothness and uniform sampling therefore give</p><p>\(
+\mathbb E[\Delta(x^{k+1})\mid x^k]
+\le\Delta(x^k)+\frac1m q_\Lambda(x^k)
+\le(1-\rho)\Delta(x^k).
+\)</p><p>A block with \(L_j=0\) has zero valuations throughout that column, so its model and objective change are both zero.</p><p>Consequently,</p><p>\(
+\boxed{\mathbb E[\Delta(x^k)]
+\le(1-\rho)^k\Delta(x^0).}
+\)</p><p>This matches the conditioning-dependent rate structure in [Nan, Gao, and Kroer, Theorem 1](https://arxiv.org/pdf/2303.00506); the proof above handles the weighted constraints directly.</p><p>The initial gap has the useful bound</p><p>\(
+\Delta(x^0)
+=G^\star-G(x^0)
+\le\sum_tc_t\log R_t
+\le W\log\tau
+\le(\tau-1)W.
+\)</p><p>For the middle inequality, \(c_t/W\) is a probability vector and the sum is \(W\) times its entropy.</p><p>If \(\tau=1\), the initial allocation is already optimal. Henceforth assume \(\tau\ge2\), and set</p><p>\(
+D_0=(\tau-1)W,
+\qquad
+M=D_0+\frac32W=(\tau+\tfrac12)W.
+\)</p><p>Since every \(h_t\) decreases on \([0,U_t]\),</p><p>\(
+\Delta(x)\le\widetilde f(0)+G^\star
+=\Delta(x^0)+\frac32W
+\le M
+\qquad(x\in X).
+\)</p><h3>5. Transferring convergence to logarithmic accuracy</h3><p>An expected bound on \(\Delta\) must not simply be identified with an expected bound on \(G^\star-G\): the objectives differ below the thresholds \(a_t\).</p><p>Strong convexity at an optimum gives the more detailed inequality</p><p>\(
+\Delta(x)\ge
+\frac12\sum_t\kappa_t(u_t(x)-u_t^\star)^2.
+\)</p><p>The first-order term is nonnegative by optimality.</p><h3>A deterministic small-gap implication</h3><p>Define</p><p>\(
+\delta_{\mathrm{safe}}
+=\min_t\frac{c_t}{8R_t^2},
+\qquad
+R_{\max}=\max_tR_t.
+\)</p><p>If \(\Delta(x)\le\delta_{\mathrm{safe}}\), then</p><p>\(
+|u_t(x)-u_t^\star|
+\le U_t\sqrt{\frac{2\Delta(x)}{c_t}}
+\le a_t/2.
+\)</p><p>Thus \(u_t(x)\ge a_t/2\) for every type.</p><p>For \(a_t/2\le u&lt;a_t\), let</p><p>\(
+d_t(u)=-c_t\log u-h_t(u).
+\)</p><p>We have \(d_t(a_t)=d_t&#x27;(a_t)=0\), and</p><p>\(
+0\le d_t&#x27;&#x27;(u)
+=\frac{c_t}{u^2}-\frac{c_t}{a_t^2}
+\le\frac{3c_t}{a_t^2}.
+\)</p><p>Integrating twice proves</p><p>\(
+0\le d_t(u)
+\le\frac{3c_t}{2a_t^2}(a_t-u)^2.
+\)</p><p>Since \(u_t^\star\ge a_t\), summing and using the strong-convexity inequality yields</p><p>\(
+G^\star-G(x)
+\le(1+3R_{\max}^2)\Delta(x)
+\quad\text{whenever }\Delta(x)\le\delta_{\mathrm{safe}}.
+\)</p><p>Therefore, with</p><p>\(
+\delta=
+\min\left\{
+\delta_{\mathrm{safe}},
+\frac{\epsilon}{1+3R_{\max}^2}
+\right\},
+\)</p><p>we have the certified implication</p><p>\(
+\boxed{\Delta(x)\le\delta
+\ \Longrightarrow\
+G^\star-G(x)\le\epsilon.}
+\)</p><p>For the exact dynamics this gives</p><p>\(
+\Pr\{G^\star-G(x^k)&gt;\epsilon\}
+\le
+\min\left\{1,\frac{D_0(1-\rho)^k}{\delta}\right\}.
+\)</p><h3>Expected logarithmic accuracy with positive output utilities</h3><p>An unconditional expected logarithmic guarantee can be obtained by a rational mixture with the initial allocation.</p><p>Put</p><p>\(
+\beta=\min\left\{\frac12,\frac{\epsilon}{2D_0}\right\},
+\qquad
+\widehat x^k=(1-\beta)x^k+\beta x^0,
+\qquad
+C_R=\sum_tc_tR_t^2.
+\)</p><p>Every utility of \(\widehat x^k\) is at least \(\beta a_t\). Compare it with<br>\((1-\beta)x^\star+\beta x^0\). Convexity of \(-G\), the derivative bound for logarithms above \(\beta a_t\), and Cauchy–Schwarz give</p><p>\(
+G^\star-G(\widehat x^k)
+\le
+\beta D_0+
+\frac{1-\beta}{\beta}\sqrt{2C_R\Delta(x^k)}.
+\)</p><p>The Cauchy–Schwarz calculation used here is</p><p>\(
+\sum_t\frac{c_t|u_t(x)-u_t^\star|}{a_t}
+\le
+\sqrt{\sum_t\kappa_t(u_t(x)-u_t^\star)^2}
+\sqrt{\sum_t\frac{c_t^2}{a_t^2\kappa_t}}
+\le\sqrt{2C_R\Delta(x)}.
+\)</p><p>Taking expectations and applying Jensen’s inequality proves</p><p>\(
+\mathbb E[G^\star-G(\widehat x^k)]
+\le
+\beta D_0+
+\frac{1-\beta}{\beta}\sqrt{2C_RD_0}\,(1-\rho)^{k/2}.
+\)</p><p>In particular, expected gap at most \(\epsilon\) follows whenever</p><p>\(
+k\ge
+\frac1\rho
+\log^+\left(\frac{8C_RD_0}{\epsilon^2\beta^2}\right),
+\)</p><p>where \(\log^+r=\max\{0,\log r\}\).</p><h3>A rational stopping certificate</h3><p>For a guarantee that holds for every returned allocation, define</p><p>\(
+\mathcal C(x)=
+\max_{z\in X}\nabla\widetilde f(x)^\top(x-z).
+\)</p><p>Convexity gives \(\Delta(x)\le\mathcal C(x)\). If \(g=\nabla\widetilde f(x)\), then \(g_{tj}\le0\), and the product structure of \(X\) gives the exact rational formula</p><p>\(
+\mathcal C(x)
+=
+\sum_{t,j}g_{tj}x_{tj}
++
+\sum_j\max_t\frac{-g_{tj}}{\mu_t}.
+\)</p><p>Thus the stopping test \(\mathcal C(x)\le\delta\) requires no logarithmic evaluations.</p><p>Let \(D_X=2\mathcal R\), an upper bound on the diameter of \(X\). Smoothness, optimality, and the Hoffman inequality imply</p><p>\(
+\mathcal C(x)
+\le
+\Delta(x)+\ell D_X\sqrt{\frac{2\Delta(x)}{\lambda}}.
+\)</p><p>For completeness, take a nearest optimum \(z\) and a minimizer \(y\) of the linear function \(g^\top y\) over \(X\). Decompose</p><p>\(
+g^\top(x-y)
+=(g-\nabla\widetilde f(z))^\top(x-y)
++\nabla\widetilde f(z)^\top(x-z)
++\nabla\widetilde f(z)^\top(z-y).
+\)</p><p>The three terms are bounded respectively by<br>\(\ell D_X\|x-z\|_2\), \(\Delta(x)\), and zero. Finally,<br>\(\|x-z\|_2\le\sqrt{2\Delta(x)/\lambda}\).</p><p>Define</p><p>\(
+\eta=
+\min\left\{
+\frac{\delta}{2},
+\frac{\lambda\delta^2}{8\ell^2D_X^2}
+\right\}.
+\)</p><p>Then</p><p>\(
+\Delta(x)\le\eta
+\ \Longrightarrow\
+\mathcal C(x)\le\delta
+\ \Longrightarrow\
+G^\star-G(x)\le\epsilon.
+\)</p><p>For exact updates stopped at the first passing certificate, Markov’s inequality gives expected iteration count</p><p>\(
+O\left(
+\frac{1+\log^+(D_0/\eta)}{\rho}
+\right).
+\)</p><p>Indeed, the probability of not having stopped by iteration \(k\) is at most<br>\(\min\{1,D_0(1-\rho)^k/\eta\}\); summing these tails proves the bound.</p><h3>6. Rational arithmetic and bit running time</h3><h3>Exact updates</h3><p>For a rational vector \(y\), Euclidean projection onto \(K_\mu\) has the form</p><p>\(
+z_t=\max\{0,y_t-\gamma\mu_t\}.
+\)</p><p>If \(\sum_t\mu_t\max\{0,y_t\}\le1\), then \(\gamma=0\). Otherwise, for the positive-coordinate set \(I\),</p><p>\(
+\gamma=
+\frac{\sum_{t\in I}\mu_ty_t-1}
+{\sum_{t\in I}\mu_t^2}.
+\)</p><p>Sorting the breakpoints \(y_t/\mu_t\) identifies \(I\) in<br>\(O(\tau\log(\tau+1))\) rational arithmetic operations. All derivatives are rational:</p><p>\(
+h_t&#x27;(u)=
+\begin{cases}
+-c_t/u,&amp;u\ge a_t,\\
+c_t(u-2a_t)/a_t^2,&amp;0\le u&lt;a_t.
+\end{cases}
+\)</p><p>Hence every exact iterate is rational.</p><p>However, a constant arithmetic-operation count is not a constant bit cost. Utility reciprocals and the projection can enlarge denominators. Using a common denominator for the current allocation gives the conservative encoding-length recurrence</p><p>\(
+b_{k+1}
+\le C(\tau+1)b_k+\operatorname{poly}(m,\tau,L)
+\)</p><p>for a universal constant \(C\). To see this, each utility numerator has size<br>\(O(b_k+\operatorname{poly}(L))\); a common denominator for the updated column can include the product of at most \(\tau\) such numerators, followed by the rational projection denominator.</p><p>Thus a \(K\)-step exact run has a valid bit-time upper bound</p><p>\(
+(C(\tau+1))^{O(K)}\operatorname{poly}(m,\tau,L).
+\)</p><p>One way to obtain a guaranteed output with this bound in expectation is to run independent exact trials of length</p><p>\(
+K=
+\left\lceil
+\frac1\rho\log\frac{4M}{\eta}
+\right\rceil,
+\)</p><p>accepting a trial only when its final certificate passes. Its expected extrapolated gap is at most \(\eta/4\), so acceptance probability is at least \(3/4\). The number of trials has bounded expectation.</p><p>This is a conservative bound, not a claim that exact denominators always grow at that rate. It explains why the geometric iteration theorem alone is insufficient for a polynomial bit-time conclusion.</p><h3>A controlled-rounding implementation</h3><p>A substantially better bit bound follows with one explicit modification: after an exact block update, round each updated coordinate <b>downward</b> to a dyadic grid of spacing \(q=2^{-b}\). Downward rounding preserves feasibility.</p><p>On all of \(X\),</p><p>\(
+\|\nabla\widetilde f(x)\|_2
+\le\|\nabla\widetilde f(x)\|_1
+\le2W=:J.
+\)</p><p>Rounding changes the updated block by norm at most \(\tau q\). Therefore the rounded process satisfies</p><p>\(
+\mathbb E[\Delta(x^{k+1})\mid x^k]
+\le(1-\rho)\Delta(x^k)+J\tau q.
+\)</p><p>Choose</p><p>\(
+b=
+\left\lceil
+\log_2^+\frac{4J\tau}{\rho\eta}
+\right\rceil.
+\)</p><p>Then \(J\tau q\le\rho\eta/4\), and</p><p>\(
+\mathbb E[\Delta(x^k)]
+\le(1-\rho)^k\Delta(x^0)+\eta/4.
+\)</p><p>Check the rational certificate after every \(K\) updates, using the \(K\) above. From any feasible starting state, the bound \(\Delta\le M\) implies that the next check fails with conditional probability at most \(1/2\). Consequently, the expected number of updates before a certified output is at most \(2K\).</p><p>All stored allocation coordinates now have encoding length<br>\(O(L+b)\): a column is either its original rational column or a dyadic column. Each candidate update and certificate is computable with rational numbers of polynomially bounded length. For example, the conservative bound</p><p>\(
+s=O\bigl(n^2(L+b+\log(n+1))\bigr)
+\)</p><p>bounds all temporary rational encoding lengths. Using elementary integer arithmetic yields the expected bit-time bound</p><p>\(
+O\left(
+\left[
+K\bigl(\tau\log(\tau+1)+\log(m+1)\bigr)+n
+\right]s^3
+\right).
+\)</p><p>The term involving \(\log(m+1)\) includes exact uniform sampling by rejection.</p><p>In particular, substituting \(H=\overline H\), the dependence is</p><p>\(
+\boxed{
+\operatorname{poly}(m,\tau,L,\log(1/\epsilon))\,
+m\max\left\{1,\frac{\Lambda\overline H^2}{\kappa}\right\}
+\left(1+\log\frac{4M}{\eta}\right).
+}
+\)</p><p>Every conditioning quantity in this expression has been defined explicitly. The rounding precision itself has polynomial encoding length:</p><p>\(
+b=O\bigl(n(L+\log(n+1))+\log(1/\epsilon)\bigr).
+\)</p><p>Thus controlled rounding avoids denominator explosion, but the condition parameter</p><p>\(
+m\max\left\{1,\frac{\Lambda\overline H^2}{\kappa}\right\}
+\)</p><p>can still be exponential in the input length. The resulting worst-case bound is exponential in numerical conditioning and logarithmic in accuracy, rather than a polynomial-time bound in the binary input length.</p><p>The rounded process is an implementation variant; the exact geometric bound in Section 4 applies to the updates exactly as stated in the question.</p><h3>7. Exponentially slow exact dynamics on two types and two goods</h3><p>The lack of a polynomial iteration guarantee is substantive.</p><p>Choose a dyadic \(q=2^{-b}\) with \(b\ge2\), and let</p><p>\(
+\mu_1=1-q,\qquad
+\mu_2=q,\qquad
+B_1=B_2=1/q,
+\)</p><p>and</p><p>\(
+v_1=(1,0),\qquad v_2=(0,1).
+\)</p><p>Take fixed accuracy \(\epsilon=1/2\). Here</p><p>\(
+W=1/q,\qquad
+a_1=a_2=1,\qquad
+x^0_{tj}=1.
+\)</p><p>The optimum assigns each good entirely to its interested type, so</p><p>\(
+u_1^\star=\frac1{1-q},
+\qquad
+u_2^\star=\frac1q.
+\)</p><p>Let \(s=x_{22}\). Only updates of good \(2\) change \(s\), and its block smoothness constant is</p><p>\(
+L_2=\mu_2B_2=1.
+\)</p><p>As long as \(s\ge1\), the unprojected update increases \(s\) by \(1/s\). Projection cannot increase it beyond that candidate, so</p><p>\(
+s^+\le s+1/s.
+\)</p><p>Projection also cannot decrease this coordinate below its old value. To verify this, let \(d=1/s\). The old column is feasible, and the candidate increases only its second coordinate by \(d\). At projection multiplier \(\gamma=d/q\), that coordinate has returned to its old value, while every other coordinate has weakly decreased. The weighted sum is therefore at most one. The chosen multiplier cannot exceed \(d/q\), proving \(s^+\ge s\).</p><p>Thus \(s\ge1\) throughout, and each update of good \(2\) satisfies</p><p>\(
+(s^+)^2
+\le(s+1/s)^2
+=s^2+2+1/s^2
+\le s^2+3.
+\)</p><p>After \(k\) total updates,</p><p>\(
+s^2\le1+3k.
+\)</p><p>Meanwhile, each type’s utility is individually bounded above by its optimum utility. Since \(c_2=\mu_2B_2=1\), the objective gap satisfies</p><p>\(
+G^\star-G(x)
+\ge\log\frac{1/q}{s}.
+\)</p><p>Accuracy \(\epsilon=1/2\) therefore requires</p><p>\(
+s\ge\frac{e^{-1/2}}q,
+\)</p><p>and hence</p><p>\(
+\boxed{
+k\ge\frac{e^{-1}q^{-2}-1}{3}.
+}
+\)</p><p>This lower bound holds for every sequence of sampled items. The instance has \(m=\tau=2\), fixed accuracy, and input length \(O(b)\), whereas the required number of updates is \(\Omega(2^{2b})\).</p><p>Therefore the allocation problem is polynomial-time solvable, while these particular dynamics can have exponential running time even before exact-arithmetic costs are considered.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 3, Ellipsoid implementation and bit complexity: The finite-precision rational ellipsoid implementation theorem is left implicit. State or cite its guarantees of containment, sufficient volume contraction, and polynomial center encoding lengths; rational gradient outputs alone do not establish those guarantees.</li><li><b>minor</b> — Section 4, A Hoffman constant and an explicit rational upper bound: After defining H as any valid Hoffman constant, the statement H &lt;= Hbar is literally false because valid constants can be enlarged arbitrarily. The proof establishes that Hbar is valid, or that the smallest admissible constant is bounded by Hbar. Clarify the intended quantifier.</li></ul>
+<div class="pre"><p><b>Verdict: proved with minor gaps.</b> The substantive mathematical argument is correct. It establishes polynomial-time rational approximation, a conditioning-dependent geometric rate for the specified exact dynamics, certified stopping rules, and an exponential iteration lower bound. Two expositional issues need clarification; neither requires new mathematics.</p><ul><li><b>Feasibility, existence, and utility bounds — verified.</b></li></ul><p>Positivity of the masses, budgets, and valuation sums makes all quantities in Section 2 well-defined. Feasibility implies \(x_{tj}\le 1/\mu_t\), so the bound \(u_t(x)\le U_t\) is valid.</p><p>The initial allocation uses exactly one unit of each good and gives utility \(a_t&gt;0\). Compactness and upper semicontinuity therefore give an optimum with finite objective value. An optimum cannot have zero utility for any type, since its objective would then be negative infinity.</p><ul><li><b>Optimal utility thresholds — verified.</b></li></ul><p>The stated optimality conditions have the correct scaling: the factors \(\mu_t\) cancel between the objective derivative and the weighted supply constraint.</p><p>Strict feasibility with positive utilities is available, so the multiplier argument applies. Complementarity and equality on positive allocation coordinates justify \(\sum_jp_j=W\). Summing the inequalities for a fixed type then gives \(u_t^\star\ge a_t\).</p><p>This argument also covers goods valued by no type: their multipliers are zero.</p><ul><li><b>Equivalence of the original and extrapolated problems — verified.</b></li></ul><p>The quadratic and logarithmic branches agree in value, first derivative, and second derivative at \(a_t\). The displayed curvature formulas are correct.</p><p>At an original optimum, both objectives have matching gradients and values. The first-order optimality inequality consequently establishes extrapolated optimality. Strict convexity in utilities gives uniqueness of the optimal utility vector, without incorrectly claiming uniqueness of the allocation.</p><p>Thus the claimed equality of optimizer sets and \(\min_X\widetilde f=-G^\star\) is valid. The cited quadratic extrapolation construction is consistent with [Gao and Kroer’s paper](https://papers.nips.cc/paper_files/paper/2020/file/f75526659f31040afeb61cb7133e4e6d-Paper.pdf); the write-up supplies its own argument for the weighted coordinates.</p><ul><li><b>Polynomial-time optimization: geometric ingredients — verified.</b></li></ul><p>The restricted polytope \(D\) contains every optimum. On \(D\), the calculation \(\|\nabla\phi(x)\|_1\le2W\) is correct, including the cancellation \(\sum_tc_tS_t/a_t=W\).</p><p>The proposed interior ball satisfies all three classes of constraints:</p><ul><li>Nonnegativity follows from the coordinate lower bound at \(z\).</li><li>Weighted supply feasibility follows from slack \(1/4\) and \(\|\mu\|_2\le1\).</li><li>The utility inequalities follow from the stated bound on \(r_0\|v_t\|_2\).</li></ul><p>The interpolated ball about \(w\) lies in \(D\). The constants in its objective bound are valid: \(r_0\le\mathcal R\), and the definition of \(\theta\) ensures \(6W\mathcal R\theta\le\epsilon/4\), including the branch \(\theta=1/2\).</p><ul><li><b>Polynomial-time optimization: ellipsoid and evaluation — sound, with one minor omission.</b></li></ul><p>The cut-retention argument is correct. Whenever a feasible queried center has gap exceeding \(\epsilon/2\), its gradient cut retains the entire constructed ball. Infeasibility cuts also retain that ball. The resulting volume contradiction establishes the existence of a sufficiently good queried center.</p><p>Selecting the smallest approximate objective, with evaluation error at most \(\epsilon/8\), raises its true gap by at most \(\epsilon/4\). The claimed final bound \(3\epsilon/4\) therefore follows.</p><p>The logarithm series has the stated geometric convergence after scaling into \([1,2]\). The weights and scaling exponent require only polynomial additional precision.</p><p><b>Minor issue:</b> the finite-precision rational ellipsoid theorem is not stated precisely. The text gives the geometric iteration bound and suitable oracle properties, but leaves the guarantee of polynomially bounded center encodings implicit. An exact central-cut ellipsoid update can involve irrational quantities, so rational oracle outputs alone do not explain that guarantee.</p><p><b>Minimum clarification:</b> state or cite the rational ellipsoid implementation theorem being used, including preservation of containment, sufficient volume contraction, and polynomial encoding lengths. The supplied radii, rational cuts, and encoding bounds provide the necessary application data.</p><ul><li><b>Curvature and smoothness constants — verified.</b></li></ul><p>Since \(R_t=W/c_t\ge1\), the interval \([0,U_t]\) contains the threshold \(a_t\). The lower curvature bound \(\kappa_t=c_t/U_t^2\) is valid throughout that interval.</p><p>The Hessian within an item column is diagonal across types, so \(L_j\) is a valid block smoothness constant. The stated full-gradient constant \(\ell=m\Lambda\) is also valid.</p><p>At least one \(L_j\) is positive. A zero \(L_j\) means every valuation in that column is zero, justifying the unchanged-column convention.</p><ul><li><b>Explicit Hoffman bound — mathematically verified, with a minor quantifier issue.</b></li></ul><p>The utility matrix has independent rows because each row has a separate type block and is nonzero. The projection normal-cone representation applies to the polyhedral optimal set.</p><p>The elimination argument preserves nonnegative inequality multipliers while obtaining independent rows. Feasibility gives the correct sign for the active-constraint contribution. The singular-value estimate then yields the claimed distance bound.</p><p>The determinant lower bound, matrix norm bound, and resulting \(\overline H\) are valid. Its logarithmic encoding bound is also valid.</p><p><b>Minor issue:</b> \(H\) is introduced as “any constant” satisfying the Hoffman inequality, followed by “Then \(H\le\overline H\).” Taken literally, this is false: any sufficiently large multiple of a valid constant is also valid. The proof establishes that \(\overline H\) itself is valid, or that the smallest admissible constant is at most \(\overline H\).</p><p><b>Minimum clarification:</b> specify one of those intended meanings. The later choice \(H=\overline H\), and all resulting rate bounds, remain justified.</p><ul><li><b>Geometric convergence of exact updates — verified.</b></li></ul><p>The strong-convexity inequality and Hoffman bound give the displayed quadratic term with coefficient \(\lambda=\kappa/H^2\).</p><p>Substitution of \(x+s(z-x)\), with \(s=\min\{1,\lambda/\Lambda\}\), produces the claimed model decrease. The squared-distance coefficient is nonpositive in both branches of that definition.</p><p>Product feasibility, exact block-model minimization, and \(L_j\le\Lambda\) justify the conditional expectation inequality. Hence the rate \(\rho=m^{-1}\min\{1,\lambda/\Lambda\}\) and the geometric expected-gap bound follow.</p><p>This rate structure agrees with [Nan, Gao, and Kroer, Theorem 1](https://arxiv.org/pdf/2303.00506). Its citation is corroborative; the weighted-coordinate result is proved directly here.</p><ul><li><b>Initial and global gap bounds — verified.</b></li></ul><p>The entropy bound gives \(\Delta(x^0)\le W\log\tau\le(\tau-1)W\).</p><p>The case \(\tau=1\) is correctly separated: the initial allocation is optimal. Subsequent quantities involving \(D_0\) are used only under the explicit assumption \(\tau\ge2\).</p><p>Each extrapolated term is decreasing for nonnegative utility, and its value at zero exceeds its value at \(a_t\) by \(3c_t/2\). Thus the global bound \(\Delta(x)\le M\) is valid.</p><ul><li><b>Transfer to logarithmic accuracy — verified.</b></li></ul><p>The utility-distance inequality follows from strong convexity at an optimum and the nonnegative first-order term.</p><p>The constants in \(\delta_{\mathrm{safe}}\) correctly ensure \(u_t(x)\ge a_t/2\). On that range, the remainder curvature bound and its integrated estimate are correct. Summation gives the stated factor \(1+3R_{\max}^2\).</p><p>Consequently, the deterministic implication using \(\delta\) and the Markov probability bound are valid. The write-up correctly distinguishes extrapolated-gap convergence from logarithmic-gap convergence.</p><ul><li><b>Positive mixture and expected logarithmic gap — verified.</b></li></ul><p>The mixture is feasible, rational, and has utility at least \(\beta a_t\). The comparison allocation and logarithmic derivative bound apply on that positive range.</p><p>The Cauchy–Schwarz factors are correct, including the coefficient \(C_R\). Jensen’s inequality then justifies the expected-gap bound. The displayed sufficient iteration count is conservative and valid.</p><ul><li><b>Stopping certificate — verified.</b></li></ul><p>Convexity gives \(\Delta(x)\le\mathcal C(x)\). Nonpositive gradient coordinates and the independent weighted supply constraints justify the exact rational formula.</p><p>In the decomposition at an optimum, the three contributions have the claimed upper bounds. The definition of \(\eta\) makes each of the two contributions to the certificate bound at most \(\delta/2\).</p><p>The tail argument therefore gives the stated expected stopping count. Every allocation accepted by the certificate satisfies the requested deterministic accuracy.</p><ul><li><b>Exact rational arithmetic — verified as a conservative upper bound.</b></li></ul><p>The weighted Euclidean projection formula is correct, including the feasible-positive-part branch. Breakpoint sorting identifies the active coordinates.</p><p>Derivatives, projections, and exact iterates are rational. The denominator-growth recurrence is a conservative bound, rather than an assertion that such growth always occurs.</p><p>The fixed-length independent-trial construction avoids inferring expected bit time merely from expected stopping time. Its success probability and bounded expected number of trials are justified.</p><ul><li><b>Controlled rounding — verified as an implementation variant.</b></li></ul><p>Downward rounding preserves feasibility. The global gradient bound \(J=2W\) and rounding displacement bound imply the stated additive objective error.</p><p>The selected precision makes the stationary error at most \(\eta/4\). At each batch endpoint, the conditional expected gap is at most \(\eta/2\), giving certificate failure probability at most \(1/2\).</p><p>The rational encoding and elementary-arithmetic bounds are conservative. Maintaining current utilities supports the stated per-update arithmetic accounting. The conditioning dependence remains explicit and potentially exponential.</p><p>The write-up correctly labels this process as a modification of the exact updates.</p><ul><li><b>Exponential lower bound — verified.</b></li></ul><p>All instance data meet the task assumptions and have encoding length \(O(b)\). The stated optimum utilities and \(L_2=1\) are correct.</p><p>The projection-multiplier argument establishes that \(s\) remains at least one and cannot increase beyond \(s+1/s\). Therefore \(s^2\le1+3k\) holds for every sampling sequence.</p><p>Each type’s utility is bounded by its respective optimum utility, so the total objective gap is at least the type-2 contribution. Accuracy \(1/2\) forces the stated lower bound on \(s\), and hence \(\Omega(2^{2b})\) updates.</p><p>This establishes exponential iteration requirements for the specified dynamics, while remaining consistent with polynomial-time solvability by a different algorithm.</p><p>There are no blocking mathematical issues. The minimum requested revisions are the precise rational ellipsoid theorem statement and correction of the Hoffman-constant quantifier.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

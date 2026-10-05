@@ -1,0 +1,572 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Approximating the Shapley Value without Marginal Contributions — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Approximating the Shapley Value without Marginal Contributions <span style="font-weight:normal;color:#8a7350">(aaai24-29225)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 6 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>The variance of any player’s Shapley value es- timate ˆϕi obtained by Stratified SVARM is bounded by V[ˆϕi] ≤2 log n n ¯T n−3 X ℓ=1 σ+ i,ℓ 2 + σ− i,ℓ+1 2.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a rational type-mass vector \(\mu\), a value oracle for a bounded \(C^2\) function \(v\) on fractional coalition masses \(x\) with \(0 \le x \le \mu\) and known derivative bounds, a query budget \(T\), tolerance \(\epsilon\), and optionally failure probability \(\delta\), estimate \(A_t = \mu_t \int_0^1 \partial_t v(\lambda \mu) d\lambda\) for all types \(t\), minimizing query complexity subject to \(\max_t E[(\hat{A}_t - A_t)^2] \le \epsilon^2\) or the corresponding \(1-\delta\) confidence guarantee.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list of \(\tau\ge1\) types with positive binary-rational masses \(\mu_t\), normalized by \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types; there is no separate parameter \(m\).<br>Let \(D_\mu=\prod_{t=1}^{\tau}[0,\mu_t]\). The unknown real-valued function \(v\) extends to a \(C^2\) function on a neighborhood of \(D_\mu\), satisfies \(v(0)=0\), and obeys known bounds \(|v(x)|\le B\), \(|\partial_t v(x)|\le G\), and \(|\partial_s\partial_t v(x)|\le H\) on \(D_\mu\), with \(B,G,H\ge0\) binary rationals. No monotonicity or nonnegativity is assumed.<br>A noiseless value oracle returns only \(v(x)\) at any chosen \(x\in D_\mu\); each call costs one query, except the known value at zero. Exact real arithmetic has unit cost, and adaptive randomized queries are allowed.<br>Estimate all type allocations \(A_t=\mu_t\int_0^1\partial_t v(\lambda\mu)\,d\lambda\). For \(\varepsilon&gt;0\), require \(\max_t\mathbb E[(\widehat A_t-A_t)^2]\le\varepsilon^2\) uniformly over admissible \(v\); alternatively, for \(0&lt;\delta&lt;1\), require \(\Pr(\max_t|\widehat A_t-A_t|\le\varepsilon)\ge1-\delta\). Expectations and probabilities concern algorithmic randomness.<br>Let \(T\in\mathbb N\) bound the number of queries on every run, and let \(L\) be the total bit length of the rational input. State arithmetic running times in \(\tau,L,T,B,G,H,\varepsilon^{-1}\), and, when applicable, \(\delta^{-1}\).</p><p>What is the minimax value-oracle query complexity for these allocations under the mean-square criterion, and under the simultaneous confidence criterion, as a function of \(\mu,\tau,B,G,H,\varepsilon\) and \(\delta\)? Equivalently, what approximation accuracy is achievable with budget \(T\)?</p><p>For finite cooperative games, Stratified SVARM gives unbiased Shapley estimates with per-player MSE \(O(\log n/(T-W))\) when coalition values are uniformly bounded, after warm-up \(W=O(n\log n)\), for \(n\ge4\) and \(T&gt;W\). [Source](https://epub.ub.uni-muenchen.de/118341/1/2302.00736v5.pdf)<br>Integrated Gradients uses the same straight-line allocation with zero baseline, but its numerical computation uses gradient access; this does not settle the value-only minimax problem stated here. No verified source found settles that exact problem. [Source](https://proceedings.mlr.press/v70/sundararajan17a/sundararajan17a.pdf)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized masses to sum to one because the society is a distribution over types.</li><li>Carried over the zero value of the empty coalition as v(0)=0; retained signed values without monotonicity.</li><li>Made boundedness and derivative bounds explicit using supplied uniform bounds B, G, and H on values, first partials, and second partials.</li><li>Interpreted C2 on the closed coalition box through an extension to a neighborhood, so boundary derivatives are defined.</li><li>Specified noiseless exact value-only access and unit-cost real arithmetic; the graded question did not specify oracle precision or arithmetic costs.</li><li>Interpreted query complexity in the worst case over admissible functions, with at most T calls on every run and randomness belonging to the algorithm.</li><li>Chose simultaneous confidence for all types to resolve the unspecified confidence guarantee.</li><li>There is no underlying candidate or alternative parameter m; the ambient dimension is the support size tau.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial solution with stronger mass and confidence bounds</h3><p>The full minimax problem remains unresolved. The results below substantially narrow the gaps identified in the notes:</p><ul><li>For equal masses, the large-budget mean-square risk is</li></ul><p>$$
+   R_T=\Theta\!\left(\frac{H^2\tau}{T^3}\right),
+   $$<br>with universal constants and an explicit sufficient budget threshold.</p><ul><li>For arbitrary masses, the large-budget upper and lower mean-square bounds differ by at most a factor of order $(\log\tau)^3$.</li><li>For two types, the confidence radius is characterized uniformly over $0&lt;\delta\le 1/8$, including the transition to deterministic accuracy.</li></ul><p>Every bound below uses only value queries. The finite-game result in [Stratified SVARM](https://epub.ub.uni-muenchen.de/118341/1/2302.00736v5.pdf) and the gradient-based computation in [Integrated Gradients](https://proceedings.mlr.press/v70/sundararajan17a/sundararajan17a.pdf) concern different information models and are not used in the proofs.</p><h3>1. Definitions and elementary cases</h3><p>Let $\mathcal V$ denote the admissible function class, and let $\mathfrak A_T$ denote the measurable randomized algorithms making at most $T$ value queries on every run. Define<br>$$
+R_T=\inf_{\mathcal A\in\mathfrak A_T}
+\sup_{v\in\mathcal V}
+\max_t\mathbb E_v[(\widehat A_t-A_t)^2]
+$$<br>and<br>$$
+e_T(\delta)=
+\inf\left\{\varepsilon&gt;0:
+\exists\mathcal A\in\mathfrak A_T\
+\forall v\in\mathcal V,\
+\Pr_v\!\left(\max_t|\widehat A_t-A_t|\le\varepsilon\right)
+\ge1-\delta
+\right\}.
+$$<br>Thus the query restriction appears explicitly in both definitions.</p><p>The chain rule and $v(0)=0$ give<br>$$
+\sum_t A_t
+=\int_0^1\frac{d}{d\lambda}v(\lambda\mu)\,d\lambda
+=v(\mu).
+$$<br>Also,<br>$$
+|A_t|\le\mu_tG.
+$$</p><p>The following cases are immediate.</p><ul><li>If $B=0$ or $G=0$, all allocations vanish.</li><li>If $\tau=1$, one query recovers $A_1=v(1)$ exactly. With zero queries,</li></ul><p>$$
+  R_0=\min\{B,G\}^2.
+  $$<br>The upper bound follows from $|v(1)|\le\min\{B,G\}$. For the lower bound, use the admissible functions $v(x)=\pm\min\{B,G\}x$ and average their squared errors.</p><ul><li>If $H=0$, the Hessian vanishes on the interior of the box. Consequently, the gradient is constant there; continuity extends this conclusion to the box. Since $v(0)=0$, the function is linear, and querying $\mu_te_t$ for every type recovers $A_t=v(\mu_te_t)$ exactly.</li></ul><p>Henceforth assume $\tau\ge2$ and $B,G,H&gt;0$.</p><h3>2. Improved value-only upper bounds</h3><h3>2.1 Subtracting the exactly recoverable radial component</h3><p>Define<br>$$
+\theta_t=\mu_t(1-\mu_t),
+\qquad
+r_t=e_t-\mu,
+\qquad
+V=v(\mu),
+$$<br>and<br>$$
+q_t(\lambda)=\mu_t\,r_t\cdot\nabla v(\lambda\mu).
+$$<br>Because<br>$$
+\int_0^1\mu\cdot\nabla v(\lambda\mu)\,d\lambda=V,
+$$<br>we have<br>$$
+A_t=\mu_tV+\int_0^1q_t(\lambda)\,d\lambda.
+$$</p><p>The direction $r_t$ satisfies<br>$$
+\|r_t\|_1=2(1-\mu_t).
+$$<br>It follows that<br>$$
+|q_t(\lambda)|\le2G\theta_t.
+$$<br>Differentiating along the path and using the entrywise Hessian bound gives<br>$$
+|q_t&#x27;(\lambda)|
+\le
+\mu_tH\|r_t\|_1\|\mu\|_1
+=2H\theta_t.
+$$<br>Thus $q_t$ is Lipschitz with constant<br>$$
+c_t=2H\theta_t.
+$$</p><p>This improves the mass dependence of the direct bound $H\mu_t$, particularly when one type has almost all the mass.</p><h3>2.2 Approximating the integrand using two values</h3><p>Fix $\lambda\in(0,1)$, put $x=\lambda\mu$, and choose<br>$$
+0&lt;h\le
+\min\left\{
+\lambda,\frac{(1-\lambda)\mu_t}{1-\mu_t}
+\right\}.
+$$<br>Then $x+hr_t\in D_\mu$: its other coordinates are $(\lambda-h)\mu_s$, and its $t$th coordinate is $\lambda\mu_t+h(1-\mu_t)$.</p><p>Define<br>$$
+Q_{t,h}(x)
+=\mu_t\frac{v(x+hr_t)-v(x)}h.
+$$<br>Along the queried segment,<br>$$
+|r_t^{\mathsf T}\nabla^2v\,r_t|
+\le H\|r_t\|_1^2.
+$$<br>The fundamental theorem of calculus therefore gives<br>$$
+|Q_{t,h}(x)-q_t(\lambda)|
+\le
+\frac{\mu_tHh\|r_t\|_1^2}{2}
+=2H\mu_t(1-\mu_t)^2h.
+$$<br>In particular, the error is at most $\eta/2$ if<br>$$
+h\le\frac{\eta}{4H\mu_t}.
+$$</p><p>The oracle is noiseless, so this step can be arbitrarily small without increasing the query count. It is a finite-difference approximation, not exact gradient access.</p><h3>2.3 Stratified integration with finite randomness</h3><p>For type $t$, partition $[0,1]$ into $n_t$ equal intervals. In each interval, independently choose one of $M_t$ equally spaced midpoints, uniformly, where $M_t$ is a power of two.</p><p>Let $U_j$ be the chosen points, and first consider the ideal estimator<br>$$
+F_t=\frac1{n_t}\sum_{j=1}^{n_t}q_t(U_j).
+$$<br>If $U_j&#x27;$ is an independent copy, Lipschitz continuity implies<br>$$
+\operatorname{Var}(q_t(U_j))
+=\frac12\mathbb E[(q_t(U_j)-q_t(U_j&#x27;))^2]
+\le c_t^2\operatorname{Var}(U_j)
+\le\frac{c_t^2}{12n_t^2}.
+$$<br>Hence<br>$$
+\operatorname{Var}(F_t)\le\frac{c_t^2}{12n_t^3}.
+$$</p><p>The expectation of $F_t$ is the composite midpoint rule with $n_tM_t$ subintervals. Its bias is at most<br>$$
+\frac{c_t}{4n_tM_t}.
+$$<br>Choose<br>$$
+M_t\ge\max\left\{1,\frac{c_t}{2n_t\eta}\right\}.
+$$<br>Then this bias is at most $\eta/2$. Replace every sampled integrand value by the finite difference above, also with error at most $\eta/2$.</p><p>Including the single endpoint query for $V$, the resulting estimator uses at most<br>$$
+1+2\sum_t n_t
+$$<br>queries and satisfies<br>$$
+\mathbb E[(\widehat A_t-A_t)^2]^{1/2}
+\le\frac{c_t}{\sqrt{12}\,n_t^{3/2}}+\eta.
+$$</p><h3>2.4 Confidence and deterministic bounds</h3><p>For completeness, the needed concentration inequality follows directly from a moment-generating-function argument. If $X$ has range length $a$, then for<br>$$
+F(s)=\log\mathbb E[e^{sX}],
+$$<br>the second derivative is a variance under the tilted distribution, so $F&#x27;&#x27;(s)\le a^2/4$. Integrating twice yields<br>$$
+\log\mathbb E[e^{s(X-\mathbb EX)}]\le\frac{s^2a^2}{8}.
+$$</p><p>Each summand $q_t(U_j)/n_t$ has range length at most $c_t/n_t^2$. Independence and optimization of the exponential bound give<br>$$
+\Pr(|F_t-\mathbb EF_t|&gt;u)
+\le2\exp\left(-\frac{2n_t^3u^2}{c_t^2}\right).
+$$<br>Therefore, for any estimated set $S$ of size $s\ge1$, a union bound gives<br>$$
+\Pr\left(
+\forall t\in S:
+|\widehat A_t-A_t|
+\le
+\eta+c_t\sqrt{\frac{\log(2s/\delta)}{2n_t^3}}
+\right)\ge1-\delta.
+$$</p><p>Alternatively, use the midpoint of each stratum deterministically. On a stratum of length $1/n_t$, integrating the Lipschitz error from its midpoint gives $c_t/(4n_t^2)$. Summing strata gives<br>$$
+|\widehat A_t-A_t|
+\le\frac{c_t}{4n_t}+\eta.
+$$</p><h3>2.5 Explicit sufficient query counts</h3><p>Query $V$ and set<br>$$
+S=\{t:2G\theta_t&gt;\varepsilon\}.
+$$<br>For types outside $S$, output $\mu_tV$. Their errors are at most $\varepsilon$.</p><p>For types in $S$, take $\eta=\varepsilon/2$. The following choices suffice:<br>$$
+n_t=
+\max\left\{
+1,\left\lceil
+\left(\frac{c_t^2}{3\varepsilon^2}\right)^{1/3}
+\right\rceil
+\right\}
+$$<br>for mean-square error,<br>$$
+n_t=
+\max\left\{
+1,\left\lceil
+\left(
+\frac{2c_t^2\log(2s/\delta)}{\varepsilon^2}
+\right)^{1/3}
+\right\rceil
+\right\}
+$$<br>for simultaneous confidence, and<br>$$
+n_t=
+\max\left\{
+1,\left\lceil\frac{c_t}{2\varepsilon}\right\rceil
+\right\}
+$$<br>for deterministic error.</p><p>Consequently, sufficient query counts are respectively<br>$$
+O\left(
+1+s+
+\left(\frac H\varepsilon\right)^{2/3}
+\sum_{t\in S}\theta_t^{2/3}
+\right),
+$$<br>$$
+O\left(
+1+s+
+\left(\frac H\varepsilon\right)^{2/3}
+\log(2s/\delta)^{1/3}
+\sum_{t\in S}\theta_t^{2/3}
+\right),
+$$<br>and<br>$$
+O\left(
+1+s+\frac H\varepsilon\sum_{t\in S}\theta_t
+\right).
+$$<br>If every $\mu_tG\le\varepsilon$, the simpler zero-query estimator already suffices.</p><h3>2.6 Explicit budget allocation</h3><p>Put<br>$$
+S_\theta=\sum_t\theta_t^{2/3},
+\qquad
+Z_\theta=\sum_t\theta_t.
+$$<br>Suppose $T\ge4\tau+1$, and write $Q=T-1$.</p><p>Choose dyadic numbers $a_t$ satisfying<br>$$
+a_t\le\theta_t^{2/3}&lt;2a_t,
+$$<br>and set<br>$$
+n_t=1+\left\lfloor
+\frac{Qa_t}{4\sum_s a_s}
+\right\rfloor.
+$$<br>Then<br>$$
+1+2\sum_tn_t
+\le1+2\tau+\frac Q2
+\le T,
+$$<br>and<br>$$
+n_t\ge\frac{Q\theta_t^{2/3}}{8S_\theta}.
+$$<br>Substitution into the variance bound, followed by $\eta\downarrow0$, proves<br>$$
+R_T\le C\frac{H^2S_\theta^3}{T^3}
+$$<br>for a universal constant $C$.</p><p>The same allocation gives the randomized confidence upper bound. For deterministic quadrature, use<br>$$
+n_t=1+\left\lfloor\frac{Q\theta_t}{4Z_\theta}\right\rfloor.
+$$<br>Its query count is again at most $T$, and its error is at most $2HZ_\theta/Q+\eta$. Thus<br>$$
+e_T(\delta)\le
+CH\min\left\{
+\frac{S_\theta^{3/2}\sqrt{\log(2\tau/\delta)}}{T^{3/2}},
+\frac{Z_\theta}{T}
+\right\}.
+$$</p><p>These statements concern minimax infima. A finite-step implementation achieves each displayed bound with an arbitrarily small additional error.</p><h3>3. A continuous family for adaptive lower bounds</h3><p>A finite sign prior is insufficient for capturing the support-size dependence: one exact real answer can encode many signs. The construction below instead uses continuous parameters.</p><h3>3.1 Smooth cutoff functions</h3><p>Define<br>$$
+\phi(z)=
+\begin{cases}
+(1-z^2)^3,&amp;|z|\le1,\\
+0,&amp;|z|&gt;1,
+\end{cases}
+\qquad
+\psi(z)=z\phi(z).
+$$<br>Both functions are globally $C^2$, because their values and first two derivatives match zero at the support endpoints. Expanding the polynomials gives<br>$$
+\phi&#x27;= -6z+12z^3-6z^5,
+\qquad
+\phi&#x27;&#x27;=-6+36z^2-30z^4,
+$$<br>$$
+\psi&#x27;=1-9z^2+15z^4-7z^6,
+\qquad
+\psi&#x27;&#x27;=-18z+60z^3-42z^5.
+$$<br>Consequently, the following conservative bounds hold:<br>$$
+|\phi|\le1,\quad|\phi&#x27;|\le6,\quad|\phi&#x27;&#x27;|\le72,
+$$<br>$$
+|\psi|\le1,\quad|\psi&#x27;|\le7,\quad|\psi&#x27;&#x27;|\le84.
+$$<br>For the last two bounds, one may also use $\psi&#x27;=\phi+z\phi&#x27;$ and $\psi&#x27;&#x27;=2\phi&#x27;+z\phi&#x27;&#x27;$.</p><p>Furthermore,<br>$$
+\psi(0)=0,\qquad\psi&#x27;(0)=1,
+$$<br>and direct integration gives<br>$$
+\int_{-1}^1\phi(z)\,dz
+=2\left(1-1+\frac35-\frac17\right)
+=\frac{32}{35}.
+$$</p><h3>3.2 Admissible parameterized functions</h3><p>Fix a subset $K$ of $k\ge2$ types and an integer $N\ge1$. Set<br>$$
+h=\frac1{2N},
+\qquad
+c_j=\frac{j-\tfrac12}{N},
+$$<br>$$
+\kappa_N=
+\min\left\{
+\frac H{576},\frac{NG}{10},4N^2B
+\right\},
+\qquad
+d_N=\frac{8\kappa_N}{35N^2}.
+$$</p><p>For each $j$, take a parameter vector $a_j\in[-1,1]^k$, indexed by $K$. Define<br>$$
+u(x)=\sum_sx_s,
+$$<br>$$
+w_j(x)=
+\sum_{t\in K}a_{jt}x_t
+-\left(\sum_{t\in K}\mu_ta_{jt}\right)u(x),
+$$<br>and<br>$$
+v_a(x)=
+\kappa_Nh^2
+\sum_{j=1}^N
+\phi\left(\frac{u(x)-c_j}{h}\right)
+\psi\left(\frac{w_j(x)}h\right).
+$$</p><p>Every coefficient of $w_j$ has absolute value at most two. Longitudinal bump interiors are disjoint, and all derivatives through order two vanish at their common endpoints. Hence at most one bump contributes at any point, and<br>$$
+|v_a|\le\kappa_Nh^2,
+$$<br>$$
+|\partial_sv_a|\le(6+2\cdot7)\kappa_Nh=20\kappa_Nh,
+$$<br>$$
+|\partial_r\partial_sv_a|
+\le(72+2\cdot6\cdot7\cdot2+84\cdot4)\kappa_N
+=576\kappa_N.
+$$<br>The definition of $\kappa_N$ verifies the bounds $B,G,H$. Also, $v_a$ is globally $C^2$ and $v_a(0)=0$.</p><p>On the allocation path,<br>$$
+u(\lambda\mu)=\lambda,\qquad w_j(\lambda\mu)=0.
+$$<br>Let $\mu_K$ be the mass vector restricted to $K$, and write<br>$$
+D_K=\operatorname{diag}(\mu_t:t\in K),
+\qquad
+C_K=I-\mathbf1\mu_K^{\mathsf T}.
+$$<br>Differentiation and integration yield the allocation vector restricted to $K$:<br>$$
+A_K(v_a)=d_ND_KC_K\sum_{j=1}^Na_j.
+$$</p><h3>3.3 What one query reveals</h3><p>At a query point, the value depends on at most one block $a_j$, and depends on it only through the linear functional $w_j(x)$.</p><p>We may therefore give the algorithm a stronger oracle: each query may reveal an arbitrary linear functional of one selected block. This stronger oracle can simulate every original value response, by applying the known functions $\phi$ and $\psi$ to the revealed functional. A lower bound for the stronger oracle is thus a lower bound for the value oracle.</p><h3>4. Lower bounds for continuous adaptive linear information</h3><h3>4.1 Prior and posterior geometry</h3><p>Give every coordinate of every $a_j$ the independent density<br>$$
+f(z)=
+\begin{cases}
+\cos^2(\pi z/2),&amp;|z|\le1,\\
+0,&amp;|z|&gt;1.
+\end{cases}
+$$<br>It is a probability density, and its Fisher integral is<br>$$
+\int_{-1}^1\frac{f&#x27;(z)^2}{f(z)}\,dz
+=\pi^2\int_{-1}^1\sin^2(\pi z/2)\,dz
+=\pi^2.
+$$</p><p>Include the algorithm’s random seed in the transcript $Y$. Conditional on $Y$, each block is constrained to an affine subspace by its revealed linear equations. Its density on that subspace is proportional to the original product density. The blocks remain conditionally independent.</p><p>Here is a justification that also covers adaptivity. Before each query, its block and linear functional are fixed by the preceding transcript. Conditioning that block on one linear equation restricts its density to the corresponding hyperplane, with a constant linear change-of-variables factor. Other blocks are unchanged. Induction proves the stated posterior description. A linearly dependent query does not reduce dimension.</p><p>Let $E_j$ be the tangent space of the posterior affine subspace for block $j$, and let $q_j$ be its number of queries. Then<br>$$
+\dim E_j\ge k-q_j,
+\qquad
+\sum_jq_j\le T.
+$$<br>Consequently, imposing one additional orthogonality constraint leaves a subspace of dimension at least $k-q_j-1$.</p><p>Define the prior score<br>$$
+s_j(a_j)=\nabla\log\prod_{t\in K}f(a_{jt}).
+$$<br>The unconditional score energy satisfies<br>$$
+\mathbb E\sum_j\|s_j\|_2^2=Nk\pi^2.
+$$</p><p>All integration-by-parts identities used below are valid on the posterior affine subspaces: the product density is $C^1$, compactly supported, and vanishes at its boundary.</p><h3>4.2 Mean-square lower bound</h3><p>Let $P_j$ be the orthogonal projection onto $E_j\cap\mathbf1^\perp$, and put $k_j=\operatorname{rank}P_j$. Then<br>$$
+\sum_jk_j\ge N(k-1)-T.
+$$<br>Also,<br>$$
+P_jC_K=P_j.
+$$</p><p>Write $m_j=\mathbb E[a_j\mid Y]$. Integrating the divergence of<br>$$
+P_j(a_j-m_j)\,p_j(a_j)
+$$<br>on the posterior affine subspace gives<br>$$
+\mathbb E[(a_j-m_j)\cdot P_js_j\mid Y]=-k_j.
+$$<br>Since $P_jC_K=P_j$, the same inner product equals<br>$$
+C_K(a_j-m_j)\cdot P_js_j.
+$$</p><p>Define<br>$$
+V_j=\mathbb E[\|C_K(a_j-m_j)\|_2^2\mid Y],
+\qquad
+F_j=\mathbb E[\|P_js_j\|_2^2\mid Y].
+$$<br>Cauchy–Schwarz, first within each block and then across blocks, gives<br>$$
+\sum_jk_j\le
+\sqrt{\left(\sum_jV_j\right)\left(\sum_jF_j\right)}.
+$$<br>Applying Cauchy–Schwarz again after averaging, and using<br>$$
+\mathbb E\sum_jF_j\le Nk\pi^2,
+$$<br>yields<br>$$
+\mathbb E\sum_jV_j
+\ge
+\frac{[N(k-1)-T]_+^2}{Nk\pi^2}.
+$$</p><p>Put<br>$$
+m_K=\min_{t\in K}\mu_t.
+$$<br>Conditional independence and the allocation formula imply that the total posterior variance of $A_K$ is at least<br>$$
+d_N^2m_K^2\sum_jV_j.
+$$<br>Every estimator’s conditional squared error is at least the posterior variance. Dividing the total coordinate risk by $k$, and observing that a worst-case risk dominates the prior average, proves<br>$$
+\boxed{
+R_T\ge
+\frac{d_N^2m_K^2[N(k-1)-T]_+^2}{Nk^2\pi^2}.
+}
+$$<br>This holds for every subset $K$ with $k\ge2$ and every integer $N\ge1$.</p><h3>4.3 Confidence lower bound</h3><p>A related integration argument gives a probability bound directly.</p><p>Now let $P_j$ project onto $E_j\cap\mu_K^\perp$. Again,<br>$$
+\sum_j\operatorname{rank}P_j\ge N(k-1)-T,
+$$<br>and this choice gives<br>$$
+C_KP_j=P_j.
+$$</p><p>For a reported allocation vector, define<br>$$
+b_t=\varepsilon\arctan\left(\frac{A_t-\widehat A_t}{\varepsilon}\right),
+\qquad t\in K.
+$$<br>Then<br>$$
+|b_t|\le\frac{\pi\varepsilon}{2},
+$$<br>and its derivative with respect to its error argument is at least $1/2$ whenever $|A_t-\widehat A_t|\le\varepsilon$.</p><p>For fixed transcript, integrate the divergence, in block $j$, of the tangent vector field<br>$$
+P_jD_K^{-1}b.
+$$<br>Because differentiation of $A_K$ with respect to $a_j$ gives $d_ND_KC_K$, its divergence is<br>$$
+d_N\sum_{t\in K}(P_j)_{tt}
+\frac1{1+((A_t-\widehat A_t)/\varepsilon)^2}.
+$$<br>Every term is nonnegative. On simultaneous success for $K$, this is at least<br>$$
+\frac{d_N}{2}\operatorname{rank}P_j.
+$$</p><p>The integrated divergence identity, summed over blocks, therefore implies<br>$$
+\frac{d_N}{2}[N(k-1)-T]_+
+\Pr(\text{success on }K)
+\le
+\left|
+\mathbb E\left[
+D_K^{-1}b\cdot\sum_jP_js_j
+\right]\right|.
+$$<br>Each projected score has conditional mean zero. Conditional independence consequently gives<br>$$
+\mathbb E\left\|\sum_jP_js_j\right\|_2^2
+\le Nk\pi^2.
+$$<br>Also,<br>$$
+\|D_K^{-1}b\|_2
+\le\frac{\pi\varepsilon\sqrt{k}}{2m_K}.
+$$<br>Cauchy–Schwarz now gives<br>$$
+\frac{d_N}{2}[N(k-1)-T]_+
+\Pr(\text{success on }K)
+\le
+\frac{\pi^2\varepsilon k\sqrt N}{2m_K}.
+$$</p><p>A uniform simultaneous guarantee implies prior-average success on $K$ at least $1-\delta$. Thus<br>$$
+\boxed{
+e_T(\delta)\ge
+\frac{d_Nm_K[N(k-1)-T]_+(1-\delta)}
+{\pi^2k\sqrt N}.
+}
+$$</p><h3>5. Consequences for arbitrary masses and growing support</h3><p>Order the masses as<br>$$
+\mu_{(1)}\ge\mu_{(2)}\ge\cdots\ge\mu_{(\tau)},
+$$<br>and define<br>$$
+W_\mu=\max_{2\le k\le\tau}k^3\mu_{(k)}^2,
+\qquad
+K_0=\max\left\{1,\frac HG,\sqrt{\frac HB}\right\}.
+$$</p><p>Suppose<br>$$
+T\ge5\tau K_0.
+$$<br>For the $k$ largest masses, choose<br>$$
+N=\left\lceil\frac{2(T+1)}{k-1}\right\rceil.
+$$<br>Then $\kappa_N=H/576$, and<br>$$
+N(k-1)-T\ge\frac{N(k-1)}2,
+\qquad
+N\le\frac{3(T+1)}{k-1}.
+$$<br>Since $k-1\ge k/2$, substitution into the lower bounds proves, for universal positive constants $c,C$,<br>$$
+\boxed{
+c\frac{H^2W_\mu}{(T+1)^3}
+\le R_T
+\le C\frac{H^2S_\theta^3}{T^3}.
+}
+$$<br>Similarly,<br>$$
+\boxed{
+c\frac{H\sqrt{W_\mu}(1-\delta)}{(T+1)^{3/2}}
+\le e_T(\delta)
+\le
+CH\min\left\{
+\frac{S_\theta^{3/2}\sqrt{\log(2\tau/\delta)}}{T^{3/2}},
+\frac{Z_\theta}{T}
+\right\}.
+}
+$$</p><h3>5.1 The mean-square coefficient gap is at most logarithmic cubed</h3><p>Write $p_i=\mu_{(i)}$. By the definition of $W_\mu$, for $i\ge2$,<br>$$
+p_i^{2/3}\le\frac{W_\mu^{1/3}}i.
+$$<br>Furthermore,<br>$$
+\theta_{(1)}^{2/3}
+=[p_1(1-p_1)]^{2/3}
+\le\left(\sum_{i=2}^\tau p_i\right)^{2/3}
+\le\sum_{i=2}^\tau p_i^{2/3}.
+$$<br>The last inequality follows from subadditivity of the power $2/3$. Since $\theta_{(i)}\le p_i$ for the other types,<br>$$
+S_\theta
+\le2\sum_{i=2}^\tau p_i^{2/3}
+\le2W_\mu^{1/3}\sum_{i=2}^\tau\frac1i
+\le2W_\mu^{1/3}\log\tau.
+$$<br>Therefore,<br>$$
+\boxed{S_\theta^3\le8W_\mu(\log\tau)^3.}
+$$</p><p>Thus the large-budget mean-square bounds match within a factor $O((\log\tau)^3)$ uniformly over all mass vectors. Whether this logarithmic gap is necessary remains open.</p><h3>5.2 Equal masses are completely characterized in this regime</h3><p>If $\mu_t=1/\tau$, then<br>$$
+W_\mu=\tau,
+$$<br>and<br>$$
+S_\theta^3
+=\tau\left(1-\frac1\tau\right)^2.
+$$<br>Hence, for $T\ge5\tau K_0$,<br>$$
+\boxed{
+R_T=\Theta\!\left(\frac{H^2\tau}{T^3}\right),
+}
+$$<br>with universal implicit constants.</p><p>Equivalently, in the small-error regime in which the necessary budgets exceed this threshold, the mean-square query complexity is<br>$$
+\Theta\!\left(
+H^{2/3}\tau^{1/3}\varepsilon^{-2/3}
+\right).
+$$</p><p>For equal masses, the confidence bounds give<br>$$
+c\frac{H\sqrt{\tau}(1-\delta)}{(T+1)^{3/2}}
+\le e_T(\delta)
+\le
+CH\min\left\{
+\frac{\sqrt{\tau\log(2\tau/\delta)}}{T^{3/2}},
+\frac1T
+\right\}.
+$$<br>These do not establish whether the simultaneous-type logarithm is necessary.</p><p>For every fixed nondegenerate society, the same bounds prove<br>$$
+R_T=\Theta(T^{-3}),
+\qquad
+e_T(\delta)=\Theta(T^{-3/2})
+$$<br>for each fixed $0&lt;\delta&lt;1$.</p><h3>6. Sharp confidence dependence for two types</h3><p>Here the logarithmic dependence on $\delta$ can also be matched.</p><h3>6.1 Upper bound</h3><p>Suppose $\tau=2$, and write $m=\mu_1$, $b=\mu_2=1-m$. Query $V=v(\mu)$, estimate $A_1$ using the centered integrand, and return<br>$$
+\widehat A_2=V-\widehat A_1.
+$$<br>Completeness implies that the two errors have the same absolute value.</p><p>For<br>$$
+n=\left\lfloor\frac{T-1}{2}\right\rfloor\ge1,
+$$<br>the centered integrand has Lipschitz constant $2Hmb$. The bounds from Section 2 give<br>$$
+R_T\le\frac{H^2m^2b^2}{3n^3}
+$$<br>and<br>$$
+e_T(\delta)\le
+Hmb\min\left\{
+\sqrt{\frac{2\log(2/\delta)}{n^3}},
+\frac1{2n}
+\right\}.
+$$</p><h3>6.2 A sign construction and its remaining uncertainty</h3><p>Use the same $h,c_j,\kappa_N,d_N$ as above, but now put<br>$$
+w(x)=bx_1-mx_2
+$$<br>and, for independent uniform signs $\xi_j$,<br>$$
+v_\xi(x)=
+\kappa_Nh^2\sum_{j=1}^N
+\xi_j
+\phi\left(\frac{x_1+x_2-c_j}{h}\right)
+\psi\left(\frac{w(x)}h\right).
+$$<br>The previous admissibility estimates apply, since the coefficients of $w$ have absolute value at most one. Its allocation is<br>$$
+A_1(v_\xi)=d_Nmb\sum_{j=1}^N\xi_j.
+$$</p><p>Every value query depends on at most one sign. Conditional on the algorithm’s seed and transcript, unrevealed signs remain independent and uniform. At least $N-T$ signs remain.</p><p>For a sum $S_k$ of $k$ independent signs, define<br>$$
+q_k(r)=\sup_{a\in\mathbb R}\Pr(|S_k-a|\le r).
+$$<br>Adding an independent summand cannot increase this concentration function: condition on that summand and bound each shifted interval by the original supremum. Consequently, a necessary confidence condition is<br>$$
+q_{N-T}\left(\frac{\varepsilon}{d_Nmb}\right)\ge1-\delta.
+$$</p><h3>6.3 An elementary Rademacher tail bound</h3><p>We prove that there is a universal $c_0&gt;0$ such that, for $k\ge1$ and $0&lt;\delta\le1/8$,<br>$$
+q_k(r)\ge1-\delta
+\quad\Longrightarrow\quad
+r\ge c_0\min\left\{k,\sqrt{k\log(1/\delta)}\right\}.
+$$</p><p>First, for every $s\ge1$,<br>$$
+\Pr(S_s\ge\sqrt{s}/20)\ge\frac14.
+$$<br>For $s\le400$, the threshold is at most one, so the event contains every positive value. For even $s\ge2$, the zero atom is at most $1/2$; for odd $s$, there is no zero atom. Thus the positive probability is at least $1/4$.</p><p>For $s&gt;400$, use the bound that the largest atom is at most $1/\sqrt{s+1}$. To verify it, write<br>$$
+p_{2r}=2^{-2r}\binom{2r}{r},
+\qquad
+p_{2r+2}=p_{2r}\frac{2r+1}{2r+2}.
+$$<br>Induction gives $p_{2r}^2\le1/(2r+1)$, because<br>$$
+(2r+1)(2r+3)\le(2r+2)^2.
+$$<br>The odd case follows from<br>$$
+p_{2r+1}=p_{2r}\frac{2r+1}{2r+2}.
+$$<br>An interval of radius $r$ contains at most $\lfloor r\rfloor+1$ atoms, since the lattice spacing is two. Therefore,<br>$$
+\Pr(|S_s|&lt;\sqrt{s}/20)
+\le\frac{\sqrt{s}/20+1}{\sqrt{s+1}}
+&lt;\frac1{10}.
+$$<br>Symmetry proves the desired positive-tail probability.</p><p>Now split the $k$ signs into $\ell$ blocks of nearly equal size, where $1\le\ell\le k$. Each block has size at least $k/(2\ell)$. With probability at least $4^{-\ell}$, every block sum exceeds its own square-root threshold, implying<br>$$
+S_k\ge\frac{\sqrt{k\ell}}{20\sqrt2}.
+$$<br>By symmetry, the corresponding negative event has the same probability.</p><p>An interval of radius strictly less than $\sqrt{k\ell}/(20\sqrt2)$ cannot intersect both tail sets. Hence<br>$$
+q_k(r)\le1-4^{-\ell}
+\quad\text{if}\quad
+r&lt;\frac{\sqrt{k\ell}}{20\sqrt2}.
+$$</p><p>Choose<br>$$
+\ell=
+\min\left\{
+k,\max\left\{
+1,\left\lfloor\frac{\log(1/\delta)}{2\log4}\right\rfloor
+\right\}
+\right\}.
+$$<br>For $\delta\le1/8$, this choice satisfies $4^{-\ell}&gt;\delta$, and $\ell$ is at least a universal constant times $\min\{k,\log(1/\delta)\}$. This proves the claimed concentration implication.</p><h3>6.4 Matching confidence radius</h3><p>Take<br>$$
+N=2(T+1).
+$$<br>For $T\ge10K_0$, we have $\kappa_N=H/576$. Applying the tail bound with $k=N-T=T+2$, and comparing with the upper bound, proves<br>$$
+\boxed{
+e_T(\delta)=
+\Theta\!\left(
+H\mu_1\mu_2
+\min\left\{
+\frac{\sqrt{\log(1/\delta)}}{(T+1)^{3/2}},
+\frac1{T+1}
+\right\}
+\right),
+\qquad 0&lt;\delta\le\frac18.
+}
+$$<br>The implicit constants are universal.</p><p>The same sign construction has conditional allocation variance at least $(N-T)d_N^2m^2b^2$. Together with the upper bound, it also gives<br>$$
+\boxed{
+R_T=\Theta\!\left(
+\frac{H^2\mu_1^2\mu_2^2}{(T+1)^3}
+\right)
+}
+$$<br>under the same sufficient budget threshold.</p><p>Thus the intermediate-confidence transition for two types is resolved in this regime: random stratification gives the square-root logarithm until $\log(1/\delta)$ reaches order $T$, after which the deterministic order is optimal.</p><p>Equivalently, when the resulting budgets lie in this large-budget regime, two-type confidence query complexity is<br>$$
+\Theta\!\left(
+\min\left\{
+\left(\frac{H\mu_1\mu_2}{\varepsilon}\right)^{2/3}
+\log(1/\delta)^{1/3},
+\frac{H\mu_1\mu_2}{\varepsilon}
+\right\}
+\right).
+$$</p><h3>7. Arithmetic running time</h3><p>The upper-bound algorithms require finite randomness. Each midpoint-grid choice uses a fixed number of fair random bits, because its grid size is a power of two.</p><p>Sample counts can be computed by doubling and binary search with cubic comparisons; no exact cube-root operation is required. In confidence implementations, replace $\log(2s/\delta)$ by the larger integer<br>$$
+\left\lceil\log_2(2s/\delta)\right\rceil.
+$$<br>Dyadic weights for $\theta_t^{2/3}$ are likewise found using cubic comparisons. Finite-difference steps use a constant number of arithmetic operations and comparisons per sample. All query points are rational when the accuracy parameters are rational.</p><p>For an accuracy-targeted implementation using at most $T$ queries, a conservative arithmetic and random-bit operation bound is<br>$$
+O\left(
+L+\tau(T+1)
++T\log(2+H/\varepsilon)
++\tau\log(2+T+\tau/\delta)
+\right).
+$$<br>For mean-square or deterministic guarantees, omit the dependence on $\delta$. The factor $\tau T$ accounts for constructing query vectors. The bounds $B$ and $G$ require only input processing and comparisons in these algorithms.</p><p>For a fixed-budget implementation with additional numerical error $\eta$, replace $\varepsilon$ in this running-time bound by $\eta$. These are exact-arithmetic bounds, not bit-complexity claims for oracle answers.</p><h3>8. Remaining open points</h3><p>The results above do not settle the full target.</p><ul><li>For arbitrary unequal masses, the large-budget mean-square coefficients $W_\mu$ and $S_\theta^3$ still need not match. Their ratio is now bounded by $O((\log\tau)^3)$, but the necessity of this gap is unproved.</li><li>The finite-budget transitions involving $B,G,H$ remain incompletely characterized. In particular, approximate recovery below the exact-recovery budget when $H=0$ is unresolved here.</li><li>For general support size, the simultaneous-confidence dependence on $\tau$ and $\delta$ is not matched. The two-type high-confidence result does not settle this question.</li><li>Uniform dependence as $\delta$ approaches one, where the required success probability becomes small, is not characterized here.</li></ul><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 2.5, displayed simultaneous-confidence query count: When the estimated set is empty, $s=0$ and $\log(2s/\delta)$ is undefined. Explicitly define $s=|S|$, restrict the logarithmic expression to $s\ge1$, and state the already-described endpoint-query procedure separately for $s=0$.</li><li><b>major</b> — Sections 5.1 and 8, arbitrary-mass mean-square characterization: The proved lower and upper coefficients $W_\mu$ and $S_\theta^3$ can differ by a nonconstant factor. Their logarithmic comparison does not determine the full mass-dependent minimax risk required by the task.</li><li><b>major</b> — Sections 1, 5, 6.4, and 8, finite-budget regimes: The matching results require large-budget thresholds. The output does not characterize all transitions involving $B,G,H$, including approximate recovery when $H=0$ below the stated exact-recovery budget.</li><li><b>major</b> — Sections 5.2 and 8, general simultaneous confidence: For general support size, the lower and upper confidence bounds do not match their dependence on $\tau$ and $\delta$. The two-type characterization does not resolve this part of the assigned minimax problem.</li><li><b>major</b> — Section 8, confidence as $\delta$ approaches one: The output does not characterize uniform minimax confidence behavior when the required success probability $1-\delta$ becomes small.</li></ul>
+<div class="pre"><p>The output is a <b>correct partial solution</b>. Its large-budget mean-square bounds, logarithmic comparison for arbitrary masses, and two-type confidence characterization withstand verification. It does not resolve the full minimax question, as it explicitly acknowledges. I found no false central step and one minor edge-case defect in a displayed upper bound.</p><p>The unresolved parts require additional mathematics, rather than clarification of the existing proofs.</p><ul><li><b>Definitions and elementary cases are correct.</b></li></ul><p>The definitions of $R_T$ and $e_T(\delta)$ preserve the requirement that every run uses at most $T$ queries. Their ordering of worst-case input and algorithmic expectation matches the task.</p><p>Completeness follows from the chain rule:<br>$$
+   \sum_t A_t=v(\mu)-v(0)=v(\mu).
+   $$<br>The coordinate bound $|A_t|\le\mu_tG$ is also correct.</p><p>If $B=0$, the function vanishes throughout the box; its derivatives on the interior, and hence by continuity on the box, vanish. If $G=0$, the same allocation conclusion follows directly.</p><p>For $\tau=1$, the claimed zero-query risk is exact. Both proposed linear functions satisfy all three bounds, including any prescribed $H\ge0$. Averaging their squared errors gives the asserted lower bound even for randomized estimators.</p><p>When $H=0$, the gradient is constant on the connected interior of the box and extends continuously to its boundary. The proposed $\tau$ axis queries therefore recover the allocations exactly. This proves an exact-recovery upper bound; it does not characterize optimal approximate recovery with fewer queries.</p><ul><li><b>The radial decomposition and finite-difference bounds are correct.</b></li></ul><p>Since $\tau\ge2$ and every mass is positive, $0&lt;\mu_t&lt;1$. Thus the directions and denominators used in Section 2 are well-defined.</p><p>The identities<br>$$
+   A_t=\mu_tV+\int_0^1q_t(\lambda)\,d\lambda,
+   \qquad
+   \|r_t\|_1=2(1-\mu_t)
+   $$<br>are correct. The entrywise derivative and Hessian bounds give precisely<br>$$
+   |q_t|\le2G\theta_t,
+   \qquad
+   |q_t&#x27;|\le2H\theta_t.
+   $$</p><p>The two restrictions on $h$ ensure that every queried coordinate remains in its permitted interval. The directional Hessian estimate gives the stated finite-difference error:<br>$$
+   |Q_{t,h}-q_t|
+   \le2H\mu_t(1-\mu_t)^2h.
+   $$<br>Consequently, the prescribed restriction $h\le\eta/(4H\mu_t)$ is sufficient for error at most $\eta/2$.</p><p>Arbitrarily small positive steps are permitted by the noiseless oracle and exact-arithmetic model. The argument does not assume gradient access.</p><ul><li><b>The stratified mean-square and confidence estimates are correct.</b></li></ul><p>Uniform sampling from the midpoint grid in a stratum has variance at most $1/(12n_t^2)$. The independent-copy identity and Lipschitz bound therefore establish<br>$$
+   \operatorname{Var}(F_t)\le\frac{c_t^2}{12n_t^3}.
+   $$</p><p>The expectation is exactly the composite midpoint rule. Its stated Lipschitz bias bound, $c_t/(4n_tM_t)$, has the correct constant. The choices of $M_t$ and finite-difference step bound the two approximation contributions by $\eta/2$ each. The root-mean-square bound follows by the triangle inequality in $L^2$.</p><p>The moment-generating-function argument is valid: a variable with range length $a$ has variance at most $a^2/4$, including under exponential tilting. Independence then gives the stated exponential tail bound. The union bound correctly supplies simultaneous confidence over the estimated coordinates.</p><p>The deterministic midpoint estimate also has the correct error $c_t/(4n_t)$ before the numerical approximation contribution.</p><p>The sample counts in Section 2.5 meet their respective targets, including the constants inside the cube roots.</p><p><b>Minor issue:</b> the displayed confidence query-count expression is undefined when $S$ is empty, because it contains $\log(2s/\delta)$ with $s=0$. This case is allowed by the assumptions.</p><p><b>Minimum clarification:</b> explicitly set $s=|S|$, restrict that expression to $s\ge1$, and state separately the already-described endpoint-query algorithm when $S$ is empty. No additional mathematics is needed.</p><ul><li><b>The fixed-budget upper bounds are valid as minimax-infimum statements.</b></li></ul><p>The dyadic weights satisfy the required comparison with $\theta_t^{2/3}$. The floor allocation obeys both<br>$$
+   1+2\sum_tn_t\le T
+   $$<br>and<br>$$
+   n_t\ge\frac{(T-1)\theta_t^{2/3}}{8S_\theta}.
+   $$<br>Substitution produces a universal-constant bound proportional to $H^2S_\theta^3/T^3$.</p><p>The deterministic allocation has the same valid query accounting and yields the stated dependence on $HZ_\theta/T$. Choosing between the randomized and deterministic algorithms justifies the minimum in the confidence upper bound.</p><p>Passing to $\eta\downarrow0$ is legitimate because $R_T$ and $e_T(\delta)$ are infima over algorithms. The output correctly distinguishes these infimum bounds from finite implementations with a positive additional numerical error.</p><ul><li><b>The continuous lower-bound family is admissible, and its allocation formula is correct.</b></li></ul><p>The polynomial derivative formulas are correct. Both cutoff functions have values and derivatives through order two equal to zero at their support endpoints, so their extensions are globally $C^2$.</p><p>The conservative derivative bounds are valid. The critical numerical calculations check:<br>$$
+   72+2\cdot6\cdot7\cdot2+84\cdot4=576,
+   $$<br>$$
+   \int_{-1}^1\phi(z)\,dz=\frac{32}{35}.
+   $$</p><p>The coefficients of $w_j$ have absolute value at most two. Only one longitudinal bump has a nonzero contribution at any point; at shared endpoints, all derivatives needed here vanish. Therefore the stated function, gradient, and Hessian bounds hold.</p><p>With $h=1/(2N)$, the gradient bound becomes $10\kappa_N/N$, and the value bound becomes $\kappa_N/(4N^2)$. Each is bounded by the corresponding prescribed input bound. The Hessian bound is controlled by $576\kappa_N$. Also, $v_a(0)=0$.</p><p>Along the allocation path, $w_j=0$ and $\psi&#x27;(0)=1$. The resulting coefficient is<br>$$
+   \kappa_Nh^2\frac{32}{35}
+   =\frac{8\kappa_N}{35N^2}=d_N.
+   $$<br>This verifies<br>$$
+   A_K(v_a)=d_ND_KC_K\sum_ja_j.
+   $$</p><ul><li><b>The stronger-oracle reduction and adaptive posterior argument are sound.</b></li></ul><p>Every value query depends on at most one block through a single linear functional. The strengthened oracle can reveal that functional and reproduce the value response. Its greater information makes its lower bounds applicable to the original oracle.</p><p>Including the independent random seed in the transcript is appropriate. Conditional on preceding responses, the next measurement functional is fixed. Conditioning on its value restricts the chosen block to an affine hyperplane, with a constant linear change-of-variables factor. Thus the asserted posterior description and conditional block independence hold for almost every transcript, including adaptive algorithms.</p><p>Dependent measurements do not reduce dimension. Consequently,<br>$$
+   \dim E_j\ge k-q_j
+   $$<br>and the subsequent rank bounds are correct.</p><p>The prior density is normalized, and its Fisher integral is indeed $\pi^2$. The compactly supported product density has the boundary vanishing needed for the integration-by-parts identities. Its restriction to a posterior affine subspace retains the required regularity; zero-dimensional cases contribute no tangent divergence.</p><ul><li><b>The mean-square lower bound follows from the stated integration argument.</b></li></ul><p>For projection onto $E_j\cap\mathbf1^\perp$, the identity $P_jC_K=P_j$ is correct. It is the appropriate left-projection identity for the inner product used in this section.</p><p>Integration by parts gives the displayed identity with $-k_j$. The two conditional Cauchy–Schwarz applications and the subsequent averaging correctly yield<br>$$
+   \mathbb E\sum_jV_j
+   \ge
+   \frac{[N(k-1)-T]_+^2}{Nk\pi^2}.
+   $$</p><p>Conditional independence eliminates cross-block centered covariance terms. Multiplication by $D_K$ decreases the squared norm by at most the factor $m_K^2$ used in the lower bound. Posterior variance lower-bounds every estimator’s conditional squared error.</p><p>Dividing the summed coordinate risk by $k$ is valid for the task’s maximum-coordinate mean-square criterion. The resulting boxed lower bound is established.</p><ul><li><b>The confidence lower bound also follows.</b></li></ul><p>Projection onto $E_j\cap\mu_K^\perp$ gives the different identity needed here:<br>$$
+   C_KP_j=P_j.
+   $$</p><p>The bounded arctangent transformation has the claimed magnitude and derivative bounds. For fixed transcript, the reported estimate is constant when differentiating over the posterior parameters.</p><p>The divergence calculation is correct. In particular, the projection identity reduces its trace to<br>$$
+   d_N\sum_{t\in K}(P_j)_{tt}
+   \frac{1}{1+((A_t-\widehat A_t)/\varepsilon)^2}.
+   $$<br>Orthogonal-projection diagonal entries are nonnegative. On simultaneous success, every derivative factor is at least $1/2$, giving the required rank contribution.</p><p>Projected scores have conditional mean zero. Conditional block independence therefore removes their cross terms in the squared norm of their sum. The remaining Fisher-energy and Cauchy–Schwarz estimates have the stated constants.</p><p>A uniform confidence guarantee implies the required prior-average success probability. Hence the boxed confidence lower bound is valid.</p><ul><li><b>The arbitrary-mass and equal-mass consequences are correct in the stated regime.</b></li></ul><p>Under $T\ge5\tau K_0$, the chosen $N$ makes both the gradient and value restrictions inactive in $\kappa_N$, leaving $\kappa_N=H/576$. The ceiling bounds and residual-dimension bounds are valid.</p><p>Substitution yields the claimed lower coefficients $W_\mu$ and $\sqrt{W_\mu}$. The upper bounds apply because this threshold also exceeds their required budget threshold.</p><p>The coefficient comparison is valid:<br>$$
+   p_i^{2/3}\le\frac{W_\mu^{1/3}}i
+   \quad\text{for }i\ge2.
+   $$<br>Subadditivity controls the largest mass’s contribution, and<br>$$
+   \sum_{i=2}^{\tau}\frac1i\le\log\tau.
+   $$<br>Thus $S_\theta^3\le8W_\mu(\log\tau)^3$ follows.</p><p>For equal masses, the formulas<br>$$
+   W_\mu=\tau,
+   \qquad
+   S_\theta^3=\tau(1-1/\tau)^2
+   $$<br>are correct. They establish the claimed universal-constant mean-square characterization in the specified large-budget regime.</p><p>The fixed-society asymptotic statements also follow when the society is nondegenerate as assumed and $\delta$ is fixed.</p><ul><li><b>The two-type confidence characterization is established.</b></li></ul><p>Completeness makes the two allocation errors equal in absolute value when the second estimate is defined by subtraction from the queried endpoint value. The stated mean-square and confidence upper constants follow from Section 2.</p><p>In the sign construction, every query depends on at most one sign. Unrevealed signs remain independent and uniform conditional on the seed and transcript. Queries returning no sign information only increase the remaining uncertainty. The necessary concentration-function condition is therefore valid.</p><p>The elementary tail argument checks out:</p><ul><li>For the small block sizes, the stated threshold includes every positive lattice value, whose probability is at least $1/4$.</li><li>The central-atom recurrence proves the asserted maximum-atom bound.</li><li>For larger block sizes, the interval count yields the displayed probability bound.</li><li>Nearly equal blocks have the claimed minimum size, and independence gives probability at least $4^{-\ell}$ for the joint positive-tail event.</li><li>An interval with the prescribed smaller radius cannot meet both tail sets.</li><li>The chosen $\ell$ satisfies $4^{-\ell}&gt;\delta$ throughout the specified range and has the required comparison with $\min\{k,\log(1/\delta)\}$.</li></ul><p>Taking $N=2(T+1)$ consequently gives the stated confidence lower bound, including its deterministic saturation. The conditional-variance argument establishes the accompanying two-type mean-square lower bound. The query-complexity inversion is valid with the stated large-budget qualification.</p><ul><li><b>The arithmetic-time claims are consistent with the model.</b></li></ul><p>The algorithms use finite random-bit strings, rational grids when the accuracy parameters are rational, and arithmetic comparisons instead of exact cube roots. Replacing the natural logarithm by the indicated ceiling of a binary logarithm is conservative.</p><p>The displayed time bound accommodates query-vector construction, sample-count searches, dyadic-weight selection, and random-bit generation under unit-cost exact arithmetic. It is correctly identified as an arithmetic bound rather than bit complexity for oracle answers.</p><ul><li><b>Major scope limitations remain.</b></li></ul><p>These are acknowledged omissions, not contradictions in the proved bounds:</p><ul><li><b>Arbitrary masses:</b> the lower and upper mean-square coefficients differ by a potentially nonconstant logarithmic factor. A full minimax answer requires closing that gap or establishing the actual intermediate dependence.</li><li><b>Finite budgets and input bounds:</b> the large-budget results do not characterize the transitions governed by $B,G,H$, including approximate recovery below the stated exact-recovery budget when $H=0$.</li><li><b>General simultaneous confidence:</b> the dependence on support size and confidence is unmatched outside the two-type result.</li><li><b>Small success probabilities:</b> uniform behavior as $\delta$ approaches one is unresolved.</li></ul><p>Completing these portions requires additional results with matching guarantees over the relevant parameter ranges. Expositional changes alone cannot settle them.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

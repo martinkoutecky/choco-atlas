@@ -22,13 +22,14 @@
 </style></head><body>
 <p><a href="../index.html">← back to the atlas</a></p>
 <h1>On Fair Division under Heterogeneous Matroid Constraints <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2021-0864)</span></h1>
-<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved</p>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved</p>
 <p class="answer"><b>Answer:</b> \(\mathrm{P}\) for decision, with polynomial-time construction of a polynomial-size rational allocation.</p>
 <h2>The anchor (named result in the paper)</h2>
 <p>Theorem 6 — class: algorithmic</p>
 <blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>In every setting with partition matroids with binary valuations (possibly het- erogeneous capacities and heterogeneous valuations), an F-EF1 allocation exists and can be computed eﬃciently by the Iterated Priority Matching Algorithm (Algorithm 5). Two key tools we use are the agent-item graph and the priority matching, deﬁned next. Deﬁnition 13 (Agent-item graph). Given a category h and a partial allocation X, the agent-item graph is a bipartite graph Gh, where one side consists of the agents with remain- ing capacity (i.e., agents such that |Xh i | &lt; kh i ), and one side consists of the unallocated items of Ch.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
 <h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given recurring slot types \(G\) partitioned into categories \(C_h\), rational type masses \(\mu_t\), rational per-capita supplies \(\rho_g\), binary values \(v_t(g)\), and capacities \(k_{t,h}\), find nonnegative masses \(y_{t,B}\) over integral feasible configurations \(B\in\mathcal B_t\) satisfying \(\sum_B y_{t,B}=\mu_t\), \(\sum_{t,B} b_g(B)y_{t,B}=\rho_g\), and, for every positive-mass pair \(t,u\), \(\frac{1}{\mu_t}\sum_B y_{t,B}v_t(B)\ge\frac{1}{\mu_u}\sum_B y_{u,B}e_t(B)\), where \(e_t(B)=\min_{Y\subseteq B,\ |Y|\le1}\max_{S\subseteq B\setminus Y,\ S\in\mathcal B_t}v_t(S)\); decide whether such a complete type-\(\mathrm{F\text{-}EF1}_\infty\) allocation exists and construct it if so.</p></div>
 <h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(G\) be recurring slot types partitioned into categories \(C_h\). Each population type \(t\) has rational mass \(\mu_t&gt;0\), binary per-copy values \(v_t(g)\), and category capacities \(k_{t,h}\). An integral configuration \(B\in\mathcal B_t\) has counts \(b_g(B)\in\mathbb Z_{\ge0}\) with \(\sum_{g\in C_h}b_g(B)\le k_{t,h}\); its value is \(v_t(B)=\sum_g b_g(B)v_t(g)\). Define \(e_t(B)=\min_{Y\subseteq B,\ |Y|\le1}\max_{S\subseteq B\setminus Y,\ S\in\mathcal B_t}v_t(S)\), where \(Y\) removes at most one copy.<br>Given rational per-capita supplies \(\rho_g\), seek nonnegative masses \(y_{t,B}\) satisfying \(\sum_B y_{t,B}=\mu_t\), \(\sum_{t,B}b_g(B)y_{t,B}=\rho_g\), and, for every \(t,u\), \(\frac{\sum_B y_{t,B}v_t(B)}{\mu_t}\ge\frac{\sum_B y_{u,B}e_t(B)}{\mu_u}\). The equalities require complete allocation; the inequalities define type-\(\mathrm{F\text{-}EF1}_\infty\).<br>Is deciding whether such an allocation exists, and constructing one when it does, in \(\mathrm P\) or \(\mathrm{NP}\)-hard?<br>For finite agents with shared categories, heterogeneous capacities, and binary values, a complete feasible \(\mathrm{F\text{-}EF1}\) allocation can be found in polynomial time. Related divisible-goods work establishes envy-free fractional allocations under linear constraints, but does not address masses over integral configurations with the fairness inequalities above.</p></div>
+
 <h2>Prover output (gpt-6-astra / medium, Bolzano prover prompt)</h2><div class="pre"><h3>Polynomial-time decision and construction</h3><p>The problem is in \(\mathrm P\), including construction of an allocation with polynomial support and polynomial encoding length. In fact, the construction satisfies the stronger condition of <b>expected feasible envy-freeness without removing a copy</b>.</p><h3>1. Feasibility criterion</h3><p>Let \(T\) be the set of population types. Capacities are nonnegative integers; if a capacity is given as a nonnegative rational, replace it by its floor, which leaves the integral configuration family unchanged.</p><p><b>Theorem.</b> A requested allocation exists if and only if supplies are nonnegative and, for every category \(h\),</p><p>\(\displaystyle \sum_{g\in C_h}\rho_g\le \sum_{t\in T}\mu_t k_{t,h}.\)</p><p>When these conditions hold, an allocation can be constructed in polynomial time with at most \(|G|+1\) configurations per population type.</p><p><b>Necessity.</b> Any feasible configuration-mass allocation satisfies</p><p>\(\displaystyle
 \sum_{g\in C_h}\rho_g
 =\sum_{t\in T}\sum_{B\in\mathcal B_t}y_{t,B}\sum_{g\in C_h}b_g(B)
@@ -38,12 +39,12 @@
 \sum_t\mu_t x_{t,g}=\rho_g,
 \qquad
 \sum_{g\in C_h}x_{t,g}\le k_{t,h}.
-\)</p><p>They will additionally satisfy, for every \(t,u,h\),</p><p>\(\displaystyle
+\)</p><p>They will additionally satisfy, for every \(t,u,h\),</p><p>\[\displaystyle
 \sum_{g\in C_h}v_t(g)x_{t,g}
 \ge
 \min\!\left\{k_{t,h},\sum_{g\in C_h}v_t(g)x_{u,g}\right\}.
 \tag{1}
-\)</p><p>Process categories independently. Fix a category \(h\), initially with its full supply unallocated.</p><h3>Simultaneous consumption</h3><p>All types start at time zero. A type is active while it has remaining category capacity and some positively supplied good in this category that it values at one.</p><p>Each active type \(t\) selects any such good and consumes it at aggregate rate \(\mu_t\). Thus every active type consumes at <b>per-capita rate one</b>. A type switches goods when its selected good is exhausted. It stops permanently when either its capacity is reached or all goods it values in this category are exhausted.</p><p>This procedure has a finite event implementation. If \(r_g\) denotes residual supply, \(z_t\) denotes the per-capita amount already consumed, and each active type has selected one good, let</p><p>\(\displaystyle R_g=\sum_{\substack{t\text{ active}\\t\text{ selected }g}}\mu_t.\)</p><p>Advance time by</p><p>\(\displaystyle
+\]</p><p>Process categories independently. Fix a category \(h\), initially with its full supply unallocated.</p><h3>Simultaneous consumption</h3><p>All types start at time zero. A type is active while it has remaining category capacity and some positively supplied good in this category that it values at one.</p><p>Each active type \(t\) selects any such good and consumes it at aggregate rate \(\mu_t\). Thus every active type consumes at <b>per-capita rate one</b>. A type switches goods when its selected good is exhausted. It stops permanently when either its capacity is reached or all goods it values in this category are exhausted.</p><p>This procedure has a finite event implementation. If \(r_g\) denotes residual supply, \(z_t\) denotes the per-capita amount already consumed, and each active type has selected one good, let</p><p>\(\displaystyle R_g=\sum_{\substack{t\text{ active}\\t\text{ selected }g}}\mu_t.\)</p><p>Advance time by</p><p>\(\displaystyle
 \Delta=
 \min\!\left(
 \{k_{t,h}-z_t:t\text{ active}\}
@@ -57,25 +58,25 @@
 S_{h,0}=0,
 \qquad
 S_{h,j}=\sum_{\ell=1}^{j}x_{t,g_{h,\ell}}.
-\)</p><p>For a parameter \(\theta\in[0,1)\), define an integral configuration by</p><p>\(\displaystyle
+\)</p><p>For a parameter \(\theta\in[0,1)\), define an integral configuration by</p><p>\[\displaystyle
 b_{g_{h,j}}(\theta)
 =
 \lfloor S_{h,j}+\theta\rfloor
 -
 \lfloor S_{h,j-1}+\theta\rfloor.
 \tag{2}
-\)</p><p>Use the same parameter \(\theta\) for every category.</p><p>These counts are nonnegative integers because the prefix sums are nondecreasing. Moreover,</p><p>\(\displaystyle
+\]</p><p>Use the same parameter \(\theta\) for every category.</p><p>These counts are nonnegative integers because the prefix sums are nondecreasing. Moreover,</p><p>\(\displaystyle
 \sum_{g\in C_h}b_g(\theta)
 =\lfloor S_{h,m_h}+\theta\rfloor
 \le k_{t,h},
-\)</p><p>where the last inequality uses \(S_{h,m_h}\le k_{t,h}\), integrality of \(k_{t,h}\), and \(\theta&lt;1\). Thus every resulting configuration belongs to \(\mathcal B_t\).</p><p>For uniform \(\theta\in[0,1)\), the identity</p><p>\(\displaystyle \mathbb E[\lfloor s+\theta\rfloor]=s \qquad(s\ge0)\)</p><p>holds: writing \(s=q+r\) with integer \(q\) and \(r\in[0,1)\), the floor equals \(q+1\) on an interval of length \(r\), and equals \(q\) elsewhere. Applying this identity to (2) gives</p><p>\(\displaystyle \mathbb E[b_g(\theta)]=x_{t,g}.\tag{3}\)</p><p>This distribution has a polynomial-size explicit representation. Its configuration can change only at a point</p><p>\(\displaystyle \theta=1-\{S_{h,j}\}\)</p><p>for a nonintegral prefix sum, where \(\{s\}=s-\lfloor s\rfloor\). There are at most \(|G|\) such points across all categories. Sort them together with the endpoints \(0,1\). Each consecutive interval contributes its length as probability and its constant configuration, evaluated at the interval’s midpoint.</p><p>Consequently, the distribution has at most \(|G|+1\) configurations. All probabilities are rational. Let \(p_{t,B}\) denote the resulting probabilities, merging identical configurations if necessary, and set</p><p>\(\displaystyle y_{t,B}=\mu_t p_{t,B}.\)</p><p>The population equalities follow from \(\sum_Bp_{t,B}=1\). Equation (3) yields the exact supply equalities:</p><p>\(\displaystyle
+\)</p><p>where the last inequality uses \(S_{h,m_h}\le k_{t,h}\), integrality of \(k_{t,h}\), and \(\theta&lt;1\). Thus every resulting configuration belongs to \(\mathcal B_t\).</p><p>For uniform \(\theta\in[0,1)\), the identity</p><p>\(\displaystyle \mathbb E[\lfloor s+\theta\rfloor]=s \qquad(s\ge0)\)</p><p>holds: writing \(s=q+r\) with integer \(q\) and \(r\in[0,1)\), the floor equals \(q+1\) on an interval of length \(r\), and equals \(q\) elsewhere. Applying this identity to (2) gives</p><p>\[\displaystyle \mathbb E[b_g(\theta)]=x_{t,g}.\tag{3}\]</p><p>This distribution has a polynomial-size explicit representation. Its configuration can change only at a point</p><p>\(\displaystyle \theta=1-\{S_{h,j}\}\)</p><p>for a nonintegral prefix sum, where \(\{s\}=s-\lfloor s\rfloor\). There are at most \(|G|\) such points across all categories. Sort them together with the endpoints \(0,1\). Each consecutive interval contributes its length as probability and its constant configuration, evaluated at the interval’s midpoint.</p><p>Consequently, the distribution has at most \(|G|+1\) configurations. All probabilities are rational. Let \(p_{t,B}\) denote the resulting probabilities, merging identical configurations if necessary, and set</p><p>\(\displaystyle y_{t,B}=\mu_t p_{t,B}.\)</p><p>The population equalities follow from \(\sum_Bp_{t,B}=1\). Equation (3) yields the exact supply equalities:</p><p>\(\displaystyle
 \sum_{t,B}b_g(B)y_{t,B}
 =\sum_t\mu_t x_{t,g}
 =\rho_g.
 \)</p><h3>4. Fairness survives the decomposition</h3><p>For an arbitrary integral multiset \(B\), define its feasible value to type \(t\), without removal, by</p><p>\(\displaystyle
 f_t(B)=
 \max_{\substack{S\subseteq B\\S\in\mathcal B_t}}v_t(S).
-\)</p><p>Binary values and independent category capacities imply the exact formula</p><p>\(\displaystyle
+\)</p><p>Binary values and independent category capacities imply the exact formula</p><p>\[\displaystyle
 f_t(B)
 =
 \sum_h
@@ -84,7 +85,7 @@ k_{t,h},
 \sum_{g\in C_h}v_t(g)b_g(B)
 \right\}.
 \tag{4}
-\)</p><p>Indeed, in each category an optimal feasible subset takes as many positively valued copies as possible, up to that category’s capacity. Choices in different categories are independent.</p><p>Fix \(t,u\), and draw \(B\) from the constructed distribution \(p_{u,\cdot}\). For any nonnegative random variable \(Z\),</p><p>\(\displaystyle \mathbb E[\min\{k,Z\}]\le\min\{k,\mathbb E[Z]\},\)</p><p>because the random variable inside the expectation is bounded above both by \(k\) and by \(Z\). Therefore, using (4), the marginal identity (3), and then (1),</p><p>\(\displaystyle
+\]</p><p>Indeed, in each category an optimal feasible subset takes as many positively valued copies as possible, up to that category’s capacity. Choices in different categories are independent.</p><p>Fix \(t,u\), and draw \(B\) from the constructed distribution \(p_{u,\cdot}\). For any nonnegative random variable \(Z\),</p><p>\(\displaystyle \mathbb E[\min\{k,Z\}]\le\min\{k,\mathbb E[Z]\},\)</p><p>because the random variable inside the expectation is bounded above both by \(k\) and by \(Z\). Therefore, using (4), the marginal identity (3), and then (1),</p><p>\(\displaystyle
 \mathbb E_{B\sim p_u}[f_t(B)]
 \le
 \sum_h\min\!\left\{

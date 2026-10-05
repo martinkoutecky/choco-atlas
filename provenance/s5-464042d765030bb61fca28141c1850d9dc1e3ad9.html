@@ -1,0 +1,142 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Heuristic and exact solutions to the inverse power index problem for small voting bodies — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Heuristic and exact solutions to the inverse power index problem for small voting bodies <span style="font-weight:normal;color:#8a7350">(s5-464042d765030bb61fca28141c1850d9dc1e3ad9)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable: \(\mathrm{P}\). Every valid input is a YES-instance, witnessed by \(w_t=b_t/\mu_t\) and \(q=1/2\), with \(P_{r,t}\to b_t\) along all admissible replications.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 (Alon-Edelman) — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite type set \(T\), rational society distribution \(\mu\), rational target type-power vector \(b\), and threshold \(\alpha\), decide whether there exist nonnegative type weights \(w_t\) and per-capita quota \(q\) such that, for every replication level \(r\) with \(r\mu_t\in\mathbb{Z}\), the weighted rule on \(r\mu_t\) indistinguishable voters of type \(t\) has normalized type-total Banzhaf power \(P_{r,t}\) satisfying \(\limsup_{r\to\infty}\sum_t\lvert P_{r,t}-b_t\rvert\le\alpha\); equivalently, minimize this limsup.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a nonempty list \(T\) of \(\tau\) types with positive binary-rational masses \(\mu_t\), where \(\sum_t\mu_t=1\); \(\tau\) is the support size, not the number of possible types. Types are labels imposing identical weights on their members.<br>The remaining input is \(b\in\mathbb{Q}_{\ge0}^{T}\) with \(\sum_tb_t=1\), and \(\alpha\in\mathbb{Q}_{\ge0}\). Let \(L\) be the total input bit length; there are \(m=2\) collective outcomes.<br>Choose real weights \(w_t\ge0\), normalized by \(\sum_t\mu_tw_t=1\), and a real per-capita quota \(0&lt;q\le1\), all fixed independently of replication.<br>For each \(r\in R_\mu:=\{r\in\mathbb{Z}_{&gt;0}:r\mu_t\in\mathbb{Z}\text{ for every }t\}\), the voter set \(N_r\) contains \(r\mu_t\) distinct voters of type \(t\). A coalition \(S\subseteq N_r\) wins exactly when \(\sum_{i\in S}w_{t(i)}\ge rq\); equality is winning.<br>Let \(B_i(v_r)\) be voter \(i\)&#x27;s normalized Penrose–Banzhaf index and \(P_{r,t}:=\sum_{i\in N_r:t(i)=t}B_i(v_r)\). Coalitions range over individual voters, including voters sharing a type.<br>The decision problem asks whether such fixed \(w,q\) exist with \(\limsup_{r\to\infty,\ r\in R_\mu}\sum_{t\in T}|P_{r,t}-b_t|\le\alpha\).</p><p>Is this decision problem in \(\mathrm{P}\), with running time polynomial in \(m,\tau,L\), or is it NP-hard?</p><p>Discrete: the [Alon–Edelman stability bound](https://web.math.princeton.edu/~nalon/PDFS/banz3.pdf) states that, for \(1\le k&lt;n\) and \(0&lt;\varepsilon&lt;1/(k+1)\), any simple game whose voters outside a designated set of \(k\) have total normalized Banzhaf power at most \(\varepsilon\) is within \(\ell_1\)-distance \((2k+1)\varepsilon/(1-(k+1)\varepsilon)+\varepsilon\) of a simple game making those outside voters null.<br>Asymptotic: [Lindner and Machover](https://eprints.lse.ac.uk/424/1/pltmss00.pdf) prove conditional convergence of Banzhaf power ratios to weight ratios at a quota of half the total weight. No result deciding exactly the fixed-type replication problem above was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Restricted the supplied type set to positive-mass support and normalized the society masses to sum to one.</li><li>Required the target type-total power vector to be nonnegative and sum to one, and the rational threshold to be nonnegative.</li><li>Allowed real nonnegative weights and a real quota, as in weighted voting games; normalized mean weight to one by scale invariance.</li><li>Interpreted per-capita quota as absolute quota rq at replication r, with 0&lt;q&lt;=1 so the empty coalition loses and the grand coalition wins.</li><li>Used the formal weighted-game convention that meeting the quota is winning.</li><li>Made weights and per-capita quota fixed across all replications, and restricted the limsup to positive integer replication levels with integral type counts.</li><li>Interpreted indistinguishable voters as distinct individual voters with identical type weights, and defined type-total power by summing their normalized Banzhaf indices.</li><li>Set m=2 for the binary collective outcome domain and L to the total binary input length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><p><b>Result</b></p><p>The problem is in \(\mathrm{P}\). In fact, <b>every valid input is a YES-instance</b>, even when \(\alpha=0\): the fixed choice<br>\[
+w_t=\frac{b_t}{\mu_t},\qquad q=\frac12
+\]<br>satisfies \(P_{r,t}\to b_t\) for every type.</p><p>Below is a self-contained proof of the required convergence. The relevant lattice case is also covered by Theorem 3.6 of [Lindner and Machover](https://eprints.lse.ac.uk/424/1/pltmss00.pdf): their hypotheses concern finitely many positive integer weights, with greatest common divisor one among the weights occurring infinitely often. Rational scaling makes those hypotheses applicable here after deleting zero-weight voters.</p><p><b>1. Feasibility and integer scaling</b></p><p>Because \(\mu_t&gt;0\), the proposed weights are well-defined, nonnegative rationals. They satisfy<br>\[
+\sum_{t\in T}\mu_tw_t=\sum_{t\in T}b_t=1.
+\]<br>Thus they satisfy the required normalization and are independent of replication.</p><p>Let \(D\) be the least common multiple of the denominators of the reduced fractions \(\mu_t\), and put \(d_t=D\mu_t\). Then every \(d_t\) is a positive integer, and<br>\[
+R_\mu=\{Dn:n\in\mathbb Z_{&gt;0}\}.
+\]<br>Indeed, integrality of \(r\mu_t\) is equivalent to divisibility of \(r\) by the reduced denominator of \(\mu_t\).</p><p>Clear the denominators of the positive weights and divide the resulting integers by their greatest common divisor. This gives integers \(a_t\ge0\) and a positive rational \(c\) such that<br>\[
+w_t=\frac{a_t}{c},
+\qquad
+\gcd\{a_t:a_t&gt;0\}=1.
+\]<br>Normalization implies<br>\[
+\sum_t\mu_ta_t=c.
+\]<br>Define the positive integer<br>\[
+A=\sum_td_ta_t=Dc.
+\]</p><p>At replication \(r=Dn\), multiplying all weights and the quota by \(c\) leaves the game unchanged. In this integer representation, total weight is \(nA\), and the winning threshold is \(nA/2\).</p><p><b>2. A lattice local limit lemma</b></p><p>We use the following elementary statement.</p><p><b>Lemma.</b> Let \(X\) be a finitely supported, nonnegative integer-valued random variable. Suppose \(0\) belongs to its support, the greatest common divisor of its positive support elements is one, and its variance \(\sigma^2\) is positive. Write \(\nu=\mathbb EX\). For independent copies \(X_1,\ldots,X_N\), and every fixed finite \(B\),<br>\[
+\Pr\!\left(\sum_{j=1}^N X_j=k\right)
+=
+\frac{1+o(1)}{\sqrt{2\pi N\sigma^2}}
+\]<br>uniformly over integers \(k\) satisfying \(|k-N\nu|\le B\).</p><p><b>Proof.</b> Let \(\phi(\theta)=\mathbb E e^{i\theta X}\). Fourier inversion gives<br>\[
+\Pr\!\left(\sum_{j=1}^N X_j=k\right)
+=
+\frac1{2\pi}\int_{-\pi}^{\pi}\phi(\theta)^N e^{-ik\theta}\,d\theta.
+\]</p><p>If \(|\phi(\theta)|=1\), equality in the triangle inequality implies that all \(e^{i\theta x}\), for support elements \(x\), coincide. Since \(0\) is in the support, they must all equal one. The greatest-common-divisor hypothesis then implies \(\theta\in2\pi\mathbb Z\). Consequently, for each sufficiently small fixed \(\delta&gt;0\), there is \(\rho&lt;1\) such that<br>\[
+|\phi(\theta)|\le\rho
+\quad\text{whenever}\quad
+\delta\le|\theta|\le\pi.
+\]<br>The contribution of this region, multiplied by \(\sqrt N\), therefore tends to zero.</p><p>Put \(f(\theta)=e^{-i\nu\theta}\phi(\theta)\). Finite support gives the Taylor expansion<br>\[
+f(\theta)=1-\frac{\sigma^2\theta^2}{2}+O(|\theta|^3).
+\]<br>After decreasing \(\delta\), there is \(\gamma&gt;0\) such that<br>\[
+|f(\theta)|\le e^{-\gamma\theta^2}
+\quad\text{for}\quad |\theta|\le\delta.
+\]</p><p>Writing \(h=k-N\nu\) and substituting \(\theta=u/\sqrt N\), the remaining contribution to \(\sqrt N\) times the probability is<br>\[
+\frac1{2\pi}
+\int_{|u|\le\delta\sqrt N}
+f(u/\sqrt N)^N e^{-ihu/\sqrt N}\,du.
+\]<br>For each fixed \(u\), the integrand tends to \(e^{-\sigma^2u^2/2}\). Its absolute value is bounded by the integrable function \(e^{-\gamma u^2}\). Moreover, convergence of the phase factor is uniform for \(|h|\le B\), since<br>\[
+|e^{-ihu/\sqrt N}-1|\le \frac{B|u|}{\sqrt N}.
+\]<br>Dominated convergence, uniformly in these \(h\), yields the limit<br>\[
+\frac1{2\pi}\int_{\mathbb R}e^{-\sigma^2u^2/2}\,du
+=
+\frac1{\sqrt{2\pi\sigma^2}}.
+\]<br>This proves the lemma. \(\square\)</p><p><b>3. Individual pivotal probabilities</b></p><p>Partition the \(Dn\) voters into \(n\) blocks, each containing \(d_t\) voters of type \(t\). A uniformly random coalition selects each individual voter independently with probability \(1/2\).</p><p>Let \(X\) denote the selected integer weight in one complete block. Then<br>\[
+\mathbb EX=\frac A2,
+\qquad
+V:=\operatorname{Var}(X)=\frac14\sum_td_ta_t^2&gt;0.
+\]<br>Its support contains \(0\) and every positive \(a_t\): the latter occurs by selecting just one voter of type \(t\). Every support element is an integer combination of the \(a_t\). Hence the greatest common divisor of its positive support elements is exactly one. The lemma applies.</p><p>Fix a type \(t\) with \(a_t&gt;0\), and designate one voter of that type in the first block. Let \(Y_t\) be the selected weight of the other voters in that block. The selected weight of all voters other than the designated voter has distribution<br>\[
+S_{n,t}=X_1+\cdots+X_{n-1}+Y_t,
+\]<br>where all displayed variables are independent and the \(X_j\) have distribution \(X\).</p><p>Let \(\psi_{n,t}\) be this voter&#x27;s absolute Banzhaf power, namely its probability of being pivotal. Because equality at the quota wins,<br>\[
+\psi_{n,t}
+=
+\Pr\!\left(\frac{nA}{2}-a_t\le S_{n,t}&lt;\frac{nA}{2}\right).
+\]<br>This half-open interval contains exactly \(a_t\) integers. Explicitly, they are<br>\[
+k=\left\lceil\frac{nA}{2}\right\rceil-a_t+j,
+\qquad
+j\in\{0,\ldots,a_t-1\}.
+\]<br>Thus exact quota ties cause no discrepancy in the number of relevant lattice points.</p><p>For every such \(k\) and every support value \(y\) of \(Y_t\),<br>\[
+k-y-\frac{(n-1)A}{2}
+=
+\left(k-\frac{nA}{2}\right)+\frac A2-y.
+\]<br>The right-hand side is bounded independently of \(n\), because \(a_t\), \(A\), and the finite support of \(Y_t\) are fixed. Applying the lemma with \(N=n-1\) therefore gives<br>\[
+\Pr(X_1+\cdots+X_{n-1}=k-y)
+=
+\frac{1+o(1)}{\sqrt{2\pi nV}},
+\]<br>uniformly over the relevant \(k\) and \(y\).</p><p>Conditioning on \(Y_t\), and then summing over the \(a_t\) integers in the pivotal interval, yields<br>\[
+\psi_{n,t}
+=
+\frac{a_t+o(1)}{\sqrt{2\pi nV}}.
+\]<br>If \(a_t=0\), a voter of type \(t\) never changes coalition weight, so \(\psi_{n,t}=0\) exactly.</p><p><b>4. Aggregate normalized power</b></p><p>The normalized Banzhaf index is well-defined at every replication. The empty coalition loses and the grand coalition wins; adding voters successively must therefore produce at least one pivotal transition.</p><p>All \(Dn\mu_t\) voters of type \(t\) have the same absolute power. Consequently,<br>\[
+P_{Dn,t}
+=
+\frac{Dn\mu_t\psi_{n,t}}
+{\sum_sDn\mu_s\psi_{n,s}}
+=
+\frac{\mu_t\psi_{n,t}}{\sum_s\mu_s\psi_{n,s}}.
+\]<br>The preceding asymptotics imply<br>\[
+\sqrt{2\pi nV}\sum_s\mu_s\psi_{n,s}
+\longrightarrow
+\sum_s\mu_sa_s=c&gt;0.
+\]<br>Therefore, for every positive-weight type,<br>\[
+P_{Dn,t}\longrightarrow
+\frac{\mu_ta_t}{c}
+=
+\mu_tw_t
+=
+b_t.
+\]<br>For a zero-weight type, \(P_{Dn,t}=b_t=0\) at every replication.</p><p>Since \(T\) is finite and every admissible replication is \(Dn\), this proves<br>\[
+\lim_{\substack{r\to\infty\\r\in R_\mu}}
+\sum_{t\in T}|P_{r,t}-b_t|=0.
+\]<br>In particular, the required limsup is at most every permitted \(\alpha\).</p><p><b>5. Computational conclusion</b></p><p>On valid inputs, the decision algorithm always returns YES. If a witness is requested, it computes \(w_t=b_t/\mu_t\) and \(q=1/2\).</p><p>Each quotient has binary encoding length polynomial in \(L\), and the \(\tau\) rational divisions take polynomial time. Neither the block construction nor any replicated voter set needs to be generated: those objects are used only in the convergence proof.</p><p>Thus the stated decision problem is polynomial-time solvable, and every rational target distribution is realized exactly in the limit.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s conclusion is correct: every valid input is a YES-instance, including when \(\alpha=0\). The self-contained convergence proof is rigorous. I found no major or minor mathematical issues.</p><ul><li><b>The proposed witness satisfies all constraints.</b></li></ul><p>Since every \(\mu_t&gt;0\), the weights \(w_t=b_t/\mu_t\) are well-defined, nonnegative rationals. Their normalization follows exactly from<br>\[
+   \sum_t\mu_tw_t=\sum_tb_t=1.
+   \]<br>The quota \(q=1/2\) lies in the permitted interval, and neither the weights nor the quota depends on replication. Zero coordinates of \(b\) are permitted and produce zero-weight types.</p><ul><li><b>The admissible replication parameters and integer scaling are correct.</b></li></ul><p>For a reduced rational mass, \(r\mu_t\) is integral exactly when its denominator divides \(r\). Consequently, the least common multiple \(D\) gives precisely \(R_\mu=\{Dn:n&gt;0\}\), and every \(d_t=D\mu_t\) is a positive integer.</p><p>At least one weight is positive because the normalized total weight is one. Clearing denominators and dividing by the greatest common divisor therefore produces the stated integers \(a_t\) and positive rational \(c\). The identities<br>\[
+   \sum_t\mu_ta_t=c,\qquad A=\sum_td_ta_t=Dc
+   \]<br>follow directly. In particular, \(A\) is a positive integer.</p><p>At replication \(Dn\), the integer-scaled total weight is \(nA\), and the threshold is \(nA/2\). Scaling both coalition weights and the threshold preserves the winning relation, including equality.</p><ul><li><b>The lattice local limit lemma is proved under sufficient hypotheses.</b></li></ul><p>Fourier inversion applies to the integer-valued distribution. The argument identifying the points where \(|\phi(\theta)|=1\) is valid: the support point zero forces the common phase to be one, and the greatest-common-divisor assumption excludes all nonzero such points in \([-\pi,\pi]\). Continuity on the remaining compact region supplies the uniform bound \(\rho&lt;1\).</p><p>The centered Taylor expansion has the stated quadratic coefficient. Positive variance supplies the Gaussian bound on the modulus near zero. After rescaling, that bound is integrable and independent of \(N\).</p><p>The phase estimate is uniform over \(|h|\le B\), so the dominated-convergence argument establishes the claimed uniform asymptotic. The Gaussian integral and its constant are correct. No additional local limit theorem is needed.</p><ul><li><b>The block distribution satisfies every lemma hypothesis.</b></li></ul><p>A uniformly chosen coalition selects individual voters independently with probability \(1/2\), including voters sharing a type. Thus the block mean and variance are correctly calculated:<br>\[
+   \mathbb EX=A/2,\qquad V=\frac14\sum_td_ta_t^2&gt;0.
+   \]</p><p>The support contains zero and each positive \(a_t\), since selecting exactly one corresponding voter has positive probability. Every support value is a sum of the integer weights. These facts establish that its positive support elements have greatest common divisor one.</p><p>Removing the designated voter from the first block gives the stated independent decomposition into \(n-1\) complete blocks and \(Y_t\). The use of the lemma concerns \(n\to\infty\); the case \(n=1\) does not require that asymptotic formula.</p><ul><li><b>The pivotal event and lattice-point count are exact.</b></li></ul><p>The designated voter is pivotal precisely when the coalition without that voter loses and the coalition with that voter wins. With equality winning, this gives<br>\[
+   nA/2-a_t\le S_{n,t}&lt;nA/2.
+   \]</p><p>The listed integers are exactly the integers in this interval. Their number is \(a_t\), whether \(nA/2\) is integral or half-integral.</p><p>After conditioning on \(Y_t=y\), the distance from the complete-block mean is bounded independently of \(n\). There are only finitely many relevant offsets and conditioning values for each fixed input. The uniform lemma therefore justifies conditioning and summing, yielding<br>\[
+   \psi_{n,t}=\frac{a_t+o(1)}{\sqrt{2\pi nV}}.
+   \]<br>Replacing \(n-1\) by \(n\) in the denominator is asymptotically valid. Zero-weight voters are null exactly, as claimed.</p><ul><li><b>Normalization and aggregation are justified.</b></li></ul><p>At every replication, the empty coalition loses and the grand coalition wins. Along a sequence adding voters individually, some addition must change a losing coalition into a winning one. Hence at least one swing exists, and the normalized Banzhaf denominator is positive.</p><p>Voters of the same type have equal absolute power by symmetry. The displayed formula for \(P_{Dn,t}\) therefore follows from the definition of normalized Banzhaf power.</p><p>Summing the individual asymptotics over the fixed finite support gives a denominator tending, after rescaling, to \(c&gt;0\). Division is consequently justified, and<br>\[
+   P_{Dn,t}\longrightarrow \mu_ta_t/c=b_t.
+   \]<br>Zero-weight types also satisfy this conclusion exactly. Finiteness of \(T\) permits summing the coordinate errors, establishing the required limit along every admissible replication.</p><ul><li><b>The supplementary citation is consistent with the proof.</b></li></ul><p>Theorem 3.6 concerns half-quota chains with finitely many positive integer weight values and greatest common divisor one among those occurring infinitely often. After excluding zero-weight voters, the block construction satisfies these conditions: every positive weight occurs in every block. The cited result is therefore applicable, although the self-contained argument already establishes the convergence. [Lindner and Machover, Theorem 3.6](https://eprints.lse.ac.uk/424/1/pltmss00.pdf).</p><ul><li><b>The computational conclusion follows.</b></li></ul><p>On the promised valid-input domain, returning YES resolves the decision problem. If a witness is requested, each rational quotient \(b_t/\mu_t\) has encoding length polynomial in \(L\) and is computable using polynomial-time rational arithmetic.</p><p>The proof does not require constructing the potentially large block or any replicated electorate algorithmically. No uniform convergence rate is needed because the decision condition concerns the limit for each fixed input. The argument establishes polynomial-time solvability for the specified case \(m=2\).</p><p>No additional clarification or repair is required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,308 @@
+<!doctype html><html><head><meta charset="utf-8"><title>A Quantitative Analysis of Multi-Winner Rules — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>A Quantitative Analysis of Multi-Winner Rules <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2019-0892)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\kappa_{\operatorname{AV}}(k,p)=k^{-1}\min_{0\le h\le k}[h+(k-h)p^{-h}]\). For CC, the guarantee is \(1\) for \(k=1\) and \(p/(p+1)\) for \(k=2\). For \(k\ge3\), put \(a=p-(p-1)/k\) and \(Z=2(k-1)p-k+3\). The CC guarantee is \((1+\max_{3\le h\le k}(ah-1)p^{-h})^{-1}\) when \((2p-3)a\le p-1\), and \(pZ/[pZ+2(k-1)p+1]\) otherwise. Every value is attained by a rational society and a worst tied winner.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>The AV-guarantee of the p-geometric rule is be- tween W(k log(p)) k log(p) + W(k log(p)) and 2W(k log(p)) k log(p) + 1 k , its CC-guarantee is between p−1 p and p p+ k k+2 .</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), committee size \(k\), \(p\ge1\), and a rational distribution \(\mu=(\mu_A)_{A\subseteq C}\) over approval types, choose \(W\in\binom{C}{k}\) maximizing \(G_{p,\mu}(W)=\sum_{A\subseteq C}\mu_A\sum_{j=1}^{|A\cap W|}p^{-j}\), where \(\operatorname{AV}_\mu(W)=\sum_A\mu_A|Acap W|\) and \(\operatorname{CC}_\mu(W)=\sum_A\mu_A\mathbf{1}[A\cap W\ne\varnothing]\); compute the resulting AV and CC ratios and characterize their worst cases over \(\mu\) and tied winners.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) be a finite candidate set, \(m=|C|\), \(1\le k\le m\), and \(p\ge1\) a binary rational. A society is given by its support: the list of the \(\tau\) approval types \(A\subseteq C\) with positive mass, each mass \(\mu_A\) a binary rational; \(\sum_A\mu_A=1\). Here \(\tau\) is the support size, not the number of possible approval sets. Let \(L\) be the total input bit length; state any running times in \(m,\tau,L,k\).<br>Empty approval sets are allowed, but require \(\sum_{A\ne\varnothing}\mu_A&gt;0\). Committees are ordinary subsets of exactly \(k\) candidates.<br>Define \(G_{p,\mu}(W)=\sum_A\mu_A\sum_{j=1}^{|A\cap W|}p^{-j}\), with an empty inner sum equal to zero, and let \(R_p(\mu,k)=\operatorname*{arg\,max}_{W\in\binom{C}{k}}G_{p,\mu}(W)\); retain every tied winner.<br>Define \(\operatorname{AV}_\mu(W)=\sum_A\mu_A|A\cap W|\) and \(\operatorname{CC}_\mu(W)=\sum_A\mu_A\mathbf1[A\cap W\ne\varnothing]\).<br>For \(X\in\{\operatorname{AV},\operatorname{CC}\}\), the instance ratio is \(r_X(\mu,k,p)=\frac{\min_{W\in R_p(\mu,k)}X_\mu(W)}{\max_{V\in\binom{C}{k}}X_\mu(V)}\), and its worst-case guarantee is \(\kappa_X(k,p)=\inf_{C,\mu}r_X(\mu,k,p)\), over all finite candidate sets and admissible rational societies.</p><p>What are the sharp worst-case AV and CC approximation guarantees \(\kappa_{\operatorname{AV}}(k,p)\) and \(\kappa_{\operatorname{CC}}(k,p)\), and which societies and tied winners attain or approach them?</p><p>For finite electorates, known bounds for \(k\ge2\) and \(p&gt;1\) are \(\frac{\mathcal W(k\log p)}{k\log p+\mathcal W(k\log p)}\le\kappa_{\operatorname{AV}}\le\frac{2\mathcal W(k\log p)}{k\log p}+\frac1k\) and \(\frac{p-1}{p}\le\kappa_{\operatorname{CC}}\le\frac{p}{p+k/(k+2)}\), where \(\mathcal W\) is the principal Lambert W function and \(\log\) is natural. [Lackner–Skowron](https://www.ijcai.org/proceedings/2019/0058.pdf)<br>The later full version retains these bounds; no exact characterization for rational-mass societies was located in the search. [Full version](https://arxiv.org/pdf/1801.01527)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specify p as a binary rational and L as the total input bit length.</li><li>Require 1 ≤ k ≤ m and retain integral candidate committees.</li><li>Allow empty approval types but exclude societies supported entirely on the empty type, so both ratio denominators are positive.</li><li>Define instance ratios using the minimum over all tied winning committees, with separate AV and CC denominators.</li><li>Take worst cases over all finite candidate sets and admissible rational societies, leaving k and p fixed.</li><li>Interpret characterization of worst cases to include infima approached without attainment.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Exact guarantees</h3><p>Both guarantees admit exact formulas, and every value below is <b>attained by a rational society and a worst tied winner</b>.</p><p>For every \(k\ge1\) and rational \(p\ge1\),</p><p>\( \displaystyle
+\boxed{\kappa_{\operatorname{AV}}(k,p)
+=\frac1k\min_{0\le h\le k}\left(h+(k-h)p^{-h}\right).}
+\)</p><p>For CC, the boundary cases are</p><p>\( \displaystyle
+\boxed{\kappa_{\operatorname{CC}}(1,p)=1,
+\qquad
+\kappa_{\operatorname{CC}}(2,p)=\frac{p}{p+1}.}
+\)</p><p>For \(k\ge3\), define</p><p>\( \displaystyle
+a=p-\frac{p-1}{k},
+\qquad
+d_h=(ah-1)p^{-h},
+\qquad
+Z=2(k-1)p-k+3.
+\)</p><p>Then</p><p>\( \displaystyle
+\boxed{
+\kappa_{\operatorname{CC}}(k,p)=
+\begin{cases}
+\left(1+\max_{3\le h\le k}d_h\right)^{-1},
+&amp; (2p-3)a\le p-1,\\[2mm]
+\displaystyle\frac{pZ}{pZ+2(k-1)p+1},
+&amp; (2p-3)a&gt;p-1.
+\end{cases}}
+\)</p><p>The two expressions agree at the regime boundary. In particular,</p><p>\( \displaystyle
+\kappa_{\operatorname{AV}}(k,1)=1,
+\qquad
+\kappa_{\operatorname{CC}}(k,1)=\frac1k.
+\)</p><p>For example,</p><p>\( \displaystyle
+\kappa_{\operatorname{CC}}(3,p)=
+\begin{cases}
+\displaystyle\frac{p^2}{p^2+2},&amp;1\le p\le\frac74,\\[2mm]
+\displaystyle\frac{4p^2}{(2p+1)^2},&amp;p\ge\frac74.
+\end{cases}
+\)</p><p>The bounds quoted in the question appear in Theorem 5 of the [full version of Lackner–Skowron](https://arxiv.org/pdf/1801.01527). The proofs of the exact formulas follow.</p><h3>2. Preliminary facts and an exchange inequality</h3><p>Write</p><p>\( \displaystyle
+g_p(t)=\sum_{j=1}^{t}p^{-j},
+\qquad g_p(0)=0,
+\)</p><p>and let \(\mathbb E\) denote expectation over approval types with masses \(\mu_A\).</p><p>The denominators in both instance ratios are positive: some candidate has positive approval mass, and some size-\(k\) committee contains that candidate.</p><p>Fix a winning committee \(W\) and any other size-\(k\) committee \(V\). Define</p><p>\( \displaystyle
+I=W\cap V,\qquad B=W\setminus V,\qquad D=V\setminus W.
+\)</p><p>Suppose \(s=|B|=|D|&gt;0\). For an approval type \(A\), put</p><p>\( \displaystyle
+i=|A\cap I|,\quad b=|A\cap B|,\quad d=|A\cap D|,
+\quad w=i+b,\quad v=i+d.
+\)</p><p>For \(x\in B\) and \(y\in D\), direct examination of the four approval possibilities gives</p><p>\( \displaystyle
+g_p\!\left(|A\cap(W-\{x\}+\{y\})|\right)-g_p(w)
+=
+\mathbf1[y\in A]p^{-(w+1)}
+-\mathbf1[x\in A]p^{-w}
++(p-1)\mathbf1[x,y\in A]p^{-(w+1)}.
+\)</p><p>Every such exchange has nonpositive expected gain because \(W\) is a winner. Summing over all \(s^2\) exchanges and multiplying by \(p/s\) yields</p><p>\[ \displaystyle
+\mathbb E[\delta]\ge0,
+\qquad
+\delta=
+b p^{1-w}
+-d\left(1+\frac{(p-1)b}{s}\right)p^{-w}.
+\tag{1}
+\]</p><p>We also have the global comparison</p><p>\[ \displaystyle
+\mathbb E[g_p(w)-g_p(v)]\ge0.
+\tag{2}
+\]</p><p>These inequalities allow \(W\) and \(V\) to overlap.</p><h3>3. AV: lower bound and attaining society</h3><h3>Lower bound</h3><p>Set</p><p>\( \displaystyle
+\rho=\frac1k\min_{0\le h\le k}\left(h+(k-h)p^{-h}\right).
+\)</p><p>Thus \(0&lt;\rho\le1\). We prove the pointwise inequality</p><p>\[ \displaystyle
+w-\rho v\ge\delta.
+\tag{3}
+\]</p><p>For fixed \(i,b\), the difference between the two sides is affine in \(d\). Since \(0\le d\le s\), checking its endpoints suffices.</p><p>At \(d=0\), this difference is</p><p>\( \displaystyle
+(1-\rho)i+b\left(1-p^{1-w}\right).
+\)</p><p>It is zero when \(w=0\), and nonnegative when \(w\ge1\).</p><p>At \(d=s\), the difference is</p><p>\( \displaystyle
+w-\rho(i+s)+(s-b)p^{-w}.
+\)</p><p>Let \(n=i+s\). Then \(w\le n\le k\), and this expression equals</p><p>\( \displaystyle
+w+(n-w)p^{-w}-\rho n.
+\)</p><p>For \(n&gt;0\),</p><p>\( \displaystyle
+\frac{w+(n-w)p^{-w}}{n}
+=p^{-w}+\frac{w}{n}(1-p^{-w})
+\ge p^{-w}+\frac{w}{k}(1-p^{-w})
+\ge\rho.
+\)</p><p>This proves (3). Taking expectations and using (1) gives</p><p>\( \displaystyle
+\operatorname{AV}_\mu(W)\ge\rho\,\operatorname{AV}_\mu(V).
+\)</p><p>If \(W=V\), the same conclusion is immediate. Choosing an AV-optimal \(V\) proves the lower bound for every winning \(W\).</p><h3>Attainment</h3><p>Choose a minimizing integer \(h\). Take a party block \(P\) of \(k\) candidates and \(k-h\) additional candidates \(D\). Assign masses</p><p>\( \displaystyle
+\mu_P=t,\qquad
+\mu_{\{d\}}=t p^{-h}\quad(d\in D),
+\qquad
+t=\frac{1}{1+(k-h)p^{-h}}.
+\)</p><p>Let \(W\) contain \(h\) candidates of \(P\) and every candidate of \(D\).</p><p>Any size-\(k\) committee contains some number \(b\ge h\) of party candidates. Its score is</p><p>\( \displaystyle
+t g_p(b)+t(k-b)p^{-(h+1)}.
+\)</p><p>Increasing \(b\) by one changes this score by</p><p>\( \displaystyle
+t\left(p^{-(b+1)}-p^{-(h+1)}\right)\le0.
+\)</p><p>Thus \(W\) is a winner. Whenever \(h&lt;k\), committees containing \(h+1\) party candidates also tie with \(W\).</p><p>Each party candidate has approval mass \(t\), while each additional candidate has approval mass \(tp^{-h}\le t\). Hence \(P\) is AV-optimal, and</p><p>\( \displaystyle
+\frac{\operatorname{AV}_\mu(W)}
+{\operatorname{AV}_\mu(P)}
+=
+\frac{h+(k-h)p^{-h}}{k}
+=\rho.
+\)</p><p>The universal lower bound ensures that \(W\) is a worst tied winner. This society has \(m=2k-h\) and \(\tau=1+k-h\).</p><h3>4. CC: a universal lower-bound family</h3><p>Assume \(p&gt;1\) and \(k\ge3\). Put \(q=p^{-1}\), and define</p><p>\( \displaystyle
+T_h=\sum_{j=1}^{h-1}q^j,
+\qquad
+d_h=(ah-1)q^h,
+\qquad
+a=p-\frac{p-1}{k}.
+\)</p><p>For \(0\le\lambda\le1\), let</p><p>\( \displaystyle
+F_h(\lambda)=\lambda d_h+(1-\lambda)T_h,
+\quad
+z_\lambda=\max_{1\le h\le k}F_h(\lambda),
+\quad
+\rho_\lambda=\frac{1}{1+z_\lambda}.
+\)</p><p>We will prove</p><p>\[ \displaystyle
+\operatorname{CC}_\mu(W)
+\ge\rho_\lambda\,\operatorname{CC}_\mu(V)
+\tag{4}
+\]</p><p>for every winning \(W\), every size-\(k\) committee \(V\), and every \(\lambda\).</p><p>When \(W\ne V\), use the notation of Section 2 and set</p><p>\( \displaystyle
+J=p\bigl(g_p(w)-g_p(v)\bigr).
+\)</p><p>By (1) and (2), both \(\mathbb E[\delta]\) and \(\mathbb E[J]\) are nonnegative. It therefore suffices to prove</p><p>\[ \displaystyle
+\mathbf1[w&gt;0]-\rho_\lambda\mathbf1[v&gt;0]
+\ge
+\rho_\lambda\bigl(\lambda\delta+(1-\lambda)J\bigr)
+\tag{5}
+\]</p><p>pointwise.</p><p><b>Both committees cover the type.</b> If \(w&gt;0\) and \(v&gt;0\), then \(J\le T_w\). Also \(\delta\le d_w\):</p><ul><li>If \(d\ge1\), then</li></ul><p>\( \displaystyle
+  \delta
+  \le
+  \left[\left(p-\frac{p-1}{s}\right)b-1\right]q^w
+  \le(aw-1)q^w=d_w.
+  \)</p><ul><li>If \(d=0\), then \(i\ge1\), so</li></ul><p>\( \displaystyle
+  \delta\le(w-1)p^{1-w}\le d_w.
+  \)</p><p>The last inequality follows from</p><p>\( \displaystyle
+  d_w-(w-1)p^{1-w}
+  =(p-1)\left(1-\frac wk\right)q^w\ge0.
+  \)</p><p>Consequently, the right side of (5) is at most<br>\(\rho_\lambda z_\lambda=1-\rho_\lambda\).</p><p><b>Only \(W\) covers the type.</b> Here \(i=d=0\), so</p><p>\( \displaystyle
+\delta=w p^{1-w},\qquad J=1+T_w.
+\)</p><p>Bernoulli’s inequality gives</p><p>\( \displaystyle
+p^w\ge1+w(p-1)\ge1+\frac{w(p-1)}{k},
+\)</p><p>and therefore \(\delta\le1+d_w\). The right side of (5) is at most<br>\(\rho_\lambda(1+z_\lambda)=1\).</p><p><b>Only \(V\) covers the type.</b> Here \(w=0\), \(d\ge1\), and</p><p>\( \displaystyle
+\delta=-d\le-1,\qquad J=-p g_p(v)\le-1.
+\)</p><p>Thus the right side of (5) is at most \(-\rho_\lambda\).</p><p><b>Neither committee covers the type.</b> Both sides vanish.</p><p>Taking expectations proves (4). The case \(W=V\) is immediate.</p><h3>Evaluating the lower bound</h3><p>First observe that, for \(h\ge3\),</p><p>\[ \displaystyle
+p^hT_h
+=\sum_{r=1}^{h-1}p^r
+\ge(h-1)+\frac{h(h-1)}2(p-1)
+\ge ah-1=p^h d_h.
+\tag{6}
+\]</p><p>The first inequality is Bernoulli’s inequality applied separately to each power.</p><p>The successive differences are</p><p>\[ \displaystyle
+d_{h+1}-d_h
+=q^h\left[aq-(ah-1)(1-q)\right].
+\tag{7}
+\]</p><p>The bracket strictly decreases with \(h\).</p><p>If \((2p-3)a\le p-1\), equivalently \(d_3\ge d_2\), a maximizer of \(d_h\) can be chosen with \(h\ge3\). Taking \(\lambda=1\) in (4) gives</p><p>\[ \displaystyle
+\kappa_{\operatorname{CC}}(k,p)
+\ge\left(1+\max_{3\le h\le k}d_h\right)^{-1}.
+\tag{8}
+\]</p><p>If \((2p-3)a&gt;p-1\), choose</p><p>\( \displaystyle
+\lambda_*=\frac{p}{a(2p-3)+1}.
+\)</p><p>The regime condition implies \(0&lt;\lambda_*&lt;1\). Furthermore,</p><p>\[ \displaystyle
+F_{h+1}(\lambda)-F_h(\lambda)
+=q^h\left[1+\lambda q(a-1)-\lambda ah(1-q)\right].
+\tag{9}
+\]</p><p>For \(\lambda=\lambda_*\), the bracket is zero at \(h=2\), positive below it, and negative above it. Hence the maximum is attained at \(h=2,3\).</p><p>To evaluate its value, define</p><p>\( \displaystyle
+\theta_2=\frac{k(p-1)+3}{Z},
+\qquad
+\theta_3=\frac{(k-2)p}{Z},
+\qquad
+Z=2(k-1)p-k+3.
+\)</p><p>These are positive and sum to one. Direct calculation gives</p><p>\( \displaystyle
+d_2-T_2=\frac{(p-1)(k-2)}{kp^2},
+\qquad
+T_3-d_3=\frac{(p-1)(p-1+3/k)}{p^3}.
+\)</p><p>Thus</p><p>\[ \displaystyle
+\theta_2d_2+\theta_3d_3
+=\theta_2T_2+\theta_3T_3
+=\frac{2(k-1)p+1}{pZ}
+=:z.
+\tag{10}
+\]</p><p>Since \(F_2(\lambda_*)=F_3(\lambda_*)\), averaging them with these weights shows that their common value is \(z\). Therefore (4) gives</p><p>\[ \displaystyle
+\kappa_{\operatorname{CC}}(k,p)
+\ge\frac1{1+z}
+=\frac{pZ}{pZ+2(k-1)p+1}.
+\tag{11}
+\]</p><h3>5. A sampling lemma that verifies all competing committees</h3><p>The following lemma supplies the sharpness check beyond single exchanges.</p><p><b>Lemma.</b> Let \(B,D\) be disjoint candidate blocks of size \(k\), and suppose a covered voter approves a uniformly chosen \(h\)-subset of \(B\) and one uniformly chosen candidate of \(D\), independently. Allow either a fixed \(h\), or a mixture of \(h=2\) and \(h=3\).</p><p>For a committee containing \(k-l\) candidates of \(B\) and \(l\) candidates of \(D\), define</p><p>\( \displaystyle
+A_l=\frac{kp}{l}\left(
+\text{expected covered-voter score of }B
+-\text{expected covered-voter score of that committee}
+\right).
+\)</p><p>For every \(1\le l\le k\),</p><p>\[ \displaystyle
+A_l\ge\min(A_1,A_k).
+\tag{12}
+\]</p><p>If \(\theta_h\) denotes the distribution of approval counts, then</p><p>\[ \displaystyle
+A_1=\sum_h\theta_h d_h,
+\qquad
+A_k=\sum_h\theta_h T_h.
+\tag{13}
+\]</p><p><b>Proof.</b> Put \(q=p^{-1}\) and \(\gamma=1-q\). Let \(M_l\) be the expected value of \(q\) raised to the number of approved candidates among the \(k-l\) selected candidates of \(B\). Sampling the \(l\) omitted candidates gives</p><p>\[ \displaystyle
+M_l=
+\frac{[t^l]Q(t)}{\binom{k}{l}},
+\qquad
+Q(t)=\sum_h\theta_h q^h(1+pt)^h(1+t)^{k-h}.
+\tag{14}
+\]</p><p>Here \([t^l]Q(t)\) means the coefficient of \(t^l\).</p><p>The approved candidate in \(D\) belongs to the committee with probability \(l/k\), independently. Hence, with</p><p>\( \displaystyle
+P_l=\left(1-\frac{\gamma l}{k}\right)M_l,
+\)</p><p>the expected covered-voter score is \((1-P_l)/(p-1)\). Consequently,</p><p>\[ \displaystyle
+A_l=\frac{kp}{p-1}\frac{P_l-P_0}{l}.
+\tag{15}
+\]</p><p>We verify that the secant slopes in (15) have no strict interior minimum.</p><p>For a pure approval count \(h\),</p><p>\( \displaystyle
+Q(t)=q^h(1+pt)^h(1+t)^{k-h}.
+\)</p><p>For a mixture of counts \(2,3\),</p><p>\( \displaystyle
+Q(t)=c(1+pt)^2(1+t)^{k-3}(1+rt),
+\quad
+c=q^2(\theta_2+q\theta_3),
+\quad
+r=\frac1{\theta_2+q\theta_3}.
+\)</p><p>In the latter case \(1\le r\le p\). Thus in both cases</p><p>\( \displaystyle
+Q(t)=c\prod_{j=1}^{k}(1+w_jt)
+\)</p><p>with all \(w_j\ge1\).</p><p>Let \(e_l\) denote the elementary symmetric polynomial of degree \(l\), and put \(u_l=M_{l+1}-M_l\). A counting identity gives</p><p>\[ \displaystyle
+u_l=
+\frac{c}{k\binom{k-1}{l}}[t^l]H(t),
+\quad
+H(t)=\sum_{j=1}^{k}(w_j-1)\prod_{i\ne j}(1+w_it).
+\tag{16}
+\]</p><p>For a pure count,</p><p>\( \displaystyle
+H(t)=h(p-1)(1+pt)^{h-1}(1+t)^{k-h}.
+\)</p><p>For the mixture,</p><p>\( \displaystyle
+H(t)
+=(1+t)^{k-3}(1+pt)
+\left[2(p-1)(1+rt)+(r-1)(1+pt)\right].
+\)</p><p>The bracket is a positive constant times \(1+st\), where</p><p>\( \displaystyle
+s=\frac{2(p-1)r+(r-1)p}{2(p-1)+(r-1)}\ge1.
+\)</p><p>Therefore, in either case, \(u_l\) is a positive constant times<br>\(e_l(v_1,\ldots,v_{k-1})/\binom{k-1}{l}\), with all \(v_j\ge1\).</p><p>We use <b>Newton’s inequalities</b> in their precise normalized form: for positive \(v_1,\ldots,v_n\), the sequence<br>\(e_l(v_1,\ldots,v_n)/\binom nl\) is log-concave. Thus</p><p>\( \displaystyle
+u_l^2\ge u_{l-1}u_{l+1}.
+\)</p><p>This sequence is also nondecreasing. Indeed, couple a uniformly chosen subset of size \(l\) with one of size \(l+1\) by adding a uniformly chosen remaining element; the product cannot decrease because every \(v_j\ge1\).</p><p>It follows that \(u_{l+1}/u_l\) is nonincreasing and at least one. Direct subtraction now yields</p><p>\[ \displaystyle
+P_{l+2}-2P_{l+1}+P_l
+=
+u_l\left[
+\left(1-\frac{\gamma(l+2)}k\right)
+\left(\frac{u_{l+1}}{u_l}-1\right)
+-\frac{2\gamma}{k}
+\right].
+\tag{17}
+\]</p><p>The bracket is nonincreasing in \(l\): its two factors before the subtraction are nonnegative and nonincreasing. Hence the second differences of \(P_l\) can change sign only from nonnegative to nonpositive. Its first differences therefore increase and then decrease.</p><p>The averages of initial segments of an increasing-then-decreasing sequence also increase and then decrease. To see this explicitly, once a new term falls below the preceding average, the new average remains above that term, and every subsequent term is no larger. Thus the averages cannot start increasing again.</p><p>The quantities \((P_l-P_0)/l\) are precisely these initial-segment averages. Their minimum is therefore at \(l=1\) or \(l=k\), proving (12).</p><p>Finally,</p><p>\( \displaystyle
+M_0=\sum_h\theta_hq^h,\quad
+M_1=\sum_h\theta_hq^h\left(1+\frac{h(p-1)}k\right),
+\quad M_k=1.
+\)</p><p>Substitution into (15) gives (13). This completes the lemma. ∎</p><h3>6. CC societies attaining the bounds</h3><h3>The two regimes for \(k\ge3\) and \(p&gt;1\)</h3><p>Take disjoint blocks \(B,D\), each of size \(k\). Choose a number \(z\) and a distribution \(\theta_h\) as follows:</p><ul><li>In the first regime, choose \(H\in\{3,\ldots,k\}\) maximizing \(d_H\), set \(z=d_H\), and put \(\theta_H=1\).</li><li>In the second regime, use the weights \(\theta_2,\theta_3\) of (10), and set \(z=[2(k-1)p+1]/(pZ)\).</li></ul><p>Put \(\rho=1/(1+z)\). For every \(d\in D\), assign singleton mass</p><p>\( \displaystyle
+\mu_{\{d\}}=\frac{1-\rho}{k}.
+\)</p><p>For every \(S\subseteq B\) of size \(h\) and every \(d\in D\), assign</p><p>\[ \displaystyle
+\mu_{S\cup\{d\}}
+=\frac{\rho\theta_h}{k\binom{k}{h}}.
+\tag{18}
+\]</p><p>Omit types whose indicated weight is zero. These masses sum to one.</p><p>Every voter approves exactly one candidate of \(D\). Therefore</p><p>\( \displaystyle
+\operatorname{CC}_\mu(D)=1,
+\qquad
+\operatorname{CC}_\mu(B)=\rho.
+\)</p><p>Consider any competing committee containing \(l\) candidates of \(D\). Symmetry makes its score depend only on \(l\). For \(l\ge1\), the sampling lemma gives</p><p>\[ \displaystyle
+G_{p,\mu}(B)-G_{p,\mu}(T_l)
+=\frac{\rho l}{kp}(A_l-z).
+\tag{19}
+\]</p><p>In the first regime, \(A_1=d_H=z\), while \(A_k=T_H\ge d_H\) by (6). In the second regime, (10) gives \(A_1=A_k=z\). Thus (12) proves that (19) is nonnegative for <b>every</b> competing committee.</p><p>Consequently, \(B\) is a winning committee with ratio \(\rho\), matching the universal lower bound. It is therefore a worst tied winner.</p><p>There are explicit ties:</p><ul><li>In both regimes, every committee obtained from \(B\) by one replacement with a candidate of \(D\) ties with \(B\).</li><li>In the second regime, \(D\) itself also ties with \(B\).</li></ul><p>All masses are rational. The first construction has</p><p>\( \displaystyle
+m=2k,\qquad \tau=k\left(1+\binom{k}{H}\right),
+\)</p><p>and the second has</p><p>\( \displaystyle
+m=2k,\qquad
+\tau=k\left(1+\binom{k}{2}+\binom{k}{3}\right).
+\)</p><h3>Boundary cases</h3><p>For \(k=1\), both objectives equal the approval mass of the selected candidate, so both guarantees are one.</p><p>For \(p=1\), the rule is AV. If \(W\) is an AV winner and \(V\) is CC-optimal, then</p><p>\( \displaystyle
+\operatorname{CC}_\mu(W)
+\ge\frac{\operatorname{AV}_\mu(W)}k
+\ge\frac{\operatorname{AV}_\mu(V)}k
+\ge\frac{\operatorname{CC}_\mu(V)}k.
+\)</p><p>To attain equality, take a block \(B\) of \(k\) candidates and \(k-1\) additional singleton candidates. Give approval type \(B\) mass \(1/k\), and each singleton type mass \(1/k\). Every candidate has the same approval mass, so every size-\(k\) committee wins. The committee \(B\) covers mass \(1/k\), whereas one member of \(B\) together with all singleton candidates covers everyone.</p><p>For \(k=2\), every committee \(T\) satisfies</p><p>\( \displaystyle
+p^{-1}\operatorname{CC}_\mu(T)
+\le G_{p,\mu}(T)
+\le(p^{-1}+p^{-2})\operatorname{CC}_\mu(T).
+\)</p><p>Comparing a winning \(W\) with a CC-optimal \(V\) therefore gives the lower bound \(p/(p+1)\).</p><p>For attainment, use three candidates \(a,b,d\), with</p><p>\( \displaystyle
+\mu_{\{a,b\}}=\frac{p}{p+1},
+\qquad
+\mu_{\{d\}}=\frac1{p+1}.
+\)</p><p>All three size-two committees have score \(1/p\). The committee \(\{a,b\}\) covers mass \(p/(p+1)\), while either mixed committee covers everyone.</p><h3>7. Rationality, finite electorates, and running time</h3><p>The constructions prove exact attainment; no limiting sequence is required. Clearing a common denominator of the rational masses produces a finite electorate with identical scores up to scaling, identical tied winners, and identical ratios.</p><p>The values require only a scan of \(k+1\) AV expressions and, in the first CC regime, at most \(k-2\) CC expressions. All comparisons can be performed exactly over rationals.</p><p>Using schoolbook integer arithmetic, a conservative bound for computing both guarantees is</p><p>\( \displaystyle
+O\!\left(L+k^3\bigl(L+\log(k+1)\bigr)^2\right)
+\)</p><p>bit operations. The calculation is independent of \(m,\tau\), apart from reading the input: the guarantees depend only on \(k,p\).</p><p>If an attaining society is output as an explicit support list, its construction takes \(O(\tau m\,\operatorname{poly}(k,L))\) bit operations, with \(m,\tau\) as stated above. In particular, the first CC witness can have exponentially many support types; evaluating its guarantee does not require listing them.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 5, sampling lemma statement: The lemma should explicitly assume p&gt;1, 1&lt;=h&lt;=k for a fixed approval count, and k&gt;=3 for the mixture of counts 2 and 3. Its proof divides by p-1 and positive u_l. Every application in Section 6 satisfies these restrictions, so this omission does not invalidate the guarantees or attainment constructions.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Verdict: proved with a minor domain clarification.</b> The AV and CC formulas, their universal lower bounds, and their rational attaining societies are correct. The sampling lemma establishes global optimality of the proposed CC winners, so the sharpness argument checks every competing committee, including committees differing by several replacements.</p><p>The only issue is that the sampling lemma should state its parameter restrictions explicitly. Its actual applications satisfy those restrictions.</p><h3>1. Scope and preliminary facts</h3><p>The output addresses both requested guarantees and supplies explicit attaining societies and winning committees. It also addresses rationality, finite-electorate realization, support sizes, and running times.</p><p>The positivity of both ratio denominators is correctly justified: the positive mass on nonempty approval sets ensures that some candidate has positive approval mass, and that candidate belongs to a size-\(k\) committee.</p><p>Empty approval types cause no difficulty. Their contributions to all objectives and exchange inequalities vanish.</p><p>The attribution of the previously known bounds to Theorem 5 is accurate. [Lackner–Skowron, full version](https://arxiv.org/pdf/1801.01527)</p><h3>2. Exchange inequalities</h3><p>The four approval possibilities give the stated exchange identity, including the correction term when both exchanged candidates are approved.</p><p>Summing over the \(s^2\) exchanges gives exactly the stated \(\delta\), with the correct sign in inequality (1). Division by \(s\) is valid because this argument explicitly assumes \(s&gt;0\).</p><p>Inequality (2) follows directly from global optimality of \(W\). The notation and inequalities correctly accommodate overlapping committees. The separate treatment of \(W=V\) avoids division by zero.</p><p><b>Assessment:</b> correct.</p><h3>3. AV lower bound and attainment</h3><h3>Lower bound</h3><p>The difference in (3) is affine in \(d\), so checking \(d=0\) and \(d=s\) suffices.</p><p>At \(d=0\), the stated expression is correct. For \(w\ge1\), both terms are nonnegative because \(\rho\le1\) and \(p^{1-w}\le1\). For \(w=0\), both \(i\) and \(b\) vanish.</p><p>At \(d=s\), the expression correctly simplifies using \(n=i+s\). The restrictions \(w\le n\le k\) hold. The subsequent comparison is valid because \(1-p^{-w}\ge0\), and \(w\) is an integer in the minimization defining \(\rho\).</p><p>Taking expectations and applying (1) therefore proves the AV comparison for every winning committee. Choosing an AV-optimal \(V\) establishes the claimed universal lower bound.</p><h3>Attainment</h3><p>The masses are positive rationals and sum to one. Every size-\(k\) committee contains at least \(h\) party candidates, and the displayed score and successive score differences are correct. Thus the proposed \(W\) is globally winning.</p><p>The individual candidate approval masses establish that \(P\) is AV-optimal, including when those masses tie. The displayed ratio equals \(\rho\).</p><p>The universal lower bound then correctly establishes that \(W\) is a worst winning committee. The claimed support size, candidate count, and additional ties are correct.</p><p><b>Assessment:</b> correct, including \(p=1\), \(k=1\), and the endpoint choices of \(h\).</p><h3>4. CC universal lower-bound family</h3><p>The pointwise argument covers all four coverage possibilities.</p><ul><li><b>Both committees cover the type.</b> The bound \(J\le T_w\) is valid because \(v\ge1\). For \(d\ge1\), the two bounds on \(\delta\) use valid inequalities: \(s\le k\), \(b\le w\), and a positive coefficient on \(b\). For \(d=0\), coverage by \(V\) implies \(i\ge1\), giving the stated alternative bound. The displayed difference proving that bound is correct.</li></ul><ul><li><b>Only \(W\) covers the type.</b> The expressions for \(\delta\) and \(J\) are correct. Bernoulli’s inequality applies to the nonnegative integer exponent \(w\) and \(p\ge1\), and yields the required bound.</li></ul><ul><li><b>Only \(V\) covers the type.</b> Both \(\delta\le-1\) and \(J\le-1\) hold. Multiplication by the nonnegative mixture weights preserves the needed direction.</li></ul><ul><li><b>Neither committee covers the type.</b> All relevant quantities vanish.</li></ul><p>Consequently, (5) and its expectation correctly establish (4). In particular, this is a bound for every winning committee, as required by the adversarial treatment of ties.</p><p><b>Assessment:</b> correct.</p><h3>5. Evaluation of the CC lower bound</h3><p>The calculation in (6) is valid for \(h\ge3\). The successive differences (7) and (9) are correct, and their brackets have the claimed monotonicity.</p><p>In the first regime, \(d_3\ge d_2\), together with the decreasing successive-difference bracket, justifies choosing a maximizer with \(h\ge3\). This also excludes \(h=1\) from being a necessary maximizer.</p><p>In the second regime:</p><ul><li>The regime condition gives \(0&lt;\lambda_*&lt;1\).</li><li>The bracket in (9) vanishes at \(h=2\).</li><li>Its strict decrease establishes that \(F_2\) and \(F_3\) are the maxima.</li><li>The weights \(\theta_2,\theta_3\) are positive and sum to one.</li><li>Both displayed differences preceding (10), and the common value in (10), are correct.</li></ul><p>Thus (8) and (11) follow. The expressions agree at the regime boundary, and the stated specialization for \(k=3\) is algebraically consistent.</p><p><b>Assessment:</b> correct.</p><h3>6. Sampling lemma</h3><p>For the parameter ranges used in the attainment constructions, the lemma’s proof is valid.</p><p>The coefficient formula (14) correctly describes sampling omitted candidates. Independence of the chosen approved candidate in \(D\) gives the displayed \(P_l\), and the geometric-score identity gives (15).</p><p>The factorizations of \(Q\) and \(H\), the counting identity (16), and the expression for the mixture parameter \(r\) are correct.</p><p>Newton’s inequalities are stated in the appropriate normalized form. Their hypotheses hold: all the relevant variables are positive. The additional condition that they are at least one justifies the monotonicity argument using coupled subsets.</p><p>Equation (17) is correct. Over its applicable index range, both factors identified in its bracket are nonnegative and nonincreasing. The resulting sign pattern of second differences therefore gives the asserted unimodality of first differences.</p><p>The argument about initial-segment averages is valid, including equality cases. It establishes the endpoint minimum needed for (12). Substituting the stated endpoint values of \(M_l\) correctly gives (13).</p><h3>Minor issue: unstated domain</h3><p>The lemma does not explicitly state \(p&gt;1\) or that a fixed approval count satisfies \(1\le h\le k\). Its proof divides by \(p-1\) and by positive \(u_l\), so those restrictions matter. The mixture case also requires \(k\ge3\).</p><p><b>Minimum clarification:</b> explicitly state these restrictions in the lemma. All applications in Section 6 already satisfy them, and the boundary cases are handled separately.</p><h3>7. CC attaining societies and ties</h3><p>The masses in (18), together with the singleton masses, are positive on the listed support and sum to one. The societies are admissible and rational.</p><p>Every voter approves exactly one candidate in \(D\), so the stated CC values of \(D\) and \(B\) are correct. Because the candidate set consists of the two blocks, every competing committee is covered by the parameter \(l\). Symmetry legitimately removes dependence on the particular selected candidates.</p><p>Equation (19) correctly accounts for both covered voters and singleton voters. The sampling lemma then establishes that \(B\) beats or ties every competing committee.</p><p>The stated one-replacement ties follow from \(A_1=z\). In the second regime, \(A_k=z\) also establishes the tie with \(D\). The support-size calculations are correct.</p><p>As supplementary arithmetic checks, exact rational evaluations passed for all constructed committees at seven values of \(p&gt;1\) and every \(3\le k\le15\). These checks support, but do not replace, the general proof.</p><p><b>Assessment:</b> correct global attainment.</p><h3>8. Boundary cases, rationality, and running time</h3><p>The \(k=1\) argument is correct for both objectives.</p><p>At \(p=1\), the rule is AV. The CC comparison chain is valid, and the proposed society attains equality.</p><p>For \(k=2\), the score bounds hold for each possible intersection size. Their comparison gives the claimed lower bound, and all three committees in the attaining construction indeed have score \(1/p\).</p><p>Clearing rational denominators preserves scores up to a common positive factor, hence preserves winners, ties, and ratios.</p><p>The exact rational scans and the conservative bit-operation bound are consistent with the sizes of the powers and rational comparisons involved. The explicit-support construction bound appropriately permits an exponentially large witness support.</p><p>This establishes polynomial-time evaluation of the worst-case guarantees in the stated parameters. It does not assert polynomial-time winner determination or instance-ratio computation for an arbitrary society.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

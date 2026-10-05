@@ -1,0 +1,315 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Dividing a Graphical Cake — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Dividing a Graphical Cake <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2021-0970)</span></h1>
+<p class="banner">NEW RESULT — continuous: hard · adversarial review: proved_with_minor_gaps · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> The existential threshold problem is $\mathrm{NP}$-hard under polynomial-time many-one reductions, already for $\tau=3$ and edgewise constant densities. The optimum $W^*$ is attained, has the exact congestion-price characterization proved above, and $W^*/\kappa$ admits certified finite rational approximation with the stated running-time bounds.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.1 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite connected graph \(G\), finite valuation-type set \(T\), type distribution \(\mu\), and per-capita capacity \(\kappa\), assign each type-conditioned unit of population mass a connected bundle \(B\subseteq G\) so that \(\ell(x)=\sum_t\mu_t\Pr[B\ni x\mid t]\leq\kappa\) almost everywhere, maximizing \(W=\min_{t:\mu_t&gt;0}\operatorname{ess\,inf}_{B\sim t}v_t(B)\); determine whether \(W\geq w\) and characterize or compute the optimum \(W/\kappa\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(G\) be a finite connected undirected multigraph without loops, with \(m\geq1\) edges, each represented by \([0,1]\); let \(\lambda\) be edgewise Lebesgue measure. A bundle is a nonempty connected finite union of closed edge intervals; vertices and endpoints may be shared.<br>A society is given by its support: \(\tau\) types with positive binary-rational masses \(\mu_t\), summing to \(1\); \(\tau\) counts listed types, not possible types. Type \(t\) has a nonnegative piecewise-constant density \(f_t\), with binary-rational breakpoints and heights, defining \(v_t(B)=\int_B f_t\,d\lambda\) and satisfying \(v_t(G)=1\).<br>The inputs also include binary-rational capacity \(\kappa&gt;0\) and threshold \(w\in[0,1]\). Let \(K\) count all listed density segments and \(L\) be the total input bit length; state running times in \(m,\tau,K,L\).<br>An allocation assigns each type a Borel probability distribution \(P_t\) over bundles, using the Borel structure induced by their finite endpoint descriptions. Feasibility means \(\ell(x)=\sum_t\mu_tP_t\{B:x\in B\}\leq\kappa\) for \(\lambda\)-almost every \(x\); unused capacity is allowed.<br>Define \(W(P)=\min_t\operatorname{ess\,inf}_{B\sim P_t}v_t(B)\) and \(W^*=\sup_{P\text{ feasible}}W(P)\).</p><p>Is deciding whether a feasible allocation satisfies \(W(P)\geq w\) in \(\mathrm{P}\), or is it \(\mathrm{NP}\)-hard? How can the optimal normalized welfare \(W^*/\kappa\) be characterized or computed?</p><p>For finitely many agents, a constructive connected allocation guarantees welfare \(1/(2n-1)\), tightly even for identical valuations on a star ([finite-agent guarantee](https://epubs.siam.org/doi/full/10.1137/22M1500502)).<br>Exact connected egalitarian optimization for finitely many agents is already \(\mathrm{NP}\)-hard on an interval ([optimization hardness](https://arxiv.org/abs/1205.3982)). No result settling this distributional mass-capacity problem was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Valuation representation was unspecified: use explicitly encoded nonnegative rational piecewise-constant densities, normalized to value the entire cake at one.</li><li>Normalize total population mass to one and retain only positive-mass support types.</li><li>Represent each edge by a unit interval; exclude loops and edgeless graphs, while allowing parallel edges.</li><li>Use connected finite unions of closed edge intervals, permitting shared vertices and endpoints; interpret almost everywhere with respect to edgewise Lebesgue measure.</li><li>Allow arbitrary Borel bundle distributions rather than requiring finite support, with measurability defined through finite endpoint descriptions.</li><li>Take capacity to be a positive binary rational and the threshold to lie between zero and one; impose no reciprocal-integer restriction on capacity.</li><li>Allow unused capacity, consistent with the finite-agent welfare problem&#x27;s allowance of incomplete allocations.</li><li>Define optimal welfare as a supremum without assuming attainment; the threshold decision asks for an actual feasible allocation meeting the threshold.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>NP-hardness and optimal distributional welfare</h3><h3>1. Interpretation and results</h3><p>I interpret the decision problem as asking whether <b>there exists</b> a feasible allocation $P$ satisfying $W(P)\ge w$. Checking an arbitrary supplied Borel distribution would require an additional representation convention.</p><p>Under this interpretation, the decision problem is <b>$\mathrm{NP}$-hard under polynomial-time many-one reductions</b>, already with exactly three listed types and densities constant on each edge. The reduction below directly establishes this; it does not rely on the fractional Steiner-tree packing oracle reduction in the notes.</p><p>The optimal welfare is attained. It admits an exact congestion-price characterization, and its normalized value can be approximated to certified additive accuracy by finite rational allocations. The approximation algorithm has running time</p><p>$$
+2^{O(K+m+m\tau/(\kappa\varepsilon))}
+\operatorname{poly}(m,\tau,K,L,E)
+$$</p><p>when $0&lt;\kappa&lt;1$ and $\varepsilon\in(0,1]$ has bit length $E$.</p><h3>2. Bundle geometry, measurability, and attainment</h3><p>Equip $G$ with its shortest-path metric. Write $\mathcal B$ for the space of bundles.</p><h3>2.1. Bounded endpoint complexity</h3><p><b>Lemma.</b> Every bundle intersects each edge in at most two closed interval components. If a bundle contains a graph vertex, its intersection with an edge consists of a possibly empty prefix and a possibly empty suffix.</p><p><b>Proof.</b> A connected set containing no graph vertex lies in one component of $G$ with its vertices removed. Such a component is an edge interior, where a connected compact set is an interval.</p><p>Now suppose that $B$ contains a graph vertex. Fix an interior point $x\in B$ on an edge. If there were omitted points on both sides of $x$, the portion of $B$ between those omitted points would be a nonempty subset both open and closed relative to $B$, separated from every graph vertex. This contradicts connectedness. Thus either the entire edge segment from $x$ to its first endpoint belongs to $B$, or the entire segment to its second endpoint belongs to $B$. Closedness gives the asserted prefix-suffix description. $\square$</p><p>This argument applies to every nonempty compact connected subset of $G$, so every such subset is a bundle. Consequently, $\mathcal B$ is compact in the Hausdorff metric: the hyperspace of nonempty compact subsets of a compact metric space is compact, and connectedness is preserved under Hausdorff limits. For the latter assertion, a disconnected limit would have two nonempty compact parts with positive separation; sufficiently close approximating sets would lie in two disjoint neighborhoods and meet both, contradicting their connectedness.</p><p>A bundle is path connected. Indeed, it is a finite union of closed intervals; connectedness forces the intersection graph of those intervals, after identifying shared graph vertices, to be connected.</p><p>We will also use the following consequence:</p><blockquote>If a bundle contains specified graph vertices, its fully included edges contain a connected subgraph spanning those vertices.</blockquote><p>To see this, subdivide at the bundle’s interval endpoints. The bundle becomes a connected finite graph. A path between original graph vertices can pass from one original vertex to another only by traversing a whole original edge.</p><h3>2.2. The specified Borel structure</h3><p>Choose an orientation of each edge. A canonical description records, for each edge, either no component, one interval $[a_1,b_1]$, or two intervals with</p><p>$$
+0\le a_1\le b_1&lt;a_2\le b_2\le1.
+$$</p><p>Included graph vertices are represented consistently on every incident edge, including by degenerate intervals when necessary. These descriptions are unique.</p><p>For any fixed vector of component counts, the valid descriptions form a Borel subset of a finite-dimensional Euclidean space. Endpoint consistency is expressed by finitely many endpoint equalities and inequalities. Connectedness is determined by connectivity of the finite intersection graph of the described intervals, hence is likewise a Borel condition.</p><p>The description-to-bundle map is continuous on each component-count stratum, because changing interval endpoints by a small amount changes their union by a small Hausdorff distance. It is therefore a Borel bijection from a standard Borel description space onto the compact metric space $\mathcal B$. A Borel bijection between standard Borel spaces has a Borel inverse. Thus the endpoint-description and Hausdorff Borel structures agree. See [Berberian, *Borel Spaces*, Proposition 3.2.5](https://web.ma.utexas.edu/mp_arc/c/02/02-156.pdf).</p><p>Moreover,</p><p>$$
+\{(B,x)\in\mathcal B\times G:x\in B\}
+$$</p><p>is closed: if $B_i\to B$ in Hausdorff distance and $x_i\to x$ with $x_i\in B_i$, then $x\in B$. Bundle membership is therefore jointly measurable, which justifies the load function and all applications of Tonelli’s theorem below.</p><h3>2.3. Continuity of bundle integrals</h3><p><b>Lemma.</b> For every bounded measurable function $g$ on $G$, the function</p><p>$$
+B\longmapsto \int_B g\,d\lambda
+$$</p><p>is continuous on $\mathcal B$.</p><p><b>Proof.</b> Let $d=d_H(B,C)$. Outside the edge portions within coordinate distance $d$ of a graph vertex, a point at graph distance at most $d$ from another bundle must be within coordinate distance $d$ of that bundle on the same edge.</p><p>An edge intersection has at most two interval components. Its coordinate $d$-neighborhood adds at most $4d$ of length. Applying this in both directions contributes at most $8md$ outside the vertex neighborhoods. The vertex neighborhoods have total length at most $2md$. Hence</p><p>$$
+\lambda(B\mathbin{\triangle}C)\le10md,
+$$</p><p>and therefore</p><p>$$
+\left|\int_Bg\,d\lambda-\int_Cg\,d\lambda\right|
+\le10m\|g\|_\infty d.
+$$</p><p>$\square$</p><p>In particular, each input valuation $v_t$ is continuous.</p><h3>2.4. Attainment</h3><p>For $a\in[0,1]$, define</p><p>$$
+\mathcal B_t(a)=\{B\in\mathcal B:v_t(B)\ge a\}.
+$$</p><p>This is nonempty and compact: it contains $G$. Welfare at least $a$ is equivalent to $P_t(\mathcal B_t(a))=1$ for every type.</p><p>Capacity is equivalent to the family of inequalities</p><p>$$
+\sum_t\mu_t\int_{\mathcal B}
+\left(\int_Bh\,d\lambda\right)dP_t(B)
+\le
+\kappa\int_Gh\,d\lambda
+\qquad
+\text{for every continuous }h\ge0.
+$$</p><p>The forward implication follows from Tonelli’s theorem. For the converse, if $\ell&gt;\kappa$ on a set of positive measure, then $\ell\ge\kappa+\rho$ on some positive-measure set for some $\rho&gt;0$. Approximation of its indicator in $L^1(\lambda)$ by nonnegative continuous functions contradicts the tested inequalities. Here $0\le\ell\le1$, so the approximation also controls the tested load.</p><p>By the preceding continuity lemma, each tested constraint is closed under weak convergence of the distributions. The varying-threshold support condition is closed as well, since it is equivalent to</p><p>$$
+\int_{\mathcal B}(a-v_t(B))_+\,dP_t(B)=0.
+$$</p><p>Probability measures on a compact metric space form a compact space in the weak topology. Thus the feasible pairs</p><p>$$
+(a,P)\in[0,1]\times\prod_t\operatorname{Prob}(\mathcal B)
+$$</p><p>form a compact set. This set is nonempty because singleton bundles give welfare zero and consume no capacity almost everywhere.</p><p>It follows that <b>$W^*$ is attained</b>.</p><h3>3. Direct many-one $\mathrm{NP}$-hardness</h3><h3>3.1. A suitable Steiner-tree source problem</h3><p>The source problem asks whether a connected unweighted graph $H$ has a tree spanning a terminal set $R$, using at most $b$ edges. We need only instances satisfying</p><p>$$
+|R|\ge2,\qquad 1\le b\le |E(H)|.
+$$</p><p>Here is a direct proof of hardness under these restrictions.</p><p>Start from Vertex Cover, whose decision problem is $\mathrm{NP}$-complete. See [Karp, *Reducibility Among Combinatorial Problems*](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/Karp.pdf). We may restrict to simple graphs $J$ having $n$ vertices, $p\ge1$ edges, and a bound $1\le k\le n$: excluded cases are directly decidable and can be mapped to fixed restricted YES or NO instances.</p><p>Construct $H$ with:</p><ul><li>a new root $o$;</li><li>one vertex for each vertex of $J$, joined to $o$;</li><li>one terminal $a_e$ for each edge $e=uv$ of $J$, joined to $u$ and $v$.</li></ul><p>Set</p><p>$$
+R=\{o\}\cup\{a_e:e\in E(J)\},
+\qquad
+b=p+k.
+$$</p><p>The graph is connected and has</p><p>$$
+r_0=n+2p
+$$</p><p>edges, with $b\le r_0$.</p><p>A vertex cover $S$ gives a terminal-spanning tree with $p+|S|$ edges: use the root edges to $S$, and join each $a_e$ to one endpoint of $e$ in $S$.</p><p>Conversely, suppose a terminal-spanning tree uses $s$ vertices corresponding to vertices of $J$. It has $p+1+s$ vertices, hence $p+s$ edges. Each terminal $a_e$ has a neighbor among those $s$ vertices, so they form a vertex cover. Thus a tree with at most $p+k$ edges gives a cover of size at most $k$.</p><p>This proves the required source hardness.</p><h3>3.2. Allocation instance</h3><p>Let $(H,R,b)$ be a source instance, and let $r$ be the smallest power of two at least $r_0=|E(H)|$. Add $r-r_0$ pendant padding edges at a fixed vertex of $H$. Call the resulting $r$ edges the <b>pool edges</b>.</p><p>Next attach:</p><ul><li>one pendant marker edge at each terminal in $R$;</li><li>one pendant dummy edge $D$ at a fixed vertex of $H$.</li></ul><p>All added leaves are distinct. Write $q=|R|$. The allocation graph has</p><p>$$
+m=r+q+1.
+$$</p><p>Choose positive dyadic numbers $\rho_1,\ldots,\rho_q$ summing to one. Explicitly, if $j=\lceil\log_2q\rceil$, take</p><p>$$
+\rho_i=2^{-j}\quad(i&lt;q),
+\qquad
+\rho_q=1-(q-1)2^{-j}.
+$$</p><p>Set</p><p>$$
+w=\frac1r,
+\qquad
+\alpha=\frac1{4r},
+\qquad
+\kappa=\frac{1+\alpha(b-1)}{2r},
+$$</p><p>and define</p><p>$$
+\gamma=r\kappa,
+\qquad
+\beta=r\kappa-\alpha b.
+$$</p><p>Create exactly three types:</p><p>| Type | Mass | Density |<br>|---|---:|---|<br>| Main | $\alpha$ | $w\rho_i$ on marker $i$, $1-w$ on $D$, zero elsewhere |<br>| Filler | $\beta$ | $1/r$ on every pool edge, zero elsewhere |<br>| Blocker | $\gamma$ | $1$ on $D$, zero elsewhere |</p><p>Each valuation is normalized:</p><p>$$
+v_{\mathrm{main}}(G)
+=w\sum_i\rho_i+(1-w)=1,
+$$</p><p>$$
+v_{\mathrm{filler}}(G)=r\cdot\frac1r=1,
+\qquad
+v_{\mathrm{blocker}}(G)=1.
+$$</p><p>The masses sum to one because</p><p>$$
+\alpha+\beta+\gamma
+=
+\alpha+2r\kappa-\alpha b
+=1.
+$$</p><p>They are strictly positive. Indeed, $b\le r$ and</p><p>$$
+\beta=\frac{1-\alpha(b+1)}2&gt;0,
+\qquad
+\gamma&gt;0.
+$$</p><p>Also,</p><p>$$
+\alpha=\frac1{4r}\le\frac1{2r}\le\kappa.
+$$</p><p>Since $r$ is a power of two, all masses, heights, $\kappa$, and $w$ are dyadic. No internal density breakpoints are needed.</p><p>The construction has</p><p>$$
+\tau=3,\qquad K=3m
+$$</p><p>when one segment is listed for every type-edge pair. Connectedness of $H$ gives $q\le r_0+1$, so $m=O(r_0)$. Every numerical datum has bit length $O(\log r_0)$. The construction therefore takes polynomial time and produces polynomial input length.</p><h3>3.3. A small Steiner tree gives a feasible allocation</h3><p>Suppose $T\subseteq H$ spans $R$ and has $s\le b$ edges.</p><p>Give the main type the deterministic bundle consisting of $T$ and all marker edges. It is connected and has main-type value exactly $w$.</p><p>Partition $D$ into the $r$ closed intervals</p><p>$$
+\left[\frac{i-1}{r},\frac{i}{r}\right],
+\qquad i=1,\ldots,r,
+$$</p><p>and let the blocker choose each with probability $1/r$. Every interval has blocker value $w$. Away from partition endpoints, blocker load is</p><p>$$
+\frac{\gamma}{r}=\kappa.
+$$</p><p>For a pool edge $e$, define its residual capacity after the main allocation by</p><p>$$
+c_e=\kappa-\alpha\,\mathbf1_{\{e\in T\}}.
+$$</p><p>These quantities are nonnegative, and their sum is</p><p>$$
+C=\sum_e c_e
+=r\kappa-\alpha s
+\ge r\kappa-\alpha b
+=\beta&gt;0.
+$$</p><p>Let the filler choose the whole pool edge $e$ with probability $c_e/C$. Every such bundle has filler value $1/r=w$. Its load contribution on $e$ is</p><p>$$
+\beta\frac{c_e}{C}\le c_e.
+$$</p><p>Thus pool-edge capacity is respected. Marker-edge load is $\alpha\le\kappa$, and dummy-edge load equals $\kappa$ almost everywhere. All three types receive value at least $w$.</p><h3>3.4. A feasible allocation gives a small Steiner tree</h3><p>Suppose an allocation is feasible with welfare at least $w$.</p><p>Every blocker bundle satisfies</p><p>$$
+\lambda(B\cap D)=v_{\mathrm{blocker}}(B)\ge w
+$$</p><p>almost surely. Therefore, by Tonelli’s theorem,</p><p>$$
+\kappa
+\ge
+\int_D\ell\,d\lambda
+\ge
+\gamma\,\mathbb E_{\mathrm{blocker}}\lambda(B\cap D)
+\ge
+\gamma w
+=\kappa.
+$$</p><p>Equality throughout forces every other type’s expected dummy-edge consumption to be zero. Since $\alpha&gt;0$,</p><p>$$
+\lambda(B\cap D)=0
+\qquad
+\text{for almost every main bundle}.
+$$</p><p>Consequently, almost every main bundle satisfies</p><p>$$
+w
+\le v_{\mathrm{main}}(B)
+=
+w\sum_i\rho_i\lambda(B\cap\text{marker }i)
+\le w.
+$$</p><p>Every $\rho_i$ is positive, and each marker has length one. Equality therefore forces full-length inclusion of every marker. Because the bundle is closed, it contains each entire closed marker edge: omitting any point would omit a relatively open subset of positive length.</p><p>In particular, almost every main bundle contains all terminals. Its fully included edges contain a terminal-spanning connected subgraph, by Section 2.1. Marker edges, padding edges, and $D$ are pendant and cannot connect distinct vertices of $H$. Removing them leaves a terminal-spanning connected subgraph of $H$, hence a terminal-spanning tree.</p><p>Let $s_{\min}$ be the minimum number of edges in such a tree. Every main bundle under consideration has pool-edge length at least $s_{\min}$.</p><p>Every filler bundle satisfies</p><p>$$
+v_{\mathrm{filler}}(B)
+=\frac{\lambda(B\cap\text{pool})}{r}
+\ge w=\frac1r,
+$$</p><p>so its pool-edge length is at least one.</p><p>Integrating capacity over the $r$ pool edges now gives</p><p>$$
+r\kappa
+\ge
+\int_{\text{pool}}\ell\,d\lambda
+\ge
+\alpha s_{\min}+\beta.
+$$</p><p>Using $\beta=r\kappa-\alpha b$ and $\alpha&gt;0$, we obtain</p><p>$$
+s_{\min}\le b.
+$$</p><p>All capacity arguments above use integrated almost-everywhere inequalities, so shared endpoints and exceptional null sets cause no difficulty.</p><p>We have proved the exact equivalence</p><p>$$
+(H,R,b)\text{ is YES}
+\quad\Longleftrightarrow\quad
+\text{the constructed allocation instance is feasible at }w.
+$$</p><p>Thus the existential threshold problem is <b>many-one $\mathrm{NP}$-hard</b>, already with $\tau=3$ and edgewise constant densities. A polynomial-time decision algorithm would imply $\mathrm P=\mathrm{NP}$.</p><h3>4. Exact characterization by congestion and prices</h3><p>For $a\in[0,1]$, define the least necessary congestion</p><p>$$
+c(a)=
+\min_{\substack{P_t\in\operatorname{Prob}(\mathcal B_t(a))\\t=1,\ldots,\tau}}
+\operatorname*{ess\,sup}_{x\in G}
+\sum_t\mu_tP_t\{B:x\in B\}.
+$$</p><p>The minimum exists. Indeed, the distribution domain is compact, and essential maximum load is a supremum of continuous tested-load functionals, hence is lower semicontinuous.</p><p>Define normalized continuous prices by</p><p>$$
+\mathcal H=
+\left\{h\in C(G):h\ge0,\ \int_Gh\,d\lambda=1\right\},
+$$</p><p>and let</p><p>$$
+\phi_t(a,h)=
+\min_{B\in\mathcal B_t(a)}\int_Bh\,d\lambda.
+$$</p><p>The bundle minimum exists by compactness and continuity.</p><p><b>Theorem.</b></p><p>$$
+\boxed{
+c(a)=
+\sup_{h\in\mathcal H}
+\sum_t\mu_t\phi_t(a,h).
+}
+$$</p><p><b>Proof.</b> For an allocation $P$, put</p><p>$$
+F(P,h)=
+\sum_t\mu_t\int_{\mathcal B_t(a)}
+\left(\int_Bh\,d\lambda\right)dP_t(B).
+$$</p><p>Its essential maximum load equals $\sup_{h\in\mathcal H}F(P,h)$. The upper bound is immediate. For the lower bound, choose a positive-measure set on which the load exceeds any prescribed number below its essential supremum, approximate its indicator by nonnegative continuous functions in $L^1(\lambda)$, and normalize their integrals.</p><p>For fixed $h$, minimizing $F(P,h)$ independently over the type distributions gives</p><p>$$
+\min_P F(P,h)=\sum_t\mu_t\phi_t(a,h).
+$$</p><p>Thus the displayed supremum is at most $c(a)$.</p><p>For the reverse inequality, fix $b&lt;c(a)$. For every $P$, some $h\in\mathcal H$ satisfies $F(P,h)&gt;b$. Continuity in $P$ and compactness give finitely many prices $h_1,\ldots,h_d$ such that</p><p>$$
+\max_iF(P,h_i)&gt;b
+\qquad\text{for every }P.
+$$</p><p>The set</p><p>$$
+S=\{(F(P,h_1),\ldots,F(P,h_d)):P\}
+$$</p><p>is compact and convex, and is disjoint from</p><p>$$
+O=\{y\in\mathbb R^d:y_i\le b\text{ for every }i\}.
+$$</p><p>Choose a closest pair $s_0\in S$, $o_0\in O$, and put $\theta=s_0-o_0$. Such a pair exists because $S$ is compact and projection onto $O$ is continuous. Its distance is positive. Coordinatewise projection gives</p><p>$$
+(o_0)_i=\min\{(s_0)_i,b\},
+\qquad
+\theta_i\ge0.
+$$</p><p>Minimality, applied along the segment from $s_0$ to any $s\in S$, gives</p><p>$$
+\theta\cdot(s-s_0)\ge0.
+$$</p><p>For every coordinate with $\theta_i&gt;0$, we have $(o_0)_i=b$. Therefore</p><p>$$
+\theta\cdot s
+\ge
+\theta\cdot s_0
+=
+b\sum_i\theta_i+\|\theta\|_2^2.
+$$</p><p>The price</p><p>$$
+h=\frac{\sum_i\theta_i h_i}{\sum_i\theta_i}
+$$</p><p>belongs to $\mathcal H$ and satisfies</p><p>$$
+\min_PF(P,h)
+\ge
+b+\frac{\|\theta\|_2^2}{\sum_i\theta_i}
+&gt;b.
+$$</p><p>Letting $b$ increase to $c(a)$ proves the reverse inequality. $\square$</p><p>Consequently,</p><p>$$
+\boxed{
+a\text{ is feasible}
+\quad\Longleftrightarrow\quad
+c(a)\le\kappa
+\quad\Longleftrightarrow\quad
+\sum_t\mu_t\phi_t(a,h)\le\kappa
+\text{ for every }h\in\mathcal H.
+}
+$$</p><p>Together with attainment, this gives the exact normalized-welfare characterization</p><p>$$
+\boxed{
+\frac{W^*}{\kappa}
+=
+\frac1\kappa
+\max\left\{
+a\in[0,1]:
+\sup_{h\in\mathcal H}
+\sum_t\mu_t
+\min_{\substack{B\in\mathcal B\\v_t(B)\ge a}}
+\int_Bh\,d\lambda
+\le\kappa
+\right\}.
+}
+$$</p><p>This is a variational characterization; it does not assert polynomial-time solvability of the bundle-minimization problems.</p><p>Threshold zero is always feasible. If $\kappa\ge1$, giving $G$ to every type proves $W^*=1$, so the normalized optimum is exactly $1/\kappa$.</p><h3>5. Certified finite computation</h3><h3>5.1. A value-controlled grid</h3><p>Fix a rational absolute welfare tolerance $\delta\in(0,1]$.</p><p>Subdivide at every input density breakpoint, producing $S\le K+m$ common atoms. For an atom $I$, write</p><p>$$
+g_I=\max_t f_t|_I,
+\qquad
+\eta=\frac{\delta}{2m},
+$$</p><p>and subdivide it into</p><p>$$
+q_I=\max\left\{1,\left\lceil\frac{g_I\lambda(I)}{\eta}\right\rceil\right\}
+$$</p><p>equal cells. Every cell has value at most $\eta$ for every type.</p><p>Since</p><p>$$
+\sum_Ig_I\lambda(I)
+\le
+\sum_t\int_Gf_t\,d\lambda
+=\tau,
+$$</p><p>the number $N$ of cells satisfies</p><p>$$
+N\le K+m+\frac{2m\tau}{\delta}.
+$$</p><p>All grid coordinates and cell values are rational.</p><h3>5.2. Rounding while preserving capacity</h3><p><b>Lemma.</b> There is a Borel map $R$ from bundles to connected unions of whole grid cells or grid singletons such that</p><p>$$
+\lambda(R(B)\setminus B)=0
+$$</p><p>and, simultaneously for all types,</p><p>$$
+v_t(R(B))\ge v_t(B)-\delta.
+$$</p><p><b>Proof.</b> If $B$ contains original graph vertices, retain all wholly contained cells and all original vertices in $B$. The fully included original edges connect those vertices, by Section 2.1, and remain intact under rounding. Every other retained cell belongs to a prefix or suffix attached to that connected part. Thus the result is connected and nonempty.</p><p>If $B$ contains no original vertex, it is an interval in one edge interior. Its wholly contained cells, when present, form an interval. If there are none, use a fixed grid singleton.</p><p>On each original edge, at most two cells are partly included and lose positive length. Each has value at most $\eta$, so total value loss is at most</p><p>$$
+2m\eta=\delta.
+$$</p><p>Any added point is a grid vertex, hence belongs to a fixed finite null set.</p><p>The rule is Borel: it depends only on finitely many original-vertex membership tests and whole-cell containment tests. The former are closed tests; the latter are closed because, for a fixed compact cell $C$, the condition $C\subseteq B$ is closed in the Hausdorff topology. $\square$</p><p>Applying $R$ to distributions preserves capacity outside that fixed finite null set. Let $W_{\mathrm{grid}}$ denote the optimum restricted to grid bundles. Original admissibility and rounding of an optimal allocation yield</p><p>$$
+\boxed{
+W_{\mathrm{grid}}\le W^*\le W_{\mathrm{grid}}+\delta.
+}
+$$</p><h3>5.3. Configuration linear programs</h3><p>Enumerate every connected nonempty subset of cells, and every grid singleton. There are at most</p><p>$$
+2^N+N+1
+$$</p><p>configurations, since the connected subdivided graph has at most $N+1$ vertices.</p><p>For threshold $a$, introduce $z_{t,C}$ only when $v_t(C)\ge a$. This variable represents the population mass of type $t$ receiving $C$. Feasibility is exactly</p><p>$$
+z_{t,C}\ge0,
+\qquad
+\sum_Cz_{t,C}=\mu_t
+\quad(t=1,\ldots,\tau),
+$$</p><p>$$
+\sum_{\substack{t,C\\j\subseteq C}}z_{t,C}\le\kappa
+\quad(j=1,\ldots,N).
+$$</p><p>These constraints are sufficient because configuration membership is constant on each cell interior; shared endpoints are null. They are necessary by integrating the constant cell-interior loads.</p><p>The grid optimum is one of the finitely many configuration values, or zero: for any distribution on a finite configuration space, welfare is the minimum value among its positive-probability type-configuration pairs. Sorting all candidate values and binary-searching with exact rational LP feasibility therefore computes $W_{\mathrm{grid}}$ exactly.</p><p>Rational linear programming is polynomial-time in its explicitly listed dimensions and coefficient bit length. Here the dimensions are at most $\tau(2^N+N+1)$ variables and $N+\tau$ constraints, and all rational arithmetic has bit length polynomial in $L$, the bit length $D$ of $\delta$, and the other input parameters. The resulting running time is</p><p>$$
+\boxed{
+2^{O(K+m+m\tau/\delta)}
+\operatorname{poly}(m,\tau,K,L,D).
+}
+$$</p><p>A basic feasible solution uses at most $N+\tau$ nonzero type-configuration variables. Thus the algorithm outputs an explicit finite rational allocation attaining the certified lower bound.</p><p>For normalized additive accuracy $\varepsilon\in(0,1]$, when $\kappa&lt;1$, take $\delta=\kappa\varepsilon$. Then</p><p>$$
+\boxed{
+\frac{W_{\mathrm{grid}}}{\kappa}
+\le
+\frac{W^*}{\kappa}
+\le
+\frac{W_{\mathrm{grid}}}{\kappa}+\varepsilon,
+}
+$$</p><p>with running time</p><p>$$
+\boxed{
+2^{O(K+m+m\tau/(\kappa\varepsilon))}
+\operatorname{poly}(m,\tau,K,L,E).
+}
+$$</p><p>This computes the optimum to certified accuracy. It need not decide an exact threshold equality $W^*=w$.</p><h3>5.4. Exact computation at threshold one</h3><p>There is an additional exact finite reduction when $w=1$.</p><p>A closed bundle of type-$t$ value one must contain every closed common atom on which $f_t$ is positive. Otherwise its relatively open complement in that atom would have positive measure and lose positive value.</p><p>Apply the rounding rule above using the common atoms themselves as cells. It retains every positive-density atom, remains connected, and never increases consumption almost everywhere. Thus threshold one is feasible exactly when the corresponding whole-atom configuration LP is feasible.</p><p>This gives running time</p><p>$$
+2^{O(K+m)}\operatorname{poly}(m,\tau,K,L).
+$$</p><p>It also gives membership in $\mathrm{NP}$ for this restricted threshold problem. A basic feasible solution has at most $S+\tau$ positive variables. Its matrix has entries in $\{0,1,-1\}$; after clearing the rational right-hand-side denominators, Cramer’s rule and the Hadamard determinant bound give polynomial-bit rational masses. The selected configurations, connectivity, masses, values, and capacities are all polynomial-time verifiable.</p><h3>6. A normalized-welfare example</h3><p>Randomization does not remove the star obstruction.</p><p>Let $n\ge2$, let $G$ be a star with $m=2n-1$ unit spokes, and take one type with density $1/m$ everywhere and capacity $\kappa=1/n$.</p><p>Choosing each whole spoke with probability $1/m$ is feasible and gives welfare $1/m$.</p><p>Suppose welfare were strictly greater than $1/m$. Almost every bundle would have length greater than one, so it would contain the center and positive prefixes on at least two spokes. For each spoke $e$, let $p_e$ be the probability of receiving a positive prefix on it.</p><p>At distance $x&gt;0$ from the center, membership probability increases to $p_e$ as $x$ decreases to zero. Choose a decreasing sequence of such points outside the capacity-exceptional null set. Capacity and continuity from below of probability give $p_e\le\kappa$.</p><p>Every sampled bundle uses at least two positive prefixes, so</p><p>$$
+2\le\sum_ep_e\le m\kappa=\frac{2n-1}{n}&lt;2,
+$$</p><p>a contradiction. Therefore</p><p>$$
+W^*=\frac1{2n-1},
+\qquad
+\frac{W^*}{\kappa}=\frac{n}{2n-1}.
+$$</p><p>Thus normalized welfare depends on the graph and valuations; the price characterization and finite approximation apply without presupposing a universal closed formula.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 5.3, the sentence beginning “all rational arithmetic has bit length polynomial”: Distinguish the bit lengths of grid coordinates and LP input coefficients from LP intermediate and output arithmetic, whose bounds also depend on the generated LP dimensions. State that rational LP arithmetic is polynomial in those explicit dimensions and coefficient encoding lengths; the displayed exponential running-time bound already absorbs this dependence.</li></ul>
+<div class="pre"><p>The output resolves the intended existential decision problem: its reduction establishes $\mathrm{NP}$-hardness, and its congestion-price formula characterizes the optimal normalized welfare. The attainment and approximation arguments are sound. I found one minor imprecision in the discussion of arithmetic bit lengths; it does not invalidate the stated running-time bounds.</p><ul><li><b>Interpretation of the task.</b></li></ul><p>The prover explicitly interprets the question as existence of a feasible allocation with $W(P)\ge w$. This matches the evident optimization and complexity question in <code>USER_TASK</code>. Its qualification about checking a supplied, arbitrarily represented Borel distribution is appropriate.</p><p>The output claims hardness, rather than membership in $\mathrm{NP}$ for the general problem. Its restricted membership claim at threshold $1$ is separately justified. These claims are internally consistent.</p><ul><li><b>Bundle geometry and measurable structure, Sections 2.1–2.2.</b></li></ul><p>The bounded-component lemma is valid. A connected compact subset avoiding all original vertices lies within one edge interior and is an interval. If it contains an original vertex, an interior component separated from both endpoints of its edge would disconnect the subset. Consequently, each edge intersection consists of at most two components, attached to its endpoints when original vertices are present.</p><p>This also justifies identifying bundles with nonempty compact connected subsets of $G$. The hyperspace compactness theorem applies because the metric graph is compact, and the supplied argument correctly shows that connectedness survives Hausdorff limits.</p><p>Path connectedness follows from the finite interval representation. The consequence concerning fully included edges is valid: a path connecting original graph vertices must traverse entire original edges between successive original vertices. This consequence is sufficient both for the hardness reduction and for rounding.</p><p>The canonical descriptions include degenerate intervals and require consistent representations of shared vertices. With these conventions, uniqueness and the Borel conditions are justified. There are finitely many component-count strata, each a Borel subset of a Euclidean space, so the description space is standard Borel. The target is compact metric, hence also standard Borel. The stated Borel-bijection theorem therefore applies with its hypotheses satisfied; the cited proposition has the stated content. [Berberian, Proposition 3.2.5](https://web.ma.utexas.edu/mp_arc/c/02/02-156.pdf).</p><p>Joint membership is closed under the indicated convergences. Thus the load function is measurable and the subsequent uses of Tonelli are justified.</p><ul><li><b>Continuity and attainment, Sections 2.3–2.4.</b></li></ul><p>The continuity estimate is valid. Away from the coordinate neighborhoods of original vertices, a path of length at most $d$ cannot leave the current edge. Enlarging at most two interval components contributes at most $4d$ per edge in each direction. The remaining vertex neighborhoods contribute at most $2md$. Therefore the stated bound</p><p>$$
+   \lambda(B\mathbin{\triangle}C)\le 10md
+   $$</p><p>supports continuity for every bounded measurable integrand. The input densities satisfy the required boundedness.</p><p>Continuous nonnegative test functions characterize the almost-everywhere capacity constraint. In the converse argument, the bound $0\le\ell\le1$ makes the stated $L^1$ approximation sufficient.</p><p>Each tested constraint is closed under weak convergence. The varying support restriction is correctly expressed by</p><p>$$
+   \int_{\mathcal B}(a-v_t(B))_+\,dP_t(B)=0.
+   $$</p><p>Its integrand is jointly continuous in the threshold and bundle, so the restriction is closed. Compactness of probability measures on the compact metric bundle space applies. Singleton allocations establish nonemptiness, including at threshold zero. The conclusion that $W^*$ is attained follows.</p><ul><li><b>Steiner-tree source reduction, Section 3.1.</b></li></ul><p>The reduction from Vertex Cover is correct. A cover supplies the described tree with $p+|S|$ edges. Conversely, a terminal-spanning tree using $s$ original vertices has exactly $p+s$ edges, and those original vertices cover every edge of the Vertex Cover instance.</p><p>The source restrictions are satisfied: the constructed graph is connected, there are at least two terminals, and</p><p>$$
+   1\le p+k\le n+2p.
+   $$</p><p>Mapping the excluded, directly decidable cases to fixed restricted instances is a routine detail, rather than a substantive gap.</p><ul><li><b>Allocation construction and forward implication, Sections 3.2–3.3.</b></li></ul><p>The numerical identities check:</p><p>$$
+   \beta=\frac{1-\alpha(b+1)}2,\qquad
+   \alpha+\beta+\gamma=1,\qquad
+   \gamma w=\kappa.
+   $$</p><p>Since $1\le b\le r$ and $\alpha=1/(4r)$, all three masses are positive and $\alpha\le\kappa$. The power-of-two choice makes the constructed numerical data dyadic. All three valuations are normalized, including the marker weights.</p><p>Padding, markers, and the dummy edge preserve connectedness and introduce no loops. The graph size, segment count, and numerical encoding lengths are polynomial in the source size.</p><p>In the forward allocation, blocker load equals $\kappa$ almost everywhere on the dummy edge. Filler probabilities are well defined because</p><p>$$
+   C=r\kappa-\alpha s\ge\beta&gt;0.
+   $$</p><p>Their load on each pool edge is at most its residual capacity. Marker load is permitted because $\alpha\le\kappa$. Every assigned bundle is connected and reaches threshold $w$.</p><ul><li><b>Reverse implication and hardness, Section 3.4.</b></li></ul><p>The dummy-edge inequality chain is correct. Equality forces the main type’s expected dummy-edge length to vanish, hence its dummy-edge length vanishes almost surely.</p><p>The main valuation then reaches threshold only by obtaining full length on every marker, because all marker weights are strictly positive. Closedness upgrades full-measure inclusion to inclusion of each entire closed marker.</p><p>Consequently, almost every main bundle contains all terminals. Its fully included original edges supply a terminal-spanning subgraph. The added edges are pendant, so they cannot provide connections between distinct original vertices. The resulting lower bound of $s_{\min}$ on main-type pool consumption is justified.</p><p>Filler bundles consume at least one unit of pool length almost surely. Integrated capacity therefore gives</p><p>$$
+   r\kappa\ge\alpha s_{\min}+\beta,
+   $$</p><p>which, with the constructed value of $\beta$, yields $s_{\min}\le b$. All these arguments tolerate the permitted shared endpoints and null exceptional sets.</p><p>The exact equivalence required for a polynomial-time many-one reduction is established. The claimed hardness already for three listed types and edgewise constant densities follows.</p><ul><li><b>Congestion-price characterization, Section 4.</b></li></ul><p>The distribution domain is nonempty, compact, and convex. Essential maximum load is the supremum of the normalized continuous tested loads, by the supplied indicator-approximation argument. Hence the congestion objective is lower semicontinuous and attains its minimum.</p><p>For fixed price, minimizing over probability distributions gives the minimum bundle price separately for each type. Compactness and continuity justify those bundle minima.</p><p>The reverse inequality is also valid. Compactness supplies finitely many prices covering the distribution domain. Their load-vector image is compact and convex and is disjoint from the coordinatewise lower orthant at level $b$. The closest-pair calculation correctly produces nonnegative separating weights, with a strictly positive sum. Their normalized combination belongs to $\mathcal H$ and has minimum tested load strictly greater than $b$.</p><p>Thus the price identity, threshold characterization, and formula for $W^*/\kappa$ follow. The threshold-zero and $\kappa\ge1$ cases are correctly handled.</p><ul><li><b>Grid construction and rounding, Sections 5.1–5.2.</b></li></ul><p>The grid bound follows from</p><p>$$
+   \sum_I g_I\lambda(I)\le\tau
+   $$</p><p>and the stated ceiling bound. Every cell has value at most $\eta$ for every type.</p><p>For a bundle containing original vertices, retaining whole cells preserves the fully included edges connecting those vertices. Remaining retained cells attach through prefixes or suffixes. For a bundle without original vertices, retained cells form an interval; the fallback singleton is admissible.</p><p>At most two partially included cells per original edge contribute lost value, giving the stated simultaneous loss bound $\delta$. Added points lie in a fixed finite grid set. The map is Borel by its finite closed containment and membership tests, and its pushforward preserves capacity away from that fixed null set.</p><p>Therefore</p><p>$$
+   W_{\mathrm{grid}}\le W^*\le W_{\mathrm{grid}}+\delta
+   $$</p><p>is justified.</p><ul><li><b>Finite computation and threshold one, Sections 5.3–5.4.</b></li></ul><p>The configuration count is valid: a connected subdivided graph with $N$ edges has at most $N+1$ vertices. The configuration LP exactly expresses the restricted allocation problem on cell interiors.</p><p>On the finite configuration space, welfare is determined by positive-probability type-configuration pairs. Searching the listed valuation thresholds therefore computes the grid optimum exactly. Standard rational LP complexity, applied to the explicitly enumerated dimensions, supports the exponential running-time bounds. The basic-feasible-solution support bound of $N+\tau$ is correct.</p><p><b>Minor issue:</b> The phrase “all rational arithmetic has bit length polynomial in $L$, the bit length $D$ of $\delta$, and the other input parameters” is too broad. Bounds for LP intermediate and output arithmetic also depend on the generated LP dimensions, which need not be polynomial in the original encoding length.</p><p><b>Minimum clarification:</b> Specify that the polynomial bound concerns the grid coordinates and LP input coefficients, and that rational LP arithmetic is polynomial in the explicitly generated dimensions and coefficient encoding lengths. Those dimensions are already accounted for in the displayed exponential running time.</p><p>At threshold one, closedness forces inclusion of every positive-density common atom. The rounding argument preserves those atoms, so the finite LP equivalence is valid. Here the number of cells is polynomially bounded by $K+m$; the basic-solution support and determinant bounds consequently give a polynomial-size certificate. The restricted $\mathrm{NP}$ membership claim follows.</p><ul><li><b>Star example, Section 6.</b></li></ul><p>The uniform whole-spoke allocation is feasible since $1/(2n-1)\le1/n$.</p><p>Welfare strictly exceeding $1/(2n-1)$ forces bundle length greater than one. Such bundles contain the center and positive prefixes on at least two spokes. Along each spoke, membership events increase toward the event of a positive prefix as the coordinate decreases to zero. Choosing coordinates outside the exceptional null set correctly yields $p_e\le\kappa$.</p><p>The contradiction</p><p>$$
+    2\le\sum_e p_e\le(2n-1)/n&lt;2
+    $$</p><p>is valid. Both the optimal welfare and its normalized value are established.</p><p>There are no blocking mathematical issues. The minor arithmetic clarification is expositional and leaves the hardness result, attainment, characterization, and certified approximation intact.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

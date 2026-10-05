@@ -1,0 +1,310 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Class Fairness in Online Matching — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Class Fairness in Online Matching <span style="font-weight:normal;color:#8a7350">(aaai23-25704)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For deterministic matching of divisible items, EQUAL-FILLING (Algorithm 2) satisfies non-wastefulness, (1 −1/e)-CEF, (1 −1/e)-CPROP, and 1/2-USW.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite known set \(T\) of complete agent types, each specifying a class and binary likes over a finite item-signature universe, rational masses \(\mu_t\) summing to \(1\), an adversarial online sequence of item signatures and sizes \(w_j\), and target ratios, can one compute a deterministic irrevocable mass-allocation policy \(x_{t,j}\) satisfying type-capacity and item-capacity constraints, non-wastefulness, and the paper&#x27;s \(\alpha\)-CEF, \(\alpha\)-CPROP, and \(\alpha\)-USW guarantees at every stopping time?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list \(T\) of \(\tau\) types with positive binary-rational masses \(\mu_t\), summing to \(1\). Here \(\tau\) is the support size, not the number of possible types. Each type specifies a class \(c(t)\in\{1,\ldots,k\}\) and binary likes \(\ell_t:S\to\{0,1\}\) over a known signature universe of size \(m\); every class has positive mass.<br>Each unit of agent mass has capacity \(1\). An adversary reveals items \((s_j,w_j)\), with \(s_j\in S\) and positive binary-rational size \(w_j\), sequentially; signatures may repeat, and neither future arrivals nor the stopping time is known.<br>A deterministic policy irrevocably chooses allocated amounts \(x_{t,j}\geq0\) using only the society and revealed history, with \(\sum_{j\leq r}x_{t,j}\leq\mu_t\), \(\sum_t x_{t,j}\leq w_j\), and \(x_{t,j}=0\) whenever \(\ell_t(s_j)=0\).<br>Non-wastefulness requires, at every prefix \(r\), that each underallocated item \(j\leq r\) has every liking type saturated: \(\sum_t x_{t,j}&lt;w_j\Rightarrow\sum_{q\leq r}x_{t,q}=\mu_t\) for every \(t\) with \(\ell_t(s_j)=1\).<br>For a prefix, let \(\mathcal F_r\) be all nonnegative matrices satisfying its type and item capacities, including matrices assigning disliked items. Define \(Y_{h,j}(Z)=\sum_{t:c(t)=h}z_{t,j}\), \(V_i(Z)=\sum_{t:c(t)=i}\sum_{j\leq r}\ell_t(s_j)z_{t,j}\), and \(\operatorname{USW}(Z)=\sum_iV_i(Z)\).<br>For an item-amount vector \(y\), define \(V_i^*(y)\) as the maximum total allocation to liking types in class \(i\), with type capacities \(\mu_t\) and item capacities \(y_j\). Set \(\operatorname{prop}_i(r)=\max_{Z\in\mathcal F_r}\min_h V_i^*(Y_h(Z))\) and \(\operatorname{OPT}(r)=\max_{Z\in\mathcal F_r}\operatorname{USW}(Z)\).<br>Given binary-rational targets \((\alpha_E,\alpha_P,\alpha_U)\in(0,1]^3\), the requested guarantees at every prefix are \(V_i(X)\geq\alpha_E V_i^*(Y_h(X))\) for all classes \(i,h\), \(V_i(X)\geq\alpha_P\operatorname{prop}_i(r)\) for every class \(i\), and \(\operatorname{USW}(X)\geq\alpha_U\operatorname{OPT}(r)\).<br>For a given society, which target triples are simultaneously attainable with non-wastefulness by a deterministic online policy, and which are impossible? Can attainable triples be implemented in polynomial time in \(m,\tau,k,r,L\), where \(L\) is the total binary input length through prefix \(r\), including the targets?<br>For finite unit-capacity agents and divisible unit-size items, Equal-Filling simultaneously guarantees non-wastefulness and ratios \((1-1/e,1-1/e,1/2)\); the proportionality ratio is tight. A later result bounds non-wasteful deterministic CEF by \(0.677\). [Original result](https://www.cs.toronto.edu/~nisarg/papers/fair-online-matching.pdf), [later bound](https://proceedings.neurips.cc/paper_files/paper/2024/file/20ceffa1fcec0f882868e5b891e3e7fa-Paper-Conference.pdf).<br>For that finite-agent model, a subsequent algorithm simultaneously guarantees CEF ratio \(1-e^{-\gamma}\) and USW ratio \(1-e^{\gamma-1}/(\gamma+1)\), for \(\gamma\in[0,1]\). [Source](https://arxiv.org/html/2605.23408v1).<br>No result settling the specified support-encoded mass model with known complete types and all three requested guarantees was identified.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Interpreted mass allocations as amounts, with one unit of capacity per unit of agent mass, giving total type capacity equal to its mass.</li><li>Specified positive binary-rational item sizes without an additional upper bound; sizes are capacities, and utilities are allocated liked amounts.</li><li>Required every represented class to have positive mass and compared classes without weighting fairness by class size.</li><li>Made the policy causal and required guarantees for every adversarial continuation and every finite prefix, with repeated signatures allowed.</li><li>Interpreted target ratios as three independently specified binary rationals in (0,1].</li><li>Retained the proportionality benchmark&#x27;s capacity-feasible hypothetical matchings, including allocations to disliked types; non-wastefulness restricts the actual policy to liked assignments.</li><li>Measured computation in the signature-universe size, positive support size, class count, prefix length, and accumulated binary input length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial results: an effective finite-horizon characterization and a sharp two-class frontier</h3><h3>1. Status and conventions</h3><p>The general society-specific attainable region, and polynomial-time implementation for every attainable triple, remain unresolved.</p><p>The results proved here are:</p><ul><li>Exact polynomial-time formulas for the benchmarks.</li><li>A finite-dimensional state sufficient for all prefix requirements.</li><li>An effective sequence of finite-horizon tests whose intersection characterizes infinite-horizon attainability.</li><li>Rational implementations for every feasible fixed finite horizon.</li><li>A sharp welfare frontier for two homogeneous classes of arbitrary masses whenever either fairness target equals $1$.</li></ul><p>Existence statements allow real allocation amounts, as permitted by the task. Rationality is asserted separately for the implementations proved below. In particular, finite-horizon rational implementations do <b>not</b> imply a rational infinite-horizon implementation.</p><h3>2. Exact benchmark formulas</h3><p>Write<br>$$
+T_i=\{t:c(t)=i\},\qquad
+C_i=\sum_{t\in T_i}\mu_t,\qquad
+C_{\min}=\min_i C_i.
+$$</p><p>For a signature-capacity vector $y=(y_s)_{s\in S}$, define $F_i(y)$ as the maximum flow in the following network:</p><ul><li>The source connects to each $t\in T_i$ with capacity $\mu_t$.</li><li>Type $t$ connects to signature $s$ with unlimited capacity when $\ell_t(s)=1$.</li><li>Signature $s$ connects to the sink with capacity $y_s$.</li></ul><p>Let $F(y)$ denote the corresponding network containing all types.</p><p>For a prefix, put<br>$$
+W_s=\sum_{j:s_j=s}w_j.
+$$</p><h3>Proposition 1: aggregation and proportionality</h3><p>For every item-amount vector $y$,<br>$$
+V_i^*(y)=F_i(\bar y),
+\qquad
+\bar y_s=\sum_{j:s_j=s}y_j.
+$$</p><p>Moreover,<br>$$
+\operatorname{OPT}(r)=F(W),
+\qquad
+\operatorname{prop}_i(r)
+=\min\{C_{\min},F_i(W/k)\}.
+$$</p><p><b>Proof.</b></p><p>Aggregating an item-level matching by signature preserves type capacities and matching value.</p><p>Conversely, suppose an aggregate matching assigns $a_{t,s}$ to type $t$ from signature $s$. For $\bar y_s&gt;0$, set<br>$$
+z_{t,j}=a_{t,s}\frac{y_j}{\bar y_s}
+\quad\text{when }s_j=s.
+$$<br>This preserves every type total. Also,<br>$$
+\sum_t z_{t,j}
+=\frac{y_j}{\bar y_s}\sum_t a_{t,s}
+\leq y_j.
+$$<br>Zero-capacity signatures carry no flow. This proves the optimistic-valuation formula. Deleting disliked allocations preserves welfare, so the same argument proves the formula for $\operatorname{OPT}(r)$.</p><p>For proportionality, $F_i$ is monotone and concave in its signature capacities. Monotonicity follows from inclusion of feasible sets. For concavity, convex combinations of feasible matchings remain feasible for the corresponding convex combinations of capacity vectors.</p><p>Given $Z\in\mathcal F_r$, let $y_h$ be class $h$’s aggregate signature bundle. Then<br>$$
+\sum_h y_h\leq W,
+\qquad
+\sum_s y_{h,s}\leq C_h.
+$$<br>Consequently,<br>$$
+\min_h F_i(y_h)
+\leq \frac1k\sum_h F_i(y_h)
+\leq F_i\!\left(\frac1k\sum_h y_h\right)
+\leq F_i(W/k).
+$$<br>Furthermore, $F_i(y_h)\leq C_h$, so the minimum is at most $C_{\min}$.</p><p>For the reverse inequality, put<br>$$
+B=\min\{C_{\min},F_i(W/k)\}.
+$$<br>Take a liked matching for class $i$ of value exactly $B$ under signature capacities $W/k$, scaling an optimal matching if necessary. Let $b_s$ be its signature totals. Thus<br>$$
+b_s\leq W_s/k,\qquad \sum_s b_s=B.
+$$<br>Assign the same signature bundle $b$ to every class. Within class $h$, distribute it proportionally to the type masses. At item level, for $W_s&gt;0$, use<br>$$
+z_{t,j}
+=\frac{\mu_t}{C_h}\,b_s\,\frac{w_j}{W_s},
+\qquad c(t)=h,\quad s_j=s.
+$$<br>Each type receives total $\mu_t B/C_h\leq\mu_t$. Each item receives<br>$$
+\sum_t z_{t,j}
+=k b_s\frac{w_j}{W_s}\leq w_j.
+$$<br>Disliked allocations are permitted in $\mathcal F_r$, so this construction is admissible.</p><p>Every class receives aggregate bundle $b$. The selected matching proves $F_i(b)\geq B$, while its total supply proves $F_i(b)\leq B$. Thus every class’s bundle has optimistic value exactly $B$ for class $i$. ∎</p><p>Max-flow/min-cut also gives<br>$$
+F_i(y)=
+\min_{A\subseteq T_i}
+\left(
+\sum_{t\in T_i\setminus A}\mu_t+
+\sum_{s\in N(A)}y_s
+\right),
+$$<br>where<br>$$
+N(A)=\{s:\ell_t(s)=1\text{ for some }t\in A\}.
+$$<br>Indeed, if $A$ is the source-side type set, all its neighboring signatures must be on the source side. The displayed expression is the resulting cut capacity, minimized over $A$.</p><p>Thus these valuations are continuous minima of finitely many rational affine functions. Their values can be computed by polynomial-size maximum-flow networks. Clearing rational denominators produces integers with bit lengths polynomial in the total input length, so benchmark evaluation is exact and polynomial-time.</p><h3>3. A bounded sufficient state</h3><h3>Proposition 2: supply clipping</h3><p>Set<br>$$
+v_s=\min\{1,W_s\}.
+$$<br>Then<br>$$
+F(v)=F(W),
+\qquad
+\min\{C_{\min},F_i(v/k)\}
+=\min\{C_{\min},F_i(W/k)\}.
+$$</p><p><b>Proof.</b></p><p>Every matching has total value at most $1$, so no signature needs capacity exceeding $1$. This proves the first equality.</p><p>For the second, let<br>$$
+B=\min\{C_{\min},F_i(W/k)\}.
+$$<br>Choose a matching of value exactly $B$ under capacities $W/k$. Its flow through any individual signature is at most $B$. Since<br>$$
+C_{\min}\leq \frac1k,
+$$<br>every signature whose supply is clipped still has capacity<br>$$
+v_s/k=1/k\geq B.
+$$<br>Unclipped capacities remain unchanged. The matching therefore remains feasible under $v/k$. Monotonicity proves the opposite inequality. ∎</p><p>Define the state<br>$$
+z=(b,q,v),
+$$<br>where<br>$$
+b_t=\sum_{j\leq r}x_{t,j},
+\qquad
+q_{h,s}=\sum_{\substack{j\leq r\\s_j=s}}Y_{h,j}(X),
+\qquad
+v_s=\min\{1,W_s\}.
+$$<br>Write<br>$$
+B_i=\sum_{t\in T_i}b_t.
+$$<br>Because the policy allocates only liked items, $B_i=V_i(X)$.</p><p>All three guarantees depend only on this state:<br>$$
+B_i\geq\alpha_E F_i(q_h),
+$$<br>$$
+B_i\geq\alpha_P\min\{C_{\min},F_i(v/k)\},
+$$<br>$$
+\sum_i B_i\geq\alpha_U F(v).
+$$</p><p>The state has $\tau+km+m$ real coordinates, independent of the number of arrivals.</p><p>Take as its ambient domain the compact rational polytope $D$ defined by<br>$$
+0\leq b_t\leq\mu_t,\qquad q_{h,s}\geq0,\qquad 0\leq v_s\leq1,
+$$<br>$$
+\sum_s q_{h,s}=B_h,
+\qquad
+\sum_h q_{h,s}\leq v_s.
+$$<br>Every actual allocation history produces a state in $D$.</p><p>Let $G\subseteq D$ consist of states satisfying the three displayed guarantees. By the min-cut formulas, each guarantee is a finite disjunction of rational linear inequalities. Hence $G$ is a finite union of compact rational polytopes.</p><h3>Local non-wastefulness</h3><p>For an arriving item $(s,w)$, an action is a vector $a=(a_t)$ satisfying<br>$$
+0\leq a_t\leq\mu_t-b_t,
+\qquad
+a_t=0\text{ if }\ell_t(s)=0,
+\qquad
+\sum_t a_t\leq w.
+$$<br>Require additionally<br>$$
+\sum_t a_t=w
+\quad\text{or}\quad
+b_t+a_t=\mu_t
+\text{ for every }t\text{ liking }s.
+$$</p><p>This local condition is equivalent to non-wastefulness for the current item. Enforcing it on arrival also enforces the condition at every later prefix, because saturated types remain saturated.</p><p>The successor state is<br>$$
+b&#x27;_t=b_t+a_t,
+$$<br>$$
+q&#x27;_{h,s}=q_{h,s}+\sum_{t\in T_h}a_t,
+\qquad
+v&#x27;_s=\min\{1,v_s+w\},
+$$<br>with other signature coordinates unchanged. Denote this successor by $\Phi(z,s,w,a)$.</p><p>Both the action relation and the transition relation are finite unions of rational polyhedral relations.</p><h3>Items larger than $1$</h3><p>It suffices to consider sizes in $[0,1]$.</p><p>If $w&gt;1$, non-wastefulness forces every liking type to be saturated, since total allocation cannot exceed $1$. For $w=1$, either the allocation is less than $1$ and the same saturation condition applies, or allocation equals $1$, which saturates all types because their total capacity is $1$.</p><p>Thus the admissible action sets for $w&gt;1$ and $w=1$ coincide. Their successor states also coincide after supply clipping. A policy for clipped sizes therefore implements a policy for the original sizes. A zero-size item is harmless and may be added to the input alphabet.</p><h3>4. An effective finite-horizon characterization</h3><p>Define<br>$$
+K_0=G,
+$$<br>and recursively<br>$$
+K_{n+1}
+=
+\left\{
+z\in G:
+\text{ for every }s\in S,\ w\in[0,1],
+\text{ there is an admissible }a
+\text{ with }\Phi(z,s,w,a)\in K_n
+\right\}.
+$$</p><p>Here $K_n$ is the set of states from which all requirements can be maintained for the next $n$ arrivals.</p><h3>Theorem 3</h3><p>For a fixed rational society and rational target triple:</p><ul><li>Every $K_n$ is compact.</li><li>Every $K_n$ is an effectively computable finite union of rational polytopes.</li><li>From a rational state in $K_n$, there is a computable rational-output policy for the next $n$ admissible arrivals.</li><li>A deterministic infinite-horizon policy exists exactly when</li></ul><p>$$
+   0\in\bigcap_{n=0}^{\infty}K_n.
+   $$</p><ul><li>When such a policy exists, it can depend only on the state $(b,q,v)$ and the current item.</li></ul><p>No polynomial bound is asserted for computing $K_n$, and no computability assertion is made for the infinite-horizon policy in part 5.</p><p><b>Proof.</b></p><h3>Compactness</h3><p>The sets are nested:<br>$$
+K_{n+1}\subseteq K_n.
+$$<br>This follows directly from the zero-size input, whose only action is zero and whose successor is the current state.</p><p>Assume $K_n$ is compact. Let $z_j\in K_{n+1}$ converge to $z$. Since $G$ is closed, $z\in G$.</p><p>Fix an input $(s,w)$. For each $j$, choose an admissible action $a_j$ with successor in $K_n$. Actions lie in the compact box<br>$$
+\prod_t[0,\mu_t].
+$$<br>A subsequence therefore converges to some $a$.</p><p>The admissible-action relation is closed: all its constraints are closed linear constraints or a finite disjunction of such constraints. The transition map is continuous. Therefore $a$ is admissible at $z$, and its successor lies in the closed set $K_n$.</p><p>This holds for every input, so $z\in K_{n+1}$. Thus $K_{n+1}$ is closed and bounded, hence compact.</p><h3>Effective polyhedral description</h3><p>For fixed targets, all coefficients in the definition of $K_{n+1}$ are rational constants. Its definition is a first-order formula consisting solely of rational linear inequalities, Boolean operations, and quantifiers over real variables.</p><p>Such formulas admit effective quantifier elimination. One elementary construction eliminates existentially quantified variables by distributing into conjunctions and applying Fourier–Motzkin elimination, retaining strict inequalities where necessary. Universal quantifiers are handled through negation.</p><p>Consequently, $K_{n+1}$ has an effectively computable description as a finite union of sets defined by rational strict and non-strict linear inequalities.</p><p>Because $K_{n+1}$ is closed, it can be represented using closed rational polyhedra. To justify this last step, consider a nonempty conjunction $P$ of strict and non-strict inequalities. Its closure is obtained by replacing strict inequalities with their non-strict versions: if $x_0\in P$ and $y$ satisfies the relaxed inequalities, then<br>$$
+(1-\varepsilon)y+\varepsilon x_0\in P
+\quad\text{for }0&lt;\varepsilon\leq1,
+$$<br>and these points approach $y$.</p><p>For a finite union, closure commutes with union. Since the union describing $K_{n+1}$ is already closed, replacing its nonempty pieces by their closures preserves it. Intersecting with the bounded domain $D$ gives rational polytopes.</p><h3>Rational finite-horizon implementation</h3><p>Suppose $z\in K_n$ is rational and the next input has rational size. The actions whose successors lie in $K_{n-1}$ form a nonempty finite union of rational polytopes.</p><p>A nonempty rational polytope contains a rational point: a vertex is obtained by solving a nonsingular system of rational linear equations. Such a point can be found effectively by examining the finitely many polyhedral pieces.</p><p>Choose one deterministically. Its successor is rational and lies in $K_{n-1}$. Repeating this construction gives a rational-output policy for the remaining horizon.</p><h3>Rational arrivals versus real arrivals</h3><p>Using every real size in $[0,1]$ does not strengthen the finite-horizon requirement.</p><p>For a fixed state and signature, the sizes admitting an action into $K_n$ form a closed set. Indeed, if feasible sizes converge, compactness supplies a convergent subsequence of their actions, and closedness supplies a feasible limiting action.</p><p>The admissible binary-rational sizes are dense in $[0,1]$, including under a dyadic interpretation. Feasibility for every admissible size therefore implies feasibility for every real size. Induction on the horizon proves that $K_n$ also characterizes the original input alphabet.</p><h3>Infinite horizon</h3><p>Put<br>$$
+K_\infty=\bigcap_{n=0}^{\infty}K_n.
+$$<br>Fix $z\in K_\infty$ and an input $(s,w)$. Let<br>$$
+A_n=
+\{a:a\text{ is admissible at }z,\ 
+\Phi(z,s,w,a)\in K_n\}.
+$$<br>Each $A_n$ is nonempty because $z\in K_{n+1}$. These sets are compact and nested. Their intersection is therefore nonempty.</p><p>Choose deterministically an action in that intersection; for example, choose its lexicographically least element, obtained by successively minimizing the finitely many coordinates over compact sets. Its successor lies in $K_\infty$.</p><p>Starting at $0\in K_\infty$ and repeating this rule preserves all requirements forever. Earlier non-wastefulness conditions remain valid by persistent saturation.</p><p>Conversely, any infinite-horizon policy works for every finite horizon. The finite-horizon characterization therefore gives $0\in K_n$ for every $n$. ∎</p><h3>Consequences and limitation</h3><p>This supplies an exact characterization:<br>$$
+(\alpha_E,\alpha_P,\alpha_U)\text{ is attainable}
+\quad\Longleftrightarrow\quad
+0\in K_n\text{ for every }n.
+$$</p><p>It also gives an algorithm that halts on every impossible triple: compute successive $K_n$ and stop when $0\notin K_n$.</p><p>The unresolved issue is detecting attainability after finitely many computations. No stabilization bound is proved. Moreover, although every finite-horizon action set has a rational witness, the compact intersection used for the infinite horizon may contain only irrational actions.</p><h3>5. A useful welfare bound for every non-wasteful allocation</h3><h3>Proposition 4</h3><p>At a prefix, let $A$ be the saturated types and let $J$ be the items liked by at least one unsaturated type. Every feasible, liked, non-wasteful allocation $X$ satisfies<br>$$
+\operatorname{OPT}(r)
+\leq
+\operatorname{USW}(X)
++
+\sum_{t\in A}\sum_{j\in J}x_{t,j}.
+$$<br>In particular,<br>$$
+\operatorname{USW}(X)\geq\frac12\operatorname{OPT}(r).
+$$</p><p><b>Proof.</b></p><p>Every item in $J$ is fully allocated; otherwise its unsaturated liking type would violate non-wastefulness.</p><p>An offline liked allocation obtains at most $\sum_{t\in A}\mu_t$ from saturated types. Its allocations to unsaturated types use only items in $J$, so their value is at most $\sum_{j\in J}w_j$. Hence<br>$$
+\operatorname{OPT}(r)
+\leq
+\sum_{t\in A}\mu_t+\sum_{j\in J}w_j.
+$$</p><p>All allocation to unsaturated types occurs on items in $J$. Since these items are fully allocated,<br>$$
+\sum_{j\in J}w_j
+=
+\sum_{t\notin A}b_t
++
+\sum_{t\in A}\sum_{j\in J}x_{t,j}.
+$$<br>Also, saturation gives $\mu_t=b_t$ for $t\in A$. Substitution proves the refined bound. The additional term is at most $\operatorname{USW}(X)$, proving the factor $1/2$. ∎</p><h3>6. A sharp frontier for two unequal homogeneous classes</h3><p>Consider two types in distinct classes, with masses<br>$$
+a,\qquad b=1-a,\qquad 0&lt;a\leq b.
+$$<br>The known universe consists of:</p><ul><li>$s_0$, liked by both types;</li><li>$s_1$, liked only by the mass-$a$ type;</li><li>$s_2$, liked only by the mass-$b$ type.</li></ul><p>Define<br>$$
+R(a)=
+\begin{cases}
+\frac23,&amp;0&lt;a\leq\frac13,\\[2mm]
+\frac{1+a}{2},&amp;\frac13\leq a\leq\frac12.
+\end{cases}
+$$</p><h3>Theorem 5</h3><p>For this society:</p><ul><li>Every triple with $\alpha_U\leq R(a)$ is attainable.</li><li>If $\max\{\alpha_E,\alpha_P\}=1$, a triple is attainable <b>if and only if</b></li></ul><p>$$
+  \alpha_U\leq R(a).
+  $$</p><ul><li>The attaining policy has rational outputs and runs in polynomial time in the prefix input length.</li></ul><p>Thus this determines the complete attainable region on the two faces where either fairness target equals $1$.</p><h3>6.1. Policy and exact fairness</h3><p>Allocate each private item up to its liking type’s remaining capacity. For shared items, allocate at equal absolute rates to the unsaturated types. Once one saturates, allocate the remainder to the other until it saturates or the item is exhausted.</p><p>The policy is non-wasteful.</p><p>If a type is saturated, its value equals its capacity, which bounds all its optimistic valuations. If it is unsaturated at the current prefix, it remained unsaturated during every earlier shared arrival. It therefore received at least the other type’s share of each shared item. The other type’s private items are disliked. This proves exact envy-freeness.</p><p>By Proposition 1,<br>$$
+\operatorname{prop}_i(r)
+=
+\min\left\{a,\frac{W_{s_0}+W_{s_i}}2\right\}.
+$$<br>A saturated type meets this bound. An unsaturated type receives at least half of every shared item and all of every private item it likes. Hence it also meets the bound. The proportionality ratio is therefore $1$.</p><h3>6.2. Welfare guarantee</h3><p>If both types are saturated, welfare is optimal. If neither is saturated, every item is fully allocated, so welfare is again optimal.</p><p>Suppose exactly one type is saturated. Let its capacity be $c$, the other capacity be $d=1-c$, and the other type’s load be $u&lt;d$. Let $A$ be the shared allocation to the saturated type.</p><p>Because the other type remained unsaturated, it received at least as much shared allocation. Thus<br>$$
+A\leq u,\qquad A\leq c.
+$$<br>Proposition 4 gives<br>$$
+\operatorname{OPT}(r)
+\leq
+\min\{1,c+u+\min(c,u)\},
+$$<br>while the policy’s welfare is $c+u$.</p><p>First suppose the larger type is saturated, so $c=b\geq1/2$. Since $u&lt;d=a\leq c$,<br>$$
+\operatorname{OPT}(r)\leq\min\{1,c+2u\}.
+$$<br>Before $u=d/2$, the ratio<br>$$
+\frac{c+u}{c+2u}
+$$<br>decreases; its derivative is $-c/(c+2u)^2$. After $u=d/2$, the denominator bound is $1$ and $c+u$ increases. Consequently,<br>$$
+\frac{\operatorname{USW}(X)}{\operatorname{OPT}(r)}
+\geq c+\frac d2
+=\frac{1+b}{2}
+\geq R(a).
+$$</p><p>Now suppose the smaller type is saturated, so $c=a$.</p><p>If $a\leq1/3$ and $u\leq a$, then<br>$$
+\frac{\operatorname{USW}(X)}{\operatorname{OPT}(r)}
+\geq\frac{a+u}{a+2u}\geq\frac23,
+$$<br>where the last inequality is equivalent to $u\leq a$.</p><p>If $a\leq1/3$ and $u\geq a$, then<br>$$
+\frac{\operatorname{USW}(X)}{\operatorname{OPT}(r)}
+\geq\frac{a+u}{2a+u}\geq\frac23,
+$$<br>where the last inequality is equivalent to $u\geq a$.</p><p>Finally, suppose $a\geq1/3$. For $u\leq a$, the bound<br>$$
+\operatorname{OPT}(r)\leq\min\{1,a+2u\}
+$$<br>gives its minimum ratio at $u=b/2$, which belongs to $[0,a]$. That minimum is<br>$$
+a+\frac b2=\frac{1+a}{2}.
+$$<br>For $u\geq a$,<br>$$
+\operatorname{USW}(X)\geq2a
+\geq\frac{1+a}{2},
+$$<br>and $\operatorname{OPT}(r)\leq1$. This completes the welfare proof.</p><h3>6.3. Sharpness when either fairness target equals $1$</h3><p>Reveal a shared item of size<br>$$
+z=\min\{2a,b\}.
+$$<br>Non-wastefulness forces full allocation. Write its allocation as $x$ to the smaller type and $y=z-x$ to the larger.</p><p>If $\alpha_P=1$, both proportionality benchmarks are $z/2$, because $z\leq2a$. Hence $x=y=z/2$.</p><p>If $\alpha_E=1$, the initial envy constraints give<br>$$
+x\geq\min\{a,y\},
+\qquad
+y\geq\min\{b,x\}=x.
+$$<br>If $x&lt;a$, the first inequality forces $y\leq x$, so $x=y$. If $x=a$, the second inequality and $z\leq2a$ again force $x=y=a$. Thus exact envy-freeness also forces $x=y=z/2$.</p><p>Next reveal a private item of size $a$ for the smaller type. Online welfare is at most<br>$$
+a+\frac z2.
+$$<br>Offline, assign the shared item entirely to the larger type and the private item to the smaller type. This is feasible because $z\leq b$, and achieves $a+z$. Therefore<br>$$
+\alpha_U\leq\frac{a+z/2}{a+z}
+=
+\begin{cases}
+\frac23,&amp;a\leq\frac13,\\[2mm]
+\frac{1+a}{2},&amp;a\geq\frac13.
+\end{cases}
+$$<br>This matches the proved policy guarantee.</p><h3>6.4. Polynomial-time implementation</h3><p>Each item requires only comparisons, additions, subtractions, and division of its size by $2$. A shared item has at most two allocation phases.</p><p>Through prefix $r$, a common denominator can be chosen as twice the product of the denominators of the masses and arriving sizes. Its bit length is polynomial in the total binary input length. Allocations and loads are bounded, so their numerator lengths are polynomial as well.</p><p>Thus the policy is exact, rational, and polynomial-time.</p><h3>7. Additional necessary bounds for this society</h3><p>The same two-class society yields obstructions when both fairness targets are below $1$.</p><h3>Fairness-dependent obstruction</h3><p>Let $z=\min\{2a,b\}$ and define<br>$$
+D=
+\max\left\{
+\frac{\alpha_P z}{2},
+\min\left\{\alpha_E a,\frac{\alpha_E z}{1+\alpha_E}\right\}
+\right\}.
+$$<br>Every attainable triple satisfies<br>$$
+\alpha_U\leq1-\frac{D}{a+z}.
+$$</p><p><b>Proof.</b></p><p>After the first shared item of size $z$, let the smaller type receive $x$. Proportionality requires<br>$$
+x\geq\alpha_P z/2.
+$$<br>Its envy constraint requires<br>$$
+x\geq\alpha_E\min\{a,z-x\}.
+$$<br>This inequality is equivalent to the disjunction<br>$$
+x\geq\alpha_E a
+\quad\text{or}\quad
+(1+\alpha_E)x\geq\alpha_E z,
+$$<br>and hence implies $x\geq D$.</p><p>After a private item of size $a$ for that type, welfare is at most $a+z-x$, while optimum is $a+z$. The claimed bound follows. ∎</p><p>In particular, when $a\leq1/3$,<br>$$
+\alpha_U\leq1-\frac{\max\{\alpha_E,\alpha_P\}}3.
+$$</p><h3>An obstruction independent of fairness</h3><p>Every attainable triple also satisfies<br>$$
+\alpha_U\leq\frac{1+a}{1+2a}.
+$$</p><p><b>Proof.</b></p><p>Reveal a shared item of size $a$, and let the smaller type receive $x$.</p><p>A subsequent private item of size $a$ for the smaller type gives an online-to-offline ratio at most<br>$$
+1-\frac{x}{2a}.
+$$<br>A subsequent private item of size $b$ for the larger type gives a ratio at most<br>$$
+b+x.
+$$<br>Both continuations are admissible. The maximum over $x$ of the smaller of these two expressions occurs at their intersection:<br>$$
+x=\frac{2a^2}{1+2a}.
+$$<br>The resulting ratio is $(1+a)/(1+2a)$. ∎</p><p>These bounds are necessary. Sufficiency outside the faces characterized in Theorem 5 is not established.</p><h3>8. Remaining open points</h3><p>The finite-horizon hierarchy gives exact tests and an infinite intersection characterization, but not a terminating general attainability algorithm. Its infinite-horizon selector may be noncomputable or irrational.</p><p>The unequal-mass example also leaves a concrete smaller problem: determine its full frontier when both fairness targets are strictly below $1$.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 1, 4, and 8: general resolution and implementation: The requested implementation question for arbitrary support-encoded societies remains unanswered: the output establishes neither polynomial-time implementation for every attainable triple nor an obstruction disproving it. The infinite-intersection characterization also does not supply a terminating general membership procedure. This is an acknowledged scope limitation, not an error in the proved partial results.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Assessment: partial, with sound proved content.</b> The benchmark formulas, finite-horizon characterization, welfare bound, and stated two-class frontier are correct. I found no false central step or substantive gap in those arguments. The output expressly leaves the general implementation question unresolved, so it does not fully resolve <code>USER_TASK</code>.</p><p>The distinction matters: the infinite intersection is an exact mathematical characterization of attainability, but the construction does not establish a terminating membership test or a polynomial-time implementation for every attainable triple.</p><h3>1. Benchmarks</h3><h3>Signature aggregation</h3><p>The identity<br>$$
+V_i^*(y)=F_i(\bar y)
+$$<br>is correct for nonnegative item capacities.</p><p>Aggregating a feasible matching preserves capacities. Conversely, the displayed proportional distribution across items of the same signature preserves each type’s total and respects each item’s capacity. Signatures with zero aggregate capacity necessarily carry zero matching flow, so the omitted division in that case causes no problem.</p><p>The formula<br>$$
+\operatorname{OPT}(r)=F(W)
+$$<br>also follows correctly. Removing disliked allocations preserves welfare and cannot violate any capacity constraint.</p><h3>Proportionality</h3><p>Both directions of<br>$$
+\operatorname{prop}_i(r)=\min\{C_{\min},F_i(W/k)\}
+$$<br>are justified.</p><p>For the upper bound:</p><ul><li>Concavity follows from taking convex combinations of feasible matchings.</li><li>The componentwise inequality $\sum_h y_h\leq W$ permits the monotonicity step.</li><li>The bound $F_i(y_h)\leq C_h$ holds because matching value cannot exceed the total amount of class $h$’s bundle.</li></ul><p>For the lower bound, the construction respects both type and item capacities:<br>$$
+\sum_j z_{t,j}=\frac{\mu_t B}{C_h}\leq\mu_t,
+\qquad
+\sum_t z_{t,j}=k b_s\frac{w_j}{W_s}\leq w_j.
+$$<br>Its use of disliked allocations is explicitly permitted by $\mathcal F_r$. Every class receives the same signature bundle, whose optimistic value is exactly $B$.</p><h3>Min-cut formula and computational claim</h3><p>The displayed min-cut formula is correct. A finite cut with source-side type set $A$ must place every signature in $N(A)$ on the source side. Including further signatures cannot reduce the cut capacity because capacities are nonnegative.</p><p>The networks have polynomial size in the support and signature universe. Clearing rational denominators incurs only polynomial bit length in the binary input length. Thus the exact polynomial-time benchmark claim is justified.</p><h3>2. Supply clipping and sufficient state</h3><h3>Supply clipping</h3><p>The welfare equality $F(v)=F(W)$ is correct because every feasible matching has total value at most $1$.</p><p>The proportionality argument also works. Its critical inequality,<br>$$
+C_{\min}\leq\frac1k,
+$$<br>follows from the positive class masses summing to $1$. A matching of value $B\leq C_{\min}$ uses at most $B$ at any individual signature, so replacing a clipped signature’s capacity by $1/k$ preserves that matching.</p><h3>State sufficiency</h3><p>The state coordinates retain everything needed for the displayed prefix guarantees:</p><ul><li>Type loads determine current class values because all actual allocations are liked.</li><li>Class signature totals determine optimistic valuations by aggregation.</li><li>Clipped supplies determine the two offline benchmarks.</li></ul><p>The domain $D$ is compact. In particular, the equality<br>$$
+\sum_s q_{h,s}=B_h
+$$<br>and the type-capacity bounds also bound every $q_{h,s}$.</p><p>Although $D$ may contain states that do not arise from an actual liked allocation history, this does not invalidate the construction. The transition rules preserve actual histories starting from zero, and future requirements depend only on the recorded quantities.</p><p>The finite-union description of $G$ is correct: an inequality bounding a finite minimum from above is a finite disjunction of the corresponding affine inequalities.</p><h3>Non-wastefulness and transitions</h3><p>The local condition is exactly the required condition for the newly arriving item. Once an underallocated item’s liking types are saturated, they remain saturated. Consequently, enforcing the condition on arrival also enforces it at all later prefixes.</p><p>The transition correctly updates clipped supply even when supply has already reached $1$.</p><h3>Large and zero sizes</h3><p>The reduction of sizes larger than $1$ is valid. For both $w&gt;1$ and $w=1$, admissibility forces all liking types to be saturated after the action. In the full-allocation case at $w=1$, total allocated mass equals total society capacity, so all types are saturated.</p><p>A zero-size arrival has only the zero action and changes no state. Adding it is harmless.</p><h3>3. Finite-horizon characterization</h3><h3>Compactness and nesting</h3><p>The zero-size arrival proves<br>$$
+K_{n+1}\subseteq K_n.
+$$</p><p>The compactness proof correctly handles the quantifiers. After fixing an input, a convergent subsequence of its witness actions supplies a limiting witness. The subsequence may depend on that input; the conclusion requires only a separate witness for each input.</p><p>The admissible-action relation is closed, the transition is continuous, and $K_n$ is closed. These are exactly the hypotheses needed for the limiting argument.</p><h3>Effective polyhedral descriptions</h3><p>The quantifier-elimination argument applies because signatures range over a finite set and all remaining expressions are rational linear relations after expanding the finitely many branches.</p><p>The step replacing strict inequalities by non-strict inequalities is justified for each nonempty conjunction by the displayed convex-combination argument. Empty conjunction pieces must be discarded, as the output explicitly specifies. Closure commutes with a finite union, so closedness of $K_{n+1}$ makes the replacement legitimate.</p><p>Intersecting the resulting polyhedra with $D$ yields bounded rational polyhedra, hence rational polytopes.</p><h3>Rational finite-horizon policies</h3><p>For a rational state and rational arrival, the successful action set is a nonempty finite union of bounded rational polyhedra. A nonempty rational polytope has a rational vertex, including when it lies in a lower-dimensional affine subspace.</p><p>Choosing such a point effectively and repeating the procedure gives the claimed rational finite-horizon implementation. No polynomial running-time or output-length bound follows from this construction, and none is asserted.</p><h3>Rational versus real arrivals</h3><p>The density argument is sound. For a fixed state, the feasible-size set is closed because witness actions lie in a fixed compact box. Feasibility on the dense admissible rational alphabet therefore implies feasibility for all real sizes in the interval.</p><p>Applied inductively, this establishes the claimed equivalence of the finite-horizon games. It also covers a dyadic interpretation of binary-rational arrivals.</p><h3>Infinite horizon</h3><p>For each state in $K_\infty$ and each input, the sets $A_n$ are nonempty, compact, and nested. Their intersection is therefore nonempty.</p><p>Successive coordinate minimization over this compact intersection defines a unique lexicographically least action. Its successor remains in $K_\infty$, yielding a deterministic state-based policy.</p><p>The converse follows from the finite-horizon characterization: a policy that succeeds indefinitely succeeds for every finite horizon.</p><p>Thus<br>$$
+0\in\bigcap_{n=0}^{\infty}K_n
+$$<br>is genuinely equivalent to attainability. Computing successive finite-horizon tests also genuinely semidecides impossibility.</p><p>The proof does <b>not</b> establish termination on attainable inputs, computability of the infinite-horizon selector, rational infinite-horizon outputs, or polynomial-time implementation. The output correctly acknowledges these limitations.</p><h3>4. General welfare bound</h3><p>Proposition 4 is correct.</p><p>Every item in $J$ is fully allocated by non-wastefulness. An offline liked allocation can obtain at most the saturated types’ total capacity from those types, and at most the total supply of $J$ from unsaturated types.</p><p>Every actual allocation to an unsaturated type is on an item in $J$, so the displayed decomposition of that supply is exact. Substituting the saturated types’ loads gives the refined bound.</p><p>The additional term is a subset of the actual liked allocation, hence is at most $\operatorname{USW}(X)$. This proves the factor $1/2$, including prefixes with zero optimum.</p><h3>5. Two-class frontier</h3><p>Theorem 5 concerns the explicitly specified society with two types and the three listed signatures. It does not establish a frontier for arbitrary heterogeneous two-class societies.</p><h3>Exact fairness</h3><p>The policy is non-wasteful.</p><p>An unsaturated type has remained unsaturated throughout the history. On every shared arrival, it receives at least the other type’s share under equal absolute filling. The other type’s private allocation contributes nothing to its optimistic valuation. This proves exact envy-freeness.</p><p>The proportionality formula<br>$$
+\operatorname{prop}_i(r)
+=
+\min\left\{a,\frac{W_{s_0}+W_{s_i}}2\right\}
+$$<br>is correct for both classes: the outer bound by $a$ absorbs the larger class’s own capacity bound.</p><p>An unsaturated type receives at least half the entire size of every shared item and all of every private item it likes. Such items cannot be underallocated while that type remains unsaturated. The proportionality argument is therefore valid.</p><h3>Welfare calculation</h3><p>When exactly one type is saturated, Proposition 4’s extra term is precisely its shared allocation $A$. The bounds<br>$$
+A\leq u,\qquad A\leq c
+$$<br>are justified by the policy and capacity constraints.</p><p>The resulting bound<br>$$
+\operatorname{OPT}(r)\leq\min\{1,c+u+\min(c,u)\}
+$$<br>is correct.</p><p>The subsequent minimizations check out:</p><ul><li>For the larger saturated type, the minimum occurs at $u=d/2$ and equals $(1+b)/2$.</li><li>For the smaller saturated type with $a\leq1/3$, both ranges give a ratio at least $2/3$.</li><li>With $a\geq1/3$, the transition point $u=b/2$ lies in $[0,a]$ and gives $(1+a)/2$.</li><li>For $u\geq a$, the inequality $2a\geq(1+a)/2$ is equivalent to $a\geq1/3$.</li></ul><p>The claimed welfare guarantee follows.</p><h3>Sharpness on the exact-fairness faces</h3><p>The first shared item is fully allocated because its size is below total capacity.</p><p>Exact proportionality forces equal shares. The exact envy constraints also force equal shares, including the boundary case $x=a$.</p><p>The second private item produces online welfare at most $a+z/2$. The specified offline allocation is feasible because $z\leq b$ and attains all arriving supply, namely $a+z$. The resulting ratio has exactly the stated two branches.</p><p>This establishes the claimed necessary and sufficient condition on either exact-fairness face.</p><h3>Implementation</h3><p>The policy uses a bounded number of rational arithmetic operations per item. Its allocations involve input sizes halved, remaining capacities, and differences of these quantities.</p><p>The stated common denominator suffices; repeated shared arrivals do not require repeated halving of previously accumulated loads. Its bit length is polynomial in the input length. The polynomial-time implementation claim for this particular society is justified.</p><h3>6. Additional necessary bounds</h3><h3>Fairness-dependent obstruction</h3><p>The equivalence<br>$$
+x\geq\alpha_E\min\{a,z-x\}
+$$<br>to the stated disjunction is valid because multiplication by the positive target preserves the minimum.</p><p>Combining it with the proportionality constraint gives exactly the displayed lower bound $D$. The continuation and welfare calculation then prove the obstruction.</p><p>For $a\leq1/3$, substituting $z=2a$ gives<br>$$
+D=a\max\{\alpha_E,\alpha_P\},
+$$<br>so the stated specialization is correct.</p><h3>Fairness-independent obstruction</h3><p>Both continuations have the stated offline optima and online upper bounds. Their ratio bounds are respectively decreasing and increasing in $x$.</p><p>The intersection<br>$$
+x=\frac{2a^2}{1+2a}
+$$<br>lies in the feasible interval $[0,a]$, and its common value is<br>$$
+\frac{1+a}{1+2a}.
+$$<br>Thus the obstruction is valid. The output correctly does not claim sufficiency.</p><h3>7. Outstanding issue and actionable feedback</h3><p><b>Major scope issue — general implementation remains unresolved.</b> The output does not determine whether every attainable target triple for an arbitrary support-encoded society admits a polynomial-time implementation. It also supplies no terminating general membership procedure beyond its infinite-intersection characterization.</p><p>This is an acknowledged unresolved part of the assignment, rather than a flaw in the proved partial results. No expositional clarification alone resolves it. A subsequent write-up must supply a result answering the implementation question, with the claimed computational bounds or a justified obstruction. Any claim of a terminating general decision procedure would additionally require justification beyond the current finite-horizon hierarchy.</p><p>No repairs are required to the mathematical arguments audited above.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

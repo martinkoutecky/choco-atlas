@@ -1,0 +1,82 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-7c49c874fd09addbee645d510454c288ee838b76 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-7c49c874fd09addbee645d510454c288ee838b76 <span style="font-weight:normal;color:#8a7350">(s5-7c49c874fd09addbee645d510454c288ee838b76)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> An exact maximizer is polynomial-time computable in \(O(\tau^2 L^3)\) bit operations, independently of \(m\); the stated problem has \(m=2\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition — class: other</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite set \(T\) of voter types, rational type masses \(\mu_u&gt;0\), and rational delegation-flow masses \(z_{tu}\) from source type \(t\) to target type \(u\), estimate nonnegative weights \(\varphi_{tu}\) maximizing \(\sum_{t,u} z_{tu}\log\!\left(\frac{\mu_u\varphi_{tu}}{\sum_v\mu_v\varphi_{tv}}\right)\), with \(\sum_u\mu_u\varphi_{tu}=1\) for each source type. For rows with positive delegation mass, the MLE is \(\hat\varphi_{tu}=z_{tu}/(\mu_u\sum_v z_{tv})\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a nonempty list \(T\) of \(\tau\) voter types with positive binary-rational masses \(\mu_t\), normalized by \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types; the underlying issue has \(m=2\) alternatives.<br>The input also contains binary-rational masses \(z_{tu}\geq0\) of observed direct delegations, with \(\sum_u z_{tu}\leq\mu_t\). Delegations within a type are permitted: the society is atomless, so excluding the source individual removes zero mass.<br>Conditional on delegating, a source of type \(t\) chooses target type \(u\) with probability \(P_{tu}=\mu_u\varphi_{tu}/\sum_v\mu_v\varphi_{tv}\). The unknown weights \(\varphi_{tu}\geq0\) are unrestricted apart from \(\sum_u\mu_u\varphi_{tu}=1\) for every \(t\).<br>The estimation problem is to compute an exact maximizer of \(\ell(\varphi)=\sum_{t,u}z_{tu}\log P_{tu}\). A zero observation contributes zero even when \(P_{tu}=0\); a positive observation with \(P_{tu}=0\) contributes \(-\infty\). Rows with no observed delegations retain their normalization constraint.<br>Let \(L\) be the total binary input length. State running times in \(m,\tau,L\).</p><p>Can an exact maximizer of this continuous delegation likelihood be computed in polynomial time in \(m,\tau,L\), or is this computation \(\mathrm{NP}\)-hard?</p><p>For finite populations partitioned into types, an explicit maximum-likelihood estimator is known up to row scaling, with target availability corrected to exclude the source voter.<br>That discrete result does not state a complexity classification for the distribution-input problem defined here.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized society masses to sum to one, interpreting them as a distribution over an atomless population.</li><li>Specified nonnegative delegation-flow masses and bounded each outgoing row total by its source mass, corresponding to at most one direct delegation per voter.</li><li>Retained delegation within a type; excluding an individual source removes zero mass in the atomless society.</li><li>Specified the logarithm conventions at zero and retained normalized, unconstrained estimation rows when their observation totals are zero.</li><li>Interpreted estimation as computing an exact maximizing weight matrix rather than evaluating the potentially irrational optimal log-likelihood.</li><li>Fixed m=2 for the underlying binary issue; no alternative-dependent parameter enters the estimation objective.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Conclusion</h3><p>An exact maximizer is computable in polynomial time. The normalization makes each row an independent probability distribution, and its maximum-likelihood estimate is given by its observed relative frequencies. An exact rational maximizer can be computed in \(O(\tau^2 L^3)\) bit operations, independently of \(m\); in the stated problem, \(m=2\).</p><h3>1. Feasible weights correspond exactly to probability distributions</h3><p>For every source type \(t\), the prescribed normalization gives<br>\[
+P_{tu}=\frac{\mu_u\varphi_{tu}}{\sum_v\mu_v\varphi_{tv}}
+      =\mu_u\varphi_{tu}.
+\]<br>Thus a feasible weight row determines a probability row:<br>\[
+P_{tu}\geq 0,\qquad \sum_uP_{tu}=1.
+\]</p><p>Conversely, because every \(\mu_u\) is strictly positive, any probability row \(p_{tu}\) determines feasible weights by<br>\[
+\varphi_{tu}=\frac{p_{tu}}{\mu_u}.
+\]<br>Indeed,<br>\[
+\sum_u\mu_u\varphi_{tu}=\sum_up_{tu}=1.
+\]</p><p>Consequently, the original optimization is equivalent to maximizing<br>\[
+\sum_t\sum_u z_{tu}\log p_{tu}
+\]<br>over one independent probability simplex for each row \(t\). Within-type delegation creates no additional restriction under the atomless assumptions in the question.</p><h3>2. Exact maximizer and proof of optimality</h3><p>Define the total observed delegation mass in row \(t\) by<br>\[
+r_t=\sum_u z_{tu}.
+\]<br>Choose<br>\[
+\varphi^*_{tu}=
+\begin{cases}
+\displaystyle\frac{z_{tu}}{\mu_u r_t},&amp;r_t&gt;0,\\[6pt]
+1,&amp;r_t=0.
+\end{cases}
+\]</p><p>These weights are feasible. For \(r_t&gt;0\),<br>\[
+\sum_u\mu_u\varphi^*_{tu}
+=\frac{\sum_u z_{tu}}{r_t}=1.
+\]<br>For \(r_t=0\), feasibility follows from \(\sum_u\mu_u=1\).</p><p>We now prove optimality separately for each row.</p><h3>Rows with positive observed mass</h3><p>Fix \(t\) with \(r_t&gt;0\), and write<br>\[
+y_u=\frac{z_{tu}}{r_t},\qquad S=\{u:y_u&gt;0\}.
+\]<br>The proposed probability row is \(p^*_{tu}=y_u\). Its likelihood is finite because every positive observation receives positive probability.</p><p>Let \(q\) be any competing probability row. If \(q_u=0\) for some \(u\in S\), its row likelihood is \(-\infty\), so it cannot improve on \(y\). Otherwise,<br>\[
+\sum_u z_{tu}\log q_u-\sum_u z_{tu}\log y_u
+=r_t\sum_{u\in S}y_u\log\frac{q_u}{y_u},
+\]<br>where terms with zero observations are omitted according to the stipulated convention.</p><p>For \(x&gt;0\), the inequality \(\log x\leq x-1\) holds, with equality exactly when \(x=1\). To verify it, the derivative of \(x-1-\log x\) is \(1-1/x\), which is negative below \(1\) and positive above \(1\); its minimum is therefore its value \(0\) at \(1\).</p><p>Applying this inequality gives<br>\[
+\begin{aligned}
+r_t\sum_{u\in S}y_u\log\frac{q_u}{y_u}
+&amp;\leq r_t\sum_{u\in S}y_u\left(\frac{q_u}{y_u}-1\right)\\
+&amp;=r_t\left(\sum_{u\in S}q_u-1\right)\\
+&amp;\leq 0.
+\end{aligned}
+\]<br>The last inequality uses nonnegativity and \(\sum_uq_u=1\). Hence \(y\) is optimal.</p><p>Moreover, equality requires \(q_u=y_u\) for every \(u\in S\). These coordinates already sum to \(1\), so all remaining coordinates must be zero. Thus the maximizing probability row, and therefore the maximizing weight row, is unique whenever \(r_t&gt;0\).</p><h3>Rows with no observed mass</h3><p>If \(r_t=0\), nonnegativity of the observations implies \(z_{tu}=0\) for every \(u\). The row contributes zero to the likelihood for every feasible row.</p><p>Our choice \(\varphi^*_{tu}=1\) satisfies the retained normalization constraint and induces \(P^*_{tu}=\mu_u\).</p><p>Since the objective is the sum of independent row objectives, these rowwise choices form a global exact maximizer.</p><h3>3. Exact representation and running time</h3><p>All entries of \(\varphi^*\) are rational. Represent the output by binary-encoded integer numerators and positive denominators. Although the inputs may be dyadic rationals, the unrestricted real weights permit rational outputs whose denominators are not powers of two.</p><p>The algorithm performs the following operations:</p><ul><li>Compute the \(\tau\) row sums \(r_t\).</li><li>For each positive row, output \(z_{tu}/(\mu_u r_t)\).</li><li>For each zero row, output \(1\) in every coordinate.</li></ul><p>Every intermediate rational can be represented with \(O(L)\) bits. To see this for a row sum, use the product of its input denominators as a common denominator. That product has bit length bounded by the sum of their encoded bit lengths, hence \(O(L)\). Each partial sum lies between \(0\) and \(\mu_t\leq1\), so its numerator has the same bound. The output formula involves only a constant number of products of such integers, preserving the \(O(L)\) bound.</p><p>There are \(O(\tau^2)\) rational arithmetic operations. Schoolbook integer arithmetic and classical fraction reduction give a conservative bound of<br>\[
+O(\tau^2L^3)
+\]<br>bit operations. The output occupies \(O(\tau^2L)\) bits. No logarithm needs to be evaluated to compute the maximizing weights.</p><p>Therefore, the distribution-input estimation problem as defined is <b>polynomial-time solvable</b>. This conclusion follows directly from its unrestricted row weights and does not require the finite-population estimator.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification verdict</h3><p><b>The prover fully resolves the task.</b> The feasible weights are in bijection with independent probability rows, the proposed estimator maximizes every row, and its exact rational representation has polynomial size. The stated \(O(\tau^2L^3)\) bit-operation bound is valid. No mathematical gaps or false statements were found.</p><h3>Step-by-step audit</h3><ul><li><b>Reduction to probability rows.</b> The normalization makes each denominator exactly \(1\), so \(P_{tu}=\mu_u\varphi_{tu}\). Nonnegativity and normalization imply that each row is a probability distribution. Conversely, strict positivity of every \(\mu_u\) makes \(\varphi_{tu}=p_{tu}/\mu_u\) well-defined and feasible for every probability row. This establishes the claimed bijection, including boundary points with zero coordinates.</li></ul><ul><li><b>Independence of rows.</b> Each constraint concerns only one source row, and the objective is a sum of row objectives. There are no shared weight constraints. Allowing within-type delegation in the atomless society introduces no additional exclusion. The rowwise decomposition is therefore justified.</li></ul><ul><li><b>Feasibility of the proposed estimator.</b> For \(r_t&gt;0\), substituting \(\varphi^*_{tu}=z_{tu}/(\mu_u r_t)\) gives normalized row sum \(1\). For \(r_t=0\), choosing every weight equal to \(1\) gives normalized row sum \(\sum_u\mu_u=1\). Both cases satisfy nonnegativity.</li></ul><ul><li><b>Optimality for positive rows.</b> Since \(r_t&gt;0\), the set \(S\) is nonempty and \(\sum_{u\in S}y_u=1\). The proposed row assigns positive probability to every positive observation, so its likelihood is finite. Competitors assigning zero probability to such an observation have likelihood \(-\infty\) and cannot improve it.</li></ul><p>For all remaining competitors, every ratio \(q_u/y_u\) used in the proof is strictly positive. The proof of \(\log x\leq x-1\) is correct for the natural logarithm. Its application yields<br>\[
+   r_t\sum_{u\in S}y_u\log(q_u/y_u)
+   \leq r_t\left(\sum_{u\in S}q_u-1\right)
+   \leq0.
+   \]<br>Both inequalities have their required hypotheses explicitly verified.</p><ul><li><b>Uniqueness for positive rows.</b> Equality in the first inequality requires \(q_u=y_u\) on every coordinate in \(S\), because each coefficient \(y_u\) is positive. Those coordinates already sum to \(1\), forcing all remaining coordinates to vanish. The bijection then also gives uniqueness of the weight row. This claim is correct.</li></ul><ul><li><b>Zero rows and global optimality.</b> Nonnegative observations with total \(0\) are all zero. Under the stipulated convention, such a row contributes exactly zero for every feasible choice. The proposed choice respects its retained normalization. Combining the rowwise maxima gives a global maximum. This also covers the case in which every observation is zero.</li></ul><ul><li><b>Exact representation.</b> The proposed weights are rational, with strictly positive denominators wherever division is performed. The task permits unrestricted nonnegative real weights, so nondyadic rational outputs are allowed. No logarithm must be computed.</li></ul><ul><li><b>Bit complexity.</b> A common denominator formed from a row’s input denominators has \(O(L)\) bits. Each partial row sum lies in \([0,1]\), giving an \(O(L)\)-bit numerator as well. Reduced rational arithmetic and the constant number of products in each output entry preserve this bound. There are \(O(\tau^2)\) arithmetic operations; classical integer arithmetic and fraction reduction fit within the conservative \(O(L^3)\) cost per operation. The claimed time and output-size bounds follow.</li></ul><p>The algorithm uses the supplied support directly and does not enumerate possible types. Its arithmetic has no additional dependence on \(m\); reading any type descriptions is covered by \(L\). Thus the bound addresses the requested parameters, including the stated \(m=2\).</p><h3>Required clarification</h3><p>None. The polynomial-time classification is established for the distribution-input problem as defined, without relying on the finite-population estimator.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

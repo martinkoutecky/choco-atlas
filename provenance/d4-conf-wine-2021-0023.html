@@ -1,0 +1,298 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-wine-2021-0023 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-wine-2021-0023 <span style="font-weight:normal;color:#8a7350">(d4-conf-wine-2021-0023)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> Yes. A randomized causal policy can be constructed and executed in polynomial time with \(F(\pi)\ge 0.726\,\mathrm{OPT}_{\mathrm{cl}}\), implying the requested \(0.725\) guarantee.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2.2 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational offline type masses \(\mu_i\) summing to \(1\), a compatibility relation with online types, and \(N\) KIID arrival rounds with known probabilities \(p_j=r_j/N\) summing to \(1\), each arrival carrying mass \(1/N\), can one compute a causal type-level policy whose minimum expected matched fraction \(\min_i \mathbb{E}[z_i]/\mu_i\) is at least \(0.725\) times the clairvoyant optimum for that same objective?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of \(\tau\) offline types with positive binary-rational masses \(\mu_i\), where \(\sum_i\mu_i=1\). Here \(\tau\) is the support size, not the number of possible types. There are \(m\) online types and an explicitly given compatibility relation \(E\).<br>There are \(N\ge1\) arrival rounds. Independently in each round, type \(j\) arrives with known probability \(p_j=r_j/N\), where \(r_j\) is a positive integer and \(\sum_jr_j=N\); each arrival has divisible mass \(1/N\).<br>Upon observing an arrival of type \(j\), a policy immediately and irrevocably allocates nonnegative masses \(a_i\) to compatible offline types, with \(\sum_i a_i\le1/N\). Any unallocated mass is discarded; cumulative allocation to type \(i\) cannot exceed \(\mu_i\).<br>A causal type-level policy may randomize and depend on the observed arrival history and remaining capacities, but cannot observe future arrivals. Let \(z_i\) be its total allocation to type \(i\), and define \(F(\pi)=\min_i\mathbb{E}_{\pi}[z_i]/\mu_i\).<br>Define \(\mathrm{OPT}_{\mathrm{cl}}=\sup_{\sigma}F(\sigma)\), where \(\sigma\) ranges over policies that know the entire realized arrival sequence before allocating, subject to the same compatibility and capacity constraints. The minimum is outside the expectation.<br>Can an algorithm construct a causal policy \(\pi\) satisfying \(F(\pi)\ge0.725\,\mathrm{OPT}_{\mathrm{cl}}\) on every instance, with construction time and execution time per arrival polynomial in \(m,\tau,N,L\), where \(L\) is the total input bit length?<br>For discrete unit-capacity offline agents, LP-based sampling with boosting achieves a stated \(0.725\) competitive ratio for minimum expected individual matching probability under integral-rate KIID arrivals; its analysis takes the large-horizon limit. [Ma, Xu and Xu](https://www.columbia.edu/~wm2428/papers/fairness_offline_agents.pdf).<br>For fractional unit-capacity matching with KIID arrivals, a \(0.731\) competitive ratio is known for the vertex-weighted sum objective, a different objective and capacity domain. No result settling the precise mass-normalized fairness guarantee above was located. [Tang, Wu and Wu](https://arxiv.org/pdf/2204.06851).</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The arrival-rate domain was unspecified; retained the discrete model&#x27;s integral rates and omitted zero-probability online types.</li><li>The allowed mass moves were unspecified; treated arrivals as divisible, permitting splitting among compatible offline types, partial allocation, and rejection, with pathwise capacity constraints.</li><li>The clairvoyant benchmark was ambiguous; defined it by optimizing the same minimum of expected matched fractions over full-sequence-informed policies.</li><li>The policy representation and runtime model were unspecified; allowed a history-dependent randomized procedure and required polynomial construction and per-arrival execution in m, tau, N, and L.</li><li>The graded question specifies an exact finite-horizon guarantee; retained it and qualified the discrete nearest-known result&#x27;s large-horizon analysis instead of weakening the target.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Answer</h3><p><b>Yes.</b> There is a randomized causal policy, with construction time and execution time per arrival polynomial in the specified parameters, satisfying<br>\(F(\pi)\ge 0.726\,\mathrm{OPT}_{\mathrm{cl}}\).<br>Consequently, the requested \(0.725\) guarantee holds.</p><p>The proof uses windowed conditional estimators, an idea from [Tang, Wu and Wu, Section 5](https://arxiv.org/pdf/2204.06851). Below, the estimator bound is proved for arbitrary positive capacities and every finite horizon. A sampling implementation and a multiplicative-weights construction then give the required fairness guarantee.</p><p>All randomness used in initialization is part of the constructed policy’s internal randomness, and is included in the expectation defining \(F\).</p><h3>1. A weighted clairvoyant benchmark</h3><p>Write \(n=N\), and let \(S=(S_1,\ldots,S_n)\) be the arrival sequence.</p><p>For a weight vector \(w\) with \(w_i\ge 0\) and \(\sum_iw_i=1\), define<br>\(W^*(w)=\sup_\sigma\sum_iw_i\,\mathbb E_\sigma[z_i]/\mu_i\),<br>where \(\sigma\) is clairvoyant. Directly from the fairness definition,<br>\(W^*(w)\ge \mathrm{OPT}_{\mathrm{cl}}\):<br>every clairvoyant policy has weighted normalized service at least its minimum normalized service, and we may take suprema.</p><p>We first specify a polynomial-time rule attaining the weighted benchmark on every realized sequence. If that sequence contains \(c_j\) arrivals of type \(j\), solve the rational linear program</p><p>\( \displaystyle
+\max \sum_i\frac{w_i}{\mu_i}\sum_{j:(i,j)\in E}x_{ij}
+\)</p><p>subject to</p><p>\( \displaystyle
+x_{ij}\ge 0,\qquad
+\sum_jx_{ij}\le\mu_i,\qquad
+\sum_ix_{ij}\le \frac{c_j}{n}.
+\)</p><p>Choose an optimal basic solution using a deterministic tie-breaking rule depending only on the count vector. Allocate \(x_{ij}/c_j\) to type \(i\) at each occurrence of type \(j\), when \(c_j&gt;0\).</p><p>These allocations are feasible: each arrival allocates at most \(1/n\), and each offline type receives at most its capacity. Conversely, aggregating any feasible allocation by online type gives a feasible solution of the displayed program. Thus this rule is optimal for the weighted objective.</p><p>Let \(B_{it}(S)\) denote its allocation to offline type \(i\) at position \(t\), and set<br>\(H_{it}(S)=B_{it}(S)/\mu_i\).<br>For each \(i\),</p><p>\( \displaystyle
+H_{it}\ge 0,\qquad \sum_{t=1}^nH_{it}\le 1.
+\)</p><p>The allocation rule is equivariant under permutations of the positions: permuting the sequence permutes the allocations in the same way. Define<br>\(q_i=\mathbb E[\sum_tH_{it}]\).<br>Then<br>\(W^*(w)=\sum_iw_iq_i\).</p><h3>2. A finite-horizon conditional-estimator lemma</h3><p>We prove the following statement independently of the matching model.</p><p><b>Lemma.</b> Suppose \(S_1,\ldots,S_n\) are independent and identically distributed, and \(H_1(S),\ldots,H_n(S)\) are nonnegative functions satisfying:</p><ul><li>\(\sum_tH_t(S)\le 1\) for every sequence;</li><li>the vector \(H(S)\) is equivariant under permutations of the positions.</li></ul><p>Let \(q=\mathbb E[\sum_tH_t]\), and put \(\beta=77/100\). For \(1\le r\le t\), define</p><p>\( \displaystyle
+U_t^{(r)}
+=\mathbb E[H_t\mid S_{t-r+1},\ldots,S_t].
+\)</p><p>Define coefficients and their mixture by</p><p>\( \displaystyle
+a_t^{(r)}
+=
+\begin{cases}
+\beta/n,&amp;r&lt;t,\\
+1-\beta(t-1)/n,&amp;r=t,
+\end{cases}
+\qquad
+X_t=\sum_{r=1}^ta_t^{(r)}U_t^{(r)},
+\qquad
+Y=\sum_{t=1}^nX_t.
+\)</p><p>Then<br>\( \mathbb E[\min(Y,1)]\ge (729/1000)q. \)</p><p>The coefficients are nonnegative and sum to one at each position.</p><h3>2.1. Conditional second moments</h3><p>For any nonempty set \(J\) of positions, let</p><p>\( \displaystyle
+P_J=\mathbb E\!\left[\sum_{t\in J}H_t\mid S_J\right].
+\)</p><p>By exchangeability, the distribution of \(P_J\) depends only on \(\ell=|J|\). Write \(v_\ell=\mathbb E[P_J^2]\). Since \(0\le P_J\le 1\),</p><p>\[ \displaystyle
+\mathbb E[P_J]=\frac{q\ell}{n},
+\qquad
+\frac{q^2\ell^2}{n^2}\le v_\ell\le\frac{q\ell}{n}.
+\tag{1}
+\]</p><p>Here the lower bound is Jensen’s inequality; the upper bound follows from \(P_J^2\le P_J\).</p><p>There are three kinds of products in the expansion of \(\mathbb E[Y^2]\).</p><p><b>Products at the same position.</b> Two windows ending at \(t\) are nested. If their lengths are \(r,s\), the tower property gives</p><p>\( \displaystyle
+\mathbb E[U_t^{(r)}U_t^{(s)}]
+=\mathbb E[(U_t^{(\min(r,s))})^2].
+\)</p><p>For a window \(J\) of length \(\ell\), exchangeability makes the expectations of<br>\((\mathbb E[H_k\mid S_J])^2\), for \(k\in J\), equal. Nonnegativity gives</p><p>\( \displaystyle
+\sum_{k\in J}(\mathbb E[H_k\mid S_J])^2
+\le
+\left(\sum_{k\in J}\mathbb E[H_k\mid S_J]\right)^2=P_J^2.
+\)</p><p>Consequently,</p><p>\[ \displaystyle
+\mathbb E[U_t^{(r)}U_t^{(s)}]\le
+\frac{v_{\min(r,s)}}{\min(r,s)}.
+\tag{2}
+\]</p><p><b>Products from disjoint windows.</b> The two estimators depend on disjoint sets of independent coordinates, so they are independent. Each has mean \(q/n\); their product has expectation \(q^2/n^2\).</p><p><b>Products from overlapping windows at distinct positions.</b> Let the endpoints be \(t&lt;k\), and let the intersection \(J\) have size \(\ell&gt;0\). Then \(t\in J\) and \(k\notin J\). Conditional on \(S_J\), the estimators depend on disjoint sets of additional independent coordinates. Thus their conditional product expectation is</p><p>\( \displaystyle
+\mathbb E[H_t\mid S_J]\,
+\mathbb E[H_k\mid S_J].
+\)</p><p>All positions outside \(J\) have equal conditional expected allocations, by permutation equivariance. Therefore</p><p>\( \displaystyle
+\mathbb E[H_k\mid S_J]
+=\frac{\mathbb E[\sum_{h\notin J}H_h\mid S_J]}{n-\ell}
+\le\frac{1-P_J}{n-\ell}.
+\)</p><p>Furthermore, symmetry within \(J\) implies</p><p>\( \displaystyle
+\mathbb E[\mathbb E[H_t\mid S_J](1-P_J)]
+=\frac1\ell\mathbb E[P_J(1-P_J)].
+\)</p><p>Hence</p><p>\[ \displaystyle
+\mathbb E[U_t^{(r)}U_k^{(s)}]
+\le
+\frac{q\ell/n-v_\ell}{\ell(n-\ell)}.
+\tag{3}
+\]</p><h3>2.2. Summing the coefficients</h3><p>We record the finite sums explicitly. Define</p><p>\( \displaystyle
+d_\ell
+=\frac1\ell\left[
+1+\frac{2\beta(n-2\ell+1)}n
++\frac{\beta^2(3\ell^2-2n\ell-3\ell+n+1)}{n^2}
+\right],
+\)</p><p>and, for \(\ell&lt;n\),</p><p>\( \displaystyle
+c_\ell
+=\frac1\ell\left[
+2+\frac{\beta(n-5\ell+1)}n
++\frac{\beta^2(8\ell^2-n\ell-n^2-3\ell+1)}{3n^2}
+\right].
+\)</p><p>The diagonal coefficient follows by grouping pairs of window lengths according to their minimum:</p><p>\( \displaystyle
+\ell d_\ell
+=(a_\ell^{(\ell)})^2
++(n-\ell)\left[
+\frac{\beta^2}{n^2}
++\frac{2\beta}{n}\left(1-\frac{\beta\ell}{n}\right)
+\right].
+\)</p><p>For the overlapping coefficient, an intersection of length \(\ell\) occurs in precisely two cases:</p><ul><li>\(r=\ell\) and \(s\ge k-t+\ell\);</li><li>\(r&gt;\ell\) and \(s=k-t+\ell\).</li></ul><p>Writing \(A_t=a_t^{(t)}=1-\beta(t-1)/n\), these cases give</p><p>\( \displaystyle
+\frac{\ell(n-\ell)c_\ell}{2}
+=
+A_\ell\sum_{k=\ell+1}^nA_k
++\frac{\beta}{n}
+\sum_{t=\ell+1}^n\sum_{k=t+1}^n
+\left(1-\frac{\beta(k-t+\ell-1)}n\right)
++\frac{\beta}{n}
+\left(1-\frac{\beta\ell}{n}\right)
+\sum_{t=\ell+1}^n(n-t).
+\)</p><p>Evaluating the arithmetic sums gives the stated expression for \(c_\ell\). In particular, \(c_\ell\ge 0\).</p><p>For disjoint windows with endpoints \(t&lt;k\), the second window has length at most \(k-t\), whose total coefficient is \(\beta(k-t)/n\). The first window’s coefficients sum to one. The disjoint contribution is therefore \(D_nq^2\), where</p><p>\( \displaystyle
+D_n=\frac{2\beta}{n^3}\sum_{t&lt;k}(k-t)
+=\frac{\beta(n^2-1)}{3n^2}.
+\)</p><p>Combining (2) and (3) yields</p><p>\[ \displaystyle
+\mathbb E[Y^2]
+\le
+\sum_{\ell=1}^nd_\ell v_\ell
++\sum_{\ell=1}^{n-1}c_\ell(q\ell/n-v_\ell)
++D_nq^2.
+\tag{4}
+\]</p><p>Extend the formula for \(c_\ell\) to \(\ell=n\). Its value satisfies</p><p>\( \displaystyle
+nc_n
+=2(1-\beta)^2+\frac{\beta(1-\beta)}n
++\frac{\beta^2}{3n^2}&gt;0.
+\)</p><p>Since \(q-v_n\ge 0\), adding the corresponding term to (4) preserves the upper bound.</p><p>Put \(\alpha_\ell=\ell/n\) and \(h_\ell=\ell(d_\ell-c_\ell)\). Subtraction gives</p><p>\[ \displaystyle
+h_\ell
+=-1+\beta(1+\alpha_\ell)
++\frac{\beta^2}{3}(\alpha_\ell^2-5\alpha_\ell+1)
++\frac{\beta+\beta^2(1-2\alpha_\ell)}n
++\frac{2\beta^2}{3n^2}.
+\tag{5}
+\]</p><p>Also, direct summation of the formula for \(d_\ell\) gives<br>\(\sum_{\ell=1}^nd_\ell\ell/n=1\).</p><p>For \(h_\ell\ge 0\), use the upper bound in (1); for \(h_\ell&lt;0\), use its lower bound. Equation (4) consequently implies</p><p>\[ \displaystyle
+\mathbb E[Y^2]
+\le
+q+D_nq^2
++\frac1n\sum_{\ell:h_\ell&lt;0}
+(-h_\ell)(q-\alpha_\ell q^2).
+\tag{6}
+\]</p><h3>2.3. A uniform bound, including small horizons</h3><p>Define</p><p>\( \displaystyle
+g(\alpha)=C+D\alpha-E\alpha^2,
+\qquad
+C=1-\beta-\frac{\beta^2}{3},
+\quad
+D=\frac{5\beta^2}{3}-\beta,
+\quad
+E=\frac{\beta^2}{3}.
+\)</p><p>For our choice of \(\beta\),</p><p>\( \displaystyle
+C=\frac{971}{30000}&gt;0,
+\qquad
+D=\frac{1309}{6000},
+\qquad
+E=\frac{5929}{30000}.
+\)</p><p>The function \(g\) is concave, and its endpoint values are<br>\(g(0)=C&gt;0\) and \(g(1)=(1-\beta)^2&gt;0\). Thus \(g\ge 0\) on \([0,1]\).</p><p>The last two terms of (5) are positive: indeed,<br>\(\beta+\beta^2(1-2\alpha)\ge\beta-\beta^2&gt;0\).<br>Hence \(h_\ell\ge-g(\alpha_\ell)\), and therefore<br>\((-h_\ell)_+\le g(\alpha_\ell)\).</p><p>Since \(q-\alpha_\ell q^2\ge 0\), (6) gives</p><p>\( \displaystyle
+\mathbb E[Y^2]\le A_nq+B_nq^2,
+\)</p><p>where</p><p>\( \displaystyle
+A_n=1+\frac1n\sum_{\ell=1}^ng(\ell/n),
+\qquad
+B_n=D_n-\frac1n\sum_{\ell=1}^n(\ell/n)g(\ell/n).
+\)</p><p>Using the sums of the first three powers of the integers,</p><p>\( \displaystyle
+A_n
+=
+\frac{193603}{180000}
++\frac{77}{7500n}
+-\frac{5929}{180000n^2},
+\)</p><p>and</p><p>\( \displaystyle
+A_n+B_n
+=
+\frac{155129}{120000}
+-\frac{C}{2n}
+-\frac{\beta^2/4+\beta/6}{n^2}.
+\)</p><p>For \(n\ge 2\),</p><p>\( \displaystyle
+A_n
+\le
+\frac{193603}{180000}+\frac{77}{15000}
+=
+\frac{194527}{180000}
+&lt;
+\frac{271}{250}.
+\)</p><p>For \(n=1\), \(A_1=1+(1-\beta)^2&lt;271/250\) as well. Moreover, for every \(n\),</p><p>\[ \displaystyle
+A_n+B_n
+\le\frac{155129}{120000}
+&lt;
+\frac{323441}{250000}.
+\tag{7}
+\]</p><p>Let \(\rho=729/1000\). The two thresholds in (7) equal<br>\(4(1-\rho)\) and \(1+4(1-\rho)^2\), respectively. It follows that, for \(0\le q\le1\),</p><p>\[ \displaystyle
+A_nq+B_nq^2-2q+1
+\le
+[1-(2\rho-1)q]^2.
+\tag{8}
+\]</p><p>To check this inference, after subtracting the right side and dividing by \(q&gt;0\), the result is affine in \(q\). Its endpoint values are<br>\(A_n-4(1-\rho)\) and<br>\(A_n+B_n-[1+4(1-\rho)^2]\), both nonpositive. The case \(q=0\) is immediate.</p><p>Finally, \(\mathbb E[Y]=q\), and Cauchy–Schwarz gives</p><p>\( \displaystyle
+\begin{aligned}
+\mathbb E[\min(Y,1)]
+&amp;=\frac{q+1-\mathbb E|Y-1|}{2}\\
+&amp;\ge\frac{q+1-\sqrt{\mathbb E[Y^2]-2q+1}}2\\
+&amp;\ge\frac{q+1-[1-(2\rho-1)q]}2
+=\rho q.
+\end{aligned}
+\)</p><p>The square root comparison is valid because<br>\(1-(2\rho-1)q&gt;0\) on \([0,1]\). This proves the lemma for every finite \(n\).</p><h3>3. Applying the lemma to arbitrary masses</h3><p>Apply the lemma separately to each normalized allocation vector \(H_{i1},\ldots,H_{in}\) from Section 1.</p><p>At position \(t\), offer the mass</p><p>\( \displaystyle
+b_{it}
+=
+\mu_i\sum_{r=1}^ta_t^{(r)}
+\mathbb E[H_{it}\mid S_{t-r+1},\ldots,S_t]
+\)</p><p>to offline type \(i\), and allocate the lesser of this offer and its remaining capacity.</p><p>These offers satisfy the arrival constraint. For each window,</p><p>\( \displaystyle
+\sum_i\mu_i\mathbb E[H_{it}\mid S_{t-r+1},\ldots,S_t]
+=
+\mathbb E\!\left[\sum_iB_{it}\mid S_{t-r+1},\ldots,S_t\right]
+\le\frac1n.
+\)</p><p>Taking the convex combination preserves that inequality. Compatibility also holds, because every conditional completion fixes the current arrival type.</p><p>The policy is causal. Its total normalized allocation to type \(i\) is exactly the total normalized offer clipped at one. The lemma therefore gives</p><p>\( \displaystyle
+\mathbb E[z_i]/\mu_i\ge\rho q_i.
+\)</p><p>Thus the ideal weighted policy has expected weighted payoff at least<br>\(\rho W^*(w)\).</p><p>This step uses no copies of offline agents and no assumption that their capacities are equal or integral.</p><h3>4. Implementing the estimators by sampling</h3><p>Exact conditional expectations need not be computed.</p><p>For each position \(t\), window length \(r\), and fixed weight vector \(w\), generate \(K\) independent completed sequences. Retain the actual types in that window and sample every other position independently from the arrival distribution. Run the weighted clairvoyant rule on each completion and average its allocation at position \(t\).</p><p>Use these sample averages in the offers of Section 3. Every sampled allocation vector is feasible for the current arrival. Therefore averaging, mixing, and clipping preserve feasibility exactly.</p><p>Fix an offline type \(i\). Let \(\widehat Y_i\) be its total normalized sampled offer and \(Y_i\) the ideal one. Conditional on the entire actual sequence, use independent samples for every position and window. Then<br>\(\mathbb E[\widehat Y_i-Y_i\mid S]=0\).</p><p>A normalized sampled allocation lies in \([0,1]\), so its conditional variance is at most its conditional mean. Consequently,</p><p>\( \displaystyle
+\begin{aligned}
+\mathbb E[(\widehat Y_i-Y_i)^2]
+&amp;\le
+\frac1K\sum_{t,r}(a_t^{(r)})^2\mathbb E[H_{it}]\\
+&amp;=\frac{q_i}{nK}\sum_{t,r}(a_t^{(r)})^2\\
+&amp;\le\frac{q_i}{K}\le\frac1K.
+\end{aligned}
+\)</p><p>The penultimate inequality uses<br>\(\sum_r(a_t^{(r)})^2\le(\sum_ra_t^{(r)})^2=1\).</p><p>The function \(y\mapsto\min(y,1)\) is one-Lipschitz. Hence the sampled policy, denoted \(\pi_w\), satisfies</p><p>\( \displaystyle
+\mathbb E_{\pi_w}[z_i]/\mu_i
+\ge\rho q_i-K^{-1/2}.
+\)</p><p>Since the weights sum to one,</p><p>\[ \displaystyle
+\sum_iw_i\,\mathbb E_{\pi_w}[z_i]/\mu_i
+\ge \rho W^*(w)-K^{-1/2}
+\ge \rho\,\mathrm{OPT}_{\mathrm{cl}}-K^{-1/2}.
+\tag{9}
+\]</p><p>Importantly, the sample complexity depends on normalized quantities bounded by one, rather than on \(1/\mu_i\).</p><h3>5. Constructing a fairness policy</h3><p>If an offline type is isolated, \(\mathrm{OPT}_{\mathrm{cl}}=0\), and the zero-allocation policy suffices. Assume henceforth that no offline type is isolated.</p><p>We first establish a lower bound needed to turn additive errors into a competitive guarantee. Upon every arrival \(j\), allocate \(\mu_i/n\) to every compatible type \(i\). This is feasible: its total allocation per arrival is at most \(1/n\), and its cumulative allocation to type \(i\) is at most \(\mu_i\). Its expected normalized service to \(i\) equals the probability that an arrival is compatible with \(i\). Because some compatible online type has \(r_j\ge1\),</p><p>\[ \displaystyle
+\mathrm{OPT}_{\mathrm{cl}}\ge\frac1n.
+\tag{10}
+\]</p><p>Set</p><p>\( \displaystyle
+\delta=\frac1{1000n},
+\qquad
+K=\delta^{-2},
+\qquad
+\eta=\frac\delta2,
+\qquad
+T=4\tau\delta^{-2}.
+\)</p><p>The policy performs the following randomized initialization before the actual arrivals:</p><ul><li>Start with \(w_i^1=1/\tau\).</li><li>For each \(k=1,\ldots,T\), independently simulate one complete execution of \(\pi_{w^k}\). Let its normalized payoff vector be \(g^k\in[0,1]^\tau\).</li><li>Update the weights proportionally to \(w_i^k(1-\eta g_i^k)\).</li><li>Select \(k\) uniformly from \(\{1,\ldots,T\}\), and use \(\pi_{w^k}\), with fresh randomness, on the actual arrivals.</li></ul><p>We verify the guarantee without assuming that the sampled payoff estimates are exact.</p><p>Let \(u_i^1=1/\tau\) be unnormalized weights and<br>\(u_i^{k+1}=u_i^k(1-\eta g_i^k)\); write \(U_k=\sum_i u_i^k\).<br>Because \(w_i^k=u_i^k/U_k\),</p><p>\( \displaystyle
+U_{k+1}=U_k(1-\eta\,w^k\!\cdot g^k).
+\)</p><p>The inequalities<br>\(\log(1-x)\le-x\) and<br>\(\log(1-x)\ge-x-x^2\), for \(0\le x\le1/2\), imply, for every \(i\),</p><p>\( \displaystyle
+-\log\tau-\eta\sum_{k=1}^Tg_i^k-\eta^2T
+\le\log U_{T+1}
+\le-\eta\sum_{k=1}^Tw^k\!\cdot g^k.
+\)</p><p>Rearranging,</p><p>\( \displaystyle
+\frac1T\sum_{k=1}^Tg_i^k
+\ge
+\frac1T\sum_{k=1}^Tw^k\!\cdot g^k
+-\frac{\log\tau}{\eta T}-\eta.
+\)</p><p>Our choices give<br>\(\log\tau/(\eta T)+\eta\le\delta\), since \(\log\tau\le\tau\).</p><p>Conditional on all preceding initialization history, (9) yields</p><p>\( \displaystyle
+\mathbb E[w^k\!\cdot g^k\mid\text{preceding history}]
+\ge\rho\,\mathrm{OPT}_{\mathrm{cl}}-\delta.
+\)</p><p>Taking expectations in the regret inequality therefore proves, for every offline type \(i\),</p><p>\[ \displaystyle
+\mathbb E\!\left[\frac1T\sum_{k=1}^Tg_i^k\right]
+\ge\rho\,\mathrm{OPT}_{\mathrm{cl}}-2\delta.
+\tag{11}
+\]</p><p>The left side is exactly the expected normalized payoff of type \(i\) under the uniformly selected policy with fresh randomness. Thus the minimum remains outside the expectation, as required.</p><h3>6. Polynomial bit complexity and bounded randomness</h3><p>All weighted offline programs have polynomially many variables and constraints and rational data. An optimal basic solution has polynomial encoding length. The normalized payoffs computed in a rollout also have polynomial encoding length; the factors \(1/\mu_i\) increase bit length by only a polynomial in \(L\).</p><p>The multiplicative updates are rational. Their encoding lengths grow polynomially over the polynomial number \(T\) of updates. Thus every offline optimization and arithmetic operation has polynomial bit complexity.</p><p>A rollout uses at most \(Kn^3\) sampled online types for its conditional completions. Both \(K\) and \(T\) are polynomial in \(n,\tau\). Execution at a single actual arrival involves at most \(nK\) weighted offline optimizations, each on an input of polynomial size. Initialization and execution per arrival are therefore polynomial in \(m,\tau,N,L\).</p><p>For completeness, exact sampling from a rational distribution can be replaced by bounded-time fair-bit sampling. This avoids an unbounded rejection-sampling loop.</p><p>Let<br>\(M=(T+1)(n+Kn^3)+1\),<br>an upper bound on all internal random draws during initialization and the actual execution, including the final policy selection. Approximate each sampling distribution by a dyadic distribution at total variation distance at most \(\delta/M\). This requires only polynomially many bits: for a distribution with \(d\) outcomes, rounding probabilities to a grid of spacing \(2^{-b}\) gives total variation distance at most \(d2^{-b}\).</p><p>Couple the ideal and implemented internal draws sequentially. The probability of any disagreement is at most \(\delta\). When no disagreement occurs, the policies make identical allocations on the same actual sequence. Since each normalized total payoff lies in \([0,1]\), this implementation changes each coordinate’s expected payoff by at most \(\delta\). Feasibility holds on every execution regardless of disagreement.</p><p>Combining this loss with (11) and then applying (10),</p><p>\( \displaystyle
+\begin{aligned}
+F(\pi)
+&amp;\ge \rho\,\mathrm{OPT}_{\mathrm{cl}}-3\delta\\
+&amp;=\frac{729}{1000}\mathrm{OPT}_{\mathrm{cl}}
+-\frac{3}{1000n}\\
+&amp;\ge\frac{726}{1000}\mathrm{OPT}_{\mathrm{cl}}\\
+&amp;\ge0.725\,\mathrm{OPT}_{\mathrm{cl}}.
+\end{aligned}
+\)</p><p>The constructed policy uses only the supplied instance, independent internal samples, and observed arrivals. It is causal, has polynomial construction and per-arrival execution time, and meets the requested guarantee on every instance.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Sections 1 and 6: deterministic optimal-basic-solution selection and polynomial bit complexity: The deterministic tie-breaking rule is unspecified, and the repeated-update bit-complexity explanation does not explicitly state that basic feasible allocation encoding lengths are bounded independently of the evolving objective weights. Specify a polynomial-time deterministic selection rule, state the rational-LP guarantee used, and clarify the uniform allocation encoding bound.</li><li><b>minor</b> — Section 6: dyadic approximation of sampling distributions: The rounding procedure is unspecified. Independent coordinate rounding need not preserve total probability one. Specify a valid nonnegative dyadic distribution with unit total mass, the claimed total-variation bound, and bounded fair-bit sampling.</li></ul>
+<div class="pre"><p>The argument establishes the requested guarantee in substance. I found no false mathematical step or major gap. Two minor implementation clarifications remain, concerning deterministic LP selection and dyadic sampling.</p><p>The appropriate verdict is <b>proved with minor gaps</b>: the finite-horizon estimator analysis, its application to arbitrary masses, and the randomized fairness construction are sound.</p><ul><li><b>Weighted clairvoyant benchmark</b></li></ul><p>The inequality \(W^*(w)\ge \mathrm{OPT}_{\mathrm{cl}}\) has the correct quantifier order. For every clairvoyant policy, its weighted normalized payoff dominates its minimum normalized payoff; taking suprema preserves that inequality.</p><p>The count-based LP characterizes feasible aggregate allocations exactly. Splitting \(x_{ij}\) equally among the \(c_j\) occurrences respects both the per-arrival constraint and offline capacities. Conversely, every feasible clairvoyant allocation produces feasible aggregate LP variables.</p><p>Choosing the allocation from the count vector makes the resulting position-level allocation equivariant under permutations. Thus the definitions of \(H_{it}\), \(q_i\), and \(W^*(w)=\sum_iw_iq_i\) are justified.</p><p>There is a minor implementation clarification about the LP selection rule, recorded below.</p><ul><li><b>Conditional second moments</b></li></ul><p>The lemma’s hypotheses imply \(0\le q\le1\). Exchangeability gives \(\mathbb E[P_J]=q|J|/n\), and the two bounds in equation (1) follow from Jensen’s inequality and \(P_J^2\le P_J\).</p><p>For nested windows, the tower-property identity is valid: the estimator for the smaller window is the conditional expectation of the estimator for the larger window. The subsequent bound by \(v_\ell/\ell\) correctly uses equality of the individual second moments under permutations within \(J\), followed by nonnegativity.</p><p>Disjoint-window estimators are independent because they are functions of disjoint collections of independent arrival coordinates.</p><p>For overlapping windows, conditional independence given the intersection is also valid. Taking conditional expectations of the two estimators reduces them to \(\mathbb E[H_t\mid S_J]\) and \(\mathbb E[H_k\mid S_J]\).</p><p>The symmetry arguments in equation (3) are sound. Positions outside \(J\) have equal conditional expectations, while symmetry within \(J\) gives the stated equality <b>after taking expectation</b>. The proof does not incorrectly assert pointwise equality among positions whose observed types may differ. Also, \(\ell&lt;n\) for every overlapping pair with distinct endpoints, so its denominator is positive.</p><ul><li><b>Finite coefficient sums</b></li></ul><p>I independently checked the diagonal, overlapping, and disjoint coefficient formulas by direct enumeration for \(n=1,\ldots,24\). I also verified symbolically the displayed diagonal and overlapping summations, the subtraction producing equation (5), the extension value \(nc_n\), and<br>\[
+   \sum_{\ell=1}^n d_\ell\ell/n=1.
+   \]</p><p>The two overlapping-window cases exhaust the possibilities. Their coefficient expressions are nonnegative, which justifies using equation (3) in the upper bound.</p><p>Adding the extended \(\ell=n\) term preserves the bound because both \(c_n\) and \(q-v_n\) are nonnegative. The sign-dependent substitution of the bounds on \(v_\ell\) is correctly oriented, including when \(h_\ell&lt;0\). Equation (6) follows.</p><ul><li><b>Uniform estimator guarantee</b></li></ul><p>The constants defining \(g\) are correct. Concavity and positive endpoint values imply \(g\ge0\) on the entire interval. The finite-horizon correction in equation (5) is positive, so \((-h_\ell)_+\le g(\ell/n)\).</p><p>The aggregate formulas check out:<br>\[
+   A_n=\frac{193603}{180000}+\frac{77}{7500n}
+       -\frac{5929}{180000n^2},
+   \]<br>\[
+   A_n+B_n=\frac{155129}{120000}
+       -\frac{971}{60000n}
+       -\frac{33187}{120000n^2}.
+   \]</p><p>The proof’s separate treatment of \(n=1\) is correct. Both threshold comparisons in equation (7) hold, and their identification with the expressions involving \(\rho=729/1000\) is exact.</p><p>The affine endpoint check establishing equation (8) is valid, with \(q=0\) handled separately. Finally, the identity for \(\min(Y,1)\), Cauchy–Schwarz, and the positivity of the comparison expression justify<br>\[
+   \mathbb E[\min(Y,1)]\ge \rho q.
+   \]</p><p>This establishes the lemma for every finite horizon, without an asymptotic assumption.</p><ul><li><b>Application to arbitrary masses and sampled estimators</b></li></ul><p>Every coordinate has a positive capacity, so normalization is legitimate. The conditional offers preserve compatibility because the current arrival is fixed in every completion. Their total mass is at most \(1/n\), since the coefficients form a convex combination of feasible conditional allocation vectors.</p><p>Coordinatewise clipping preserves feasibility. Because offers are nonnegative and the capacity is fixed, total allocation to each coordinate equals its total offer clipped at that capacity. Therefore the scalar lemma applies exactly as claimed.</p><p>The sampling analysis also checks out. Conditional on the entire actual sequence, independent completion samples give zero-mean estimation errors with no cross-covariance between different position/window pairs. Normalized samples lie in \([0,1]\), and the variance bound and coefficient-square bound imply the stated mean-square error.</p><p>The Lipschitz argument yields an additive loss of at most \(K^{-1/2}\) per coordinate. Averaging with nonnegative weights summing to one gives equation (9). No inverse-capacity factor enters the sample count.</p><ul><li><b>Fairness construction and initialization randomness</b></li></ul><p>If any offline type is isolated, every policy gives that coordinate zero service, so \(\mathrm{OPT}_{\mathrm{cl}}=0\).</p><p>Otherwise, the proposed baseline allocation is feasible, including across all \(n\) rounds. Its expected normalized service is the probability of a compatible arrival. Integral positive rates therefore justify \(\mathrm{OPT}_{\mathrm{cl}}\ge1/n\).</p><p>The multiplicative-weights updates remain positive. The logarithmic inequalities apply because \(\eta g_i^k\le1/2\). Their directions and the resulting regret inequality are correct.</p><p>The parameter choices give<br>\[
+   \frac{\log\tau}{\eta T}+\eta
+   =\frac{\delta\log\tau}{2\tau}+\frac{\delta}{2}
+   \le\delta.
+   \]</p><p>Conditioning on the preceding initialization history makes the current weight vector fixed, so equation (9) applies to each simulated rollout. Taking expectations consequently gives equation (11).</p><p>Selecting a recorded policy uniformly and executing it with fresh randomness has the claimed expected coordinate payoff. This remains true although later weights depend on earlier simulated payoffs. The final minimum is taken over coordinate expectations, as required by the task.</p><ul><li><b>Polynomial implementation and bounded randomness</b></li></ul><p>The numbers of updates, completion samples, and LP calls are polynomial in the permitted parameters. The stated internal-draw bound safely covers the initialization simulations, actual execution samples, and final policy selection.</p><p>The bit-complexity claim is sound in substance, but its explanation should make explicit that basic feasible allocation sizes are bounded independently of the evolving objective weights. Merely invoking a bound polynomial in each LP’s entire input length would not, by itself, justify polynomial growth over repeated updates.</p><p>The sequential coupling argument is correct once valid dyadic distributions have been specified. Until the first disagreement, the two executions have identical histories and sampling distributions. The union bound gives disagreement probability at most \(\delta\), and bounded coordinate payoffs give the claimed expectation loss.</p><p>The probability-rounding procedure needs the minor clarification below.</p><ul><li><b>Final guarantee and scope</b></li></ul><p>Combining the three additive losses with the benchmark lower bound correctly gives<br>\[
+   F(\pi)\ge\frac{729}{1000}\mathrm{OPT}_{\mathrm{cl}}
+           -\frac{3}{1000n}
+   \ge\frac{726}{1000}\mathrm{OPT}_{\mathrm{cl}}.
+   \]</p><p>The policy is causal and satisfies feasibility on every execution. The proof addresses support-size input, arbitrary positive rational masses, finite horizons, and the minimum-outside-expectation objective.</p><p>Its complexity conclusion concerns constructing a policy with the requested approximation guarantee; it does not claim exact polynomial-time computation of \(\mathrm{OPT}_{\mathrm{cl}}\).</p><p>The minimum requested clarifications are:</p><ul><li><b>Minor — Sections 1 and 6:</b> Specify a deterministic, polynomial-time selection rule for an optimal basic LP solution. State the rational-LP guarantee being used, and explicitly identify the objective-independent allocation encoding bound needed for the repeated weight updates.</li><li><b>Minor — Section 6:</b> Specify probability-preserving dyadic rounding. Coordinatewise rounding alone need not produce probabilities summing to one. Confirm nonnegativity, unit total mass, the stated total-variation bound, and bounded fair-bit sampling.</li></ul><p>Neither issue requires a new mathematical estimate or a change to the argument.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,609 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-9860ad3bce0875ae44d04a7352dc6b0ae9f837af — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-9860ad3bce0875ae44d04a7352dc6b0ae9f837af <span style="font-weight:normal;color:#8a7350">(s5-9860ad3bce0875ae44d04a7352dc6b0ae9f837af)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.1 — class: other</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Consider the fair multi-user dueling bandit problem with D users and K arms, where D, K ≥ 4 are even, and a time horizon T. Suppose the user preferences satisfy Assumption 3.1 and the utilities are defined by the scoring function in Equation 2. Then, for any online learning algorithm, there exists a problem instance such that the expected regret (defined in Equation 4) is at least: E[RT ] = Ω  T 2/3 min(K, D)1/3 .</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(K\) arms and \(\tau\) types with known positive rational masses \(\mu_t\) summing to one, each type has an unknown reciprocal preference matrix \(P_t\) with a Condorcet winner \(a_t^\star\). Each round, a learner chooses two policies \(\pi,\pi&#x27; \in \Delta_K\), samples an arm from each, and receives one independent preference response from each type. Define \(u_t(\pi)=\sum_{a=1}^K \pi(a)\,2P_{t,a,a_t^\star}\) and \(\Phi_\mu(\pi)=\exp\!\left(\sum_{t=1}^{\tau}\mu_t\log u_t(\pi)\right)\), with zero welfare if any positive-mass type has zero utility. What is the minimax expected cumulative regret over horizon \(H\), as a function of \(H,K,\tau,\mu\), and the preference gaps, and can an algorithm attain the resulting rate?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of \(\tau\) type labels with positive binary-rational masses \(\mu_t\), summing to one; \(\tau\) is the support size, not the number of possible types. Let \(m=K\), let \(K,\tau\geq4\) be even, and let \(H\geq1\) be an integer horizon; \(L\) is the bit length of the supplied data. State running times in \(K,\tau,L,H\) and any additional parameters.<br>Each type has a fixed unknown matrix \(P_t\in[0,1]^{K\times K}\), with \(P_{t,i,j}+P_{t,j,i}=1\) and \(P_{t,i,i}=1/2\), and a unique strict Condorcet winner \(a_t^\star\). Other pairwise ties and probabilities zero or one are allowed.<br>At round \(h\), the learner adaptively chooses \(\pi_h,\pi&#x27;_h\in\Delta_K\), independently samples a shared pair \(i_h\sim\pi_h,j_h\sim\pi&#x27;_h\), and observes the pair and one response \(Y_{h,t}\sim\operatorname{Bernoulli}(P_{t,i_h,j_h})\) from every type. Conditional on the pair and past, responses are independent across types and use fresh randomness each round; equal sampled arms are permitted.<br>Define \(u_t(\pi)=\sum_a\pi(a)2P_{t,a,a_t^\star}\) and \(\Phi_\mu(\pi)=\exp(\sum_t\mu_t\log u_t(\pi))\), with value zero when any utility is zero. Let \(\pi^\star\in\arg\max_{\pi\in\Delta_K}\Phi_\mu(\pi)\) and \(R_H=\sum_{h=1}^H[\Phi_\mu(\pi^\star)-(\Phi_\mu(\pi_h)+\Phi_\mu(\pi&#x27;_h))/2]\).<br>For a supplied rational gap bound \(g\in[0,1/2]\), let \(\mathcal P_g\) contain exactly the above preference tensors satisfying \(\min_{t,i\ne j}|P_{t,i,j}-1/2|\geq g\). The learner knows \(K,\tau,H,\mu,g\), but neither the matrices nor their winners. Define \(\mathcal R^*(H,K,\tau,\mu,g)=\inf_A\sup_{P\in\mathcal P_g}\mathbb E_{A,P}[R_H]\), where the infimum ranges over randomized adaptive learners.</p><p>What is the minimax regret rate \(\mathcal R^*(H,K,\tau,\mu,g)\), both without a gap promise \((g=0)\) and with \(g&gt;0\), and can an algorithm attain it?</p><p>For finite societies with product welfare, Ahmed and Ghasemi establish a worst-case lower bound \(\Omega(H^{2/3}\min(K,D)^{1/3})\) for even \(K,D\geq4\), and upper bounds with horizon dependence \(\widetilde O(H^{2/3})\) at fixed positive preference gap; these concern product regret. [Source](https://arxiv.org/html/2605.01961v3)<br>For equal-weight geometric-mean welfare with observed absolute rewards, Zhang, Vuong and Luo obtain \(\widetilde O(K^{2/D}H^{(D-1)/D}+K)\) regret and a lower bound matching the horizon exponent; this uses different feedback. No result settling the mass-weighted dueling problem above was located. [Source](https://papers.neurips.cc/paper_files/paper/2024/file/6a183ab792c56627d4c9dc45c1f5a616-Paper-Conference.pdf)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified cumulative regret as the optimal fixed policy&#x27;s welfare minus the average welfare of the two chosen policies, evaluated before arm sampling.</li><li>Specified a shared sampled arm pair, independent sampling from the two policies, observed arm identities, and conditionally independent type responses with fresh randomness each round; permitted self-duels.</li><li>Made preference matrices stationary, allowed arbitrary real probabilities in the closed unit interval, and required unique strict Condorcet winners while permitting ties between other arms.</li><li>Carried the anchor&#x27;s evenness and lower-size conditions to K and the support size tau.</li><li>Resolved gap-dependent minimax ambiguity using a supplied rational lower bound g on the minimum absolute off-diagonal preference gap, matching the finite-model gap definition; g=0 retains the unrestricted Condorcet domain.</li><li>Specified the learner&#x27;s knowledge and the minimax quantifiers; matrices and winners remain unknown.</li><li>Identified m with K and defined L as the bit length of supplied data, excluding unknown preference probabilities.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial minimax characterization</h3><p>The full joint minimax rate remains unresolved. However, the previous results can be strengthened in two directions:</p><ul><li>The small-gap $H^{2/3}$ lower bound holds for <b>every supplied mass vector</b> in a larger regime, without a mass-partition condition.</li><li>For sufficiently large gaps, the minimax horizon rate is <b>logarithmic</b>, rather than $H^{2/3}$.</li></ul><p>All results below concern the supplied support of size $\tau$. Distinct supported types provide independent responses even when their preference matrices coincide.</p><h3>1. Proven bounds</h3><p>Define<br>$$
+\mu_{\min}=\min_t\mu_t,\qquad
+\delta=1-\max_t\mu_t,\qquad
+b=\min\{K,\tau\},
+$$<br>$$
+B_0=\min\{\tau,K-2\},\qquad
+Q=\min\left\{\binom K2,\tau(K-1)\right\},
+$$<br>and<br>$$
+\Lambda=\left\lceil\log_2\bigl(16\tau K^2(H+1)\bigr)\right\rceil.
+$$</p><p>The following statements are proved below.</p><p><b>Without a gap promise,</b><br>$$
+\frac{\delta H}{2048}
+\leq
+\mathcal R^*(H,K,\tau,\mu,0)
+\leq H.
+$$<br>Consequently, for every fixed supplied positive mass vector,<br>$$
+\mathcal R^*(H,K,\tau,\mu,0)=\Theta_\mu(H).
+$$<br>The joint dependence on the masses is not determined by these bounds.</p><p><b>For every positive gap,</b> an explicit algorithm gives<br>$$
+\mathcal R^*(H,K,\tau,\mu,g)
+\leq
+\min\left\{
+H,\;
+C\left[
+\frac{Q\Lambda}{g^2}
++
+K^{1/3}b\,\Lambda^{1/3}H^{2/3}
++1
+\right]
+\right\},
+$$<br>where $C$ is universal.</p><p><b>For small positive gaps,</b> if<br>$$
+0&lt;g&lt;\frac{1-1/B_0}{2},
+$$<br>then, for every fixed supplied mass vector,<br>$$
+\mathcal R^*(H,K,\tau,\mu,g)
+=
+\widetilde\Theta_{K,\tau,\mu,g}(H^{2/3}).
+$$<br>Here the upper bound hides logarithms in $H$, and the lower-bound constant may depend on the fixed parameters. This improves the previous partition-dependent lower bound.</p><p><b>For large gaps,</b> suppose<br>$$
+0&lt;1-2g&lt;\mu_{\min}.
+$$<br>Set<br>$$
+c=1-2g,\qquad
+\kappa=\frac{\mu_{\min}-c}{1-c},\qquad
+\rho=1-c(b-1).
+$$<br>Then $\kappa,\rho&gt;0$, and an explicit algorithm gives<br>$$
+\mathcal R^*(H,K,\tau,\mu,g)
+\leq
+\min\left\{
+H,\;
+C\left[
+\frac{Q\Lambda}{g^2}
++
+\frac{\tau b^3}{\mu_{\min}\rho^2\kappa^6}
+\log(H+1)
++1
+\right]
+\right\}.
+$$<br>For every fixed $0&lt;g&lt;1/2$, there is also a logarithmic lower bound. Therefore, in this large-gap regime,<br>$$
+\mathcal R^*(H,K,\tau,\mu,g)
+=
+\Theta_{K,\tau,\mu,g}(\log(H+1)).
+$$</p><p><b>At the deterministic endpoint,</b><br>$$
+\frac1{16}\min\{H,K\}
+\leq
+\mathcal R^*(H,K,\tau,\mu,1/2)
+\leq
+\min\{H,Q\}.
+$$</p><p>For example, if the masses are equal and $K\geq\tau+2$, these results determine the horizon rate for every positive gap except the boundary:<br>$$
+\begin{cases}
+\widetilde\Theta(H^{2/3}),
+&amp;
+0&lt;g&lt;(1-1/\tau)/2,
+\\[2mm]
+\Theta(\log(H+1)),
+&amp;
+(1-1/\tau)/2&lt;g&lt;1/2,
+\\[2mm]
+\Theta(1),
+&amp;
+g=1/2,
+\end{cases}
+$$<br>with $K,\tau,g$ fixed.</p><p>The cited [Ahmed–Ghasemi result](https://arxiv.org/html/2605.01961v3) concerns product welfare, while the cited [Zhang–Vuong–Luo result](https://papers.neurips.cc/paper_files/paper/2024/file/6a183ab792c56627d4c9dc45c1f5a616-Paper-Conference.pdf) uses absolute-reward feedback. No transfer of either theorem is needed below.</p><h3>2. Objective properties and first-order conditions</h3><p>Write<br>$$
+s_{t,a}=2P_{t,a,a_t^\star},
+\qquad
+u_t(\pi)=\sum_a s_{t,a}\pi(a).
+$$<br>Strict Condorcet optimality gives<br>$$
+s_{t,a_t^\star}=1,\qquad 0\leq s_{t,a}&lt;1
+\quad(a\neq a_t^\star).
+$$<br>Under a positive gap, the stronger restriction is<br>$$
+s_{t,a}\leq c:=1-2g
+\quad(a\neq a_t^\star).
+$$<br>Thus welfare and each round’s regret belong to $[0,1]$.</p><p>For positive coordinates, the weighted geometric mean<br>$$
+G_\mu(u)=\prod_tu_t^{\mu_t}
+$$<br>satisfies<br>$$
+D^2G_\mu(u)[v,v]
+=
+G_\mu(u)
+\left[
+\left(\sum_t\mu_t\frac{v_t}{u_t}\right)^2
+-
+\sum_t\mu_t\left(\frac{v_t}{u_t}\right)^2
+\right]
+\leq0.
+$$<br>The inequality is weighted Cauchy–Schwarz, using $\sum_t\mu_t=1$. Continuity extends concavity to the nonnegative orthant. Hence $\Phi_\mu$ is continuous and concave on the simplex.</p><p>The uniform policy has every utility at least $1/K$. Compactness therefore gives an optimizer with positive utilities. We may equivalently maximize<br>$$
+f(\pi)=\sum_t\mu_t\log u_t(\pi).
+$$</p><p>At any optimizer $\pi^\star$, differentiation in the feasible direction toward arm $a$ gives<br>$$
+C_a:=\sum_t\mu_t\frac{s_{t,a}}{u_t(\pi^\star)}
+\leq1.
+$$<br>Moreover,<br>$$
+\sum_a\pi^\star(a)C_a=1.
+$$<br>Consequently, every arm receiving positive optimal mass has $C_a=1$.</p><p>Taking $a=a_t^\star$ and keeping its nonnegative $t$-th summand gives<br>$$
+u_t(\pi^\star)\geq\mu_t.
+$$<br>These arguments also apply to any nonnegative score matrix with one designated unit score in each row.</p><p>We use the usual adaptive relative-entropy chain rule and Pinsker’s inequality. Their application here is valid because, conditional on the recorded past and chosen policies, the pair-sampling kernel is the same in both environments; only the conditional response distributions can differ.</p><h3>3. Linear regret without a gap promise</h3><h3>3.1 Choosing a substantial group</h3><p>There is a nonempty proper subset $A$ of types whose mass $w$ satisfies<br>$$
+\frac{\delta}{4}\leq w\leq\frac12.
+$$</p><p>Indeed, if $\max_t\mu_t&gt;1/2$, take all types except one of maximum mass; then $w=\delta$. Otherwise, take a single mass in $[1/4,1/2]$ if one exists. If none exists, accumulate masses until their sum first reaches $1/4$; since each added mass is below $1/4$, the resulting sum is below $1/2$.</p><p>Let $r=|A|$.</p><h3>3.2 Two nearly indistinguishable environments</h3><p>Give every type outside $A$ winner $3$, with scores equal to one at arm $3$ and zero elsewhere.</p><p>For every type in $A$, use one of two matrices, differing only on $\{1,2\}$:<br>$$
+P^{(0)}_{1,2}=\frac12+\varepsilon,
+\qquad
+P^{(1)}_{1,2}=\frac12-\varepsilon.
+$$<br>In both environments set<br>$$
+P_{1,3}=1,\qquad P_{2,3}=\frac58,
+$$<br>and let arms $1,2$ beat every arm beyond $3$ deterministically. Complete all unspecified comparisons identically and reciprocally.</p><p>The selected types have winner $1$ in environment $0$ and winner $2$ in environment $1$. Their score vectors on arms $1,2,3$ are respectively<br>$$
+(1,1-2\varepsilon,0),
+\qquad
+(1-2\varepsilon,1,3/4).
+$$<br>All extra-arm scores are zero.</p><p>For a policy, put<br>$$
+x=\pi(1)+\pi(2),\qquad z=\pi(3).
+$$<br>The limiting welfare functions as $\varepsilon\downarrow0$ are<br>$$
+F_0(\pi)=x^wz^{1-w},
+\qquad
+F_1(\pi)=(x+3z/4)^wz^{1-w}.
+$$<br>Since $x+z\leq1$, increasing $z$ to $1-x$ cannot decrease either expression. On that boundary, write<br>$$
+f_0(x)=x^w(1-x)^{1-w},
+$$<br>$$
+f_1(x)=\left(\frac34+\frac{x}{4}\right)^w(1-x)^{1-w}.
+$$<br>Their optimal values are<br>$$
+M_0=w^w(1-w)^{1-w},
+\qquad
+M_1=(3/4)^w.
+$$<br>The first maximum occurs at $x=w$. For the second,<br>$$
+-\frac{d}{dx}\log f_1(x)
+=
+\frac{1-w}{1-x}-\frac{w}{3+x}
+\geq1-\frac{4w}{3}
+\geq\frac13,
+$$<br>so its maximum occurs at $x=0$.</p><h3>3.3 Separation of the required policies</h3><p>Both $M_0$ and $M_1$ are at least $1/2$.</p><p>If $x\leq w/2$, monotonicity of $f_0$ on $[0,w]$ gives<br>$$
+M_0-F_0(\pi)\geq M_0-f_0(w/2).
+$$<br>Furthermore,<br>$$
+\log\frac{f_0(w)}{f_0(w/2)}
+=
+\int_{w/2}^w\frac{w-y}{y(1-y)}\,dy
+\geq\frac{w}{16}.
+$$<br>For the last inequality, restrict the integral to $[w/2,3w/4]$, where the integrand is at least $1/4$. Using $1-e^{-w/16}\geq w/32$,<br>$$
+M_0-F_0(\pi)\geq\frac{w}{64}.
+$$</p><p>If $x&gt;w/2$, the derivative bound for $f_1$ instead gives<br>$$
+M_1-F_1(\pi)
+\geq
+M_1(1-e^{-w/6})
+\geq\frac{w}{24}.
+$$<br>Therefore, for every policy,<br>$$
+[M_0-F_0(\pi)]+[M_1-F_1(\pi)]
+\geq\frac{w}{64}.
+$$</p><p>Let $F_j^\varepsilon,V_j^\varepsilon$ be the actual welfare functions and optimal values. Since<br>$$
+|a^w-b^w|\leq|a-b|^w
+\quad(0\leq a,b\leq1),
+$$<br>we have<br>$$
+\sup_\pi|F_j^\varepsilon(\pi)-F_j(\pi)|
+\leq(2\varepsilon)^w.
+$$<br>Also $F_j^\varepsilon\leq F_j$, so<br>$$
+V_j^\varepsilon-F_j^\varepsilon(\pi)
+\geq
+M_j-F_j(\pi)-(2\varepsilon)^w.
+$$<br>Choose $\varepsilon$ so small that<br>$$
+(2\varepsilon)^w\leq\frac{w}{256}.
+$$<br>Then the sum of the two actual policy regrets is at least $w/128$.</p><h3>3.4 Information bound</h3><p>For $\varepsilon\leq1/4$, the relative entropy between the two Bernoulli laws on the differing pair is at most $32\varepsilon^2$. There are $r$ independently responding selected types. Thus the full interaction laws satisfy<br>$$
+\operatorname{KL}(\mathbb P_0\Vert\mathbb P_1)
+\leq32rH\varepsilon^2,
+$$<br>and their total variation distance is at most<br>$$
+4\varepsilon\sqrt{rH}.
+$$<br>Further choose<br>$$
+\varepsilon\leq\frac{w}{1024\sqrt{rH}}.
+$$<br>The distance is then at most $w/256$.</p><p>The pointwise separation applies separately to both policies each round. Changing the law of a $[0,H]$-valued regret functional changes its expectation by at most $H$ times total variation. Hence<br>$$
+\mathbb E_0R_H+\mathbb E_1R_H
+\geq
+\frac{wH}{128}-\frac{wH}{256}
+=
+\frac{wH}{256}.
+$$<br>One environment has expected regret at least $wH/512$, which is at least $\delta H/2048$.</p><p>The matrices are not restricted to supplied finite precision, so these arbitrarily small, horizon-dependent choices of $\varepsilon$ are admissible.</p><h3>4. A general positive-gap algorithm</h3><p>Assume $g&gt;0$.</p><h3>4.1 Identify winners</h3><p>Compare either every unordered pair or run a sequential knockout tournament separately for each type, choosing the method with fewer comparison blocks. There are at most $Q$ blocks.</p><p>Use<br>$$
+n_0=\left\lceil\frac{2\Lambda}{g^2}\right\rceil
+$$<br>fresh rounds per block, playing its two arms deterministically. Hoeffding’s inequality and a union bound show that all relevant empirical probabilities differ from their true values by less than $g/2$, except with probability at most $1/[4(H+1)]$.</p><p>On that event, every comparison sign is correct. A strict Condorcet winner survives a sequential tournament once encountered.</p><p>Operationally, denote the identified winner by $\widehat a_t$, and let<br>$$
+W=\{\widehat a_t:t\},\qquad B=|W|\leq b.
+$$<br>Only on the successful identification event do we identify $\widehat a_t$ with $a_t^\star$.</p><p>Before beginning this stage, if $Qn_0&gt;H$, use a fixed policy for the whole horizon.</p><h3>4.2 Estimate winner columns</h3><p>Let $M$ be the number of unordered pairs with at least one endpoint in $W$. Then<br>$$
+M\leq KB,\qquad M\leq Q.
+$$<br>Set<br>$$
+n=
+\left\lceil
+\left(\frac{B^2H^2\Lambda}{M^2}\right)^{1/3}
+\right\rceil.
+$$<br>After identification, check whether $Mn$ fits in the remaining horizon. If it does not, use a fixed policy for the remaining rounds. This check requires no retrospective change of earlier policies.</p><p>Otherwise, estimate each of these pairs using $n$ fresh repetitions. Choose a rational radius satisfying<br>$$
+\sqrt{\frac{\Lambda}{2n}}
+\leq r_n
+\leq2\sqrt{\frac{\Lambda}{2n}}.
+$$<br>Another conditional Hoeffding union bound gives simultaneous error at most $r_n$, except with probability at most $1/[4(H+1)]$.</p><p>Form optimistic scores<br>$$
+U_{t,a}=
+\begin{cases}
+1,&amp;a=\widehat a_t,\\
+\min\{1,\,2(\widehat P_{t,a,\widehat a_t}+r_n)\},
+&amp;a\neq\widehat a_t.
+\end{cases}
+$$<br>On the joint successful event,<br>$$
+s_{t,a}\leq U_{t,a}\leq s_{t,a}+\epsilon,
+\qquad
+\epsilon=4r_n.
+$$</p><h3>4.3 Optimize and smooth</h3><p>Compute a policy $\widehat\pi$ within additive $\eta=1/H$ of optimal welfare for $U$. Let $q$ be uniform on $W$, and define<br>$$
+\gamma=\min\{1,B\epsilon\},
+\qquad
+\widetilde\pi=(1-\gamma)\widehat\pi+\gamma q.
+$$<br>Play $\widetilde\pi$ on both sides thereafter.</p><p>Every true type obtains utility at least $1/B$ from $q$. If $\gamma=B\epsilon&lt;1$, then<br>$$
+\begin{aligned}
+u_t(\widetilde\pi)
+&amp;\geq
+(1-\gamma)
+\left(\sum_aU_{t,a}\widehat\pi(a)-\epsilon\right)
++\frac{\gamma}{B}\\
+&amp;\geq
+(1-\gamma)\sum_aU_{t,a}\widehat\pi(a).
+\end{aligned}
+$$<br>Monotonicity and degree-one homogeneity of $G_\mu$ imply<br>$$
+\Phi_\mu(\widetilde\pi)
+\geq
+(1-\gamma)\bigl(\Phi_\mu(\pi^\star)-\eta\bigr).
+$$<br>Thus exploitation regret per round is at most $B\epsilon+\eta$. If $\gamma=1$, the same bound follows from the unit regret bound.</p><p>Charging one per exploration round and $H$ on failure gives<br>$$
+\mathbb ER_H
+\leq
+Qn_0+Mn+4BH r_n+O(1).
+$$<br>The choice of $n$ yields<br>$$
+\mathbb ER_H
+\leq
+C\left[
+\frac{Q\Lambda}{g^2}
++
+(MB^2\Lambda)^{1/3}H^{2/3}
++1
+\right].
+$$<br>Since $MB^2\leq Kb^3$, this proves the claimed upper bound.</p><p>The fallback branches satisfy the same bound: the identification branch has $H&lt;Qn_0$; the later fallback has $H$ below the sum of identification and proposed estimation budgets. Ceiling costs are absorbed using $M\leq Q$.</p><h3>4.4 Finite implementation and running time</h3><p>One explicit optimizer enumerates the simplex grid with denominator<br>$$
+J=\lceil4K^2H\rceil.
+$$<br>To verify its approximation guarantee, let $\pi_U^\star$ be an optimizer and put $d=2K/J$. Mix $\pi_U^\star$ with the uniform policy with weight $Kd$, then round to the grid with $\ell_1$ error at most $d$.</p><p>Each row has a unit score, so the uniform mixture adds at least $d$ utility to every row. Rounding removes at most $d$. The rounded policy therefore has welfare at least<br>$$
+(1-Kd)\Phi_{\mu,U}(\pi_U^\star),
+$$<br>whose loss is at most $1/(2H)$.</p><p>Evaluate grid welfare to additive accuracy $1/(4H)$ and select the largest estimate. <b>If any utility is zero, assign welfare zero directly.</b> Otherwise, evaluate weighted logarithms and exponentiation. Positive rational utilities have logarithms of polynomially bounded bit length, so the required evaluations use polynomial bit time.</p><p>With<br>$$
+N_{\mathrm{grid}}=\binom{J+K-1}{K-1},
+$$<br>a conservative running-time bound is<br>$$
+O\left(
+L+
+\bigl(H\tau+N_{\mathrm{grid}}K\tau\bigr)
+\operatorname{poly}\left(
+L+\log(H+1)+\log K+\log\tau+\log(1/g)
+\right)
+\right).
+$$<br>This implementation is exponential in $K$.</p><h3>5. A small-gap lower bound for every mass vector</h3><p>We now prove the new lower-bound regime<br>$$
+c=1-2g&gt;\frac1{B_0}.
+$$</p><h3>5.1 Baseline instance</h3><p>Put $B=B_0$. Partition the supported types into any $B$ nonempty groups, with masses<br>$$
+\nu_1,\ldots,\nu_B&gt;0,\qquad \sum_j\nu_j=1.
+$$<br>There are enough arms for $B$ winner arms and two additional arms. Denote the additional arms by $C,D$.</p><p>Choose<br>$$
+\frac1B&lt;b_0&lt;c.
+$$<br>For group $j$, give winner arm $j$ score one, other winner arms score zero, and both $C,D$ score $b_0$. Extra arms have score zero.</p><p>These scores are realized by setting each winner-column probability to half its score and completing all unspecified comparisons deterministically. All off-diagonal probabilities satisfy the promised gap.</p><p>For a policy write<br>$$
+x=\pi(C)+\pi(D).
+$$<br>The grouped utilities and baseline welfare are<br>$$
+u_j=\pi(j)+b_0x,
+\qquad
+F_0(\pi)=\prod_{j=1}^Bu_j^{\nu_j}.
+$$<br>Let $V_0$ be its maximum.</p><p>No optimizer uses extra arms: removing their mass and renormalizing the remaining policy strictly increases every positive utility. Also, all optimizers have the same utility vector $u^\star$. Indeed, $\sum_j\nu_j\log u_j$ is strictly concave in positive utility vectors, so two distinct optimal utility vectors would have a strictly better midpoint.</p><p>At an optimizer,<br>$$
+\sum_ju_j^\star=1+(Bb_0-1)x^\star.
+$$<br>Since $Bb_0&gt;1$, the optimal total compromise mass $x^\star$ is consequently unique.</p><p>Moreover, $x^\star&gt;0$. If it were zero, the best winner-only policy would be $\pi(j)=\nu_j$. The directional derivative of logarithmic welfare toward $C$ would then equal<br>$$
+b_0\sum_j\frac{\nu_j}{\nu_j}-1
+=
+Bb_0-1&gt;0,
+$$<br>contradicting optimality.</p><p>The first-order conditions give<br>$$
+\frac{\nu_j}{u_j^\star}\leq1,
+\qquad
+b_0\sum_j\frac{\nu_j}{u_j^\star}=1.
+$$<br>Because $1/b_0&lt;B$, at least one index $j_0$ satisfies<br>$$
+\eta_0:=1-\frac{\nu_{j_0}}{u_{j_0}^\star}&gt;0.
+$$<br>Thus arm $j_0$ has zero mass in every baseline optimizer.</p><p>Define positive constants<br>$$
+a=V_0\nu_{j_0},
+\qquad
+d=\frac{V_0\eta_0}{2}.
+$$</p><h3>5.2 Perturb an unplayed winner comparison</h3><p>Construct environments $-$ and $+$ by changing only the score of arm $C$ for group $j_0$:<br>$$
+s_{j_0,C}^{\pm}=b_0\pm\varepsilon.
+$$<br>All other scores and comparisons remain fixed.</p><p>For<br>$$
+0&lt;\varepsilon\leq
+\min\{b_0/2,(c-b_0)/2\},
+$$<br>both instances lie in $\mathcal P_g$. They differ only on comparisons $\{j_0,C\}$ for the $r$ types in group $j_0$.</p><p>In the minus instance, moving mass from $C$ to $D$ cannot decrease welfare. The baseline optimum with all compromise mass on $D$ is unchanged. Hence<br>$$
+V_-=V_0.
+$$<br>Its welfare tangent has coefficient gap at least $2d$ for winner arm $j_0$ and at least $a\varepsilon$ for $C$. Concavity therefore gives<br>$$
+r_-(\pi):=V_--F_-(\pi)
+\geq d\pi(j_0)+a\varepsilon\pi(C).
+$$</p><p>For sufficiently small positive $\varepsilon$, the plus instance satisfies<br>$$
+r_+(\pi):=V_+-F_+(\pi)
+\geq d\pi(j_0)+a\varepsilon\pi(D).
+$$<br>Here are the required details.</p><p>The perturbed objectives converge uniformly to $F_0$, with error at most $\varepsilon^{\nu_{j_0}}$. Compactness implies that every limit of perturbed optimizers is a baseline optimizer. Thus their utility vectors converge to $u^\star$, and their total compromise masses converge to $x^\star&gt;0$.</p><p>For sufficiently small $\varepsilon$, the welfare-gradient gap for winner $j_0$ is therefore at least $d$. Every plus optimizer puts positive mass on $C$ and zero mass on $D$: shifting positive mass from $D$ to $C$ strictly increases its positive welfare.</p><p>Consequently, at a plus optimizer the coefficient of $C$ is $V_+$, while the coefficient gap for $D$ is<br>$$
+V_+\frac{\nu_{j_0}\varepsilon}{u_{j_0}^+}
+\geq
+V_0\nu_{j_0}\varepsilon
+=
+a\varepsilon.
+$$<br>We used $V_+\geq V_0$ and $u_{j_0}^+\leq1$. All other coefficient gaps are nonnegative by optimality, proving the asserted tangent bound.</p><h3>5.3 Near-optimal policies must use compromise arms</h3><p>The compact set<br>$$
+\{\pi:\pi(C)+\pi(D)\leq x^\star/2\}
+$$<br>contains no baseline optimizer. Hence<br>$$
+\Delta_0
+:=
+V_0-
+\max_{\pi:\,\pi(C)+\pi(D)\leq x^\star/2}F_0(\pi)
+&gt;0.
+$$<br>Since $F_-\leq F_0$,<br>$$
+r_-(\pi)\geq\Delta_0
+\quad\text{whenever }\pi(C)+\pi(D)\leq x^\star/2.
+$$<br>It follows, for every policy, that<br>$$
+\pi(C)+\pi(D)
+\geq
+\frac{x^\star}{2}
+\left(1-\frac{r_-(\pi)}{\Delta_0}\right).
+$$<br>If the right side is positive, the preceding implication applies; if it is nonpositive, the inequality is automatic.</p><p>Choose a constant $\varepsilon_0&gt;0$ sufficiently small that all preceding conclusions hold and $\varepsilon_0\leq\Delta_0$.</p><h3>5.4 Information and regret</h3><p>Let $S_j,S_C,S_D$ be the sums over rounds of the averages of the two policies’ respective arm masses.</p><p>For the informative pair, the differing Bernoulli probabilities are<br>$$
+p_\pm=(b_0\pm\varepsilon)/2.
+$$<br>The elementary Bernoulli relative-entropy bound<br>$$
+\operatorname{kl}(p_-\Vert p_+)
+\leq
+\frac{(p_--p_+)^2}{p_+(1-p_+)}
+$$<br>is at most $4\varepsilon^2/b_0$. The informative-pair probability is at most the sum of the two policies’ masses on $j_0$. Conditional independence across the $r$ types therefore gives the conservative bound<br>$$
+\operatorname{KL}(\mathbb P_-\Vert\mathbb P_+)
+\leq
+\frac{32r\varepsilon^2}{b_0}\mathbb E_-S_j
+\leq
+\frac{32r\varepsilon^2}{b_0d}\mathbb E_-R_H.
+$$</p><p>Take<br>$$
+\varepsilon=
+\min\left\{
+\varepsilon_0,\;
+\left(\frac{b_0d x^\star}{128rH}\right)^{1/3}
+\right\}.
+$$<br>If<br>$$
+\mathbb E_-R_H\geq\frac{a x^\star\varepsilon H}{16},
+$$<br>we already have the desired bound.</p><p>Otherwise,<br>$$
+\operatorname{KL}(\mathbb P_-\Vert\mathbb P_+)
+\leq\frac{a(x^\star)^2}{64}
+\leq\frac{(x^\star)^2}{64}.
+$$<br>Pinsker gives total variation less than $x^\star/8$.</p><p>The compromise-mass inequality and $\varepsilon\leq\Delta_0$ yield<br>$$
+\mathbb E_-(S_C+S_D)
+\geq
+\frac{x^\star}{2}
+\left(H-\frac{\mathbb E_-R_H}{\Delta_0}\right)
+\geq\frac{x^\star H}{4}.
+$$<br>Since $0\leq S_D\leq H$,<br>$$
+\begin{aligned}
+\mathbb E_-R_H+\mathbb E_+R_H
+&amp;\geq
+a\varepsilon\bigl(\mathbb E_-S_C+\mathbb E_+S_D\bigr)\\
+&amp;\geq
+a\varepsilon
+\left[
+\mathbb E_-(S_C+S_D)
+-H\,\operatorname{TV}(\mathbb P_-,\mathbb P_+)
+\right]\\
+&amp;\geq
+\frac{a x^\star\varepsilon H}{8}.
+\end{aligned}
+$$<br>Thus in either case,<br>$$
+\mathcal R^*
+\geq
+\frac{a x^\star H}{16}
+\min\left\{
+\varepsilon_0,\;
+\left(\frac{b_0d x^\star}{128rH}\right)^{1/3}
+\right\}.
+$$<br>For fixed parameters this is $\Omega(H^{2/3})$, completing the small-gap horizon characterization.</p><h3>6. Logarithmic regret for sufficiently large gaps</h3><p>Assume<br>$$
+0&lt;c=1-2g&lt;\mu_{\min}.
+$$</p><h3>6.1 Optimal policies reveal all winner comparisons</h3><p>Let $W$ be the true winner set, with $B=|W|\leq b$, and let<br>$$
+\nu_a=\sum_{t:a_t^\star=a}\mu_t
+\quad(a\in W).
+$$</p><p>At an optimizer, summing the first-order coefficients over winner arms gives<br>$$
+\sum_{a\in W}C_a
+=
+\sum_t\mu_t
+\frac{\sum_{a\in W}s_{t,a}}{u_t(\pi^\star)}
+\geq
+\sum_t\frac{\mu_t}{u_t(\pi^\star)}.
+$$<br>Since each $C_a\leq1$,<br>$$
+\sum_t\frac{\mu_t}{u_t(\pi^\star)}\leq B.
+$$<br>For a nonwinner arm $a$,<br>$$
+C_a\leq cB&lt;1.
+$$<br>It therefore cannot receive positive optimal mass.</p><p>For a winner arm $a$, every type having that winner satisfies<br>$$
+u_t(\pi^\star)\leq c+(1-c)\pi^\star(a).
+$$<br>Thus<br>$$
+1\geq C_a
+\geq
+\frac{\nu_a}{c+(1-c)\pi^\star(a)}.
+$$<br>Consequently,<br>$$
+\pi^\star(a)
+\geq
+\frac{\nu_a-c}{1-c}
+\geq
+\kappa.
+$$<br>Every optimizer is supported on $W$ and gives every winner arm mass at least $\kappa$.</p><p>The same floor holds for an optimizer of any estimated score matrix having designated winner scores one and all other scores in $[0,c]$.</p><h3>6.2 Uniform strong concavity</h3><p>Restrict policies to $W$. Choose one representative type for each winner arm. Its score row has a unit diagonal and off-diagonal entries at most $c$.</p><p>For any vector $v$, choose a coordinate of maximum absolute value. Its representative row satisfies<br>$$
+|s_t\cdot v|
+\geq
+[1-c(B-1)]\|v\|_\infty
+\geq
+\frac{\rho}{\sqrt b}\|v\|_2.
+$$<br>Because every representative type has mass at least $\mu_{\min}$ and all utilities are at most one,<br>$$
+-D^2f(\pi)[v,v]
+=
+\sum_t\mu_t\frac{(s_t\cdot v)^2}{u_t(\pi)^2}
+\geq
+\lambda\|v\|_2^2,
+$$<br>where<br>$$
+\lambda=\frac{\mu_{\min}\rho^2}{b}.
+$$<br>Thus logarithmic welfare is $\lambda$-strongly concave wherever its utilities are positive.</p><h3>6.3 Epoch algorithm and estimation error</h3><p>Identify winners as in Section 4, with failure probability at most $1/[4(H+1)]$. Apply the same preliminary horizon check.</p><p>On the remaining rounds use epochs of lengths $1,2,4,\ldots$, truncating the last epoch. Throughout an epoch, play the same policy on both sides. Restrict policies to<br>$$
+\mathcal D=
+\left\{\pi\in\Delta(W):\pi(a)\geq\kappa/2
+\text{ for all }a\in W\right\}.
+$$<br>Start with the uniform policy on $W$.</p><p>After each epoch, estimate winner-column scores using only that epoch’s observations. Set the designated diagonal scores to one and clip other estimates to $[0,c]$. For the next epoch, choose a policy in $\mathcal D$ whose estimated logarithmic welfare is within $H^{-2}$ of its maximum.</p><p>Conditional on correct identification and the policy selected for an epoch of length $n$, each distinct winner pair has sampling probability at least $\kappa^2/2$. Its count $N$ is binomial. Conditional on $N\geq1$, a doubled Bernoulli sample mean has mean squared error at most $1/N$; clipping cannot increase that error. If $N=0$, use any score in $[0,c]$, incurring squared error at most one.</p><p>Using<br>$$
+\mathbb E\frac1{N+1}
+=
+\frac{1-(1-p)^{n+1}}{(n+1)p},
+\qquad
+\frac1{N\vee1}\leq\frac2{N+1},
+$$<br>each score estimate has mean squared error at most<br>$$
+\frac4{\kappa^2(n+1)}.
+$$<br>For the maximum score error $e$, summing over at most $\tau B$ relevant entries gives<br>$$
+\mathbb Ee^2
+\leq
+\frac{4\tau B}{\kappa^2(n+1)}.
+$$</p><h3>6.4 Quadratic conversion from estimation error to regret</h3><p>Let $\widehat f$ be the estimated logarithmic objective. On $\mathcal D$, both true and estimated utilities are at least $\kappa/2$. Therefore,<br>$$
+\|\nabla f-\nabla\widehat f\|_2
+\leq
+\frac{6\sqrt B}{\kappa^2}e.
+$$<br>Indeed, for each coordinate, subtract the fractions defining the two gradients and use utility error at most $e$, score error at most $e$, and the utility floor.</p><p>Let $\widehat\pi$ be the approximate estimated maximizer and put<br>$$
+\Delta=f(\pi^\star)-f(\widehat\pi).
+$$<br>Writing $\zeta=\sup_{\mathcal D}\|\nabla f-\nabla\widehat f\|_2$,<br>$$
+\Delta
+\leq
+H^{-2}+\zeta\|\pi^\star-\widehat\pi\|_2.
+$$<br>Strong concavity and optimality of $\pi^\star$ give<br>$$
+\Delta\geq\frac{\lambda}{2}
+\|\pi^\star-\widehat\pi\|_2^2.
+$$<br>Combining these inequalities, and using<br>$$
+\zeta\sqrt{2\Delta/\lambda}
+\leq
+\Delta/2+\zeta^2/\lambda,
+$$<br>yields<br>$$
+\Delta
+\leq
+2H^{-2}+\frac{2\zeta^2}{\lambda}.
+$$<br>Because true logarithmic welfare is nonpositive, exponentiation converts logarithmic loss to welfare loss without increasing it. Hence expected per-round regret in the following epoch is at most<br>$$
+\frac{288\tau B^2}
+{\lambda\kappa^6(n+1)}
++
+2H^{-2}.
+$$<br>The following epoch has length at most $2n$, so its expected regret is bounded by<br>$$
+\frac{576\tau B^2}{\lambda\kappa^6}
+$$<br>plus its negligible optimization contribution.</p><p>There are $O(\log(H+1))$ epochs. Identification failures contribute $O(1)$ expected regret. Substituting $\lambda$ proves the large-gap upper bound.</p><h3>6.5 Running time</h3><p>Use the transformed grid<br>$$
+\pi(a)=\frac{\kappa}{2}
++
+\left(1-\frac{B\kappa}{2}\right)q(a),
+$$<br>where $q$ ranges over a simplex grid with denominator<br>$$
+J_{\mathrm{gap}}=
+\left\lceil\frac{16bH^2}{\kappa}\right\rceil.
+$$<br>Rounding has $\ell_1$ error at most $2B/J_{\mathrm{gap}}$. Since the estimated logarithmic gradient has coordinate magnitudes at most $2/\kappa$, the resulting objective loss is at most $1/(4H^2)$. Evaluation to accuracy $1/(8H^2)$ gives the required $H^{-2}$ optimization guarantee. All utilities here are positive.</p><p>With<br>$$
+N_{\mathrm{gap}}
+=
+\binom{J_{\mathrm{gap}}+b-1}{b-1},
+$$<br>a conservative running time is<br>$$
+O\left(
+L+
+\left[
+H\tau+
+N_{\mathrm{gap}}b\tau\log(H+1)
+\right]
+\operatorname{poly}\left(
+L+\log(H+1)+\log K+\log\tau
++\log(1/g)+\log(1/\kappa)
+\right)
+\right).
+$$<br>Again, this finite implementation is exponential in the number of winner arms.</p><h3>7. A logarithmic lower bound for every nonendpoint positive gap</h3><p>Fix $0&lt;g&lt;1/2$. Consider two environments in which all types share the same matrix. Set<br>$$
+P^{(+)}_{1,2}=\frac12+g,
+\qquad
+P^{(-)}_{1,2}=\frac12-g,
+$$<br>and let both arms $1,2$ beat all other arms deterministically. Complete remaining comparisons deterministically and identically.</p><p>The winners are $1$ and $2$, respectively. Since all types have identical utilities, welfare is linear:<br>$$
+F_+(\pi)=\pi(1)+(1-2g)\pi(2),
+$$<br>$$
+F_-(\pi)=(1-2g)\pi(1)+\pi(2).
+$$</p><p>Let $R$ be the larger expected regret in these two environments. Put<br>$$
+k_g=
+2g\log\frac{1/2+g}{1/2-g},
+\qquad
+C_g=\frac{\tau k_g}{g}.
+$$<br>Only pair $\{1,2\}$ is informative. Under the plus environment, its probability is at most the sum of the policies’ masses on arm $2$, which is at most the current regret divided by $g$. Therefore,<br>$$
+\operatorname{KL}(\mathbb P_+\Vert\mathbb P_-)
+\leq C_gR.
+$$</p><p>Let $S_1$ be the horizon sum of average policy mass on arm $1$, and consider the event $E=\{S_1\geq H/2\}$. Pointwise,<br>$$
+R_H^{(+)}\geq2g(H-S_1),
+\qquad
+R_H^{(-)}\geq2gS_1.
+$$<br>Markov’s inequality gives<br>$$
+\mathbb P_+(E)\geq1-\frac{R}{gH},
+\qquad
+\mathbb P_-(E)\leq\frac{R}{gH}.
+$$<br>If $R\leq gH/2$, data processing to this event and the binary entropy bound give<br>$$
+C_gR
+\geq
+\frac12\log\frac{gH}{R}-\log2.
+$$</p><p>For $gH\geq256$, either $R&gt;\sqrt{gH}$ or<br>$$
+R\geq\frac{\log(gH)}{8C_g}.
+$$<br>Thus, with $g,\tau$ fixed,<br>$$
+\mathcal R^*=\Omega_{g,\tau}(\log H).
+$$<br>Together with Section 6, this proves the logarithmic horizon rate there.</p><h3>8. The deterministic endpoint</h3><p>At $g=1/2$, every off-diagonal comparison is deterministic and every score row is the indicator of its winner.</p><p>All winners can be identified without error in at most $Q$ rounds. Define<br>$$
+\nu_a=\sum_{t:a_t^\star=a}\mu_t.
+$$<br>Then<br>$$
+\Phi_\mu(\pi)=\prod_{a:\nu_a&gt;0}\pi(a)^{\nu_a}.
+$$<br>The optimizer is $\pi=\nu$, because<br>$$
+\sum_{a:\nu_a&gt;0}\nu_a\log\frac{\pi(a)}{\nu_a}
+\leq
+\log\sum_{a:\nu_a&gt;0}\pi(a)
+\leq0.
+$$<br>Playing $\nu$ thereafter gives the upper bound $\min\{H,Q\}$. A conservative bit running time is<br>$$
+O\left(
+L+(H\tau+Q\tau)
+\operatorname{poly}(L+\log(H+1)+\log K+\log\tau)
+\right).
+$$</p><p>For the lower bound, choose a common winner $J$ uniformly among the arms. Start from any fixed deterministic auxiliary tournament and force $J$ to beat every other arm; all types share the resulting matrix.</p><p>Couple interaction with this environment to interaction with the auxiliary tournament. Histories agree until a sampled pair contains $J$. In the auxiliary process, $J$ is independent of the transcript, so the probability of encountering it before round $h$ is at most $2(h-1)/K$.</p><p>The expected average policy mass on $J$ in round $h$ is consequently at most<br>$$
+\frac1K+\frac{2(h-1)}K.
+$$<br>Optimal welfare is one, and policy welfare equals its mass on $J$. Each of the first $\min\{H,\lceil K/8\rceil\}$ rounds therefore has expected regret at least $1/2$. This proves<br>$$
+\mathcal R^*\geq\frac1{16}\min\{H,K\}.
+$$<br>These deterministic instances also belong to every other gap class.</p><h3>9. What remains unresolved</h3><p>The proved horizon regimes leave genuine gaps. In particular, the small-gap argument requires<br>$$
+1-2g&gt;\frac1{\min\{\tau,K-2\}},
+$$<br>whereas the logarithmic algorithm requires<br>$$
+1-2g&lt;\mu_{\min}.
+$$<br>The intervening regimes and their boundaries are not settled here.</p><p>The bounds also do not determine sharp joint dependence on the masses, support size, arm count, gap, and horizon. The explicit algorithms attain the proved upper bounds, but their exhaustive optimization implementations do not establish polynomial running time jointly in all supplied parameters.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 1 and 9: positive-gap regime coverage: The minimax horizon rate is not established when $\mu_{\min}\leq 1-2g\leq 1/\min\{\tau,K-2\}$, including the relevant boundaries. Additional mathematical results are required to resolve this part of the assigned task.</li><li><b>major</b> — Sections 1, 8, and 9: joint minimax characterization: The bounds do not determine sharp joint dependence on $H,K,\tau,\mu,g$, including mass dependence at $g=0$ and the parameter gap between the endpoint bounds. Thus the full requested minimax rate remains unresolved despite the valid fixed-parameter horizon characterizations.</li><li><b>minor</b> — Section 4.4, also relevant to Section 6.5: elementary-function evaluation: The statement that logarithms of positive rational utilities have polynomially bounded bit length is imprecise because those logarithms generally lack finite exact rational encodings. State the required approximation precision, approximation bit-length bounds, and a polynomial-time numerical evaluation procedure.</li><li><b>minor</b> — Section 8: logarithmic proof of endpoint optimality: The displayed logarithmic comparison is undefined when $\pi(a)=0$ for an arm with $\nu_a&gt;0$. Restrict that calculation to positive relevant coordinates and explicitly address the remaining policies using the supplied zero-welfare convention.</li></ul>
+<div class="pre"><h3>Verification report</h3><p>The output establishes substantial partial results. I found no false central step in the regret arguments. In particular, the linear lower bound without a gap promise, the general positive-gap upper bound, the small-gap lower bound, and the large-gap logarithmic upper bound are sound in substance.</p><p>It does <b>not</b> resolve the full requested minimax rate. The prover acknowledges this accurately: intermediate positive-gap regimes, boundary cases, and sharp joint parameter dependence remain open. The appropriate overall status is <b>partial</b>.</p><p>There are also two minor presentation gaps in the finite implementation and endpoint optimization arguments.</p><h3>1. Definitions, objective properties, and optimality conditions</h3><p>The score definition<br>$$
+s_{t,a}=2P_{t,a,a_t^\star}
+$$<br>correctly gives<br>$$
+s_{t,a_t^\star}=1,\qquad 0\leq s_{t,a}&lt;1
+$$<br>for other arms. Under the positive-gap promise, the stronger bound<br>$$
+s_{t,a}\leq 1-2g
+$$<br>is correct. Thus all policy utilities and welfare values lie in $[0,1]$, and per-round regret lies in $[0,1]$.</p><p>The displayed Hessian of the weighted geometric mean is correct. Weighted Cauchy–Schwarz applies because the masses are positive and sum to one. Extension to the boundary by continuity is valid.</p><p>The uniform policy provides every type utility at least $1/K$. Therefore the optimal welfare is positive, every optimizer has positive utilities, and logarithmic optimization is legitimate at optimizers.</p><p>The first-order inequalities<br>$$
+C_a\leq 1,\qquad \sum_a\pi^\star(a)C_a=1
+$$<br>follow correctly from differentiation toward simplex vertices and the score representation. Positive optimal coordinates consequently have coefficient one. Keeping the designated winner’s contribution correctly yields<br>$$
+u_t(\pi^\star)\geq\mu_t.
+$$</p><p><b>Assessment:</b> Verified.</p><h3>2. Linear lower bound without a gap promise</h3><h3>Group selection and preference construction</h3><p>The subset-selection argument produces a nonempty proper group with<br>$$
+\delta/4\leq w\leq 1/2.
+$$<br>All branches are valid, including the case of a mass exactly equal to $1/2$.</p><p>The two constructed environments have the asserted strict Condorcet winners. The unspecified comparisons can be completed identically without affecting those winners. The stated score vectors, including the score $3/4$ for arm $3$ in the second environment, are correct.</p><h3>Limiting objectives and separation</h3><p>The limiting welfare functions correctly aggregate the identical score rows within each group. Replacing unused mass by mass on arm $3$ cannot decrease either limiting objective.</p><p>The maxima<br>$$
+M_0=w^w(1-w)^{1-w},\qquad M_1=(3/4)^w
+$$<br>are correct. The derivative bound for the second objective holds on its positive domain and establishes its maximum at zero.</p><p>The integral estimate and subsequent exponential estimates are valid over the stated range of $w$. Both optimal values are at least $1/2$, so the asserted pointwise regret separation follows.</p><p>The uniform perturbation bound<br>$$
+\sup_\pi|F_j^\varepsilon(\pi)-F_j(\pi)|\leq(2\varepsilon)^w
+$$<br>is valid. Its use to compare optimal values and policy regrets is correctly directed.</p><h3>Information calculation</h3><p>For the differing comparison, the Bernoulli relative entropy bound is valid for $\varepsilon\leq1/4$. Conditional independence contributes the factor $r$, while the adaptive chain rule contributes at most $H$ informative rounds. Pinsker’s inequality gives the stated total variation bound.</p><p>The regret functionals are bounded by $H$, so transferring one expectation between the two interaction laws costs at most $H$ times total variation. The constants yield<br>$$
+\max_j\mathbb E_jR_H\geq wH/512\geq\delta H/2048.
+$$</p><p>The arbitrarily small perturbations are admissible: the task imposes no supplied precision restriction on the unknown matrices.</p><p><b>Assessment:</b> Verified. Together with the unit regret bound, this establishes the stated linear horizon rate for each fixed positive mass vector.</p><h3>3. General positive-gap algorithm</h3><h3>Winner identification</h3><p>Both identification methods are valid under the positive-gap promise:</p><ul><li>Correct comparison signs identify each winner from all unordered pairs.</li><li>A strict Condorcet winner survives a sequential knockout tournament.</li></ul><p>Adaptive selection of tournament comparisons does not invalidate concentration: each block uses fresh observations, conditional on the preceding history.</p><p>The repetition count and the definition of $\Lambda$ are sufficient for the stated failure probability. The bound on the number of comparison blocks is valid.</p><h3>Winner-column estimation and smoothing</h3><p>The bounds<br>$$
+M\leq KB,\qquad M\leq Q
+$$<br>hold because $B\leq\tau$ and each required pair touches at least one identified winner.</p><p>On successful identification and estimation, the optimistic scores satisfy the asserted simultaneous bounds. Clipping at one preserves optimism because true scores are at most one.</p><p>The smoothing argument is correct. Uniform mass on the true winner set gives every type utility at least $1/B$. When $\gamma=B\epsilon&lt;1$, the added utility compensates for the score-estimation error. Monotonicity and degree-one homogeneity then give the claimed exploitation bound. The case $\gamma=1$ is covered by the unit regret bound.</p><h3>Budget and regret accounting</h3><p>The exploration, exploitation, and failure charges are valid. The proposed choice of $n$ produces the stated order<br>$$
+(MB^2\Lambda)^{1/3}H^{2/3}.
+$$<br>Ceiling contributions can be absorbed into the identification term using $M\leq Q$. The fallback branches also satisfy the bound because their proposed budgets exceed the available horizon.</p><h3>Finite optimization</h3><p>The grid approximation calculation is sound. The uniform mixture adds sufficient utility to withstand rounding, and the resulting welfare loss is at most $1/(2H)$. Evaluation error of $1/(4H)$ then gives the requested total optimization error.</p><p><b>Minor issue:</b> The claim that positive rational utilities have logarithms of “polynomially bounded bit length” is imprecise. Such logarithms generally have no finite exact rational encoding. The intended claim must concern numerical approximations at the required precision.</p><p><b>Minimum clarification:</b> State the precision and bit-length bounds for approximations to logarithms and exponentials, and identify a polynomial-time evaluation procedure at that precision.</p><p>The exhaustive grid size is explicitly exponential in $K$. This is acceptable as a finite implementation; the user did not require a polynomial-time algorithm.</p><p><b>Assessment:</b> The regret bound is verified. The bit-time claim needs minor clarification.</p><h3>4. Small-gap lower bound for every supplied mass vector</h3><h3>Baseline construction</h3><p>The condition<br>$$
+c&gt;1/B_0
+$$<br>permits the chosen $b_0$. The partition exists, and there are enough arms for the winner arms and the two compromise arms.</p><p>The score rows can be realized by reciprocal preference matrices with strict Condorcet winners. The winner-column probabilities satisfy the promised gap; deterministic completion of other comparisons preserves it.</p><p>The argument excluding extra arms is valid at an optimizer because its utilities are positive. Strict concavity in the positive utility vector establishes uniqueness of the optimal utility vector. The sum-of-utilities identity then establishes uniqueness of total compromise mass.</p><p>The directional derivative correctly proves $x^\star&gt;0$. The first-order conditions imply the existence of $j_0$ with a strictly suboptimal winner-arm coefficient, and hence zero mass on that arm in every baseline optimizer.</p><h3>Perturbed environments and tangent bounds</h3><p>Both perturbations remain in the promised class for the stated perturbation range. They differ only on the indicated comparisons.</p><p>In the minus environment, transferring compromise mass from $C$ to $D$ cannot decrease welfare, and the unchanged baseline optimizer attains $V_0$. Thus $V_-=V_0$.</p><p>The minus tangent bound is valid. Its coefficient gap for arm $j_0$ is $2d$, while its coefficient gap for $C$ is at least $a\varepsilon$.</p><p>Uniform convergence and compactness correctly control all perturbed optimizers. In the plus environment, the positive limiting compromise mass and strict improvement from transferring mass from $D$ to $C$ establish positive mass on $C$ and zero mass on $D$. The resulting coefficient gaps give the stated plus tangent bound.</p><h3>Compromise mass and information</h3><p>The compact-set separation defining $\Delta_0$ is valid because every baseline optimizer has compromise mass $x^\star$. The resulting lower bound on compromise mass follows with the stated quantifiers.</p><p>The Bernoulli relative entropy estimate is valid over the chosen perturbation range. The probability of an informative pair is bounded by the combined policy mass on $j_0$, so information is correctly controlled by regret in the minus environment.</p><p>Substitution of the chosen $\varepsilon$ gives the stated entropy and total variation bounds. The low-regret branch retains sufficient expected compromise mass, and the expectation-transfer argument gives the claimed lower bound.</p><p><b>Assessment:</b> Verified. This establishes the stated fixed-parameter small-gap horizon rate, but does not cover its boundary or the intervening regimes.</p><h3>5. Large-gap logarithmic algorithm</h3><h3>Support and coordinate floors</h3><p>The sum of winner-arm coefficients correctly implies<br>$$
+\sum_t\frac{\mu_t}{u_t(\pi^\star)}\leq B.
+$$<br>Since $c&lt;\mu_{\min}$ and $B\leq\tau$, the bound $cB&lt;1$ holds. Therefore no nonwinner arm receives optimal mass.</p><p>The coordinate floor<br>$$
+\pi^\star(a)\geq\frac{\nu_a-c}{1-c}\geq\kappa
+$$<br>is valid for every winner arm. It also holds for the estimated matrices described in the output.</p><p>Positivity of $\rho$ follows from<br>$$
+b\mu_{\min}\leq\tau\mu_{\min}\leq1.
+$$</p><h3>Strong concavity</h3><p>The representative-row argument is correct: choosing a coordinate of maximum absolute value and applying the triangle inequality gives the asserted row-product lower bound.</p><p>The resulting logarithmic Hessian estimate yields the stated strong-concavity constant. The utility upper bound used here is valid because policies are probability vectors and scores are at most one.</p><h3>Estimation and regret conversion</h3><p>Playing a fixed policy on both sides throughout an epoch makes each pair count binomial, conditional on the preceding history. The policy floor gives the stated sampling probability.</p><p>The reciprocal-count identity and inequality are correct. The score mean-squared error bound accounts for zero counts, and clipping cannot increase error because the true scores lie in the clipping interval.</p><p>The gradient discrepancy bound follows from the common utility floor. The optimization-error inequality, strong-concavity distance bound, and quadratic estimate combine with the stated constants. Exponentiation does not increase logarithmic loss here because the relevant logarithmic welfare values are nonpositive.</p><p>The next-epoch accounting gives constant expected regret per epoch, apart from the stated parameter factors. Truncation of the last epoch causes no problem. Identification failures and the initial epoch contribute only the claimed bounded terms.</p><p>The transformed grid is feasible, and its approximation calculation is correct. Its elementary-function evaluation requires the same numerical clarification noted in Section 3 of this audit.</p><p><b>Assessment:</b> The logarithmic regret upper bound is verified.</p><h3>6. Logarithmic lower bound</h3><p>The common-matrix environments satisfy the gap promise and have the asserted linear welfare functions.</p><p>Only the comparison between arms $1$ and $2$ differs. Its sampling probability is correctly bounded by current regret divided by $g$. Conditional independence across the supported types yields the factor $\tau$ in the entropy bound.</p><p>The event based on $S_1$ gives the stated testing inequalities. Under the stated regret restriction, data processing and the binary entropy bound imply<br>$$
+C_gR\geq\frac12\log\frac{gH}{R}-\log2.
+$$<br>The subsequent dichotomy and constants are correct for $gH\geq256$.</p><p><b>Assessment:</b> Verified as an asymptotic logarithmic lower bound for fixed positive nonendpoint gap and fixed support size. Together with the large-gap algorithm, it establishes that regime’s claimed horizon rate.</p><h3>7. Deterministic endpoint</h3><p>At $g=1/2$, every off-diagonal probability is deterministic, and each utility is precisely the policy mass on that type’s winner. Winner identification therefore needs no repeated observations.</p><p>Aggregating masses by winner gives the stated objective and optimizer. The exploration upper bound is valid, including the horizon-limited branch.</p><p><b>Minor issue:</b> The displayed logarithmic comparison proving optimality is undefined for policies assigning zero probability to an arm with positive aggregate mass.</p><p><b>Minimum clarification:</b> State that the logarithmic calculation applies to policies with positive mass on every represented winner, and explicitly dispose of the remaining policies under the specified zero-welfare convention.</p><p>The lower-bound coupling is valid. Histories agree until a pair encounters the random forced winner, and the auxiliary transcript is independent of that winner. The encounter-probability bound and expected policy-mass bound yield the claimed constant regret over the initial rounds. The final constant<br>$$
+\frac1{16}\min\{H,K\}
+$$<br>is justified.</p><p><b>Assessment:</b> Verified up to the minor logarithm-domain omission. The upper and lower bounds leave joint parameter dependence unresolved.</p><h3>8. Outstanding scope and actionable feedback</h3><p>The unresolved portions are substantive limitations, not hidden defects in the proved constructions.</p><ul><li><b>Major — uncovered positive-gap regimes.</b> The output does not determine the minimax horizon rate when</li></ul><p>$$
+   \mu_{\min}\leq1-2g\leq\frac1{\min\{\tau,K-2\}},
+   $$<br>including the relevant boundaries. Resolving these cases requires additional results, rather than clarification of an existing step.</p><ul><li><b>Major — incomplete joint minimax characterization.</b> Fixed-parameter horizon rates do not determine the rate jointly in $H,K,\tau,\mu,g$. The displayed bounds also leave a parameter gap at the deterministic endpoint. To answer the full task, the prover must provide matching parameter-dependent bounds or explicitly retain its partial characterization.</li></ul><ul><li><b>Minor — numerical computation wording.</b> Replace exact “bit length” language for logarithms with a precise approximation and bit-complexity statement.</li></ul><ul><li><b>Minor — endpoint logarithm domain.</b> State the domain of the Jensen calculation and cover zero policy coordinates explicitly.</li></ul><p>The existing direction is worth continuing: the output supplies valid bounds across several regimes and identifies its principal unresolved cases honestly.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

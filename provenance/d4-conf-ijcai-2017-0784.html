@@ -1,0 +1,120 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Proportional Rankings — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Proportional Rankings <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2017-0784)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\text{-complete}\), even with dyadic masses and threshold</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>The problem of deciding whether there exists an (α, λ)-signiﬁcant group of voters is NP-complete. The measure qP (r) can be lifted from individual rankings to ranking rules: we can measure the quality of a ranking rule f as the minimum value of qP (f(P)), over all possible proﬁles P. However, in our theoretical analysis of ranking rules we take the following approach, which assumes more ﬂexibility on the part of groups of voters that seek to be repre- sented: given a group of proportion α and with cohesiveness at least λ, we ask at which point in the ranking the average satisfaction of this group reaches λ.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given alternatives \(A\), approval types \(T\subseteq 2^A\), rational masses \(\mu_t\ge 0\) summing to \(1\), \(\alpha\in(0,1]\cap\mathbb{Q}\), and \(\lambda\in\mathbb{N}\), decide whether there exist masses \(z_t\in[0,\mu_t]\) with \(\sum_t z_t=\alpha\) and \(\left|\bigcap_{t:z_t&gt;0}A_t\right|\ge\lambda\). Equivalently, decide whether some \(B\subseteq A\) with \(|B|=\lambda\) satisfies \(\sum_{t:B\subseteq A_t}\mu_t\ge\alpha\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(A\) be a finite set of \(m\ge 1\) alternatives. A society is given by its support: a list \(T\) of \(\tau\) distinct nonempty approval sets \(A_t\subseteq A\), each with a positive binary-rational mass \(\mu_t\), where \(\sum_{t\in T}\mu_t=1\). Here \(\tau\) is the support size, not the number of possible approval sets.<br>Given binary-rational \(\alpha\in(0,1]\) and an integer \(1\le\lambda\le m\), decide whether there are real masses \(0\le z_t\le\mu_t\) satisfying \(\sum_{t\in T}z_t=\alpha\) and \(\left|\bigcap_{t:z_t&gt;0}A_t\right|\ge\lambda\). Equivalently, decide whether some \(B\subseteq A\) with \(|B|=\lambda\) satisfies \(\sum_{t:B\subseteq A_t}\mu_t\ge\alpha\).<br>Let \(L\) be the total input bit length; express running times in \(m,\tau,L,\lambda\).</p><p>Is this continuous significant-group decision problem in \(\mathrm{P}\), or is it \(\mathrm{NP}\)-hard?</p><p>For an explicitly listed finite electorate of \(n\) voters with nonempty approval sets, deciding whether a group of exactly \(\lceil\alpha n\rceil\) voters commonly approves at least \(\lambda\) alternatives is \(\mathrm{NP}\)-complete (Skowron, Lackner, Brill, Peters, and Elkind, 2017).<br>That result classifies selection of indivisible voters; it does not give a classification for the divisible-mass problem stated above.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Excluded empty approval sets, following the discrete profile definition.</li><li>Restricted lambda to integers from 1 through m, following the discrete significant-group definition, and required m to be positive.</li><li>Represented only positive-mass types in the support, omitting zero-mass entries.</li><li>Specified that selected masses are real and divisible, with exact total mass alpha replacing the discrete rounded group size.</li><li>Defined L as the total input bit length, including the approval sets, masses, alpha, and lambda.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Classification</h3><p>The continuous significant-group decision problem is \(\mathrm{NP}\)-complete when \(\lambda\) is part of the input. This holds even when all masses and the threshold are dyadic rationals.</p><p>The proof below applies directly to divisible masses.</p><h3>1. Eliminating the continuous variables</h3><p>For any \(B\subseteq A\), define its supporting mass by<br>\(
+w(B)=\sum_{t:B\subseteq A_t}\mu_t.
+\)</p><p>We first verify the stated equivalence.</p><p>Suppose feasible masses \(z_t\) exist. Since \(\alpha&gt;0\), at least one mass is positive. Choose any \(\lambda\)-element subset \(B\) of the common intersection of the approval sets with positive mass. Every type with \(z_t&gt;0\) then contains \(B\), so<br>\(
+w(B)\ge\sum_{t:z_t&gt;0}z_t=\alpha.
+\)</p><p>Conversely, suppose \(|B|=\lambda\) and \(w(B)\ge\alpha\). Enumerate the types containing \(B\), and take mass from each successively, up to its capacity, until the total reaches \(\alpha\). This is possible because their total capacity is at least \(\alpha\). Set all other masses to zero. Every approval set receiving positive mass contains \(B\), so the resulting masses are feasible.</p><p>Thus the decision problem is exactly whether a \(\lambda\)-element set \(B\) satisfies \(w(B)\ge\alpha\).</p><h3>2. Membership in \(\mathrm{NP}\)</h3><p>A certificate is a list of the \(\lambda\) alternatives in \(B\). Verify that they are distinct, determine which approval sets contain them, and compare their total mass with \(\alpha\).</p><p>This comparison uses exact integer arithmetic. Write the masses and threshold as binary-encoded fractions, and let \(Q\) be the product of their denominators. The bit length of \(Q\) is \(O(L)\), because the denominator bit lengths sum to at most \(L\). Multiplying by \(Q\) therefore turns the comparison into an integer comparison involving polynomially many bits.</p><p>Hence verification takes polynomial time, and the problem belongs to \(\mathrm{NP}\).</p><h3>3. A polynomial reduction from CLIQUE</h3><p>We use the classical \(\mathrm{NP}\)-completeness of CLIQUE: given a finite simple undirected graph \(G\) and an integer \(k\), decide whether \(G\) contains a clique of size \(k\). See [Karp, *Reducibility among Combinatorial Problems*](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/Karp.pdf).</p><p>Let \(G=(V,E)\), with \(n=|V|\) and \(q=|E|\).</p><p>Instances with \(k&lt;3\), \(k&gt;n\), or \(q&lt;\binom{k}{2}\) can be decided directly in polynomial time. Map these cases to a fixed valid YES or NO instance of our target problem:</p><ul><li>A YES instance has one alternative, one approval set containing it, mass \(1\), and \(\alpha=\lambda=1\).</li><li>A NO instance has two alternatives, their two singleton approval sets each of mass \(1/2\), and \(\alpha=\lambda=1\).</li></ul><p>For the remaining instances, assume<br>\(
+3\le k\le n
+\quad\text{and}\quad
+q\ge\binom{k}{2}.
+\)</p><h3>Construction</h3><p>Let \(N\) be the smallest power of two satisfying \(N\ge n+4\). Construct a graph \(H\) by adding to \(G\):</p><ul><li>two disjoint edges on four new vertices;</li><li>enough isolated vertices to give \(H\) exactly \(N\) vertices.</li></ul><p>The added edges have no endpoints in \(V\). Thus<br>\(
+N&lt;2(n+4),
+\qquad
+|E(H)|=q+2.
+\)</p><p>Use the edges of \(H\) as alternatives:<br>\(
+A=E(H),
+\qquad
+m=q+2,
+\qquad
+\lambda=\binom{k}{2},
+\qquad
+\alpha=\frac{N-k}{N}.
+\)</p><p>For each vertex \(v\in V(H)\), define the approval set<br>\(
+C_v=\{e\in E(H):v\notin e\}.
+\)</p><p>Provisionally assign mass \(1/N\) to each vertex&#x27;s approval set. To obtain the required support of distinct approval sets, merge equal sets: for every distinct set \(C\) occurring among the \(C_v\), output one type with<br>\(
+A_C=C,
+\qquad
+\mu_C=\frac{|\{v\in V(H):C_v=C\}|}{N}.
+\)</p><h3>Input requirements</h3><p>Every approval set is nonempty. An original vertex avoids both added edges; an endpoint of one added edge avoids the other; and an isolated vertex avoids every edge.</p><p>The merged approval sets are distinct by construction. Their masses are positive and sum to \(1\). Because \(N\) is a power of two, all masses and \(\alpha\) are dyadic rationals. Also,<br>\(
+0&lt;\alpha&lt;1,
+\qquad
+1\le\lambda\le m,
+\)<br>using \(k\le n&lt;N\) and \(\binom{k}{2}\le q\).</p><p>There are at most \(N=O(n)\) support types. With approval sets represented by incidence bit vectors, the output length is<br>\(
+L=O\bigl(n(q+\log(n+1))\bigr).
+\)<br>Constructing and merging the sets takes polynomial time.</p><h3>4. Correctness of the reduction</h3><p>For an edge set \(B\subseteq E(H)\), let<br>\(
+U(B)=\bigcup_{e\in B}e
+\)<br>be its set of endpoints.</p><p>By definition,<br>\(
+B\subseteq C_v
+\quad\Longleftrightarrow\quad
+v\notin U(B).
+\)</p><p>Merging equal approval sets preserves their total supporting mass. Consequently,<br>\(
+w(B)
+=\frac{|\{v:B\subseteq C_v\}|}{N}
+=\frac{N-|U(B)|}{N}.
+\)</p><p>For \(|B|=\lambda=\binom{k}{2}\), this gives<br>\(
+w(B)\ge\alpha
+\quad\Longleftrightarrow\quad
+|U(B)|\le k.
+\)</p><h3>Forward direction</h3><p>Suppose \(G\) has a clique \(K\) of size \(k\). Take \(B\) to be its \(\binom{k}{2}\) edges. Then \(U(B)=K\), so<br>\(
+w(B)=\frac{N-k}{N}=\alpha.
+\)</p><p>By Section 1, the continuous instance is a YES instance.</p><h3>Reverse direction</h3><p>Suppose the continuous instance is a YES instance. Section 1 supplies an edge set \(B\) with<br>\(
+|B|=\binom{k}{2},
+\qquad
+|U(B)|\le k.
+\)</p><p>Put \(r=|U(B)|\). Since \(H\) is simple, there are at most \(\binom{r}{2}\) edges with both endpoints in \(U(B)\). Therefore<br>\(
+\binom{k}{2}
+=|B|
+\le\binom{r}{2}
+\le\binom{k}{2}.
+\)</p><p>If \(r&lt;k\), then \(\binom{r}{2}&lt;\binom{k}{2}\), since \(k\ge3\), which is impossible. Hence \(r=k\). Equality also shows that \(B\) contains every unordered pair of vertices in \(U(B)\), so \(U(B)\) is a clique of size \(k\) in \(H\).</p><p>Every added vertex has degree at most one. A vertex in a clique of size \(k\ge3\) has at least two neighbors within that clique. Thus this clique contains only original vertices and is a clique in \(G\).</p><p>This proves both directions of the reduction. Together with membership in \(\mathrm{NP}\), it establishes \(\mathrm{NP}\)-completeness.</p><h3>5. Running times in the requested parameters</h3><p>Two exhaustive algorithms give useful parameter bounds.</p><p><b>Enumerate alternatives.</b> Enumerate all \(\binom{m}{\lambda}\) sets \(B\) and compute \(w(B)\). A conservative running-time bound, including exact rational arithmetic, is<br>\(
+O\!\left(\binom{m}{\lambda}(m\tau+L^3)\right).
+\)<br>In particular, this is polynomial for every fixed \(\lambda\), since \(\binom{m}{\lambda}\le m^\lambda\).</p><p><b>Enumerate support subsets.</b> Enumerate all nonempty \(S\subseteq T\), checking<br>\(
+\sum_{t\in S}\mu_t\ge\alpha
+\quad\text{and}\quad
+\left|\bigcap_{t\in S}A_t\right|\ge\lambda.
+\)<br>These conditions are sufficient by Section 1. They are necessary because, from feasible masses, the set \(S=\{t:z_t&gt;0\}\) satisfies both conditions. This algorithm takes<br>\(
+O\!\left(2^\tau(m\tau+L^3)\right),
+\)<br>and is polynomial for fixed support size \(\tau\).</p><p>Choosing the smaller enumeration gives the bound<br>\(
+O\!\left(
+\min\!\left\{\binom{m}{\lambda},2^\tau\right\}
+(m\tau+L^3)
+\right).
+\)</p><p>Thus divisibility permits exact trimming to the desired mass, but the unrestricted choice of commonly approved alternatives remains \(\mathrm{NP}\)-complete.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verdict</h3><p>The prover resolves the assigned problem correctly. The argument establishes \(\mathrm{NP}\)-completeness when \(\lambda\) is part of the input, including the restriction to dyadic masses and threshold. It directly addresses divisible masses and does not rely on transferring hardness from indivisible voters.</p><p>No major or minor mathematical issues were found.</p><h3>Step-by-step verification</h3><h3>1. Eliminating the continuous variables</h3><p>Both directions are valid.</p><ul><li>From feasible masses, \(\alpha&gt;0\) ensures the positive-mass support is nonempty. The intersection condition permits choosing a set \(B\) of exactly \(\lambda\) alternatives. Every positive-mass type contains \(B\), and the capacity constraints imply \(w(B)\ge\alpha\).</li><li>Conversely, the successive allocation described in the proof terminates with total mass exactly \(\alpha\), since the finitely many supporting types have total capacity at least \(\alpha\). Each allocated mass respects its capacity, and every type receiving positive mass contains \(B\).</li></ul><p>The proof therefore correctly replaces real-valued witnesses with finite certificates. Equality at the threshold is handled correctly.</p><h3>2. Membership in \(\mathrm{NP}\)</h3><p>The certificate and verification procedure are valid. A list of \(\lambda\le m\) alternative identifiers has polynomial length, and checking distinctness and containment is polynomial.</p><p>The denominator-product argument is correct: the product has bit length bounded by the sum of the input denominator bit lengths, hence \(O(L)\). Scaled numerators and their sum also have polynomial bit length. Exact comparison therefore takes polynomial time.</p><p>No assumption that feasible real masses themselves have short encodings is needed.</p><h3>3. Source problem and exceptional cases</h3><p>The invoked theorem is the standard \(\mathrm{NP}\)-completeness of CLIQUE for finite simple undirected graphs with the requested clique size supplied as input. This is the appropriate source problem. [Karp’s original paper](https://www2.seas.gwu.edu/~simhaweb/champalg/tsp/papers/KarpOriginal.pdf) lists CLIQUE among its complete problems.</p><p>The preprocessing is sound:</p><ul><li>Sizes below three can be checked directly.</li><li>A requested size exceeding the vertex count is impossible.</li><li>Fewer than \(\binom{k}{2}\) edges precludes a clique of size \(k\).</li></ul><p>The fixed target instances are valid. The YES instance has supporting mass one. In the NO instance, each possible singleton \(B\) has supporting mass one-half, below the threshold one.</p><h3>4. Construction and target input requirements</h3><p>The construction satisfies every stated requirement.</p><ul><li>The smallest power of two \(N\ge n+4\) satisfies \(N&lt;2(n+4)\).</li><li>Adding two disjoint edges and isolated vertices preserves simplicity and yields exactly \(q+2\) edges.</li><li>Every approval set is nonempty for the reasons given: original vertices avoid both added edges, added endpoints avoid the other added edge, and isolated vertices avoid every edge.</li><li>Merging equal approval sets produces distinct support types with positive masses summing to one.</li><li>All masses and the threshold are dyadic.</li><li>Since \(3\le k\le n&lt;N\), the threshold lies strictly between zero and one.</li><li>Since \(\binom{k}{2}\le q\), the requested \(\lambda\) lies within the alternative count.</li></ul><p>The support count and output-length bounds are correct for the stated incidence-vector representation. Constructing and merging the sets takes polynomial time.</p><h3>5. Supporting-mass identity</h3><p>The identity<br>\[
+B\subseteq C_v\quad\Longleftrightarrow\quad v\notin U(B)
+\]<br>is correct: all selected edges avoid \(v\) exactly when \(v\) is absent from their endpoint union.</p><p>Merging preserves the calculation because vertices with equal approval sets contribute identical containment indicators. Thus<br>\[
+w(B)=\frac{N-|U(B)|}{N}.
+\]<br>For the constructed threshold, the claimed equivalence with \(|U(B)|\le k\) follows exactly, including equality.</p><h3>6. Forward implication</h3><p>A clique of size \(k\) contributes exactly \(\binom{k}{2}\) edges. Because \(k\ge3\), their endpoint union is precisely the clique’s vertex set. The resulting supporting mass equals \(\alpha\), and Section 1 supplies feasible divisible masses.</p><p>This implication is complete.</p><h3>7. Reverse implication</h3><p>The edge-count argument is correct. Writing \(r=|U(B)|\), simplicity gives<br>\[
+\binom{k}{2}=|B|\le\binom{r}{2}\le\binom{k}{2}.
+\]</p><p>For nonnegative integer \(r&lt;k\) with \(k\ge3\), the middle quantity is strictly smaller than \(\binom{k}{2}\). Consequently \(r=k\). Equality in the edge bound forces every pair of vertices in \(U(B)\) to be present as an edge, giving a clique.</p><p>Every added vertex has degree at most one, whereas a vertex in a clique of size at least three has at least two neighbors. The recovered clique therefore lies entirely in \(G\).</p><p>There is no soundness gap from padding, duplicate approval sets, or divisible allocation.</p><h3>8. Running-time claims</h3><p>Both enumerations are correct.</p><ul><li>Enumerating all \(\lambda\)-element alternative sets directly checks the established finite characterization.</li><li>Enumerating nonempty support subsets is sufficient when their intersection is large enough and their total capacity reaches the threshold. It is necessary because the positive-mass support of any feasible solution satisfies both conditions.</li></ul><p>The factor \(m\tau\) conservatively covers containment or intersection computations with incidence vectors. The \(L^3\) term conservatively covers exact rational arithmetic using elementary integer operations.</p><p>The stated combined bound<br>\[
+O\!\left(\min\!\left\{\binom{m}{\lambda},2^\tau\right\}(m\tau+L^3)\right)
+\]<br>is valid. Polynomial time for fixed \(\lambda\), and separately for fixed support size \(\tau\), follows as claimed.</p><h3>Required feedback</h3><p>No mathematical repair or additional clarification is needed. The general hardness classification and the parameter-dependent algorithmic bounds are both established.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

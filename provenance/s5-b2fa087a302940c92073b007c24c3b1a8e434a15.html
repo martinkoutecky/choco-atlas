@@ -1,0 +1,266 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Approximate Proportionality in Online Fair Division — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Approximate Proportionality in Online Fair Division <span style="font-weight:normal;color:#8a7350">(s5-b2fa087a302940c92073b007c24c3b1a8e434a15)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: polynomial-time · adversarial review: proved · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> $\alpha^*(2)=3-\sqrt5$, and $\alpha^*(N)=0$ for every $N\geq3$. The guarantees are attained by deterministic online algorithms.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 5.1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For $n \geq 2$ and any $\alpha &gt; 0$, no online algorithm can always return an allocation that is $\alpha$-EF1, $\alpha$-MMS, or $\alpha$-PROPX, even with perfect MIV predictions.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a unit-mass population \(P=\bigsqcup_{t\in T}P_t\) with \(\lambda(P_t)=\mu_t\), additive type valuations \(v_t\), perfect type-level MIV predictions \(p_t\), and an adaptive online stream of indivisible goods whose type valuations are revealed on arrival, assign each good \(g_j\) irrevocably to a measurable set \(S_j\subseteq P\) of mass \(1/N\). What is the largest \(\alpha\) that an online algorithm can guarantee, against every such stream, so that for \(\lambda\)-almost every agent \(a\in P_t\), the resulting integral bundle satisfies \(\alpha\)-PROPX?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Fix an integer \(N\geq2\). A society is given by its support: \(\tau\) types with positive binary-rational masses \(\mu_t\), where \(\sum_t\mu_t=1\); \(\tau\) counts supported types, not possible types.<br>Realize the society as an atomless probability space \(P=\bigsqcup_tP_t\), with \(\lambda(P_t)=\mu_t\). Types have nonnegative additive valuations; arriving item values and predictions are binary rationals.<br>Initially the algorithm knows the support, masses, \(N\), and perfect maximum-item-value predictions \(p_t\). Each legal finite stream \(G=\{g_1,\ldots,g_m\}\) satisfies \(p_t=\max_{g\in G}v_t(g)\), including when \(p_t=0\); \(m\geq1\) is unknown beforehand.<br>Upon arrival, all type values for the current good are revealed. The algorithm immediately and irrevocably chooses a measurable recipient set \(S_j\subseteq P\) with \(\lambda(S_j)=1/N\). Every recipient receives the whole item; recipient sets may overlap across goods.<br>An agent \(a\in P_t\) receives the integral bundle \(A(a)=\{g_j:a\in S_j\}\). For \(\alpha\in[0,1]\), the outcome is \(\alpha\)-PROPX if, for almost every agent, either \(A(a)=G\), or \(v_t(A(a))+v_t(g)\geq\alpha v_t(G)/N\) for every \(g\in G\setminus A(a)\), including zero-valued goods.<br>An adaptive adversary observes past allocations and internal randomness and chooses subsequent value vectors and when to stop, subject to the prediction promise. Guarantees must hold for every legal stream and every realization of algorithmic randomness.<br>State any running-time bounds in \(m\), \(\tau\), the total input bit length \(L\), and \(\log N\).</p><p>What is the supremal approximation guarantee \(\alpha^*(N)\) achievable by an online algorithm uniformly over all supported societies and legal streams: is it zero or positive, and if positive, what is its optimal dependence on \(N\)?</p><p>For finite societies with \(n\geq2\), no online algorithm always guarantees \(\alpha\)-PROPX for any \(\alpha&gt;0\), even with perfect maximum-item-value predictions ([source](https://arxiv.org/html/2508.03253v2)).<br>No result settling exactly this atomless recipient-set model was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The population space was unspecified; use an atomless probability space partitioned into the supported types.</li><li>N was undefined; take it as an independently supplied integer at least two, governing both recipient mass and the proportional benchmark.</li><li>The valuation encoding was unspecified; use nonnegative binary-rational item values and predictions, allowing zero-valued types.</li><li>The information and stopping rules were incomplete; the support and predictions are initially known, future values are revealed only on arrival, and the finite horizon is unknown.</li><li>The recipient-set interpretation was implicit; each selected agent receives the whole item, and sets for different items may overlap.</li><li>Approximate PROPX was undefined; retain the all-goods exception and quantify over every missing good, including zero-valued goods.</li><li>The randomized guarantee was unspecified; retain the anchor&#x27;s always-successful guarantee for every realization against an adversary observing internal randomness.</li><li>The scope of the optimum was unspecified; seek a uniform guarantee over all supported societies for each fixed N, using a supremum in case no largest attainable ratio exists.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Exact supremal guarantee</h3><p>The answer is<br>$$
+\boxed{
+\alpha^*(N)=
+\begin{cases}
+3-\sqrt5,&amp;N=2,\\
+0,&amp;N\geq3.
+\end{cases}}
+$$</p><p>Both guarantees are attained by deterministic algorithms. The positive result for $N=2$ holds uniformly over all supported societies. The matching upper bound allows arbitrary measurable recipient sets, not merely the fixed cohorts used by the algorithm.</p><h3>1. Atomless partitions and the case $N\geq3$</h3><p>We first justify the measurable partitions used below.</p><p><b>Divisibility lemma.</b> If $\lambda$ is finite and atomless, $E$ is measurable, and $s\in[0,\lambda(E)]$, then $E$ has a measurable subset of mass $s$.</p><p><b>Proof.</b> Every positive-mass measurable set contains positive-mass subsets of arbitrarily small mass: split it into two positive-mass parts, retain the smaller part, and repeat. Each retained mass is at most half its predecessor.</p><p>For $0&lt;s&lt;\lambda(E)$, construct increasing measurable sets $F_n\subseteq E$ with $\lambda(F_n)\leq s$. Given $F_n$ with positive remaining gap, let<br>$$
+u_n=\sup\{\lambda(H):H\subseteq E\setminus F_n
+\text{ measurable},\ \lambda(H)\leq s-\lambda(F_n)\}.
+$$<br>The small-subset property gives $u_n&gt;0$. Choose such an $H_n$ with $\lambda(H_n)&gt;u_n/2$ and put $F_{n+1}=F_n\cup H_n$.</p><p>Let $F=\bigcup_nF_n$. If $\lambda(F)&lt;s$, the remaining set $E\setminus F$ contains a measurable $H$ with<br>$$
+0&lt;\lambda(H)\leq s-\lambda(F).
+$$<br>This $H$ is admissible in every supremum defining $u_n$. Consequently, every increment has mass greater than $\lambda(H)/2$, contradicting $\lambda(F)\leq s$. Thus $\lambda(F)=s$. The endpoint cases are immediate. $\square$</p><p>Now fix $N\geq3$ and any $\alpha&gt;0$. Take one supported type of mass $1$, with prediction $p=1$. Choose a positive dyadic rational $\varepsilon&lt;\alpha/N$ and reveal two goods valued $\varepsilon$ and $1$.</p><p>Their recipient sets satisfy<br>$$
+\lambda(S_1\cup S_2)\leq\frac2N&lt;1.
+$$<br>Thus a positive-mass set receives neither good. For these agents, the inequality associated with the missing $\varepsilon$-valued good would require<br>$$
+\varepsilon\geq\frac{\alpha(1+\varepsilon)}N,
+$$<br>which is false. This stream satisfies the prediction promise and uses strictly positive values. The obstruction therefore holds even offline.</p><p>Conversely, nonnegative valuations make every allocation $0$-PROPX. A fixed measurable set of mass $1/N$, supplied by the divisibility lemma, can receive every item. Hence<br>$$
+\alpha^*(N)=0\qquad(N\geq3).
+$$</p><h3>2. A $(3-\sqrt5)$-PROPX algorithm for $N=2$</h3><h3>2.1. Cohorts and constants</h3><p>Partition every type into fixed measurable cohorts<br>$$
+P_t=C_t^0\sqcup C_t^1,\qquad
+\lambda(C_t^0)=\lambda(C_t^1)=\frac{\mu_t}{2}.
+$$<br>This is possible because the restriction of the measure to each $P_t$ is finite and atomless.</p><p>For each good, select exactly one cohort from each type. Their union has mass<br>$$
+\sum_t\frac{\mu_t}{2}=\frac12.
+$$<br>The decisions for different types can therefore be made independently.</p><p>A type with $p_t=0$ values every good at zero, by nonnegativity and the prediction promise. Select $C_t^0$ throughout for that type.</p><p>Consider one type with $p&gt;0$, and normalize its values by $p$. Every arriving normalized value $x$ belongs to $[0,1]$, and every legal final stream contains a value-$1$ item.</p><p>Define<br>$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\rho=\frac1{\phi^2}=\frac{3-\sqrt5}{2}.
+$$<br>The desired approximation is $2\rho=3-\sqrt5$. We will use<br>$$
+\phi^2=\phi+1,\qquad
+\frac{\rho}{1-\rho}=\frac1\phi,\qquad
+\rho(\phi+1)=1,
+$$<br>and<br>$$
+\rho(2\phi+1)=\phi,\qquad
+(1-2\rho)\,2\phi=2\rho.
+$$<br>These identities follow by substitution from $\phi^2=\phi+1$.</p><p>Let $a,b$ be the normalized utilities of $C^0,C^1$. Because each good goes to exactly one cohort, the normalized total value is<br>$$
+T=a+b.
+$$</p><h3>2.2. Allocation rule</h3><p>Initially $a=b=0$, and the type is in <b>preparation</b>.</p><p>During preparation, allocate an arriving value $x$ as follows:</p><ul><li>If $x=1$, give it to $C^1$.</li><li>Otherwise, if $a+x\leq\phi$, give it to $C^0$.</li><li>Otherwise, give it to $C^1$.</li></ul><p>After updating the utilities, leave preparation permanently if either $x=1$ or $a+b\geq2\phi$.</p><p>During the <b>regular phase</b>, give an arriving value $x$ to $C^0$ if<br>$$
+b\geq\rho(a+b+x);
+$$<br>otherwise, give it to $C^1$.</p><p>This rule uses only the current item, the prediction, two accumulated utilities, and a phase flag.</p><h3>2.3. Conditions sufficient for fairness</h3><p>Whenever $C^1$ has received at least one item, let $q$ be the minimum normalized value among its received items. Thus $q$ is the minimum value of an item missed by $C^0$.</p><p>The conditions<br>$$
+b\geq\rho T,\qquad a+q\geq\rho T
+$$<br>are sufficient for $2\rho$-PROPX:</p><ul><li>Every agent in $C^1$ already has utility at least $\rho T$.</li><li>Every item missed by $C^0$ has value at least $q$, so adding any such item gives utility at least $a+q\geq\rho T$.</li></ul><p>We prove these conditions at entry to the regular phase and preserve them thereafter.</p><h3>2.4. Preparation invariants</h3><p>Before the first value-$1$ item, preparation maintains<br>$$
+a\leq\phi.
+$$<br>Furthermore, whenever $C^1$ has received an item,<br>$$
+a+q&gt;\phi.
+$$</p><p>Indeed, a nonmaximum item is given to $C^1$ only when $a+x&gt;\phi$. If it becomes the new minimum, then $q=x$, proving the second inequality. If it does not, the previous inequality persists. Allocations to $C^0$ only increase $a$.</p><p>Zero-valued items always go to $C^0$ during preparation, so every preparation item received by $C^1$ is positive.</p><p>Immediately before leaving preparation, $T&lt;2\phi$. Consequently, immediately afterward,<br>$$
+T&lt;2\phi+1.
+$$</p><p>There are two ways to leave preparation.</p><p><b>Entry caused by reaching $T\geq2\phi$ without a maximum item.</b> The preparation invariants give<br>$$
+a\leq\phi,\qquad b=T-a\geq\phi,\qquad a+q&gt;\phi.
+$$<br>Since $\rho T&lt;\rho(2\phi+1)=\phi$, both sufficient fairness conditions hold.</p><p><b>Entry caused by the first maximum item.</b> This item goes to $C^1$, so afterward $b\geq1$ and $a\leq\phi$. Therefore<br>$$
+b\geq\frac a\phi
+\quad\Longleftrightarrow\quad
+b\geq\rho(a+b).
+$$<br>If $C^1$ previously had no items, then $b=q=1$, and $a+q=T\geq\rho T$.</p><p>Otherwise its previous minimum was below $1$, remains unchanged, and satisfies $a+q&gt;\phi&gt;\rho T$.</p><p>Thus entry always satisfies<br>$$
+b\geq\rho T,\qquad a+q\geq\rho T.
+$$<br>It also satisfies the auxiliary condition<br>$$
+q&lt;1\quad\Longrightarrow\quad a+q&gt;\phi.
+$$</p><h3>2.5. Preservation in the regular phase</h3><p>Assume the sufficient fairness conditions hold before the next item.</p><p>If the rule selects $C^0$, then $b\geq\rho(T+x)$ by definition of the rule. Also,<br>$$
+a+x+q-\rho(T+x)
+=(a+q-\rho T)+(1-\rho)x\geq0.
+$$<br>Both fairness conditions persist. The auxiliary condition, when needed, persists because $a$ only increases.</p><p>Suppose instead that the rule selects $C^1$. Then<br>$$
+b&lt;\rho(T+x).
+$$<br>Its new utility satisfies<br>$$
+b+x\geq\rho T+x\geq\rho(T+x).
+$$<br>It remains to check $C^0$, whose new minimum missed value is<br>$$
+q&#x27;=\min\{q,x\}.
+$$</p><p><b>If $T\geq2\phi$</b>, then<br>$$
+a=T-b&gt;(1-\rho)T-\rho x.
+$$<br>Hence<br>$$
+\begin{aligned}
+a-\rho(T+x)
+&amp;&gt;(1-2\rho)T-2\rho x\\
+&amp;\geq(1-2\rho)\,2\phi-2\rho\\
+&amp;=0.
+\end{aligned}
+$$<br>Here we used $x\leq1$. Thus $a$ alone exceeds the new threshold, independently of any decrease in $q$.</p><p><b>If $T&lt;2\phi$</b>, the regular phase must have started with a maximum item: entry caused solely by accumulated value already has $T\geq2\phi$, and totals never decrease. Therefore $b\geq1$.</p><p>The condition selecting $C^1$ implies<br>$$
+(1-\rho)b&lt;\rho(a+x),
+$$<br>and therefore<br>$$
+a+x&gt;\phi b\geq\phi.
+$$</p><p>If $x\leq q$, then $q&#x27;=x$, so $a+q&#x27;&gt;\phi$. If $x&gt;q$, then $q&lt;1$ because $x\leq1$, and the auxiliary condition gives $a+q&#x27;=a+q&gt;\phi$.</p><p>In either case,<br>$$
+a+q&#x27;&gt;\phi&gt;\rho(T+x),
+$$<br>because $T+x&lt;2\phi+1$. This also preserves the auxiliary condition whenever the new total remains below $2\phi$.</p><p>Induction proves the sufficient fairness conditions at every regular-phase prefix.</p><h3>2.6. Legal stopping times</h3><p>For every positive-prediction type, a legal final stream contains a maximum-valued item. That type therefore enters the regular phase no later than the arrival of its first maximum.</p><p>Its final allocation consequently satisfies $2\rho$-PROPX. Applying this argument independently to all supported types proves<br>$$
+\alpha^*(2)\geq2\rho=3-\sqrt5.
+$$<br>The algorithm is deterministic, so this guarantee holds against adaptive stopping and for every permitted stream.</p><h3>3. Matching impossibility for $N=2$</h3><p>We prove that every proposed guarantee $\alpha&gt;3-\sqrt5$ fails. The construction uses one type of mass $1$ and prediction $p=1$.</p><h3>3.1. Parameters</h3><p>Choose a dyadic rational $r$ satisfying<br>$$
+\rho&lt;r&lt;\min\left\{\frac\alpha2,\frac25\right\}.
+$$<br>Such a choice exists because $\rho&lt;2/5$ and $\alpha/2&gt;\rho$. Failure of $2r$-PROPX implies failure of $\alpha$-PROPX.</p><p>Define<br>$$
+c=\frac r{1-r},\qquad h=\frac1c=\frac{1-r}{r},\qquad
+d=c^2+c-1.
+$$<br>Since $r/(1-r)$ is strictly increasing,<br>$$
+\frac1\phi&lt;c&lt;\frac23.
+$$<br>Thus $d&gt;0$. Choose a positive dyadic rational $\delta$ with<br>$$
+\delta&lt;\frac d{1+c}.
+$$<br>Because $d&lt;c$ when $c&lt;1$, we have<br>$$
+\delta&lt;r.
+$$<br>We also have<br>$$
+1+\delta&lt;r(c+2),
+$$<br>because<br>$$
+r(c+2)-1=\frac d{1+c}.
+$$</p><p>Finally, put<br>$$
+K=\left\lfloor\frac h\delta\right\rfloor+1.
+$$<br>Then<br>$$
+h&lt;K\delta\leq h+\delta,\qquad r(h+1)=1.
+$$</p><h3>3.2. Initial construction and measure bookkeeping</h3><p>Reveal a zero-valued item. Let its recipient set be $A$, and let $B=P\setminus A$. Both have mass $1/2$.</p><p>Next reveal value-$\delta$ items, stopping this stage at the first recipient set $S_k$ that differs from $A$ on positive measure, or after $K$ such items if no change occurs.</p><p>If the first change occurs at round $k$, write<br>$$
+t=k\delta,\qquad E=A\setminus S_k.
+$$<br>Then $\lambda(E)&gt;0$: equal masses of $A$ and $S_k$ imply<br>$$
+\lambda(A\setminus S_k)=\lambda(S_k\setminus A).
+$$</p><p>Outside a null set:</p><ul><li>every agent in $B$ has utility at most $\delta$ and misses the initial zero;</li><li>every agent in $E$ has utility $t-\delta$ and misses the current $\delta$-valued item.</li></ul><p>The second statement holds because all preceding small-item recipient sets equal $A$ modulo null sets. All subsequent uses of such equalities involve only finitely many allocations, so their exceptional null sets can be discarded together.</p><h3>3.3. First change with $t&lt;c$</h3><p>Append one value-$1$ item and stop. The threshold for $2r$-PROPX is $r(t+1)$.</p><p>Any agent in $B$ omitted from the last recipient set has utility at most<br>$$
+\delta&lt;r&lt;r(t+1)
+$$<br>and misses the initial zero. Thus, unless failure already occurs on positive measure, the last recipient set must equal $B$ modulo null sets.</p><p>Then agents in $E$ receive no further utility. Adding their missing $\delta$-valued item gives utility $t$, while<br>$$
+t&lt;c=\frac r{1-r}
+\quad\Longleftrightarrow\quad
+t&lt;r(t+1).
+$$<br>They fail on positive measure.</p><h3>3.4. First change with $c\leq t&lt;2c$</h3><p>Append two value-$1$ items and stop. The threshold is $r(t+2)$.</p><p>An agent in $B$ who misses either appended item has utility at most<br>$$
+1+\delta&lt;r(c+2)\leq r(t+2).
+$$<br>The missing initial zero witnesses failure. Therefore, avoiding positive-measure failure requires both appended recipient sets to equal $B$ modulo null sets.</p><p>Agents in $E$ then receive neither item. Their missing-small-item inequality has left side $t$, but<br>$$
+t&lt;2c=\frac{2r}{1-r}
+\quad\Longleftrightarrow\quad
+t&lt;r(t+2).
+$$<br>Again they fail.</p><h3>3.5. First change with $2c\leq t\leq h+\delta$</h3><p>This branch uses a medium-valued item between two maximum-valued items.</p><p>We first prove that a suitable value exists. Define<br>$$
+U=c(t+1)-1-\frac{\delta}{1-r}
+$$<br>and<br>$$
+L=\max\left\{0,\ h-t+\frac\delta r,\ \frac tc-2\right\}.
+$$<br>We claim<br>$$
+0\leq L&lt;U&lt;1.
+$$</p><p>First, using $t\geq2c$ and $1/(1-r)=1+c$,<br>$$
+U\geq2c^2+c-1-(1+c)\delta
+=c^2+d-(1+c)\delta&gt;c^2&gt;0.
+$$<br>Using $t\leq h+\delta$ and $ch=1$,<br>$$
+U\leq c(h+\delta+1)-1-(1+c)\delta=c-\delta&lt;1.
+$$</p><p>For the second candidate in $L$,<br>$$
+\begin{aligned}
+U-\left(h-t+\frac\delta r\right)
+&amp;=(1+c)(t-h+r)
+-\delta\left(\frac1r+\frac1{1-r}\right)\\
+&amp;\geq\frac{d(2c+1)}c-\delta\frac{(1+c)^2}c\\
+&amp;&gt;d&gt;0.
+\end{aligned}
+$$<br>Here the middle expression follows by substituting $r=c/(1+c)$, and the last inequality uses $\delta&lt;d/(1+c)$.</p><p>For the third candidate, $c-1/c&lt;0$ gives<br>$$
+\begin{aligned}
+U-\left(\frac tc-2\right)
+&amp;=\left(c-\frac1c\right)t+c+1-(1+c)\delta\\
+&amp;\geq c+2-\frac1{c^2}-\delta(h+1)\\
+&amp;=\frac{d(c+1)}{c^2}-\delta(h+1)\\
+&amp;&gt;\frac d{c^2}&gt;0.
+\end{aligned}
+$$<br>The final step uses $h+1=(c+1)/c$ and $\delta&lt;d/(1+c)$. This proves the claim.</p><p>Choose a dyadic rational $x\in(L,U)$. In particular, $0&lt;x&lt;1$. Rearranging its defining strict inequalities gives<br>$$
+1+\delta&lt;r(t+1+x),
+$$<br>$$
+t&lt;r(t+2+x),
+$$<br>and<br>$$
+1+x+\delta&lt;r(t+2+x).
+$$</p><p>Now append a value-$1$ item. If its recipient set differs from $B$ modulo null sets, stop immediately. A positive-mass subset of $B$ misses that item, has utility at most $\delta&lt;r(t+1)$, and misses the initial zero. This legal stop gives failure.</p><p>Otherwise, append the value-$x$ item. If its recipient set differs from $B$ modulo null sets, stop. A positive-mass subset of $B$ then has utility at most<br>$$
+1+\delta&lt;r(t+1+x)
+$$<br>and misses the initial zero. This is another legal failure.</p><p>If both allocations equal $B$ modulo null sets, append one more value-$1$ item and stop. The final threshold is $r(t+2+x)$.</p><p>Every agent in $B$ omitted from this last item has utility at most<br>$$
+1+x+\delta&lt;r(t+2+x)
+$$<br>and misses the initial zero. Thus either such a positive-mass failure occurs, or the last recipient set also equals $B$ modulo null sets.</p><p>In the latter event, agents in $E$ received none of the appended items. Adding their missing $\delta$-valued item gives utility<br>$$
+t&lt;r(t+2+x).
+$$<br>Hence $E$ fails.</p><h3>3.6. No change during the $K$ small items</h3><p>Append one value-$1$ item and stop.</p><p>Almost every agent in $B$ had utility zero before this last item, has final utility at most $1$, and misses the initial zero. But<br>$$
+r(K\delta+1)&gt;r(h+1)=1.
+$$<br>Thus $B$ fails.</p><h3>3.7. Legality and randomness</h3><p>Every branch is finite, uses only dyadic values in $[0,1]$, and contains a value-$1$ item. Every stopping point therefore satisfies the same perfect prediction $p=1$.</p><p>The adversary chooses its branches solely from observed allocations. In every branch, failure occurs on positive measure. The proof applies separately to every realization of algorithmic randomness.</p><p>Consequently, no guarantee $\alpha&gt;3-\sqrt5$ is possible:<br>$$
+\alpha^*(2)\leq3-\sqrt5.
+$$<br>Together with Section 2, this proves equality.</p><h3>4. Representation and running time</h3><p>For a concrete implementation, realize the types as labelled intervals of lengths $\mu_t$ and use their fixed halves as cohorts. Specify these cohorts once; thereafter each recipient set is represented by one selection bit per supported type.</p><p>The algorithm for $N=2$ uses $O(m\tau)$ exact arithmetic operations. It does not need to store $q$, which is used only in the proof.</p><p>Although its thresholds involve $\sqrt5$, all comparisons can be performed exactly with rational arithmetic. In unnormalized units, for example,<br>$$
+u\leq\phi p
+\quad\Longleftrightarrow\quad
+2u-p\leq\sqrt5\,p.
+$$<br>If $2u-p\leq0$, the comparison holds; otherwise it is equivalent to<br>$$
+(2u-p)^2\leq5p^2.
+$$<br>Likewise, for $V\geq0$,<br>$$
+b\geq\rho V
+\quad\Longleftrightarrow\quad
+\sqrt5\,V\geq3V-2b,
+$$<br>which is decided by checking the sign of the right side and, when positive, squaring. The comparison with $2\phi p$ is handled identically.</p><p>Let<br>$$
+B=O\!\left(L+\log(m+1)+\log N\right).
+$$<br>Using a common denominator for each type’s prediction and values seen so far keeps the accumulated numerators and denominators within $O(B)$ bits: denominator lengths accumulate within the total input length, and summation adds at most a logarithmic allowance in $m$.</p><p>Schoolbook arithmetic therefore gives<br>$$
+O(m\tau B^2)
+$$<br>bit operations and $O(\tau B)$ working space, excluding the emitted history. That history uses $O(m\tau)$ cohort-selection bits. The fixed-set algorithm for $N\geq3$ also fits these bounds.</p><p>On an abstract atomless realization, the same algorithm uses fixed measurable halves whose existence was proved in Section 1. No enumeration of unsupported types is required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><p><b>The claimed result is proved.</b> The lower-bound algorithm, matching adversary, and running-time analysis are correct under the stated model. No major or minor issues were found.</p><p>The output establishes<br>$$
+\alpha^*(2)=3-\sqrt5,
+\qquad
+\alpha^*(N)=0\quad\text{for }N\geq3,
+$$<br>with deterministic algorithms attaining both guarantees.</p><h3>1. Measurable partitions</h3><p>The divisibility lemma is correctly proved.</p><ul><li>Atomlessness permits splitting any positive-mass measurable set into two positive-mass parts. Retaining the smaller part repeatedly produces arbitrarily small positive masses.</li><li>Whenever the construction has a positive remaining gap, its supremum $u_n$ is positive, and the chosen increment exists.</li><li>If the limiting union had mass below $s$, a fixed positive-mass subset of its complement would be admissible at every stage. Every increment would then exceed a fixed positive constant, contradicting the bounded total mass.</li><li>The endpoint cases $s=0$ and $s=\lambda(E)$ are immediate.</li></ul><p>Restricting an atomless measure to a measurable type set preserves atomlessness. Thus the fixed type cohorts and the fixed recipient set used later exist on the stipulated abstract probability space.</p><h3>2. Impossibility for $N\geq3$</h3><p>The two-item construction is valid and establishes an offline obstruction.</p><p>The recipient sets have union of mass at most $2/N&lt;1$, leaving a positive-mass set of agents with empty bundles. For these agents, the missing item of value $\varepsilon$ requires<br>$$
+\varepsilon\geq\frac{\alpha(1+\varepsilon)}N.
+$$<br>The chosen inequality $\varepsilon&lt;\alpha/N$ contradicts this requirement.</p><p>The stream has a positive dyadic value $\varepsilon$ and a maximum value of $1$, so it satisfies the prediction promise. Nonnegativity makes every allocation $0$-PROPX. Consequently, the claimed equality for $N\geq3$ follows.</p><h3>3. The algorithm for $N=2$</h3><h3>3.1. Feasibility and reduction to individual types</h3><p>Selecting one half-cohort from every supported type gives total recipient mass<br>$$
+\sum_t\frac{\mu_t}{2}=\frac12.
+$$<br>Therefore the independent type decisions define a feasible measurable allocation for every item.</p><p>For a type with $p_t=0$, the prediction promise and nonnegativity imply that every item has value zero. The fairness requirement is satisfied.</p><p>For $p_t&gt;0$, normalization gives values in $[0,1]$, and every legal final stream contains a value-$1$ item. Since every item goes to exactly one cohort of that type, $T=a+b$ is its normalized total value.</p><h3>3.2. Constants and sufficient conditions</h3><p>All displayed identities involving $\phi$ and $\rho$ are correct. In particular,<br>$$
+\rho(2\phi+1)=\phi,
+\qquad
+(1-2\rho)\,2\phi=2\rho.
+$$</p><p>For approximation factor $2\rho$ and $N=2$, the required threshold is $\rho T$. The sufficient conditions<br>$$
+b\geq\rho T,
+\qquad
+a+q\geq\rho T
+$$<br>are valid: the first cohort can add any missing item of value at least $q$, while the second cohort already meets the threshold.</p><p>The quantity $q$ is used only after the second cohort has received an item. This condition holds at every entry to the regular phase.</p><h3>3.3. Preparation and entry</h3><p>The preparation invariants are established correctly.</p><p>A nonmaximum item goes to the second cohort only when $a+x&gt;\phi$. This gives $a+q&gt;\phi$ when a new minimum is established; subsequent increases of $a$ preserve it. Zero-valued items go to the first cohort during preparation.</p><p>Immediately before exit, the total is below $2\phi$. Since an arriving item has value at most $1$, immediately after exit,<br>$$
+T&lt;2\phi+1.
+$$</p><p>Both exit cases are valid:</p><ul><li><b>Exit by accumulated value:</b> $a\leq\phi$, $b\geq\phi$, and $a+q&gt;\phi$. Since $\rho T&lt;\phi$, both fairness conditions hold.</li><li><b>Exit by a maximum item:</b> the second cohort has $b\geq1$, while $a\leq\phi$. This implies $b\geq a/\phi$, equivalently $b\geq\rho T$. If this is its first item, $q=b=1$; otherwise its previous minimum remains below $1$ and retains $a+q&gt;\phi$.</li></ul><p>The auxiliary implication involving $q&lt;1$ is also correctly established at entry.</p><h3>3.4. Regular-phase preservation</h3><p>When the item goes to the first cohort, the rule directly ensures the second cohort’s threshold. The displayed update<br>$$
+a+x+q-\rho(T+x)
+=(a+q-\rho T)+(1-\rho)x
+$$<br>correctly preserves the other condition.</p><p>When the item goes to the second cohort, its new utility satisfies the threshold because its previous utility was at least $\rho T$ and $x\geq\rho x$.</p><p>The remaining check for the first cohort is correctly divided into two cases:</p><ul><li><b>If $T\geq2\phi$:</b> the strict inequality selecting the second cohort, together with $x\leq1$, implies</li></ul><p>$$
+  a&gt;\rho(T+x).
+  $$<br>Hence any decrease of the minimum missed value is harmless.</p><ul><li><b>If $T&lt;2\phi$:</b> entry must have occurred through a maximum item, so $b\geq1$. The selection inequality implies $a+x&gt;\phi$. If $x$ becomes the new minimum, this proves the needed bound directly. Otherwise $q&lt;1$, and the auxiliary condition supplies it. Since $T+x&lt;2\phi+1$, the new threshold is below $\phi$.</li></ul><p>The auxiliary condition is preserved whenever the new total remains below $2\phi$. That is sufficient: totals never decrease, and the higher-total argument does not require this condition.</p><p>Thus the induction is complete.</p><h3>3.5. Legal stopping times</h3><p>Every positive-prediction type encounters a maximum item before a legal final stop and therefore enters the regular phase. Its final allocation satisfies the proved conditions.</p><p>This establishes the guarantee simultaneously for all supported types, including types that enter the regular phase at different times. The deterministic, streamwise proof also covers adaptive adversaries and every permitted stopping time.</p><h3>4. Matching upper bound for $N=2$</h3><h3>4.1. Parameter checks</h3><p>The choice<br>$$
+\rho&lt;r&lt;\min\left\{\frac\alpha2,\frac25\right\}
+$$<br>is possible for every proposed $\alpha&gt;3-\sqrt5$. A failure of $2r$-PROPX also violates $\alpha$-PROPX.</p><p>The stated relations among $c$, $h$, and $d$ are correct. In particular,<br>$$
+\frac1\phi&lt;c&lt;\frac23,
+\qquad
+d&gt;0.
+$$<br>The chosen bound on $\delta$ correctly implies<br>$$
+\delta&lt;r,
+\qquad
+1+\delta&lt;r(c+2).
+$$<br>The definition of $K$ gives<br>$$
+h&lt;K\delta\leq h+\delta.
+$$</p><h3>4.2. Measure bookkeeping</h3><p>At the first positive-measure change from $A$, equal recipient masses imply<br>$$
+\lambda(A\setminus S_k)=\lambda(S_k\setminus A)&gt;0.
+$$<br>Thus the witness set $E$ has positive measure.</p><p>The utility descriptions for $B$ and $E$ are correct after discarding the finite union of preceding exceptional null sets. Agents in $B$ miss the initial zero-valued item, which supplies the stated witness whenever their utility is below threshold.</p><h3>4.3. The first two change branches</h3><p>For $t&lt;c$, omitting a positive-mass subset of $B$ from the maximum item immediately causes failure. Avoiding that failure forces its recipient set to equal $B$ modulo null sets. Then the agents in $E$ fail because<br>$$
+t&lt;r(t+1).
+$$</p><p>For $c\leq t&lt;2c$, any agent in $B$ missing either maximum item has utility at most $1+\delta$, below $r(t+2)$. Avoiding positive-measure failure therefore forces both recipient sets to equal $B$ modulo null sets. The agents in $E$ then fail because<br>$$
+t&lt;r(t+2).
+$$</p><p>Both arguments apply to arbitrary measurable recipient sets.</p><h3>4.4. The medium-item branch</h3><p>The interval computation is correct. Under<br>$$
+2c\leq t\leq h+\delta,
+$$<br>the supplied estimates establish<br>$$
+0\leq L&lt;U&lt;1.
+$$<br>Both displayed differences between $U$ and the nonzero candidates defining $L$ have the claimed positive bounds. Hence a dyadic $x\in(L,U)$ exists.</p><p>Rearranging these inequalities yields exactly the three threshold inequalities needed for the subsequent stopping tests.</p><p>At each conditional stop, a positive-mass subset of $B$ misses the current item and has utility below the relevant threshold. If no conditional stop produces failure, all three appended recipient sets equal $B$ modulo null sets. The positive-mass set $E$ then fails using its missing small item.</p><h3>4.5. No-change branch and legality</h3><p>If no change occurs during the $K$ small items, agents in $B$ have final utility at most $1$, whereas<br>$$
+r(K\delta+1)&gt;1.
+$$<br>Their missing initial zero witnesses failure.</p><p>All branches are finite, contain a maximum-valued item, and use dyadic values in $[0,1]$. The conditional stops occur only after a maximum item has appeared, so each stopped stream satisfies the prediction promise.</p><p>The branches cover every allocation history. Because the adversary observes allocations, the argument applies separately to every realization of algorithmic randomness.</p><h3>5. Representation and running time</h3><p>The representation and complexity claims are valid.</p><p>The interval realization represents each recipient set by one cohort-selection bit per supported type. On an abstract atomless realization, the same allocation rule uses the fixed measurable halves whose existence was proved.</p><p>The irrational thresholds are handled by exact sign checks followed, where appropriate, by squaring nonnegative quantities. The stated comparison formulas are correct, including equality cases.</p><p>Common-denominator accumulation keeps intermediate integers within the stated bit bound. Products of input denominators contribute at most their total encoding length, and accumulation requires only a logarithmic allowance for the number of items. With<br>$$
+B=O\!\left(L+\log(m+1)+\log N\right),
+$$<br>the claimed bounds<br>$$
+O(m\tau B^2)
+$$<br>bit operations and $O(\tau B)$ working space are justified. The emitted selection history has $O(m\tau)$ bits.</p><h3>6. Issues and required clarification</h3><p>No unjustified nontrivial steps, false statements, hypothesis errors, missing cases, or blocking ambiguities were found. No additional clarification is required to verify the claimed result.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

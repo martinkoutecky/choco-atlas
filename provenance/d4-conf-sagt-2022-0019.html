@@ -1,0 +1,114 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-sagt-2022-0019 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-sagt-2022-0019 <span style="font-weight:normal;color:#8a7350">(d4-conf-sagt-2022-0019)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> NP-hard</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>The problem of returning a schedule minimizing the total absolute deviation is strongly NP-hard.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\) tasks with positive durations \(p_i\) and a society supported on \(\tau\) preferred schedules, each with positive binary-rational mass \(\mu_t\) summing to \(1\), compute a permutation \(S\) minimizing \(\Phi_\mu(S)=\sum_t \mu_t\sum_i |C_i(S)-d_{i,t}|\), where \(C_i(S)\) is task \(i\)’s completion time in \(S\), and \(d_{i,t}\) is its completion time in type \(t\)’s preferred schedule.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>There are \(m\geq 1\) tasks with positive binary-rational durations \(p_i\). Every schedule is a permutation of all tasks, executed on one machine from time \(0\), without idle time or preemption.<br>A society is given by its support: \(\tau\geq 1\) distinct preferred schedules \(V_t\), each with positive binary-rational mass \(\mu_t\), where \(\sum_{t=1}^{\tau}\mu_t=1\). Here \(\tau\) is the support size, not the number \(m!\) of possible types.<br>Let \(C_i(S)\) be task \(i\)&#x27;s completion time in schedule \(S\), and set \(d_{i,t}=C_i(V_t)\), using the same durations in every schedule.<br>The problem is to compute a permutation \(S\) minimizing \(\Phi_\mu(S)=\sum_{t=1}^{\tau}\mu_t\sum_{i=1}^{m}|C_i(S)-d_{i,t}|\); any minimizing permutation is acceptable. Let \(L\) be the total input bit length; state running times in \(m,\tau,L\).</p><p>Is exact minimization of \(\Phi_\mu\) polynomial-time solvable in \(m,\tau,L\), or is it NP-hard?</p><p>For a finite electorate with equally weighted voters, minimizing total absolute completion-time deviation is strongly NP-hard. With exactly two equally weighted voters, either preferred schedule is optimal.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The duration encoding was unspecified; durations are positive binary rationals, allowing the positive integer durations used by the discrete hardness result.</li><li>Schedules start at time zero on one machine, without idle time or preemption, as in the discrete definition.</li><li>The treatment of optimal ties was unspecified; returning any minimizing permutation suffices.</li><li>The input is nonempty: there is at least one task and one supported type. L denotes total input bit length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>Exact minimization is <b>NP-hard</b> when the support size \(\tau\) is part of the input. This follows from the finite-electorate hardness premise in the question by aggregating identical votes. The conclusion also holds if “binary-rational” is interpreted strictly as requiring dyadic masses.</p><p>The reduction does not establish hardness for any particular fixed support size.</p><h3>1. Aggregating identical votes</h3><p>Use the stated hardness result as a premise. Consider an instance with \(n\) equally weighted voters whose preferred permutations are \(R_1,\ldots,R_n\). Its objective is<br>\[
+F(S)=\sum_{r=1}^{n}\sum_{i=1}^{m}|C_i(S)-C_i(R_r)|.
+\]</p><p>Let \(V_1,\ldots,V_\tau\) be the distinct permutations appearing among these votes, and let \(c_t\) be the multiplicity of \(V_t\). Thus<br>\[
+c_t\geq 1,\qquad \sum_{t=1}^{\tau}c_t=n,\qquad \tau\leq n.
+\]<br>Keep the durations unchanged and assign mass<br>\[
+\mu_t=\frac{c_t}{n}.
+\]<br>These masses are positive and sum to one. For every permutation \(S\),<br>\[
+\Phi_\mu(S)
+=\sum_{t=1}^{\tau}\frac{c_t}{n}
+  \sum_{i=1}^{m}|C_i(S)-C_i(V_t)|
+=\frac{F(S)}{n}.
+\]<br>Consequently, the two instances have exactly the same minimizing permutations. In particular, <b>any</b> minimizer returned for the support instance solves the original instance.</p><p>This transformation has polynomial size and running time. Identical permutations can be grouped by lexicographic sorting, using<br>\[
+O\!\left(nm\log(n+1)\log(m+1)\right)
+\]<br>bit operations for comparisons of task labels. Each mass has an encoding of \(O(\log(n+1))\) bits. The output contains at most \(n\) permutations, so it is polynomial in the original input length.</p><p>Therefore, a polynomial-time algorithm in \(m,\tau,L\) would yield a polynomial-time algorithm for the given NP-hard finite-electorate problem.</p><h3>2. If the masses must be dyadic</h3><p>The fractions \(c_t/n\) need not be dyadic. The following modification proves hardness under that stricter interpretation too.</p><p>Let \(D\) be a common denominator of the source durations; for example, take the product of their encoded denominators. Define<br>\[
+q_i=Dp_i,\qquad Q=\sum_{i=1}^{m}q_i.
+\]<br>All \(q_i\) and \(Q\) are positive integers. For each support permutation, put<br>\[
+a_t(S)=D\sum_{i=1}^{m}|C_i(S)-C_i(V_t)|.
+\]<br>Every scaled completion time is an integer between \(0\) and \(Q\), hence<br>\[
+a_t(S)\in\mathbb Z_{\geq 0},
+\qquad
+a_t(S)\leq mQ.
+\]</p><p>The original normalized, scaled objective is<br>\[
+H_0(S)=\sum_{t=1}^{\tau}\frac{c_t}{n}a_t(S)
+      =\frac{DF(S)}{n}.
+\]<br>Since \(DF(S)\) is an integer, any two distinct values of \(H_0\) differ by at least \(1/n\).</p><p>Choose a power of two \(M\) satisfying<br>\[
+M&gt;4n\tau mQ.
+\]<br>For \(t&lt;\tau\), define<br>\[
+k_t=\left\lfloor\frac{Mc_t}{n}\right\rfloor,
+\qquad
+k_\tau=M-\sum_{t&lt;\tau}k_t,
+\qquad
+\widehat\mu_t=\frac{k_t}{M}.
+\]<br>Because \(M&gt;n\) and \(c_t\geq 1\), every \(k_t\) with \(t&lt;\tau\) is positive. Moreover,<br>\[
+k_\tau\geq \frac{Mc_\tau}{n}&gt;0.
+\]<br>Thus these are positive dyadic masses summing to one.</p><p>For \(t&lt;\tau\), the rounding error has absolute value less than \(1/M\). The last coordinate compensates for their sum. Therefore,<br>\[
+\sum_{t=1}^{\tau}
+\left|\widehat\mu_t-\frac{c_t}{n}\right|
+\leq \frac{2\tau}{M}.
+\]<br>Writing<br>\[
+\widehat H(S)=\sum_{t=1}^{\tau}\widehat\mu_t a_t(S)
+            =D\Phi_{\widehat\mu}(S),
+\]<br>we obtain, uniformly over all permutations,<br>\[
+|\widehat H(S)-H_0(S)|
+\leq \frac{2\tau mQ}{M}
+&lt;\frac{1}{2n}.
+\]</p><p>Let \(T\) minimize \(\widehat H\), and let \(S^*\) minimize \(H_0\). If \(T\) were not an original minimizer, the integer gap would give<br>\[
+H_0(T)-H_0(S^*)\geq \frac1n.
+\]<br>But optimality of \(T\) for \(\widehat H\) gives<br>\[
+\begin{aligned}
+H_0(T)-H_0(S^*)
+&amp;=[H_0(T)-\widehat H(T)]
+  +[\widehat H(T)-\widehat H(S^*)]
+  +[\widehat H(S^*)-H_0(S^*)]\\
+&amp;&lt;\frac1{2n}+0+\frac1{2n}
+=\frac1n,
+\end{aligned}
+\]<br>a contradiction. Hence <b>every dyadic-instance minimizer is an original minimizer</b>.</p><p>Finally, this is a polynomial-size construction. If the source input length is \(L_0\), then \(D\) and \(Q\) have polynomially many bits. Taking the smallest suitable power of two gives<br>\[
+\log M=O\!\left(\log(n\tau m)+\log Q\right),
+\]<br>so all constructed masses have polynomial encoding length. This completes the reduction even under the dyadic interpretation.</p><h3>3. Exact running-time bounds</h3><p>For completeness, the problem admits an exact subset dynamic program.</p><p>Define the individual completion-time cost<br>\[
+f_i(x)=\sum_{t=1}^{\tau}\mu_t|x-d_{i,t}|.
+\]<br>For a subset \(A\) of tasks, let<br>\[
+P(A)=\sum_{i\in A}p_i,
+\]<br>and let \(B(A)\) be the minimum total cost of ordering precisely the tasks in \(A\), starting at time zero. Then<br>\[
+B(\varnothing)=0,
+\qquad
+B(A)=\min_{i\in A}
+\left[B(A\setminus\{i\})+f_i(P(A))\right].
+\]</p><p>To justify the recurrence, if task \(i\) is last, it completes at \(P(A)\). Removing it leaves a schedule of \(A\setminus\{i\}\), with all other completion times unchanged. Conversely, appending \(i\) to an optimal ordering of that smaller subset attains the corresponding candidate value.</p><p>All arithmetic can be performed exactly by clearing the duration and mass denominators. The resulting integers have \(O(L)\) bits: products of input denominators have bit lengths bounded by their total encoded length, and summing the objective terms adds only logarithmically many bits.</p><p>Using ordinary quadratic-time integer arithmetic, this yields:</p><ul><li>Evaluation of one permutation: \(O(m\tau L^2)\) bit operations.</li><li>Exact optimization: \(O(2^m m\tau L^2)\) bit operations.</li><li>Dynamic-programming storage, including preferred completion times: \(O((2^m+m\tau)L)\) bits.</li></ul><p>Recording a minimizing last task at each subset reconstructs a minimizing permutation.</p><h3>4. The two-voter case</h3><p>The hardness conclusion concerns unrestricted support size and is consistent with the stated two-voter result.</p><p>Indeed, for two schedules \(V_1,V_2\) of equal mass, the triangle inequality gives<br>\[
+\Phi_\mu(S)
+\geq \frac12\sum_{i=1}^{m}|C_i(V_1)-C_i(V_2)|.
+\]<br>Both \(S=V_1\) and \(S=V_2\) attain this bound.</p><p>Thus the target problem is NP-hard in general, despite this easy special case.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The output correctly resolves the task: exact minimization is NP-hard when the support size is unrestricted. Both reductions preserve the property needed for the requested output: <b>any returned minimizing permutation solves the source instance</b>. No major or minor mathematical issues were found.</p><ul><li><b>Use of the hardness premise</b></li></ul><p>The finite-electorate hardness result is explicitly supplied by <code>USER_TASK</code>, so the prover may use it as a premise without proving or citing it separately. The source instance is represented by its explicitly listed voter permutations \(R_1,\ldots,R_n\), as required for the stated polynomial-size transformation.</p><p>The prover appropriately limits its conclusion to unrestricted support size. It does not claim hardness for a particular fixed support size or claim that the dyadic reduction establishes strong NP-hardness.</p><ul><li><b>Aggregation of identical votes</b></li></ul><p>The multiplicities satisfy \(c_t\geq 1\), \(\sum_t c_t=n\), and \(\tau\leq n\). Consequently, the constructed masses \(c_t/n\) are positive and sum to one, and the support permutations are distinct.</p><p>The identity \(\Phi_\mu(S)=F(S)/n\) holds for every permutation \(S\). Multiplication by the positive constant \(1/n\) preserves all minimizing permutations, including ties. Thus the reduction satisfies the task’s requirement that any minimizing permutation be acceptable.</p><p>The sorting bound is valid: there are \(O(n\log(n+1))\) comparisons, each examining at most \(m\) labels of \(O(\log(m+1))\) bits. Each mass has \(O(\log(n+1))\) encoding length. Since the source explicitly contains \(n\) permutations, the transformation is polynomial in its input length.</p><ul><li><b>Integer scaling and objective separation</b></li></ul><p>Taking the product of the duration denominators produces a valid common denominator \(D\). Hence \(q_i=Dp_i\) and \(Q=\sum_i q_i\) are positive integers.</p><p>Every scaled completion time lies between \(0\) and \(Q\), so each scaled absolute deviation is an integer at most \(Q\). Therefore \(a_t(S)\) is a nonnegative integer bounded by \(mQ\), as stated.</p><p>The equality \(H_0(S)=DF(S)/n\) is correct. Since \(DF(S)\) is an integer, distinct objective values differ by at least \(1/n\). This separation statement applies to distinct values, without incorrectly excluding ties.</p><ul><li><b>Dyadic masses</b></li></ul><p>The choice \(M&gt;4n\tau mQ\) implies \(M&gt;n\). Thus every rounded numerator for \(t&lt;\tau\) is positive. The compensating last numerator satisfies \(k_\tau\geq Mc_\tau/n&gt;0\), and the numerators sum exactly to \(M\).</p><p>Each of the first \(\tau-1\) coordinate errors has magnitude less than \(1/M\). The last coordinate compensates for their sum, so the stated total error bound \(2\tau/M\) is valid, although conservative.</p><p>Combining this with \(a_t(S)\leq mQ\) yields the uniform strict bound<br>\[
+   |\widehat H(S)-H_0(S)|&lt;\frac{1}{2n}.
+   \]<br>The constants and strict inequality are correct.</p><p>The comparison between a rounded-objective minimizer \(T\) and an original minimizer \(S^*\) is valid. Rounded optimality makes the middle difference nonpositive, while the two perturbation terms together are strictly less than \(1/n\). This contradicts the original objective separation whenever \(T\) is not an original minimizer.</p><p>The argument establishes the required inclusion of minimizer sets; it does not require every original minimizer to remain optimal after rounding. For \(\tau=1\), the empty sum gives \(k_1=M\), so the construction also covers that edge case.</p><ul><li><b>Encoding size of the dyadic construction</b></li></ul><p>The product defining \(D\) has bit length bounded by the total denominator encoding length. The scaled durations and their sum \(Q\) consequently have polynomial bit length.</p><p>Choosing the smallest suitable power of two gives the stated bound on \(\log M\). Thus the dyadic numerators and denominators have polynomial encoding length. The potentially large numerical value of \(M\) does not invalidate the reduction because it is encoded in binary.</p><ul><li><b>Subset dynamic program and running times</b></li></ul><p>The recurrence correctly uses the fixed preferred completion times from the full input schedules. When \(i\) is last in an ordering of \(A\), its completion time is \(P(A)\), and deleting it leaves every earlier completion time unchanged. Conversely, appending it realizes the corresponding candidate cost. The base case \(B(\varnothing)=0\) is correct.</p><p>Clearing duration and mass denominators permits exact integer arithmetic. Products of denominators, completion-time sums, and objective sums have \(O(L)\) bits under the stated explicit input representation.</p><p>There are \(2^m\) states and at most \(m\) candidates per state. Evaluating a candidate cost directly uses \(\tau\) terms. The stated optimization bound \(O(2^m m\tau L^2)\), evaluation bound \(O(m\tau L^2)\), and storage bound \(O((2^m+m\tau)L)\) are valid conservative bounds. Recording a minimizing last task supports reconstruction within these bounds.</p><ul><li><b>Two equally weighted voters</b></li></ul><p>The coordinatewise triangle inequality gives the displayed lower bound. Either preferred schedule attains equality because one deviation term vanishes and the other equals the distance between the two preferred completion-time vectors. This verifies the special case and is consistent with unrestricted-support hardness.</p><p>No additional clarification or repair is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

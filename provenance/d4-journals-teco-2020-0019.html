@@ -1,0 +1,296 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Group Fairness in Committee Selection — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Group Fairness in Committee Selection <span style="font-weight:normal;color:#8a7350">(d4-journals-teco-2020-0019)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 (Main) — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>In both the {\sc approval set} and {\sc ranking} settings with $m$ candidates, for any committee size $K$, a stable lottery over committees of size $K$ always exists. Furthermore, for any $\epsilon &gt; 0$, an $\epsilon$-approximately $L$-stable lottery can be computed in $poly\left(m^L, \frac{1}{\epsilon} \right)$ time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), committee size \(K\), deviation bound \(L\), tolerance \(\epsilon&gt;0\), and a distribution \(\mu\) over approval-set or ranking types, compute a finite-support lottery \(\Delta\) over committees \(S\subseteq C\) with \(|S|=K\) such that, for every deviation \(S&#x27;\subseteq C\) with \(1\le |S&#x27;|\le L\), \(\mathbb{E}_{S\sim\Delta}[\sum_{t:S&#x27;\succ_t S}\mu_t]\le (1+\epsilon)|S&#x27;|/K\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given a candidate set \(C\) with \(m=|C|\), integers \(1\le \ell\le K\le m\), and a positive binary rational \(\epsilon\), consider the following lottery computation problem.<br>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass \(\mu_t\) a binary rational, with \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types; let \(L\) be the total input bit length.<br>Each type specifies either an approval set \(A_t\subseteq C\), possibly empty, or a strict total ranking of \(C\); mixtures of these two kinds are permitted. An approval type strictly prefers \(S&#x27;\) to \(S\) exactly when \(|S&#x27;\cap A_t|&gt;|S\cap A_t|\); a ranking type does so exactly when its favorite candidate in \(S&#x27;\) outranks its favorite candidate in \(S\). Indifference never counts as strict preference.<br>Compute an explicitly listed finite lottery \(\Delta\), with nonnegative binary rational probabilities summing to one, over committees \(S\subseteq C\) of size exactly \(K\), satisfying \(\mathbb{E}_{S\sim\Delta}[\sum_{t:S&#x27;\succ_t S}\mu_t]\le(1+\epsilon)|S&#x27;|/K\) for every \(S&#x27;\subseteq C\) with \(1\le |S&#x27;|\le\ell\).</p><p>Is computing such a lottery possible in time \(\operatorname{poly}(m,\tau,L,K,\ell,1/\epsilon)\), allowing randomized computation with success probability at least \(2/3\), or is this search problem NP-hard?</p><p>For finite voter lists, stable lotteries exist, and approximately stable lotteries admit an expected-time randomized \(\operatorname{poly}(m^{\ell},1/\epsilon)\) algorithm in the voter-comparison model, including mixed preferences; ranking-only profiles admit polynomial time for unrestricted \(\ell\). [Cheng et al.](https://arxiv.org/abs/1905.04438)<br>For finite approval-only elections, a recent result gives polynomial-time computation of deterministic core committees. [Becker et al.](https://arxiv.org/html/2609.11912v1)<br>No source located establishes the stated unrestricted computation bound or NP-hardness for this explicitly supported rational-mass lottery problem.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Renamed the deviation bound to ell so that L denotes total input bit length.</li><li>Required integer committee and deviation sizes with 1 &lt;= ell &lt;= K &lt;= m, and normalized positive rational masses to sum to one.</li><li>Used strict total candidate rankings, as in the ranking proof; committee indifference does not contribute to capture mass.</li><li>Permitted empty approval sets and mixtures of approval and ranking types, consistent with the stated models and mixed-preference extension.</li><li>Required an explicit lottery with binary rational probabilities and a binary rational positive tolerance.</li><li>Allowed randomized polynomial-time computation with success probability at least two thirds, reflecting the anchor&#x27;s randomized algorithm.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial results for mixed profiles</h3><p>The unrestricted search problem remains unresolved here. The following results strengthen the fixed-support tractability result in the notes:</p><ul><li>Mixed profiles admit a polynomial-time randomized algorithm when the number of <b>approval types</b> is fixed, even when the number of ranking types is unrestricted.</li><li>Every mixed profile admits an approximately stable dyadic lottery supported on at most $a\ell+m+1$ committees, where $a$ is the number of approval types.</li></ul><p>The algorithm has running time<br>$$
+\operatorname{poly}\!\left(m,\tau,L,K,\ell,1/\epsilon,(\ell+1)^{a+1}\right)
+$$<br>and success probability at least $5/6$. Its dependence on $a$ prevents it from settling the requested unrestricted bound.</p><p>The proof uses the probability-matching idea of [Cheng et al.](https://arxiv.org/html/1905.04438v1), but proves the required rounding inequalities directly.</p><h3>1. Definitions and a stronger system of inequalities</h3><p>Partition the supported types into approval types $\mathcal A$ and ranking types $\mathcal R$, and write $a=|\mathcal A|$. For a size-$K$ committee $S$ and a nonempty deviation $T$, define<br>$$
+g(S,T)=\sum_t\mu_t\mathbf 1[T\succ_t S].
+$$<br>For a lottery $\Delta$, let $g(\Delta,T)=\mathbb E_{S\sim\Delta}[g(S,T)]$.</p><p>For each candidate $c$, define its ranking capture mass against $S$ by<br>$$
+r_c(S)=\sum_{t\in\mathcal R}\mu_t\mathbf 1[\{c\}\succ_t S].
+$$<br>Consider the stronger capture expression<br>$$
+\widetilde g(S,T)
+=
+\sum_{t\in\mathcal A}\mu_t
+\mathbf 1[|T\cap A_t|&gt;|S\cap A_t|]
++
+\sum_{c\in T}r_c(S).
+$$</p><p>For every ranking type, if $T$ is strictly preferred to $S$, then some candidate in $T$ is strictly preferred to the favorite candidate in $S$. Consequently,<br>$$
+g(S,T)\le\widetilde g(S,T).
+$$<br>The same inequality holds after taking expectations over $S$.</p><p>Since the masses sum to one, for $1\le |T|\le\ell$ we also have<br>$$
+0\le\widetilde g(S,T)\le |T|.
+$$<br>Indeed, an approval type contributes at most its mass, and a ranking type contributes at most $|T|$ times its mass.</p><p>We will prove feasibility and tractability results for the stronger inequalities<br>$$
+\widetilde g(\Delta,T)\le\frac{|T|}{K}.
+$$</p><h3>2. Dependent rounding and an elementary probability bound</h3><h3>Lemma 1: rounding with negative dependence</h3><p>Given rational numbers $\alpha_c\in[0,1]$ satisfying<br>$$
+\sum_{c\in C}\alpha_c=K,
+$$<br>one can sample a size-$K$ committee $S$ such that, writing $X_c=\mathbf 1[c\in S]$,<br>$$
+\mathbb E[X_c]=\alpha_c
+$$<br>and, for every $U\subseteq C$,<br>$$
+\mathbb E\!\left[\prod_{c\in U}(1-X_c)\right]
+\le
+\prod_{c\in U}(1-\alpha_c).
+$$</p><p><b>Proof.</b> Start with the fractional vector $x=\alpha$. While two coordinates $x_i,x_j$ are fractional, put<br>$$
+u=\min\{1-x_i,x_j\},
+\qquad
+v=\min\{x_i,1-x_j\}.
+$$<br>Replace $(x_i,x_j)$ by<br>$$
+(x_i+u,x_j-u)
+$$<br>with probability $v/(u+v)$, and otherwise by<br>$$
+(x_i-v,x_j+v).
+$$<br>The update preserves their sum and their individual expectations. At least one of the two coordinates becomes integral.</p><p>Fix $U$. If it contains neither updated coordinate, its product is unchanged. If it contains exactly one, the product has unchanged conditional expectation. If it contains both, write the update as $(x_i+t,x_j-t)$. Then<br>$$
+(1-x_i-t)(1-x_j+t)
+=
+(1-x_i)(1-x_j)+(x_j-x_i)t-t^2.
+$$<br>Since $\mathbb E[t]=0$, its conditional expectation cannot increase. Multiplication by the remaining nonnegative factors preserves this conclusion.</p><p>Thus the relevant product is a supermartingale. There are at most $m$ updates. At termination all coordinates are integral: one remaining fractional coordinate would contradict the integral coordinate sum $K$. This proves the claims. $\square$</p><h3>Lemma 2: a reciprocal-moment bound</h3><p>Let $X=\sum_{i=1}^hX_i$, where the $X_i$ are zero-one variables satisfying the negative-dependence inequality in Lemma 1. Put $\lambda=\mathbb E[X]&gt;0$. For every positive integer $j$,<br>$$
+\Pr[X&lt;j]\le
+j\frac{1-e^{-\lambda}}{\lambda}.
+$$</p><p><b>Proof.</b> For $z\in[0,1]$, expand<br>$$
+z^X=\prod_{i=1}^h\bigl(z+(1-z)(1-X_i)\bigr).
+$$<br>All coefficients in this expansion are nonnegative. Negative dependence therefore gives<br>$$
+\mathbb E[z^X]
+\le
+\prod_{i=1}^h\bigl(1-(1-z)\mathbb E[X_i]\bigr)
+\le
+e^{-\lambda(1-z)}.
+$$<br>Integrating and using the finite support of $X$ yields<br>$$
+\mathbb E\!\left[\frac1{X+1}\right]
+=
+\int_0^1\mathbb E[z^X]\,dz
+\le
+\frac{1-e^{-\lambda}}{\lambda}.
+$$<br>On the event $X&lt;j$, integrality gives $X+1\le j$. Hence<br>$$
+\mathbf 1[X&lt;j]\le\frac{j}{X+1}.
+$$<br>Taking expectations proves the result. $\square$</p><h3>3. A response to every lottery of deviations</h3><h3>Proposition 3: the stronger system has a probability-matching response</h3><p>Let $\Gamma$ be any lottery over deviations $T$ satisfying $1\le |T|\le\ell$. There is an efficiently samplable lottery $\mathcal D_\Gamma$ over size-$K$ committees such that<br>$$
+\mathbb E_{S\sim\mathcal D_\Gamma,\ T\sim\Gamma}
+\left[\widetilde g(S,T)-\frac{|T|}{K}\right]\le0,
+$$<br>where $S$ and $T$ are sampled independently.</p><p><b>Proof.</b> Define<br>$$
+p_c=\Pr_{T\sim\Gamma}[c\in T],
+\qquad
+\beta=\frac{\mathbb E_{T\sim\Gamma}[|T|]}{K}.
+$$<br>Then $0&lt;\beta\le1$ and<br>$$
+\sum_cp_c=\beta K.
+$$<br>Therefore<br>$$
+\sum_c\min\{1,p_c/\beta\}\le K.
+$$<br>Increase these quantities, if necessary, to a vector $\alpha\in[0,1]^m$ whose sum is exactly $K$. Such an increase is possible because $K\le m$. Sample $S$ using Lemma 1.</p><p>We establish a contribution bound of $\beta$ for each type.</p><h3>Approval types</h3><p>Fix an approval set $A$. Partition it into<br>$$
+F=\{c\in A:\alpha_c=1\},
+\qquad
+B=A\setminus F.
+$$<br>Almost surely $F\subseteq S$, so<br>$$
+|T\cap A|&gt;|S\cap A|
+\quad\Longrightarrow\quad
+|T\cap B|&gt;|S\cap B|.
+$$<br>Put<br>$$
+X=|S\cap B|,
+\qquad
+Y=|T\cap B|,
+\qquad
+\lambda=\mathbb E[X].
+$$<br>For every $c\in B$, the inequality $\alpha_c&lt;1$ implies $p_c\le\beta\alpha_c$. Consequently,<br>$$
+\mathbb E[Y]\le\beta\lambda.
+$$</p><p>If $\lambda=0$, then $\mathbb E[Y]=0$, and both variables vanish almost surely. Capture is impossible.</p><p>Otherwise, $X$ and $Y$ are independent, and Lemma 2 gives<br>$$
+\begin{aligned}
+\Pr[X&lt;Y]
+&amp;=\sum_{j\ge1}\Pr[Y=j]\Pr[X&lt;j]\\
+&amp;\le
+\frac{1-e^{-\lambda}}{\lambda}
+\sum_{j\ge1}j\Pr[Y=j]\\
+&amp;\le\beta.
+\end{aligned}
+$$<br>Thus the approval type&#x27;s capture probability is at most $\beta$.</p><h3>Ranking types</h3><p>Fix a ranking<br>$$
+c_1\succ c_2\succ\cdots\succ c_m.
+$$<br>Let $h$ be the first index with $\alpha_{c_h}=1$, or let $h=m+1$ if there is no such index.</p><p>For $j\ge h$, singleton capture by $c_j$ is impossible. For $j&lt;h$, Lemma 1 gives<br>$$
+\Pr[\{c_j\}\succ S]
+=
+\Pr[X_{c_1}=\cdots=X_{c_j}=0]
+\le
+\prod_{i=1}^j(1-\alpha_{c_i}).
+$$<br>Since $p_{c_j}\le\beta\alpha_{c_j}$ for these indices,<br>$$
+\begin{aligned}
+\sum_{j=1}^mp_{c_j}\Pr[\{c_j\}\succ S]
+&amp;\le
+\beta\sum_{j=1}^{h-1}
+\alpha_{c_j}\prod_{i=1}^j(1-\alpha_{c_i})\\
+&amp;\le
+\beta\sum_{j=1}^{h-1}
+\alpha_{c_j}\prod_{i=1}^{j-1}(1-\alpha_{c_i})\\
+&amp;=
+\beta\left(1-\prod_{i=1}^{h-1}(1-\alpha_{c_i})\right)\\
+&amp;\le\beta.
+\end{aligned}
+$$<br>This bounds precisely the expected <b>sum of singleton captures</b> contributed by this ranking type.</p><p>Weighting both kinds of bounds by their masses gives<br>$$
+\mathbb E[\widetilde g(S,T)]\le\beta.
+$$<br>The expected deviation cost is also $\beta$, proving the proposition. $\square$</p><p>The construction needs only the candidate inclusion marginals of $\Gamma$. It does not need an explicit enumeration of its support.</p><h3>4. Strong feasibility and shorter lottery descriptions</h3><h3>Theorem 4: existence with support at most $a\ell+m+1$</h3><p>Every instance admits a lottery satisfying<br>$$
+\widetilde g(\Delta,T)\le\frac{|T|}{K}
+\qquad
+(1\le |T|\le\ell),
+$$<br>supported on at most $a\ell+m+1$ committees, with rational probabilities of polynomial encoding length.</p><p>For every positive $\epsilon$, the same support bound is attainable with dyadic probabilities satisfying the original requested inequalities.</p><p><b>Proof.</b> Consider the finite zero-sum game with defender actions all size-$K$ committees, attacker actions all permitted deviations, and attacker payoff<br>$$
+H(S,T)=\widetilde g(S,T)-\frac{|T|}{K}.
+$$<br>Proposition 3 shows that against every mixed attacker strategy, some defender action has expected payoff at most zero. The finite minimax theorem therefore gives a defender lottery satisfying all the stronger inequalities. Both action sets are finite and nonempty, so the theorem applies.</p><p>For support reduction, associate to $S$ the following vector with $d_0=a\ell+m$ coordinates:</p><ul><li>For each approval type $t$ and each $1\le j\le\ell$, the coordinate $\mathbf 1[|S\cap A_t|&lt;j]$.</li><li>For each candidate $c$, the coordinate $r_c(S)$.</li></ul><p>Every value $\widetilde g(\Delta,T)$ is a linear function of the expected vector.</p><p>Any convex combination of these vectors can be reduced to at most $d_0+1$ vectors. Indeed, if more coefficients are positive, the augmented vectors $(1,\Phi(S))$ are linearly dependent. Thus there are coefficients $\gamma_S$, of both signs, satisfying<br>$$
+\sum_S\gamma_S=0,
+\qquad
+\sum_S\gamma_S\Phi(S)=0.
+$$<br>Replacing probabilities $p_S$ by $p_S-\theta\gamma_S$, where<br>$$
+\theta=\min_{\gamma_S&gt;0}\frac{p_S}{\gamma_S},
+$$<br>preserves their sum and expected vector, preserves nonnegativity, and removes at least one positive coefficient. Iteration proves the support bound.</p><p>Fix the resulting $R\le d_0+1$ committees. The polytope of probabilities on them satisfying the stronger inequalities is nonempty, compact, and rational. Choose a vertex.</p><p>Write $\mu_t=u_t/v_t$ and put $Q=\prod_tv_t$, so $\log Q\le L$. Multiplying each deviation constraint by $KQ$ gives integer coefficients and right-hand sides bounded in absolute value by $KQ\ell$. At the vertex, $R$ independent active constraints determine the probabilities. Cramer&#x27;s rule bounds their numerators and denominators by<br>$$
+R!(KQ\ell)^R.
+$$<br>Thus each probability has bit length<br>$$
+O\!\left(R(L+\log K+\log\ell+\log R)\right).
+$$</p><p>Finally, choose a power of two $N\ge RK/\epsilon$. Round the probabilities to multiples of $1/N$: take their floors after multiplication by $N$, then increment enough distinct entries to make their sum $N$. Each coordinate changes by at most $1/N$, so total variation changes by at most $R/(2N)$.</p><p>Because $g(S,T)\in[0,1]$, every original capture expectation changes by at most this total variation distance. The rounded lottery $\widehat\Delta$ therefore satisfies<br>$$
+g(\widehat\Delta,T)
+\le
+\frac{|T|}{K}+\frac{\epsilon}{2K}
+\le
+(1+\epsilon)\frac{|T|}{K}.
+$$<br>Rounding introduces no new committees. $\square$</p><p>This is an existence and encoding theorem; it does not construct the support in unrestricted polynomial time.</p><h3>5. An attacker representation depending only on approval types</h3><p>We next give an explicit polynomial-size representation when $a$ is fixed.</p><p>Order the candidates $c_1,\ldots,c_m$. Build a directed acyclic graph whose states are<br>$$
+(i,s,z_1,\ldots,z_a),
+$$<br>where $i$ candidates have been processed, $s\le\ell$ have been selected, and<br>$$
+z_t=|T\cap A_t|
+$$<br>among the processed candidates.</p><p>The initial state is $(0,0,0,\ldots,0)$. At candidate $c_{i+1}$:</p><ul><li>Exclusion leaves $s$ and all counts unchanged.</li><li>Inclusion increases $s$ by one and increases $z_t$ by $\mathbf 1[c_{i+1}\in A_t]$.</li></ul><p>At layer $m$, states with $1\le s\le\ell$ connect to a common sink. A source-to-sink path specifies exactly one permitted deviation, and every permitted deviation has such a path.</p><p>The graph has<br>$$
+O\!\left((m+1)(\ell+1)^{a+1}\right)
+$$<br>vertices and edges. Let $d$ be its number of edges.</p><p>Let $P\subseteq\mathbb R^d$ be its nonnegative unit source-to-sink flow polytope. Every flow decomposes into a probability distribution over paths: repeatedly extract a positive-flow path and subtract its minimum edge flow. Acyclicity ensures that this process accounts for the entire flow. Thus $P$ represents lotteries of deviations.</p><p>Every coordinate lies in $[0,1]$, so<br>$$
+\|x-u\|_2^2\le d
+\qquad
+(x,u\in P).
+$$</p><p>For a fixed defender committee $S$, define an edge vector $w(S)$ as follows:</p><ul><li>An inclusion edge for candidate $c$ receives weight $r_c(S)-1/K$.</li><li>An exclusion edge receives weight zero.</li><li>A terminal edge with count vector $z$ receives weight</li></ul><p>$$
+\sum_{t\in\mathcal A}\mu_t\mathbf 1[z_t&gt;|S\cap A_t|].
+$$</p><p>Every coordinate has absolute value at most one. A path representing $T$ has total weight $H(S,T)$. Consequently, for the deviation lottery represented by $x$,<br>$$
+w(S)\cdot x=\mathbb E[H(S,T)].
+$$</p><p>Both the candidate marginals needed by Proposition 3 and this expected payoff are computable directly from $x$ in polynomial time.</p><h3>6. Polynomial-time computation for fixed approval-type count</h3><h3>Theorem 5</h3><p>There is a randomized algorithm with running time<br>$$
+\operatorname{poly}\!\left(
+m,\tau,L,K,\ell,1/\epsilon,(\ell+1)^{a+1}
+\right)
+$$<br>that outputs an explicitly listed dyadic lottery satisfying the requested inequalities with probability at least $5/6$.</p><p><b>Proof.</b> Put<br>$$
+\epsilon_0=\min\{\epsilon,1\},
+\qquad
+\delta=\frac{\epsilon_0}{4K}.
+$$<br>Let $q$ be the smallest power of two satisfying $q\ge d/\delta$, and set<br>$$
+N=q^2,
+\qquad
+\eta=\frac1q.
+$$<br>Start with any path flow $x_1\in P$.</p><h3>Obtaining a defender response</h3><p>At iteration $j$, apply Proposition 3 to the deviation lottery represented by $x_j$. Independently sample committees from its rounding construction until finding $S_j$ with<br>$$
+w(S_j)\cdot x_j\le\delta.
+$$</p><p>To bound the success probability of a trial, write<br>$$
+Z=w(S)\cdot x_j.
+$$<br>Proposition 3 gives $\mathbb E[Z]\le0$, while $Z\ge-1$, because capture is nonnegative and deviation cost is at most one. If $p=\Pr[Z\le\delta]$, then<br>$$
+0\ge\mathbb E[Z]\ge-p+\delta(1-p).
+$$<br>Hence<br>$$
+p\ge\frac{\delta}{1+\delta}.
+$$<br>Thus polynomially many trials suffice.</p><p>After accepting $S_j$, set<br>$$
+x_{j+1}
+=
+\operatorname{proj}_P\bigl(x_j+\eta w(S_j)\bigr),
+$$<br>where the projection minimizes squared Euclidean distance.</p><h3>The regret calculation</h3><p>Write $w_j=w(S_j)$. For every $u\in P$, the projection inequality gives<br>$$
+\|x_{j+1}-u\|_2^2
+\le
+\|x_j+\eta w_j-u\|_2^2.
+$$<br>For completeness, if $y$ is the projection of $z$, first-order optimality gives $(z-y)\cdot(u-y)\le0$ for every $u\in P$. Expanding squared distances proves the stated inequality.</p><p>Rearranging and summing over $j$ gives<br>$$
+\sum_{j=1}^Nw_j\cdot(u-x_j)
+\le
+\frac{\|x_1-u\|_2^2}{2\eta}
++
+\frac{\eta}{2}\sum_{j=1}^N\|w_j\|_2^2.
+$$<br>The bounds $\|x_1-u\|_2^2\le d$ and $\|w_j\|_2^2\le d$ imply<br>$$
+\frac1N\sum_{j=1}^Nw_j\cdot(u-x_j)
+\le
+\frac dq
+\le\delta.
+$$<br>Every accepted response satisfies $w_j\cdot x_j\le\delta$, so<br>$$
+\frac1N\sum_{j=1}^Nw_j\cdot u\le2\delta
+\qquad
+(u\in P).
+$$</p><p>Return the uniform lottery on $S_1,\ldots,S_N$. Taking $u$ to be the path flow of any permitted deviation $T$ yields<br>$$
+\widetilde g(\Delta,T)-\frac{|T|}{K}\le2\delta.
+$$<br>Therefore<br>$$
+g(\Delta,T)
+\le
+\frac{|T|}{K}+\frac{\epsilon_0}{2K}
+\le
+(1+\epsilon)\frac{|T|}{K}.
+$$<br>This conclusion holds simultaneously for all deviations. Since $N$ is a power of two, every output probability $1/N$ is dyadic. Repeated committees may be merged.</p><h3>Rational arithmetic and projection complexity</h3><p>Each projection is a rational convex quadratic program over the explicitly described nonempty compact polytope $P$, with positive definite Hessian $2I$. Polynomial-time rational convex quadratic programming therefore applies. See [Kozlov, Tarasov, and Khachiyan](https://www.mathnet.ru/eng/zvmmf5189).</p><p>We must additionally rule out excessive bit growth over the iterations. Let $y$ be the projection of rational $z$. Choose independent active constraint rows $B$ at $y$, with right-hand side $b$. The flow constraints have entries in $\{0,1,-1\}$, and<br>$$
+y=z-B^{\mathsf T}(BB^{\mathsf T})^{-1}(Bz-b).
+$$<br>Indeed, $y-z$ is orthogonal to the direction space of the minimal face containing $y$, and the displayed formula is the orthogonal projection onto its affine hull.</p><p>The integer determinant $\det(BB^{\mathsf T})$ has bit length $O(d\log(d+1))$ by Hadamard&#x27;s inequality. Thus projection increases a common denominator&#x27;s bit length by at most that amount. Adding $\eta w_j$ increases it by at most $O(L+\log q)$. Over $N$ iterations the bit lengths remain polynomial in $N,d,L,\log q$.</p><p>In the rounding construction, all current coordinates can use a common denominator. Pair updates add or subtract such coordinates and preserve that denominator. Each rounding trial consequently uses polynomial-bit arithmetic.</p><h3>A bounded running time and success probability</h3><p>Cap the number of trials per iteration at<br>$$
+J=
+\left\lceil\frac{1+\delta}{\delta}\right\rceil
+\left\lceil\log_2(12N)\right\rceil.
+$$<br>For any iteration, conditional on its preceding history, the probability of accepting no trial is at most<br>$$
+\left(1-\frac{\delta}{1+\delta}\right)^J
+\le\frac1{12N}.
+$$<br>A union bound over iterations gives failure probability at most $1/12$.</p><p>Rational Bernoulli choices can be sampled by drawing uniform integers with binary rejection sampling. Each rejection attempt fails with probability less than $1/2$. There are at most $NJm$ such choices. Capping each sampler after<br>$$
+B=\left\lceil\log_2(12NJm)\right\rceil
+$$<br>attempts gives additional failure probability at most $1/12$, by coupling with the uncapped exact samplers.</p><p>The bounded algorithm therefore succeeds with probability at least $5/6$. Its iteration count, trial count, arithmetic lengths, and projection costs are polynomial in the claimed parameters. $\square$</p><p>For fixed $a$, this proves the requested form of polynomial-time tractability even with arbitrarily many ranking types. It does not give uniform polynomial dependence on $a$.</p><h3>7. Approval-only computation and the quota clarification</h3><p>For completeness, the approval-only result in the notes extends to rational masses as follows.</p><p>Choose<br>$$
+N_{\mathrm v}=\left\lceil\frac{\tau K}{\epsilon}\right\rceil.
+$$<br>Round the masses to $\nu_t=n_t/N_{\mathrm v}$, with nonnegative integers $n_t$ summing to $N_{\mathrm v}$, using floors followed by increments. Then<br>$$
+\frac12\sum_t|\mu_t-\nu_t|
+\le\frac{\tau}{2N_{\mathrm v}}
+\le\frac{\epsilon}{2K}.
+$$<br>For every committee and deviation, capture mass changes by at most this total variation distance. To justify this, the mass difference has sum zero, and the captured-type indicator lies in $[0,1]$; its inner product with the difference is bounded by the total positive mass of that difference.</p><p>Construct the election containing $n_t$ copies of approval type $t$. [Becker, Greger, and Peters, Theorem 7.1](https://arxiv.org/html/2609.11912v1) computes a core+ committee in polynomial time using quota<br>$$
+q_{\mathrm B}
+=
+\frac12\left(\frac{N_{\mathrm v}}K+
+\frac{N_{\mathrm v}}{K+1}\right).
+$$<br>Core+ excludes, in particular, integral blocking coalitions at this quota. Since $q_{\mathrm B}&lt;N_{\mathrm v}/K$, it also excludes every blocking coalition at the Hare quota $N_{\mathrm v}/K$.</p><p>Thus its returned committee $S$ satisfies<br>$$
+g_\nu(S,T)&lt;\frac{|T|}{K}
+$$<br>for every nonempty permitted deviation. Returning $S$ with probability one gives<br>$$
+g_\mu(S,T)
+&lt;
+\frac{|T|}{K}+\frac{\epsilon}{2K}
+\le
+(1+\epsilon)\frac{|T|}{K}.
+$$<br>The replicated election has polynomial size in $\tau,K,1/\epsilon$, and the rounding arithmetic has polynomial bit complexity. This establishes deterministic polynomial-time search for approval-only instances.</p><h3>8. What remains open</h3><p>The fixed-approval-type algorithm still uses a graph of size exponential in the variable parameter $a$. The approval-only algorithm handles unrestricted $a$, but its guarantee does not supply the responses needed for mixed profiles.</p><p>Accordingly, the unrestricted target requires either:</p><ul><li>An algorithm eliminating this exponential dependence for arbitrary mixed support; or</li><li>A search reduction proving hardness of computing <b>any</b> valid lottery.</li></ul><p>No such unrestricted algorithm or search reduction is established here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 6 and 8; resolution of USER_TASK: The unrestricted mixed-profile complexity question is not settled. The algorithm depends polynomially on $(\ell+1)^{a+1}$, which is exponential in variable $a$, and no hardness reduction is provided. This is explicitly acknowledged incompleteness.</li><li><b>minor</b> — Proposition 3: efficiently samplable response for any lottery: The computational assertion lacks an encoding assumption for the deviation marginals. Distinguish mathematical existence for real marginals from efficient exact sampling with rational marginals of specified bit length. Theorem 5 supplies rational marginals, so its application survives.</li><li><b>minor</b> — Section 6: active-row projection formula: The selected independent active rows $B$ must span all active constraint rows, including flow equalities. Independence alone does not ensure that they describe the affine hull of the minimal face. Specify a maximal independent selection.</li><li><b>minor</b> — Section 6: rational convex quadratic programming citation: State explicitly the cited theorem&#x27;s exact rational optimizer guarantee and polynomial dependence on encoded input length. The source supports the application, and the stated projection problem satisfies its hypotheses.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial, with sound substantive progress.</b> The output establishes strong feasibility, a polynomial support bound, and tractability when the number of approval types is fixed. Its approval-only extension is also valid. It does <b>not</b> resolve the unrestricted mixed-profile complexity question in <code>USER_TASK</code>, and it explicitly acknowledges that limitation.</p><p>I found no false central inequality. The partial results require only minor clarifications concerning computational representations and the projection argument.</p><h3>1. Capture expression and its bounds</h3><p>The definition of $\widetilde g$ correctly dominates $g$. For a ranking type, strict preference for $T$ means that at least one candidate in $T$ outranks the favorite candidate in $S$. Summing singleton-capture indicators can overcount that type, but cannot undercount it.</p><p>The bound</p><p>$$
+0\le \widetilde g(S,T)\le |T|
+$$</p><p>is correct for nonempty $T$: an approval type contributes at most its mass, whereas a ranking type contributes at most $|T|$ times its mass. The masses sum to one.</p><p>The proof consistently preserves strict preference. In particular, singleton capture by a ranking candidate requires that neither that candidate nor any higher-ranked candidate belong to $S$.</p><p><b>Assessment:</b> correct.</p><h3>2. Dependent rounding and the reciprocal-moment bound</h3><h3>Lemma 1</h3><p>Both updates preserve the coordinate sum and keep the coordinates in $[0,1]$. Their stated probabilities give conditional mean displacement zero, so individual expectations are preserved.</p><p>The critical expansion is correct:</p><p>$$
+(1-x_i-t)(1-x_j+t)
+=
+(1-x_i)(1-x_j)+(x_j-x_i)t-t^2.
+$$</p><p>Consequently, the conditional expectation of the product cannot increase when both updated coordinates belong to $U$. The other two cases are also correct.</p><p>Each update makes at least one fractional coordinate integral. A single remaining fractional coordinate is incompatible with the integral total $K$. Thus termination, committee size, marginals, and the claimed negative dependence all follow.</p><h3>Lemma 2</h3><p>The expansion of $z^X$ has nonnegative coefficients for $z\in[0,1]$, allowing the negative-dependence inequality to be applied term by term. The exponential bound and integration are correct.</p><p>The implication</p><p>$$
+X&lt;j\quad\Longrightarrow\quad X+1\le j
+$$</p><p>uses precisely the stated integrality and positive-integer hypothesis. The resulting reciprocal-moment bound is valid even when its right-hand side exceeds one.</p><p><b>Assessment:</b> both lemmas are correct.</p><h3>3. Probability-matching response</h3><p>The marginal normalization is valid:</p><p>$$
+0&lt;\beta\le1,
+\qquad
+\sum_c p_c=\beta K,
+\qquad
+\sum_c\min\{1,p_c/\beta\}\le K.
+$$</p><p>There is sufficient remaining coordinate capacity to increase the vector to total $K$, because $K\le m$.</p><h3>Approval contribution</h3><p>The reduction from $A$ to $B=A\setminus F$ is valid. Every candidate in $F$ belongs to $S$ almost surely, while $T$ contains at most $|F|$ such candidates.</p><p>For $c\in B$, the construction of $\alpha$ and $\alpha_c&lt;1$ imply $p_c\le\beta\alpha_c$. Hence $\mathbb E[Y]\le\beta\lambda$.</p><p>The case $\lambda=0$ is handled correctly: both nonnegative integer variables vanish almost surely. Otherwise, independence of $S$ and $T$ justifies conditioning on $Y$, and Lemma 2 yields the stated contribution bound.</p><p>Empty approval sets cause no difficulty.</p><h3>Ranking contribution</h3><p>For $j&lt;h$, the singleton-capture event is exactly avoidance of the ranking prefix through $c_j$. For $j\ge h$, capture is impossible because the certain winner $c_h$ is at least as highly ranked.</p><p>The product inequality and telescoping sum are correct, including the cases $h=1$ and $h=m+1$. They bound the expected sum of singleton captures, which is the ranking contribution required by $\widetilde g$.</p><p>Weighting the per-type bounds gives the proposition’s payoff inequality.</p><p><b>Minor issue — computational representation.</b> Proposition 3 quantifies over “any lottery” $\Gamma$ and calls its response efficiently samplable, without specifying how $\Gamma$ or its marginals are represented. The mathematical argument permits real marginals, but the later exact-arithmetic sampling algorithm requires rational marginals with a finite encoding.</p><p><b>Minimum clarification:</b> distinguish the mathematical existence assertion from the computational assertion, and specify the marginal representation and bit length for the latter. This does not obstruct Theorem 5, whose flow iterates are rational.</p><h3>4. Feasibility, support reduction, and probability encoding</h3><h3>Minimax application</h3><p>The defender and attacker action sets are finite and nonempty. Proposition 3 gives a mixed defender response of nonpositive expected payoff against every attacker lottery. Averaging then guarantees a pure defender response with nonpositive expected payoff against that lottery.</p><p>The finite minimax theorem therefore yields simultaneous feasibility of all stronger inequalities.</p><h3>Support reduction</h3><p>The feature vector has the claimed $a\ell+m$ coordinates. For each permitted $T$, its approval contribution uses the coordinate indexed by $|T\cap A_t|$ when this count is positive; a zero count contributes zero. The ranking contribution is linear in the candidate coordinates.</p><p>The affine-dependence elimination correctly preserves nonnegativity, total probability, and the expected feature vector. It establishes support at most $a\ell+m+1$.</p><h3>Rational probabilities</h3><p>After the support is fixed, the feasible probability polytope is nonempty, compact, and rational. At a vertex, independent active constraints determine the probabilities.</p><p>The integer scaling and coefficient bound are valid. Since</p><p>$$
+Q=\prod_t v_t,
+\qquad
+\log Q\le L,
+$$</p><p>the Cramer’s-rule bound gives polynomial encoding length. The exponentially many possible deviation constraints do not invalidate this existence argument.</p><h3>Dyadic rounding</h3><p>Floors followed by increments give total probability one, with each coordinate changing by at most $1/N$. The total variation bound is therefore correct.</p><p>Using $g(S,T)\in[0,1]$ bounds the change in the original capture expectation. The choice $N\ge RK/\epsilon$ provides the stated slack for every nonempty deviation.</p><p><b>Assessment:</b> Theorem 4 is correct. It establishes existence and encoding, not an unrestricted polynomial-time construction.</p><h3>5. Attacker flow representation</h3><p>The graph correctly records deviation size and all approval-intersection counts. Each permitted deviation determines a unique inclusion/exclusion path, and each source-to-sink path determines a permitted deviation.</p><p>The vertex and edge bounds are correct. A nonnegative unit flow in this acyclic graph decomposes into a distribution over paths; there is no circulation component.</p><p>The coordinate bounds, diameter bound, and edge-weight construction are valid. Terminal edges account for approval capture, while inclusion edges account for ranking singleton capture and deviation cost. Thus path weight equals $H(S,T)$.</p><p>The candidate marginals can be obtained from inclusion-edge flows without enumerating the represented lottery.</p><p><b>Assessment:</b> correct.</p><h3>6. Fixed-approval-type algorithm</h3><h3>Defender acceptance probability</h3><p>The bounds $\mathbb E[Z]\le0$ and $Z\ge-1$ imply</p><p>$$
+\Pr[Z\le\delta]\ge\frac{\delta}{1+\delta}.
+$$</p><p>The proof’s expectation estimate is correct. Its lower bound needs no upper bound on $Z$.</p><h3>Regret calculation</h3><p>The update sign is appropriate for the maximizing attacker. The projection inequality, rearrangement, and telescoping sum are correct.</p><p>With $N=q^2$ and $\eta=1/q$, the average regret bound is $d/q\le\delta$. Combining it with accepted-response payoffs gives the claimed simultaneous bound for every $u\in P$.</p><p>Taking $u$ to be a deviation path establishes the requested inequalities. The additive slack is sufficient because $|T|\ge1$ and $\epsilon_0\le\epsilon$. The uniform output probabilities are dyadic.</p><h3>Projection computation and bit complexity</h3><p>The cited quadratic-programming result supports exact polynomial-time optimization of rational convex quadratic objectives over rational linear constraints. Here the objective has positive definite Hessian, and the feasible polytope is explicitly described, nonempty, and compact. The application is valid. [Kozlov, Tarasov, and Khachiyan](https://www.mathnet.ru/eng/zvmmf5189)</p><p>The determinant and common-denominator argument correctly controls cumulative bit growth, subject to the following clarification.</p><p><b>Minor issue — selection of active rows.</b> “Choose independent active constraint rows $B$” must mean a maximal independent selection spanning the active constraint rows. An arbitrary independent subset need not describe the affine hull of the minimal face, so the displayed projection formula would not follow for that subset.</p><p><b>Minimum clarification:</b> state explicitly that the selected rows span the active constraints, including the flow equalities.</p><p><b>Minor issue — exact optimization theorem.</b> The write-up names polynomial-time rational convex quadratic programming without explicitly stating its exact-output guarantee. That guarantee matters because subsequent steps use exact rational iterates.</p><p><b>Minimum clarification:</b> state that the cited theorem returns an exact rational optimizer in time polynomial in the encoded rational objective and constraints. The source supports this application; no new mathematical argument is required.</p><h3>Bounded random computation</h3><p>The trial cap gives failure probability at most $1/(12N)$ per iteration. The union bound over iterations is valid despite adaptive histories.</p><p>Binary rejection sampling has the stated rejection bound. The cap and coupling argument contribute at most another $1/12$ failure probability. Therefore the overall success probability is at least $5/6$.</p><p>The iteration count, trial count, arithmetic lengths, and output length are polynomial in the claimed parameters.</p><p><b>Assessment:</b> Theorem 5 is sound in substance, with the minor clarifications above.</p><h3>7. Approval-only extension</h3><p>Mass rounding gives the stated total variation error, including when some rounded masses become zero. The captured-type indicator consequently changes its weighted value by at most that error.</p><p>The cited Theorem 7.1 computes a size-$K$ core+ committee in polynomial time at exactly the midpoint quota used in the output. Its model allows empty approval sets and covers $K=m$. Core+ excludes integral blocking coalitions. [Becker, Greger, and Peters, Sections 2–3 and Theorem 7.1](https://arxiv.org/html/2609.11912v1)</p><p>Because the chosen quota is smaller than the Hare quota, absence of blocking coalitions at the chosen quota implies absence at the Hare quota. The strict capture bound follows from the core definition: the complete set of voters strictly preferring $T$ would otherwise constitute a blocking coalition.</p><p>Replication size, rational arithmetic, and transfer back to the original masses have the claimed polynomial bounds.</p><p><b>Assessment:</b> correct.</p><h3>8. Resolution of <code>USER_TASK</code></h3><p><b>Major incompleteness relative to the assignment:</b> the unrestricted complexity question remains unanswered.</p><p>For variable $a$, the factor $(\ell+1)^{a+1}$ is not bounded by a uniform polynomial in the requested parameters. The approval-only result does not cover arbitrary mixtures, and the support theorem does not construct the support in unrestricted polynomial time. No hardness reduction is supplied.</p><p>This is an acknowledged limitation, not a false claim of completion. The verified partial results are substantial, and this direction is worth another round. Completing the assignment requires one of the unrestricted results identified in Section 8; none follows from the present write-up.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

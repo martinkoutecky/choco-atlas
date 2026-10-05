@@ -1,0 +1,286 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-467b6661e37cf18634f4fadddd52866c5d48cdf0 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-467b6661e37cf18634f4fadddd52866c5d48cdf0 <span style="font-weight:normal;color:#8a7350">(s5-467b6661e37cf18634f4fadddd52866c5d48cdf0)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition C.6 — class: other</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite support of worker types \(t\), rational masses \(\mu_t\), and for each type a task count \(n_t\) and a binary self-predicting signal channel, choose an integer quota \(n_0(t)\in\{0,\ldots,n_t\}\) for each type to maximize \(\sum_t \mu_t\,\delta_t(n_0(t))\), where \(\delta_t(k)\) is that type&#x27;s EA sensitivity at quota \(k\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list of \(\tau\) worker types with positive binary-rational masses \(\mu_t\), normalized by \(\sum_t\mu_t=1\); \(\tau\) counts listed types, not possible types.<br>Each type has a positive binary-encoded task count \(n_t\) and a binary-rational joint signal distribution \(J_t\) on \(\{0,1\}^2\). Write \(a_{t,i}=\sum_jJ_{t,ij}&gt;0\), \(b_{t,j}=\sum_iJ_{t,ij}\), and \(p_{t,ij}=J_{t,ij}/a_{t,i}\); require \(p_{t,00}&gt;p_{t,10}\) and \(p_{t,11}&gt;p_{t,01}\) (self-prediction).<br>At effort \(e\in[0,1]\), the \(n_t\) signal pairs are independent with joint law \(eJ_t+(1-e)a_tb_t^{\mathsf T}\). Both workers report their signals; the peer always exerts full effort.<br>For quota \(k\in\{0,\ldots,n_t\}\), enforced agreement (EA) changes only the worker&#x27;s reports: if their zero count \(r\) exceeds \(k\), flip a uniformly chosen subset of \(r-k\) zeros to ones; if \(r&lt;k\), flip a uniformly chosen subset of \(k-r\) ones to zeros. Then apply output agreement against the peer&#x27;s unchanged reports, obtaining score \(S_t(k,e)\).<br>Define \(\delta_t(k)=\left.\frac{\partial}{\partial e}\mathbb E[S_t(k,e)]\right|_{e=1^-}/\sqrt{\operatorname{Var}(S_t(k,1))}\), with expectation and variance over signals and enforcement randomness; restrict to instances with positive denominator for every feasible quota.<br>Choose one integer quota \(n_0(t)\) per type to maximize \(\sum_t\mu_t\delta_t(n_0(t))\); any maximizing vector is allowed. Let \(m=2\) be the signal alphabet size and \(L\) the total binary input length, including task counts.</p><p>Is computing a maximizing quota vector polynomial-time solvable in \(m,\tau,L\), or is it NP-hard?</p><p>For finite binary tasks, a binomial-quantile characterization of sensitivity-maximizing EA enforcement is stated by [Zhang et al.](https://arxiv.org/html/2506.02259v2#Ax3.SS3), without a bit-complexity bound.<br>No result settling this support-encoded mass optimization problem was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the positive masses to sum to one, interpreting the society as a distribution over types.</li><li>Specified the signal channel by a rational joint distribution, including the worker&#x27;s prior, with positive worker signal marginals and strict self-prediction; equal worker and peer marginals are not required.</li><li>Evaluated sensitivity at full effort using the left derivative, consistent with the full-effort sensitivity evaluations.</li><li>Included both directions of minimal random enforcement and left the peer&#x27;s reports unchanged.</li><li>Used the unconditional score variance and admitted only instances where sensitivity&#x27;s denominator is positive for every quota.</li><li>Encoded positive task counts in binary and included them in the total input length.</li><li>Kept one integer quota per type and allowed any maximizing vector when quotas tie.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial result: exact optimization for symmetric worker marginals</h3><p>The general binary-input complexity classification remains unresolved. I prove a nontrivial special case:</p><p><b>If every listed type has worker zero marginal $a_{t,0}=1/2$, then</b><br>$$
+n_0(t)=\left\lfloor\frac{n_t}{2}\right\rfloor
+$$<br><b>is a maximizing vector, computable in polynomial time in the binary input length.</b></p><p>This requires no symmetry of the joint distribution $J_t$. For an even task count, the central quota is uniquely optimal; for an odd task count, exactly the two central quotas maximize sensitivity.</p><p>I also prove a comparative-statics result for the general single-type objective.</p><h3>1. Population optimization separates</h3><p>For each type $t$, let<br>$$
+M_t=\max_{0\leq k\leq n_t}\delta_t(k).
+$$<br>These maxima exist because the feasible sets are finite. Every feasible vector satisfies<br>$$
+\sum_t\mu_t\delta_t(n_0(t))
+\leq
+\sum_t\mu_tM_t.
+$$<br>Since every $\mu_t$ is positive, equality holds if and only if every chosen coordinate maximizes its own type’s sensitivity.</p><p>Thus the support-encoded population problem reduces to one independent optimization per listed type. Conversely, the single-type problem is the population problem with $\tau=1$ and mass $1$. The masses introduce no coupling.</p><h3>2. A self-contained derivation of the single-type objective</h3><p>Suppress the type index and write<br>$$
+a=a_0,\qquad u=p_{00},\qquad v=p_{10},\qquad d=u-v.
+$$<br>The hypotheses give $0&lt;a&lt;1$ and $d&gt;0$. The peer’s zero marginal is<br>$$
+b=au+(1-a)v=v+ad.
+$$</p><p>Let $A_k(e)$ be the total number of agreements after enforcement. Dividing this score by $n$ scales its expectation derivative and standard deviation by the same positive factor, so it preserves sensitivity.</p><h3>Conditional score moments</h3><p>Let $R$ be the worker’s observed zero count. The effort mixture preserves the worker marginal, so<br>$$
+R\sim\operatorname{Bin}(n,a)
+$$<br>at every effort level.</p><p>At full effort, conditional on $R=r$, the agreement count has distribution<br>$$
+A_k(1)\mid R=r\sim
+\begin{cases}
+\operatorname{Bin}(r,u)+\operatorname{Bin}(k-r,v)
++\operatorname{Bin}(n-k,1-v),&amp;r\leq k,\\
+\operatorname{Bin}(k,u)+\operatorname{Bin}(r-k,1-u)
++\operatorname{Bin}(n-r,1-v),&amp;r\geq k,
+\end{cases}
+$$<br>where the summands are independent.</p><p>Indeed, condition first on the complete worker signal vector and the chosen flips. The peer signals are independent across tasks. The three groups have the displayed sizes and agreement probabilities. Every conditioning with the same $r$ yields the same agreement-count distribution, so averaging over positions and enforcement randomness preserves this law.</p><p>Define<br>$$
+H_k(r)=2\min(r,k)-r=k-|r-k|.
+$$<br>Expanding the conditional means gives<br>$$
+\mathbb E[A_k(1)\mid R=r]
+=n(1-v)+(2v-1)k+dH_k(r).
+$$<br>Complementary Bernoulli probabilities have equal variance, so<br>$$
+\operatorname{Var}(A_k(1)\mid R=r)
+=ru(1-u)+(n-r)v(1-v).
+$$<br>Consequently, the law of total variance gives<br>$$
+\operatorname{Var}(A_k(1))
+=C+d^2w_k,
+$$<br>where<br>$$
+C=n\bigl(au(1-u)+(1-a)v(1-v)\bigr),
+\qquad
+w_k=\operatorname{Var}(H_k(R))
+=\operatorname{Var}(|R-k|).
+$$</p><p>These variances are positive. Both $R=0$ and $R=1$ have positive probability, while $H_k(0)=0$ and $H_k(1)$ is either $1$ or $-1$. Thus $w_k&gt;0$, and $d&gt;0$ implies positive score variance.</p><h3>Expectation derivative</h3><p>At effort $e$, the conditional peer-zero probabilities are<br>$$
+u(e)=b+e(1-a)d,\qquad v(e)=b-ead.
+$$<br>Substitution into the conditional mean, followed by averaging over $R$, gives<br>$$
+\mathbb E[A_k(e)]
+=n(1-b)+(2b-1)k+2edg_k,
+$$<br>where<br>$$
+g_k=\mathbb E[\min(R,k)]-ak.
+$$<br>The expectation is affine in $e$, so its left derivative at full effort is $2dg_k$.</p><p>Setting<br>$$
+\lambda=\frac{C}{d^2}\geq0
+$$<br>therefore yields<br>$$
+\boxed{\delta(k)=\frac{2g_k}{\sqrt{\lambda+w_k}}.}
+$$</p><p>For completeness, $g_0=g_n=0$, and $g_k&gt;0$ for every interior quota when $n\geq2$. To prove this, use<br>$$
+\min(r,k)\geq\frac{kr}{n}.
+$$<br>For $0&lt;k&lt;n$, this inequality is strict whenever $0&lt;r&lt;n$. Taking expectations and using $\mathbb E[R]=na$ proves the assertion. When $n=1$, both sensitivities vanish.</p><h3>Folded-binomial representation</h3><p>Put<br>$$
+f_k=\mathbb E[|R-k|],\qquad
+\sigma^2=na(1-a).
+$$<br>Since $|R-k|^2=(R-k)^2$,<br>$$
+w_k=\sigma^2+(k-na)^2-f_k^2.
+$$<br>Also,<br>$$
+2g_k=na+(1-2a)k-f_k.
+$$<br>In particular, when $a=1/2$,<br>$$
+\boxed{g_k=\frac n4-\frac{f_k}{2}.}
+$$</p><p>The variance term genuinely depends on the quota. For example, take $n=2$ and<br>$$
+J=\frac12
+\begin{pmatrix}
+1&amp;0\\
+0&amp;1
+\end{pmatrix}.
+$$<br>Then $d=1$, $C=0$, and<br>$$
+\operatorname{Var}(A_0(1))=\frac12,
+\qquad
+\operatorname{Var}(A_1(1))=\frac14.
+$$<br>Thus the quota-independent-variance assertion underlying the cited characterization does not apply to this model. [Zhang et al., Lemma C.5 and Appendix F.6](https://arxiv.org/html/2506.02259v2#Ax6.SS6)</p><h3>3. A tail bound for finite log-concave sequences</h3><p>The following elementary lemma supplies the key variance comparison.</p><p><b>Lemma.</b> Let $\pi_0,\ldots,\pi_M$ be positive, where $M\geq1$, and suppose the ratios<br>$$
+\frac{\pi_{j+1}}{\pi_j}
+$$<br>are nonincreasing in $j$. Define<br>$$
+T_j=\sum_{i=j}^M\pi_i,\qquad T_{M+1}=0,\qquad
+\rho=\frac{T_1}{T_0}.
+$$<br>Let $Y$ have probabilities $\Pr(Y=j)=\pi_j/T_0$. For every integer $0\leq l&lt;M$,<br>$$
+\mathbb E[Y-l\mid Y&gt;l]&lt;\frac1{1-\rho}.
+$$</p><p><b>Proof.</b> For $0\leq j&lt;M$,<br>$$
+\frac{T_j}{\pi_j}
+=
+1+\sum_{h=1}^{M-j}
+\prod_{i=0}^{h-1}\frac{\pi_{j+i+1}}{\pi_{j+i}}.
+$$<br>Each product is nonincreasing when $j$ increases, and the sum then contains fewer terms. Hence $T_j/\pi_j$ is nonincreasing. Therefore $\pi_j/T_j$ is nondecreasing, and<br>$$
+\frac{T_{j+1}}{T_j}
+=1-\frac{\pi_j}{T_j}
+\leq\rho.
+$$<br>Iterating gives<br>$$
+\frac{T_{l+h}}{T_{l+1}}\leq\rho^{h-1}.
+$$<br>The tail-sum identity for a positive integer-valued random variable now gives<br>$$
+\mathbb E[Y-l\mid Y&gt;l]
+=
+\sum_{h=1}^{M-l}\frac{T_{l+h}}{T_{l+1}}
+\leq
+\sum_{h=1}^{M-l}\rho^{h-1}
+&lt;
+\sum_{h=1}^{\infty}\rho^{h-1}
+=
+\frac1{1-\rho}.
+$$<br>The strict inequality holds because $0&lt;\rho&lt;1$ and the support is finite. This proves the lemma.</p><h3>4. Folded-binomial variance increases away from the center</h3><p><b>Proposition.</b> Let $R\sim\operatorname{Bin}(n,1/2)$, with $n\geq2$. Then<br>$$
+w_{k+1}&gt;w_k
+\qquad
+\left(\left\lceil\frac n2\right\rceil\leq k&lt;n\right),
+$$<br>where $w_k=\operatorname{Var}(|R-k|)$. Moreover, $w_{n-k}=w_k$.</p><p><b>Proof.</b> Set<br>$$
+X=R-\frac n2.
+$$<br>The distribution of $X$ is symmetric, which immediately gives $w_{n-k}=w_k$.</p><p>For an outward step, write<br>$$
+c=k-\frac n2\geq0,\qquad
+q=\Pr(X&gt;c),\qquad
+s=1-2q,
+$$<br>and define<br>$$
+F(c)=\mathbb E[|X-c|],\qquad
+B_c=\mathbb E[X-c-\tfrac12\mid X&gt;c].
+$$<br>Here $q&gt;0$. By symmetry,<br>$$
+s=\Pr(-c\leq X\leq c)&gt;0.
+$$</p><p>There are no support points strictly between $c$ and $c+1$. Thus<br>$$
+F(c+1)-F(c)=1-2q=s.
+$$<br>Since $\mathbb E[X]=0$,<br>$$
+F(c)
+=c+2\mathbb E[(X-c)_+]
+=c+q+2qB_c.
+$$<br>Using<br>$$
+\operatorname{Var}(|X-c|)
+=\operatorname{Var}(X)+c^2-F(c)^2,
+$$<br>we obtain<br>$$
+\begin{aligned}
+w_{k+1}-w_k
+&amp;=2c+1-2sF(c)-s^2\\
+&amp;=4q\left(c+\frac12-sB_c\right).
+\end{aligned}
+$$<br>It remains to prove that the expression in parentheses is positive.</p><h3>Even task count</h3><p>Suppose $n=2M$. Define<br>$$
+\pi_j=\Pr(X=j)
+=2^{-2M}\binom{2M}{M+j},
+\qquad 0\leq j\leq M,
+$$<br>and put $p_*=\pi_0$. The ratios<br>$$
+\frac{\pi_{j+1}}{\pi_j}
+=\frac{M-j}{M+j+1}
+$$<br>are decreasing, and $\pi_j\leq p_*$.</p><p>Symmetry gives<br>$$
+T_0=\frac{1+p_*}{2},
+\qquad
+T_1=\frac{1-p_*}{2}.
+$$<br>Here $c=l$ for an integer $0\leq l&lt;M$. Applying the lemma to the positive-side index yields<br>$$
+B_c
+&lt;
+\frac1{1-T_1/T_0}-\frac12
+=
+\frac1{2p_*}.
+$$<br>Also,<br>$$
+s=\pi_0+2\sum_{j=1}^l\pi_j
+\leq(2l+1)p_*=(2c+1)p_*.
+$$<br>Therefore<br>$$
+sB_c&lt;\frac{s}{2p_*}\leq c+\frac12.
+$$</p><h3>Odd task count</h3><p>Suppose $n=2M+1$. Since $n\geq2$, this case has $M\geq1$. Define<br>$$
+\pi_j=\Pr(X=j+\tfrac12)
+=2^{-n}\binom n{M+1+j},
+\qquad 0\leq j\leq M,
+$$<br>and again put $p_*=\pi_0$. Now<br>$$
+\frac{\pi_{j+1}}{\pi_j}
+=\frac{M-j}{M+j+2}
+$$<br>is decreasing, and $\pi_j\leq p_*$. Symmetry gives<br>$$
+T_0=\frac12,\qquad T_1=\frac12-p_*.
+$$</p><p>Here $c=l+1/2$ for an integer $0\leq l&lt;M$. The lemma gives<br>$$
+B_c
+&lt;
+\frac1{1-T_1/T_0}-\frac12
+=
+\frac1{2p_*}-\frac12
+&lt;
+\frac1{2p_*}.
+$$<br>Furthermore,<br>$$
+s=2\sum_{j=0}^l\pi_j
+\leq2(l+1)p_*=(2c+1)p_*.
+$$<br>Again,<br>$$
+sB_c&lt;c+\frac12.
+$$</p><p>In both cases, the variance-difference formula gives $w_{k+1}-w_k&gt;0$. This proves the proposition.</p><h3>5. Exact maximizing quotas for symmetric worker marginals</h3><p><b>Theorem.</b> Suppose $a=1/2$. For every permitted self-predicting joint distribution:</p><ul><li>if $n$ is even, the unique maximizing quota is $n/2$;</li><li>if $n$ is odd, exactly the quotas $(n-1)/2$ and $(n+1)/2$ maximize sensitivity.</li></ul><p><b>Proof.</b> For $n=1$, both feasible quotas have zero sensitivity, giving the asserted pair.</p><p>Assume $n\geq2$. Reflection of the symmetric binomial distribution gives<br>$$
+f_{n-k}=f_k.
+$$<br>Hence both $g_k=n/4-f_k/2$ and $w_k$ are symmetric about $n/2$.</p><p>For every integer $k\geq\lceil n/2\rceil$ with $k&lt;n$, the preceding proof gives<br>$$
+f_{k+1}-f_k=s&gt;0.
+$$<br>Therefore<br>$$
+g_{k+1}&lt;g_k.
+$$<br>The proposition simultaneously gives<br>$$
+w_{k+1}&gt;w_k.
+$$<br>All denominators are positive, and $g_k&gt;0$ at interior quotas. Consequently,<br>$$
+\delta(k+1)^2
+=
+\frac{4g_{k+1}^2}{\lambda+w_{k+1}}
+&lt;
+\frac{4g_k^2}{\lambda+w_k}
+=
+\delta(k)^2.
+$$<br>This also covers the final step to quota $n$, whose numerator is zero. Symmetry proves strict decrease on both sides away from the central quota or central pair.</p><p>This establishes the theorem.</p><p>For a society in which every listed type satisfies $a_{t,0}=1/2$, separability now proves that choosing<br>$$
+n_0(t)=\left\lfloor\frac{n_t}{2}\right\rfloor
+$$<br>for every type is optimal. Binary integer division by $2$ takes polynomial time in the encoding length. No binomial probabilities or sensitivity comparisons need to be evaluated.</p><p>Thus this subclass is polynomial-time solvable even when the numerical task counts are exponentially large relative to their encodings.</p><h3>6. Comparative statics for arbitrary worker marginals</h3><p>The normalized objective also has a useful property without symmetry.</p><p><b>Proposition.</b> Fix $n\geq2$ and $0&lt;a&lt;1$. For $\lambda\geq0$, let<br>$$
+F_\lambda(k)=\frac{g_k^2}{\lambda+w_k}.
+$$<br>If $0\leq\lambda_1&lt;\lambda_2$ and $k_i$ is any maximizer of $F_{\lambda_i}$, then<br>$$
+g_{k_2}\geq g_{k_1},
+\qquad
+w_{k_2}\geq w_{k_1}.
+$$</p><p><b>Proof.</b> Maximizers are interior because interior values are positive and endpoint values vanish. Set<br>$$
+A_i=g_{k_i}^2&gt;0,\qquad W_i=w_{k_i}&gt;0.
+$$<br>Optimality is equivalently expressed by<br>$$
+\frac{\lambda_1+W_1}{A_1}
+\leq
+\frac{\lambda_1+W_2}{A_2},
+\qquad
+\frac{\lambda_2+W_2}{A_2}
+\leq
+\frac{\lambda_2+W_1}{A_1}.
+$$<br>Adding these inequalities and cancelling the variance terms yields<br>$$
+(\lambda_2-\lambda_1)
+\left(\frac1{A_2}-\frac1{A_1}\right)\leq0.
+$$<br>Thus $A_2\geq A_1$, and positivity of the $g$ values gives $g_{k_2}\geq g_{k_1}$.</p><p>The first optimality inequality additionally gives<br>$$
+W_2
+\geq
+\frac{A_2}{A_1}W_1
++\lambda_1\left(\frac{A_2}{A_1}-1\right)
+\geq W_1.
+$$<br>This proves the proposition, including arbitrary choices among tied maximizers.</p><h3>7. Remaining open question</h3><p>The results above settle the binary-encoded problem for symmetric worker marginals and establish an ordering property as the quota-independent variance parameter changes.</p><p>They do not classify the general problem with arbitrary $a$. The remaining single-type optimization is<br>$$
+\max_{k\in\{0,\ldots,n\}}
+\frac{\bigl(\mathbb E[\min(R,k)]-ak\bigr)^2}
+{\lambda+\operatorname{Var}(|R-k|)},
+\qquad
+R\sim\operatorname{Bin}(n,a),
+$$<br>with binary-encoded $n$.</p><p>No polynomial-time algorithm in the binary input length, and no valid hardness reduction for this general optimization, is established here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 5 and 7: scope of the complexity conclusion: The polynomial-time algorithm is established only when every listed type satisfies $a_{t,0}=1/2$. USER_TASK permits arbitrary positive worker marginals. The output supplies neither a polynomial-time exact algorithm for those general inputs nor a valid hardness reduction, and explicitly acknowledges this limitation.</li></ul>
+<div class="pre"><p>The output establishes a rigorous special case and a valid comparative-statics result, but it does <b>not resolve USER_TASK’s general complexity question</b>. Its explicit claim of partial progress is accurate. I found no mathematical error in the results it proves.</p><ul><li><b>Population separability is correct.</b></li></ul><p>Each quota has an independent feasible set, and the objective is a sum of coordinate objectives with strictly positive weights $\mu_t$. Consequently, equality in<br>$$
+   \sum_t\mu_t\delta_t(n_0(t))\leq\sum_t\mu_tM_t
+   $$<br>holds exactly when every coordinate is individually maximizing.</p><p>The converse specialization to $\tau=1$ and mass $1$ is also valid. Thus population masses introduce no optimization coupling. This reduces the target to the single-type problem; it does not establish that problem’s complexity.</p><ul><li><b>The conditional agreement distributions are correct.</b></li></ul><p>The assumptions imply $0&lt;a&lt;1$, $0\leq v&lt;u\leq1$, and $d&gt;0$. The effort mixture preserves the worker marginal, so $R\sim\operatorname{Bin}(n,a)$ independently of effort.</p><p>Conditional on the complete worker signal vector and enforcement selection, the peer signals remain independent across tasks. The three groups in each displayed distribution have the correct sizes and agreement probabilities. Their joint distribution depends only on $r$ and $k$, so averaging over the conditioning preserves the stated convolution of independent binomials.</p><p>At $r=k$, the two displayed cases agree. Zero-sized binomial groups cause no difficulty.</p><ul><li><b>The mean and variance calculations are correct.</b></li></ul><p>Expanding either conditional distribution gives<br>$$
+   \mathbb E[A_k(1)\mid R=r]
+   =n(1-v)+(2v-1)k+dH_k(r).
+   $$<br>Complementing a Bernoulli probability preserves its variance, yielding the stated conditional variance. The law of total variance therefore gives<br>$$
+   \operatorname{Var}(A_k(1))=C+d^2w_k.
+   $$</p><p>The positivity argument also holds for every permitted $n\geq1$ and every feasible quota: both $R=0$ and $R=1$ have positive probability, and their $H_k$ values differ. Hence $w_k&gt;0$, including when $C=0$. The proof does not inadvertently exclude deterministic conditional peer signals.</p><p>Replacing an average agreement score by its agreement count preserves sensitivity because both numerator and denominator scale by the same positive factor.</p><ul><li><b>The effort derivative and normalized objective are correct.</b></li></ul><p>The conditional probabilities<br>$$
+   u(e)=b+e(1-a)d,\qquad v(e)=b-ead
+   $$<br>follow from the specified joint effort mixture. Since the distribution of $R$ remains fixed, the expectation is affine in effort, with derivative $2dg_k$. Cancellation of the positive factor $d$ gives<br>$$
+   \delta(k)=\frac{2g_k}{\sqrt{\lambda+w_k}},
+   \qquad \lambda=\frac{C}{d^2}\geq0.
+   $$</p><p>The endpoint values $g_0=g_n=0$ are correct. For $n\geq2$, the inequality used to prove positivity at interior quotas is valid and strict on an event of positive probability. The separate treatment of $n=1$ is correct.</p><ul><li><b>The folded-binomial identities and variance counterexample are correct.</b></li></ul><p>Both identities<br>$$
+   w_k=na(1-a)+(k-na)^2-f_k^2,
+   \qquad
+   2g_k=na+(1-2a)k-f_k
+   $$<br>follow from the definitions.</p><p>In the displayed example, $R$ has probabilities $1/4,1/2,1/4$. At quota $0$, the agreement count is $2-R$, with variance $1/2$. At quota $1$, it equals $2$ when $R=1$ and $1$ otherwise, with variance $1/4$. Thus the example genuinely disproves quota-independent unconditional variance in the task’s model.</p><p>The cited paper does state quota independence in Lemma C.5 and uses it in deriving Proposition C.6. The prover’s characterization of that cited assertion is therefore accurate. [Zhang et al., Appendix C.3 and Appendix F.6](https://arxiv.org/html/2506.02259v2#Ax3.SS3)</p><ul><li><b>The finite log-concave tail lemma is rigorous.</b></li></ul><p>The product comparison establishes that $T_j/\pi_j$ is nonincreasing. This implies nondecreasing discrete hazards and the bound on successive tail ratios.</p><p>Every conditional expectation in the lemma is well-defined because $l&lt;M$ and all masses are positive. Also, $0&lt;\rho&lt;1$. The tail-sum identity applies to the positive integer-valued conditional residual, and the finite geometric sum is strictly smaller than the corresponding infinite sum.</p><p>No additional theorem or missing hypothesis is needed here.</p><ul><li><b>The outward variance comparison is correct.</b></li></ul><p>The symmetry identity $w_{n-k}=w_k$ is valid. In the stated outward-step range, $q&gt;0$, and the symmetric interval defining $s$ contains positive mass, so $s&gt;0$.</p><p>The lattice support justifies the increment formula<br>$$
+   F(c+1)-F(c)=s.
+   $$<br>The variance-difference calculation checks:<br>$$
+   w_{k+1}-w_k
+   =4q\left(c+\frac12-sB_c\right).
+   $$</p><p>In both parity cases, the displayed binomial ratios are correct and decreasing. The tail lemma’s positivity and support hypotheses hold, and the outward-step range gives precisely $0\leq l&lt;M$.</p><p>For even task counts, the lemma yields $B_c&lt;1/(2p_*)$. For odd task counts, it yields the stated stronger bound. The bounds on $s$ then establish<br>$$
+   sB_c&lt;c+\frac12.
+   $$<br>Hence the strict variance increase follows throughout the claimed range, including the final outward step.</p><ul><li><b>The symmetric-marginal optimization theorem is established.</b></li></ul><p>For $a=1/2$, reflection makes both numerator and denominator symmetric. On every outward step, $g_k$ strictly decreases and $w_k$ strictly increases. Numerators are nonnegative, interior numerators are positive, and denominators are positive; thus the strict comparison of squared sensitivities also proves the strict comparison of sensitivities.</p><p>The endpoint step is covered by its zero numerator. Reflection gives the left-side comparisons. For odd $n$, the central pair have equal values by symmetry. The $n=1$ case is explicitly and correctly handled.</p><p>Therefore the uniqueness assertions are justified, and choosing $\lfloor n_t/2\rfloor$ for every listed type is optimal in the stated subclass. Producing these binary integers requires polynomial time in $L$, without evaluating binomial probabilities.</p><ul><li><b>The comparative-statics proposition is correct, including ties.</b></li></ul><p>For $n\geq2$, every maximizing quota is interior because endpoint objectives vanish and interior objectives are positive. Consequently, the reciprocals used in the proof are legitimate.</p><p>Adding the two optimality inequalities gives the displayed inequality with the correct sign, implying $A_2\geq A_1$. Since the relevant $g_k$ values are positive, this implies $g_{k_2}\geq g_{k_1}$. Rearranging the first optimality inequality then gives the stated bound $W_2\geq W_1$.</p><p>Nothing in this argument requires unique maximizers, so the quantifier allowing arbitrary choices among ties is justified. This proposition supplies structural information, but no algorithmic running-time bound.</p><ul><li><b>The general complexity classification remains missing.</b></li></ul><p><b>Severity: major relative to USER_TASK’s requested resolution.</b> The polynomial-time result assumes $a_{t,0}=1/2$ for every type, whereas USER_TASK allows arbitrary positive worker marginals. Neither separability nor comparative statics supplies an exact algorithm with running time polynomial in binary input length for those arbitrary marginals. No hardness reduction is supplied either.</p><p>This is an acknowledged limitation, not a false claim of completion. The output contains genuine proved progress and should be classified as <b>partial</b>, rather than refuted.</p><p><b>Minimum actionable feedback:</b> retain the established results, but supply either an exact maximizing-quota algorithm for arbitrary permitted marginals with a binary bit-complexity bound, or a valid hardness reduction under the task’s input and output specifications. Further clarification of the existing special-case proof will not settle the general target.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

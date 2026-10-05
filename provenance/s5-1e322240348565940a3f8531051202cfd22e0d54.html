@@ -1,0 +1,437 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-1e322240348565940a3f8531051202cfd22e0d54 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-1e322240348565940a3f8531051202cfd22e0d54 <span style="font-weight:normal;color:#8a7350">(s5-1e322240348565940a3f8531051202cfd22e0d54)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: hardness</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>For \(0&lt;\Delta&lt;1/2\), let \(\mu\) be an unknown distribution on \(\rho_a=(a\succ b)\) and \(\rho_b=(b\succ a)\), with masses \(1/2+\Delta\) and \(1/2-\Delta\) in either order. Given independent samples from \(\mu\), determine the least worst-case expected number of samples and the workspace needed to identify the winner with error at most \(\epsilon\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is represented by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational; \(\tau\) is the support size, not the number of possible types. Here \(m=\tau=2\), the types are \(\rho_a=(a\succ b)\) and \(\rho_b=(b\succ a)\), and total mass is \(1\).<br>Known binary rationals \(0&lt;\Delta&lt;1/2\) and \(0&lt;\epsilon&lt;1/2\) specify two possible societies: \(\mu_+(\rho_a)=1/2+\Delta\) and \(\mu_-(\rho_a)=1/2-\Delta\). The winner is the candidate with greater mass.<br>The actual labeled mass list is hidden: a classical randomized algorithm obtains information about the society only through independent samples from it. The support types and the two possible mass assignments are known.<br>The algorithm may stop adaptively, must halt almost surely, and must have error at most \(\epsilon\) under each society. Sample cost is the worst-case expected number of samples; workspace is the worst-case expected peak number of mutable bits, including counters and retained samples, excluding read-only parameters. There is no uncounted clock or mutable external storage.<br>Let \(L\) be the total binary encoding length of the parameters and possible support descriptions; express resource bounds in \(m,\tau,L,\Delta,\epsilon\).</p><p>What are the least worst-case expected sample cost and expected workspace for identifying the winner under these conditions?</p><p>The discrete sampling-only result states expected-time \(\Omega(n^2(1/2-\epsilon)^2/\operatorname{MoV}^2)\) and expected-space \(\Omega(\log(n^2(1/2-\epsilon)^2/\operatorname{MoV}^2))\) lower bounds. Its two-candidate family already has sampling probabilities \(1/2\pm\operatorname{MoV}/n\), exactly the distribution family specified here. [Verified source](https://proceedings.mlr.press/v216/liu23a/liu23a.pdf)<br>No separate open continuous complexity question was verified.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Restricted the support representation to a hidden instance accessed through samples; revealing its labeled masses would reveal the winner and contradict the sampling-only discrete model.</li><li>Made Delta and epsilon known binary rational parameters and restricted epsilon to (0,1/2), excluding the zero-sample random-guess endpoint.</li><li>Allowed adaptive stopping and internal classical randomization, with almost-sure termination and a separate error guarantee under each possible society.</li><li>Defined expected workspace as expected peak mutable bits, excluding read-only parameters but counting counters, retained samples, and other mutable state.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Results and scope</h3><p>The least worst-case expected sample count can be determined exactly. For workspace, I prove stronger bounds than those in the notes: they match in their dependence on $\Delta$ and $\epsilon$, up to an additive $O(\log L)$ term for parameter processing. That remaining term prevents a complete characterization in every regime.</p><p>Throughout, $m=\tau=2$. Define<br>$$
+p=\frac12+\Delta,\qquad q=\frac12-\Delta,\qquad
+r=\frac pq,\qquad \theta=\ln r,
+$$<br>and<br>$$
+\delta=1-2\epsilon,\qquad
+t=\ln\frac{1-\epsilon}{\epsilon}.
+$$<br>Thus $r&gt;1$, $\theta&gt;0$, $0&lt;\delta&lt;1$, and<br>$$
+\delta=\tanh(t/2).
+$$</p><p>Let $N_*$ be the minimum worst-case expected sample count. Let $W_*$ be the infimum of worst-case expected peak workspace over admissible algorithms, minimizing workspace independently of sample count.</p><p>The results proved below are:</p><ul><li>An exact formula for $N_*$, and consequently</li></ul><p>$$
+   N_*=
+   \Theta\left(
+   \frac{\delta}{\Delta}
+   \max\left\{1,\frac{t}{\theta}\right\}
+   \right).
+   $$</p><ul><li>Universal constants $c,C&gt;0$ such that, with</li></ul><p>$$
+   F=1+\delta\log_2\left(1+\frac{1+t}{\theta}\right),
+   $$<br>$$
+   cF\leq W_*+1
+   \leq C\bigl(F+\log_2(L+1)\bigr).
+   $$</p><ul><li>A uniform algorithm with expected sample count $O(N_*)$ and deterministic peak workspace</li></ul><p>$$
+   O\left(
+   \log(L+1)+\log\left(1+\frac{t}{\theta}\right)
+   \right).
+   $$</p><p>The workspace upper bounds use ordinary explicit binary encodings of rational numerators and denominators, or explicit finite binary expansions.</p><p>For the workspace lower bound, I count a complete changing configuration: control location, input addresses, counters, and retained samples are included. This implements the stipulated absence of an uncounted clock or mutable external storage. Allowing arbitrarily many uncharged changing control states would permit those states to act as storage.</p><h3>1. Exact optimum for expected samples</h3><p>Encode a sampled $\rho_a$ by $X=1$ and a sampled $\rho_b$ by $X=-1$. Under $\mu_+$,<br>$$
+\Pr(X=1)=p,\qquad \mathbb E X=2\Delta,
+$$<br>and under $\mu_-$ these probabilities are exchanged.</p><p>For every integer $j\geq0$, put<br>$$
+d_j=\frac{r^j-1}{r^j+1}
+=\tanh(j\theta/2).
+$$<br>Then $d_0=0$, and $d_j$ increases strictly to $1$.</p><p>Define<br>$$
+k=\left\lceil\frac{t}{\theta}\right\rceil,\qquad
+\lambda=\frac{\delta-d_{k-1}}{d_k-d_{k-1}}.
+$$<br>Because $\delta=\tanh(t/2)$,<br>$$
+d_{k-1}\leq\delta\leq d_k,
+$$<br>so $0\leq\lambda\leq1$.</p><p><b>Proven claim.</b><br>$$
+\boxed{
+N_*=
+\frac{(1-\lambda)(k-1)d_{k-1}
++\lambda k d_k}{2\Delta}.
+}
+$$</p><h3>1.1 Threshold tests and achievability</h3><p>For $j\geq1$, maintain<br>$$
+S_n=\sum_{i=1}^n X_i
+$$<br>and stop at<br>$$
+T_j=\inf\{n:|S_n|=j\}.
+$$<br>Announce $a$ at $S_{T_j}=j$ and $b$ at $S_{T_j}=-j$.</p><p>Under $\mu_+$, the probability $h(s)$ of reaching $j$ before $-j$ satisfies<br>$$
+h(s)=p\,h(s+1)+q\,h(s-1),
+\qquad h(-j)=0,\quad h(j)=1.
+$$<br>Writing $z=q/p$, its solution is<br>$$
+h(s)=\frac{1-z^{s+j}}{1-z^{2j}}.
+$$<br>In particular,<br>$$
+\Pr_+(S_{T_j}=j)=\frac{r^j}{1+r^j},
+\qquad
+\Pr_+(S_{T_j}=-j)=\frac{1}{1+r^j}.
+$$<br>Sign exchange gives the corresponding probabilities under $\mu_-$. The error under each society is therefore<br>$$
+\frac{1-d_j}{2}.
+$$</p><p>This stopping time has finite expectation. From any interior state, $2j$ consecutive positive samples force absorption. Under either society, that event has probability at least $q^{2j}&gt;0$. Consequently,<br>$$
+\Pr(T_j&gt;2j\ell)\leq(1-q^{2j})^\ell.
+$$</p><p>Since $\{T_j\geq i\}$ is determined before sample $i$, independence and absolute summability give<br>$$
+\mathbb E_+S_{T_j}
+=\sum_{i\geq1}\mathbb E_+[X_i\mathbf 1_{\{T_j\geq i\}}]
+=2\Delta\,\mathbb E_+T_j.
+$$<br>The terminal probabilities imply $\mathbb E_+S_{T_j}=jd_j$. Hence<br>$$
+\mathbb E_+T_j=\mathbb E_-T_j=\frac{jd_j}{2\Delta}.
+$$</p><p>For $j=0$, take no samples and announce a fair random candidate. Choose threshold $k$ with probability $\lambda$, and threshold $k-1$ otherwise. Its error under each society is exactly $\epsilon$, since<br>$$
+(1-\lambda)d_{k-1}+\lambda d_k=\delta.
+$$<br>Its expected sample count is the displayed formula for $N_*$.</p><h3>Exact threshold computation</h3><p>The ceiling defining $k$ can be computed without numerical logarithms.</p><p>Write<br>$$
+r=\frac AB,\qquad
+\frac{1-\epsilon}{\epsilon}=\frac CD
+$$<br>with positive integers $A&gt;B$ and $C&gt;D$. Starting at $j=1$, compute successive integer powers until<br>$$
+A^jD\geq B^jC.
+$$<br>The first such $j$ is exactly $k$. The procedure terminates because $(A/B)^j$ tends to infinity, and the non-strict comparison handles equality correctly.</p><p>The numbers $d_j$ and $\lambda$ are rational. To generate an exact coin with rational probability $u/v$, draw a uniformly random integer using $\lceil\log_2v\rceil$ fair bits, reject values at least $v$, and accept precisely values below $u$. Each trial succeeds with probability greater than $1/2$, so this randomization halts almost surely and uses no society samples.</p><p>This establishes exact sample-optimal achievability; it does not assert that this implementation minimizes workspace.</p><h3>1.2 Lower bound for arbitrary adaptive algorithms</h3><p>Consider any admissible algorithm with finite expected sample count under both societies. Put an equal prior on the two societies, writing $H=1$ for $\mu_+$ and $H=-1$ for $\mu_-$. Let $D\in\{1,-1\}$ be the announced winner, $T$ the sample count, and<br>$$
+S_T=\sum_{i=1}^T X_i.
+$$</p><p>For a complete stopped transcript, including private randomness, the likelihood ratio is $r^{S_T}$. Sampling contributes this factor; the algorithm&#x27;s randomization and stopping rules are identical under the two hypotheses and cancel. Therefore<br>$$
+\mathbb E[H\mid\text{transcript}]
+=\tanh(\theta S_T/2).
+$$</p><p>The two error guarantees imply<br>$$
+\mathbb E[HD]\geq\delta.
+$$<br>Conditioning on the transcript yields<br>$$
+\delta\leq\mathbb E[d_{|S_T|}].
+$$</p><p>There is also an exact cost identity:<br>$$
+2\Delta\,\mathbb ET
+=\mathbb E[HS_T]
+=\mathbb E[|S_T|d_{|S_T|}].
+$$<br>For the first equality, expand the stopped sum. Conditional on $H$ and the past, $HX_i$ has mean $2\Delta$, and $\{T\geq i\}$ is determined before sample $i$. Interchanging sum and expectation is justified by $\mathbb ET&lt;\infty$. The second equality follows from the posterior formula and $|S_T|\leq T$.</p><p>Let $g$ be the piecewise linear interpolant through<br>$$
+(d_j,jd_j),\qquad j=0,1,2,\ldots.
+$$<br>These points lie on<br>$$
+f(x)=\frac{2}{\theta}x\,\operatorname{artanh}(x).
+$$<br>Direct differentiation gives<br>$$
+f&#x27;&#x27;(x)=\frac{4}{\theta(1-x^2)^2}&gt;0
+\qquad(0\leq x&lt;1).
+$$<br>Thus successive secant slopes increase, so $g$ is convex. Its ordinates increase, so it is also increasing.</p><p>Jensen&#x27;s inequality now gives<br>$$
+2\Delta\,\mathbb ET
+=\mathbb E[g(d_{|S_T|})]
+\geq g(\mathbb E[d_{|S_T|}])
+\geq g(\delta).
+$$<br>Here the required expectations are finite by the cost identity. The prior-average expected sample count is at most the larger society-specific expectation. Consequently every admissible algorithm has worst-case expected sample count at least<br>$$
+\frac{g(\delta)}{2\Delta},
+$$<br>which is precisely the value attained in Section 1.1.</p><h3>2. Uniform consequences for sample complexity</h3><p>At each interpolation point, $jd_j\geq d_j$, so $g(x)\geq x$. Convexity of $f$ also gives $g(x)\geq f(x)$. Therefore<br>$$
+N_*\geq
+\frac{\delta}{2\Delta}
+\max\left\{1,\frac{t}{\theta}\right\}.
+$$</p><p>For an upper bound, run the threshold-$k$ test with probability $\delta/d_k$, and otherwise announce a random candidate. Its error is exactly $\epsilon$, and its expected sample count is<br>$$
+\frac{\delta k}{2\Delta}
+\leq\frac{\delta}{2\Delta}\left(1+\frac{t}{\theta}\right).
+$$<br>Hence<br>$$
+\boxed{
+N_*=
+\Theta\left(
+\frac{1-2\epsilon}{\Delta}
+\max\left\{
+1,
+\frac{\ln((1-\epsilon)/\epsilon)}
+{\ln((1/2+\Delta)/(1/2-\Delta))}
+\right\}
+\right).
+}
+$$</p><p>For $0&lt;\Delta\leq1/4$,<br>$$
+\frac{d\theta}{d\Delta}=\frac{4}{1-4\Delta^2},
+$$<br>and integration gives<br>$$
+4\Delta\leq\theta\leq\frac{16}{3}\Delta.
+$$<br>Thus<br>$$
+N_*=
+\Theta\left(
+\frac{\delta}{\Delta}
++\frac{\delta t}{\Delta^2}
+\right).
+$$</p><p>In particular:</p><ul><li>If $\epsilon$ is bounded above by a fixed constant below $1/2$, then</li></ul><p>$$
+  N_*=\Theta\left(\Delta^{-2}\ln\frac1\epsilon\right).
+  $$</p><ul><li>If $\epsilon$ tends to $1/2$, then $t=\Theta(\delta)$ and</li></ul><p>$$
+  N_*=
+  \Theta\left(
+  \frac{\delta}{\Delta}
+  +\frac{\delta^2}{\Delta^2}
+  \right).
+  $$</p><ul><li>If $\epsilon\geq q$, equivalently $\delta\leq2\Delta$, then $k=1$ and</li></ul><p>$$
+  N_*=\frac{\delta}{2\Delta}.
+  $$</p><h3>3. A finite-state lemma for expected peak workspace</h3><p>Let $B$ denote an execution&#x27;s peak number of mutable bits. Under the equal prior, write<br>$$
+\overline W=\mathbb EB.
+$$<br>Then<br>$$
+\overline W\leq
+\max\{\mathbb E_+B,\mathbb E_-B\}.
+$$</p><p>A complete configuration using at most $b$ bits has at most<br>$$
+K_b\leq2^{b+1}
+$$<br>possible encodings. Fixed additive encoding overhead changes only constants below.</p><p>The following lemma controls executions with an <b>exact</b> peak workspace, rather than merely executions below a memory cap.</p><p><b>Proven lemma.</b> For every integer $b\geq0$ and announcement $d\in\{1,-1\}$, put<br>$$
+u_{b,d}=\Pr_+(B=b,D=d),\qquad
+v_{b,d}=\Pr_-(B=b,D=d).
+$$<br>Then either both probabilities vanish, or<br>$$
+e^{-16\cdot2^b\theta}
+\leq\frac{u_{b,d}}{v_{b,d}}
+\leq e^{16\cdot2^b\theta}.
+$$<br>Consequently,<br>$$
+\boxed{
+\delta\leq
+\mathbb E\left[\tanh(8\cdot2^B\theta)\right].
+}
+$$</p><h3>3.1 Proof of the probability-ratio bound</h3><p>Truncate the algorithm immediately before its workspace would exceed $b$. Augment its configuration with one flag recording whether workspace exactly $b$ has already been reached.</p><p>There are at most $2K_b$ transient states and five terminal outcomes:</p><ul><li>announcement $a$, with peak below $b$;</li><li>announcement $b$, with peak below $b$;</li><li>announcement $a$, with peak exactly $b$;</li><li>announcement $b$, with peak exactly $b$;</li><li>overflow.</li></ul><p>This truncated process terminates almost surely: an execution either overflows or follows an almost-surely terminating original execution.</p><p>Use elementary transitions consuming at most one society sample. Under the two societies, every nonzero transition probability has ratio in $[r^{-1},r]$. Deterministic operations and private random bits have ratio one. Merging transitions preserves these bounds. Because $p,q&gt;0$, the reachable transition graph is the same under both societies.</p><p>Reset each terminal state to the initial state, and remove unreachable states. The resulting finite chain is irreducible: every reachable state has a path to a terminal state, terminals return to the initial state, and the initial state reaches every retained state.</p><p>Its number of states satisfies<br>$$
+n_b\leq2K_b+5\leq2^{b+2}+5.
+$$</p><p>For a finite irreducible Markov chain, the Markov chain tree formula expresses stationary mass at a state as its total rooted spanning-tree weight divided by the sum of these weights. Each tree weight is the product of its transition probabilities. These hypotheses are exactly those checked above. [Aldous and Fill, Corollary 9.11](https://www.stat.berkeley.edu/~aldous/RWG/Book_Ralph/Ch9.S2.html)</p><p>Every tree has $n_b-1$ edges. Its weight ratio between the two societies therefore lies in<br>$$
+[r^{-(n_b-1)},r^{n_b-1}],
+$$<br>as does the ratio of a sum of weights over the same trees.</p><p>The probability of a terminal outcome in one execution equals its stationary mass divided by the total stationary mass of terminal outcomes. To justify this, divide the reset chain into successive executions: each cycle contains exactly one terminal visit. The mean cycle length is finite, because finite-state almost-sure absorption supplies a uniformly positive chance of absorption within some fixed number of steps, hence a geometric tail.</p><p>The terminal-outcome probability ratio is consequently bounded by<br>$$
+r^{2(n_b-1)}
+\leq \exp\bigl((2^{b+3}+8)\theta\bigr)
+\leq \exp(16\cdot2^b\theta).
+$$<br>The terminal outcome with peak exactly $b$ and announcement $d$ has probability $\Pr(B=b,D=d)$, proving the assertion.</p><h3>3.2 Converting the lemma into an information bound</h3><p>If $u/v$ and $v/u$ are at most $e^z$, then<br>$$
+|u-v|\leq\tanh(z/2)(u+v).
+$$<br>Indeed, after exchanging $u,v$ if necessary, the ratio $(u-v)/(u+v)$ increases with $u/v$ and is at most $(e^z-1)/(e^z+1)$.</p><p>Put<br>$$
+\eta_b=\tanh(8\cdot2^b\theta),
+\qquad
+\pi_b=\Pr(B=b)
+$$<br>under the equal prior. Applying the preceding inequality separately to the two announcements gives<br>$$
+\mathbb E[HD\,\mathbf 1_{\{B=b\}}]
+\leq\eta_b\pi_b.
+$$<br>Summing over $b$, using boundedness to justify the sum, yields<br>$$
+\delta\leq\mathbb E[HD]
+\leq\sum_b\eta_b\pi_b
+=\mathbb E[\eta_B].
+$$</p><h3>4. Stronger workspace lower bounds</h3><h3>4.1 Dependence on small $\Delta$, even for weak advantage</h3><p>First suppose $\theta\leq1/128$, and set<br>$$
+A=\log_2\frac1{8\theta}\geq4.
+$$<br>For every integer $b\geq0$,<br>$$
+\eta_b\leq\min\{1,2^{b-A}\}
+\leq\frac{2(b+1)}{A}.
+$$<br>For the last inequality:</p><ul><li>If $b+1\geq A/2$, its right side is at least one.</li><li>Otherwise $2^{b-A}\leq2^{-A/2}\leq1/A$, where $2^{A/2}\geq A$ for $A\geq4$.</li></ul><p>The lemma therefore implies<br>$$
+\delta\leq\frac{2(\overline W+1)}A.
+$$<br>Also,<br>$$
+\log_2(1+1/\theta)\leq A+4\leq2A.
+$$<br>Hence<br>$$
+\overline W+1
+\geq\frac{\delta}{4}\log_2(1+1/\theta).
+$$</p><p>If $\theta&gt;1/128$, then $\log_2(1+1/\theta)&lt;8$, and the trivial inequality $\overline W+1\geq1$ handles this range. Combining the ranges gives<br>$$
+\boxed{
+W_*+1=
+\Omega\left(
+1+\delta\log_2(1+1/\theta)
+\right).
+}
+$$</p><p>This improves the notes&#x27; lower bound when $\delta$ is small: the logarithm contains $1/\theta$, rather than only $\delta/\theta$.</p><h3>4.2 Dependence on high confidence</h3><p>The lemma and monotonicity of $\eta_b$ imply<br>$$
+\delta\leq
+\eta_b\Pr(B\leq b)+\Pr(B&gt;b).
+$$<br>Thus<br>$$
+\Pr(B&gt;b)\geq
+\frac{\delta-\eta_b}{1-\eta_b}
+$$<br>whenever the numerator is positive.</p><p>Choose $b$ satisfying<br>$$
+8\cdot2^b\theta\leq t/4.
+$$<br>Put $z=\tanh(t/4)$. Since $\delta=\tanh(t/2)$,<br>$$
+\delta=\frac{2z}{1+z^2}.
+$$<br>Because $\eta_b\leq z$ and $(\delta-x)/(1-x)$ decreases with $x&lt;1$,<br>$$
+\Pr(B&gt;b)
+\geq\frac{\delta-z}{1-z}
+=\frac{z(1+z)}{1+z^2}
+=\frac{\delta(1+z)}2
+\geq\frac{\delta}{2}.
+$$</p><p>If $t/\theta\geq2^{12}$, take<br>$$
+b=\left\lfloor\log_2(t/\theta)\right\rfloor-5.
+$$<br>Then $2^b\leq t/(32\theta)$ and<br>$$
+b\geq\frac12\log_2(t/\theta).
+$$<br>Consequently,<br>$$
+\overline W\geq b\Pr(B&gt;b)
+\geq\frac{\delta}{4}\log_2(t/\theta).
+$$<br>For smaller $t/\theta$, the additive one absorbs the bounded logarithm. Therefore<br>$$
+W_*+1=
+\Omega\left(
+1+\delta\log_2(1+t/\theta)
+\right).
+$$</p><p>Finally,<br>$$
+1+\frac{1+t}{\theta}
+\leq
+(1+1/\theta)(1+t/\theta).
+$$<br>Combining the two lower bounds proves<br>$$
+\boxed{
+W_*+1=
+\Omega\left(
+1+\delta\log_2\left(1+\frac{1+t}{\theta}\right)
+\right).
+}
+$$</p><h3>5. Parameter processing in $O(\log L)$ workspace</h3><p>The upper bounds require a uniform implementation that does not retain $L$-bit rational operands.</p><p><b>Arithmetic fact.</b> For a rational expression formed from the input rationals using a fixed number of additions, subtractions, and multiplications, one can compute signs, compare values, and determine the leading binary exponent of a positive value using $O(\log(L+1))$ mutable bits.</p><p>Here is an explicit justification.</p><p>Clear denominators symbolically. All resulting integers have $O(L)$ bits. A requested output bit can be recomputed from the input:</p><ul><li>Addition and subtraction scan columns from least significant to most significant, keeping a bounded carry or borrow.</li><li>Multiplication scans the same columns, adding at most $O(L)$ bit products per column. The carry is $O(L)$ and needs $O(\log L)$ bits.</li><li>A fixed expression depth requires only a fixed number of nested loop counters and carries.</li><li>Input addresses and column indices need $O(\log L)$ bits.</li></ul><p>Repeated scans find the highest nonzero bit and compare integers, without retaining the integers themselves.</p><p>For a positive rational $A/D$, let $a,d$ be the bit lengths of $A,D$. Its binary exponent is either $a-d-1$ or $a-d$. Comparing $A/D$ with $2^{a-d}$ decides which, by shifted integer comparison. Equality is handled exactly.</p><p>All scans are finite. Their time may be large, but they consume no society samples.</p><h3>5.1 Compact approximations to $\theta$ and $t$</h3><p>We can compute compact dyadic or small-integer values $\theta_0,u$ satisfying<br>$$
+\theta_0\leq\theta\leq4\theta_0,
+\qquad
+t\leq u\leq4t.
+$$</p><p>For $\theta_0$:</p><ul><li>If $\Delta\leq1/4$, let $h=-\lfloor\log_2\Delta\rfloor$ and $\alpha=2^{-h}$. Then $\alpha\leq\Delta&lt;2\alpha$. Set</li></ul><p>$$
+  \theta_0=4\alpha.
+  $$<br>Section 2 gives $\theta_0\leq\theta\leq4\theta_0$.</p><ul><li>If $\Delta&gt;1/4$, let $h=-\lfloor\log_2q\rfloor\geq3$ and set</li></ul><p>$$
+  \theta_0=h/4.
+  $$<br>Since $2^{-h}\leq q&lt;2^{1-h}$ and $p&gt;3/4$,<br>$$
+  \theta\geq(h-1)\ln2-\ln(4/3)
+  \geq\frac{2h}{3}-1
+  \geq\frac h4,
+  $$<br>while $\theta\leq h\ln2\leq h$.<br>The elementary inequalities used here are<br>$$
+  \ln x\geq\frac{2(x-1)}{x+1}\quad(x\geq1),
+  \qquad
+  \ln x\leq x-1.
+  $$<br>The first follows by differentiating the difference, whose derivative is $(x-1)^2/[x(x+1)^2]$.</p><p>For $u$:</p><ul><li>If $\delta\leq1/2$, let $f=-\lfloor\log_2\delta\rfloor$ and $\beta=2^{-f}$. Set $u=8\beta$. Since</li></ul><p>$$
+  2\delta\leq t
+  =\int_0^\delta\frac{2\,dx}{1-x^2}
+  \leq\frac83\delta,
+  $$<br>and $\beta\leq\delta&lt;2\beta$, we obtain $t\leq u\leq4t$.</p><ul><li>If $\delta&gt;1/2$, then $\epsilon&lt;1/4$. Let $h=-\lfloor\log_2\epsilon\rfloor$ and set $u=h$. The same calculation used for $q$ gives</li></ul><p>$$
+  h/4\leq t\leq h.
+  $$</p><p>Every exponent or small coefficient here has magnitude $O(L)$, so its compact representation needs $O(\log(L+1))$ bits.</p><h3>6. Uniform upper bounds</h3><h3>6.1 Constant-factor optimal samples with small workspace</h3><p>First suppose $\delta\leq2\Delta$. Put<br>$$
+a_0=\frac{\delta}{2\Delta}\leq1
+$$<br>and choose the smallest power of two $a_1$ satisfying $a_1\geq a_0$. Then<br>$$
+a_0\leq a_1&lt;2a_0.
+$$<br>The exponent of $a_1$ is computable by the arithmetic procedure above, including equality cases.</p><p>With probability $a_1$, take one sample and announce its top candidate. Otherwise announce a fair random candidate. Its error under either society is<br>$$
+\frac12-a_1\Delta\leq\epsilon.
+$$<br>Its sample count is less than $2N_*$.</p><p>A coin of probability $2^{-h}$ is generated by requiring $h$ consecutive fair heads, stopping at the first tail. Its counter needs $O(\log(L+1))$ bits because $h=O(L)$.</p><p>Now suppose $\delta&gt;2\Delta$. Compute $\theta_0,u$ as above and run the signed-sum test with<br>$$
+J=\left\lceil\frac{u}{\theta_0}\right\rceil.
+$$<br>Then<br>$$
+J\theta\geq t,\qquad
+J\leq1+\frac{16t}{\theta},
+$$<br>so its error is at most $\epsilon$.</p><p>Moreover,<br>$$
+\delta&gt;2\Delta=\tanh(\theta/2)
+$$<br>implies $t&gt;\theta$. Hence $J\theta\leq17t$. Concavity of $\tanh$ on the nonnegative reals, together with $\tanh(0)=0$, gives<br>$$
+d_J=\tanh(J\theta/2)\leq17\tanh(t/2)=17\delta.
+$$<br>Its expected sample count is therefore<br>$$
+\frac{Jd_J}{2\Delta}
+\leq
+\frac{17\delta}{2\Delta}
+\left(1+\frac{16t}{\theta}\right)
+=O(N_*).
+$$</p><p>The compact representations of $u,\theta_0$ allow $J$ to be formed using<br>$$
+O(\log(L+1)+\log(J+1))
+$$<br>bits. Explicitly, their ratio has the form $A2^e/C$, with $A,C=O(L)$. If the ratio is below one, $J=1$. Otherwise its numerator and denominator can be materialized using $O(\log(J+1)+\log(L+1))$ bits and divided by ordinary integer arithmetic.</p><p>The signed sum remains between $-J$ and $J$; no sample-count counter is needed. Thus this algorithm has deterministic peak workspace<br>$$
+\boxed{
+O\left(
+\log(L+1)+\log\left(1+\frac{t}{\theta}\right)
+\right).
+}
+$$</p><h3>6.2 Smaller expected workspace when $\delta$ is small</h3><p>For minimizing workspace, a different algorithm improves the dependence on $\delta$.</p><p>Suppose $\delta\leq1/4$. Choose the smallest power of two $a_1$ satisfying<br>$$
+a_1\geq2\delta.
+$$<br>Then<br>$$
+2\delta\leq a_1&lt;4\delta,\qquad a_1\leq1.
+$$<br>Compute and retain only its exponent and the compact representation of $\theta_0$. This costs $O(\log(L+1))$ bits.</p><p>With probability $a_1$, construct<br>$$
+J=\left\lceil\frac2{\theta_0}\right\rceil
+$$<br>and run the threshold-$J$ test. Otherwise announce a fair random candidate.</p><p>Because $J\theta\geq2$,<br>$$
+d_J\geq\tanh(1)&gt;\frac12.
+$$<br>The algorithm&#x27;s advantage under either society is therefore<br>$$
+a_1d_J\geq\delta,
+$$<br>which proves its error guarantee.</p><p>Also,<br>$$
+J\leq1+\frac8\theta.
+$$<br>The additional $O(\log(J+1))$ bits are allocated only on the branch of probability $a_1$. Its worst-case expected peak workspace is consequently<br>$$
+O\left(
+\log(L+1)+
+\delta\log(1+1/\theta)
+\right).
+$$<br>It halts almost surely and has finite expected sample count. This branch need not be sample-optimal.</p><p>For $\delta&gt;1/4$, use Section 6.1. Since $\delta$ is then bounded below,<br>$$
+\log(1+t/\theta)
+=O\left(
+\delta\log\left(1+\frac{1+t}{\theta}\right)
+\right).
+$$</p><p>Together, these constructions prove<br>$$
+\boxed{
+W_*+1=
+O\left(
+1+\log(L+1)+
+\delta\log_2\left(1+\frac{1+t}{\theta}\right)
+\right).
+}
+$$</p><h3>7. Resolved workspace regimes and the cited bound</h3><p>The lower and upper bounds match whenever<br>$$
+\log(L+1)=
+O\left(
+1+\delta\log_2\left(1+\frac{1+t}{\theta}\right)
+\right).
+$$<br>In that regime,<br>$$
+W_*+1=
+\Theta\left(
+1+\delta\log_2\left(1+\frac{1+t}{\theta}\right)
+\right).
+$$</p><p>Two concrete cases are fully covered.</p><p><b>One sample suffices.</b> If $\epsilon\geq q$, simply announce the top candidate of one sample. This uses bounded workspace, so<br>$$
+W_*+1=\Theta(1).
+$$<br>Its sample count need not equal the independently minimized $N_*$.</p><p><b>Fixed $\Delta$ and increasingly small error.</b> Fix a rational $\Delta\in(0,1/2)$ and let $\epsilon=2^{-h}$, with ordinary explicit encoding and no padding. Then $L=\Theta(h)$, $\theta$ is constant, $t=\Theta(h)$, and $\delta$ tends to one. Therefore<br>$$
+W_*=\Theta(\log h)
+=\Theta\left(\log\log\frac1\epsilon\right),
+$$<br>while<br>$$
+N_*=\Theta\left(\log\frac1\epsilon\right).
+$$</p><p>The cited discrete theorem states sample and space lower bounds involving $\operatorname{MoV}/n$. Substituting $\Delta=\operatorname{MoV}/n$ into its sample bound yields $\Omega(\delta^2/\Delta^2)$, consistent with Section 2. [Liu et al., Theorem 3](https://proceedings.mlr.press/v216/liu23a/liu23a.pdf)</p><p>Its displayed space expression cannot be used as a <b>uniform</b> lower bound in the present expected-peak model when $\epsilon$ varies. The following admissible family demonstrates this directly.</p><p>For integers $h\geq2$, take<br>$$
+\Delta_h=2^{-2^h},\qquad
+\delta_h=2^{-h},\qquad
+\epsilon_h=\frac{1-2^{-h}}2.
+$$<br>Their explicit encoding length is<br>$$
+L_h=\Theta(2^h).
+$$<br>Here $\theta_h=\Theta(2^{-2^h})$ and $t_h=\Theta(2^{-h})$, so<br>$$
+1+\delta_h\log_2\left(
+1+\frac{1+t_h}{\theta_h}
+\right)=\Theta(1).
+$$<br>Section 6.2 therefore provides an admissible uniform algorithm with<br>$$
+W=O(h).
+$$<br>By contrast,<br>$$
+\log_2\frac{\delta_h^2}{\Delta_h^2}
+=2^{h+1}-2h
+=\Theta(2^h).
+$$<br>Thus an asserted uniform $\Omega(\log(\delta^2/\Delta^2))$ workspace lower bound would contradict this construction under the conditions of this task.</p><p>For fixed error bounded away from $1/2$, the independently proved lower bound above does recover $\Omega(\log(1/\Delta))$ as $\Delta$ tends to zero.</p><h3>8. What remains unresolved</h3><p>The sample optimum is completely proved, including exact threshold computation.</p><p>For workspace, the established bounds are<br>$$
+c\left[
+1+(1-2\epsilon)
+\log_2\left(
+1+
+\frac{1+\ln((1-\epsilon)/\epsilon)}
+{\ln((1/2+\Delta)/(1/2-\Delta))}
+\right)
+\right]
+\leq W_*+1
+$$<br>and<br>$$
+W_*+1\leq
+C\left[
+1+\log_2(L+1)
++(1-2\epsilon)
+\log_2\left(
+1+
+\frac{1+\ln((1-\epsilon)/\epsilon)}
+{\ln((1/2+\Delta)/(1/2-\Delta))}
+\right)
+\right].
+$$</p><p>The remaining gap is the additive parameter-processing term. I have not proved that it is necessary, nor constructed an algorithm eliminating it in all regimes. Consequently, the overall task remains partial. This is a gap in this solution, not a claim that a separate continuous-complexity problem is known to be open.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 7–8: unresolved workspace regimes: The task requests the least worst-case expected workspace, but only $cF\leq W_*+1\leq C(F+\log_2(L+1))$ is established. When $\log_2(L+1)$ dominates $F$, there is no matching characterization. Complete the workspace analysis in those regimes and state the algorithmic quantifiers and encoding convention explicitly.</li><li><b>minor</b> — Results and scope; Section 4.1: claims of stronger or improved workspace bounds: The claimed improvement over the cited workspace expression is not a valid uniform comparison: the new bound has a factor $\delta$ outside the logarithm. The Section 7 family itself makes the new expression constant-order while the cited expression is $\Theta(2^h)$. Remove the improvement claim or specify a justified comparison regime and baseline in the same model.</li></ul>
+<div class="pre"><p>The output is <b>partial</b>. The exact optimum for expected samples is established. The workspace arguments establish valid bounds under the stated configuration-counting convention, but they do not determine the least expected workspace in every parameter regime. The prover acknowledges this limitation.</p><p>I found no false central mathematical step. There is one major unresolved requirement and one minor misstatement about the strength of the workspace lower bound.</p><p><b>1. Definitions and scope</b></p><p>The definitions of $p,q,r,\theta,\delta,t$ are consistent with the task. In particular,<br>$$
+p+q=1,\qquad p-q=2\Delta,\qquad
+\delta=\tanh(t/2).
+$$<br>The stipulated parameter ranges ensure that all logarithms, ratios, and denominators used subsequently are defined.</p><p>Treating sample minimization and workspace minimization as separate optimization problems is explicitly stated and consistent with asking for the least value of each resource. Because $m=\tau=2$ throughout, no general dependence on variable $m$ or $\tau$ is required.</p><p>The workspace convention counts control location and input addresses as mutable configuration information. This is a natural explicit interpretation of the prohibition on an uncounted clock or mutable external storage. The workspace lower bounds depend on this convention.</p><p><b>2. Exact sample optimum: verified</b></p><p>The threshold-test calculation is correct.</p><ul><li>The displayed hitting-probability function satisfies the recurrence and both boundary conditions.</li><li>Evaluating it at the initial state gives the stated terminal probabilities and error $(1-d_j)/2$ under each society.</li><li>The block argument supplies a geometric tail, establishing almost-sure termination and finite expected sample count.</li><li>The stopped-sum calculation is justified by absolute summability, since $|X_i|=1$ and $\mathbb E T_j&lt;\infty$.</li><li>Consequently,</li></ul><p>$$
+  \mathbb E_+T_j=\mathbb E_-T_j=\frac{jd_j}{2\Delta}.
+  $$</p><p>The threshold-zero convention correctly produces zero samples and error $1/2$. Since $t&gt;0$, the defined integer $k$ satisfies $k\geq1$, so the mixture never uses a negative threshold.</p><p>The interpolation weight satisfies $0\leq\lambda\leq1$. Exact equality at an interpolation point is handled correctly. The mixture therefore attains the stated error and expected sample count.</p><p>The integer-power comparison computes $k$ exactly, including equality cases. The exact rational-coin implementation terminates almost surely and consumes no society samples. Its potentially large workspace does not invalidate sample-optimal achievability.</p><p>For the lower bound against arbitrary adaptive algorithms:</p><ul><li>The stopped-transcript likelihood ratio is $r^{S_T}$: the hypothesis-independent randomization and stopping rules cancel.</li><li>The posterior identity follows under the equal prior.</li><li>The two separate error guarantees imply $\mathbb E[HD]\geq\delta$.</li><li>Conditioning yields $\delta\leq\mathbb E[d_{|S_T|}]$.</li><li>Both equalities in</li></ul><p>$$
+  2\Delta\,\mathbb ET
+  =\mathbb E[HS_T]
+  =\mathbb E[|S_T|d_{|S_T|}]
+  $$<br>are justified by finite expected sample count and the posterior formula.</p><p>The derivative<br>$$
+f&#x27;&#x27;(x)=\frac{4}{\theta(1-x^2)^2}
+$$<br>is correct. It establishes increasing secant slopes, hence convexity of the interpolant $g$. The interpolation ordinates increase, establishing monotonicity.</p><p>Jensen’s inequality applies: the relevant cost expectation is finite, and $d_{|S_T|}&lt;1$ almost surely. Comparing prior-average cost with worst-case cost completes the lower bound.</p><p>Thus the boxed exact formula for $N_*$ is proved.</p><p><b>3. Sample-complexity consequences: verified</b></p><p>Both lower bounds, $g(x)\geq x$ and $g(x)\geq f(x)$, hold. The alternative randomized threshold test establishes the stated upper bound. Together they justify the uniform $\Theta$ expression.</p><p>The derivative and integration bounds for $0&lt;\Delta\leq1/4$ are correct:<br>$$
+4\Delta\leq\theta\leq\frac{16}{3}\Delta.
+$$<br>The ensuing simplified sample bounds are valid in this range. The first two “In particular” statements should be read with this inherited restriction; they are not uniform simplifications over the entire interval $0&lt;\Delta&lt;1/2$.</p><p>The one-sample interpolation regime is independently correct:<br>$$
+\epsilon\geq q
+\quad\Longleftrightarrow\quad
+\delta\leq2\Delta
+\quad\Longleftrightarrow\quad
+k=1,
+$$<br>and then $N_*=\delta/(2\Delta)$.</p><p><b>4. Finite-state workspace lemma: verified under the stated model</b></p><p>Counting complete configurations makes the bound $K_b\leq2^{b+1}$ valid for binary encodings of length at most $b$.</p><p>The truncation and peak-attainment flag distinguish the event of exact peak workspace from merely remaining below a cap. The resulting process terminates almost surely.</p><p>With transitions consuming at most one society sample, each nonzero transition-probability ratio lies in $[r^{-1},r]$. Merging transitions preserves this interval. Positivity of $p$ and $q$ ensures that reachability is the same under both societies.</p><p>After resetting terminal states, the retained finite chain is irreducible. The stated rooted-tree formula is the appropriate stationary-distribution theorem, and its hypotheses are satisfied. The cited [Aldous–Fill corollary](https://www.stat.berkeley.edu/~aldous/RWG/Book_Ralph/Ch9.S2.html) supports this application.</p><p>The passage from stationary terminal masses to execution-outcome probabilities is justified by the reset cycles and finite mean cycle length. Periodicity does not invalidate the argument.</p><p>The constants check:<br>$$
+2(n_b-1)\leq2^{b+3}+8\leq16\cdot2^b.
+$$<br>The probability-ratio inequality and its conversion to the hyperbolic-tangent information bound are correct, including zero-probability outcomes.</p><p><b>5. Workspace lower bounds: calculations verified</b></p><p>In Section 4.1, the pointwise estimate on $\eta_b$ holds in both stated cases. The comparison<br>$$
+\log_2(1+1/\theta)\leq A+4\leq2A
+$$<br>is valid in the specified range. The complementary range is handled by the additive constant.</p><p>In Section 4.2, the monotonicity of $(\delta-x)/(1-x)$ is correct because $\delta&lt;1$. The double-angle identity and resulting tail-probability bound are also correct.</p><p>For the selected integer $b$, both the threshold condition and<br>$$
+b\geq\frac12\log_2(t/\theta)
+$$<br>hold when $t/\theta\geq2^{12}$. The expectation bound follows from the tail probability.</p><p>Combining the two lower bounds using the displayed product inequality establishes the claimed lower bound involving $F$.</p><p><b>Minor issue — misleading comparison with the cited bound.</b></p><p>The statement “This improves the notes&#x27; lower bound when $\delta$ is small” is not justified as a comparison of the displayed expressions. The new lower bound contains the factor $\delta$ outside the logarithm. Replacing the logarithm’s argument alone does not make the entire bound stronger.</p><p>Indeed, the prover’s own Section 7 family makes its new bound constant-order while the cited expression grows as $\Theta(2^h)$.</p><p>The minimum correction is to remove the improvement claim or identify a precise comparison regime and a valid baseline bound in the same workspace model. This wording error does not invalidate the independently proved lower bound.</p><p><b>6. Parameter processing and workspace upper bounds: verified</b></p><p>The arithmetic procedure applies to fixed-size expression structures, as stated. Intermediate integers have $O(L)$ bits; column indices and multiplication carries require $O(\log(L+1))$ bits. Recomputing requested bits permits comparison without retaining entire operands.</p><p>The leading-exponent procedure handles equality correctly.</p><p>All four approximation branches satisfy their claimed bounds. The restrictions ensuring the integer exponents are sufficiently large are satisfied, and the numerical constants in the logarithm estimates check.</p><p>In Section 6.1:</p><ul><li>The dyadic activation probability has the stated bounds, including equality cases.</li><li>The one-sample branch meets the error guarantee and uses less than $2N_*$ samples in expectation.</li><li>In the other branch, the threshold inequalities are valid.</li><li>The implication $t&gt;\theta$ and the concavity estimate for $d_J$ justify the constant-factor sample guarantee.</li><li>The compact threshold construction and signed-sum storage justify the claimed deterministic peak workspace.</li></ul><p>In Section 6.2:</p><ul><li>The activation probability satisfies $2\delta\leq a_1&lt;4\delta$.</li><li>The active threshold test has $d_J&gt;1/2$, giving the required overall advantage.</li><li>Allocating threshold storage only on the active branch justifies the factor $\delta$ in expected peak workspace.</li><li>Both branches terminate almost surely and have finite expected sample count.</li></ul><p>Thus the stated workspace upper bound is established.</p><p><b>7. Special regimes and the discrete citation: verified with the stated limitation</b></p><p>The matching-regime condition genuinely makes the lower and upper bounds agree.</p><p>The one-sample workspace conclusion and the fixed-$\Delta$ high-confidence example follow from the preceding results.</p><p>The substitution into the discrete sample expression is algebraically correct, since $1/2-\epsilon=\delta/2$. The cited [Theorem 3](https://proceedings.mlr.press/v216/liu23a/liu23a.pdf) displays the expected runtime and space expressions discussed by the prover.</p><p>For the proposed varying-error family, the encoding length, parameter asymptotics, expected workspace upper bound, and contrasting logarithmic expression all check. This demonstrates that a uniform transfer of that workspace expression to the present expected-peak model would conflict with the constructed algorithm. It does not, by itself, establish which interpretation or hypothesis accounts for the difference in the source theorem.</p><p><b>8. Major issue — the least workspace remains undetermined</b></p><p>The task asks for the least worst-case expected workspace under all stipulated parameter conditions. The output leaves the interval<br>$$
+cF\leq W_*+1\leq C\bigl(F+\log_2(L+1)\bigr)
+$$<br>unresolved when the parameter-processing term dominates $F$.</p><p>The write-up establishes neither that this term is necessary nor that it can always be eliminated. Consequently, the workspace portion of the target is incomplete. This is an acknowledged mathematical gap, not an error in the proved bounds.</p><p>To complete the assignment, the prover must provide a matching workspace characterization in the remaining regimes, with the algorithmic quantifiers and input-encoding convention explicit. Further argument is required; expositional clarification alone cannot close this gap.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

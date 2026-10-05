@@ -1,0 +1,320 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ecai-2023-0102 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ecai-2023-0102 <span style="font-weight:normal;color:#8a7350">(d4-conf-ecai-2023-0102)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 8 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>MUDAN terminates within time $O(n^2+|E|)$, satisfies IC, IR, ND, NW, and $1/m$-weak efficiency.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a fixed finite rooted directed network template, a finite menu of community profiles with rational valuations and rational population shares, a supply density \(q\), and a specified tie-breaking rule, form societies by replicating the communities and connecting their entry roles to seller \(s\). With \(m_k=\lfloor qhk\rfloor\) items for \(k\) copies of an \(h\)-buyer template, compute the limiting allocation and payment mass for each role when MUDAN runs as \(k\) grows through compatible denominators. Determine its worst-case limiting welfare factor over the allowed profiles against the top-\(q\)-mass benchmark, evaluating each tagged buyer&#x27;s incentive comparison in the finite replicas before taking the limit.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Input a directed template with \(h\geq1\) buyer roles and nonempty entry set \(R\), from which every role is reachable; a finite menu \(C\) of nonnegative rational valuation vectors \((v_{c,r})_{r=1}^h\); rational community shares \(\alpha_c\geq0\) summing to \(1\); and rational supply density \(0&lt;q\leq1\).<br>A society is given by its support: the list of its \(\tau\) types with positive mass, each mass a binary rational. Here types are community-role pairs \((c,r)\), with mass \(\alpha_c/h\); \(\tau\) is support size, not the number of possible types.<br>For integers \(k\) with every \(k\alpha_c\) integral, make \(k\alpha_c\) disjoint copies of profile \(c\), connect seller \(s\) to every copy&#x27;s entry roles, and supply \(m_k=\lfloor qhk\rfloor\) items; each buyer demands one item. No edges connect different copies.<br>Use priority \(\sigma_i=|r_i&#x27;|\), where \(r_i&#x27;\) is the reported outgoing neighbour set. Input fixed orders on communities and roles; resolve all ties lexicographically by community, role, then copy index, independently of reports.<br>MUDAN starts with explored set \(A=r_s\), winners \(W=\varnothing\), and residual supply \(\ell=m_k\). Set \(P=W\cup\operatorname{Top}_{\ell}(A\setminus W)\), taking all available buyers if fewer than \(\ell\) exist and ranking by reported valuation with the specified ties.<br>While \(\ell&gt;0\), repeatedly expand each not-yet-expanded buyer in \(W\cup(A\setminus P)\) by adding its reported neighbours to \(A\), recomputing \(P\) after each expansion. If \(P\setminus W=\varnothing\), stop; otherwise choose its highest-priority buyer \(w\), charge the current \((\ell+1)\)-st highest reported valuation in \(A\setminus W\) (zero if absent), add \(w\) to \(W\), decrement \(\ell\), and recompute \(P\). Winners receive one item; all other allocations and payments are zero.<br>At truthful reports, define \(a_{c,r}(\alpha)=\lim_k (hk)^{-1}\sum_{i\text{ of type }(c,r)}\pi_i\) and \(p_{c,r}(\alpha)=\lim_k (hk)^{-1}\sum_{i\text{ of type }(c,r)}p_i\), along the compatible integers. Let \(B_q(\alpha)=\max\{\sum_{c,r}v_{c,r}x_{c,r}:0\leq x_{c,r}\leq\alpha_c/h,\ \sum_{c,r}x_{c,r}=q\}\).<br>For the fixed template, menu, density and orders, define the worst-case factor \(\rho=\inf_{\alpha\in\mathbb Q_{\geq0}^{C},\ \sum_c\alpha_c=1,\ B_q(\alpha)&gt;0}\bigl(\sum_{c,r}v_{c,r}a_{c,r}(\alpha)\bigr)/B_q(\alpha)\); require that the menu contains a positive valuation.<br>Tagged-buyer incentive comparisons use utility \(v_i\pi_i-p_i\) in each finite replica before taking limits: allow joint deviations to any nonnegative rational bid and any subset of true outgoing neighbours, hold other reports fixed, and silence buyers made unreachable by the deviation.<br>Do these replica limits always exist, and are the decision problems asking whether a designated limiting allocation mass, payment mass, or \(\rho\) is at least an input rational threshold in \(\mathrm P\) or NP-hard? State running times in \(m\), \(\tau\), total binary input length \(L\), \(h\), template edge count, and menu size; here finite supply is \(m=m_k\), and replica expansion size is not the continuous input size.<br>Discrete MUDAN runs in \(O(n^2+|E|)\), is incentive compatible, individually rational, non-deficit and non-wasteful, and guarantees \(1/m\) of the top-\(m\) welfare among buyers not separated from the seller by the last winner. [Source](https://arxiv.org/pdf/2302.08924v2).<br>No result settling this replica-limit problem was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Community profiles specify valuations on one common template; replicas have no intercommunity edges, and every template role is reachable from the nonempty entry set.</li><li>Population shares sum to one; buyer types are community-role pairs, each with mass equal to its community share divided by h.</li><li>Valuations and bids are nonnegative rationals, and supply density lies in (0,1]; compatible replication requires integral community copy counts.</li><li>The unspecified priority is reported outgoing degree, an explicitly permitted MUDAN priority. Tie-breaking uses input community and role orders followed by copy index, independently of reports.</li><li>Missing price ranks have value zero, as indicated by the discrete examples; expansion occurs through winners and exhausted buyers, and termination handles zero supply or an empty potential-winner set.</li><li>Allocation and payment masses mean total allocation counts and total payments divided by hk, recorded separately for each community-role pair.</li><li>Allowed profiles for the worst-case factor are all rational mixtures of the supplied menu, including mixtures with zero shares; zero-benchmark mixtures are excluded and the menu must contain a positive valuation.</li><li>Tagged-buyer deviations may jointly change bids and suppress outgoing neighbours; newly unreachable buyers are silenced, following the discrete incentive definition.</li><li>The computational target uses rational-threshold decision versions and separately asks whether the required limits exist.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial solution: exact replica limits for a star with one community</h3><p>The general existence and complexity questions remain unresolved here. The main additional result is a complete solution for a nontrivial subclass: a directed star with one community, arbitrary nonnegative rational role valuations, arbitrary role order, and arbitrary rational density.</p><p>For this subclass, all allocation and payment limits exist, and all three threshold problems are in $\mathrm P$. The payment formulas account for exact supply boundaries; at such boundaries, an error of one item in the allocation count can change the payments of a positive population mass.</p><p>I also prove general structural facts and the unrestricted welfare bound from the notes, including the zero-supply case identified by the verifier.</p><h3>1. General notation and structural facts</h3><p>Fix a society $\alpha$ and a compatible integer $k$. Write<br>$$
+n=hk,\qquad m=\lfloor qhk\rfloor,\qquad
+\mu_{c,r}=\frac{\alpha_c}{h}.
+$$<br>Let $e$ be the template edge count and let $d$ be the number of communities with positive share. Then<br>$$
+\tau=hd,\qquad |E_k|=k(e+|R|).
+$$<br>Define the finite normalized outcomes<br>$$
+a^{(k)}_{c,r}
+=\frac1n\sum_{i\text{ of type }(c,r)}\pi_i,
+\qquad
+p^{(k)}_{c,r}
+=\frac1n\sum_{i\text{ of type }(c,r)}p_i.
+$$</p><p>All statements below concern truthful reports unless explicitly stated otherwise. Valuation ranking always includes the prescribed tie order.</p><h3>1.1. Exhaustion is permanent</h3><p>An explored, unallocated buyer is <b>exhausted</b> when it lies outside the current top-$\ell$ set.</p><p>Once a buyer is exhausted, it can never become a potential winner again. Indeed, at exhaustion at least $\ell$ explored, unallocated buyers precede it in valuation ranking. Exploration cannot reduce that count. Selecting a winner reduces the count by at most one and reduces $\ell$ by exactly one. The count therefore remains at least the residual supply.</p><p>This also proves independence from the order of eligible expansions. With winners and residual supply fixed, put<br>$$
+D(A)=A\setminus
+\bigl(W\cup\operatorname{Top}_{\ell}(A\setminus W)\bigr).
+$$<br>If $A\subseteq A&#x27;$, then $D(A)\subseteq D(A&#x27;)$. Consequently,<br>$$
+F(A)=A\cup\bigcup_{i\in W\cup D(A)}r_i
+$$<br>is monotone.</p><p>Iteration of $F$ from the explored set at the beginning of the expansion stage reaches its least fixed point. Every individual permitted expansion stays within this fixed point. Conversely, an exhaustive expansion sequence ends at a fixed point: all eligible buyers have been expanded, and the neighbors of previously expanded buyers are already explored. Its final explored set is therefore exactly the least fixed point. Winner tie-breaking then determines the run uniquely.</p><h3>1.2. Every truthful replica allocates its entire supply</h3><p>For $m=0$, this is immediate.</p><p>Otherwise, suppose the algorithm stops after expansion with $\ell&gt;0$ and no potential winner. Then $A\setminus W=\varnothing$, so $A=W$. Every explored buyer has been expanded, and no outgoing edge from $A$ leads outside $A$. All seller neighbors belong to $A$.</p><p>Seller reachability therefore implies that all $n$ buyers belong to $A=W$. But stopping with positive residual supply means<br>$$
+|W|&lt;m\leq n,
+$$<br>a contradiction.</p><p>Thus exactly $m$ buyers win.</p><h3>1.3. Prices are nondecreasing and individually bounded</h3><p>Suppose a winner is removed from the current top-$\ell$ set. If the current $(\ell+1)$-st buyer exists, that buyer becomes the $\ell$-th buyer after the removal. Since residual supply becomes $\ell-1$, this is precisely the next price position before further exploration. Exploration cannot decrease an order statistic. If the old price position was absent, its price was zero.</p><p>Hence successive winner prices are nondecreasing. Also, every truthful winner satisfies<br>$$
+0\leq p_i\leq v_i,
+$$<br>because it belongs to the top-$\ell$ set when charged the next valuation.</p><h3>2. A general finite welfare bound</h3><p>Let<br>$$
+V=\max_{c,r}v_{c,r},
+$$<br>and let $\operatorname{OPT}_k$ be the sum of the top $m$ valuations among all $n$ buyers.</p><p><b>Proposition.</b> Every truthful replica satisfies<br>$$
+\sum_i v_i\pi_i\geq \frac{\operatorname{OPT}_k}{h}-V.
+$$</p><h3>Proof</h3><p>If $m=0$, both welfare and $\operatorname{OPT}_k$ are zero, so the assertion holds. Assume henceforth that $m&gt;0$.</p><p>Fix $t\in(0,V]$. Let $K(t)$ count copies containing a buyer valued at least $t$, and let $H(t)$ count final winners valued at least $t$.</p><p>Consider a state after exhaustive expansion and before winner selection. Write $H_{\mathrm{cur}}(t)$ for the number of previously selected winners valued at least $t$.</p><p>If the current price is below $t$, every explored, unallocated buyer valued at least $t$ is potential. Otherwise, such a buyer outside the top-$\ell$ set would imply a price at least $t$.</p><p>Consider a copy counted by $K(t)$ that has not yet received a winner valued at least $t$. Choose a buyer in it valued at least $t$.</p><p>If this buyer is explored, it is an unallocated potential winner. If it is unexplored, take a seller-to-buyer path and its first unexplored buyer. Its predecessor is explored and unexpanded. At the end of exhaustive expansion, that predecessor must be an unallocated potential winner. The predecessor lies in the same copy, since the seller’s entry neighbors are already explored.</p><p>Distinct copies supply distinct potential buyers. At most $H_{\mathrm{cur}}(t)$ copies have received a winner valued at least $t$. Therefore<br>$$
+K(t)-H_{\mathrm{cur}}(t)\leq\ell.
+$$</p><p>If the first winner price is at least $t$, all $m$ winners have valuation at least $t$. Otherwise, consider the first selection state whose price reaches $t$, if one exists. At the preceding selection state,<br>$$
+H_{\mathrm{cur}}(t)+\ell\geq K(t).
+$$<br>The intervening selection decreases this sum by at most one. Every subsequent winner is valued at least $t$, so the sum is preserved thereafter and becomes $H(t)$ at termination.</p><p>If no price reaches $t$, apply the same inequality immediately before the last selection, where $\ell=1$. In either case,<br>$$
+H(t)\geq \min\{m,K(t)\}-1.
+$$</p><p>Let $N(t)$ count all buyers valued at least $t$. Each copy has $h$ buyers, so<br>$$
+N(t)\leq hK(t).
+$$<br>It follows that<br>$$
+H(t)\geq \frac1h\min\{m,N(t)\}-1.
+$$<br>Integrating the buyer indicators gives<br>$$
+\sum_i v_i\pi_i=\int_0^V H(t)\,dt,
+\qquad
+\operatorname{OPT}_k=\int_0^V\min\{m,N(t)\}\,dt.
+$$<br>Integration proves the proposition. $\square$</p><h3>Consequences for subsequential limits</h3><p>For any density $z\in[0,1]$, define $B_z(\alpha)$ by the benchmark in the question with $q$ replaced by $z$. Filling types in decreasing valuation order is optimal: transferring mass from a lower-valued filled type to a higher-valued unfilled type cannot decrease welfare.</p><p>At density $m/n$, capacities and target mass are integer multiples of $1/n$, so<br>$$
+B_{m/n}(\alpha)=\frac{\operatorname{OPT}_k}{n}.
+$$<br>Additional allocated mass has marginal value between zero and $V$. Thus<br>$$
+B_q(\alpha)-\frac Vn
+\leq \frac{\operatorname{OPT}_k}{n}
+\leq B_q(\alpha).
+$$<br>Consequently,<br>$$
+\frac{B_q(\alpha)}h-\frac{(1+1/h)V}{hk}
+\leq
+\sum_{c,r}v_{c,r}a^{(k)}_{c,r}
+\leq B_q(\alpha).
+$$</p><p>The normalized allocation and payment vectors lie in a fixed bounded box, so jointly convergent subsequences exist. Every subsequential limit $(a,p)$ satisfies<br>$$
+0\leq a_{c,r}\leq\mu_{c,r},
+\qquad
+0\leq p_{c,r}\leq v_{c,r}a_{c,r},
+\qquad
+\sum_{c,r}a_{c,r}=q,
+$$<br>and<br>$$
+\frac{B_q(\alpha)}h
+\leq\sum_{c,r}v_{c,r}a_{c,r}
+\leq B_q(\alpha).
+$$</p><p>These statements do not establish uniqueness of the subsequential limits. Conditional on existence for every society, they imply<br>$$
+\frac1h\leq\rho\leq1.
+$$</p><h3>3. Exactly solvable subclass: one community on a directed star</h3><p>Assume $h\geq2$. Rename the roles as $0,1,\ldots,h-1$. Role $0$ is the unique entry role, with edges to every other role; leaves have no outgoing edges. There is exactly one community, so $\alpha=1$ and every positive integer $k$ is compatible.</p><p>Write<br>$$
+d=h-1,\qquad u=v_0.
+$$<br>List the leaf roles in decreasing valuation order, resolving ties by the given role order. Write their valuations as<br>$$
+z_1\geq z_2\geq\cdots\geq z_d.
+$$<br>Subscripts here identify this sorted list of leaf roles.</p><p>Define<br>$$
+g=
+\#\{\text{leaf roles preceding role }0
+\text{ in the full valuation ranking}\}.
+$$<br>Thus a leaf contributes to $g$ if its valuation exceeds $u$, or if its valuation equals $u$ and its role precedes role $0$.</p><p>Roots have priority $d&gt;0$, while leaves have priority zero. Therefore every selected winner is a root whenever any root remains potential.</p><h3>3.1. Exact finite root allocations</h3><p>Let $w_k$ be the number of root winners. Then<br>$$
+w_k=
+\begin{cases}
+\min\{m,k\},&amp;g=0,\\
+0,&amp;g\geq1\text{ and }m&lt;k,\\
+\min\left\{k,\left\lfloor\frac{m-k}{g}\right\rfloor+1\right\},
+&amp;g\geq1\text{ and }m\geq k.
+\end{cases}
+$$</p><h3>Proof</h3><p>The case $m=0$ is immediate.</p><p>If $g=0$, every leaf ranks below every root. Leaf discoveries therefore cannot displace a potential root. Exactly $\min\{m,k\}$ roots win.</p><p>Now suppose $g\geq1$. Once any root becomes exhausted, exhaustive expansion exhausts all remaining unallocated roots. To see this, at a state with an exhausted root, the potential set is full and contains no leaf below the roots: such a leaf would rank below the exhausted root. Expanding an exhausted root reveals $g$ new leaves above every root. If a root remains potential, at least one of these new leaves displaces a root, which becomes eligible for expansion. Repeating this argument exhausts all remaining roots.</p><p>If $m&lt;k$, some root is exhausted initially, so this cascade occurs before any root can win.</p><p>If $m\geq k$, initially no root is exhausted. After $r$ roots have won and been expanded, provided no root has yet become exhausted, the explored unallocated buyers consist of<br>$$
+k-r\text{ roots},\qquad
+r\text{ buyers of each leaf role}.
+$$<br>Residual supply is $m-r$. All remaining roots are potential exactly when<br>$$
+(k-r)+gr\leq m-r,
+$$<br>equivalently,<br>$$
+gr\leq m-k.
+$$<br>While this holds, a root wins next. The first root selection that makes it fail is selection<br>$$
+\left\lfloor\frac{m-k}{g}\right\rfloor+1.
+$$<br>Before another winner can be selected, the exhaustion cascade removes all remaining roots from potential competition. If all $k$ roots win first, the count is capped at $k$. This proves the formula. $\square$</p><h3>3.2. Exact finite leaf allocations and payments</h3><p>Put<br>$$
+L_k=m-w_k.
+$$<br>If $L_k&gt;0$, every root has been expanded before the first leaf winner is selected: roots have either won or become exhausted. Hence all $dk$ leaves are explored.</p><p>No leaf expansion reveals another buyer. Therefore the leaf winners are exactly the top $L_k$ leaf buyers. The number of winners of sorted leaf role $j$ is<br>$$
+T_{j,k}
+=
+\min\{k,\max\{0,L_k-(j-1)k\}\}.
+$$<br>This formula also holds when $L_k=0$.</p><p>All leaf winners pay the same price:<br>$$
+b_k=
+\begin{cases}
+z_{\lfloor L_k/k\rfloor+1},&amp;0&lt;L_k&lt;dk,\\
+0,&amp;L_k=0\text{ or }L_k=dk.
+\end{cases}
+$$<br>Indeed, removing a member of a fixed top-$L_k$ set and decrementing supply leaves its original next valuation unchanged as the price. Thus the total payment of leaf role $j$ is<br>$$
+b_kT_{j,k}.
+$$</p><h3>3.3. Exact finite root payments</h3><p>If $m&lt;k$, every root winner pays $u$: an exhausted root supplies the next valuation. This case has root winners only when $g=0$.</p><p>Suppose $m\geq k$, and put $D=m-k$. Immediately before root winner $r+1$, where<br>$$
+0\leq r&lt;w_k,
+$$<br>no root has yet become exhausted. The candidates consist of $k-r$ roots and $r$ buyers of each leaf role. Since $gr\leq D$, the price position lies below the root block.</p><p>The price is $z_j$ for the smallest $j$ satisfying<br>$$
+jr&gt;D,
+$$<br>or zero if no such $j$ exists.</p><p>Define<br>$$
+N_{1,k}=\max\{0,w_k-D-1\},
+$$<br>and, for $2\leq j\leq d$,<br>$$
+N_{j,k}
+=
+\max\left\{
+0,\
+\min\left\{w_k-1,\left\lfloor\frac D{j-1}\right\rfloor\right\}
+-\left\lfloor\frac Dj\right\rfloor
+\right\}.
+$$<br>These count precisely the integers $r$ satisfying<br>$$
+0\leq r&lt;w_k,\qquad
+jr&gt;D,\qquad
+(j-1)r\leq D.
+$$<br>Consequently, total root payment is<br>$$
+\sum_{j=1}^d z_jN_{j,k}.
+$$</p><p>These are exact finite formulas, requiring no replica construction.</p><h3>4. All replica limits for the star subclass</h3><p>Put<br>$$
+s=qh.
+$$<br>Define the limiting number of root winners per copy by<br>$$
+x=
+\begin{cases}
+\min\{s,1\},&amp;g=0,\\
+0,&amp;g\geq1\text{ and }s\leq1,\\
+(s-1)/g,&amp;g\geq1\text{ and }1&lt;s&lt;g+1,\\
+1,&amp;g\geq1\text{ and }s\geq g+1.
+\end{cases}
+$$<br>The finite root formula and $m/k\to s$ give<br>$$
+\frac{w_k}{k}\longrightarrow x.
+$$<br>Put<br>$$
+y=s-x.
+$$<br>Then $L_k/k\to y$, and $0\leq y\leq d$.</p><h3>4.1. Allocation limits</h3><p>The root and sorted leaf allocation masses are<br>$$
+a_0=\frac{x}{h},
+$$<br>and<br>$$
+a_j=\frac1h\min\{1,\max\{0,y-j+1\}\},
+\qquad 1\leq j\leq d.
+$$<br>These follow directly from the finite allocation formulas and continuity of clipping. In particular,<br>$$
+a_0+\sum_{j=1}^d a_j=q.
+$$</p><h3>4.2. Root payment limit</h3><p>If $s&lt;1$, then<br>$$
+p_0=
+\begin{cases}
+uq,&amp;g=0,\\
+0,&amp;g\geq1.
+\end{cases}
+$$<br>Indeed, eventually $m&lt;k$, and the exact finite root payment is respectively $um$ or zero.</p><p>Suppose $s\geq1$. Define<br>$$
+\lambda_1=x-\min\{x,s-1\},
+$$<br>and, for $2\leq j\leq d$,<br>$$
+\lambda_j
+=
+\min\left\{x,\frac{s-1}{j-1}\right\}
+-
+\min\left\{x,\frac{s-1}{j}\right\}.
+$$<br>Then<br>$$
+p_0=\frac1h\sum_{j=1}^d z_j\lambda_j.
+$$</p><p>To justify the limit, for $j\geq2$ the exact count $N_{j,k}$ counts integers in<br>$$
+\left(\frac D j,\frac D{j-1}\right]\cap[0,w_k-1].
+$$<br>The difference between the number of integers in an interval and its length is bounded by two. Since<br>$$
+\frac Dk\longrightarrow s-1,\qquad
+\frac{w_k}{k}\longrightarrow x,
+$$<br>division by $k$ gives $N_{j,k}/k\to\lambda_j$. The displayed formula for $N_{1,k}$ gives the same conclusion for $j=1$. Taking the finite weighted sum proves the payment formula.</p><h3>4.3. Leaf payment limit, including exact boundaries</h3><p>If $y=0$, every limiting leaf allocation and payment mass is zero. Assume $y&gt;0$.</p><p>When $g\geq1$ and $s&lt;g+1$, define<br>$$
+b=z_{\lceil y\rceil}.
+$$<br>In all other cases, define<br>$$
+b=
+\begin{cases}
+z_{\lfloor y\rfloor+1},&amp;y&lt;d,\\
+0,&amp;y=d.
+\end{cases}
+$$<br>Then all leaf payment limits exist and satisfy<br>$$
+p_j=b\,a_j.
+$$</p><p>For nonintegral $y$, the assertion follows immediately from $L_k/k\to y$: eventually $\lfloor L_k/k\rfloor=\lfloor y\rfloor$.</p><p>For integral $y$, the finite offset must be determined rather than discarded.</p><p>First suppose all roots win asymptotically in the branch $s\geq g+1$, or in the branch $g=0$, $s\geq1$. In these branches all roots win exactly, so<br>$$
+L_k=\lfloor sk\rfloor-k=\lfloor(s-1)k\rfloor.
+$$<br>If $y=s-1$ is an integer, then $L_k=yk$. The price is the next leaf role’s valuation, or zero when $y=d$.</p><p>Now suppose $g\geq1$ and $s&lt;g+1$. If $s&lt;1$, then $y=s\in(0,1)$ is nonintegral. It remains to consider $s\geq1$ and integral $y=j$.</p><p>Here<br>$$
+j=s-\frac{s-1}{g},
+\qquad
+(g-1)s=gj-1.
+$$<br>For all sufficiently large $k$, the cap at $k$ is inactive, and<br>$$
+w_k=\left\lfloor\frac{m-k}{g}\right\rfloor+1.
+$$<br>Moreover,<br>$$
+(gj-1)k-(g-1)m
+=(g-1)(sk-\lfloor sk\rfloor).
+$$<br>This quantity belongs to $[0,g-1)$ when $g&gt;1$ and equals zero when $g=1$. Therefore<br>$$
+g(m-jk)\leq m-k&lt;g(m-jk+1),
+$$<br>which proves<br>$$
+\left\lfloor\frac{m-k}{g}\right\rfloor=m-jk.
+$$<br>Consequently,<br>$$
+L_k=m-w_k=jk-1.
+$$<br>Thus the finite next leaf is still in role $j$, and its price is $z_j$, as claimed.</p><p>This establishes all allocation and payment limits for the subclass.</p><h3>5. Welfare factor and threshold complexity for the subclass</h3><p>Because the menu has one community, the society simplex contains only $\alpha=1$. Hence $\rho$ is the ratio for this single society.</p><p>Sort all $h$ role valuations, including the root, as<br>$$
+t_1\geq t_2\geq\cdots\geq t_h.
+$$<br>Define<br>$$
+F=
+\sum_{j=1}^h
+t_j\min\{1,\max\{0,s-j+1\}\}.
+$$<br>The greedy benchmark proof in Section 2 gives<br>$$
+B_q=\frac Fh.
+$$<br>The menu contains a positive valuation and $q&gt;0$, so $F&gt;0$. Therefore<br>$$
+\rho=
+\frac{
+ux+\displaystyle\sum_{j=1}^d
+z_j\min\{1,\max\{0,y-j+1\}\}
+}{F}.
+$$</p><p>Every expression above is rational and obtained by sorting, rational arithmetic, clipping, and integer comparisons. Thus the designated allocation-mass, designated payment-mass, and welfare-factor threshold problems are all in $\mathrm P$ for this subclass.</p><h3>A boundary example with welfare loss</h3><p>Take $h=4$, root value zero, and leaf values<br>$$
+3,\quad 2,\quad 1.
+$$<br>Let $q=5/8$. Then<br>$$
+g=3,\qquad s=\frac52,\qquad x=\frac12,\qquad y=2.
+$$<br>The limiting allocations, listed as root followed by the sorted leaves, are<br>$$
+\left(\frac18,\frac14,\frac14,0\right).
+$$<br>Root payment is zero. Since $y=2$ is an integer in the partial-root branch, the leaf price is $2$, not $1$. The limiting payment masses are<br>$$
+\left(0,\frac12,\frac12,0\right).
+$$<br>Indeed, the exact finite identity is $L_k=2k-1$.</p><p>Achieved welfare is $5/4$, whereas the benchmark is<br>$$
+B_{5/8}=\frac{3+2+1/2}{4}=\frac{11}{8}.
+$$<br>Hence<br>$$
+\rho=\frac{10}{11}.
+$$<br>Thus the solved subclass includes inefficient outcomes, as well as nontrivial payment boundaries.</p><h3>Running times and input parameters</h3><p>For arbitrary templates, a finite replica can be simulated using two balanced trees for the potential set, one ordered by valuation and one by priority, together with a queue of buyers awaiting expansion.</p><p>Permanent exhaustion means that exhausted buyers never need reinsertion. Each buyer is discovered once, exhausted at most once, and expanded at most once. The price is the maximum exhausted valuation when exhausted buyers exist, and zero otherwise. Thus finite simulation uses<br>$$
+O\bigl(n\log(m+2)+|E_k|\bigr)
+=
+O\bigl(hk\log(m+2)+k(e+|R|)\bigr)
+$$<br>operations. The case $m=0$ returns zero outcomes immediately; explicit per-buyer output still requires $O(n)$ time.</p><p>Since $hk&lt;(m+1)/q$, this is also bounded by<br>$$
+O\left(
+\frac{m+1}{q}\log(m+2)
++
+\frac{(m+1)(e+|R|)}{qh}
+\right).
+$$<br>A conservative bit bound, including reading the input, is<br>$$
+O\left(
+L+
+\bigl[hk\log(m+2)+k(e+|R|)\bigr]
+\bigl(L+\log(k+1)\bigr)^2
+\right).
+$$<br>This is a finite-replica bound, not a polynomial continuous-input algorithm. Binary encoding does not bound $k$ or $1/q$ polynomially in $L$ or $\tau$.</p><p>For the solved star subclass,<br>$$
+\tau=h,\qquad e=h-1,\qquad |C|=1.
+$$<br>The exact finite formulas require<br>$$
+O\bigl(h\log(h+1)\bigr)
+$$<br>arithmetic operations, independently of the number of winners $m$. The limit formulas and threshold comparisons have the same arithmetic-operation bound.</p><p>For an explicit conservative bit bound, put<br>$$
+S_k=L+\log(k+1)+h\log(h+1).
+$$<br>The finite formula algorithm takes<br>$$
+O\bigl(L+h\log(h+1)S_k^3\bigr)
+$$<br>bit operations. For the continuous limit and threshold algorithms, replace $S_k$ by<br>$$
+S=L+h\log(h+1).
+$$<br>Intermediate rational denominators involve input denominators and products of integers bounded by $h$, so their bit lengths are polynomially bounded by $S$. These bounds are polynomial in the continuous input length and require no replica expansion.</p><h3>6. Tagged-buyer incentives and unresolved questions</h3><p>Use the finite incentive-compatibility theorem supplied in the question as a premise. Its priority conditions are satisfied: reported outgoing degree is independent of the bid and cannot increase when neighbors are hidden. The prescribed tie orders are independent of reports, and the silence convention matches the finite model. These conditions and the finite theorem appear in Section 3 and Lemma 4 of the [cited paper](https://arxiv.org/pdf/2302.08924v2).</p><p>For every finite replica, every tagged buyer, and every permitted joint deviation, including a deviation depending on $k$,<br>$$
+u_k^{\mathrm{dev}}\leq u_k^{\mathrm{truth}}.
+$$<br>For $m=0$, both utilities are zero. Therefore, without assuming any utility limit,<br>$$
+\limsup_k
+\bigl(u_k^{\mathrm{dev}}-u_k^{\mathrm{truth}}\bigr)\leq0.
+$$<br>If truthful tagged utility converges to $u$, this additionally gives<br>$$
+\limsup_k u_k^{\mathrm{dev}}\leq u.
+$$<br>Aggregate type convergence does not itself establish convergence of a tagged buyer’s utility.</p><p>The remaining general gap is uniqueness of normalized subsequential outcomes for arbitrary templates and menus. The structural facts and welfare bounds above do not close it. Nor does the polynomial algorithm for one-community stars classify any unrestricted threshold problem.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 2, subsequential consequences; Section 6, unresolved questions: The output establishes convergent subsequences and constraints on their limits, but does not establish full-sequence allocation or payment convergence for arbitrary admissible templates and menus.</li><li><b>major</b> — Section 5, threshold complexity and running times: Polynomial threshold algorithms are established only for one-community directed stars; the unrestricted allocation-mass and payment-mass threshold problems remain unclassified.</li><li><b>major</b> — Section 2, conditional bound on $\rho$; Section 5, singleton-menu computation: General well-definedness of $\rho$ is conditional on unresolved replica-limit existence, and the unrestricted welfare-factor threshold problem is not classified.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial, with sound substantive progress.</b> The output establishes the stated results for one-community directed stars, together with general finite structural facts, a welfare bound, and constraints on subsequential limits. It does <b>not</b> settle general replica-limit existence or any unrestricted threshold problem. The prover accurately acknowledges those limitations.</p><p>I found no false central step or counterexample to the results actually proved. The major issues below are missing parts of <code>USER_TASK</code>, rather than defects in the star formulas.</p><h3>1. General notation and structural facts</h3><h3>Replica sizes and normalization</h3><p>The identities<br>$$
+n=hk,\qquad \tau=hd,\qquad |E_k|=k(e+|R|)
+$$<br>are correct, with $d$ denoting the number of positive-share communities in this section. Compatibility ensures that each positive-share community contributes every role to the support.</p><p>The normalization by $n$ agrees with the task’s definitions.</p><h3>Permanent exhaustion</h3><p>The argument is correct. Once an unallocated buyer has at least $\ell$ explored, unallocated buyers preceding it, exploration cannot decrease that count. Selecting a winner decreases the count by at most one while decreasing $\ell$ by exactly one.</p><p>The claim remains valid with tied valuations because the prescribed ranking is a fixed total order.</p><h3>Independence of expansion order</h3><p>The inclusion<br>$$
+D(A)\subseteq D(A&#x27;)
+$$<br>for $A\subseteq A&#x27;$ is correct when winners and residual supply are fixed. Consequently, the stated expansion map is monotone.</p><p>The fixed-point argument correctly accounts for previously expanded buyers: their outgoing neighbors are already explored. Finiteness and exhaustive expansion therefore justify the asserted unique explored set at each selection stage. Fixed winner tie-breaking then determines the run.</p><h3>Allocation of the entire supply</h3><p>The argument is correct, including $m=0$.</p><p>For positive residual supply, an empty potential-winner set forces $A=W$. Exhaustive expansion then makes $A$ closed under outgoing edges. Since all seller neighbors are explored and all buyers are seller-reachable, premature termination contradicts $|W|&lt;m\leq n$.</p><h3>Prices and individual bounds</h3><p>The order-statistic argument is correct. Removing any current potential winner shifts the previous price position to the next price position after the supply decrement. Further exploration cannot lower its valuation.</p><p>The bound<br>$$
+0\leq p_i\leq v_i
+$$<br>also follows from membership in the current potential set. No strict-valuation assumption is needed.</p><h3>2. General finite welfare bound</h3><p>The proposition<br>$$
+\sum_i v_i\pi_i\geq \frac{\operatorname{OPT}_k}{h}-V
+$$<br>is supported by the written argument.</p><p>The critical steps check as follows:</p><ul><li>If the price is below $t$, every explored, unallocated buyer valued at least $t$ is potential. Otherwise the next valuation would be at least $t$.</li></ul><ul><li>A copy containing such a buyer but containing no previously selected winner valued at least $t$ supplies a potential buyer. For an unexplored target, the predecessor of the first unexplored buyer must be unexpanded and potential after exhaustive expansion.</li></ul><ul><li>These witnesses belong to distinct copies, giving</li></ul><p>$$
+   K(t)-H_{\mathrm{cur}}(t)\leq\ell.
+   $$</p><ul><li>At the first price crossing, the intervening selection decreases $H_{\mathrm{cur}}(t)+\ell$ by at most one. Subsequent winners have valuation at least $t$. The no-crossing case is correctly handled immediately before the last selection.</li></ul><ul><li>The passage from copies to buyers uses the valid inequality</li></ul><p>$$
+   N(t)\leq hK(t).
+   $$<br>The resulting bound and integration give the displayed proposition.</p><p>The zero-supply case is explicitly and correctly separated.</p><h3>Benchmark and subsequential consequences</h3><p>The greedy benchmark argument is valid for the nonnegative valuations and capacities in the task. At density $m/n$, the capacities and supply are multiples of $1/n$, so the equality with normalized finite optimum is justified.</p><p>The rounding estimate has the correct constant:<br>$$
+0\leq B_q(\alpha)-\frac{\operatorname{OPT}_k}{n}\leq\frac Vn.
+$$<br>Combining it with the welfare proposition gives the stated error<br>$$
+\frac{(1+1/h)V}{hk}.
+$$</p><p>Boundedness yields jointly convergent subsequences, and the allocation, payment, supply, and welfare constraints pass to those limits. These conclusions establish <b>subsequential existence</b>, not convergence of the full sequence.</p><p>The statement<br>$$
+\frac1h\leq\rho\leq1
+$$<br>is correctly conditional on general existence. It is not presented as an unconditional resolution of $\rho$.</p><h3>3. Exact finite formulas for one-community stars</h3><p>The subclass assumptions are explicit: $h\geq2$, one entry root, edges from that root to every leaf, and one community.</p><p>The definition of $g$ correctly includes both strict valuation comparisons and role-order ties. Thus each counted leaf precedes every root buyer.</p><h3>Root allocations</h3><p>All branches of the formula for $w_k$ are justified:</p><ul><li>For $g=0$, discoveries cannot displace potential roots.</li><li>For $g\geq1$ and $m&lt;k$, an initially exhausted root initiates the stated cascade.</li><li>For $g\geq1$ and $m\geq k$, the condition</li></ul><p>$$
+  gr\leq m-k
+  $$<br>correctly characterizes the stage before exhaustion begins.</p><p>The additional one in the root-count formula is necessary: the root that first makes this inequality fail has already won before the cascade occurs. The cap at $k$ is correct.</p><h3>Leaf allocations and payments</h3><p>If a leaf is selected, every root has already won or become exhausted and has been expanded. Thus all leaves are explored.</p><p>Although leaf priority ties need not select buyers in valuation order, selection eventually allocates exactly the fixed top-$L_k$ leaf set. The clipping formula for $T_{j,k}$ is correct.</p><p>The common leaf price is also correct, including exact multiples of $k$ and full leaf allocation.</p><h3>Root payments</h3><p>Before root winner $r+1$, the inequality $gr\leq D$ places the price position below the root block. The condition<br>$$
+jr&gt;D
+$$<br>correctly identifies its leaf valuation, with zero when the position is absent.</p><p>The formulas for $N_{j,k}$ correctly count the specified integer intervals. Their endpoints and the special case $j=1$ have the correct offsets.</p><p>As a computational cross-check, direct execution of the specified mechanism matched these finite allocation and payment formulas in $56{,}160$ cases covering $2\leq h\leq4$, valuations in $\{0,1,2\}$, every role order, $1\leq k\leq3$, and every feasible integer supply. This supplements, rather than replaces, the written proof.</p><h3>4. Star replica limits and payment boundaries</h3><h3>Allocations</h3><p>The finite root formulas imply the displayed limit $x$ in every branch. The allocation formulas follow by continuous clipping and satisfy total mass $q$.</p><h3>Root payments</h3><p>For $s&lt;1$, the finite payment formulas give the stated limits directly.</p><p>For $s\geq1$, the normalized interval counts converge to the displayed $\lambda_j$. The endpoint errors are bounded independently of $k$, so they disappear after normalization. The weighted payment formula is justified.</p><h3>Leaf payments</h3><p>The treatment of integral $y$ is essential and correct.</p><p>In the branches where all roots win, the exact leaf count is the stated floor expression. At an integral boundary, the next leaf role supplies the price, or the price is zero at full leaf allocation.</p><p>In the partial-root branch, the arithmetic establishing<br>$$
+L_k=jk-1
+$$<br>is correct. It also covers $g=1$: the intermediate quantity is then zero, and the stated floor identity still holds.</p><p>When $y=0$, the finite payment bounds ensure that vanishing allocation mass gives vanishing payment mass.</p><p>Thus the output establishes all allocation and payment limits for its declared subclass.</p><h3>5. Welfare factor and complexity</h3><p>With one community, the feasible society set contains only $\alpha=1$. Therefore replacing the infimum defining $\rho$ by the single society’s ratio is legitimate.</p><p>The benchmark formula is correct. A positive menu valuation and $q&gt;0$ ensure $F&gt;0$, so the ratio is defined.</p><p>The boundary example checks:<br>$$
+x=\frac12,\qquad y=2,\qquad
+B_{5/8}=\frac{11}{8},\qquad
+\rho=\frac{10}{11}.
+$$<br>Its limiting allocation and payment masses agree with the finite formulas.</p><h3>Running times</h3><p>The finite simulation operation bound is supported by permanent exhaustion, one-time discovery and expansion, and potential-set trees of size at most $m$. Maintaining the maximum exhausted valuation supports the price query.</p><p>The conversion using<br>$$
+hk&lt;\frac{m+1}{q}
+$$<br>is correct. The conservative bit bound is consistent with the required comparisons and counters.</p><p>For the star subclass, sorting and evaluating the finite or limiting formulas takes the stated number of arithmetic operations. The denominator and bit-length discussion supports polynomial bit complexity for the continuous threshold algorithms.</p><p>The output correctly distinguishes finite-replica simulation from a polynomial algorithm in continuous input size. Its unrestricted simulation bounds do not classify the unrestricted threshold problems.</p><h3>6. Tagged-buyer incentives</h3><p>The invocation is acceptable because <code>USER_TASK</code> expressly supplies finite incentive compatibility as a premise. The cited paper’s priority condition, silent-report convention, and incentive-compatibility statement match the conditions invoked here. [Source, Section 3 and Lemma 4](https://arxiv.org/pdf/2302.08924v2).</p><p>The selected priority is independent of bids and cannot increase when neighbors are hidden. The deviation domain in the task is covered by the stated finite premise.</p><p>The pointwise finite utility inequality implies the asserted limit-superior inequality, including for deviations depending on $k$. The stronger conclusion is correctly conditional on truthful tagged utility convergence.</p><p>The prover correctly avoids inferring tagged-buyer utility convergence from aggregate type convergence.</p><h3>7. Major unresolved obligations and actionable feedback</h3><h3>Issue 1 — General replica-limit existence</h3><p><b>Severity: major relative to the assigned task.</b></p><p>Boundedness and subsequential constraints do not establish convergence for arbitrary templates and menus.</p><p><b>Required completion:</b> establish full-sequence convergence of every designated allocation and payment coordinate along compatible integers, or provide an admissible failure of convergence. No clarification of the existing subsequence argument alone settles this obligation.</p><h3>Issue 2 — Unrestricted allocation and payment threshold complexity</h3><p><b>Severity: major relative to the assigned task.</b></p><p>The polynomial formulas apply only to one-community stars. General finite simulation may require replica expansion beyond polynomial continuous input size.</p><p><b>Required completion:</b> after resolving well-definedness, provide a polynomial algorithm or hardness result for each unrestricted threshold problem, with the requested input-size dependence.</p><h3>Issue 3 — General welfare-factor well-definedness and complexity</h3><p><b>Severity: major relative to the assigned task.</b></p><p>The general bound on $\rho$ is conditional, and its exact computation is confined to a singleton society space.</p><p><b>Required completion:</b> justify general well-definedness and classify the unrestricted threshold problem over rational societies satisfying $B_q(\alpha)&gt;0$.</p><p>These omissions prevent a complete answer to <code>USER_TASK</code>. They do not invalidate the proved subclass or structural results.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,242 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Fair Division with Market Values — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Fair Division with Market Values <span style="font-weight:normal;color:#8a7350">(aaai25-33484)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable in $m,\tau,L$; every valid instance is feasible.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Corollary 1 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>An allocation that is EF1 w.r.t. the subjective utilities and SD-EF1 w.r.t. the market valuation always ex- ists, and can be computed in polynomial time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational masses \(\mu\) over complete additive subjective valuation types on finitely many recurring good classes \(G\), a common additive market valuation \(v\), and per-capita copy supplies \(b_g\), find a finite-support distribution \(\lambda_{t,B}\) over integral bundles \(B\) satisfying type-mass and supply constraints, such that every occupied source-target pair satisfies subjective EF1 and market SD-EF1.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive masses \(\mu_t\), each a binary rational, with \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types.<br>Let \(G\) contain \(m\geq1\) recurring good classes, with nonnegative rational subjective values \(u_t(g)\), common nonnegative rational market values \(v(g)\), and positive rational per-capita supplies \(b_g\). All input numbers are binary encoded; \(L\) is the total input bit length.<br>A bundle is \(B\in\mathbb Z_{\geq0}^{G}\), allowing repeated copies, with additive utility \(u_t(B)\). Seek finitely supported nonnegative rational masses \(\lambda_{t,B}\) satisfying \(\sum_B\lambda_{t,B}=\mu_t\) and \(\sum_{t,B}\lambda_{t,B}B_g=b_g\) for every \(g\in G\).<br>For every ordered pair \((t,B),(s,C)\) with positive allocation mass, including pairs of the same type, require subjective EF1 under \(u_t\), where removing a good means removing one copy from \(C\).<br>Also require market SD-EF1: either \(C=0\), or there is a class \(h\) with \(C_h&gt;0\) such that \(\sum_{g:v(g)\geq a}B_g\geq\sum_{g:v(g)\geq a}(C_g-\mathbf1_{g=h})\) for every \(a\in\{v(g):g\in G\}\). Ties use weak thresholds, including zero; the subjective and market removal witnesses may differ.</p><p>Is finding such an allocation, or reporting infeasibility, polynomial-time solvable in \(m,\tau,L\), or is it NP-hard?</p><p>For finitely many agents and individually listed indivisible goods, an allocation satisfying subjective EF1 and market SD-EF1 always exists and is computable in polynomial time. [Barman, Ebadian, Latifian, and Shah](https://www.cs.toronto.edu/~nisarg/papers/market-values.pdf)<br>No result settling this exact distribution-over-types problem was identified in the search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized total society mass to one, so supplies are interpreted per capita.</li><li>Specified nonnegative rational subjective and market values, allowing zeros and ties, as permitted by the discrete goods model.</li><li>Took G to list classes with positive rational supply; absent classes are omitted.</li><li>Interpreted integral bundles as multisets with arbitrary nonnegative integer copy counts, including the empty bundle.</li><li>Required exact supply exhaustion, matching complete partition of the goods in the discrete model.</li><li>Specified rational allocation masses and binary encoding of bundle counts.</li><li>Applied fairness to every ordered occupied pair, including pairs within one type; each removal deletes one target-bundle copy, and the two fairness conditions may use different witnesses.</li><li>Defined market stochastic dominance using weak value thresholds, including zero, without breaking market-value ties.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>A polynomial-time construction</h3><p>The problem is <b>polynomial-time solvable in $m,\tau,L$</b>. Every valid instance is feasible, and an allocation with at most $\tau+2m+1$ positive masses can be constructed in polynomial time.</p><p>The construction uses market-ranked blocks of total supply one. Its main ingredient is a transportation linear program that removes all directed envy cycles while preserving subjective EF1. Support reduction keeps the number of allocated type-bundle pairs polynomial throughout.</p><p>The market-block idea is also used in the finite-agent reduction underlying Corollary 1 of [Barman, Ebadian, Latifian, and Shah](https://www.cs.toronto.edu/~nisarg/papers/market-values.pdf). The proof below establishes the required construction directly for rational population masses, without expanding the population into individual agents.</p><h3>1. Two useful fairness characterizations</h3><p>For any nonnegative additive valuation $u$, define<br>$$
+M_u(C)=
+\begin{cases}
+\max_{g:C_g&gt;0}u(g),&amp;C\ne0,\\
+0,&amp;C=0.
+\end{cases}
+$$<br>Subjective EF1 from $B$ to $C$ is equivalent to<br>$$
+u(B)\ge u(C)-M_u(C).
+$$<br>For nonempty $C$, removing a copy of maximum value minimizes the remaining utility. For empty $C$, the displayed inequality holds automatically because utilities are nonnegative.</p><p>For a market threshold $a$, write<br>$$
+P_a(B)=\sum_{g:v(g)\ge a}B_g.
+$$</p><p><b>Lemma 1.</b> Market SD-EF1 from $B$ to $C$ is equivalent to<br>$$
+P_a(B)\ge P_a(C)-1
+\qquad\text{for every }a\in\{v(g):g\in G\}.
+$$</p><p><b>Proof.</b> Removing one copy reduces any threshold count by at most one, proving necessity.</p><p>For sufficiency, if $C=0$, the required exception applies. Otherwise choose a class $h$ of maximum market value present in $C$. At thresholds above $v(h)$, the envied bundle has count zero. At every other threshold, removing one copy of $h$ reduces its count by exactly one. Thus this single copy witnesses every required inequality. Ties and zero market values cause no exception. $\square$</p><p>In particular, market SD-EF1 in both directions follows whenever every supported pair satisfies<br>$$
+|P_a(B)-P_a(C)|\le1
+$$<br>at every market threshold.</p><h3>2. Normalize supplies and form market blocks</h3><p>Set<br>$$
+q_g=\lfloor b_g\rfloor,
+\qquad
+r_g=b_g-q_g.
+$$<br>Thus $q$ is an integer bundle and $0\le r_g&lt;1$.</p><p>It suffices to construct an allocation for supplies $r_g$ and then add $q$ to every allocated bundle. Indeed, total population mass is one, so this addition gives exactly the original supplies. Market prefix differences are unchanged. For subjective EF1, note that<br>$$
+M_{u_t}(q+C)\ge M_{u_t}(C).
+$$<br>Consequently,<br>$$
+\begin{aligned}
+u_t(q+B)-u_t(q+C)+M_{u_t}(q+C)
+&amp;=u_t(B)-u_t(C)+M_{u_t}(q+C)\\
+&amp;\ge u_t(B)-u_t(C)+M_{u_t}(C)\\
+&amp;\ge0.
+\end{aligned}
+$$<br>This includes empty $C$.</p><p>Let<br>$$
+R=\sum_g r_g&lt;m.
+$$<br>If $R=0$, assign $q$ to every type, with mass $\mu_t$, and finish.</p><p>Otherwise set<br>$$
+k=\lceil R\rceil\le m.
+$$<br>Add a dummy class of supply $k-R$ if this quantity is positive. Its subjective utilities are all zero.</p><p>Order the real classes by nonincreasing market value, breaking ties arbitrarily, and place the dummy last. Lay out consecutive intervals of the corresponding residual supply lengths on $[0,k)$.</p><p>Split each class interval at integer boundaries. Call each positive-length piece a <b>token class</b> $h$. It has:</p><ul><li>an underlying real class $g(h)$, or the dummy label;</li><li>a block index $j(h)\in\{1,\ldots,k\}$, meaning its interval lies in $[j(h)-1,j(h))$;</li><li>a positive rational supply $a_h$, equal to its interval length.</li></ul><p>Write $H$ for the token classes and $p=|H|$. Each real-class interval has length less than one, so it produces at most two token classes. The dummy interval, when present, ends at the integer $k$ and produces only one. Hence<br>$$
+p\le2m+1.
+$$<br>For every block $j$,<br>$$
+\sum_{h:j(h)=j}a_h=1.
+$$</p><p>Define token utilities by<br>$$
+\widetilde u_t(h)=
+\begin{cases}
+u_t(g(h)),&amp;h\text{ has a real label},\\
+0,&amp;h\text{ is dummy}.
+\end{cases}
+$$<br>A token bundle is an integer vector $Z\in\mathbb Z_{\ge0}^{H}$. Mapping it to a real bundle means merging equal real labels and deleting dummy labels. Repeated real copies are therefore allowed.</p><p>The algorithm will allocate blocks successively. After processing block $j$, every supported token bundle will contain exactly one token from each block $1,\ldots,j$, and no tokens from later blocks.</p><h3>3. Remove envy cycles by a transportation linear program</h3><p>We first prove a general operation on a finitely supported allocation.</p><p>Suppose its positive type-bundle pairs are indexed by $i=1,\ldots,N$:<br>$$
+(t_i,Z_i,w_i),
+\qquad w_i&gt;0.
+$$<br>Assume this allocation satisfies subjective EF1 for every ordered pair.</p><p>Let $C_1,\ldots,C_K$ be its distinct supported bundles, and let their aggregate masses be<br>$$
+W_\ell=\sum_{i:Z_i=C_\ell}w_i.
+$$</p><p>Introduce a variable $x_{i\ell}$ only when<br>$$
+\widetilde u_{t_i}(C_\ell)\ge\widetilde u_{t_i}(Z_i).
+$$<br>Solve<br>$$
+\begin{aligned}
+\text{maximize}\quad&amp;
+\sum_{i,\ell}x_{i\ell}\widetilde u_{t_i}(C_\ell),\\
+\text{subject to}\quad&amp;
+\sum_\ell x_{i\ell}=w_i
+&amp;&amp;\text{for every }i,\\
+&amp;
+\sum_i x_{i\ell}=W_\ell
+&amp;&amp;\text{for every }\ell,\\
+&amp;
+x_{i\ell}\ge0.
+\end{aligned}
+$$<br>The original assignment is feasible. The polytope is bounded, since every variable is at most one, so an optimum exists.</p><p>Interpret a positive $x_{i\ell}$ as assigning mass $x_{i\ell}$ of type $t_i$ bundle $C_\ell$. Aggregate identical resulting type-bundle pairs.</p><p><b>Lemma 2.</b> This operation preserves type masses, token supplies, and subjective EF1. At an optimum, the directed envy graph on the resulting positive type-bundle pairs is acyclic.</p><p>Here the graph has an edge<br>$$
+(t,B)\longrightarrow(s,C)
+\quad\text{exactly when}\quad
+\widetilde u_t(C)&gt;\widetilde u_t(B).
+$$</p><p><b>Proof.</b> The row equations preserve each original cohort’s mass and hence every type mass. The column equations preserve the aggregate mass of every bundle, and therefore preserve all token supplies.</p><p>For subjective EF1, take a positive $x_{i\ell}$. The assigned bundle satisfies<br>$$
+\widetilde u_{t_i}(C_\ell)\ge\widetilde u_{t_i}(Z_i).
+$$<br>Every resulting supported bundle $D$ was supported originally. Original EF1 therefore gives<br>$$
+\widetilde u_{t_i}(Z_i)
+\ge
+\widetilde u_{t_i}(D)-M_{\widetilde u_{t_i}}(D).
+$$<br>Combining these inequalities proves every required resulting comparison.</p><p>For acyclicity, suppose an optimum has a directed cycle<br>$$
+(t_1,B_1)\longrightarrow\cdots
+\longrightarrow(t_\ell,B_\ell)
+\longrightarrow(t_1,B_1).
+$$<br>Use indices modulo $\ell$. For each cycle vertex, select a positive transportation cell supplying that type-bundle pair; call its row $i_r$. Thus<br>$$
+t_{i_r}=t_r,
+\qquad
+\widetilde u_{t_r}(B_r)\ge
+\widetilde u_{t_r}(Z_{i_r}).
+$$<br>The cycle inequalities imply<br>$$
+\widetilde u_{t_r}(B_{r+1})
+&gt;
+\widetilde u_{t_r}(B_r)
+\ge
+\widetilde u_{t_r}(Z_{i_r}).
+$$<br>Hence assigning bundle $B_{r+1}$ to row $i_r$ is an allowed transportation cell.</p><p>Choose a positive $\varepsilon$ no larger than the selected cells’ masses. For every $r$, move mass $\varepsilon$ in row $i_r$ from $B_r$ to $B_{r+1}$. The selected cells are distinct because the cycle vertices are distinct.</p><p>Every row total is preserved. Every bundle-column total is preserved because the receiving and relinquished bundles form the same cyclic list. The objective increases by<br>$$
+\varepsilon\sum_{r=1}^{\ell}
+\left(
+\widetilde u_{t_r}(B_{r+1})
+-
+\widetilde u_{t_r}(B_r)
+\right)&gt;0,
+$$<br>contradicting optimality. Thus the graph is acyclic. $\square$</p><p>This lemma applies to comparisons within a type as well as across types.</p><h3>4. Reduce support without changing the invariants</h3><p>For a fixed stage, suppose the required token supplies are $c_h$. They equal $a_h$ for processed blocks and zero for unprocessed blocks.</p><p>Given a feasible allocation, retain its available type-bundle pairs and solve<br>$$
+\sum_{Z}\lambda_{t,Z}=\mu_t,
+\qquad
+\sum_{t,Z}\lambda_{t,Z}Z_h=c_h,
+\qquad
+\lambda_{t,Z}\ge0
+$$<br>for a basic feasible solution.</p><p>This linear program is feasible because the current allocation is a feasible point. It is bounded because the masses sum to one.</p><p>Associate to a variable its column<br>$$
+A_{t,Z}=(e_t,Z)\in\mathbb Z^{\tau+p}.
+$$<br>A basic feasible solution has at most<br>$$
+d:=\tau+p
+$$<br>positive variables. To see the relevant support bound directly, if the active columns were dependent, there would be a nonzero vector $z$ supported on those columns with<br>$$
+\sum_i z_iA_i=0.
+$$<br>The type rows imply $\sum_i z_i=0$, so $z$ has both positive and negative entries. Sufficiently small perturbations in both directions along $z$ preserve feasibility, contradicting extremality.</p><p>The resulting support is a subset of the available support. Therefore:</p><ul><li>subjective EF1 is preserved;</li><li>acyclicity of the envy graph is preserved, when present;</li><li>any property held separately by each supported bundle is preserved.</li></ul><p>In particular, the one-token-per-processed-block property is preserved. We use this support reduction repeatedly.</p><h3>5. Allocate one block in an acyclic envy order</h3><p>Suppose blocks $1,\ldots,j-1$ have been allocated. Assume the current allocation:</p><ul><li>satisfies subjective EF1;</li><li>has an acyclic envy graph;</li><li>has positive pairs $(t_i,Z_i,w_i)$, indexed by $i=1,\ldots,N$.</li></ul><p>Take a topological order of the envy graph: every directed edge goes from an earlier vertex to a later one.</p><p>Serve the cohorts in that order. While serving cohort $i$, choose, among token classes of block $j$ with positive remaining supply, a token $h$ maximizing $\widetilde u_{t_i}(h)$. If the cohort has remaining mass $w$ and that token has remaining supply $a$, assign bundle<br>$$
+Z_i+e_h
+$$<br>to mass<br>$$
+\alpha=\min\{w,a\}.
+$$<br>Subtract $\alpha$ from both remaining quantities and continue.</p><p>The block supply and total cohort mass both equal one. Every step reduces both totals by the same amount. Thus available supply remains whenever unserved mass remains. Every step exhausts a cohort or a token class, so there are at most $N+p_j$ steps, where $p_j$ is the number of token classes in block $j$.</p><p>The operation preserves type masses, uses exactly the block’s supplies, and gives each resulting bundle exactly one new token.</p><p><b>Lemma 3.</b> This greedy block allocation preserves subjective EF1.</p><p><b>Proof.</b> Consider an ordered pair of resulting positive assignments<br>$$
+(t_i,Z_i+e_h),
+\qquad
+(t_\ell,Z_\ell+e_f).
+$$<br>All utility comparisons below use the first recipient’s valuation $\widetilde u_{t_i}$.</p><p>There are three cases.</p><p><b>Case 1: $i$ precedes $\ell$ in the topological order.</b></p><p>Token $f$ was available when token $h$ was chosen: its supply is positive at the later assignment and only decreases over time. Greedy choice therefore gives<br>$$
+\widetilde u_{t_i}(h)\ge\widetilde u_{t_i}(f).
+$$</p><p>If $Z_\ell\ne0$, old EF1 supplies a token copy $z$ in $Z_\ell$ such that<br>$$
+\widetilde u_{t_i}(Z_i)
+\ge
+\widetilde u_{t_i}(Z_\ell-e_z).
+$$<br>Consequently,<br>$$
+\begin{aligned}
+\widetilde u_{t_i}(Z_i+e_h)
+&amp;\ge
+\widetilde u_{t_i}(Z_\ell-e_z)
++\widetilde u_{t_i}(f)\\
+&amp;=
+\widetilde u_{t_i}(Z_\ell+e_f-e_z).
+\end{aligned}
+$$<br>The old witness remains present in the augmented envied bundle.</p><p>If $Z_\ell=0$, remove its new token $f$. Its remaining bundle is empty, and nonnegative utility suffices.</p><p><b>Case 2: $\ell$ precedes $i$.</b></p><p>There cannot be an envy edge from vertex $i$ to vertex $\ell$, because that would contradict the topological order. Thus<br>$$
+\widetilde u_{t_i}(Z_i)\ge\widetilde u_{t_i}(Z_\ell).
+$$<br>Removing the envied bundle’s new token $f$ yields<br>$$
+\widetilde u_{t_i}(Z_i+e_h)
+\ge
+\widetilde u_{t_i}(Z_i)
+\ge
+\widetilde u_{t_i}(Z_\ell).
+$$</p><p><b>Case 3: $i=\ell$.</b></p><p>The two recipients originated from the same type-bundle cohort. Again remove the envied bundle’s new token:<br>$$
+\widetilde u_{t_i}(Z_i+e_h)
+\ge
+\widetilde u_{t_i}(Z_i)
+=
+\widetilde u_{t_i}(Z_\ell).
+$$</p><p>These cases cover every ordered pair, including pairs of the same type and pairs created by splitting one cohort. $\square$</p><h3>6. The complete algorithm and market fairness</h3><p>Initialize each type with the empty token bundle and mass $\mu_t$.</p><p>For each block $j=1,\ldots,k$:</p><ul><li>Apply the transportation optimization of Section 3.</li><li>Apply support reduction, retaining at most $d$ positive pairs.</li><li>Topologically order the resulting acyclic envy graph.</li><li>Allocate block $j$ greedily as in Section 5.</li><li>Apply support reduction again.</li></ul><p>Induction using Lemmas 2 and 3 proves that every stage satisfies subjective EF1 and all mass and processed-supply equations. At the end, every supported token bundle contains exactly one token from every block.</p><p>We now prove market fairness after merging real labels and deleting dummy labels.</p><p>Fix an original market threshold $a$. In the interval layout, the real classes satisfying $v(g)\ge a$ occupy precisely a prefix<br>$$
+[0,\gamma_a),
+\qquad
+\gamma_a=\sum_{g:v(g)\ge a}r_g.
+$$<br>This holds for ties because the entire tied group belongs to the threshold prefix. It also holds at threshold zero: the prefix contains all real classes and ends before the dummy.</p><p>A supported token bundle chooses exactly one token from each unit block. Every block entirely before $\gamma_a$ contributes one threshold copy. Every block entirely after $\gamma_a$ contributes zero. If $\gamma_a$ lies strictly inside a block, that block contributes either zero or one.</p><p>Hence every resulting real residual bundle $B$ satisfies<br>$$
+P_a(B)\in
+\{\lfloor\gamma_a\rfloor,\lceil\gamma_a\rceil\}.
+$$<br>Any two such bundles therefore have threshold counts differing by at most one. Lemma 1 proves market SD-EF1 for every ordered pair.</p><p>Subjective EF1 also survives the mapping to real bundles. Utilities are unchanged by merging labels and deleting dummy tokens. Moreover, since dummy utilities are zero and real utilities are nonnegative,<br>$$
+M_{\widetilde u_t}(Z)=M_{u_t}(B)
+$$<br>for a token bundle $Z$ and its real image $B$, including when $B$ is empty. Thus the subjective EF1 characterization from Section 1 is unchanged.</p><p>The mapped allocation has residual supplies $r_g$. Finally add $q$ to every bundle as justified in Section 2. This produces the required original allocation.</p><h3>7. Polynomial bit complexity</h3><p>It remains to verify that the construction is polynomial in the binary input size, rather than merely in the number of mathematical operations.</p><p>We use the standard rational linear-programming theorem: feasibility and linear optimization over an explicitly encoded rational polytope can be performed in polynomial time, and an optimal basic feasible solution can be obtained when the polytope is nonempty and bounded. All linear programs above satisfy these hypotheses.</p><h3>Dimensions and number of operations</h3><p>There are<br>$$
+k\le m,
+\qquad
+p\le2m+1,
+\qquad
+d=\tau+p
+$$<br>blocks, token classes, and support-bound rows, respectively.</p><p>Before each transportation optimization, support reduction has left at most $d$ pairs. There are therefore at most $d$ distinct bundles, at most $d^2$ transportation variables, and at most $2d$ equality constraints.</p><p>A basic transportation solution has at most $2d$ positive cells. After aggregation, the next support-reduction problem thus has at most $2d$ variables.</p><p>The greedy block operation starts with at most $d$ cohorts and creates at most $d+p_j$ positive assignments. Its subsequent support-reduction problem also has polynomial size.</p><p>Topological sorting and choosing highest-utility available tokens require polynomially many exact rational comparisons. There are at most $m$ iterations.</p><h3>A uniform bound on the compressed masses</h3><p>Choose an integer $D$ clearing the denominators of the input type masses and supplies. Taking the product of their input denominators gives<br>$$
+\log D=O(L).
+$$<br>Every residual supply, dummy supply, and token-piece length has denominator dividing $D$: these numbers are obtained from input supplies by sums, subtraction, and integer boundaries.</p><p>In a support-reduction problem, the right-hand side consists of type masses, processed token supplies, and zeros. Its coordinates lie in $[0,1]$ and have denominators dividing $D$.</p><p>Every supported token bundle has exactly one token per processed block. Since each token class belongs to a single block, every token coordinate is zero or one. The support-reduction matrix therefore has entries in $\{0,1\}$.</p><p>If a basic solution has $s\le d$ positive variables, their independent columns admit a nonsingular $s$-row restriction $M$. Cramer’s rule gives<br>$$
+\lambda_i=
+\frac{\det M_i(Dy)}{D\det M},
+$$<br>where $y$ is the restricted right-hand side. Determinant expansion yields<br>$$
+1\le|\det M|\le s!,
+\qquad
+|\det M_i(Dy)|\le D\,s!.
+$$<br>Thus every compressed mass has bit length<br>$$
+O\!\left(L+d\log(d+1)\right).
+$$<br>Crucially, this bound depends on the fixed input right-hand sides, not on the number of preceding iterations.</p><h3>Intermediate arithmetic</h3><p>Transportation right-hand sides are compressed masses and sums of at most $d$ such masses. Their bit lengths are polynomial. Objective coefficients are utilities of bundles of size at most $m$, so their bit lengths are polynomial as well. Exact transportation solutions consequently have polynomial encoding length.</p><p>The greedy operation uses only comparisons and subtraction of rational masses and token supplies. Within one block, all resulting denominators divide the product of the denominators present at the start of that operation. There are polynomially many such numbers, each of polynomial bit length, so intermediate rational bit lengths remain polynomial. The following support reduction restores the uniform bound above.</p><p>Finally, adding $q$ produces bundle coordinates of polynomial bit length. The final allocation has at most<br>$$
+d\le\tau+2m+1
+$$<br>positive masses; merging identical mapped type-bundle pairs can only decrease this number.</p><p>Therefore the entire construction, including its output, has polynomial bit complexity in $m,\tau,L$.</p><h3>8. Conclusion</h3><p>Every valid instance admits the requested allocation, and the algorithm above constructs one in polynomial time. Thus reporting infeasibility is unnecessary on inputs satisfying the stated hypotheses.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s claim is <b>proved</b>. The construction addresses the exact distribution-over-types problem, including binary-encoded supplies, repeated copies, comparisons within a type, weak market thresholds, and zero valuations. I found no major or minor issues requiring repair.</p><ul><li><b>Fairness characterizations are correct.</b></li></ul><p>For a nonempty bundle $C$, removing a copy with maximum subjective value minimizes the remaining additive utility. Thus<br>$$
+   u(B)\ge u(C)-M_u(C)
+   $$<br>is exactly subjective EF1. The convention $M_u(0)=0$ correctly handles empty envied bundles because utilities are nonnegative.</p><p>Lemma 1 also correctly establishes market SD-EF1. Necessity follows because removing one copy decreases each threshold count by at most one. For sufficiency, a maximum-market-value copy in $C$ supplies a single witness for all thresholds: above its value, $C$ has no qualifying copies; at or below its value, removing it decreases the count by exactly one.</p><p>This argument respects weak thresholds, ties, zero market values, and repeated copies. Consequently, pairwise threshold-count differences of at most one suffice for all ordered comparisons.</p><ul><li><b>Removing the common integer supply is valid.</b></li></ul><p>The decomposition<br>$$
+   b_g=q_g+r_g,\qquad q_g=\lfloor b_g\rfloor,\qquad 0\le r_g&lt;1
+   $$<br>is correct. Adding $q$ to every allocated bundle contributes exactly $q_g$ to aggregate supply because total population mass is one.</p><p>Market prefix differences remain unchanged. The displayed subjective calculation is correct: common additive utility cancels, while<br>$$
+   M_{u_t}(q+C)\ge M_{u_t}(C).
+   $$<br>When $C$ is empty, this inequality follows from nonnegativity and the stated empty-bundle convention. Therefore residual subjective EF1 implies subjective EF1 after adding $q$.</p><p>The case $R=0$ is completely handled: identical bundles $q$ satisfy both fairness requirements and all supply equations.</p><ul><li><b>The token construction and its size bounds are correct.</b></li></ul><p>Since each residual supply is strictly less than one,<br>$$
+   R=\sum_g r_g&lt;m.
+   $$<br>For $R&gt;0$, this gives<br>$$
+   1\le k=\lceil R\rceil\le m.
+   $$<br>Padding by the dummy supply makes the total interval length exactly $k$.</p><p>Each real interval has length less than one and therefore intersects at most two unit blocks in positive length. If the dummy interval is present, its length is less than one and it ends at $k$, so it lies entirely in the last block. Hence<br>$$
+   p\le 2m+1.
+   $$</p><p>Zero residual supplies produce no token classes, consistent with the definition requiring positive-length pieces. Splitting at integer boundaries ensures every token belongs to exactly one block, and every block has total token supply one.</p><p>The contextual attribution to market-ranked blocks is consistent with the reduction preceding Corollary 1 in the [cited paper](https://www.cs.toronto.edu/~nisarg/papers/market-values.pdf). The distributional construction is proved independently in the submitted argument; it does not rely on expanding rational masses into individually listed agents.</p><ul><li><b>The transportation LP preserves the required allocation properties.</b></li></ul><p>The original assignment is feasible because each original bundle is an allowed destination for its own row. Row equations preserve original cohort masses and therefore type masses. Column equations preserve aggregate bundle masses and therefore every token supply.</p><p>Every variable is bounded by its row mass, which is at most one. Thus the feasible polytope is nonempty and bounded.</p><p>The EF1 preservation argument is valid for every ordered resulting pair. A recipient receives a bundle worth at least its original bundle under its own valuation, while every resulting envied bundle belonged to the original support. The original EF1 inequality therefore applies to that envied bundle and combines with the recipient’s utility improvement.</p><p>Aggregation of identical type-bundle pairs does not introduce any new comparison requiring a different argument.</p><ul><li><b>The acyclicity argument is sound.</b></li></ul><p>For every selected cycle vertex, the proof selects a positive transportation cell supplying that vertex. The strict envy inequality makes the successor bundle an allowed destination for the selected row.</p><p>Distinct cycle vertices give distinct selected cells. Thus choosing $\varepsilon$ no larger than every selected cell’s mass ensures that all decremented cells remain nonnegative.</p><p>Cycle vertices may share a type, a bundle column, or even an original transportation row. None of these possibilities invalidates the exchange:</p><ul><li>Each individual transfer preserves its row total.</li><li>Distinct selected cells prevent multiple decrements of the same cell.</li><li>The cyclic list of destination bundles preserves every column total, including repeated bundle columns.</li></ul><p>The stated objective change is exactly the sum of the strictly positive envy improvements, multiplied by $\varepsilon$. It contradicts optimality. Therefore the resulting envy graph is acyclic, including edges between different bundles assigned to the same type.</p><ul><li><b>Support reduction is justified and preserves the invariants claimed.</b></li></ul><p>The support-reduction LP uses only currently available type-bundle pairs and has the current allocation as a feasible point. Type equations imply total mass one, establishing boundedness.</p><p>The active-column argument correctly proves that an extreme point has at most<br>$$
+   d=\tau+p
+   $$<br>positive variables. A dependence among active columns gives a nonzero perturbation preserving all equations. The type rows force its coefficients to sum to zero, so the perturbation has both signs and permits sufficiently small feasible changes in both directions.</p><p>Since support reduction only removes pairs, it preserves subjective EF1 and any existing acyclicity. It also preserves the one-token-per-processed-block property. The equality constraints preserve type masses and processed supplies.</p><ul><li><b>The greedy block allocation preserves subjective EF1.</b></li></ul><p>Supply and cohort mass both total one. Each assignment subtracts the same mass from these two totals, and each step exhausts a cohort or a token class. The claimed bound of at most $N+p_j$ steps is valid.</p><p>All three cases in Lemma 3 are correct:</p><ul><li>If the recipient’s cohort precedes the envied cohort, the later recipient’s token was still available when the earlier token was selected. Greedy choice supplies the required utility comparison. An old removal witness remains available in the augmented envied bundle.</li><li>If the envied cohort precedes the recipient’s cohort, the topological order excludes a strict envy edge from the later vertex to the earlier vertex. Removing the envied bundle’s new token then establishes EF1.</li><li>If both assignments originate from the same cohort, their old bundle and type coincide. Removing the envied assignment’s new token suffices by nonnegativity.</li></ul><p>The empty old envied bundle is expressly handled. These cases cover every ordered pair, including different assignments of the same type and assignments created by splitting one cohort.</p><ul><li><b>The complete algorithm maintains the invariants in the required order.</b></li></ul><p>Initialization with empty bundles satisfies subjective EF1 and all initial mass equations.</p><p>Before each greedy block operation, transportation optimization establishes acyclicity, and support reduction preserves it. Greedy allocation then preserves subjective EF1 and allocates precisely the current block supply. The subsequent support reduction preserves those properties.</p><p>The proof does not incorrectly assume that greedy allocation preserves acyclicity: the next iteration establishes it again before it is needed.</p><p>Transportation only redistributes existing bundles, while greedy allocation adds exactly one token from the new block. Therefore the final token bundles have exactly one token from every block.</p><ul><li><b>The final market and subjective fairness arguments are valid.</b></li></ul><p>At each original market threshold $a$, the qualifying real intervals form the prefix<br>$$
+   [0,\gamma_a),\qquad
+   \gamma_a=\sum_{g:v(g)\ge a}r_g.
+   $$<br>Arbitrary ordering within tied market values causes no problem because a weak threshold includes the entire tied group. The dummy is last, so the zero threshold also has the stated prefix structure.</p><p>Each complete block before the prefix endpoint contributes one qualifying copy; each block after it contributes none. Only a block containing the endpoint can vary. Thus<br>$$
+   P_a(B)\in\{\lfloor\gamma_a\rfloor,\lceil\gamma_a\rceil\}.
+   $$<br>This includes integer endpoints, where the two values coincide. Lemma 1 consequently supplies market SD-EF1 for every ordered pair.</p><p>Merging real labels preserves additive utilities and supply totals. Deleting dummy tokens preserves utilities because their values are zero. Nonnegativity ensures that deleting those tokens also preserves the maximum-copy value, including when the real image is empty. Therefore subjective EF1 survives the mapping.</p><p>Adding $q$ then gives the original supplies and preserves both fairness conditions as already established.</p><ul><li><b>The polynomial-time and bit-complexity claims are justified.</b></li></ul><p>The stated rational LP theorem supplies exact optimization and a basic optimal solution for explicitly encoded nonempty bounded rational polytopes. Both LP families meet these hypotheses.</p><p>Before transportation, support has size at most $d$, giving at most $d^2$ variables and $2d$ equality constraints. A basic transportation solution has at most $2d$ positive cells. Greedy allocation creates at most $d+p_j$ assignments. There are at most $m$ iterations, so all LP dimensions and discrete operations are polynomially bounded.</p><p>The denominator argument correctly prevents uncontrolled growth across iterations. A common input denominator $D$ satisfies<br>$$
+    \log D=O(L).
+    $$<br>Residual supplies, dummy supply, and token lengths retain denominators dividing $D$.</p><p>The support-reduction matrix has entries in $\{0,1\}$ because every supported bundle contains at most one token of each token class. Its right-hand side has coordinates in $[0,1]$ with denominators dividing $D$. For an independent positive support of size $s\le d$, the stated Cramer bounds<br>$$
+    1\le|\det M|\le s!,
+    \qquad
+    |\det M_i(Dy)|\le D\,s!
+    $$<br>are correct. They yield compressed mass bit lengths<br>$$
+    O\!\left(L+d\log(d+1)\right).
+    $$</p><p>Transportation inputs therefore have polynomial encoding length, and exact basic solutions do as well. Within a greedy operation, subtraction introduces no denominator factors outside the product of the starting denominators. That product has polynomial bit length. The following support reduction restores the uniform bound.</p><p>Finally, the integer parts $q_g$ have polynomial bit length even when numerically large. Adding them does not expand repeated copies individually. The final support bound<br>$$
+    \tau+2m+1
+    $$<br>is valid, and aggregating identical mapped pairs can only reduce it.</p><p>No additional lemma, clarification, or repair is needed to make the submitted argument verifiable.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

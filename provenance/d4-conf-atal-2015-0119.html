@@ -1,0 +1,387 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Sample Complexity for Winner Prediction in Elections — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Sample Complexity for Winner Prediction in Elections <span style="font-weight:normal;color:#8a7350">(d4-conf-atal-2015-0119)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> The promise is nonempty exactly when $\epsilon\le(m-k)/(2(m-1))$. For $m\ge3$, writing $\beta=(m-k)/m$ and $\Lambda=\log((k+1)/\delta)$, the minimax sample complexity is $\Theta(\beta\epsilon^{-2}\Lambda)$ when $\epsilon\le\beta/16$, and $\Theta(1+\Lambda/\log(1/(1-2\epsilon)))$ otherwise, with universal constants and the infinite-denominator convention at $\epsilon=1/2$. For $m=2$, it is exactly the smallest positive $n$ for which the randomized-majority binomial error at probability $1/2+\epsilon$ is at most $\delta$; at $\epsilon=1/2$ it is one.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 7 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>There is a (ε, δ)-winner determination algorithm for the k- approval voting rule with sample complexity O( log( k δ ) ε2 ).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), a voting rule, \(\epsilon,\delta\), and i.i.d. sampling access to an unknown society distribution \(\mu\) over complete rankings, promised \(\mathrm{MOV}_\infty(\mu)\ge\epsilon\), what is the minimum worst-case number of samples needed to output the true winner with probability at least \(1-\delta\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) contain \(m\ge 2\) candidates, and fix \(1\le k&lt;m\), rational \(0&lt;\epsilon&lt;1\), rational \(0&lt;\delta&lt;1/2\), and a publicly known priority order for breaking ties.<br>A society is represented by its support: a list of \(\tau\) strict complete rankings with positive binary rational masses summing to \(1\). Here \(\tau\) is the support size, not the number of possible rankings, and \(L\) is the representation&#x27;s total bit length.<br>For this prediction problem, the support list is hidden: the algorithm receives only independent samples of complete rankings from the unknown society \(\mu\).<br>Use \(k\)-approval, extending scores to masses, with winner \(w_k(\mu)\) selected using the fixed priority order.<br>Define \(\mathrm{MOV}_\infty(\mu)=\inf_{\nu:w_k(\nu)\ne w_k(\mu)}\frac12\sum_{\rho\in\mathcal L(C)}|\mu(\rho)-\nu(\rho)|\), where \(\nu\) ranges over all distributions on strict complete rankings, including rankings outside the original support.<br>Promise \(\mathrm{MOV}_\infty(\mu)\ge\epsilon\). A sample reveals one entire ranking; error probability includes sampling and internal randomness. State running times in \(m,\tau,L,k,\epsilon^{-1},\log(1/\delta)\).</p><p>What is the minimum worst-case number of samples needed to output \(w_k(\mu)\) with probability at least \(1-\delta\), as a function of \(m,k,\epsilon,\delta\)?</p><p>Discrete winner prediction has an upper bound of \(O(\epsilon^{-2}\log(k/\delta))\). [Primary source](https://arxiv.org/pdf/1502.04354v3).<br>The claimed discrete lower bound of \(\Omega(\epsilon^{-2}(1-\delta)\log(k+1))\) has an author-issued restriction to \(k&lt;cm\) for fixed \(0&lt;c&lt;1\). [Author&#x27;s erratum](https://asiaccs2026.cse.iitkgp.ac.in/~palash/).<br>The primary source already formulates its sampling arguments using vote distributions; no separately verified result establishes the full minimax function for the model stated here.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specialized the unspecified voting rule to k-approval, which is the anchor&#x27;s rule, with at least two candidates and 1 &lt;= k &lt; m.</li><li>Normalized total mass to one and used strict complete rankings and a publicly known fixed priority order for ties.</li><li>Interpreted MOV_infty as the infimum mass that must be reassigned to change the winner, equivalently total variation distance, rather than coordinatewise infinity distance.</li><li>Allowed replacement mass to move to rankings outside the original support.</li><li>Distinguished the society&#x27;s support representation from predictor access: the representation is hidden to preserve the stated unknown-distribution sampling question.</li><li>Used a worst-case sample cap and error probability over both samples and internal randomness, with 0 &lt; epsilon &lt; 1 and 0 &lt; delta &lt; 1/2.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Minimax sample complexity</h3><p>Let $N^*(m,k,\epsilon,\delta)$ be the smallest deterministic sample cap under which an algorithm succeeds with probability at least $1-\delta$ on every promised society. Algorithms may randomize and stop early. All logarithms below are natural.</p><p>Define<br>$$
+\beta=\frac{m-k}{m},
+\qquad
+\epsilon_{\max}=\frac{m-k}{2(m-1)},
+\qquad
+\Lambda=\log\frac{k+1}{\delta}.
+$$</p><p><b>The minimax rate for $m\ge3$, throughout the nonempty promise range, is</b><br>$$
+N^*(m,k,\epsilon,\delta)
+=
+\begin{cases}
+\displaystyle
+\Theta\!\left(\frac{\beta}{\epsilon^2}\Lambda\right),
+&amp;0&lt;\epsilon\le\beta/16,\\[6pt]
+\displaystyle
+\Theta\!\left(
+1+\frac{\Lambda}{\log(1/(1-2\epsilon))}
+\right),
+&amp;\beta/16&lt;\epsilon\le\epsilon_{\max}.
+\end{cases}
+$$<br>All implicit constants are universal. At $\epsilon=1/2$, which is feasible only for $k=1$, the denominator in the second line is interpreted as infinite; exactly one sample suffices.</p><p>The promise class is empty when $\epsilon&gt;\epsilon_{\max}$, giving sample complexity zero under the vacuous convention. For $m=2$, an exact binomial characterization is given in Section 7.</p><p>The cited paper provides the earlier $O(\epsilon^{-2}\log(k/\delta))$ upper bound; the author’s erratum restricts its claimed discrete lower-bound argument. The bounds here are proved directly for the stated distributional model. [Primary source](https://arxiv.org/pdf/1502.04354v3), [author’s erratum](https://asiaccs2026.cse.iitkgp.ac.in/~palash/).</p><h3>1. Exact margin and feasibility</h3><p>For a candidate $c$, let $A_c(\rho)$ indicate that $c$ is among the first $k$ positions of ranking $\rho$, and write<br>$$
+s_c=\mathbb E_\mu A_c.
+$$<br>Then $0\le s_c\le1$ and $\sum_c s_c=k$.</p><p><b>Lemma 1.</b> If $w=w_k(\mu)$, then<br>$$
+\mathrm{MOV}_\infty(\mu)
+=\frac12\min_{c\ne w}(s_w-s_c).
+$$</p><p><b>Proof.</b> For a rival $c$, the function $X=A_w-A_c$ takes values in $[-1,1]$. Consequently,<br>$$
+\left|\mathbb E_\mu X-\mathbb E_\nu X\right|
+\le2\,\mathrm{TV}(\mu,\nu).
+$$<br>Indeed, the positive and negative parts of $\mu-\nu$ each have mass $\mathrm{TV}(\mu,\nu)$.</p><p>If $c\ne w$ wins under $\nu$, then $s_c(\nu)\ge s_w(\nu)$. Hence<br>$$
+\mathrm{TV}(\mu,\nu)\ge\frac{s_w-s_c}{2},
+$$<br>which proves the lower bound.</p><p>Conversely, choose a rival attaining the smallest gap, and denote that gap by $d$. If $d&gt;0$, put<br>$$
+a=\Pr_\mu(A_w-A_c=1),
+\qquad
+b=\Pr_\mu(A_w-A_c=-1).
+$$<br>Since $a-b=d$, there is enough mass in the first class to move $d/2+\eta$ of it, for sufficiently small $\eta&gt;0$, to a ranking in the second class. Such a destination ranking exists because $1\le k&lt;m$.</p><p>This operation has total variation distance $d/2+\eta$ and changes the score difference to $-2\eta$. Thus $w$ loses. Letting $\eta$ decrease to zero proves the upper bound. If $d=0$, mixing in an arbitrarily small mass on a ranking approving $c$ but not $w$ makes $c$ strictly outscore $w$. ∎</p><p>The promise is therefore equivalent to<br>$$
+s_w-s_c\ge2\epsilon
+\qquad(c\ne w).
+$$<br>In particular, the population winner is unique.</p><p>Summing these inequalities gives<br>$$
+k\le m s_w-2\epsilon(m-1)
+\le m-2\epsilon(m-1).
+$$<br>Thus $\epsilon\le\epsilon_{\max}$ is necessary.</p><p>It is sufficient: always approve a fixed candidate $w$, and choose the other $k-1$ approved candidates uniformly among the remaining $m-1$. Then<br>$$
+s_w=1,
+\qquad
+s_c=\frac{k-1}{m-1}\quad(c\ne w),
+$$<br>and the margin is exactly $\epsilon_{\max}$. Complete each approval set deterministically into a ranking. This produces a finite society with positive rational masses.</p><p>This construction is available for every choice of $w$. Consequently, on a nonempty promise class, a zero-sample algorithm cannot succeed uniformly when $\delta&lt;1/2$.</p><h3>2. A general upper bound</h3><p>The algorithm counts approvals in independent samples and returns the empirical winner, using the prescribed priority order.</p><p>We prove<br>$$
+N^*
+\le
+\min\left\{
+\left\lceil4\epsilon^{-2}\log\frac{8k}{\delta}\right\rceil,\;
+\left\lceil2\beta\epsilon^{-2}\log\frac{m-1}{\delta}\right\rceil
+\right\}.
+$$</p><h3>Approval-count bound</h3><p>Let $B_1,\ldots,B_n$ be independent Bernoulli variables with mean $p$, and let $S=\sum_i(B_i-p)$. For $0&lt;t\le1$ and $nt^2\ge2\log2$,<br>$$
+\Pr(|S|\ge nt)\le8p\,e^{-nt^2/4}.
+$$</p><p>To verify this, set $\lambda=t/2$. The inequalities<br>$$
+e^\lambda-1-\lambda\le\lambda^2,
+\qquad
+e^{-\lambda}-1+\lambda\le\lambda^2
+$$<br>hold for $0\le\lambda\le1/2$. The Bernoulli moment-generating function therefore gives<br>$$
+\mathbb E e^{\lambda S}\le e^{np\lambda^2},
+\qquad
+\mathbb E e^{-\lambda S}\le e^{np\lambda^2}.
+$$<br>By convexity in $p$,<br>$$
+\mathbb E\bigl(\cosh(\lambda S)-1\bigr)
+\le e^{np\lambda^2}-1
+\le p(e^{n\lambda^2}-1).
+$$<br>For $z\ge\log2$,<br>$$
+\cosh z-1=\frac{e^z}{2}(1-e^{-z})^2\ge\frac{e^z}{8}.
+$$<br>Applying Markov’s inequality at $z=\lambda nt=nt^2/2$ proves the assertion.</p><p>Apply this bound with $t=\epsilon$ to every candidate. Since $\sum_c s_c=k$,<br>$$
+\Pr\bigl(\exists c:\ |\widehat s_c-s_c|\ge\epsilon\bigr)
+\le8k\,e^{-n\epsilon^2/4}.
+$$<br>When all deviations are strictly smaller than $\epsilon$, every empirical winner–rival gap is positive. This proves the first sample bound; its chosen budget also satisfies the concentration bound’s side condition.</p><h3>Rejection-count bound</h3><p>Put $Y_c=1-A_c$ and $q_c=\mathbb E Y_c$. The winner minimizes rejection probability, and $\sum_cq_c=m-k$, so $q_w\le\beta$.</p><p>For a rival $c$, let $X=Y_c-Y_w$, and define<br>$$
+a=\Pr(X=1),\qquad b=\Pr(X=-1),\qquad d=a-b.
+$$<br>The promise gives $d\ge2\epsilon$, while $b\le q_w\le\beta$. Optimizing the exponential Markov bound gives<br>$$
+\Pr\left(\sum_{i=1}^nX_i\le0\right)
+\le
+\left(1-(\sqrt a-\sqrt b)^2\right)^n
+\le e^{-n(\sqrt a-\sqrt b)^2}.
+$$<br>For $b&gt;0$, the optimizing parameter is $\frac12\log(a/b)$; for $b=0$, take its limiting value.</p><p>Moreover,<br>$$
+(\sqrt a-\sqrt b)^2
+=\frac{d^2}{(\sqrt a+\sqrt b)^2}
+\ge\frac{d^2}{2(a+b)}
+\ge\frac{d^2}{2(d+2\beta)}.
+$$<br>The final expression increases with $d&gt;0$. Feasibility implies $\epsilon\le\beta$, so<br>$$
+(\sqrt a-\sqrt b)^2
+\ge\frac{\epsilon^2}{\epsilon+\beta}
+\ge\frac{\epsilon^2}{2\beta}.
+$$<br>A union bound over rivals proves the second sample bound, counting every empirical tie as a possible failure.</p><p>If $k\le m/2$, then $\beta\ge1/2$, and the first bound applies. If $k&gt;m/2$, then $m&lt;2k$, and the second applies. Thus, throughout the feasible range,<br>$$
+N^*=O\!\left(\frac{\beta}{\epsilon^2}\Lambda\right).
+$$</p><h3>3. Matching lower bound for small margins</h3><p>Assume $m\ge3$ and $0&lt;\epsilon\le\beta/16$.</p><h3>A finite rational family</h3><p>Choose<br>$$
+M=\min\{m,\max\{3,2k\}\}
+$$<br>active candidates. Then $M\ge3$ and $M\ge k+1$. Let $U$ be uniform on their $k$-element approval sets. Complete each set into a ranking using a fixed deterministic rule.</p><p>For active candidate $i$, let $I_i$ indicate its inclusion, and put<br>$$
+u=\frac{k}{M},
+\qquad
+V=u(1-u),
+\qquad
+\lambda=\frac{2\epsilon(M-1)}{MV}.
+$$<br>Define<br>$$
+P_i(S)=U(S)\bigl(1+\lambda(I_i(S)-u)\bigr).
+$$<br>These masses sum to one. They are positive because $\lambda\le1/2$:</p><ul><li>If $k=1$, then $M=3$ and $\lambda=6\epsilon\le3/8$.</li><li>If $2\le k\le m/2$, then $M=2k$, $V=1/4$, and $\lambda&lt;8\epsilon\le1/2$.</li><li>If $k&gt;m/2$, then $M=m$, $V=u\beta$, and $\lambda\le1/(8u)&lt;1/4$.</li></ul><p>All masses are rational.</p><p>Counting subsets gives, for $j\ne i$,<br>$$
+\operatorname{Var}_U(I_i)=V,
+\qquad
+\operatorname{Cov}_U(I_i,I_j)=-\frac{V}{M-1}.
+$$<br>Indeed,<br>$$
+\mathbb E_U(I_iI_j)=\frac{k(k-1)}{M(M-1)}.
+$$<br>Therefore the scores under $P_i$ are<br>$$
+s_i=u+\lambda V,
+\qquad
+s_j=u-\frac{\lambda V}{M-1}.
+$$<br>Their difference is exactly $2\epsilon$. Inactive candidates have score zero; their gap from $i$ exceeds $2\epsilon$ because $u\ge1/3$ and $2\epsilon\le1/8$. Lemma 1 shows that $P_i$ has winner $i$ and margin $\epsilon$.</p><h3>Divergence bounds</h3><p>Write $D(P\|Q)$ for relative entropy. The inequality $\log x\le x-1$ gives<br>$$
+D(P\|Q)\le\sum_x\frac{(P(x)-Q(x))^2}{Q(x)}.
+$$<br>In all three cases above, $V\ge\beta/5$. Consequently,<br>$$
+D(P_i\|U)
+\le\lambda^2V
+\le\frac{4\epsilon^2}{V}
+\le\frac{20\epsilon^2}{\beta}.
+$$<br>Also $P_j\ge U/2$, and<br>$$
+\mathbb E_U(I_i-I_j)^2=\frac{2VM}{M-1}.
+$$<br>Hence<br>$$
+D(P_i\|P_j)
+\le2\lambda^2\mathbb E_U(I_i-I_j)^2
+\le\frac{16\epsilon^2}{V}
+\le\frac{80\epsilon^2}{\beta}.
+$$</p><h3>Dependence on the number of possible winners</h3><p>Choose $J$ uniformly among the $M$ active candidates, and draw $n$ samples from $P_J$. An algorithm using at most $n$ samples can be padded with unused samples. Independent internal randomness does not increase information about $J$.</p><p>The identity relating average divergence to mutual information gives<br>$$
+I(J;\text{samples})
+\le\frac1M\sum_iD(P_i^{\otimes n}\|U^{\otimes n})
+\le\frac{20n\epsilon^2}{\beta}.
+$$<br>For completeness, the average divergence to a fixed reference equals the mutual information plus the nonnegative divergence of the sample marginal to that reference.</p><p>Map any inactive output to a fixed active candidate, and call the resulting prediction $\widehat J$. Its success probability $p$ satisfies $p&gt;1/2$. Under the product of the marginals of $J$ and $\widehat J$, the equality event has probability $1/M$. The log-sum inequality and data processing therefore imply<br>$$
+I(J;\text{samples})
+\ge I(J;\widehat J)
+\ge\operatorname{kl}(p\|1/M)
+\ge\operatorname{kl}(1/2\|1/M),
+$$<br>where $\operatorname{kl}$ denotes binary relative entropy. The last inequality follows from its monotonicity in the first argument above $1/M$.</p><p>Explicitly,<br>$$
+\operatorname{kl}(1/2\|1/M)
+=\frac12\log\frac{M^2}{4(M-1)}
+\ge\frac1{64}\log M.
+$$<br>For $M\ge16$, this follows from the lower bound $\frac12\log(M/4)\ge\frac14\log M$. For $3\le M&lt;16$, the left side is at least $\frac12\log(9/8)\ge1/18$, while $\log M&lt;3$.</p><p>Since $M\ge k+1$, we obtain<br>$$
+n=\Omega\!\left(\frac{\beta}{\epsilon^2}\log(k+1)\right).
+$$</p><h3>Dependence on confidence</h3><p>For $\delta\le1/4$, choose distinct $i,j$, and let $E$ be the event that the algorithm outputs $i$. Under $P_i$, its probability is at least $1-\delta$; under $P_j$, it is at most $\delta$. Applying the log-sum inequality to this event gives<br>$$
+nD(P_i\|P_j)
+\ge\operatorname{kl}(1-\delta\|\delta)
+=(1-2\delta)\log\frac{1-\delta}{\delta}
+\ge\frac14\log\frac1\delta.
+$$<br>Here $1-2\delta\ge1/2$ and $1-\delta\ge\sqrt\delta$.</p><p>Thus<br>$$
+n=\Omega\!\left(\frac{\beta}{\epsilon^2}\log\frac1\delta\right).
+$$<br>Combining the two lower bounds proves the first line of the theorem when $\delta\le1/4$. When $\delta&gt;1/4$, the confidence logarithm is bounded and is absorbed by $\log(k+1)$. This completes the small-margin lower bound uniformly for all permitted $\delta$.</p><h3>4. A boundary family with a different information rate</h3><p>The following family supplies the missing large-margin lower bounds.</p><p><b>Lemma 2.</b> Let $M&gt;k\ge2$, and put<br>$$
+h=\frac{k-1}{M-1},
+\qquad
+a_M=\log\frac1h.
+$$<br>For each of $M$ candidates $i$, let $Q_i$ approve $i$ always and choose the other $k-1$ approved candidates uniformly among the remaining $M-1$. Complete approval sets deterministically into rankings.</p><p>The minimum worst-case sample budget for identifying $i$ within this family is<br>$$
+\Theta\!\left(
+1+\frac{\log((k+1)/\delta)}{a_M}
+\right),
+$$<br>with universal constants.</p><p><b>Proof of the upper bound.</b> Let $T$ be the intersection of the sampled approval sets. It always contains the winner. Every rival survives all $n$ samples with probability $h^n$, so<br>$$
+\Pr(|T|&gt;1)\le(M-1)h^n=(k-1)h^{n-1}.
+$$<br>Thus<br>$$
+n=1+\left\lceil\frac{\log((k-1)/\delta)}{a_M}\right\rceil
+$$<br>suffices.</p><p><b>Proof of the lower bound.</b> Give the winner index a uniform prior. Every sample sequence has identical likelihood under all indices in $T$ and zero likelihood under other indices. The posterior is therefore uniform on $T$.</p><p>Under a fixed true winner, let $X=|T|-1$ and<br>$$
+z=\mathbb E X=(M-1)h^n.
+$$<br>The optimal Bayes error is $\mathbb E[X/(1+X)]$.</p><p>Two distinct rivals are jointly approved on one sample with probability<br>$$
+h_2=\frac{(k-1)(k-2)}{(M-1)(M-2)}
+\le h^2.
+$$<br>For $n\ge1$, this gives<br>$$
+\mathbb E X^2
+=z+(M-1)(M-2)h_2^n
+\le z+z^2.
+$$<br>Cauchy–Schwarz, applied to $\sqrt{X/(1+X)}$ and $\sqrt{X(1+X)}$, yields<br>$$
+\mathbb E\frac{X}{1+X}
+\ge\frac{(\mathbb E X)^2}{\mathbb E[X(1+X)]}
+\ge\frac{z}{z+2}.
+$$<br>A uniformly successful algorithm must have Bayes error at most $\delta$. Hence<br>$$
+z\le\frac{2\delta}{1-\delta},
+\qquad
+n a_M\ge
+\log\frac{(M-1)(1-\delta)}{2\delta}.
+$$</p><p>We verify that this implies the claimed rate uniformly, including $\delta$ close to $1/2$.</p><p>First, $n\ge1$. Also $\delta&lt;1/2$ implies<br>$$
+n\ge1+\frac{\log((k-1)/2)}{a_M}.
+$$<br>For $k\ge4$,<br>$$
+\log((k-1)/2)\ge\frac14\log(k+1).
+$$<br>Indeed, $(k-1)^4/(16(k+1))$ is increasing for $k\ge4$ and exceeds one at $k=4$.</p><p>For $k=2,3$, we instead use<br>$$
+a_M\ge\log\frac{k}{k-1}\ge\log(3/2);
+$$<br>then $n\ge1$ already supplies a universal constant multiple of $\log(k+1)/a_M$.</p><p>Finally, if $\delta\le1/4$, then $M-1\ge2$ gives<br>$$
+n a_M
+\ge\log\frac{1-\delta}{\delta}
+\ge\frac12\log\frac1\delta.
+$$<br>For $\delta&gt;1/4$, the confidence term is absorbed by $\log(k+1)$. Combining these inequalities proves the lower bound. ∎</p><p>These societies have finite support and positive rational masses. Their winner–rival gap is $1-h$, so their margin is $(1-h)/2$.</p><h3>5. Large-margin lower bound</h3><p>Assume<br>$$
+m\ge3,
+\qquad
+\beta/16&lt;\epsilon\le\epsilon_{\max}.
+$$<br>Write<br>$$
+g=2\epsilon,
+\qquad
+t=1-g,
+\qquad
+a=\log\frac1t.
+$$</p><h3>The case $k\ge2$</h3><p>Feasibility gives<br>$$
+t\ge\frac{k-1}{m-1}&gt;0.
+$$<br>Choose an active set of size<br>$$
+M=1+\left\lceil\frac{k-1}{t}\right\rceil.
+$$<br>Then $k+1\le M\le m$. Place the family from Lemma 2 on these active candidates; inactive candidates are never approved.</p><p>Its rival approval probability is<br>$$
+h=\frac{k-1}{M-1}\le t.
+$$<br>Thus its active winner–rival gap is at least $1-t=g$, and its gap from inactive candidates is one. Every member belongs to the required promise class.</p><p>It remains to compare its information rate with $a$. Since<br>$$
+\frac{M-1}{k-1}
+\le\frac1t+\frac1{k-1},
+$$<br>we have<br>$$
+a_M
+\le a+\log\left(1+\frac{t}{k-1}\right)
+\le a+\frac1{k-1}.
+$$<br>Moreover,<br>$$
+(m-k)(k-1)\ge m-2.
+$$<br>To check this, set $x=k-1$ and observe that the difference from $m-2$ is $(x-1)(m-2-x)\ge0$. Consequently,<br>$$
+\frac1{k-1}\le\frac{m-k}{m-2}\le3\beta.
+$$<br>Our margin assumption gives $g&gt;\beta/8$, and $a=-\log(1-g)\ge g$. Therefore<br>$$
+a_M\le a+3\beta\le a+24g\le25a.
+$$<br>Lemma 2 now proves<br>$$
+N^*=\Omega\!\left(1+\frac{\Lambda}{a}\right).
+$$</p><h3>The case $k=1$</h3><p>For $g&lt;1$, consider two societies supported on rankings whose top candidates are $i$ and $j$. Their top-candidate probabilities are respectively<br>$$
+\left(\frac{1+g}{2},\frac{1-g}{2}\right)
+\quad\text{and}\quad
+\left(\frac{1-g}{2},\frac{1+g}{2}\right).
+$$<br>All remaining candidates have score zero. Both societies have margin $\epsilon$.</p><p>Their one-sample affinity, defined as $\sum_x\sqrt{P(x)Q(x)}$, is<br>$$
+B=\sqrt{1-g^2}.
+$$<br>For any two distributions with affinity $B$, Cauchy–Schwarz gives<br>$$
+\mathrm{TV}(P,Q)
+\le\sqrt{1-B^2}.
+$$<br>Indeed, apply it to the factors $\sqrt P-\sqrt Q$ and $\sqrt P+\sqrt Q$ in the total-variation sum. Affinity multiplies under independent products. Hence the optimal equal-prior error after $n$ samples is at least<br>$$
+\frac{1-\sqrt{1-B^{2n}}}{2}
+\ge\frac{B^{2n}}4.
+$$<br>Writing<br>$$
+b=-\log(1-g^2)\le-\log(1-g)=a,
+$$<br>we obtain<br>$$
+n\ge\frac{\log(1/(4\delta))}{b}.
+$$<br>For $\delta\le1/16$, this gives a universal constant multiple of $\Lambda/a$.</p><p>For $\delta&gt;1/16$, use $n\ge1$. Here $\beta=(m-1)/m\ge2/3$, so<br>$$
+a\ge g&gt;\beta/8\ge1/12,
+\qquad
+\Lambda&lt;\log32.
+$$<br>Thus $1+\Lambda/a$ is universally bounded, and $n\ge1$ supplies the required lower bound.</p><p>If $g=1$, one sample is necessary and sufficient. This completes the large-margin lower bound.</p><h3>6. Large-margin upper bound</h3><p>Again write $g=2\epsilon$, $t=1-g$, and $a=\log(1/t)$.</p><p>If $\epsilon=1/2$, feasibility forces plurality, and the promised winner has score one. One sample identifies it. Assume henceforth $\epsilon&lt;1/2$.</p><h3>Margins at most $3/8$</h3><p>For $\epsilon\le3/8$,<br>$$
+a=-\log(1-2\epsilon)
+\le\frac{2\epsilon}{1-2\epsilon}
+\le8\epsilon.
+$$<br>When $\epsilon&gt;\beta/16$, we also have $\beta&lt;16\epsilon$. Therefore<br>$$
+\frac{\beta}{\epsilon^2}
+\le\frac{128}{a}.
+$$<br>The general upper bound from Section 2 proves the desired rate in this range.</p><h3>Margins larger than $3/8$</h3><p>Now $0&lt;t&lt;1/4$. The score-gap promise implies<br>$$
+s_w\ge1-t,
+\qquad
+s_c\le t\quad(c\ne w).
+$$<br>Let $Z_c$ be candidate $c$’s approval count in $n$ samples. It suffices that<br>$$
+Z_w&gt;n/2
+\quad\text{and}\quad
+Z_c&lt;n/2\quad(c\ne w).
+$$</p><p>Set<br>$$
+\lambda=\log\frac{1-t}{t},
+\qquad
+H(t)=-\frac12\log(4t(1-t)).
+$$<br>The exponential Markov bound for a binomial variable, together with monotonicity in its success probability, gives<br>$$
+\Pr(Z_w\le n/2)\le e^{-nH(t)}.
+$$</p><p>We need a rival bound weighted by its approval probability. If $Z$ is binomial with success probability $p\le t$, then convexity in $p$ gives<br>$$
+\mathbb E(e^{\lambda Z}-1)
+=(1+p(e^\lambda-1))^n-1
+\le\frac pt\left((1+t(e^\lambda-1))^n-1\right).
+$$<br>Provided $\lambda n/2\ge\log2$, Markov’s inequality therefore yields<br>$$
+\Pr(Z\ge n/2)
+\le\frac{2p}{t}
+\left(2\sqrt{t(1-t)}\right)^n
+=\frac{2p}{t}e^{-nH(t)}.
+$$<br>Summing over rivals, using $\sum_c s_c=k$, gives<br>$$
+\Pr(\text{prediction fails})
+\le\left(1+\frac{2k}{t}\right)e^{-nH(t)}.
+$$</p><p>We claim that<br>$$
+H(t)\ge\frac{a}{16}
+\qquad(0&lt;t\le1/4).
+$$<br>To verify it, regard $H$ as a function of $a$, where $t=e^{-a}$ and $a\ge\log4$. Then<br>$$
+\frac{dH}{da}
+=\frac12\left(1-\frac{e^{-a}}{1-e^{-a}}\right)
+\ge\frac13.
+$$<br>Thus $H-a/16$ is increasing. At $a=\log4$, it is positive because<br>$$
+\frac12\log(4/3)&gt;\frac{\log4}{16},
+$$<br>equivalently $(4/3)^8&gt;4$.</p><p>Since $1+2k/t\le3k/t$, it is enough to take<br>$$
+n=
+\left\lceil16\left(1+\frac{\log(3k/\delta)}a\right)\right\rceil.
+$$<br>This budget also satisfies $\lambda n/2\ge\log2$. Consequently,<br>$$
+N^*=O\!\left(1+\frac{\Lambda}{a}\right).
+$$<br>Together with Section 5, this proves the second line of the theorem.</p><h3>7. Exact binary characterization</h3><p>For $m=2$, necessarily $k=1$. The promise class is nonempty exactly when $\epsilon\le1/2$.</p><p>For $0&lt;\epsilon&lt;1/2$, put $p_0=1/2+\epsilon$. If $B_n$ has distribution $\operatorname{Bin}(n,p_0)$, define<br>$$
+e_n(\epsilon)
+=
+\Pr(B_n&lt;n/2)
++\frac12\Pr(B_n=n/2).
+$$<br>Then the exact answer is<br>$$
+N^*(2,1,\epsilon,\delta)
+=
+\min\{n\ge1:\ e_n(\epsilon)\le\delta\}.
+$$</p><p><b>Proof.</b> Consider the two endpoint societies with probabilities $p_0$ and $1-p_0$ that the first candidate ranks above the second. With equal prior probabilities, their likelihood ratio favors the first society exactly when the observed count exceeds $n/2$. Majority prediction with fair randomization on a tie therefore minimizes average error, attaining $e_n(\epsilon)$ under each endpoint. Every algorithm’s worst-case error is at least this average error.</p><p>The same rule works uniformly over the promise class. Its error is nonincreasing as the first candidate’s ranking probability increases above $p_0$: couple the Bernoulli samples using common uniform random variables, and note that the conditional error is nonincreasing in the observed count. Symmetry handles probabilities below $1-p_0$. ∎</p><p>At $\epsilon=1/2$, handle the deterministic endpoint societies directly: exactly one sample suffices. In particular, no likelihood ratio is needed on zero-probability observations.</p><h3>8. Running time and numerical parameters</h3><p>Let $n$ be the selected sample budget. Streaming full rankings, maintaining approval counters, and selecting the empirical winner takes<br>$$
+O(m(n+1))
+$$<br>word operations. With binary candidate labels and counters, a corresponding bound is<br>$$
+O\!\left(m(n+1)(\log m+\log(n+1))\right)
+$$<br>bit operations, using<br>$$
+O\!\left(m(\log m+\log(n+1))\right)
+$$<br>bits of working memory.</p><p>For $m\ge3$, substitute the theorem’s budget. The resulting word-operation bounds are<br>$$
+O\!\left(m+(m-k)\epsilon^{-2}\Lambda\right)
+$$<br>in the small-margin range, and<br>$$
+O\!\left(
+m\left(1+\frac{\Lambda}{\log(1/(1-2\epsilon))}\right)
+\right)
+$$<br>in the large-margin range.</p><p>These costs exclude the sampling oracle’s implementation. The algorithm never reads the hidden representation, so they have no dependence on $\tau$ or $L$.</p><p>For complete preprocessing accounting, let $b_\epsilon,b_\delta$ be the encoding lengths of the supplied rational parameters. These are distinct from the hidden society length $L$ and cannot generally be bounded by $\epsilon^{-1}$ and $\log(1/\delta)$.</p><p>The budgets can be selected with polynomial bit cost in<br>$$
+b_\epsilon+b_\delta+\log m
+$$<br>using integer arithmetic. No exact transcendental evaluation is required:</p><ul><li>For the bounds in Section 2, replace natural-log factors by suitable larger integer ceilings of binary logarithms.</li><li>In the high-margin case, compute</li></ul><p>$$
+  H=\left\lceil\log_2\frac{k+1}{\delta}\right\rceil,
+  \qquad
+  J=\left\lfloor\log_2\frac1t\right\rfloor,
+  $$<br>and use $n=32(1+\lceil H/J\rceil)$. Here $J\ge2$. Since $a\ge J\log2$ and $\log(3k/\delta)\le(H+2)\log2$, this budget satisfies the bound proved in Section 6 and has the same asymptotic order.</p><p>Binary-log floors and ceilings of rationals are determined by bit lengths and exact shifted-integer comparisons.</p><p>For the exact binary minimum, let<br>$$
+H=\left\lceil\log_2\frac2\delta\right\rceil,
+\qquad
+B=\left\lceil\epsilon^{-2}H\right\rceil.
+$$<br>The exponential Markov bound gives $e_B(\epsilon)\le e^{-2B\epsilon^2}&lt;\delta$. Thus one can compute the exact binomial errors for all $n\le B$ using the binomial dynamic recurrence and return the first qualifying $n$. This uses polynomial bit time in $B,b_\epsilon,b_\delta$; a conservative schoolbook-arithmetic bound is<br>$$
+O\!\left(
+B^4(b_\epsilon+b_\delta+\log(B+1))^2
+\right).
+$$<br>Sampling and prediction then use the streaming bounds above.</p><h3>9. Boundary behavior and veto</h3><p>At the maximum feasible margin, the formula specializes, for $k\ge2$, to<br>$$
+N^*(m,k,\epsilon_{\max},\delta)
+=
+\Theta\!\left(
+1+\frac{\log((k+1)/\delta)}
+{\log((m-1)/(k-1))}
+\right).
+$$<br>This explains why the small-margin expression cannot simply be extrapolated to every parameter range. For plurality at its feasibility boundary, exactly one sample suffices.</p><p>For veto, $k=m-1$ and $m\ge3$, the two branches combine to give<br>$$
+N^*(m,m-1,\epsilon,\delta)
+=
+\Theta\!\left(
+\frac1{m\epsilon^2}\log\frac m\delta
+\right)
+$$<br>throughout the entire feasible range<br>$$
+0&lt;\epsilon\le\frac1{2(m-1)}.
+$$<br>Indeed, in the large-margin branch, $\epsilon$ is within universal factors of $1/m$, and $-\log(1-2\epsilon)$ is within universal factors of $\epsilon$.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The output <b>proves the claimed minimax rates</b>, with an exact characterization for the binary case. I found no false step, blocking gap, or necessary expositional repair. The running-time claims correctly distinguish access to samples from access to the hidden society representation.</p><ul><li><b>Scope and interpretation of the claim.</b></li></ul><p>The definition of $N^*$ uses a deterministic worst-case sample cap, permits internal randomness, and permits early stopping. This matches the stated prediction problem. Padding a stopped execution with unused independent samples is valid for the lower bounds.</p><p>For $m\ge3$, the output establishes the minimum sample complexity up to universal constant factors, rather than an exact integer minimum. Its use of $\Theta$ makes this distinction explicit. For $m=2$, it supplies an exact integer characterization.</p><p>The lower-bound societies have finite support with positive rational masses. The task does not impose a fixed upper bound on $\tau$ or $L$, so their support sizes and encoding lengths do not invalidate the constructions.</p><ul><li><b>Lemma 1: the exact continuous margin.</b></li></ul><p>The total-variation inequality is applicable because $A_w-A_c$ takes values in $[-1,1]$. Whenever a different candidate wins under $\nu$, that candidate’s score is at least $w$’s score, including when the outcome changes through a tie. Thus the lower bound applies under the prescribed priority order.</p><p>For the upper bound, $a-b=d$ implies that the source class contains enough mass to transfer $d/2+\eta$ for sufficiently small positive $\eta$. A ranking approving $c$ and rejecting $w$ exists for every $1\le k&lt;m$. The transfer changes the score difference by exactly twice the transferred mass, making $c$ strictly outscore $w$.</p><p>The zero-gap case is also handled: mixing with such a ranking makes the tied rival strictly outscore $w$ at arbitrarily small total variation. The use of an infimum therefore resolves the possible distinction between attaining a tie and changing the winner.</p><p>Consequently,<br>$$
+   \mathrm{MOV}_\infty(\mu)=\frac12\min_{c\ne w}(s_w-s_c)
+   $$<br>is justified, and the promise implies a unique population winner.</p><ul><li><b>Feasibility and zero samples.</b></li></ul><p>Summing the score-gap inequalities and using $\sum_c s_c=k$ and $s_w\le1$ gives the stated necessary upper limit on $\epsilon$.</p><p>The proposed construction attains that limit: its winner has score $1$, while every rival has score $(k-1)/(m-1)$. Its masses are positive rationals, including the deterministic case $k=1$.</p><p>The construction is available with every candidate as winner. Hence a zero-sample algorithm cannot succeed uniformly with probability greater than $1/2$. This validates both the positive lower bound on every nonempty promise class and the separately stated vacuous convention for an empty class.</p><ul><li><b>Section 2: general upper bounds.</b></li></ul><p>The Bernoulli concentration argument is valid throughout its stated range. The exponential remainder inequalities hold for $0\le\lambda\le1/2$. The convexity bound involving $p$ is valid, and the condition $nt^2\ge2\log2$ ensures that the denominator used in Markov’s inequality has the stated lower bound.</p><p>Summing the resulting candidate bounds uses $\sum_c s_c=k$, so it introduces $k$, rather than $m$, into the logarithm. Strict deviations below $\epsilon$ preserve every winner–rival gap. The chosen sample budget satisfies the concentration argument’s side condition.</p><p>In the rejection argument, $q_w\le\beta$ follows because the winner minimizes rejection probability. The optimized exponential bound correctly handles both $b&gt;0$ and the limiting case $b=0$. The subsequent inequalities give<br>$$
+   (\sqrt a-\sqrt b)^2\ge\frac{\epsilon^2}{2\beta}.
+   $$<br>The required condition $\epsilon\le\beta$ follows from the feasibility bound for all $m\ge2$.</p><p>Finally, the split at $k=m/2$ correctly converts the two explicit upper bounds into the uniform bound<br>$$
+   O\!\left(\beta\epsilon^{-2}\Lambda\right).
+   $$</p><ul><li><b>Section 3: small-margin lower bound.</b></li></ul><p>The active-set size satisfies $M\ge3$ and $M\ge k+1$. The displayed case analysis establishes $\lambda\le1/2$, so all constructed masses are positive. Normalization follows from $\mathbb E_U(I_i-u)=0$.</p><p>The inclusion covariance calculation is correct. Substitution gives the stated scores and an active winner–rival gap of exactly $2\epsilon$. The bounds $u\ge1/3$ and $2\epsilon\le1/8$ ensure that inactive candidates do not determine a smaller margin.</p><p>The relative-entropy bounds are valid. The reference distribution has positive mass on every approval set in the common support, and $P_j\ge U/2$ justifies the pairwise denominator bound. The uniform estimate $V\ge\beta/5$ holds in all three parameter cases. The constants $20$ and $80$ are consistent with the preceding calculations.</p><p>The information argument applies to randomized algorithms because their internal randomness is independent of the unknown index. Under the product of the index and prediction marginals, the equality event has probability $1/M$, regardless of the prediction marginal. The binary relative-entropy lower bound therefore applies as written.</p><p>The numerical estimate<br>$$
+   \operatorname{kl}(1/2\|1/M)\ge\frac1{64}\log M
+   $$<br>holds for both stated ranges of $M$.</p><p>For the confidence lower bound, the selected event has probabilities at least $1-\delta$ and at most $\delta$ under the two societies. The relative-entropy comparison and the constant $\frac14$ are valid for $\delta\le1/4$. For larger $\delta$, the bounded confidence logarithm is absorbed by $\log(k+1)$.</p><p>These arguments establish the complete first branch with universal constants.</p><ul><li><b>Lemma 2: the boundary family.</b></li></ul><p>The intersection upper bound correctly counts each rival’s survival probability as $h^n$.</p><p>The deterministic completion of approval sets provides a common ranking representation across the family. Thus observing the complete rankings does not invalidate the posterior calculation: each compatible winner index has the same likelihood.</p><p>The posterior is uniform on the intersection, giving Bayes error $\mathbb E[X/(1+X)]$. The joint-approval probability $h_2$, its comparison with $h^2$, and the second-moment estimate are correct. The stated Cauchy–Schwarz application yields<br>$$
+   \mathbb E\frac{X}{1+X}\ge\frac{z}{z+2}.
+   $$</p><p>The conversion from this bound to the claimed rate handles the potentially delicate regime $\delta$ approaching $1/2$. The separate treatment of $k=2,3$ is valid, and the logarithmic comparison for $k\ge4$ holds already at $k=4$. The confidence argument covers $\delta\le1/4$, with the remaining range absorbed as claimed.</p><ul><li><b>Section 5: large-margin lower bounds.</b></li></ul><p>For $k\ge2$, feasibility ensures that the selected integer $M$ lies between $k+1$ and $m$. The boundary family then has margin at least $\epsilon$, including against inactive candidates.</p><p>The ceiling estimate for $a_M$ is correct. The displayed algebraic identity verifies<br>$$
+   (m-k)(k-1)\ge m-2.
+   $$<br>Together with the large-margin assumption, this establishes $a_M\le25a$. Applying Lemma 2 therefore gives the required lower bound without a parameter-dependent implicit constant.</p><p>For $k=1$, the two societies have the asserted margin. Their affinity is $\sqrt{1-g^2}$, and the total-variation comparison and product-affinity calculation give the stated testing lower bound. The inequality $b\le a$ has the correct direction. The separate treatments of small $\delta$, larger $\delta$, and $g=1$ cover the entire allowed range.</p><ul><li><b>Section 6: large-margin upper bound.</b></li></ul><p>For $\epsilon\le3/8$, the estimates on $a$ and $\beta$ correctly imply<br>$$
+   \frac{\beta}{\epsilon^2}\le\frac{128}{a}.
+   $$<br>Thus the general upper bound has the required order.</p><p>For $\epsilon&gt;3/8$, the score-gap promise implies $s_w\ge1-t$ and $s_c\le t$ for every rival. The winner-tail bound is valid. The rival-tail argument correctly uses convexity to retain a factor proportional to the rival’s approval probability, allowing summation through $\sum_c s_c=k$.</p><p>The derivative calculation proving $H(t)\ge a/16$ is correct, as is the endpoint comparison at $t=1/4$. The chosen budget controls the failure probability and satisfies the additional Markov-bound condition.</p><p>The endpoint $\epsilon=1/2$ is correctly isolated: feasibility forces $k=1$, and the promised winner appears first in every sample.</p><ul><li><b>Section 7: exact binary characterization.</b></li></ul><p>For the two endpoint societies, the likelihood-ratio decision is majority with fair randomization on an observed tie. Its errors under the endpoints are equal, so its average error supplies a worst-case lower bound for every algorithm.</p><p>The coupling argument establishes the required monotonicity over each side of the promise class. Thus the same rule attains that lower bound uniformly, proving the stated exact minimum.</p><p>Randomizing a prediction when the sample counts tie is permitted by the task. It does not alter the fixed priority order defining the population winner, which is unique under the promise. The deterministic endpoint case is also handled correctly.</p><ul><li><b>Section 8: computation and representation.</b></li></ul><p>The streaming time and memory bounds account for reading complete rankings and maintaining counters. Excluding the sampling oracle’s implementation is appropriate because the algorithm receives samples and does not receive the hidden support.</p><p>The additional lengths $b_\epsilon$ and $b_\delta$ are correctly distinguished from $L$. Exact rational parameters can have long encodings without large $\epsilon^{-1}$ or $\log(1/\delta)$, so this qualification is necessary for complete bit-complexity accounting.</p><p>The integer-log replacements preserve the upper bounds. In the high-margin case, $J\ge2$, and the proposed integer budget dominates the sufficient budget from Section 6.</p><p>For the binary case, the stated exponential bound guarantees termination by $B$. Exact binomial recurrence calculations have polynomial bit cost in the listed quantities; the conservative arithmetic bound is consistent with that computation.</p><ul><li><b>Section 9 and the cited context.</b></li></ul><p>The maximum-margin specialization follows from the large-margin branch. The veto specialization is valid throughout the feasible range, including its endpoint.</p><p>The contextual attribution is accurate: the paper states the earlier upper bound, and the author’s page states the restriction on the discrete lower-bound proof. Neither external result is needed to complete the output’s direct arguments. [Primary source](https://arxiv.org/pdf/1502.04354v3), [author’s erratum](https://asiaccs2026.cse.iitkgp.ac.in/~palash/).</p><p>No corrective feedback is required. The write-up settles the distributional sample-complexity question to the precision it claims and supplies polynomial-time prediction algorithms with explicit encoding qualifications.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

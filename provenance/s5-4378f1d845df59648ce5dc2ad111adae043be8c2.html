@@ -1,0 +1,243 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Revisiting EFX and fPO Allocations for Binary Chores — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Revisiting EFX and fPO Allocations for Binary Chores <span style="font-weight:normal;color:#8a7350">(s5-4378f1d845df59648ce5dc2ad111adae043be8c2)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.8 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For the allocation of binary additive chores to unweighted agents, Algorithm~\ref{alg: bobw_EFEFX} computes a lottery that achieves ex-ante EF, fPO, and ex-post EFX in polynomial time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite type set \(T\) with binary cost vectors \(a_{t,e}\in\{0,1\}\), type masses \(\mu_t\), equal entitlements, and per-capita chore supplies \(q_e\), compute a finite-support lottery over measurable allocations of integral bundle vectors \(b\in\mathbb{Z}_{\geq 0}^{E}\) that assigns all chore mass, makes every realization ex-post EFX and fPO, and satisfies ex-ante EF and fPO for every positive-mass ordered pair of agents.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list of \(\tau\geq1\) types with positive binary-rational masses \(\mu_t\), summing to \(1\). Here \(\tau\) is the support size, not the number of possible types. There are \(m\geq1\) chore categories \(E\), binary additive costs \(c_t(b)=\sum_{e\in E}a_{t,e}b_e\) with \(a_{t,e}\in\{0,1\}\), and nonnegative binary-rational per-capita supplies \(q_e\); \(L\) is the total input bit length.<br>Represent agents by disjoint intervals \(A_t\) of lengths \(\mu_t\), with Lebesgue measure and equal entitlements; write \(t(x)\) for agent \(x\)&#x27;s type. A realization is a measurable integral-bundle map \(b:A\to\mathbb Z_{\geq0}^{E}\) satisfying \(\int_A b_e(x)\,dx=q_e\) for every \(e\).<br>Ex-post EFX means that, for almost every ordered pair \((x,y)\), \(c_{t(x)}(b(x))-a_{t(x),e}\leq c_{t(x)}(b(y))\) for every \(e\) with \(b_e(x)&gt;0\), including zero-cost chores; empty bundles impose no removal condition.<br>A feasible allocation is fPO if no measurable, integrable fractional map \(z:A\to\mathbb R_{\geq0}^{E}\) with the same supplies weakly lowers agents&#x27; costs almost everywhere and strictly lowers them on a set of positive measure.<br>A finite-support lottery \((\lambda_\ell,b^\ell)\) must have every realization EFX and fPO. Its expected map \(\bar b=\sum_\ell\lambda_\ell b^\ell\) must be fPO and satisfy ex-ante EF: \(c_{t(x)}(\bar b(x))\leq c_{t(x)}(\bar b(y))\) for almost every ordered pair \((x,y)\), including pairs within one type.<br>Encode the lottery by positive binary-rational probabilities summing to \(1\), a finite common partition of each type interval into intervals with binary-rational endpoints, and an integral bundle vector on each cell in each realization.</p><p>Is computing such a lottery, or determining that none exists, solvable in polynomial time in \(m,\tau,L\), or is this problem NP-hard?</p><p>For finitely many equally entitled agents and individually listed binary additive chores, a polynomial-time algorithm constructs a lottery with ex-ante EF and fPO and ex-post EFX and fPO, supported on at most \(n^2\) allocations. [Source](https://arxiv.org/html/2609.13970v1)<br>No result settling the exact atomless-agent lottery problem above was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized total agent mass to one and represented each type by an atomless interval; equal entitlements mean unweighted comparisons between individual agents.</li><li>Took chore supplies to be nonnegative binary rationals, interpreted as category quantities per unit agent mass, with no normalization of their sum.</li><li>Interpreted positive-mass ordered pairs as almost-everywhere comparisons under product measure, including comparisons between agents of the same type.</li><li>Carried over removal of every chore in the envious agent&#x27;s bundle, including zero-cost chores; removal decreases the relevant integral coordinate by one.</li><li>Defined continuum fPO using all feasible measurable fractional reallocations, with weak improvement almost everywhere and strict improvement on a positive-measure set; ex-ante fPO applies to the expected bundle map.</li><li>Specified a finite computational encoding using rational probabilities and rational interval cells carrying integral bundles.</li><li>Allowed an infeasibility report because existence for the continuous formulation is not supplied by the discrete guarantee.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and proved results</h3><p>The prescribed explicit search problem <b>cannot be solved in polynomial time in $m,\tau,L$</b>, because some inputs require exponentially many realizations and partition cells. Nevertheless, <b>every valid input admits a lottery</b>, so determining existence always answers yes.</p><p>I give a direct construction proving existence, without invoking the finite-agent theorem. It also yields a polynomial-time construction whenever the total supply of universally costly chores is an integer.</p><p>A further result is that deciding whether <b>one deterministic realization suffices</b> is $\mathrm{NP}$-complete, even for a restricted family with dyadic inputs. This does <b>not</b> establish $\mathrm{NP}$-hardness of computing an unrestricted lottery. That part of the target remains unresolved.</p><p>Throughout, rationals are encoded by binary numerators and denominators. The construction also respects the narrower interpretation in which all input and output rationals must be dyadic.</p><h3>1. Characterizing fractional Pareto optimality</h3><p>Let<br>$$
+E^+=\{e\in E:a_{t,e}=1\text{ for every supported type }t\},
+\qquad
+Q=\sum_{e\in E^+}q_e.
+$$<br>Call the categories in $E^+$ universal. Write $|B|$ for the Lebesgue measure of a measurable set $B$.</p><p><b>Proposition.</b> A feasible nonnegative, integrable allocation $u$, whether integral or fractional, is fPO if and only if every non-universal category is assigned exclusively to agents who incur zero cost for it, almost everywhere.</p><p><b>Proof.</b> Since the total mass of agents is $1$, the integrated cost is<br>$$
+\operatorname{SC}(u)
+=
+\int_A c_{t(x)}(u(x))\,dx
+=
+Q+\sum_{e\notin E^+}\int_A a_{t(x),e}u_e(x)\,dx.
+$$<br>In particular, every feasible fractional allocation has integrated cost at least $Q$.</p><p>Suppose, for some non-universal category $e$,<br>$$
+\delta=\int_{\{x:a_{t(x),e}=1\}}u_e(x)\,dx&gt;0.
+$$<br>Its zero-cost recipient set<br>$$
+Z=\{x:a_{t(x),e}=0\}
+$$<br>has positive measure: at least one supported type has coefficient zero, and every supported type has positive mass.</p><p>Remove all category-$e$ chores from its positive-cost recipients and add $\delta/|Z|$ chores per agent on $Z$. Leave all other coordinates unchanged. This defines a feasible, measurable, integrable fractional allocation. It leaves the costs of agents in $Z$ unchanged and weakly lowers every other cost. The agents from whom a positive quantity was removed form a positive-measure set, because the removed integral is $\delta&gt;0$. They strictly improve. Thus $u$ is not fPO.</p><p>Conversely, suppose every non-universal category is assigned at zero cost. Then $\operatorname{SC}(u)=Q$. A fractional Pareto improvement would strictly decrease integrated cost, contradicting the lower bound $Q$. Indeed, its cost reduction is an integrable function that is nonnegative almost everywhere and positive on a positive-measure set, so its integral is positive. This proves the proposition. $\square$</p><p>Consequently, the expectation of any finite lottery of feasible fPO allocations is automatically fPO: non-universal categories remain assigned only at zero cost.</p><h3>2. A direct lottery construction for every input</h3><p>Write<br>$$
+Q=h+r,
+\qquad
+h=\lfloor Q\rfloor,
+\qquad
+0\leq r&lt;1.
+$$<br>If $r&gt;0$, write $r=p/D$ in lowest terms. If $r=0$, set $p=0$ and $D=1$.</p><p>The construction uses $D$ equally likely realizations. Each type has the same distribution of universal chores. Non-universal chores are assigned only where the universal load is $h$, rather than $h+1$.</p><h3>2.1 Integral universal bundles with the prescribed supplies</h3><p>Order the universal categories as $e_1,\ldots,e_u$, where $u=|E^+|$, and define<br>$$
+s_0=0,
+\qquad
+s_i=\sum_{j=1}^i q_{e_j}.
+$$<br>Thus $s_u=Q$.</p><p>For $s\geq0$ and $w\in[0,1)$, define<br>$$
+F_s(w)=\lfloor s\rfloor+
+\mathbf{1}_{[0,s-\lfloor s\rfloor)}(w).
+$$<br>For each universal category, put<br>$$
+U_{e_i}(w)=F_{s_i}(w)-F_{s_{i-1}}(w).
+$$</p><p>These functions have three needed properties.</p><p>First, $U_{e_i}(w)$ is a nonnegative integer. To check nonnegativity, observe that $F_s(w)$ is nondecreasing in $s$. If two values of $s$ have the same integer part, their indicator intervals are nested. If their integer parts differ, the increase in the integer part compensates for any decrease in the indicator.</p><p>Second,<br>$$
+\int_0^1 F_s(w)\,dw
+=
+\lfloor s\rfloor+(s-\lfloor s\rfloor)
+=s.
+$$<br>Therefore,<br>$$
+\int_0^1 U_{e_i}(w)\,dw=q_{e_i}.
+$$</p><p>Third, telescoping gives<br>$$
+\sum_{e\in E^+}U_e(w)
+=
+F_Q(w)
+=
+h+\mathbf{1}_{[0,r)}(w).
+$$<br>Thus every universal bundle contains exactly $h$ or $h+1$ chores.</p><p>If there are no universal categories, then $Q=h=r=0$, and the same statements hold with an empty sum.</p><h3>2.2 Assigning non-universal chores only to low agents</h3><p>For each non-universal category $e$, choose one supported type $t_e$ satisfying<br>$$
+a_{t_e,e}=0.
+$$<br>Such a type exists by definition.</p><p>Let<br>$$
+z_e=\frac{q_e}{\mu_{t_e}},
+\qquad
+k_e=\left\lfloor\frac{z_e}{1-r}\right\rfloor,
+\qquad
+\delta_e=z_e-k_e(1-r).
+$$<br>Because $r&lt;1$,<br>$$
+0\leq\delta_e&lt;1-r.
+$$</p><p>On the normalized interval of type $t_e$, define<br>$$
+V_e(w)
+=
+k_e\mathbf{1}_{[r,1)}(w)
++
+\mathbf{1}_{[r,r+\delta_e)}(w).
+$$<br>Assign category $e$ to no other type.</p><p>This is a nonnegative integral bundle coordinate, supported entirely on the low region $[r,1)$. Moreover,<br>$$
+\int_0^1 V_e(w)\,dw
+=
+k_e(1-r)+\delta_e
+=z_e.
+$$<br>After multiplying by the type mass, its total supply is $\mu_{t_e}z_e=q_e$.</p><p>Let $B_t(w)$ denote the resulting integral bundle for type $t$: its universal coordinates are $U_e(w)$, and its non-universal coordinates are the functions $V_e(w)$ designated for that type.</p><h3>2.3 Rotating the bundles</h3><p>Choose consecutive type intervals<br>$$
+A_t=[\alpha_t,\alpha_t+\mu_t).
+$$<br>For an agent $x\in A_t$, its normalized position is<br>$$
+w_t(x)=\frac{x-\alpha_t}{\mu_t}\in[0,1).
+$$</p><p>For each $j\in\{0,\ldots,D-1\}$, define a realization by<br>$$
+b^j(x)
+=
+B_t\!\left(\left\{w_t(x)-\frac{j}{D}\right\}\right),
+\qquad x\in A_t,
+$$<br>where $\{v\}=v-\lfloor v\rfloor$. Give each realization probability $1/D$.</p><p>Rotation modulo $1$ preserves Lebesgue measure. Thus, for every realization and every universal category,<br>$$
+\int_A b^j_e(x)\,dx
+=
+\sum_t\mu_t\int_0^1 U_e(w)\,dw
+=
+q_e.
+$$<br>For a non-universal category, only its designated type receives it, and<br>$$
+\int_A b^j_e(x)\,dx
+=
+\mu_{t_e}\int_0^1 V_e(w)\,dw
+=
+q_e.
+$$<br>Every realization is therefore feasible.</p><h3>2.4 Ex-post EFX and fPO</h3><p>Fix a realization. Every agent has universal load $h$ or $h+1$, and every non-universal chore is assigned at zero cost.</p><p>Consider a low agent $x$, whose own cost is $h$. Removing any assigned chore leaves cost at most $h$. Every comparison bundle contains at least $h$ universal chores, so<br>$$
+c_{t(x)}(b^j(x))-a_{t(x),e}
+\leq h
+\leq c_{t(x)}(b^j(y)).
+$$<br>This includes removal of zero-cost chores.</p><p>A high agent has $h+1$ universal chores and no non-universal chores. Every assigned chore consequently costs that agent $1$. Removing any one leaves cost $h$, and the same comparison applies.</p><p>Empty bundles impose no condition, as required. Hence every realization is EFX. The proposition in Section 1 also proves that every realization is fPO.</p><h3>2.5 Ex-ante EF and fPO</h3><p>For every normalized position $w$,<br>$$
+\frac1D\sum_{j=0}^{D-1}
+\mathbf{1}_{[0,r)}
+\!\left(\left\{w-\frac{j}{D}\right\}\right)
+=r.
+$$<br>For $r=0$, this is immediate. Otherwise, write<br>$$
+w=\frac{a}{D}+v,
+\qquad
+0\leq v&lt;\frac1D,
+$$<br>with an integer $a$. The rotated positions enumerate<br>$$
+v,\ v+\frac1D,\ \ldots,\ v+\frac{D-1}{D}
+$$<br>in some order. Exactly $p$ lie in $[0,p/D)$, proving the identity.</p><p>It follows that every agent has expected universal load<br>$$
+h+r=Q.
+$$<br>Agents incur zero cost for all non-universal chores they receive. Therefore,<br>$$
+c_{t(x)}(\bar b(x))=Q
+$$<br>almost everywhere.</p><p>For any comparison agent $y$, the universal part of $\bar b(y)$ also has total quantity $Q$. Its other coordinates contribute nonnegative cost to type $t(x)$, so<br>$$
+c_{t(x)}(\bar b(y))\geq Q=c_{t(x)}(\bar b(x)).
+$$<br>This proves ex-ante EF, including comparisons within one type. The expected map is fPO by Section 1.</p><p>Thus <b>every valid input admits a lottery</b>.</p><h3>2.6 Encoding and running time</h3><p>Each base function is constant on finitely many intervals with rational endpoints. Its possible breakpoints are:</p><ul><li>fractional parts of the universal prefix sums $s_i$;</li><li>$0$, $r$, and $1$;</li><li>$r+\delta_e$ for categories designated for the type.</li></ul><p>There are $O(m+1)$ breakpoints per type. Taking the union of their rotations by $j/D$ gives a common partition with<br>$$
+C=O\!\left(D\tau(m+1)\right)
+$$<br>cells. Mapping normalized endpoints back to $A_t$ preserves rationality.</p><p>All numbers in this construction have bit length polynomial in $L$. For example, the denominator of $Q$ divides the product of the universal-supply denominators, giving<br>$$
+D\leq 2^{O(L)}.
+$$<br>Also, $1-r\geq1/D$, and each positive type mass is at least $2^{-O(L)}$. Consequently, the integers $h$ and $k_e$ have $O(L)$ bits. Prefix sums, endpoints, rotations, and bundle coordinates can all be computed by exact rational arithmetic with polynomial bit length.</p><p>Listing all probabilities, partition cells, and bundle vectors therefore takes time polynomial in $m,\tau,L,D$, and in particular at most<br>$$
+2^{O(L)}.
+$$</p><p>If the inputs are dyadic, then $D$ is a power of $2$, so the probabilities are dyadic. Physical partition endpoints are dyadic as well. For the only potentially non-dyadic normalized breakpoint, observe that<br>$$
+\mu_{t_e}(r+\delta_e)
+=
+\mu_{t_e}r+q_e-\mu_{t_e}k_e(1-r),
+$$<br>which is dyadic. Rotation adds a dyadic quantity $\mu_{t_e}j/D$ and, when wrapping occurs, subtracts an integer multiple of $\mu_{t_e}$.</p><p><b>Corollary.</b> If $Q$ is an integer, then $D=1$. The construction is deterministic and runs in polynomial time in $m,\tau,L$, using $O(\tau(m+1))$ partition cells.</p><h3>3. An unavoidable exponential output requirement</h3><p>The following lower bound is independent of the construction above.</p><p>Fix $k\geq1$. Consider one type of mass $1$, one category costing $1$, and supply<br>$$
+q=1+2^{-k}.
+$$<br>The input length is $L=\Theta(k)$.</p><p>Suppose a valid lottery has $K$ positive-probability realizations, with probabilities $\lambda_1,\ldots,\lambda_K$.</p><h3>3.1 EFX determines every realized load</h3><p>Fix a realization $\ell$. Its integer-valued load function has at least one positive-measure level set, because its countably many level sets cover a space of measure $1$. Let $d$ be the least level having positive measure. All lower levels have measure zero.</p><p>If the set of agents with load at least $d+2$ had positive measure, its Cartesian product with the positive-measure load-$d$ set would violate EFX: removing one chore would leave cost at least $d+1&gt;d$. Thus<br>$$
+b^\ell(x)\in\{d,d+1\}
+$$<br>almost everywhere.</p><p>Since the integral lies strictly between $1$ and $2$, necessarily $d=1$. Hence<br>$$
+b^\ell(x)=1+\mathbf{1}_{S_\ell}(x),
+\qquad
+|S_\ell|=2^{-k}.
+$$</p><h3>3.2 Ex-ante EF bounds every probability</h3><p>Define<br>$$
+g(x)=\sum_{\ell=1}^K\lambda_\ell b^\ell(x).
+$$<br>Identical costs and ex-ante EF imply $g(x)\leq g(y)$ for almost every ordered pair. Swapping coordinates gives equality for almost every pair. By Fubini’s theorem, $g$ is constant almost everywhere. Its integral determines that constant:<br>$$
+g(x)=1+2^{-k}
+$$<br>almost everywhere.</p><p>Combining the finitely many exceptional null sets gives<br>$$
+g(x)=1+\sum_{\ell=1}^K\lambda_\ell\mathbf{1}_{S_\ell}(x)
+$$<br>on a common full-measure set. On the positive-measure set $S_\ell$, this yields<br>$$
+1+2^{-k}=g(x)\geq1+\lambda_\ell.
+$$<br>Therefore,<br>$$
+\lambda_\ell\leq2^{-k}.
+$$<br>Summing the probabilities,<br>$$
+1=\sum_{\ell=1}^K\lambda_\ell\leq K2^{-k},
+\qquad
+K\geq2^k.
+$$</p><h3>3.3 The common partition also requires exponentially many cells</h3><p>On each positive-length common partition cell, every realized load and the expected load are constant. Since the expected load exceeds $1$, some realization assigns load $2$ throughout that cell. Its length is consequently at most $|S_\ell|=2^{-k}$.</p><p>If there are $C$ positive-length cells, their lengths sum to $1$, so<br>$$
+C\geq2^k.
+$$</p><p>These two bounds are attained. Partition the unit interval into $N=2^k$ equal cells $I_1,\ldots,I_N$, and use<br>$$
+b^j(x)=1+\mathbf{1}_{I_j}(x),
+\qquad
+\lambda_j=\frac1N.
+$$<br>Every realization has the prescribed supply and is EFX, and every expected load equals $1+1/N$. Section 1 proves fPO, since the only category is universal.</p><p>Thus the minimum numbers of realizations and common partition cells are both exactly $2^k$. Merely writing the required explicit output takes exponential time in $L$.</p><h3>4. A related restriction is NP-complete</h3><p>This section proves hardness for <b>existence of a deterministic solution</b>, not for unrestricted lottery search.</p><p>Consider the following restricted family. There are $T\geq2$ types, one universal category $u$, and one private category $e_i$ for each type $i$. Costs are<br>$$
+a_{i,u}=1,
+\qquad
+a_{i,e_i}=0,
+\qquad
+a_{i,e_j}=1\quad(j\neq i).
+$$<br>Supplies satisfy<br>$$
+q_{e_i}=\mu_i,
+\qquad
+q_u=\beta,
+\qquad
+0&lt;\beta&lt;1.
+$$</p><p><b>Lemma.</b> An instance in this family has a valid deterministic allocation if and only if there is a subset $H\subseteq\{1,\ldots,T\}$ such that<br>$$
+\sum_{i\in H}\mu_i=\beta.
+$$</p><p><b>Proof of necessity.</b> In a deterministic lottery, ex-ante EF is ordinary EF. By fPO, category $e_i$ can be assigned only to type $i$. Thus an agent’s own cost equals its universal load.</p><p>Within-type EF forces this own cost to be constant almost everywhere on each type interval. Indeed, the two directed EF inequalities imply equality for almost every pair within that interval, and Fubini gives an almost-everywhere constant. Since bundles are integral, write these constants as integers<br>$$
+d_1,\ldots,d_T\in\mathbb Z_{\geq0}.
+$$<br>The universal supply gives<br>$$
+\sum_i\mu_i d_i=\beta&lt;1.
+$$<br>At least one type $j$ has $d_j=0$, since otherwise this average would be at least $1$. Also, at least one type has positive cost because $\beta&gt;0$.</p><p>Choose a type $i$ with maximum $d_i$. Then $i\neq j$. For almost every agent $y$ of type $j$, fPO and $d_j=0$ imply<br>$$
+c_i(b(y))=b_{e_j}(y).
+$$<br>EF from type $i$ to type $j$ therefore requires<br>$$
+b_{e_j}(y)\geq d_i
+$$<br>almost everywhere on $A_j$. Integrating and using the private supply,<br>$$
+\mu_j=q_{e_j}
+=\int_{A_j}b_{e_j}(y)\,dy
+\geq\mu_j d_i.
+$$<br>As $\mu_j&gt;0$, we obtain $d_i\leq1$. Hence every $d_i$ belongs to $\{0,1\}$, and<br>$$
+H=\{i:d_i=1\}
+$$<br>has total mass $\beta$.</p><p><b>Proof of sufficiency.</b> Given such a subset $H$, assign every type-$i$ agent one private chore $e_i$ and $\mathbf{1}_H(i)$ universal chores. Supplies are correct.</p><p>An agent of type $i$ incurs own cost $\mathbf{1}_H(i)$. It evaluates a different type-$j$ agent’s bundle at<br>$$
+1+\mathbf{1}_H(j).
+$$<br>Thus the allocation is EF. Removing any nonnegative-cost chore cannot increase own cost, so EF implies the required EFX condition, including zero-cost removals. Private chores are assigned at zero cost, proving fPO. One cell per type encodes the allocation. $\square$</p><h3>4.1 Reduction from SUBSET SUM</h3><p>Use the standard $\mathrm{NP}$-hardness of SUBSET SUM for positive binary integers; this hardness is also stated in [Polak, Rohwedder, and Węgrzycki, *Knapsack and Subset Sum with Small Items*](https://arxiv.org/abs/2105.04035). Membership in $\mathrm{NP}$ follows by verifying a proposed subset.</p><p>Take positive integers $a_1,\ldots,a_n$ and a target $B$ with<br>$$
+0&lt;B&lt;S,
+\qquad
+S=\sum_{i=1}^n a_i.
+$$<br>Restricting to this range preserves hardness: the excluded cases are decidable directly and can be mapped to fixed yes- or no-instances in the restricted range.</p><p>Choose a power of two $R$ satisfying<br>$$
+R&gt;S+B.
+$$<br>Introduce $n+1$ types with masses<br>$$
+\mu_i=\frac{a_i}{R}\quad(1\leq i\leq n),
+\qquad
+\mu_{n+1}=\frac{R-S}{R},
+$$<br>and set<br>$$
+\beta=\frac{B}{R}.
+$$<br>Use the cost matrix and private supplies specified above.</p><p>All masses and supplies are dyadic, all masses are positive, and they sum to $1$. The construction has polynomial input length. Furthermore,<br>$$
+\mu_{n+1}&gt;\beta,
+$$<br>so a subset with total mass $\beta$ cannot include the added type.</p><p>By the lemma, a deterministic solution exists exactly when<br>$$
+\sum_{i\in H}a_i=B
+$$<br>for some subset of the original indices. This proves $\mathrm{NP}$-hardness.</p><p>The restricted deterministic-existence problem belongs to $\mathrm{NP}$: a subset of types is a polynomial-size certificate, and its mass sum can be checked by exact rational arithmetic. Therefore this restricted problem is $\mathrm{NP}$-complete.</p><h3>4.2 Why this does not prove unrestricted search hardness</h3><p>Every instance in this reduction admits a lottery by Section 2, including the no-instances of SUBSET SUM. An unrestricted search algorithm is allowed to return a randomized solution even when a deterministic one exists.</p><p>Consequently, deciding whether a deterministic solution exists cannot be recovered merely by inspecting whether an arbitrary returned lottery has one realization. The reduction establishes hardness of the stated restriction only.</p><h3>5. Remaining target question</h3><p>The following conclusions are fully proved:</p><ul><li>Every valid input has an explicitly encodable finite lottery.</li><li>Existence can therefore be decided by always answering yes on valid inputs.</li><li>Explicit construction has an unconditional exponential worst-case output requirement.</li><li>A direct construction runs in time polynomial in the input length and the denominator of the fractional universal supply; integer universal supply admits polynomial-time deterministic construction.</li><li>Deterministic-solution existence is $\mathrm{NP}$-complete on the restricted dyadic family above.</li></ul><p>The remaining gap is a hardness classification for <b>unrestricted explicitly encoded lottery search</b> under a specified search-reduction notion. Neither the exponential output requirement nor the deterministic-existence reduction supplies that classification.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 4.2–5: unrestricted lottery-search classification: The output explicitly leaves unrestricted lottery-search $\mathrm{NP}$-hardness unresolved. Neither the exponential output lower bound nor the deterministic-existence reduction establishes that classification. Completing this part requires a specified search-reduction notion and an argument applying to unrestricted valid lottery outputs.</li><li><b>minor</b> — Section 4.1: choice of the power of two $R$: The condition $R&gt;S+B$ alone does not specify a polynomial-bit choice, although polynomial reduction size is subsequently claimed. Specify a polynomial-time selection of $R$ and justify its polynomial bit length.</li></ul>
+<div class="pre"><p>The output is <b>partial relative to the full task, but its substantive mathematical results are correct</b>. It proves existence for every valid input and rules out polynomial-time construction in the required explicit encoding. Its deterministic-existence reduction is also valid, subject to a minor clarification about the reduction’s numerical parameter. It does not establish $\mathrm{NP}$-hardness of unrestricted lottery search, and explicitly acknowledges that limitation.</p><p>No central false statement or counterexample was found.</p><ul><li><b>Section 1: characterization of fPO — verified.</b></li></ul><p>The integrated-cost identity correctly separates universal categories from the remaining categories:<br>$$
+   \operatorname{SC}(u)
+   =
+   Q+\sum_{e\notin E^+}\int_A a_{t(x),e}u_e(x)\,dx.
+   $$<br>Consequently, every feasible fractional allocation has integrated cost at least $Q$.</p><p>In the necessity direction, the positive support masses ensure that the zero-cost recipient set $Z$ has positive measure. Removing the positive-cost allocation of category $e$ and distributing its total quantity over $Z$ preserves supplies, nonnegativity, measurability, and integrability. A positive removed integral implies strict improvement on a positive-measure set.</p><p>In the sufficiency direction, a Pareto improvement would produce a nonnegative integrable cost reduction that is positive on a positive-measure set. Its integral is strictly positive, contradicting the lower bound $Q$.</p><p>The expectation claim also follows: a finite convex combination preserves the restriction that non-universal categories are allocated only to zero-cost recipients. Zero supplies and the absence of universal categories cause no difficulty.</p><ul><li><b>Sections 2.1–2.3: construction and feasibility — verified.</b></li></ul><p>The monotonicity of $F_s(w)$ in $s$ is correctly justified, including transitions between different integer parts. Therefore the differences defining $U_e(w)$ are nonnegative integers. Their integrals give the required universal supplies, and telescoping gives universal load $h$ or $h+1$.</p><p>For each non-universal category, the definitions of $k_e$ and $\delta_e$ give<br>$$
+   0\leq\delta_e&lt;1-r.
+   $$<br>Thus the extra interval lies within the low region, and the integral of $V_e$ is exactly $z_e$. Multiplication by the designated type’s mass gives supply $q_e$.</p><p>Rotation preserves normalized Lebesgue measure; the physical type interval contributes the factor $\mu_t$. The supply calculations are consequently correct in every realization.</p><p>The construction also covers $r=0$, $Q=0$, and categories with zero supply.</p><ul><li><b>Section 2.4: ex-post EFX and fPO — verified.</b></li></ul><p>A low agent has own cost $h$, and removing any assigned chore leaves cost at most $h$. Every comparison bundle contains at least $h$ universal chores, which cost every supported type $h$ in total.</p><p>A high agent receives only universal chores. Each assigned chore costs that agent $1$, so removal leaves cost $h$.</p><p>This argument explicitly handles the task’s stronger removal condition for zero-cost chores. Empty bundles impose no condition. The fPO characterization applies to every realization.</p><ul><li><b>Section 2.5: ex-ante EF and expected fPO — verified.</b></li></ul><p>The rotation identity is correct. For $r=p/D$, the rotated positions consist of one point in each interval of length $1/D$, with the same offset; exactly $p$ lie in $[0,p/D)$. The half-open convention handles boundary positions consistently.</p><p>Consequently, every agent has expected universal load $Q$. All non-universal chores in an agent’s own expected bundle cost that agent zero. Every comparison bundle has universal quantity $Q$, and its other coordinates contribute nonnegative cost to the evaluating type.</p><p>These observations establish ex-ante EF, including within-type comparisons. Expected fPO follows from Section 1. Hence the universal existence conclusion is justified.</p><ul><li><b>Section 2.6: explicit encoding and running time — verified.</b></li></ul><p>The stated breakpoints suffice to describe the base functions. Taking all rotated breakpoints produces a finite common partition with<br>$$
+   C=O\!\left(D\tau(m+1)\right).
+   $$</p><p>The denominator and magnitude bounds support polynomial bit lengths for the arithmetic quantities. Listing bundle vectors for every realization on every common cell entails an additional factor of $D$ relative to the cell count, but the claimed running time is polynomial in $D$, so this does not invalidate the bound. The overall exponential upper bound in $L$ remains valid.</p><p>The dyadic argument correctly addresses the potentially non-dyadic normalized breakpoint by checking its physical coordinate after multiplication by $\mu_{t_e}$. The rotation adjustments also preserve dyadic physical endpoints.</p><p>When $Q$ is integral, $D=1$, and the deterministic polynomial-time corollary follows.</p><ul><li><b>Section 3.1: realized-load restriction — verified.</b></li></ul><p>The integer level sets are countable, so at least one has positive measure. Choosing the least such level $d$ is legitimate.</p><p>If loads at least $d+2$ occurred on a positive-measure set, their ordered comparisons with the positive-measure load-$d$ set would violate EFX on a positive-product-measure set. Thus loads belong to $\{d,d+1\}$ almost everywhere.</p><p>The supply lies strictly between $1$ and $2$, forcing $d=1$. Therefore each realization has a high-load set of measure exactly $2^{-k}$.</p><ul><li><b>Section 3.2: lower bound on lottery support — verified.</b></li></ul><p>The two directed ex-ante EF inequalities imply equality of expected loads for almost every pair. Fubini’s theorem is applicable: the expected load is measurable and integrable on a finite-measure space. Its almost-everywhere constant value is determined by its integral.</p><p>Since the lottery is finite, the exceptional null sets can be combined. On each positive-measure set $S_\ell$, the expected excess load is at least $\lambda_\ell$, giving<br>$$
+   \lambda_\ell\leq 2^{-k}.
+   $$<br>Summing probabilities correctly yields<br>$$
+   K\geq 2^k.
+   $$</p><ul><li><b>Section 3.3: partition lower bound and attainment — verified.</b></li></ul><p>On each positive-length common cell, the expected load exceeds $1$. Some realization must therefore assign load $2$ on that cell. Its length cannot exceed the measure $2^{-k}$ of that realization’s high-load set.</p><p>Summing cell lengths proves $C\geq 2^k$. The proposed equal-cell construction attains both bounds and satisfies feasibility, EFX, ex-ante EF, and fPO.</p><p>Since the input length is $\Theta(k)$, the explicit output requirement is exponentially large. This establishes an unconditional obstruction to polynomial-time construction under the encoding required by the task.</p><ul><li><b>Section 4: deterministic-existence equivalence — verified.</b></li></ul><p>In a deterministic solution, within-type EF forces the universal load to be an almost-everywhere constant integer $d_i$. The private categories contribute no own cost because fPO restricts each to its unique zero-cost type.</p><p>The average universal load $\beta&lt;1$ guarantees a type with $d_j=0$, while $\beta&gt;0$ guarantees a positive maximum load. For a maximum-load type $i$, EF toward type $j$ forces the latter’s private quantity to be at least $d_i$ almost everywhere. Integrating against its prescribed private supply gives $d_i\leq1$.</p><p>Thus the constants are binary and identify the required subset of type masses.</p><p>Conversely, the proposed constant bundle on each type has correct supplies and satisfies EF both within and across types. EF implies the stated EFX inequalities because every removal subtracts a nonnegative cost. fPO follows from the private assignments. The equivalence is sound.</p><ul><li><b>Section 4.1: reduction and membership — verified, with one minor clarification.</b></li></ul><p>The cited source defines SUBSET SUM on positive integers and states its $\mathrm{NP}$-hardness; the invoked source problem matches the reduction. [Polak, Rohwedder, and Węgrzycki](https://arxiv.org/html/2105.04035v1)</p><p>Restricting to $0&lt;B&lt;S$ is valid because the excluded cases are directly decidable. The added mass is positive, the masses sum to $1$, and $R&gt;S+B$ ensures that the added type cannot belong to a subset of mass $\beta$.</p><p>The equivalence with the original subset-sum instance is correct. A subset of types provides the asserted polynomial-size certificate for the restricted deterministic-existence problem.</p><p><b>Minor issue:</b> the instruction to choose a power of two $R&gt;S+B$ does not explicitly constrain its bit length or specify its selection. The subsequent claim of polynomial reduction size needs that routine detail.</p><p><b>Minimum clarification:</b> specify a polynomial-time choice of $R$ and justify its polynomial bit length. No new mathematical argument is needed.</p><ul><li><b>Sections 4.2–5: relationship to the assigned target — partial.</b></li></ul><p>The prover correctly distinguishes deterministic-existence hardness from unrestricted lottery-search hardness. Every reduced instance admits a lottery, and an unrestricted solver need not return a deterministic solution when one exists.</p><p>The exponential output lower bound also does not establish $\mathrm{NP}$-hardness. It proves a representation-dependent running-time obstruction.</p><p><b>Major scope gap, explicitly acknowledged:</b> the requested unrestricted search-hardness classification remains unproved. This is an incompleteness relative to the assignment, rather than an error in the established results.</p><p><b>Minimum additional requirement:</b> state the intended search-reduction notion and supply a hardness argument applying to unrestricted valid lottery outputs. No repair of the current deterministic reduction alone establishes that claim.</p><p>The genuine progress is substantial: universal existence, trivial existence decision on valid inputs, an exponential explicit-output lower bound, a construction matching the stated exponential scale, and restricted deterministic-existence $\mathrm{NP}$-completeness. The full unrestricted hardness classification remains open in this output.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

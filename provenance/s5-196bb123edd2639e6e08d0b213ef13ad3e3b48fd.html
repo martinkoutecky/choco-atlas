@@ -1,0 +1,391 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-196bb123edd2639e6e08d0b213ef13ad3e3b48fd — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-196bb123edd2639e6e08d0b213ef13ad3e3b48fd <span style="font-weight:normal;color:#8a7350">(s5-196bb123edd2639e6e08d0b213ef13ad3e3b48fd)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 8.2 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite candidate set \(C\), strict-ranking types \(T\) with rational masses \(\mu_t\), Snowveil&#x27;s local parameters, quorum \(Q&gt;1/2\), horizon \(H\), and precision \(\varepsilon\), initialize \(y_{t,j}(0)=0\), where \(y_{t,j}\) is the mass of type \(t\) locked on candidate \(j\). Let \(u_t=\mu_t-\sum_j y_{t,j}\), and let \(q_j(y)\) be the probability that the paper&#x27;s Voter Update Process returns \(\mathrm{LOCK}(j)\) when its samples are drawn from the current reported-ranking distribution. Evolve \(\frac{dy_{t,j}}{ds}=\frac{u_t}{\sum_r u_r}q_j(y)\). Determine which candidate first reaches \(\sum_t y_{t,j}\ge Q\) by time \(H\), and return its hitting time within \(\varepsilon\), or report that none reaches quorum by \(H\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C=\{1,\ldots,m\}\), with \(m\ge2\), ordered by index for lexicographic tie-breaking. A society is given by its support: \(\tau\) full strict-ranking types \(R_t\), each with positive binary-rational mass \(\mu_t\), with \(\sum_t\mu_t=1\); \(\tau\) is the support size, not the number of possible rankings.<br>Inputs are positive integers \(k,\gamma\), an integer \(1\le\tau_{\min}\le\gamma\), and binary rationals \(\alpha,\beta,\lambda\in[0,1]\), \(Q\in(1/2,1]\), \(H&gt;0\), and \(\varepsilon&gt;0\). Set \(\tau_{\max}=\lfloor\gamma/2\rfloor+1\); let \(L\) be the total binary input length, including the integers.<br>For a sample of \(k\) rankings, let \(B_j\) be candidate \(j\)&#x27;s Borda score, \(a_j\) its first-place count, and \(b\) the lexicographically selected Borda winner. CHB returns \(b\) if \(a_b\ge\lceil\alpha k\rceil\); otherwise it selects the lexicographically selected maximizer of \((1-\lambda)B_j/[k(m-1)]+\lambda a_j/k\) among candidates satisfying \(a_j\ge\lceil\alpha k\rceil\) and \(B_j\ge\beta\max_h B_h\), returning \(b\) if that set is empty.<br>At state \(y\), put \(u_t=\mu_t-\sum_j y_{t,j}\). The reported-ranking distribution assigns mass \(u_t\) to \(R_t\) and mass \(y_{t,j}\) to the ranking obtained by moving \(j\) to the top of \(R_t\), preserving all other relative positions; coincident rankings have their masses added.<br>A local update freezes this distribution and starts candidate win counters at zero. Each of at most \(\gamma\) independent rounds draws \(k\) independent rankings from it, applies CHB, and increments the winner&#x27;s counter; it immediately returns \(\mathrm{LOCK}(j)\) when \(j\)&#x27;s counter reaches \(\tau_{\max}\). If no early exit occurs, it returns NO-LOCK when the maximum counter is below \(\tau_{\min}\), and otherwise locks on the counter maximizer whose most recent round win occurred latest.<br>Let \(q_j(y)\) be this update&#x27;s probability of returning \(\mathrm{LOCK}(j)\). Starting from \(y_{t,j}(0)=0\), evolve \(\frac{dy_{t,j}}{ds}=\frac{u_t}{\sum_r u_r}q_j(y)\) while unlocked mass is positive; if it vanishes, continue from the limiting state with all masses constant. Locks are irreversible.<br>The computational problem is to identify the first candidate with \(\sum_t y_{t,j}(s)\ge Q\) at some \(s\in[0,H]\), and approximate its first hitting time with absolute error at most \(\varepsilon\), or report that no candidate reaches quorum by \(H\). Equality at the horizon counts as reaching quorum.</p><p>Is this continuous quorum-and-hitting-time problem solvable in deterministic polynomial time, or is it NP-hard? State running times in \(m,\tau,L,k,\gamma,H,\varepsilon\), with polynomial time measured in the binary input length.</p><p>Discrete Snowveil has a stated expected \(O(n)\) bound on local-update calls for single-winner convergence, with other parameters fixed and assuming convergence and a positive lock-probability bound independent of \(n\). [Source](https://arxiv.org/pdf/2512.18444)<br>No result settling this exact continuous quorum-and-hitting-time problem was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized total society mass to one so that Q retains its discrete meaning as a fraction of the electorate.</li><li>Required at least two candidates, full strict rankings, positive sample size and round count, Q at most one, and positive rational horizon and precision.</li><li>Instantiated the unspecified aggregation rule as CHB, including its eligibility filters, fallback, parameter domains, and lexicographic tie-breaking.</li><li>Defined reported rankings by promoting the locked candidate while preserving the remaining order, with unlocked mass reporting its original ranking.</li><li>Used independent mass-weighted sampling within and across rounds, with the distribution frozen during a local update; individual self-exclusion has zero mass in the continuous society.</li><li>Set the early-exit threshold to floor(gamma/2)+1, as prescribed in the full version, and allowed the final support threshold to range from one to gamma.</li><li>Defined recency tie-breaking by the latest occurrence among tied counter maximizers.</li><li>Extended the trajectory constantly after unlocked mass vanishes, including its limiting state, to define behavior when the ODE denominator becomes zero.</li><li>Used absolute hitting-time error, counted equality at H as a hit, and retained exact winner and horizon classification without a separation promise.</li><li>Encoded integer parameters in binary and measured polynomial time in the total binary input length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status</h3><p>I do not settle the unrestricted quorum problem. I prove a new hardness result that survives the feedback in the differential equation:</p><blockquote>Deciding whether a designated candidate has positive locked mass at a fixed positive time is NP-complete, already for $\gamma=1$ and $\alpha=0$.</blockquote><p>The construction also gives a polynomial-bit separation between zero and positive mass. Consequently, approximating a designated locked-mass coordinate to a supplied binary accuracy is NP-hard.</p><p>These results concern positive mass and small thresholds, rather than the required quorum $Q&gt;1/2$. I distinguish that remaining gap explicitly below.</p><h3>1. Exact reduction to candidate coordinates</h3><p>Let<br>$$
+x_j(s)=\sum_t y_{t,j}(s),\qquad
+X(s)=\sum_jx_j(s),\qquad
+U(s)=1-X(s).
+$$<br>Write<br>$$
+r(y)=\sum_jq_j(y).
+$$<br>While $U&gt;0$, summing the given equations yields<br>$$
+u_t&#x27;=-\frac{u_t}{U}r(y),
+\qquad
+U&#x27;=-r(y).
+$$<br>Therefore<br>$$
+\left(\frac{u_t}{U}\right)&#x27;
+=\frac{u_t&#x27;U-u_tU&#x27;}{U^2}=0.
+$$<br>Since $u_t(0)=\mu_t$ and $U(0)=1$,<br>$$
+u_t=\mu_tU.
+$$<br>It follows that<br>$$
+x_j&#x27;=q_j(y),
+\qquad
+y_{t,j}&#x27;=\mu_tq_j(y)=\mu_tx_j&#x27;.
+$$<br>The zero initial conditions imply<br>$$
+y_{t,j}=\mu_tx_j.
+$$</p><p>Let $P_0$ be the truthful-ranking distribution, and let $P_j$ be the distribution obtained by promoting $j$ in every truthful ranking, with the original type masses. The reported distribution is exactly<br>$$
+P(x)=(1-X)P_0+\sum_jx_jP_j.
+$$<br>Consequently the dynamics reduce to<br>$$
+x_j&#x27;=q_j(x),\qquad x(0)=0,
+$$<br>on<br>$$
+S=\left\{x\in\mathbb R^m:x_j\ge0,\ \sum_jx_j\le1\right\},
+$$<br>until $X=1$, followed by the prescribed constant continuation.</p><p>This reduction preserves all type information relevant to reported rankings; coincident rankings simply have their masses added.</p><h3>2. Probability formulas, regularity, and completion</h3><p>Put<br>$$
+h=\left\lfloor\frac{\gamma}{2}\right\rfloor+1.
+$$<br>Let $p_j(x)$ denote the probability that one round elects $j$.</p><h3>Exact probability evaluation</h3><p>Use $N=\tau(m+1)$ labeled components, consisting of each truthful type and each of its possible promotions. Their weights are<br>$$
+w_{t,0}(x)=\mu_t(1-X),
+\qquad
+w_{t,a}(x)=\mu_tx_a.
+$$<br>For a count vector $v$ over these components,<br>$$
+p_j(x)=
+\sum_{\substack{|v|=k\\\mathrm{CHB}(v)=j}}
+\frac{k!}{\prod_i v_i!}\prod_iw_i(x)^{v_i}.
+$$<br>Thus $p_j$ is a rational-coefficient polynomial of degree at most $k$.</p><p>For the local update, generate all $\gamma$ round winners in advance. Let $n_j$ be their final counts, and define<br>$$
+M(n)=\max_i n_i,\qquad T(n)=\{i:n_i=M(n)\}.
+$$<br>Since $2h&gt;\gamma$, at most one candidate has count at least $h$. If one does, it is precisely the early-exit winner. Otherwise, conditional on a positive-probability count vector, all compatible winner sequences are equiprobable. Permuting tied maximizers shows that each has probability $1/|T(n)|$ of having the latest most recent win.</p><p>Hence, with<br>$$
+\omega_j(n)=
+\begin{cases}
+1,&amp;n_j\ge h,\\
+1/|T(n)|,&amp;M(n)&lt;h,\ M(n)\ge\tau_{\min},\ j\in T(n),\\
+0,&amp;\text{otherwise},
+\end{cases}
+$$<br>we have<br>$$
+q_j(x)=
+\sum_{|n|=\gamma}
+\frac{\gamma!}{\prod_i n_i!}
+\prod_i p_i(x)^{n_i}\,\omega_j(n).
+$$<br>Zero-probability count vectors contribute zero, so no conditional-distribution assertion is needed for them. In particular, $q_j$ is a polynomial of degree at most $k\gamma$.</p><p>Define<br>$$
+A_k=\binom{k+N-1}{N-1},
+\qquad
+A_\gamma=\binom{\gamma+m-1}{m-1}.
+$$<br>At a rational state with coordinate bit length at most $b$, multinomial enumeration evaluates all probabilities in bit time<br>$$
+O(A_kNm+A_\gamma m)\,
+\operatorname{poly}(L,m,\tau,k,\gamma,b).
+$$<br>For each sample histogram, Borda scores, thresholds, and tie-breaking are computable exactly in polynomial bit time. Probability products admit common denominators whose bit lengths are polynomial in the displayed numerical parameters. This is an exact evaluation bound, not a polynomial bound in binary input length.</p><h3>Existence and finite completion</h3><p>Set<br>$$
+D=k\gamma,\qquad c=m^{1-h}.
+$$<br>For $x,z\in S$, total variation satisfies<br>$$
+\operatorname{TV}(P(x),P(z))
+\le\|x-z\|_1,
+$$<br>because<br>$$
+P(x)-P(z)=\sum_j(x_j-z_j)(P_j-P_0)
+$$<br>and $\operatorname{TV}(P_j,P_0)\le1$.</p><p>Coupling all $D$ pre-generated ranking draws gives<br>$$
+\|q(x)-q(z)\|_1\le2D\|x-z\|_1,
+\qquad
+|r(x)-r(z)|\le D\|x-z\|_1.
+$$<br>The polynomial field therefore has a unique trajectory until the boundary $X=1$.</p><p>The event that the first $h$ round winners are all $j$ guarantees a lock on $j$. Thus<br>$$
+q_j(x)\ge p_j(x)^h.
+$$<br>Since $\sum_jp_j(x)=1$, convexity gives<br>$$
+c=m^{1-h}
+\le\sum_jp_j(x)^h
+\le r(x)\le1.
+$$<br>Nonnegative derivatives preserve nonnegative coordinates. Boundedness permits continuation until $X=1$, and the completion time satisfies<br>$$
+1\le T_{\mathrm{end}}\le c^{-1}=m^{h-1}.
+$$</p><p>Let $a_j$ be the truthful first-place mass of $j$. Its reported first-place mass is<br>$$
+Ua_j+x_j.
+$$<br>If all sampled rankings put $j$ first, then $j$ is the unique Borda winner and passes the first-place threshold. Hence, writing $e=kh$,<br>$$
+p_j(x)\ge(Ua_j+x_j)^k,
+\qquad
+q_j(x)\ge(Ua_j+x_j)^e\ge x_j^e.
+$$<br>An interior quorum crossing therefore has strictly positive speed:<br>$$
+x_j&#x27;\ge Q^e.
+$$</p><p>Finally, all coordinates are nondecreasing. Since $2Q&gt;1$, at most one candidate can ever reach quorum.</p><h3>3. An exact characterization of positive locked mass</h3><p>For a set $A$ of candidates, let $\mathcal W(A)$ consist of all truthful rankings and all rankings obtained by promoting a member of $A$ in a truthful ranking.</p><p>Define<br>$$
+A_0=\varnothing
+$$<br>and recursively<br>$$
+A_{\ell+1}
+=
+A_\ell\cup
+\left\{
+j:\text{some multiset of $k$ rankings from }\mathcal W(A_\ell)
+\text{ elects }j
+\right\}.
+$$<br>This increasing sequence stabilizes after at most $m$ strict enlargements. Denote its fixed point by $A_*$. Possible samples may equivalently be represented by histograms over labeled components; coincident rankings do not affect existence.</p><p><b>Proposition.</b> For every $H&gt;0$,<br>$$
+x_j(H)&gt;0\quad\Longleftrightarrow\quad j\in A_*.
+$$</p><p><b>Proof.</b> First,<br>$$
+q_j(x)&gt;0\quad\Longleftrightarrow\quad p_j(x)&gt;0.
+$$<br>The forward implication holds because a lock on $j$ requires at least one round win by $j$: early exit requires $h$ wins, and fallback locking requires a positive maximal count because $\tau_{\min}\ge1$. The reverse implication follows from $q_j\ge p_j^h$.</p><p>Consider the face of $S$ on which $x_j=0$ for every $j\notin A_*$. Every reported ranking there belongs to $\mathcal W(A_*)$. By the fixed-point definition, no sample of these rankings elects a candidate outside $A_*$. Thus every corresponding derivative is zero. Restricting the polynomial field to this face gives a solution of the full equation; uniqueness shows that the trajectory starting at zero stays in the face. Therefore<br>$$
+j\notin A_*\quad\Longrightarrow\quad x_j(s)=0
+$$<br>for all times.</p><p>Conversely, all truthful labeled components have positive mass throughout $0&lt;s&lt;T_{\mathrm{end}}$, because their masses are $\mu_tU(s)$.</p><p>Every candidate in $A_1$ consequently has positive round-win probability, and hence positive derivative, at every such time. Integrating over any nonempty subinterval of $(0,s)$ gives $x_j(s)&gt;0$.</p><p>Inductively, suppose all members of $A_\ell$ have positive coordinates throughout $(0,T_{\mathrm{end}})$. Every labeled component used by $\mathcal W(A_\ell)$ then has positive mass throughout that interval. A witnessing sample for any newly added candidate therefore has positive probability, so that candidate also has positive derivative and positive coordinate throughout the interval.</p><p>All members of $A_*$ thus have positive coordinates at every positive time before completion. Monotonicity and constant continuation preserve positivity afterward. ∎</p><p>This proposition controls feedback exactly: it determines which candidates become active, rather than merely which candidates can win initially.</p><h3>Certificate and enumeration costs</h3><p>Membership in $A_*$ has a polynomial-size certificate. List at most $m$ candidates in an activation order, with a winning sample histogram for each. Each histogram may use truthful components and promotions of previously listed candidates. Its counts require $O(N\log(k+1))$ bits. Exact CHB verification is polynomial in binary input length.</p><p>A direct deterministic closure algorithm has bit running time bounded by<br>$$
+O\!\left(mA_kNm\right)\,
+\operatorname{poly}(L,m,\tau,k).
+$$<br>The activation predicate does not otherwise depend on $\gamma$ or $\tau_{\min}$.</p><h3>4. NP-completeness of continuous activation</h3><p><b>Theorem.</b> Given a designated candidate $J$, deciding whether<br>$$
+x_J(H)&gt;0
+$$<br>is NP-complete, already with<br>$$
+H=\frac12,\qquad
+\gamma=\tau_{\min}=1,\qquad
+\alpha=0.
+$$</p><p>Membership in NP follows from the preceding activation certificate. I prove hardness by constructing a SAT encoding whose infeasibility survives every promotion other than promotion of $J$ itself.</p><h3>4.1 Encoding a satisfying assignment by sample counts</h3><p>Start with a $3$-CNF formula on $n\ge1$ variables, with $c_{\mathrm{cl}}$ clauses. There are $2n$ variable ranking types, indexed by truth choices<br>$$
+t=(i,T),\qquad t=(i,F).
+$$<br>Let their sample counts be $v_t$, temporarily assuming<br>$$
+\sum_t v_t=n.
+$$</p><p>For each variable $i$, introduce two coefficient rows<br>$$
+A_{i,+,t}
+=
+n\,\mathbf1_{\{t\text{ belongs to variable }i\}}-1,
+\qquad
+A_{i,-,t}=-A_{i,+,t}.
+$$<br>Their row sums are<br>$$
+n(v_{i,T}+v_{i,F}-1)
+$$<br>and its negative. Both are nonnegative exactly when<br>$$
+v_{i,T}+v_{i,F}=1.
+$$</p><p>For each clause, introduce a row<br>$$
+A_{\mathrm{clause},t}
+=
+n\,\mathbf1_{\{t\text{ makes a literal in that clause true}\}}-1.
+$$<br>Once each variable has exactly one selected truth choice, the row sum is $n(s-1)$, where $s$ counts selected choices satisfying a literal in that clause. It is nonnegative exactly when the clause is satisfied.</p><p>Let<br>$$
+d=2n+c_{\mathrm{cl}}.
+$$<br>Every coefficient has absolute value at most $n$.</p><h3>4.2 Realizing the inequalities as Borda comparisons</h3><p>Set<br>$$
+h_0=2n+1,\qquad
+b_{\max}=d+1,
+$$<br>$$
+m_0=h_0(d+2)+n+1,
+\qquad
+k=n(h_0+1).
+$$<br>Use named candidates $J,L_0,L_1$, and one candidate $G_b$ for each row, indexed by $b=2,\ldots,d+1$. Give $J$ the smallest candidate index. The remaining candidates are fillers.</p><p>Specify rankings by their distinct Borda scores.</p><p>In a baseline ranking, assign<br>$$
+B_J=m_0-2,\qquad
+B_{L_0}=m_0-1,\qquad
+B_{L_1}=m_0-3,
+$$<br>$$
+B_{G_b}=m_0-2-b.
+$$<br>These named candidates occupy the top $d+3$ positions. Fill all remaining positions with fillers.</p><p>In variable ranking $t$, assign<br>$$
+B_J=h_0,\qquad
+B_{L_0}=0,\qquad
+B_{L_1}=2h_0,
+$$<br>$$
+B_{G_b}=h_0(b+1)-A_{b,t}.
+$$<br>These scores are valid and distinct:</p><ul><li>The smallest row-candidate score is at least $3h_0-n&gt;2h_0$.</li><li>Consecutive row-candidate scores differ by at least $h_0-2n=1$.</li><li>The largest row-candidate score is at most $h_0(d+2)+n=m_0-1$.</li></ul><p>Fill the unused positions with fillers. There are<br>$$
+m_0-(d+3)=2n(d+2)+n
+$$<br>fillers, so there are at least $2n$ of them. If two variable types have identical named-score patterns, use distinct cyclic orders of the fillers in their available positions. This makes all variable types distinct.</p><p>Let<br>$$
+r_0=\left\lceil\log_2(2n+1)\right\rceil.
+$$<br>Give every variable type mass $2^{-r_0}$, and the baseline type mass<br>$$
+1-2n\,2^{-r_0}.
+$$<br>Every mass is positive and at least $2^{-r_0}$.</p><h3>4.3 Correctness of the unmodified encoding</h3><p>Suppose a sample contains $z$ baseline rankings and $v=\sum_tv_t$ variable rankings. Its score differences against the balancing candidates are<br>$$
+B_J-B_{L_0}=-z+h_0v,
+\qquad
+B_J-B_{L_1}=z-h_0v.
+$$<br>For $J$ to beat both, necessarily<br>$$
+z=h_0v.
+$$<br>Since $z+v=k=n(h_0+1)$, this forces<br>$$
+v=n,\qquad z=h_0n.
+$$</p><p>Against row candidate $G_b$, the score difference is<br>$$
+B_J-B_{G_b}
+=
+bz+\sum_t(A_{b,t}-h_0b)v_t
+=
+\sum_tA_{b,t}v_t.
+$$<br>Thus beating every named candidate is equivalent to selecting one truth value per variable and satisfying every clause.</p><p>For completeness, fillers cannot obstruct a satisfying witness. In the baseline ranking, $J$ beats every filler by at least $b_{\max}+1$. In a variable ranking, its disadvantage against any filler is at most<br>$$
+m_0-1-h_0=h_0b_{\max}+n.
+$$<br>For the forced sample composition, its total advantage is at least<br>$$
+h_0n(b_{\max}+1)-n(h_0b_{\max}+n)
+=
+n(h_0-n)&gt;0.
+$$<br>Ties against named candidates favor $J$.</p><p>We have proved:</p><ul><li>If a sample beats all the named opponents of $J$, the formula is satisfiable.</li><li>If the formula is satisfiable, some sample elects $J$.</li></ul><h3>4.4 Making infeasibility survive feedback</h3><p>The following elementary fact is the key.</p><p><b>Promotion lemma.</b> In one ranking, promoting a candidate other than $J$ increases the Borda-score difference of $J$ against any fixed opponent by at most one.</p><p><b>Proof.</b> If the opponent is the promoted candidate, its score increases and $J$&#x27;s score does not increase, so the difference cannot increase. Otherwise, neither compared candidate is promoted. Each of their scores either stays unchanged or decreases by one, so their difference increases by at most one. ∎</p><p>Let<br>$$
+g=k+1.
+$$<br>Replace every original candidate $a$ by a block<br>$$
+a^1,a^2,\ldots,a^g.
+$$<br>In every ranking, replace $a$ by this consecutive block, in the displayed fixed order. The final number of candidates is<br>$$
+m=gm_0.
+$$<br>Call $a^1$ the representative. If $a$ originally has Borda score $s_a$, its representative now has score<br>$$
+gs_a+g-1.
+$$<br>Therefore representative-to-representative score differences are multiplied by $g$. Give $J^1$ the smallest index in the enlarged election.</p><p>If the formula is satisfiable, its original winning sample elects $J^1$ in the enlarged election. Indeed, it beats every representative, and each nonrepresentative is below its own representative in every sampled ranking.</p><p>Now suppose a sample made from enlarged truthful rankings and arbitrary single promotions of candidates other than $J^1$ elects $J^1$. Each sampled ranking has an underlying truthful type. For every named opponent representative $a^1$, the promotion lemma implies<br>$$
+\Delta_{\mathrm{modified}}(J^1,a^1)
+\le
+g\,\Delta_{\mathrm{original}}(J,a)+k.
+$$<br>Winning implies the left side is nonnegative. Hence<br>$$
+g\,\Delta_{\mathrm{original}}(J,a)\ge-k.
+$$<br>The original difference is an integer, and $g=k+1$. Therefore<br>$$
+\Delta_{\mathrm{original}}(J,a)\ge0.
+$$<br>This holds for both balancing candidates and every row candidate. Section 4.3 then recovers a satisfying assignment.</p><p>Thus, if the formula is unsatisfiable, $J^1$ cannot win from any combination of truthful rankings and promotions of other candidates.</p><p>On the face $x_{J^1}=0$, every reported component is of precisely this form. Consequently<br>$$
+q_{J^1}(x)=0
+$$<br>throughout that face. Uniqueness of the reduced dynamics makes the face invariant, and<br>$$
+x_{J^1}(s)=0
+$$<br>for all times.</p><p>If the formula is satisfiable, a truthful sample elects $J^1$ with positive probability, so $q_{J^1}(0)&gt;0$. Continuity gives positive locked mass at every positive time.</p><p>For $\alpha=0$, CHB always returns the Borda winner. For $\gamma=1$, the local update immediately locks on its single round winner. We have therefore obtained the required reduction.</p><h3>Construction size</h3><p>The construction satisfies<br>$$
+\tau=2n+1,\qquad k=O(n^2),
+$$<br>$$
+m_0=O\!\left(n(n+c_{\mathrm{cl}})\right),
+\qquad
+m=O\!\left(n^3(n+c_{\mathrm{cl}})\right).
+$$<br>All full rankings and masses can be written in polynomial time and have polynomial total binary length. This completes the NP-completeness proof.</p><h3>5. A quantitative hardness gap for continuous mass approximation</h3><p>The preceding reduction gives more than a zero-versus-positive distinction.</p><p>For $\gamma=1$, every update locks, so<br>$$
+r=1,\qquad X(s)=s,\qquad U(s)=1-s
+$$<br>before completion at time one.</p><p>In a satisfiable instance, fix a truthful winning histogram for $J^1$. Its initial probability is at least<br>$$
+2^{-r_0k},
+$$<br>because every type mass is at least $2^{-r_0}$ and its multinomial coefficient is at least one.</p><p>At time $s\le1/2$, the labeled event of drawing this same histogram entirely from truthful components has probability at least<br>$$
+(1-s)^k2^{-r_0k}.
+$$<br>This is a lower bound on the winning-sample probability; coincident reported rankings can only add further probability. Thus<br>$$
+x_{J^1}\!\left(\frac12\right)
+\ge
+2^{-r_0k}\int_0^{1/2}(1-s)^k\,ds
+$$<br>$$
+=
+\frac{2^{-r_0k}}{k+1}
+\left(1-2^{-(k+1)}\right)
+\ge
+\frac{2^{-r_0k}}{2(k+1)}.
+$$</p><p>Define the dyadic rational<br>$$
+\delta=
+2^{-\left(r_0k+\lceil\log_2(k+1)\rceil+2\right)}.
+$$<br>Its binary description has polynomial length. The two cases satisfy<br>$$
+\begin{cases}
+x_{J^1}(1/2)=0,&amp;\text{if the formula is unsatisfiable},\\
+x_{J^1}(1/2)\ge2\delta,&amp;\text{if the formula is satisfiable}.
+\end{cases}
+$$</p><p>It follows that:</p><ul><li>Deciding whether $x_{J^1}(1/2)\ge\delta$ is NP-hard, even under this gap promise.</li><li>Producing an approximation to $x_{J^1}(1/2)$ with absolute error at most $\delta/4$ is NP-hard.</li></ul><p>For the second statement, compare the returned approximation with $\delta$. The error guarantee separates the two cases.</p><p>In particular, unless $\mathrm P=\mathrm{NP}$, a general coordinate-approximation algorithm cannot run in time polynomial in the binary input length, including $\log(1/\varepsilon)$. This conclusion does not rule out algorithms polynomial in the numerical value $1/\varepsilon$.</p><p><b>Limitation.</b> The threshold $\delta$ is below $1/2$. These arguments do not establish hardness for quorum $Q&gt;1/2$, nor do they show that activation of $J^1$ creates or prevents a majority quorum.</p><h3>6. Exact polynomial-time cases of the requested problem</h3><h3>Unanimity quorum</h3><p>Suppose $Q=1$.</p><p>If two distinct candidates appear first in truthful supported rankings, each can win a homogeneous truthful sample. Both belong to $A_1$, so both receive positive irreversible locked mass. No candidate can reach mass one.</p><p>If every truthful ranking has the same first candidate $j$, consider<br>$$
+x_j(s)=\min\{s,1\},
+\qquad x_i(s)=0\quad(i\ne j).
+$$<br>Promoting $j$ changes no truthful ranking. Every sample elects $j$, and every local update locks on $j$. The displayed trajectory therefore satisfies the reduced dynamics, and uniqueness identifies it as the actual trajectory.</p><p>Hence quorum is reached precisely when the truthful support has a common first candidate and $H\ge1$. Its hitting time is exactly one. This is decidable in $\operatorname{poly}(L)$ bit time, independently of the numerical sizes of $k$ and $\gamma$.</p><p>The same unanimous-support argument handles every allowed $Q$: the hitting time is exactly $Q$.</p><h3>One sampled ranking</h3><p>For $k=\gamma=1$, CHB elects the sampled ranking&#x27;s first candidate, and the update locks immediately. Thus<br>$$
+q_j(x)=Ua_j+x_j,\qquad r=1.
+$$<br>The solution is<br>$$
+x_j(s)=a_js\quad(0\le s\le1),
+\qquad
+x_j(s)=a_j\quad(s\ge1),
+$$<br>because before completion,<br>$$
+Ua_j+x_j=(1-s)a_j+a_js=a_j.
+$$</p><p>A candidate reaches quorum exactly when<br>$$
+a_j\ge Q
+\quad\text{and}\quad
+H\ge\frac{Q}{a_j}.
+$$<br>Its hitting time is the rational number $Q/a_j$. Exact rational comparisons handle equality at the horizon in $\operatorname{poly}(L)$ bit time.</p><p>The same conclusion holds for<br>$$
+k=1,\qquad \gamma=2,\qquad \tau_{\min}=1.
+$$<br>If the two round winners coincide, the second round triggers the lock. If they differ, the latest-win tie rule selects the second winner. The update therefore always returns the second-round winner, giving the same probabilities.</p><h3>Earliest possible horizon</h3><p>Since $X&#x27;\le1$, no candidate can reach quorum before time $Q$. Thus $H&lt;Q$ is an immediate exact NO instance.</p><p>At $H=Q$, reaching quorum requires unanimous truthful first place. To see this, suppose truthful first places are not unanimous. For every candidate $j$, some truthful type has another first candidate $i$. Homogeneous samples of that type give $p_i(0)&gt;0$, hence $q_i(0)&gt;0$, so $q_j(0)&lt;1$. By continuity, integrating $q_j\le1$ gives<br>$$
+x_j(Q)&lt;Q.
+$$<br>Here the trajectory exists through time $Q$ because $Q\le1\le T_{\mathrm{end}}$.</p><h3>7. A certified algorithm with explicit separation assumptions</h3><p>The following algorithm approximates the trajectory and solves the quorum problem under additional promises. Those promises are not part of the original task.</p><p>Assume a supplied rational $\delta_{\mathrm{sep}}&gt;0$ such that:</p><ul><li>Every terminal coordinate differs from $Q$ by at least $\delta_{\mathrm{sep}}$.</li><li>If an eventual quorum exists, its hitting time differs from $H$ by at least $\delta_{\mathrm{sep}}$.</li></ul><h3>Mass parameterization and field bounds</h3><p>Parameterize by total locked mass $z=X$. Since $r\ge c&gt;0$,<br>$$
+\frac{dx}{dz}=\frac{q(x)}{r(x)},
+\qquad
+\frac{ds}{dz}=\frac1{r(x)},
+\qquad 0\le z\le1.
+$$<br>In the combined $\ell_1$ norm, this field has magnitude at most<br>$$
+B=1+c^{-1}.
+$$<br>Its Lipschitz constant is at most<br>$$
+K=\frac{3D}{c}+\frac{D}{c^2}.
+$$<br>Indeed,<br>$$
+\left\|\frac{q(x)}{r(x)}-\frac{q(y)}{r(y)}\right\|_1
+\le
+\frac{2D}{c}\|x-y\|_1
++\frac{|r(x)-r(y)|}{r(x)}
+\le
+\frac{3D}{c}\|x-y\|_1,
+$$<br>and<br>$$
+\left|\frac1{r(x)}-\frac1{r(y)}\right|
+\le\frac{D}{c^2}\|x-y\|_1.
+$$</p><h3>Finite Euler implementation</h3><p>For a desired node error $0&lt;\eta\le1/2$, use the explicitly computable integer<br>$$
+E_0=2^{\lceil2K\rceil}.
+$$<br>It satisfies<br>$$
+e^K\le E_0\le2\,2^{2K}.
+$$<br>Choose a power-of-two mesh size $J$ with<br>$$
+J\ge\frac{BE_0}{\eta},
+\qquad \Delta=\frac1J.
+$$<br>Set<br>$$
+\nu=\frac{K\eta}{2E_0}.
+$$</p><p>At each step, evaluate the field exactly at the rational numerical state, then round it with combined error at most $\nu$. Round the candidate derivative vector to nonnegative dyadic coordinates summing exactly to one. This can be done by rounding down to a sufficiently fine dyadic grid and distributing the missing grid units according to the fractional remainders. Each coordinate error is at most one grid unit. Round the time derivative on the same sufficiently fine grid.</p><p>Consequently, numerical candidate states stay in $S$ and satisfy<br>$$
+\sum_j\widehat x_j(z_i)=z_i.
+$$</p><p>If $e_i$ is the combined node error, the Euler truncation bound gives<br>$$
+e_{i+1}\le(1+K\Delta)e_i+\frac{KB\Delta^2}{2}+\nu\Delta.
+$$<br>Summing the recurrence yields<br>$$
+e_i
+\le
+\left(\frac{B\Delta}{2}+\frac{\nu}{K}\right)(e^K-1)
+\le\eta.
+$$<br>The mesh and rounding use<br>$$
+O\!\left(K+\log(m/\eta)\right)
+$$<br>fractional bits. In particular, the implementation does not require exact evaluation of an irrational exponential.</p><h3>Quorum identification and hitting time</h3><p>Put<br>$$
+a=(Q/2)^e
+$$<br>and choose<br>$$
+\eta\le
+\min\left\{
+\frac{\delta_{\mathrm{sep}}}{4},
+\frac Q4,
+\frac12,
+\frac{ca}{6}\min\{\varepsilon,\delta_{\mathrm{sep}}\}
+\right\}.
+$$<br>The terminal approximation identifies whether an eventual quorum exists and, if it does, its unique candidate.</p><p>For that candidate, let $z_i$ be the first numerical node whose approximate coordinate reaches $Q$. Since a numerical coordinate increases by at most $\Delta$ in one step, its true coordinate at $z_i$ differs from $Q$ by at most $\eta+\Delta$.</p><p>Let $z_*$ be the true crossing. Between $z_i$ and $z_*$ the coordinate is at least $Q-\eta\ge Q/2$. Therefore<br>$$
+\frac{dx_j}{dz}=\frac{q_j}{r}\ge q_j\ge x_j^e\ge a,
+$$<br>and<br>$$
+|z_i-z_*|\le\frac{\eta+\Delta}{a}.
+$$<br>Since $ds/dz\le1/c$ and $\Delta\le\eta$, the approximate hitting time has error at most<br>$$
+\eta+\frac{\eta+\Delta}{ca}
+\le\frac{3\eta}{ca}
+\le\frac12\min\{\varepsilon,\delta_{\mathrm{sep}}\}.
+$$<br>The horizon-separation promise then makes comparison with $H$ unambiguous.</p><h3>Running time</h3><p>Writing $\ell_\eta$ and $\ell_{\mathrm{sep}}$ for the binary lengths of the two precision parameters, a conservative bit bound is<br>$$
+O\!\left(
+\frac{B\,2^{2K}}{\eta}
+(A_kNm+A_\gamma m)
+\right)
+\operatorname{poly}
+\!\left(
+L,m,\tau,k,\gamma,K,\ell_\eta,\ell_{\mathrm{sep}}
+\right).
+$$<br>Here<br>$$
+N=\tau(m+1),\qquad
+D=k\gamma,\qquad
+c=m^{1-\lfloor\gamma/2\rfloor-1},
+$$<br>with $c=m^{1-h}$ as above. The horizon enters through its binary encoding and the final comparison; the algorithm follows the trajectory through completion, whose time is at most $c^{-1}$.</p><p>This bound is generally far from polynomial in binary input length. It is a certified upper bound for the separated problem, not a classification of the original problem.</p><h3>8. What remains unresolved</h3><p>The new construction repairs the feedback obstruction to transferring initial positivity into continuous positivity: unsatisfiable instances remain on the invariant face $x_J=0$ under all other promotions.</p><p>Two further steps are still missing for the assigned problem:</p><ul><li>A reduction must turn activation or a small locked-mass gap into a crossing of an allowed quorum $Q&gt;1/2$, while controlling the other candidates.</li><li>An unrestricted algorithm must decide terminal equality with $Q$ and hitting-time equality with $H$. The numerical argument above excludes both through its separation promises.</li></ul><p>The discrete expected $O(n)$ statement counts local-update calls using convergence and a positive lock-probability bound independent of $n$. It does not provide the probability-evaluation cost or the exact comparisons needed here. [Snowveil, Theorem 8.2](https://arxiv.org/pdf/2512.18444)</p><p>Thus this write-up proves new hardness results for the continuous trajectory, but neither deterministic polynomial-time solvability nor NP-hardness of the exact majority-quorum-and-hitting-time problem.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 4–5 and 8: transfer from activation hardness to the assigned quorum problem: The reductions establish hardness for positive designated mass and thresholds below $1/2$, but do not establish a crossing of an allowed quorum $Q&gt;1/2$. A reduction to the actual quorum-and-hitting-time output, verified in both directions, is still required.</li><li><b>major</b> — Section 7: separation assumptions and unrestricted decision: The algorithm requires terminal coordinates and eventual hitting times to be separated from $Q$ and $H$. These promises are absent from USER_TASK and exclude required equality cases. An unrestricted decision mechanism or another argument removing these assumptions is missing.</li><li><b>minor</b> — Section 7: mesh selection and running-time bound: Only the lower bound $J\ge BE_0/\eta$ is specified, while the running-time upper bound assumes a mesh within a constant factor of it. Specify the smallest admissible power of two or an explicit upper bound on $J$.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial.</b> The write-up establishes substantial results about the continuous dynamics, including a sound NP-completeness reduction for positive locked mass. It does <b>not</b> classify the majority-quorum-and-hitting-time problem in <code>USER_TASK</code>, and explicitly acknowledges this limitation.</p><p>I found no false central step in the activation reduction. The main blocking issues are the missing connection to an allowed quorum $Q&gt;1/2$ and the additional separation assumptions in the proposed numerical algorithm.</p><h3>1. Reduction to candidate coordinates</h3><p><b>Verified.</b></p><p>The differentiation identities hold while $U&gt;0$:<br>$$
+u_t&#x27;=-\frac{u_t}{U}r(y),\qquad U&#x27;=-r(y).
+$$<br>Consequently, the displayed derivative of $u_t/U$ vanishes. The initial conditions then imply<br>$$
+u_t=\mu_tU,\qquad y_{t,j}=\mu_tx_j.
+$$<br>Summing the original equations correctly gives $x_j&#x27;=q_j$.</p><p>The distribution<br>$$
+P(x)=(1-X)P_0+\sum_jx_jP_j
+$$<br>has nonnegative weights summing to one on $S$, and accurately represents the original reported-ranking distribution. Keeping coincident rankings as separate labeled components does not change the induced distribution.</p><p>The reduction applies before exhaustion of unlocked mass; the write-up correctly retains the task’s constant continuation afterward.</p><h3>2. Probability formulas, regularity, and completion</h3><p><b>Verified.</b></p><h3>Sample and update probabilities</h3><p>The multinomial expression for $p_j$ correctly enumerates sample histograms. Since each component weight is affine in $x$, the claimed degree bound of $k$ is valid.</p><p>The local-update formula correctly handles early exit:</p><ul><li>Since $2h&gt;\gamma$, two candidates cannot both accumulate at least $h$ wins.</li><li>A candidate with final count at least $h$ must have triggered early exit.</li><li>If no final count reaches $h$, no early exit occurred.</li></ul><p>Conditional on a positive-probability final count vector, all compatible winner sequences have the same probability. Permuting the identities of tied maximizers preserves the conditional distribution, so the latest-most-recent-win rule selects each tied maximizer with probability $1/|T(n)|$.</p><p>The formula therefore also handles $\tau_{\min}&gt;h$: early exit remains possible independently of the fallback threshold. The degree bound $k\gamma$ follows.</p><h3>Evaluation costs</h3><p>The histogram counts $A_k$ and $A_\gamma$ are correct. Computing CHB from a histogram requires only polynomial-time integer and rational arithmetic in the displayed parameters. The probability arithmetic can use common denominators of polynomial bit length in the numerical parameters.</p><p>The stated bound is an enumeration bound, <b>not</b> a polynomial bound in binary input length. The write-up makes this distinction correctly.</p><h3>Regularity and completion</h3><p>The total-variation estimate and the coupling bounds<br>$$
+\|q(x)-q(z)\|_1\le2D\|x-z\|_1,\qquad
+|r(x)-r(z)|\le D\|x-z\|_1
+$$<br>have the correct constants. Pre-generating all ranking draws remains valid despite early exit.</p><p>The polynomial vector field is locally Lipschitz, satisfying the standard local existence and uniqueness hypotheses. Nonnegative coordinate derivatives preserve nonnegativity before $X=1$.</p><p>The homogeneous-winner event proves<br>$$
+q_j\ge p_j^h.
+$$<br>Since the round-winner probabilities sum to one, the convexity bound gives<br>$$
+m^{1-h}\le r\le1.
+$$<br>The claimed completion-time bounds follow:<br>$$
+1\le T_{\mathrm{end}}\le m^{h-1}.
+$$</p><p>The first-place mass formula $Ua_j+x_j$ is correct. Homogeneous samples establish the displayed lower bounds on $p_j$ and $q_j$, including positive speed at an interior quorum crossing.</p><p>Finally, nondecreasing coordinates and total locked mass at most one imply that at most one candidate can reach $Q&gt;1/2$.</p><h3>3. Characterization of positive locked mass</h3><p><b>Verified.</b></p><p>The equivalence<br>$$
+q_j(x)&gt;0\quad\Longleftrightarrow\quad p_j(x)&gt;0
+$$<br>holds in both directions. A lock requires at least one win, including in fallback locking because $\tau_{\min}\ge1$; conversely, the homogeneous-round event guarantees a lock with positive probability.</p><p>The fixed-point face argument correctly excludes candidates outside $A_*$. On that face, every positive-mass reported component belongs to $\mathcal W(A_*)$, so the corresponding excluded derivatives vanish. Uniqueness gives invariance until completion, and constant continuation preserves it.</p><p>The induction proving positivity for candidates in $A_*$ is also valid. Truthful component masses remain positive before completion, and already activated candidates have positive promotion masses at every positive time in that interval. Each witnessing histogram therefore has positive probability.</p><p>The activation certificate has polynomial size in binary input length. Histogram counts use binary encoding, and verifying CHB does not require expanding the sample into $k$ rankings. Ordering candidates by activation layers supplies the required order of dependence.</p><p>Thus this section genuinely characterizes continuous activation, including feedback.</p><h3>4. NP-completeness of activation</h3><p><b>Verified for the auxiliary decision problem stated here.</b></p><h3>Assignment encoding</h3><p>The two variable rows enforce<br>$$
+v_{i,T}+v_{i,F}=1
+$$<br>once total variable count is $n$. Clause rows are nonnegative precisely when at least one selected truth choice satisfies that clause.</p><p>The construction also handles $n=1$: the variable rows then impose no additional restriction, but the forced total count already supplies the required single choice.</p><h3>Ranking realization</h3><p>The score ranges and distinctness checks are correct:</p><ul><li>Row-candidate scores exceed $2h_0$.</li><li>Consecutive row-candidate scores differ by at least one.</li><li>Every assigned score lies between zero and $m_0-1$.</li></ul><p>The filler count is correctly calculated:<br>$$
+m_0-(d+3)=2n(d+2)+n.
+$$<br>There are enough fillers to distinguish otherwise identical variable types by cyclic ordering.</p><p>The dyadic type masses are positive, sum to one, and each is at least $2^{-r_0}$.</p><h3>Unmodified election</h3><p>The balancing comparisons force<br>$$
+z=h_0v,\qquad v=n.
+$$<br>Substitution into the row comparisons yields exactly the intended coefficient inequalities.</p><p>The filler margin calculation is correct:<br>$$
+h_0n(b_{\max}+1)-n(h_0b_{\max}+n)
+=n(h_0-n)&gt;0.
+$$<br>Giving $J$ the smallest index correctly resolves all permitted ties in its favor.</p><h3>Feedback protection</h3><p>The promotion lemma is valid for every opponent, including when the opponent itself is promoted.</p><p>Replacing candidates by fixed-order blocks multiplies representative score differences by $g$. Across $k$ sampled rankings, non-$J^1$ promotions can improve any relevant difference by at most $k$. Thus the displayed implication<br>$$
+g\,\Delta_{\mathrm{original}}(J,a)\ge-k
+\quad\Longrightarrow\quad
+\Delta_{\mathrm{original}}(J,a)\ge0
+$$<br>is correct because the original difference is integral and $g=k+1$.</p><p>Consequently, an unsatisfiable formula prevents $J^1$ from winning throughout the face $x_{J^1}=0$. This addresses the feedback obstruction, rather than merely establishing initial impossibility.</p><p>For satisfiable instances, the truthful winning sample survives the block expansion. The smallest-index convention and the strict ordering below each representative are sufficient.</p><p>Finally, $\alpha=0$ makes CHB return the Borda winner, and $\gamma=1$ makes the update lock immediately. The construction size is polynomial.</p><p><b>Scope limitation — major.</b> This establishes NP-completeness of deciding $x_J(H)&gt;0$, not NP-hardness of the requested majority-quorum problem. No argument converts activation into crossing an allowed $Q&gt;1/2$.</p><p><b>Required additional work:</b> supply a reduction to the actual quorum-and-hitting-time output, with both directions verified. This is substantive missing mathematics, not an expositional clarification.</p><h3>5. Quantitative mass-approximation hardness</h3><p><b>Verified, with the same scope limitation.</b></p><p>For $\gamma=1$, every update locks, so $X(s)=s$ until completion at time one.</p><p>The fixed truthful histogram has initial probability at least $2^{-r_0k}$. Its all-truthful labeled realization at time $s$ contributes the factor $(1-s)^k$. The integral is correctly evaluated:<br>$$
+\int_0^{1/2}(1-s)^k\,ds
+=\frac{1-2^{-(k+1)}}{k+1}.
+$$</p><p>The chosen $\delta$ satisfies the claimed separation between zero and at least $2\delta$, and its binary description has polynomial length. Comparing a $\delta/4$-accurate coordinate approximation with $\delta$ correctly distinguishes the two cases.</p><p>The resulting hardness concerns coordinate approximation and small-threshold decisions. It does not establish majority-quorum hardness. The distinction between polynomial dependence on binary precision length and polynomial dependence on the numerical value $1/\varepsilon$ is correctly stated.</p><h3>6. Exact special cases</h3><p><b>Verified.</b></p><ul><li>For $Q=1$, two distinct truthful first-place candidates receive positive irreversible mass, preventing unanimity quorum. Common truthful first place gives the displayed trajectory and exact hitting time one.</li><li>For common truthful first place and arbitrary allowed $Q$, the hitting time is exactly $Q$.</li><li>For $k=\gamma=1$, CHB selects the sampled first candidate for every allowed $\alpha$. The solution $x_j(s)=a_js$ before completion satisfies the differential equation directly.</li><li>For $k=1$, $\gamma=2$, and $\tau_{\min}=1$, the update always selects the second-round winner, including the case of distinct winners.</li><li>The conditions involving $a_j$, $Q$, and $H$ correctly include equality at the horizon.</li><li>The conclusions for $H&lt;Q$ and $H=Q$ follow from the stated bounds and the positive initial probability of another candidate locking.</li></ul><p>These are polynomial-time cases of the assigned problem, not an unrestricted classification.</p><h3>7. Certified algorithm under separation promises</h3><p><b>The mathematical error bounds are verified.</b></p><p>Since $r\ge c&gt;0$, parameterization by total locked mass is legitimate through the endpoint. The magnitude bound $B$ and Lipschitz bound $K$ are valid.</p><p>The dyadic rounding prescription can preserve nonnegative candidate derivatives summing exactly to one while achieving the stated combined error.</p><p>The Euler recurrence and its accumulated bound are correct. The choice of $E_0$ safely bounds $e^K$, and the mesh and rounding conditions imply node error at most $\eta$.</p><p>For hitting-time estimation:</p><ul><li>At the first numerical crossing node, the true coordinate differs from $Q$ by at most $\eta+\Delta$.</li><li>Its value at that node is at least $Q-\eta$.</li><li>Monotonicity ensures the coordinate remains at least $Q/2$ between that node and the true crossing.</li><li>The resulting crossing and time-error bounds have the stated constants.</li></ul><p>The terminal and horizon separation promises therefore suffice for the offered decision procedure.</p><p><b>Minor issue: mesh selection and running time.</b> The instruction only requires<br>$$
+J\ge BE_0/\eta.
+$$<br>This permits arbitrarily larger meshes, whereas the subsequent running-time upper bound assumes $J$ is within a constant factor of that lower bound.</p><p><b>Minimum clarification:</b> specify that $J$ is the smallest power of two satisfying the inequality, or state the corresponding upper bound on $J$.</p><p><b>Scope limitation — major.</b> The algorithm assumes terminal and horizon separations absent from <code>USER_TASK</code>. In particular, it excludes the equality-at-horizon instances the task explicitly requires.</p><p><b>Required additional work:</b> if this algorithm is intended to resolve the unrestricted task, provide a justified decision mechanism for the excluded comparisons or otherwise remove the promises. No such mechanism is established here.</p><h3>8. External reference and final adjudication</h3><p>The cited Snowveil theorem states an expected $O(n)$ convergence bound in update steps. Its proof invokes convergence and a positive lock-probability bound independent of $n$. The prover’s restricted use of that statement is consistent with the source; it does not supply an algorithm for this continuous problem. [Snowveil, Theorem 8.2](https://arxiv.org/pdf/2512.18444)</p><p>The write-up’s final claim of partial progress is accurate. The activation hardness, coordinate-approximation hardness, structural results, special cases, and promised numerical algorithm survive this audit. Neither deterministic polynomial-time solvability nor NP-hardness of the exact majority-quorum-and-hitting-time problem is established.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

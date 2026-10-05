@@ -1,0 +1,108 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-d1983b45c2bdd47e5e1e51a9ed7a5ef68e415b3a — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-d1983b45c2bdd47e5e1e51a9ed7a5ef68e415b3a <span style="font-weight:normal;color:#8a7350">(s5-d1983b45c2bdd47e5e1e51a9ed7a5ef68e415b3a)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\mathsf{NP}\)-complete</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Shift Bribery over Social Network is NP-complete when all members of the family of cost functions Π are identity functions and there are 2 candidates.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given two candidates, a finite set of types \(T\), rational masses \(\mu_t\) summing to \(1\), an initial ranking for each type, a rational symmetric influence kernel \(K\), and a normalized budget \(B\), is there a choice of directly shifted mass \(x_t\in[0,\mu_t]\) with \(\sum_t x_t\le B\) that makes the preferred candidate receive a strict majority? An initially opposing type \(t\) gains supporting mass \(x_t+(\mu_t-x_t)\mathbf{1}[\sum_u K_{tu}x_u\ge1]\); initially supporting mass remains \(\mu_t\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>There are \(m=2\) candidates, with preferred candidate \(c\). A society is given by its support: a nonempty list \(T\) of \(\tau\) types, each with a strict initial ranking and positive binary rational mass \(\mu_t\), where \(\sum_{t\in T}\mu_t=1\). Types may share rankings but differ in network position; \(\tau\) is the support size, not the number of possible rankings.<br>The input also contains an explicitly listed symmetric kernel \(K\in\mathbb{Q}_{\ge0}^{T\times T}\) and a binary rational budget \(B\ge0\). Diagonal entries describe influence between distinct individuals of the same type; no upper bound or row normalization is imposed on \(K\).<br>A direct intervention chooses real masses \(x_t\in[0,\mu_t]\), at unit cost per mass, with \(\sum_t x_t\le B\). Interventions are permitted on initially supporting types and contribute influence even though their ranking remains unchanged. Only directly intervened mass generates influence, in one simultaneous round.<br>Let \(S\subseteq T\) be the initially supporting types. Final support for \(c\) is \(F(x)=\sum_{t\in S}\mu_t+\sum_{t\notin S}\left[x_t+(\mu_t-x_t)\mathbf{1}\!\left\{\sum_{u\in T}K_{tu}x_u\ge1\right\}\right]\). Equality activates influence; victory requires \(F(x)&gt;1/2\), so an electoral tie fails. Let \(L\) be the total binary input length; state running times in \(m,\tau,L\).</p><p>Is deciding whether such an intervention achieves \(F(x)&gt;1/2\) solvable in polynomial time in \(m,\tau,L\), or is it \(\mathsf{NP}\)-hard?</p><p>Discrete network shift bribery is \(\mathsf{NP}\)-complete even with two candidates, unit intervention costs, undirected networks, and unit edge weights ([source](https://arxiv.org/html/2510.21200v3)).<br>Continuous shift bribery for scoring rules without network influence has polynomial-time algorithms ([source](https://arxiv.org/html/2608.25444v1)); the search located no classification of the exact threshold-kernel problem above.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Required positive support masses, a nonempty support, and strict initial rankings; types include network position and need not have distinct rankings.</li><li>Restricted kernel entries to nonnegative rationals, matching nonnegative discrete influence weights; imposed no upper bound or row normalization.</li><li>Interpreted diagonal kernel entries as influence between distinct individuals within a type, preserving the graded question&#x27;s unrestricted symmetric kernel.</li><li>Specified a nonnegative binary rational budget and real, divisible intervention masses with unit cost per mass.</li><li>Retained interventions on initially supporting types as paid influence signals, consistent with the discrete definition allowing direct shifts at every voter.</li><li>Specified one simultaneous influence round generated only by direct interventions, with no propagation from indirectly converted mass.</li><li>Retained the graded aggregate threshold and strict-majority requirement; threshold equality activates influence and electoral ties fail.</li><li>Defined L as total binary input length, including the explicitly listed kernel.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><p><b>Classification.</b> The stated decision problem is \(\mathsf{NP}\)-complete, even with \(m=2\), a symmetric kernel with zero diagonal, and all nonzero kernel entries equal. Thus it has no algorithm polynomial in \(m,\tau,L\) unless \(\mathsf{P}=\mathsf{NP}\).</p><p>The proof below treats interventions as arbitrary real masses and preserves the strict victory condition.</p><p><b>1. Membership in \(\mathsf{NP}\).</b> Let \(O=T\setminus S\) denote the initially opposing types, and write \(s=\sum_{t\in S}\mu_t\).</p><p>For any subset \(A\subseteq O\), define the rational polytope</p><p>\(
+P_A=\left\{x:
+0\le x_t\le\mu_t\ \text{for every }t,\quad
+\sum_{t\in T}x_t\le B,\quad
+\sum_{u\in T}K_{tu}x_u\ge1\ \text{for every }t\in A
+\right\}.
+\)</p><p>On this polytope, consider the linear objective</p><p>\(
+G_A(x)=s+\sum_{t\in A}\mu_t+\sum_{t\in O\setminus A}x_t.
+\)</p><p>Every type in \(A\) is activated. An opposing type outside \(A\) contributes at least its directly intervened mass. Consequently, \(F(x)\ge G_A(x)\) for every \(x\in P_A\).</p><p>Conversely, if \(x\) is any feasible intervention and</p><p>\(
+A_x=\left\{t\in O:\sum_{u\in T}K_{tu}x_u\ge1\right\},
+\)</p><p>then \(x\in P_{A_x}\) and \(F(x)=G_{A_x}(x)\). Hence a winning intervention exists precisely when some \(A\subseteq O\) has</p><p>\(
+P_A\ne\varnothing
+\quad\text{and}\quad
+\max_{x\in P_A}G_A(x)&gt;\frac12.
+\)</p><p>Each nonempty \(P_A\) is closed and bounded, so the maximum exists. Its constraints and objective have rational coefficients of polynomial encoding length. Rational linear programming permits exact optimization and comparison with \(\frac12\) in polynomial bit complexity; see the [MIT notes on the ellipsoid method](https://ocw.mit.edu/courses/6-251j-introduction-to-mathematical-programming-fall-2009/e13f5e6650f7be1e21101a2e7bd0d5b8_MIT6_251JF09_lec18.pdf).</p><p>A certificate therefore consists simply of the at most \(\tau\) bits specifying \(A\). The verifier performs this linear-programming test in \(\operatorname{poly}(m,\tau,L)\) time, with \(m=2\). This proves membership in \(\mathsf{NP}\), including for real-valued interventions.</p><p><b>2. Source problem and construction.</b> We reduce from CLIQUE: given an explicitly represented simple undirected graph \(G=(V,E)\) and an integer \(k\), decide whether \(G\) contains \(k\) pairwise adjacent vertices. CLIQUE is \(\mathsf{NP}\)-complete; see [Karp’s original paper](https://www2.seas.gwu.edu/~simhaweb/champalg/tsp/papers/KarpOriginal.pdf).</p><p>We may restrict to \(2\le k\le n=|V|\). Excluded cases are directly decidable and can be mapped to fixed yes or no instances satisfying this restriction.</p><p>Put</p><p>\(
+h=|E|,\qquad
+q=\binom{k}{2},\qquad
+w=\frac{1}{4(h+q+1)},\qquad
+a=\frac{w}{4(n+1)},\qquad
+s=\frac12-\left(q-\frac12\right)w.
+\)</p><p>The candidates are \(c\) and \(d\). Construct the following types:</p><p>| Types | Initial ranking | Mass per type |<br>|---|---|---|<br>| One vertex type \(v_i\) for each \(i\in V\) | \(c\succ d\) | \(a\) |<br>| One edge type \(r_e\) for each \(e\in E\) | \(d\succ c\) | \(w\) |<br>| One additional supporting type \(p\) | \(c\succ d\) | \(s-na\) |<br>| One additional opposing type \(z\) | \(d\succ c\) | \(1-s-hw\) |</p><p>Set the budget to \(B=ka\).</p><p>For each edge \(e=\{i,j\}\), set</p><p>\(
+K_{r_e,v_i}=K_{v_i,r_e}
+=K_{r_e,v_j}=K_{v_j,r_e}
+=\frac{1}{2a}.
+\)</p><p>All other entries are zero. Thus the kernel is symmetric and nonnegative, has zero diagonal, and has a bipartite graph of positive entries.</p><p><b>3. Validity and encoding size.</b> Because \(k\ge2\), we have \(q\ge1\). Furthermore,</p><p>\(
+0&lt;\left(q-\frac12\right)w&lt;\frac14,
+\qquad\text{so}\qquad
+\frac14&lt;s&lt;\frac12.
+\)</p><p>Also,</p><p>\(
+na=\frac{nw}{4(n+1)}&lt;\frac{w}{4}&lt;\frac14,
+\)</p><p>which proves \(s-na&gt;0\). The final opposing type has positive mass because</p><p>\(
+1-s-hw
+=\frac12+\left(q-\frac12\right)w-hw
+&gt;\frac12-hw&gt;\frac14.
+\)</p><p>All masses are positive, and their sum is</p><p>\(
+na+(s-na)+hw+(1-s-hw)=1.
+\)</p><p>The initially supporting mass is exactly \(s\). Importantly, the budget satisfies</p><p>\(
+B=ka\le na&lt;\frac{w}{4}.
+\)</p><p>There are \(\tau=n+h+2\) types. Since \(h,q\) are \(O(n^2)\), all constructed rationals have \(O(\log(n+1))\) bits. In particular,</p><p>\(
+\frac{1}{2a}=8(n+1)(h+q+1)
+\)</p><p>is an integer of polynomial magnitude. Explicitly listing the entire kernel gives output length \(O(\tau^2\log(n+1))\); the construction takes polynomial time.</p><p><b>4. The threshold forces both endpoints to be fully intervened.</b> For an edge \(e=\{i,j\}\), the influence received by its edge type is exactly</p><p>\(
+\sum_{u\in T}K_{r_e,u}x_u
+=\frac{x_{v_i}+x_{v_j}}{2a}.
+\)</p><p>The bounds \(0\le x_{v_i},x_{v_j}\le a\) therefore imply</p><p>\(
+r_e\text{ is activated}
+\quad\Longleftrightarrow\quad
+x_{v_i}=x_{v_j}=a.
+\)</p><p>Indeed, reaching the threshold requires \(x_{v_i}+x_{v_j}\ge2a\), while their combined capacity is exactly \(2a\).</p><p>For any feasible intervention, define</p><p>\(
+H(x)=\{i\in V:x_{v_i}=a\}.
+\)</p><p>The budget implies</p><p>\(
+|H(x)|a\le\sum_{t\in T}x_t\le ka,
+\qquad\text{hence}\qquad |H(x)|\le k.
+\)</p><p>The activated edge types are precisely the edges of the subgraph induced by \(H(x)\).</p><p>Interventions on edge types influence only initially supporting vertex types. Those types already contribute their entire mass to support, and the model has no further rounds of propagation. Thus symmetry creates no additional opposing-type activations. The type \(z\) has zero influence.</p><p><b>5. Correctness of the reduction.</b> Suppose first that \(G\) contains a clique \(C\) of size \(k\). Intervene with mass \(a\) on each vertex type corresponding to \(C\), and nowhere else. The cost is exactly \(ka=B\). All \(q\) clique edge types activate, giving</p><p>\(
+F(x)=s+qw=\frac12+\frac{w}{2}&gt;\frac12.
+\)</p><p>Thus every yes instance of CLIQUE produces a winning intervention.</p><p>Now suppose that \(G\) has no clique of size \(k\), and take any feasible real intervention \(x\). Write \(A(x)\) for the number of activated edge types.</p><p>Since \(|H(x)|\le k\), we have \(A(x)\le q-1\): if \(|H(x)|&lt;k\), its induced subgraph has fewer than \(q\) possible edges; if \(|H(x)|=k\), at least one of its \(q\) possible edges is absent.</p><p>The exact final support is</p><p>\(
+F(x)=s+A(x)w
++\sum_{\substack{e\in E\\r_e\text{ not activated}}}x_{r_e}
++x_z.
+\)</p><p>The last two terms together are at most the total intervention cost, hence at most \(B\). Therefore,</p><p>\(
+F(x)\le s+(q-1)w+B
+=\frac12-\frac{w}{2}+B
+&lt;\frac12-\frac{w}{4}
+&lt;\frac12.
+\)</p><p>This bounds every feasible intervention, including fractional interventions on vertex types and direct interventions on opposing types. No intervention wins in a no instance.</p><p>The construction is therefore a polynomial-time many-one reduction from CLIQUE, proving \(\mathsf{NP}\)-hardness. Together with Section 1, it proves \(\mathsf{NP}\)-completeness.</p><p><b>6. Running time and conclusion.</b> Enumerating the subsets \(A\subseteq T\setminus S\) and solving the linear programs from Section 1 gives an exact algorithm running in</p><p>\(
+2^{\tau-|S|}\operatorname{poly}(m,\tau,L),
+\qquad m=2.
+\)</p><p>For fixed \(\tau\), this is polynomial in the input length. When \(\tau\) varies, the problem is \(\mathsf{NP}\)-complete already for two candidates.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p><b>Verdict: proved.</b> The output establishes \(\mathsf{NP}\)-completeness for the exact continuous problem in <code>USER_TASK</code>. The reduction respects arbitrary real interventions, symmetry, positive rational masses, equality activation, and strict victory. I found no mathematical issues requiring repair.</p><h3>1. Membership in \(\mathsf{NP}\)</h3><p>The proposed certificate and verifier are valid.</p><ul><li>For each \(A\subseteq O\), the constraints defining \(P_A\) impose all intervention bounds, the budget, and activation of every type in \(A\). They need not forbid activation outside \(A\).</li></ul><ul><li>The inequality \(F(x)\ge G_A(x)\) holds throughout \(P_A\). An activated opposing type contributes its full mass, which is at least its directly intervened mass because \(x_t\le\mu_t\). Thus additional activations cannot invalidate acceptance.</li></ul><ul><li>For any feasible intervention \(x\), choosing its actual activated set \(A_x\) gives \(F(x)=G_{A_x}(x)\). This establishes both directions of the claimed existential equivalence.</li></ul><ul><li>Every nonempty \(P_A\) is compact: its constraints are closed, and its coordinate bounds make it bounded. Its linear objective therefore attains a maximum. This correctly handles strict victory without assuming that an arbitrary approximation to the optimum suffices.</li></ul><ul><li>The invoked theorem—exact feasibility and optimization of explicitly represented rational linear programs in polynomial bit complexity—applies. There are \(\tau\) variables and \(2\tau+1+|A|\) inequalities, with polynomial total encoding length. The objective coefficients and constant also have polynomial encoding length. Consequently, exact comparison of the optimum with \(1/2\) is legitimate. The cited [MIT notes](https://ocw.mit.edu/courses/6-251j-introduction-to-mathematical-programming-fall-2009/e13f5e6650f7be1e21101a2e7bd0d5b8_MIT6_251JF09_lec18.pdf) state polynomial-time feasibility and optimization for integer data; the extension to binary rational data by clearing denominators is routine.</li></ul><ul><li>The subset certificate has at most \(\tau\) bits. A deterministic polynomial-time LP computation is permitted inside an \(\mathsf{NP}\) verifier. No certificate encoding the original real intervention is required.</li></ul><p><b>Assessment:</b> correct.</p><h3>2. Source problem and construction</h3><p>The source theorem is the standard \(\mathsf{NP}\)-completeness of CLIQUE on explicitly represented simple undirected graphs, as cited to [Karp’s paper](https://www2.seas.gwu.edu/~simhaweb/champalg/tsp/papers/KarpOriginal.pdf). The construction uses exactly this graph class.</p><p>Restricting to \(2\le k\le n\) is legitimate: the excluded cases are directly decidable, and fixed yes and no CLIQUE instances within the restriction exist. Omitting their explicit descriptions is routine and does not leave a substantive gap.</p><p>The constructed instance satisfies the intended model:</p><ul><li>Vertex types and \(p\) initially support \(c\); edge types and \(z\) initially oppose \(c\).</li><li>Interventions on supporting vertex types are expressly permitted by <code>USER_TASK</code>.</li><li>Every positive kernel entry is \(1/(2a)\), paired with its symmetric counterpart.</li><li>All diagonal entries are zero.</li><li>The isolated types \(p\) and \(z\) receive and generate no influence through the kernel.</li></ul><p><b>Assessment:</b> correct.</p><h3>3. Masses, budget, and encoding</h3><p>All displayed inequalities and identities check out.</p><p>Since \(q\ge1\) and \(w=1/[4(h+q+1)]\), the claimed bounds \(1/4&lt;s&lt;1/2\) hold. Also, \(na&lt;w/4&lt;1/4\), so \(s-na&gt;0\).</p><p>The calculation for the final opposing mass is correct:<br>\(1-s-hw=1/2+(q-1/2)w-hw&gt;1/2-hw&gt;1/4\).</p><p>The masses sum exactly to \(1\), and the supporting mass is exactly \(s\). The budget satisfies \(B=ka\le na&lt;w/4\).</p><p>The kernel value simplifies correctly to<br>\(1/(2a)=8(n+1)(h+q+1)\).<br>All constructed rational numerators and denominators have \(O(\log(n+1))\) bits. With \(\tau=n+h+2\), explicitly listing the kernel takes polynomial space and time.</p><p><b>Assessment:</b> correct, including when \(h=0\) or \(h&lt;q\).</p><h3>4. Activation characterization</h3><p>For an edge type \(r_e\), its only influencing types are its two endpoint vertex types. Its received influence is exactly \((x_{v_i}+x_{v_j})/(2a)\).</p><p>Because both endpoint interventions are bounded above by \(a\), the activation condition is equivalent to \(x_{v_i}=x_{v_j}=a\). This equivalence remains valid for arbitrary real interventions and uses equality activation correctly.</p><p>The budget implies \(|H(x)|\le k\), so activated edge types correspond precisely to edges induced by at most \(k\) fully intervened vertices.</p><p>Symmetric influence from edge interventions reaches only supporting vertex types. Their support is already counted in full, and the stipulated single round prevents further propagation.</p><p><b>Assessment:</b> correct.</p><h3>5. Correctness in both directions</h3><p><b>Yes direction.</b> Intervening fully on the \(k\) clique vertices costs exactly \(B\). Precisely the clique’s \(q\) edge types activate, and all opposing direct interventions are zero. Therefore \(F(x)=s+qw=1/2+w/2&gt;1/2\).</p><p><b>No direction.</b> Without a \(k\)-clique, the induced subgraph on \(H(x)\) has at most \(q-1\) edges. This includes \(|H(x)|&lt;k\), since then fewer than \(q\) vertex pairs are possible.</p><p>The displayed expression for final support is exact. Activated edge types contribute \(w\); unactivated edge types contribute their direct interventions; isolated \(z\) contributes \(x_z\).</p><p>The remaining direct-support terms are a subset of the nonnegative intervention costs, so their sum is at most \(B\). Hence the stated bound<br>\(F(x)\le1/2-w/2+B&lt;1/2-w/4&lt;1/2\)<br>is valid.</p><p>This excludes every feasible real intervention, including partial endpoint interventions and interventions on opposing types.</p><p><b>Assessment:</b> correct.</p><h3>6. Final classification and running time</h3><p>The polynomial-time many-one reduction proves \(\mathsf{NP}\)-hardness. Combined with the valid membership argument, it proves \(\mathsf{NP}\)-completeness.</p><p>The enumeration bound \(2^{\tau-|S|}\operatorname{poly}(m,\tau,L)\), with \(m=2\), follows from the subset characterization. Its polynomial behavior for fixed \(\tau\) is consistent with hardness when \(\tau\) varies.</p><p><b>Repair feedback:</b> none required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

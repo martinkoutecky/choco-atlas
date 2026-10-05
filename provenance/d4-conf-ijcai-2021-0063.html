@@ -1,0 +1,196 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ijcai-2021-0063 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ijcai-2021-0063 <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2021-0063)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: hard · adversarial review: proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\text{-hard}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Corollary 2 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite supported proposer and receiver type sets \(I,J\), positive rational masses \(a_i,b_j\) each summing to \(1\), strict rankings over opposite-side types, and designated positive-mass types \(i^\star,j^\star\), compute a strict ranking reported by all of type \(i^\star\) and the resulting rational fluid deferred-acceptance matching \(x\). In each round, unheld proposer mass advances to its next ranked receiver type, and each receiver type holds its highest-ranked incoming mass up to capacity \(b_j\), rejecting excess. Minimize \(S_{j^\star}(x)=\sum_i x_{ij^\star}s_{j^\star}(i)/b_{j^\star}\), subject to \(R_{i^\star}(x)=\sum_j x_{i^\star j}r_{i^\star}(j)/a_{i^\star}\le R_{i^\star}(x^0)\), where \(x^0\) is the truthful fluid deferred-acceptance outcome; determine whether this exact optimization is solvable in \(\operatorname{poly}(|I|+|J|,L)\) time, for input bit length \(L\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(I,J\) be nonempty finite proposer and receiver type supports, with positive binary rational masses \(a_i,b_j\) satisfying \(\sum_i a_i=\sum_j b_j=1\). A society is given by its support: only types of positive mass are listed; \(\tau=|I|+|J|\) is the support size, not the number of possible preference types. Set \(m=\max\{|I|,|J|\}\), and let \(L\) be the total input bit length.<br>Each type has a strict total ranking of all opposite-side types, all acceptable. Let \(r_i(j)\in\{1,\ldots,|J|\}\) and \(s_j(i)\in\{1,\ldots,|I|\}\) be positions in the true rankings, with position \(1\) best. Fix designated types \(i^\star\in I\) and \(j^\star\in J\).<br>Fluid proposer-side deferred acceptance starts with all mass unheld. In simultaneous rounds, each unheld portion proposes to its next receiver in its reported ranking; each receiver pools new proposals with previously held mass, retains its highest-ranked proposer mass up to capacity \(b_j\), and rejects the excess. Mass at a cutoff type is divisible; only rejected portions advance next round, and a previously displaced portion resumes after the receiver that rejected it. Stop when no proposals remain.<br>The outcome \(x_{ij}\ge0\) is the rational mass held between types, with \(\sum_jx_{ij}=a_i\) and \(\sum_ix_{ij}=b_j\). Write \(x^0\) for the truthful outcome. All mass of \(i^\star\) must report one common strict total ranking of \(J\); all other reports remain truthful, and truthful reporting is allowed.<br>Compute a report and its resulting outcome minimizing \(S_{j^\star}(x)=\sum_i x_{ij^\star}s_{j^\star}(i)/b_{j^\star}\), subject to \(R_{i^\star}(x)=\sum_jx_{i^\star j}r_{i^\star}(j)/a_{i^\star}\le R_{i^\star}(x^0)\).</p><p>Is this exact optimization solvable in \(\operatorname{poly}(m,\tau,L)\) time, or is it NP-hard?</p><p>For discrete one-to-one matching with strict complete preferences and a fixed accomplice–beneficiary pair, an optimal permutation report preserving the accomplice’s truthful partner is computable in \(O(n^3)\) time, where \(n\) is the number of agents on each side ([source](https://arxiv.org/pdf/2012.04518)).<br>No result settling the exact fluid optimization defined here was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The undefined rank scores are positions in the true complete rankings, starting at 1 for the best type; scores do not change with reports.</li><li>Rankings and reports are strict total orders over all opposite-side support types, with every type acceptable and no truncation, as in the discrete definition.</li><li>Fluid rounds pool incoming and previously held mass; only rejected portions advance, retaining their own proposal history. A receiver may retain a fraction of its cutoff proposer type.</li><li>Truthful reporting is an admissible report, including when no beneficial manipulation exists.</li><li>For the requested size convention, tau is the combined support size and m is the larger side’s support size.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Exact fluid accomplice optimization is NP-hard</h3><p>The exact optimization is <b>NP-hard</b>, even with positive dyadic masses, strict complete rankings, and one designated accomplice–beneficiary pair. Its rational-threshold decision version is also NP-complete.</p><p>The reduction below is from Subset Sum. Its main ingredient is a receiver capacity that absorbs the first half of an item’s displaced mass. The beneficiary gains only from the remaining half. Equality in a resulting bound forces every item to be selected completely or not at all.</p><h3>1. Deferred-acceptance facts used</h3><p>We use two established facts about bipartite stable allocation with strict rankings and rational vertex quotas:</p><ul><li>Proposer-side DA has an outcome independent of proposal order.</li><li>Its outcome can be computed in polynomial time using an accelerated stable-allocation algorithm.</li></ul><p>These are covered by Lemma 1 and Section 3 of [Dean and Munshi, *Faster Algorithms for Stable Allocation Problems*](https://people.computing.clemson.edu/~bcdean/stable_alloc.pdf).</p><p>The hypotheses apply here: the graph is bipartite, quotas are rational, and rankings are strict. Edge capacities can be set to the redundant bounds \(\min\{a_i,b_j\}\). Simultaneous pooling implements the same proposal-and-rejection operation; proposals at a receiver can be serialized because retaining its highest-ranked mass depends only on the pooled mass.</p><p>Consequently, we may verify the truthful outcome and a witnessing report using convenient sequential proposal schedules. We do not assume that literal round-by-round simulation runs in polynomial time.</p><p>All construction calculations initially use <b>unnormalized quotas</b>. Uniform scaling preserves DA and both average-rank scores. Section 7 converts the construction to positive dyadic masses summing to one.</p><h3>2. Reduction and preferences</h3><p>Take a Subset Sum instance with positive binary integers \(\nu_1,\ldots,\nu_n\) and target \(T&gt;0\), where \(n\ge 2\). The question is whether some subset \(F\subseteq\{1,\ldots,n\}\) satisfies</p><p>\[
+\sum_{i\in F}\nu_i=T.
+\]</p><p>Define</p><p>\[
+c_i=i+2,\qquad
+w_i=\frac{\nu_i}{c_i},\qquad
+M=\sum_{i=1}^n w_i,\qquad
+g=\frac{T}{5}.
+\]</p><p>There are proposer types \(p,u,v,q_1,\ldots,q_n,t_1,\ldots,t_n,d\), with quotas</p><p>| Proposer | Quota |<br>|---|---:|<br>| \(p\) | \(M+4g\) |<br>| \(u,v\), each | \(2g\) |<br>| \(q_i\) | \(w_i\) |<br>| \(t_i\) | \(w_i/2\) |<br>| \(d\) | \(M\) |</p><p>The designated accomplice is \(p\).</p><p>There are receiver types \(A,B,H,C,D,X_1,\ldots,X_n,Y_1,\ldots,Y_n,J\), with capacities</p><p>| Receiver | Capacity |<br>|---|---:|<br>| \(A,B\), each | \(g\) |<br>| \(H\) | \(M\) |<br>| \(C\) | \(2g\) |<br>| \(D\) | \(4g\) |<br>| \(X_i\) | \(w_i\) |<br>| \(Y_i\) | \(w_i/2\) |<br>| \(J\) | \(M\) |</p><p>The designated beneficiary is \(J\). Both sides have total quota</p><p>\[
+\frac{7}{2}M+8g.
+\]</p><p>The accomplice’s true ranking is</p><p>\[
+A\succ B\succ H\succ C\succ D
+\succ X_1\succ\cdots\succ X_n
+\succ Y_1\succ\cdots\succ Y_n\succ J.
+\]</p><p>In particular,</p><p>\[
+r_p(H)=3,\qquad r_p(X_i)=i+5=3+c_i.
+\]</p><p>All other proposers have the following ranking prefixes:</p><p>| Proposer | Ranking prefix |<br>|---|---|<br>| \(u\) | \(D\succ A\succ C\succ B\) |<br>| \(v\) | \(C\succ B\succ A\succ D\) |<br>| \(q_i\) | \(X_i\succ Y_i\succ J\) |<br>| \(t_i\) | \(Y_i\succ H\) |<br>| \(d\) | \(J\succ H\) |</p><p>Receiver ranking prefixes are:</p><p>| Receiver | Ranking prefix |<br>|---|---|<br>| \(A\) | \(u\succ v\succ p\) |<br>| \(B\) | \(v\succ p\succ u\) |<br>| \(C\) | \(u\succ p\succ v\) |<br>| \(D\) | \(v\succ p\succ u\) |<br>| \(X_i\) | \(p\succ q_i\) |<br>| \(Y_i\) | \(q_i\succ t_i\) |<br>| \(H\) | all \(t_i\) and \(d\), then \(p\) |<br>| \(J\) | \(q_n\succ\cdots\succ q_1\succ t_1\succ t_2\succ d\) |</p><p>Complete every prefix by appending all omitted types in an arbitrary strict order. Thus all types are acceptable. At \(H\), every omitted proposer is below \(p\); at \(J\), every omitted proposer is below \(d\).</p><p>The beneficiary’s ranks satisfy</p><p>\[
+s_J(d)=n+3,\qquad
+s_J(d)-s_J(q_i)=i+2=c_i.
+\]</p><p>If types are required to have distinct rankings, choose different bottom tails for \(B\) and \(D\); their displayed prefixes are the only repeated receiver prefixes. This does not affect the argument.</p><p>Write \(h\) for an unnormalized DA outcome.</p><h3>3. Structure under every report</h3><p>Fix <b>any</b> common permutation report by \(p\), and put</p><p>\[
+x_i=h_{pX_i}.
+\]</p><p>We establish properties that hold independently of that report.</p><h3>3.1. The item types remain in their designated receivers</h3><p>Receiver \(X_i\) ranks \(p\) first and \(q_i\) second. Consequently,</p><p>\[
+0\le x_i\le w_i,
+\]</p><p>and \(q_i\) is displaced from \(X_i\) by exactly \(x_i\). It next proposes to \(Y_i\), where it has highest priority. Hence the eventual allocations are</p><p>\[
+\begin{aligned}
+h_{q_iX_i}&amp;=w_i-x_i,\\
+h_{q_iY_i}&amp;=\min\{x_i,w_i/2\},\\
+h_{q_iJ}&amp;=(x_i-w_i/2)_+,
+\end{aligned}
+\]</p><p>where \(z_+=\max\{z,0\}\).</p><p>Here is a justification that these routes cannot spill into their unspecified tails. Start all non-accomplice proposers before processing \(p\), which is permitted by schedule independence. Initially \(q_i,t_i,d\) fill \(X_i,Y_i,J\), respectively.</p><p>During the subsequent execution, the mass of \(p\) retained at \(X_i\) never decreases, because \(p\) has highest priority there. If its current value is \(e_i\), at most</p><p>\[
+\min\{e_i,w_i/2\}
+\]</p><p>of \(t_i\) has been displaced toward \(H\), and at most</p><p>\[
+(e_i-w_i/2)_+
+\]</p><p>of \(q_i\) has advanced toward \(J\). Total \(q_i\)-mass reaching \(J\) is at most \(M\), so \(J\) can retain all of it ahead of \(d\). The mass of \(d\) displaced toward \(H\) is at most that incoming \(q_i\)-mass.</p><p>Thus total \(t_i\)- and \(d\)-mass reaching \(H\) is at most</p><p>\[
+\sum_i\left(
+\min\{e_i,w_i/2\}+(e_i-w_i/2)_+
+\right)
+=\sum_i e_i\le M.
+\]</p><p>All this mass has priority over every other proposer at \(H\), so it is retained. These bounds give an induction over proposals: none of \(q_i,t_i,d\) ever reaches an unspecified tail. In particular, the two \(t_i\) types ranked above \(d\) at \(J\) never propose there.</p><p>At termination, therefore,</p><p>\[
+h_{t_iH}=\min\{x_i,w_i/2\},\qquad
+h_{dH}=\sum_i(x_i-w_i/2)_+.
+\]</p><p>Their combined mass at \(H\) is exactly \(\sum_i x_i\).</p><p>Receivers \(Y_i\) and \(J\) remain full of these designated types and retain no mass of \(p\).</p><h3>3.2. The local proposers remain at \(A,B,C,D\)</h3><p>No item proposer reaches these four receivers.</p><p>Proposer \(u\) has highest priority at \(A\) and \(C\), whose combined capacity is \(3g\), exceeding its entire quota \(2g\). After any rejection at \(D\), these receivers retain all its remaining mass. Thus \(u\) never reaches \(B\), and all its mass remains local.</p><p>Proposer \(v\) has highest priority at \(B\) and \(D\). In particular, \(D\) has capacity \(4g\), exceeding \(v\)’s entire quota. Thus \(v\) also remains local.</p><p>Since the four local receivers are full, their total capacity \(8g\) consists of \(4g\) from \(u,v\) and exactly \(4g\) from \(p\). Consequently,</p><p>\[
+h_{pH}=M-\sum_i x_i.
+\]</p><h3>3.3. A lower bound on the accomplice’s local rank cost</h3><p>Define the local cost relative to assigning the same mass to \(H\):</p><p>\[
+\Delta=-2h_{pA}-h_{pB}+h_{pC}+2h_{pD}.
+\]</p><p>We prove</p><p>\[
+\boxed{\Delta\ge g.}
+\]</p><p>Let</p><p>\[
+a=h_{uA},\quad d_0=h_{uD},\quad
+z=h_{vA},\quad c=h_{vC},\quad b=h_{vB}.
+\]</p><p>Because \(u\) has no allocation at \(B\),</p><p>\[
+h_{uC}=2g-a-d_0.
+\]</p><p>Because \(v\) proposes first to \(C\), then to \(B\), where it has highest priority,</p><p>\[
+b=\min\{2g-c,g\},
+\qquad
+h_{vD}=2g-z-b-c.
+\]</p><p>Subtracting the \(u,v\) allocations from the four capacities gives</p><p>\[
+\Delta
+=g+3a+4z+3b+c-d_0.
+\]</p><p>We have \(d_0\le 2g\). Also \(3b+c\ge 2g\): if \(c\le g\), then \(b=g\); if \(c\ge g\), then \(b=2g-c\), so</p><p>\[
+3b+c=6g-2c\ge 2g.
+\]</p><p>Since \(a,z\) are nonnegative, the claimed bound follows.</p><h3>4. Truthful outcome and the no-regret bound</h3><p>Under truthful reporting, the item types stay at their initial receivers. The remaining truthful allocations are</p><p>\[
+h^0_{pH}=M,\qquad
+h^0_{pC}=2g,\qquad
+h^0_{pD}=2g,
+\]</p><p>\[
+h^0_{uD}=2g,\qquad
+h^0_{vA}=h^0_{vB}=g.
+\]</p><p>To verify this, initially hold \(u\) at \(D\), \(v\) at \(C\), and all item types at their first choices. Process \(p\) in its truthful order. It is initially retained by \(A,B\), then fills \(H\), and sends \(2g\) to \(C\). This displaces \(v\), which takes \(B\) and \(A\), displacing the \(2g\) of \(p\) held there. Those portions pass the already full \(H,C\) and are retained at \(D\) alongside \(u\).</p><p>The truthful total true-rank cost of \(p\) is consequently</p><p>\[
+C_p^0=3(M+4g)+6g.
+\]</p><p>For an arbitrary report, Section 3 gives the exact identity</p><p>\[
+C_p(h)
+=\sum_j r_p(j)h_{pj}
+=3(M+4g)+\Delta+\sum_i c_i x_i.
+\]</p><p>The average-rank no-regret constraint compares these total costs, since the accomplice’s quota is fixed. Using \(\Delta\ge g\), every feasible report satisfies</p><p>\[
+\sum_i c_i x_i\le 5g=T.
+\]</p><p>Thus</p><p>\[
+\boxed{\text{No regret implies }\sum_i c_i x_i\le T.}
+\]</p><h3>5. The beneficiary threshold forces whole-item selection</h3><p>Truthfully, \(J\) holds only \(d\), so its average rank is \(n+3\).</p><p>Under any report, the beneficiary’s improvement in its unnormalized rank sum is</p><p>\[
+P(h)=\sum_i c_i(x_i-w_i/2)_+.
+\]</p><p>Indeed, \(q_i\) replaces precisely \((x_i-w_i/2)_+\) of \(d\), and its rank advantage over \(d\) is \(c_i\). Hence</p><p>\[
+S_J(h)=n+3-\frac{P(h)}{M}.
+\]</p><p>For every \(x\in[0,w]\),</p><p>\[
+(x-w/2)_+\le \frac{x}{2},
+\]</p><p>with equality <b>exactly</b> when \(x=0\) or \(x=w\). Therefore every no-regret report satisfies</p><p>\[
+P(h)
+\le \frac12\sum_i c_i x_i
+\le \frac{T}{2}.
+\]</p><p>Set the decision threshold to</p><p>\[
+\theta=n+3-\frac{T}{2M}.
+\]</p><p>Suppose a no-regret report attains \(S_J(h)\le\theta\). Then \(P(h)\ge T/2\), so equality must hold throughout the preceding inequalities. All \(c_i\) are positive; consequently,</p><p>\[
+x_i\in\{0,w_i\}\quad\text{for every }i,
+\qquad
+\sum_i c_i x_i=T.
+\]</p><p>Thus the set \(F=\{i:x_i=w_i\}\) satisfies</p><p>\[
+\sum_{i\in F}\nu_i
+=\sum_{i\in F}c_iw_i
+=T.
+\]</p><p>A successful fluid report therefore yields a Subset Sum solution.</p><h3>6. Every Subset Sum solution yields a successful report</h3><p>Conversely, suppose \(F\) satisfies \(\sum_{i\in F}\nu_i=T\). Let</p><p>\[
+W=\sum_{i\in F}w_i\le M.
+\]</p><p>Have \(p\) report the selected \(X_i\) first, followed by</p><p>\[
+A\succ B\succ H\succ D\succ C,
+\]</p><p>and then all remaining receivers in any strict order.</p><p>We verify its outcome with a sequential DA schedule. First place all other proposers at their first choices. For each selected \(X_i\), process \(p\)’s proposal and the resulting rejection chain:</p><ul><li>\(X_i\) retains \(w_i\) of \(p\), displacing \(q_i\).</li><li>\(Y_i\) retains \(w_i/2\) of \(q_i\), displacing \(t_i\).</li><li>\(J\) retains the remaining \(w_i/2\) of \(q_i\), displacing the same amount of \(d\).</li><li>The displaced \(t_i,d\) mass, totaling \(w_i\), is retained at \(H\).</li></ul><p>After these chains, \(H\) holds \(W\) of higher-priority mass. Next, \(A,B\) each retain \(g\) of \(p\); \(H\) retains \(M-W\) of \(p\); and \(D\) retains its remaining \(2g\) alongside \(u\). All mass is now held.</p><p>Thus</p><p>\[
+h_{pA}=h_{pB}=g,\qquad
+h_{pC}=0,\qquad h_{pD}=2g,
+\]</p><p>so \(\Delta=g\), while \(x_i=w_i\) exactly for selected items. Its total true-rank cost is</p><p>\[
+C_p(h)
+=3(M+4g)+g+\sum_{i\in F}c_iw_i
+=3(M+4g)+g+T
+=C_p^0.
+\]</p><p>The report therefore satisfies no regret with equality. Its beneficiary improvement is</p><p>\[
+P(h)=\frac12\sum_{i\in F}c_iw_i=\frac{T}{2},
+\]</p><p>so \(S_J(h)=\theta\).</p><p>We have proved the equivalence</p><p>\[
+\boxed{
+\text{Subset Sum is YES}
+\iff
+\text{a no-regret report attains }S_J\le\theta.
+}
+\]</p><h3>7. Positive dyadic normalization and polynomial input size</h3><p>The construction has \(2n+4\) proposer types and \(2n+6\) receiver types. Every quota is positive.</p><p>To obtain dyadic masses, multiply all quotas by</p><p>\[
+K_0=10\prod_{i=1}^n c_i.
+\]</p><p>This makes every quota integral, including \(w_i/2\) and \(g\). Let \(N\) be the resulting total quota on either side, and choose an integer \(k\) with \(2^k&gt;N\).</p><p>Add one proposer and one receiver, each with quota \(2^k-N\), ranking each other first. Append these added types last in every original true ranking, and rank every original proposer below the added proposer at the added receiver.</p><p>The added pair remains fully matched to itself. Every proposal from an original proposer to the added receiver is wholly rejected; deleting these proposals leaves the original DA problem. In particular, arbitrary insertion of this receiver into \(p\)’s report cannot change the original attainable outcomes.</p><p>Finally divide all quotas by \(2^k\). The masses are positive dyadic rationals and sum to one on each side. Original true ranks, the no-regret condition, and the beneficiary scores are unchanged.</p><p>Moreover,</p><p>\[
+\log K_0=O(n\log n),
+\]</p><p>and the integer quotas, \(k\), and \(\theta\) have polynomial bit length in the Subset Sum input. There are only \(O(n)\) supported types and \(O(n^2)\) ranking entries. Thus this is a polynomial-time reduction respecting the task’s support-size convention.</p><h3>8. Complexity conclusion</h3><p>An exact optimizer would compute the optimal beneficiary score and compare it with \(\theta\), thereby deciding Subset Sum. Hence the requested exact optimization is NP-hard.</p><p>For completeness, the threshold decision problem belongs to NP: a certificate is \(p\)’s permutation report. The polynomial stable-allocation evaluator computes its DA outcome and the truthful outcome, after which both rational inequalities can be checked exactly. Clearing the input denominators requires only polynomial bit length; the accelerated algorithm uses additions, subtractions, comparisons, and minimum operations on these scaled quantities.</p><p>Therefore the threshold decision problem is NP-complete, and the exact optimization cannot have a \(\operatorname{poly}(m,\tau,L)\)-time algorithm unless \(\mathrm{P}=\mathrm{NP}\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 1, applicability of Dean and Munshi&#x27;s stable-allocation results: The cited presentation uses auxiliary dummy vertices to represent unassigned mass, but the write-up does not explicitly account for that convention. Explain its applicability to the balanced complete instance and confirm that the accelerated evaluator returns the same original-edge DA allocation. This requires only a routine modeling clarification.</li></ul>
+<div class="pre"><p>The reduction is sound in substance. It establishes NP-hardness of the requested exact optimization and NP-completeness of the rational-threshold decision version. I found no false central step or substantive mathematical gap. One minor clarification concerns the auxiliary-vertex convention in the cited algorithm.</p><h3>1. Deferred-acceptance facts</h3><p>The citation supports the required conclusions: Lemma 1 gives finite termination and proposal-order independence, with the unique proposer-optimal allocation as output; Section 3 supplies an accelerated algorithm computing that allocation. Thus the prover correctly distinguishes polynomial-time evaluation from potentially expensive literal proposal simulation. See [Dean and Munshi, Sections 2–3](https://people.computing.clemson.edu/~bcdean/stable_alloc.pdf).</p><p>Strict rankings, rational quotas, and redundant edge capacities fit the cited stable-allocation model. Serialization of proposals within a simultaneous round preserves receiver holdings because each receiver retains the highest-priority mass from the same pool.</p><p><b>Minor issue:</b> The cited presentation uses auxiliary dummy vertices to represent unassigned mass. The prover lists the principal hypotheses but does not explicitly account for that convention. The minimum clarification is to explain how that convention applies to the balanced, complete instance and confirm that the evaluator returns the same original-edge allocation. This is a routine modeling clarification, not a missing hardness argument.</p><h3>2. Construction and ranks</h3><p>The construction contains \(2n+4\) proposer types and \(2n+6\) receiver types before padding. All quotas are positive.</p><p>Both quota sums are correctly computed as<br>\[
+\frac{7}{2}M+8g.
+\]</p><p>The accomplice’s displayed ranking gives<br>\[
+r_p(H)=3,\qquad r_p(X_i)=i+5=3+c_i.
+\]</p><p>The beneficiary’s displayed prefix gives<br>\[
+s_J(q_i)=n-i+1,\qquad s_J(d)=n+3,
+\]<br>and consequently<br>\[
+s_J(d)-s_J(q_i)=i+2=c_i.
+\]</p><p>The assumption \(n\ge2\) makes both displayed types \(t_1,t_2\) available. The arbitrary ranking tails do not affect these ranks or the subsequent priority comparisons.</p><h3>3. Structure under arbitrary reports</h3><p>The universal quantifier over the accomplice’s reports is adequately addressed.</p><p>At \(X_i\), the accomplice has highest priority, so its retained mass cannot decrease. At \(Y_i\), the designated types \(q_i,t_i\) outrank every other proposer; at \(J\), the initial type \(d\) outranks all omitted types. The induction therefore excludes interference from arbitrary proposals by \(p\).</p><p>The bound on higher-priority mass reaching \(H\) is correct:<br>\[
+\sum_i\left(\min\{e_i,w_i/2\}+(e_i-w_i/2)_+\right)
+=\sum_i e_i\le M.
+\]</p><p>This verifies that the designated item types do not enter their unspecified tails. Their final allocations, including the formulas involving \(x_i\), follow from their routes and the stated capacities. In particular, \(p\) receives no final allocation at \(Y_i\) or \(J\).</p><p>The local confinement argument also checks out. Proposer \(u\) has highest priority at \(A,C\), with sufficient combined capacity; proposer \(v\) has highest priority at \(B,D\), with sufficient capacity at \(D\). Neither reaches an unspecified tail.</p><p>The task’s balanced, complete setting guarantees full receiver capacities at termination. Consequently, the local receivers hold exactly \(4g\) of \(p\), and<br>\[
+h_{pH}=M-\sum_i x_i.
+\]</p><h3>4. Local cost bound</h3><p>Re-expanding the definition of \(\Delta\) using the stated allocations confirms<br>\[
+\Delta=g+3a+4z+3b+c-d_0.
+\]</p><p>The identity<br>\[
+b=\min\{2g-c,g\}
+\]<br>is justified by \(v\)’s proposal order and highest priority at \(B\).</p><p>The bound \(3b+c\ge2g\) is correct in both cases. In the case \(c\ge g\), the calculation also uses \(c\le2g\), which follows immediately from \(v\)’s quota. Together with \(d_0\le2g\) and nonnegativity, this establishes<br>\[
+\Delta\ge g.
+\]</p><p>No substantive gap occurs here.</p><h3>5. Truthful outcome and no regret</h3><p>The truthful proposal schedule is consistent with the displayed rankings and capacities. The displacement of \(p\) from \(A,B\) sends exactly \(2g\) onward to \(D\), while the final holdings at \(H,C\) remain as stated.</p><p>The truthful cost calculation is correct:<br>\[
+3M+4(2g)+5(2g)=3(M+4g)+6g.
+\]</p><p>The arbitrary-report cost identity correctly accounts for every possible final destination of \(p\):<br>\[
+C_p(h)=3(M+4g)+\Delta+\sum_i c_i x_i.
+\]</p><p>Because the accomplice’s quota is fixed, comparison of average ranks is equivalent to comparison of these total costs. Thus no regret indeed implies<br>\[
+\sum_i c_i x_i\le5g=T.
+\]</p><h3>6. Threshold and whole-item selection</h3><p>The beneficiary improvement formula is correct: only the specified \(q_i\)-mass replaces \(d\), with rank advantage \(c_i\).</p><p>For positive \(w\), the inequality<br>\[
+(x-w/2)_+\le x/2
+\]<br>holds throughout \(0\le x\le w\), with equality precisely at \(x=0\) and \(x=w\).</p><p>Therefore the threshold condition forces equality in both bounds<br>\[
+P(h)\le\frac12\sum_i c_i x_i\le\frac T2.
+\]</p><p>Since every coefficient \(c_i\) is positive, equality forces every item individually to satisfy \(x_i\in\{0,w_i\}\). The extracted set then satisfies<br>\[
+\sum_{i\in F}\nu_i=T.
+\]</p><p>This direction excludes fractional false positives.</p><h3>7. Report realizing a subset solution</h3><p>The proposed report is a single common strict permutation, as required.</p><p>Each selected item’s rejection chain has the stated allocations. After all selected chains, \(H\) holds exactly \(W\) of higher-priority mass. The remaining quota of \(p\) is correctly exhausted by<br>\[
+g+g+(M-W)+2g=M+4g-W.
+\]</p><p>At this outcome, \(u\) remains at \(D\), and \(v\) remains at \(C\). No further rejection chain is triggered. Hence the claimed local allocations and \(\Delta=g\) are correct.</p><p>The resulting cost equals the truthful cost, and the beneficiary improvement equals \(T/2\). This verifies the converse direction, including exact equality in the no-regret constraint.</p><h3>8. Dyadic normalization and encoding</h3><p>The multiplier \(K_0\) clears all quota denominators, including those in \(w_i/2\) and \(g\).</p><p>The added pair ranks each other first, so it remains matched internally. Its receiver rejects original proposers; inserting it into the accomplice’s report cannot change the original attainable allocations.</p><p>Appending the added types last preserves all original rank positions. Uniform scaling preserves both average-rank scores and the no-regret comparison.</p><p>The stated polynomial-size claim is valid with a power of two immediately above \(N\). The product defining \(K_0\) has polynomial bit length, and the construction has only linearly many supported types and quadratically many ranking entries. No expansion into individual agents is used.</p><h3>9. Complexity conclusion and feedback</h3><p>An exact optimizer would decide the established threshold equivalence, so the NP-hardness conclusion follows.</p><p>A permutation report has polynomial certificate length. The cited accelerated evaluator, together with exact rational comparisons and the denominator-size argument, supports NP membership of the threshold version.</p><p>The only requested clarification is the applicability of the cited algorithm’s auxiliary dummy-vertex convention. No modification of the reduction or its inequalities is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

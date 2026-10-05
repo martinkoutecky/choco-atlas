@@ -1,0 +1,360 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Sample Complexity of Linear Regression Models for Opinion Formation in Networks — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Sample Complexity of Linear Regression Models for Opinion Formation in Networks <span style="font-weight:normal;color:#8a7350">(aaai25-33531)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finitely many weighted rooted network templates \(H\), rational masses \(\mu_{h,a}\) of rooted roles \((h,a)\), regression parameters \(k,\varepsilon\), and \(W_h=L_h+I\), choose per-agent sample intensities \(r_{h,a}\ge k\) minimizing \(S_\infty=\sum_{h,a}\mu_{h,a}r_{h,a}\), subject to \(k\sum_{b\in V_h}[(W_h^{-1})_{ab}]^2/r_{h,b}\le\varepsilon\) for every rooted role \((h,a)\), and output the optimum and an allocation attaining it.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Input consists of a nonempty finite family of explicitly listed finite network templates \(H_h=(V_h,E_h)\), with nonnegative binary-rational symmetric influence weights \(v^h_{ab}=v^h_{ba}\), zero off edges and on the diagonal. Define \((W_h)_{aa}=1+\sum_{b\ne a}v^h_{ab}\) and \((W_h)_{ab}=-v^h_{ab}\) for \(a\ne b\).<br>A type is a rooted role \((h,a)\), where \(a\in V_h\). Every vertex of each listed template has a supported role. A society is given by its support: the list of its \(\tau\) types with positive binary-rational masses \(\mu_{h,a}\), summing to \(1\); \(\tau\) is the support size, not the number of possible types.<br>Given an integer \(k\ge1\) and a positive binary-rational \(\varepsilon\), choose real intensities \(r_{h,a}\ge k\) minimizing \(S_\infty=\sum_{h,a}\mu_{h,a}r_{h,a}\), subject to \(k\sum_{b\in V_h}[(W_h^{-1})_{ab}]^2/r_{h,b}\le\varepsilon\) for every supported role. Denote the minimum by \(S_\infty^*\); the optimization problem asks for this value and an attaining allocation.<br>Let \(m=\max_h|V_h|\) and \(L\) be the total binary input length, including a nonnegative rational threshold \(B\). State running times in \(m,\tau,L\), and \(k\).</p><p>Is deciding whether \(S_\infty^*\le B\) in \(\mathrm{P}\), or is it \(\mathrm{NP}\)-hard?</p><p>For finite networks, Liu et al. establish \(\mathrm{TSC}=\Theta(\sum_i m_i^*+nk)\), where \(m^*\) minimizes their reciprocal-constraint allocation program, and give a polynomial-time estimation framework. [Source](https://arxiv.org/html/2311.02349v3)<br>They also give an SOCP formulation for that real allocation program; this does not itself establish an exact rational-threshold complexity classification for the distribution-over-role problem above. [Source](https://arxiv.org/html/2311.02349v3)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified explicit, nonempty finite templates and nonnegative binary-rational weights; imposed symmetry consistently with the full version&#x27;s symmetric weighted-Laplacian treatment.</li><li>Required every template vertex to have a positive-mass supported role, so every intensity appearing in a constraint is defined and charged in the objective.</li><li>Normalized the positive masses to sum to one, interpreting the society as a distribution over rooted roles.</li><li>Specified integer k at least one, positive rational epsilon, and real sample intensities with the given lower bound.</li><li>Used exact comparison with an input rational threshold B as the complexity question associated with the requested optimization, distinguishing it from numerical approximation.</li><li>Defined m as the largest template size and L as the total binary input length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial classification</h3><p>I do not settle whether the general exact threshold problem is in $\mathrm{P}$ or is $\mathrm{NP}$-hard. The following results are proved below.</p><ul><li><b>For $m\le2$, exact threshold decision is polynomial-time many-one equivalent to square-root-sum comparison.</b> This strengthens the one-way reduction in the notes.</li><li>For arbitrary templates, the decision problem belongs to $\exists\mathbb R\cap\mathrm{co}\text{-}\exists\mathbb R$, and consequently to $\mathrm{PSPACE}$.</li><li>The optimum is attained by a unique allocation. Exact decision, and exact computation of the value and allocation using algebraic-number representations, are possible in time</li></ul><p>$$
+   (\tau+1)^{O(\tau)}\operatorname{poly}(m,L,\log(k+1)).
+   $$</p><ul><li>Edgeless templates are solvable in polynomial time.</li></ul><p>These statements concern exact comparison, including equality at $B$.</p><h3>1. Normalization, attainment, and uniqueness</h3><p>Enumerate all supported roles by $i=1,\ldots,\tau$. Since every vertex of every listed template is supported, all variables have positive objective coefficients, and<br>$$
+\sum_h |V_h|=\tau.
+$$<br>Empty templates, if permitted, can be discarded.</p><p>Write<br>$$
+P_h=W_h^{-1},
+\qquad
+C^h_{ab}=(P_h)_{ab}^{2},
+$$<br>and let $C$ be the block diagonal matrix with blocks $C^h$.</p><h3>1.1. Properties of the influence matrices</h3><p>For every nonzero real vector $z$ indexed by $V_h$,<br>$$
+z^{\mathsf T}W_hz
+=
+\sum_a z_a^2+
+\sum_{\{a,b\}\subseteq V_h}v^h_{ab}(z_a-z_b)^2
+&gt;0.
+$$<br>Thus $W_h$ is positive definite and invertible. Its inverse has rational entries.</p><p>Moreover, $P_h$ is entrywise nonnegative. To prove this, take any $b\ge0$ and write $z=W_h^{-1}b$. If some coordinate of $z$ were negative, choose a coordinate $a$ attaining its minimum. Then<br>$$
+b_a=(W_hz)_a
+=
+z_a+\sum_{c\ne a}v^h_{ac}(z_a-z_c)
+\le z_a&lt;0,
+$$<br>contradicting $b\ge0$. Applying this argument to each coordinate vector $b$ proves $P_h\ge0$.</p><p>Since $W_h\mathbf1=\mathbf1$, we also have $P_h\mathbf1=\mathbf1$. Therefore<br>$$
+\sum_b C^h_{ab}
+=
+\sum_b(P_h)_{ab}^2
+\le
+\left(\sum_b(P_h)_{ab}\right)^2
+=1.
+$$</p><h3>1.2. Scaling and attainment</h3><p>Set $r_i=kx_i$. The normalized problem is<br>$$
+F^*=
+\min\left\{
+\sum_i\mu_i x_i:
+x_i\ge1,\quad C(1/x)\le\varepsilon\mathbf1
+\right\},
+\qquad
+S_\infty^*=kF^*,
+$$<br>where $1/x$ denotes coordinatewise reciprocation.</p><p>Let<br>$$
+R=\max\{1,1/\varepsilon\}.
+$$<br>The uniform allocation $x_i=R$ is feasible because every row sum of $C$ is at most $1$. Its objective is $R$, using $\sum_i\mu_i=1$.</p><p>Every allocation whose normalized objective is at most $R$ satisfies<br>$$
+1\le x_i\le R/\mu_i.
+$$<br>All masses are positive. Hence the feasible set intersected with this objective sublevel is nonempty, closed, and bounded. The objective is continuous, so its minimum is attained. In particular,<br>$$
+k\le S_\infty^*\le kR.
+$$</p><h3>1.3. Uniqueness</h3><p>Set $y_i=1/x_i$. The normalized problem becomes<br>$$
+\min_{y\in D} f(y),
+\qquad
+f(y)=\sum_i\frac{\mu_i}{y_i},
+\qquad
+D=\{y:0&lt;y_i\le1,\ Cy\le\varepsilon\mathbf1\}.
+$$<br>The domain $D$ is convex. On the positive orthant,<br>$$
+\nabla^2f(y)
+=
+\operatorname{diag}\left(\frac{2\mu_i}{y_i^3}\right)
+$$<br>is positive definite, because every $\mu_i&gt;0$. Thus $f$ is strictly convex.</p><p>If two distinct feasible points both minimized $f$, their midpoint would be feasible and would have strictly smaller objective. This is impossible. Therefore the minimizing $y$, and consequently the minimizing allocation $r_i=k/y_i$, are unique.</p><h3>2. Exact solution of every two-vertex template</h3><p>Consider a template with two vertices $a,b$ and influence weight $w\ge0$. Let its masses be $u,v&gt;0$. These are their actual society masses; they need not sum to $1$.</p><p>When $w=0$, both vertices are isolated. Their optimal normalized intensities are<br>$$
+x_a=x_b=\max\{1,1/\varepsilon\},
+$$<br>with contribution<br>$$
+(u+v)\max\{1,1/\varepsilon\}.
+$$</p><p>Assume henceforth $w&gt;0$. Direct inversion gives<br>$$
+P=
+\begin{pmatrix}
+p&amp;q\\
+q&amp;p
+\end{pmatrix},
+\qquad
+p=\frac{1+w}{1+2w},
+\qquad
+q=\frac{w}{1+2w}.
+$$<br>Thus $p&gt;q&gt;0$ and $p+q=1$. Define<br>$$
+A=p^2,\qquad D=q^2,\qquad \rho=A+D.
+$$<br>The normalized reciprocal constraints are<br>$$
+\frac{A}{x_a}+\frac{D}{x_b}\le\varepsilon,
+\qquad
+\frac{D}{x_a}+\frac{A}{x_b}\le\varepsilon.
+$$</p><p>If $\varepsilon\ge\rho$, the allocation $x_a=x_b=1$ is feasible and optimal, with contribution $u+v$.</p><p>For the remaining case, assume<br>$$
+0&lt;\varepsilon&lt;\rho.
+$$<br>Interchange the vertex labels if necessary so that $u\ge v$, and define<br>$$
+\gamma=A+pq\sqrt{v/u}.
+$$</p><p>The exact solution is as follows.</p><p>| Condition | Optimal $(x_a,x_b)$ | Optimal normalized contribution |<br>|---|---|---|<br>| $uD\le vA$ | $\left(\rho/\varepsilon,\rho/\varepsilon\right)$ | $(u+v)\rho/\varepsilon$ |<br>| $uD&gt;vA$ and $\varepsilon\le\gamma$ | $\left((A+pq\sqrt{v/u})/\varepsilon,(D+pq\sqrt{u/v})/\varepsilon\right)$ | $(Au+Dv+2pq\sqrt{uv})/\varepsilon$ |<br>| $uD&gt;vA$ and $\varepsilon&gt;\gamma$ | $\left(1,D/(\varepsilon-A)\right)$ | $u+vD/(\varepsilon-A)$ |</p><p>The original intensities are $r_a=kx_a$ and $r_b=kx_b$.</p><h3>2.1. Proof of the formulas</h3><p>Use reciprocal variables $y_a=1/x_a$ and $y_b=1/x_b$.</p><p>First, the optimizer satisfies $y_a\ge y_b$. When $u&gt;v$, if $y_a&lt;y_b$, swapping the coordinates preserves feasibility and decreases the objective, since<br>$$
+\left(\frac{u}{y_a}+\frac{v}{y_b}\right)
+-
+\left(\frac{u}{y_b}+\frac{v}{y_a}\right)
+=
+(u-v)\left(\frac1{y_a}-\frac1{y_b}\right)&gt;0.
+$$<br>When $u=v$, swapping preserves the objective, and uniqueness forces $y_a=y_b$.</p><p>For $y_a\ge y_b$, the first constraint is the stronger one, because<br>$$
+(Ay_a+Dy_b)-(Dy_a+Ay_b)
+=
+(A-D)(y_a-y_b)\ge0.
+$$</p><p>At the optimizer, this first constraint is tight. Indeed, suppose<br>$$
+Ay_a+Dy_b&lt;\varepsilon.
+$$<br>Move along the segment from $(y_a,y_b)$ toward $(1,1)$. This preserves the coordinate bounds and ordering. The first constraint increases continuously to $\rho&gt;\varepsilon$, so it becomes tight before reaching $(1,1)$. Both coordinates weakly increase, and at least one strictly increases. Consequently the objective strictly decreases, contradicting optimality.</p><p>Put $z=y_a$. Tightness gives<br>$$
+y_b=\frac{\varepsilon-Az}{D}.
+$$<br>The ordering and positivity conditions become<br>$$
+z\ge\frac{\varepsilon}{\rho},
+\qquad
+z\le1,
+\qquad
+z&lt;\frac{\varepsilon}{A}.
+$$<br>Conversely, these conditions ensure $0&lt;y_b\le z\le1$, and hence feasibility for both constraints.</p><p>We therefore minimize<br>$$
+\phi(z)=\frac{u}{z}+\frac{vD}{\varepsilon-Az}
+$$<br>on this interval. Its derivatives are<br>$$
+\phi&#x27;(z)
+=
+-\frac{u}{z^2}
++
+\frac{vDA}{(\varepsilon-Az)^2},
+$$<br>$$
+\phi&#x27;&#x27;(z)
+=
+\frac{2u}{z^3}
++
+\frac{2vDA^2}{(\varepsilon-Az)^3}
+&gt;0.
+$$<br>The unique unconstrained critical point is<br>$$
+z_0
+=
+\frac{\varepsilon}{A+\sqrt{AD}\sqrt{v/u}}
+=
+\frac{\varepsilon}{\gamma}.
+$$<br>It always satisfies $z_0&lt;\varepsilon/A$.</p><p>The position of $z_0$ relative to the remaining endpoints determines the optimizer:</p><ul><li>We have</li></ul><p>$$
+  z_0\le\frac{\varepsilon}{\rho}
+  \quad\Longleftrightarrow\quad
+  A+pq\sqrt{v/u}\ge A+D
+  \quad\Longleftrightarrow\quad
+  vA\ge uD.
+  $$<br>Strict convexity then makes the left endpoint optimal, giving the first row of the table.</p><ul><li>If $uD&gt;vA$, then $z_0&gt;\varepsilon/\rho$. When $\varepsilon\le\gamma$, we also have $z_0\le1$, so $z_0$ is feasible and optimal. Reciprocation gives the second row. Its cost is</li></ul><p>$$
+  u\frac{A+pq\sqrt{v/u}}{\varepsilon}
+  +
+  v\frac{D+pq\sqrt{u/v}}{\varepsilon}
+  =
+  \frac{Au+Dv+2pq\sqrt{uv}}{\varepsilon}.
+  $$</p><ul><li>If $uD&gt;vA$ and $\varepsilon&gt;\gamma$, then $z_0&gt;1$, so the right endpoint $z=1$ is optimal. Here $\varepsilon&gt;\gamma&gt;A$, making that endpoint feasible. The inequality $\varepsilon&lt;\rho=A+D$ also implies</li></ul><p>$$
+  0&lt;\frac{\varepsilon-A}{D}&lt;1.
+  $$<br>This gives the third row.</p><p>This proves every case, including the equality boundaries.</p><h3>2.2. Selecting the cases requires only rational comparisons</h3><p>All parameters except $\gamma$ are rational. Comparing $\varepsilon$ with $\gamma$ also reduces to rational arithmetic.</p><p>If $\varepsilon\le A$, then automatically $\varepsilon\le\gamma$. If $\varepsilon&gt;A$, both sides of<br>$$
+\varepsilon-A\le pq\sqrt{v/u}
+$$<br>are nonnegative, so squaring is reversible:<br>$$
+\varepsilon\le\gamma
+\quad\Longleftrightarrow\quad
+u(\varepsilon-A)^2\le ADv.
+$$</p><p>Thus the applicable formula can be selected in polynomial time using exact rational arithmetic, without approximate square-root comparisons.</p><h3>3. Equivalence with square-root-sum for $m\le2$</h3><p>Define the square-root-sum decision problem, abbreviated $\mathrm{SRS}$, as follows: given positive binary integers $d_1,\ldots,d_n$ and a nonnegative binary integer $K$, decide whether<br>$$
+\sum_{i=1}^n\sqrt{d_i}\le K.
+$$<br>The exact comparison issue is discussed in [Cheng et al., *On the Sum of Square Roots of Polynomials and Related Problems*](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Sum20of20Square20Roots20ToCT.pdf).</p><h3>3.1. Reduction from allocation decision to $\mathrm{SRS}$</h3><p>Different templates have disjoint variables and constraints. Every allocation costs at least the sum of the individual template minima, and combining their individual minimizers attains this sum. Therefore their optimal contributions add exactly.</p><p>For $m\le2$, the formulas in Section 2 express the normalized optimum as<br>$$
+F^*=R_0+\sum_{j=1}^J\sqrt{z_j},
+$$<br>where $R_0$ is rational, every $z_j$ is a positive rational, and $J\le\tau$.</p><p>Specifically, each interior two-vertex case contributes<br>$$
+\frac{Au+Dv}{\varepsilon}
++
+\sqrt{\left(\frac{2pq}{\varepsilon}\right)^2uv}.
+$$<br>All other cases contribute only rational terms. Singleton templates contribute<br>$$
+\mu_i\max\{1,1/\varepsilon\}.
+$$</p><p>The case selection and construction of $R_0,z_1,\ldots,z_J$ take<br>$$
+\operatorname{poly}(\tau,L,\log(k+1))
+$$<br>bit operations. Rational additions and products preserve polynomial encoding length: the bit length of a product is at most the sum of its factors’ bit lengths, and common denominators can be formed by products.</p><p>Set<br>$$
+t=B/k-R_0.
+$$<br>If $t&lt;0$, the answer is no. If $J=0$, rational comparison decides the answer. In these cases, output a fixed yes or no instance of $\mathrm{SRS}$, respectively $(d_1,K)=(1,1)$ or $(1,0)$.</p><p>Otherwise, write<br>$$
+z_j=a_j/b_j,
+\qquad
+t=c/e,
+$$<br>with positive integers $a_j,b_j,e$ and a nonnegative integer $c$. Define<br>$$
+Q=e\prod_{j=1}^J b_j,
+\qquad
+d_j=a_jb_j(Q/b_j)^2,
+\qquad
+K=Qt.
+$$<br>All $d_j$ are positive integers, and $K$ is a nonnegative integer. Moreover,<br>$$
+\sqrt{d_j}=Q\sqrt{z_j}.
+$$<br>Since $Q&gt;0$,<br>$$
+S_\infty^*\le B
+\quad\Longleftrightarrow\quad
+\sum_{j=1}^J\sqrt{d_j}\le K.
+$$</p><p>The binary length of $Q$ is the sum of polynomially bounded denominator lengths. The output therefore has polynomial length and is computable in polynomial time. This proves a polynomial-time many-one reduction to $\mathrm{SRS}$.</p><p>The same computation outputs the unique allocation as polynomial-length radical expressions. This symbolic output does not itself decide their sum’s comparison with a rational threshold.</p><h3>3.2. Reduction from $\mathrm{SRS}$ to allocation decision</h3><p>Here is a complete reduction in the other direction, including the construction from the notes.</p><p>Take an $\mathrm{SRS}$ instance $d_1,\ldots,d_n,K$, with $n\ge1$. Set<br>$$
+D_0=\sum_{i=1}^n d_i,
+\qquad
+N=9D_0+n,
+$$<br>and choose a power of two $T&gt;N$.</p><p>For each $i$, introduce a separately labelled two-vertex template with edge weight $1/2$, assigning masses<br>$$
+u_i=\frac{9d_i}{T},
+\qquad
+v_i=\frac1T.
+$$<br>Add a singleton template with mass<br>$$
+\frac{T-N}{T}.
+$$<br>Every mass is positive, and their sum is $1$. The template labels distinguish the roles even though the two-vertex structures are identical.</p><p>Set<br>$$
+k=1,
+\qquad
+\varepsilon=\frac14.
+$$<br>For every pair,<br>$$
+p=\frac34,\qquad q=\frac14,
+\qquad A=\frac9{16},\qquad D=\frac1{16},
+\qquad \rho=\frac58.
+$$</p><p>If $d_i=1$, then $u_iD=v_iA$, so the first case of Section 2 applies. If $d_i&gt;1$, then $u_iD&gt;v_iA$, and $\varepsilon&lt;A&lt;\gamma$, so the interior case applies. In both cases the pair’s exact contribution is<br>$$
+\frac{81d_i+1+18\sqrt{d_i}}{4T}.
+$$<br>For $d_i=1$, this expression equals $25/T$, matching the uniform-case contribution.</p><p>The corresponding normalized intensities, valid for every $d_i\ge1$, are<br>$$
+x_{i,a}=\frac94+\frac1{4\sqrt{d_i}},
+\qquad
+x_{i,b}=\frac{9\sqrt{d_i}+1}{4}.
+$$<br>Their feasibility and optimality follow from the proved cases in Section 2.</p><p>The singleton’s optimal intensity is $4$. Adding contributions gives<br>$$
+S_\infty^*
+=
+\frac{
+16(T-N)+81D_0+n+18\sum_{i=1}^n\sqrt{d_i}
+}{4T}.
+$$<br>Choose<br>$$
+B=
+\frac{16(T-N)+81D_0+n+18K}{4T}.
+$$<br>Then<br>$$
+S_\infty^*\le B
+\quad\Longleftrightarrow\quad
+\sum_{i=1}^n\sqrt{d_i}\le K.
+$$</p><p>All masses and the threshold are dyadic, so the reduction remains valid if “binary-rational” is restricted to finite binary expansions. It has<br>$$
+m=2,\qquad \tau=2n+1.
+$$<br>If the source input length is $\ell$, the quantities $D_0,N,T$ have $O(\ell)$ bits, and the constructed input has $O(\ell^2)$ length. The reduction is therefore polynomial-time.</p><p><b>Proved conclusion:</b> exact allocation decision restricted to $m\le2$ is polynomial-time many-one equivalent to $\mathrm{SRS}$. Neither direction establishes $\mathrm{NP}$-hardness.</p><h3>4. General existential-real formulations</h3><h3>4.1. Polynomial-size rational preprocessing</h3><p>For a template of size $n_h$, clear the denominators of its influence weights. A common denominator obtained by multiplying their denominators has polynomial binary length. The resulting integer matrix representing $W_h$ has entries of polynomial binary length.</p><p>The determinant expansion bounds determinant and cofactor lengths by a polynomial in $n_h,L$: a determinant has at most $n_h!$ terms, each a product of $n_h$ entries. The adjugate formula therefore bounds the rational entry lengths of $W_h^{-1}$ by a polynomial in $m,L$.</p><p>The inverses can be computed using exact elimination in<br>$$
+O\left(\sum_h n_h^3\right)
+\le O(\tau m^2)
+$$<br>rational arithmetic operations. Fraction-free elimination gives polynomial bit complexity. Squaring inverse entries to obtain $C$, and clearing positive denominators in the formulas below, preserves polynomial encoding length.</p><h3>4.2. A formula for the threshold condition</h3><p>The condition $S_\infty^*\le B$ is equivalent to the existence of real vectors $x,t$ satisfying<br>$$
+x_i\ge1,\qquad t_i\ge0,\qquad x_it_i\ge1,
+$$<br>$$
+Ct\le\varepsilon\mathbf1,
+\qquad
+k\sum_i\mu_i x_i\le B.
+$$</p><p>Indeed, an original feasible allocation meeting the threshold gives such a point by taking $x_i=r_i/k$ and $t_i=1/x_i$.</p><p>Conversely, these inequalities imply $t_i\ge1/x_i$. Since $C\ge0$,<br>$$
+C(1/x)\le Ct\le\varepsilon\mathbf1.
+$$<br>Thus $r_i=kx_i$ is feasible and meets the threshold. Attainment from Section 1 ensures equivalence with the optimum comparison, including equality.</p><p>After denominator clearing, this formula has $2\tau$ variables, $4\tau+1$ inequalities, degree at most two, and polynomially bounded integer coefficient lengths. Hence the decision problem belongs to $\exists\mathbb R$.</p><h3>4.3. Polynomial optimality conditions</h3><p>There is also a polynomial-size existential formula certifying the opposite answer.</p><p>Consider again<br>$$
+f(y)=\sum_i\frac{\mu_i}{y_i},
+\qquad
+0&lt;y_i\le1,
+\qquad
+Cy\le\varepsilon\mathbf1.
+$$<br>This is a differentiable convex program on the open positive orthant. It attains its minimum.</p><p>It has a strictly feasible point. Set<br>$$
+\delta=\frac12\min\{1,\varepsilon\},
+\qquad
+y=\delta\mathbf1.
+$$<br>Then $0&lt;\delta&lt;1$ and, using the row-sum bound,<br>$$
+Cy\le\delta\mathbf1&lt;\varepsilon\mathbf1.
+$$</p><p>The convex KKT theorem states that, for such a differentiable convex program with an attained minimum and a strictly feasible point, nonnegative multipliers satisfying stationarity and complementary slackness exist at every minimizer. Its hypotheses have just been checked. See [Boyd and Vandenberghe, *Convex Optimization*, Section 5.5.3](https://www.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).</p><p>Thus a feasible $y$ is optimal precisely when there exist $\lambda_a,\nu_i\ge0$ satisfying<br>$$
+\mu_i
+=
+y_i^2\left(\sum_a C_{ai}\lambda_a+\nu_i\right),
+$$<br>$$
+\lambda_a\bigl((Cy)_a-\varepsilon\bigr)=0,
+\qquad
+\nu_i(y_i-1)=0.
+$$<br>Here $\lambda_a$ corresponds to a row constraint, and $\nu_i$ to $y_i\le1$.</p><p>For completeness, sufficiency follows directly. Stationarity says<br>$$
+\nabla f(y)=-C^{\mathsf T}\lambda-\nu.
+$$<br>For any feasible $z$, convexity gives<br>$$
+f(z)\ge f(y)+\nabla f(y)^{\mathsf T}(z-y).
+$$<br>Complementary slackness and feasibility imply<br>$$
+-\lambda^{\mathsf T}C(z-y)\ge0,
+\qquad
+-\nu^{\mathsf T}(z-y)\ge0.
+$$<br>For example, whenever $\lambda_a&gt;0$, complementary slackness gives $(Cy)_a=\varepsilon$, while $(Cz)_a\le\varepsilon$. The coordinate inequality is justified identically. Hence $f(z)\ge f(y)$.</p><p>Introduce $x_i$ with $x_iy_i=1$. Let $\mathcal M(x,y,\lambda,\nu)$ denote the following system:<br>$$
+0&lt;y_i\le1,\qquad x_iy_i=1,
+\qquad Cy\le\varepsilon\mathbf1,
+$$<br>$$
+\lambda_a\ge0,\qquad \nu_i\ge0,
+$$<br>$$
+\mu_i=y_i^2\left(\sum_a C_{ai}\lambda_a+\nu_i\right),
+$$<br>$$
+\lambda_a\bigl((Cy)_a-\varepsilon\bigr)=0,
+\qquad
+\nu_i(y_i-1)=0.
+$$<br>Its solutions have exactly the optimal $x,y$, though the multipliers need not be unique.</p><p>Consequently,<br>$$
+S_\infty^*&gt;B
+$$<br>is equivalent to<br>$$
+\exists x,y,\lambda,\nu:
+\quad
+\mathcal M(x,y,\lambda,\nu)
+\quad\text{and}\quad
+k\sum_i\mu_i x_i&gt;B.
+$$<br>This formula has $4\tau$ variables, $O(\tau)$ polynomial conditions, degree at most three, and polynomial coefficient lengths.</p><p>Therefore both the decision problem and its complement reduce to existential real feasibility:<br>$$
+\boxed{\text{Exact threshold decision belongs to }
+\exists\mathbb R\cap\mathrm{co}\text{-}\exists\mathbb R.}
+$$<br>This does not assert membership in $\mathrm{NP}$: the existential witnesses are real numbers, without a proved polynomial-size discrete certificate.</p><h3>5. Exact algorithms and output representations</h3><h3>5.1. Decision complexity</h3><p>Existential real formulas with integer polynomial coefficients are decidable in polynomial space. This yields membership in $\mathrm{PSPACE}$; see [Canny, *Some Algebraic and Geometric Computations in PSPACE*](https://www2.eecs.berkeley.edu/Pubs/TechRpts/1988/6041.html).</p><p>The one-block real quantifier-elimination bounds give decision time<br>$$
+(sd)^{O(q)}\operatorname{poly}(H)
+$$<br>for $q$ quantified variables, $s$ polynomial conditions, degree bound $d$, and integer coefficient bit bound $H$. Applying these bounds to Section 4.2, with<br>$$
+q=2\tau,\qquad s=4\tau+1,\qquad d=2,
+$$<br>gives<br>$$
+(\tau+1)^{O(\tau)}
+\operatorname{poly}(m,L,\log(k+1)).
+$$<br>The relevant quantifier-elimination and intermediate coefficient bounds are stated in [Basu, *Algorithms in Real Algebraic Geometry: A Survey*, Theorem 2.27](https://arxiv.org/html/1409.1534#S2.SS5.SSS2).</p><h3>5.2. Computing the exact optimum and allocation</h3><p>An exact output representation is necessary because optimal coordinates need not be rational. Use the following representation for each output number:</p><ul><li>an integer univariate polynomial;</li><li>a rational interval containing exactly one distinct real root of that polynomial.</li></ul><p>The represented number is that root. The polynomial need not be minimal.</p><p>For an allocation coordinate, keep $x_i$ free in $\mathcal M$ and existentially quantify all other variables. By existence and uniqueness, the resulting formula defines exactly the singleton<br>$$
+\{x_i^*\}.
+$$<br>For the optimum value, introduce a free variable $s$, impose<br>$$
+s=k\sum_i\mu_i x_i,
+$$<br>and quantify all variables of $\mathcal M$. This defines exactly<br>$$
+\{S_\infty^*\}.
+$$</p><p>Each formula has one free variable, $O(\tau)$ quantified variables and conditions, degree at most three, and polynomial coefficient lengths. One-block quantifier elimination therefore computes an equivalent univariate formula within<br>$$
+(\tau+1)^{O(\tau)}
+\operatorname{poly}(m,L,\log(k+1))
+$$<br>time, with output degree and coefficient lengths bounded within the same asymptotic bound.</p><p>To see why this yields algebraic numbers, consider any such singleton formula after quantifier elimination. Some nonzero polynomial in the formula must vanish at the singleton point. Otherwise every polynomial sign would be constant on a sufficiently small neighborhood of that point, making the Boolean formula true on an interval. That would contradict its defining a singleton.</p><p>Univariate real-root isolation and sign evaluation select the unique root satisfying the formula. These operations take polynomial time in the univariate formula’s total length, degrees, and coefficient lengths. Performing this for all coordinates and for the value preserves the displayed singly exponential bound. Multiplication by $k$ produces the original intensities $r_i^*=kx_i^*$.</p><p>Thus the general optimization problem is exactly computable, with the stated representation and running time. In particular, both exact decision and exact optimization are polynomial-time solvable for fixed $\tau$.</p><h3>6. Polynomial special cases and the SOCP distinction</h3><p>For edgeless templates, $W_h=P_h=I$, so every role independently requires<br>$$
+r_i\ge k,
+\qquad
+r_i\ge k/\varepsilon.
+$$<br>Because every mass is positive, its smallest feasible intensity is optimal:<br>$$
+r_i^*=k\max\{1,1/\varepsilon\},
+\qquad
+S_\infty^*=k\max\{1,1/\varepsilon\}.
+$$<br>The allocation and rational threshold comparison take<br>$$
+\operatorname{poly}(\tau,L,\log(k+1))
+$$<br>time. This includes $m=1$.</p><p>The general rational SOCP formulation is also valid. Under $x_i\ge1$ and $t_i\ge0$,<br>$$
+x_it_i\ge1
+\quad\Longleftrightarrow\quad
+\left\|(2,x_i-t_i)\right\|_2\le x_i+t_i.
+$$<br>Indeed, the right-hand side is positive, and squaring gives exactly<br>$$
+4+(x_i-t_i)^2\le(x_i+t_i)^2
+\quad\Longleftrightarrow\quad
+x_it_i\ge1.
+$$<br>This matches the reciprocal-variable formulation in [Liu et al., Lemma 20](https://arxiv.org/html/2311.02349v3#Sx2.SS2).</p><p>It does not prove a polynomial-time exact threshold algorithm. Such an algorithm would, by Section 3.2, decide square-root-sum comparison in polynomial time.</p><h3>7. What remains unresolved</h3><p>The strengthened partial result identifies the exact comparison problem for all two-vertex templates: it is polynomial-time equivalent to square-root-sum comparison, and its optimum and allocation have explicit radical formulas.</p><p>For larger templates, both threshold answers have polynomial-size existential-real formulations, and exact algebraic output is available in singly exponential time.</p><p>None of these arguments supplies a polynomial-time exact algorithm for unrestricted $\tau$, or a reduction establishing $\mathrm{NP}$-hardness. The requested general classification therefore remains unresolved here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 7 and the overall response to USER_TASK: The requested general exact-threshold classification is not established: neither membership in $\mathrm{P}$ nor $\mathrm{NP}$-hardness is proved. The prover acknowledges this incompleteness. Completing the assignment requires a further complexity result, not merely clarification of the existing arguments.</li></ul>
+<div class="pre"><p><b>Assessment: partial, mathematically sound progress.</b> The subsidiary results check out. The output does not resolve the requested general classification: it proves neither membership in $\mathrm{P}$ nor $\mathrm{NP}$-hardness. It explicitly acknowledges this limitation, so there is no false claim of a complete solution.</p><p>I found no false central step or substantive gap in the partial results.</p><h3>1. Normalization, attainment, and uniqueness</h3><p><b>Verified.</b></p><ul><li>The identity $\sum_h|V_h|=\tau$ follows from the task’s requirement that every listed vertex has a supported role. Consequently, every optimization variable has a positive objective coefficient.</li><li>The quadratic-form expansion for $W_h$ is correct. Nonnegative weights imply $W_h$ is positive definite, including for disconnected and edgeless templates.</li><li>The minimum-coordinate argument correctly establishes entrywise nonnegativity of $P_h=W_h^{-1}$. It does not require connectivity.</li><li>From $W_h\mathbf1=\mathbf1$, the conclusion $P_h\mathbf1=\mathbf1$ follows. Entrywise nonnegativity then justifies the row-sum bound for the entrywise square matrix:</li></ul><p>$$
+  \sum_b C^h_{ab}\le1.
+  $$</p><ul><li>Substitution $r_i=kx_i$ correctly cancels $k$ from every reciprocal constraint and yields $S_\infty^*=kF^*$.</li><li>The uniform allocation $x_i=R$, where $R=\max\{1,1/\varepsilon\}$, is feasible. Positivity of the masses gives the stated coordinate bounds on its objective sublevel. This establishes a nonempty compact sublevel containing a global minimizer.</li><li>The reciprocal transformation is bijective between the stated feasible domains. The positive definite Hessian establishes strict convexity, and hence uniqueness of the attained allocation.</li></ul><p>No missing boundary case affects these arguments. A valid society necessarily has $\tau\ge1$, since its positive masses sum to $1$.</p><h3>2. Two-vertex formulas</h3><p><b>Verified, including all equality boundaries.</b></p><p>The inverse matrix, the definitions $A=p^2$, $D=q^2$, and $\rho=A+D$ are correct. The cases $w=0$ and $\varepsilon\ge\rho$ are handled correctly.</p><p>For $w&gt;0$ and $0&lt;\varepsilon&lt;\rho$:</p><ul><li>The swapping argument correctly establishes $y_a\ge y_b$ after ordering the masses as $u\ge v$. For equal masses, uniqueness supplies the required equality.</li><li>Under that ordering, the first reciprocal constraint is indeed the stronger constraint.</li><li>The segment argument correctly proves its tightness. Along the segment, both coordinates weakly increase, at least one strictly increases, and the stronger constraint reaches equality before $(1,1)$.</li><li>The resulting interval conditions correctly incorporate positivity, ordering, and both coordinate upper bounds.</li><li>Both displayed derivatives of $\phi$ are correct. The critical point</li></ul><p>$$
+   z_0=\frac{\varepsilon}{A+pq\sqrt{v/u}}
+   $$<br>is correct and lies below the excluded positivity endpoint.</p><ul><li>The comparison determining the left endpoint is correct:</li></ul><p>$$
+   z_0\le\frac{\varepsilon}{\rho}
+   \quad\Longleftrightarrow\quad
+   vA\ge uD.
+   $$</p><ul><li>The interior and upper-bound cases yield the displayed allocations and costs.</li></ul><p>At $uD=vA$, the critical point coincides with the left endpoint. At $\varepsilon=\gamma$, it coincides with the endpoint $z=1$. Thus the table’s treatment of equality is consistent.</p><p>The rational case-selection test also checks out. Squaring is used only after establishing that both compared quantities are nonnegative.</p><h3>3. Equivalence with square-root-sum comparison</h3><p><b>Both polynomial-time many-one reductions are valid.</b></p><p><b>Allocation decision to square-root-sum.</b> Independent template minima add because their variables and constraints are disjoint and their minima are attained. Every radical contribution has a positive rational radicand, and all remaining contributions are rational.</p><p>The denominator-clearing construction satisfies<br>$$
+\sqrt{a_jb_j(Q/b_j)^2}=Q\sqrt{a_j/b_j}.
+$$<br>The constructed threshold $K=Qt$ is an integer because $Q$ contains the denominator of $t$. The product of denominators has polynomial binary length; its magnitude need not be polynomial. The separately handled negative-threshold and radical-free cases are correct.</p><p><b>Square-root-sum to allocation decision.</b> The construction satisfies all task restrictions:</p><ul><li>Every mass is positive because $T&gt;N$.</li><li>The masses sum to $1$.</li><li>Every listed vertex is supported.</li><li>Separately labelled templates give distinct roles.</li><li>The weights, masses, $\varepsilon$, and threshold are admissible dyadic rationals.</li><li>The constructed threshold is nonnegative.</li></ul><p>The constants and pair contributions check out:<br>$$
+\frac{81d_i+1+18\sqrt{d_i}}{4T}.
+$$<br>For $d_i=1$, this equals $25/T$, as required by the uniform case. The displayed intensities agree with the applicable two-vertex formulas.</p><p>The singleton contribution and final threshold therefore give exactly the asserted comparison equivalence. The stated output-length bound is valid.</p><p>This establishes square-root-sum equivalence for $m\le2$. It supplies no reduction from a problem established here to be $\mathrm{NP}$-hard.</p><h3>4. Rational preprocessing and existential-real membership</h3><p><b>Verified.</b></p><p>The denominator, determinant, and cofactor bounds establish polynomial encoding lengths for $W_h^{-1}$ and $C$. Exact matrix inversion has the stated polynomial arithmetic-operation bound, and fraction-free elimination supports polynomial bit complexity.</p><p>The threshold formula is equivalent to the original problem in both directions. In particular, $x_i\ge1$ and $x_it_i\ge1$ imply $t_i\ge1/x_i$, and nonnegativity of $C$ makes the replacement sound. The count of $2\tau$ variables and $4\tau+1$ inequalities is correct.</p><p>Thus membership in $\exists\mathbb R$ is established.</p><h3>5. KKT certificate for the complementary answer</h3><p><b>Verified; the cited theorem’s hypotheses are satisfied.</b></p><p>The program has a differentiable convex objective on the open positive orthant and affine inequality constraints. Attainment was already proved. The proposed point $\delta\mathbf1$ lies in the objective’s domain and satisfies every inequality strictly.</p><p>The necessary-and-sufficient KKT theorem under Slater’s condition applies as stated. [Boyd and Vandenberghe, Section 5.5.3](https://www.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)</p><p>The stationarity equation has the correct sign:<br>$$
+\frac{\mu_i}{y_i^2}
+=
+\sum_a C_{ai}\lambda_a+\nu_i.
+$$<br>Multiplication by $y_i^2$ is reversible because $y_i&gt;0$. The complementary-slackness equations and the direct sufficiency argument are also correct.</p><p>Adding $x_iy_i=1$ and the strict objective comparison consequently characterizes $S_\infty^*&gt;B$. The claimed variable count, cubic degree bound, and polynomial coefficient lengths are valid.</p><p>Hence membership in $\exists\mathbb R\cap\mathrm{co}\text{-}\exists\mathbb R$ follows. The output correctly distinguishes real witnesses from polynomial-size discrete certificates.</p><h3>6. Exact algorithms and output representations</h3><p><b>Verified.</b></p><p>The stated $\mathrm{PSPACE}$ upper bound follows from the existential-real formulation and the cited existential-theory decision theorem. [Canny](https://www2.eecs.berkeley.edu/Pubs/TechRpts/1988/6041.html)</p><p>The cited quantifier-elimination theorem provides arithmetic complexity and intermediate coefficient-size bounds. With one quantified block and either zero or one free variable, its specialization supports<br>$$
+(\tau+1)^{O(\tau)}
+\operatorname{poly}(m,L,\log(k+1)).
+$$<br>The polynomial conditions here have constant degree and polynomial encoding length. Unbounded multiplier sets do not violate the theorem’s hypotheses. [Basu, Theorem 2.27](https://arxiv.org/html/1409.1534#S2.SS5.SSS2)</p><p>Existence and uniqueness make the projected coordinate and value sets singletons. The argument that a nonzero output polynomial must vanish at each singleton is valid. Standard univariate root isolation and sign determination then provide the specified algebraic representations within the claimed bound.</p><p>The distinction between polynomial-length radical expressions for individual two-vertex allocations and exact comparison of their summed objective is maintained correctly.</p><h3>7. Edgeless templates and the SOCP distinction</h3><p><b>Verified.</b></p><p>For edgeless templates, each reciprocal constraint independently gives $r_i\ge k/\varepsilon$. Combining this with $r_i\ge k$ yields the displayed optimal allocation and value. The rational computations have polynomial bit complexity.</p><p>The displayed second-order-cone identity is correct under the stated sign restrictions. Its algebraic equivalence can be checked directly, so this step does not depend on an unstated theorem from Liu et al.</p><p>The output correctly refrains from inferring polynomial-time exact rational-threshold decision from the SOCP formulation.</p><h3>8. Issue and minimum repair needed</h3><p><b>Major issue — incomplete resolution of the assigned target.</b> Sections 3–7 establish useful special-case equivalence, upper bounds, and exact algorithms, but no general $\mathrm{P}$ algorithm or $\mathrm{NP}$-hardness result.</p><p>This is an acknowledged limitation, not an erroneous inference. No clarification or expositional repair can complete the requested classification. A further mathematical or complexity result establishing one of the requested alternatives is needed. The existing partial results require no substantive repair.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

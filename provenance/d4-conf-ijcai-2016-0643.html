@@ -1,0 +1,319 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Committee Scoring Rules: Axiomatic Classification and Hierarchy — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Committee Scoring Rules: Axiomatic Classification and Hierarchy <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2016-0643)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 15 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Let Rf be a decomposable committee scor- ing rule deﬁned through a family of scoring functions fm,k(i1, . . . , ik) = γ(1) m,k(i1) + γ(2) m,k(i2) + · · · + γ(k) m,k(ik), where γ = (γ(t) m,k)tkm is a family of polynomial-time com- putable single-winner scoring functions. If for each m, each k 2 [m], each i 2 [k −1] and each p 2 [m], it holds that γi−1(p) ≥γi(p), then there is a polynomial-time al- gorithm that, given an election E = (C, V ) and a commit- tee size k, outputs a committee W such that scoreE(W) ≥ (1 −1 e) maxS✓C,|W |=k scoreE(S).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\) candidates, committee size \(k\), a finite set \(T\) of complete ranking types, rational masses \(\mu\in\Delta^{|T|}\), and decomposable scores \(f_{m,k}(i_1,\ldots,i_k)=\sum_{j=1}^{k}\gamma^{(j)}_{m,k}(i_j)\) satisfying the paper&#x27;s adjacent-layer condition, compute a committee \(S\subseteq C\) with \(|S|=k\) such that \(F_\mu(S)\ge (1-1/e)\max_{|S&#x27;|=k}F_\mu(S&#x27;)\), where \(F_\mu(S)=\sum_{r\in T}\mu_r f_{m,k}(\operatorname{pos}_r(S))\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given a candidate set \(C\) with \(|C|=m\geq1\) and an integer \(1\leq k\leq m\), a society is given by its support: a list \(T\) of \(\tau\) distinct strict complete ranking types, each with positive binary-rational mass \(\mu_r\), where \(\sum_{r\in T}\mu_r=1\). Here \(\tau=|T|\) is the support size, not the number of possible rankings.<br>The input also contains binary-encoded nonnegative integer scoring tables \(\gamma^{(j)}_{m,k}:\{1,\ldots,m\}\to\mathbb Z_{\geq0}\), nonincreasing in position, satisfying \(\gamma^{(j)}_{m,k}(p)\geq\gamma^{(j+1)}_{m,k}(p)\) for every \(1\leq j&lt;k\) and \(1\leq p\leq m\). Let \(L\) denote the total input bit length.<br>For a committee \(S\subseteq C\) of size \(k\), let \(\operatorname{pos}_r(S)=(i_1,\ldots,i_k)\) list its members&#x27; positions in ranking \(r\) in increasing order, with position \(1\) best. Define \(f_{m,k}(i_1,\ldots,i_k)=\sum_{j=1}^k\gamma^{(j)}_{m,k}(i_j)\) and \(F_\mu(S)=\sum_{r\in T}\mu_r f_{m,k}(\operatorname{pos}_r(S))\). Any qualifying committee may be returned; ties impose no additional requirement.</p><p>Is there an algorithm, polynomial in \(m,\tau,k,L\), that always returns a committee \(S\) with \(|S|=k\) and \(F_\mu(S)\geq(1-1/e)\max_{S&#x27;\subseteq C,\,|S&#x27;|=k}F_\mu(S&#x27;)\), or is achieving this approximation guarantee NP-hard?</p><p>For explicitly listed, equally weighted voters, a polynomial-time \((1-1/e)\)-approximation is asserted for decomposable scoring rules with polynomial-time computable scores under the intended consecutive-layer condition. [Discrete approximation result](https://www.ijcai.org/Proceedings/16/Papers/043.pdf)<br>No result explicitly treating this same approximation problem with binary-rational support masses was identified in the search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Resolved the undefined adjacent-layer condition as pointwise dominance of layer j over layer j+1 for every 1≤j&lt;k; the printed condition refers to an undefined layer zero.</li><li>Made score representation explicit using input tables of binary-encoded nonnegative integers, preserving the discrete definition&#x27;s score domain and positional monotonicity.</li><li>Specified strict complete rankings, positions starting at one, and the discrete domain 1≤k≤m.</li><li>Removed zero-mass types from the supplied type set so that it is exactly the positive support; retained total mass one.</li><li>Defined L as total input bit length and allowed any committee meeting the guarantee, consistent with the nonunique-winner convention.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial progress: mass compression and an exact submodularity test</h3><p>The full approximation-versus-hardness question remains unresolved. I establish two new results:</p><ul><li>A polynomial-size rounding of the electorate that preserves every committee score up to an error small relative to the optimum. Consequently, a <b>uniform</b> approximation algorithm for explicitly listed voters transfers to binary-rational masses with an arbitrarily small loss. An inverse-polynomial improvement over $1-1/e$ in the discrete guarantee would remove that loss entirely.</li><li>A necessary and sufficient condition, testable in polynomial time, for the natural score extension to be submodular. This gives the requested guarantee on a subclass strictly larger than the subclass identified by the position-drop condition in <code>NOTES</code>.</li></ul><p>All unconditional claims below are proved independently. The transfer statements explicitly identify the discrete algorithm they assume.</p><h3>1. Definitions and elementary cases</h3><p>Write $\gamma_j$ for $\gamma^{(j)}_{m,k}$, and let</p><p>$$
+\operatorname{OPT}
+=
+\max_{\substack{S\subseteq C\\ |S|=k}}F_\mu(S).
+$$</p><p>For any $S\subseteq C$, let $i_1&lt;\cdots&lt;i_{|S|}$ be its selected positions in ranking $r$. Define</p><p>$$
+G_r(S)
+=
+\sum_{j=1}^{\min(k,|S|)}\gamma_j(i_j),
+\qquad
+G(S)
+=
+\sum_{r\in T}\mu_rG_r(S).
+$$</p><p>Thus $G(S)=F_\mu(S)$ when $|S|=k$, and $G(\varnothing)=0$.</p><p>Each $G_r$ is monotone. When a candidate is added, every retained order statistic weakly decreases in position, so its contribution weakly increases. If the number of retained order statistics increases, the new contribution is nonnegative. Positive weighted sums preserve monotonicity, so $G$ is monotone.</p><p>The cases $k=1$ and $k=m$ are exactly solvable: evaluate every singleton in the first case, and return $C$ in the second. The arguments below address the general input class.</p><h3>2. An unconditional bound relating individual scores to the optimum</h3><p>Put</p><p>$$
+A=\gamma_1(1).
+$$</p><p>Layer dominance and position monotonicity imply</p><p>$$
+0\leq\gamma_j(p)\leq A
+$$</p><p>for every $j$ and $p$. If $A=0$, every score is zero and any size-$k$ committee qualifies. Hence assume $A&gt;0$.</p><p>For each candidate $c$, define its first-place mass by</p><p>$$
+q_c
+=
+\sum_{\substack{r\in T\\ \operatorname{pos}_r(c)=1}}\mu_r.
+$$</p><p>Every ranking has exactly one first-place candidate, so</p><p>$$
+\sum_{c\in C}q_c=1.
+$$</p><p>Let $S_0$ contain the $k$ candidates with largest $q_c$. Their total first-place mass is at least $k/m$. Indeed, the average of the $k$ largest numbers in a list is at least the average of the entire list.</p><p>Whenever a ranking&#x27;s first-place candidate belongs to $S_0$, its committee score is at least $A$. All other contributions are nonnegative. Consequently,</p><p>$$
+\operatorname{OPT}
+\geq F_\mu(S_0)
+\geq \frac{k}{m}A.
+$$</p><p>On the other hand, every size-$k$ committee has individual ranking score at most $kA$. Thus, for every ranking $r$ and every size-$k$ committee $S$,</p><p>$$
+0
+\leq
+f_{m,k}(\operatorname{pos}_r(S))
+\leq kA
+\leq m\operatorname{OPT}.
+$$</p><p>This bound is independent of the smallest mass and of the numerical magnitude of the scoring entries.</p><h3>3. Polynomial-size mass compression</h3><h3>Lemma</h3><p>Let $N&gt;\tau$ be an integer. Define</p><p>$$
+n_r=\lfloor N\mu_r\rfloor,
+\qquad
+N&#x27;=\sum_{r\in T}n_r,
+$$</p><p>and define the unnormalized rounded objective</p><p>$$
+\widetilde F(S)
+=
+\frac1N
+\sum_{r\in T}n_r
+f_{m,k}(\operatorname{pos}_r(S)).
+$$</p><p>Then $N&#x27;&gt;0$, $N&#x27;\leq N$, and every size-$k$ committee satisfies</p><p>$$
+0
+\leq
+F_\mu(S)-\widetilde F(S)
+\leq
+\frac{m\tau}{N}\operatorname{OPT}.
+$$</p><p>In particular,</p><p>$$
+\max_{|S|=k}\widetilde F(S)
+\geq
+\left(1-\frac{m\tau}{N}\right)\operatorname{OPT}.
+$$</p><h3>Proof</h3><p>Because $\sum_rN\mu_r=N$ and $\lfloor x\rfloor&gt;x-1$,</p><p>$$
+N&#x27;
+&gt;
+N-\tau
+&gt;
+0.
+$$</p><p>Also, $N&#x27;\leq N$.</p><p>For every ranking,</p><p>$$
+0\leq \mu_r-\frac{n_r}{N}&lt;\frac1N.
+$$</p><p>The scoring entries are nonnegative, so</p><p>$$
+0
+\leq
+F_\mu(S)-\widetilde F(S)
+=
+\sum_{r\in T}
+\left(\mu_r-\frac{n_r}{N}\right)
+f_{m,k}(\operatorname{pos}_r(S)).
+$$</p><p>Applying the bound from Section 2 gives</p><p>$$
+F_\mu(S)-\widetilde F(S)
+\leq
+\frac{\tau}{N}m\operatorname{OPT}.
+$$</p><p>Apply this inequality to an optimal committee to obtain the final assertion. $\square$</p><p>The rounded electorate consists of $n_r$ explicitly listed copies of ranking $r$, omitting types with $n_r=0$. Its ordinary total-score objective is $N\widetilde F$, so multiplying by $N$ does not change approximation ratios.</p><p>For rational $\varepsilon\in(0,1)$, choose</p><p>$$
+N=\left\lceil\frac{m\tau}{\varepsilon}\right\rceil.
+$$</p><p>The rounded electorate then has at most $N$ voters, and the error is at most $\varepsilon\operatorname{OPT}$ for every committee.</p><p>Each $n_r$ can be computed exactly from the binary-rational input. Explicitly writing the rounded electorate takes time polynomial in $m,\tau,L,$ and $1/\varepsilon$. The scoring tables are unchanged.</p><h3>4. What transfers from a discrete approximation algorithm</h3><h3>The precise algorithmic premise</h3><p>Assume an algorithm $\mathcal A$ has the following properties:</p><ul><li>Its input contains explicitly listed voters, the scoring tables, and $k$.</li><li>It runs in time polynomial in that input&#x27;s bit length.</li><li>It always returns a size-$k$ committee whose score is at least $\rho$ times the optimum, where $0&lt;\rho\leq1$.</li></ul><p>This is a <b>uniform</b> premise concerning algorithms with scoring tables supplied as input. A theorem stated separately for each fixed rule family does not automatically establish this uniform premise.</p><p>The cited [IJCAI paper, Theorem 15](https://www.ijcai.org/Proceedings/16/Papers/043.pdf) asserts the discrete $1-1/e$ guarantee but does not supply its algorithm or proof. The following statements are implications from the precise premise above.</p><h3>Transfer with an arbitrarily small loss</h3><p>Run $\mathcal A$ on the rounded electorate from Section 3, and let $S$ be its output. Since its total-score objective is $N\widetilde F$,</p><p>$$
+\widetilde F(S)
+\geq
+\rho\max_{|W|=k}\widetilde F(W).
+$$</p><p>Rounding only decreases scores. Therefore,</p><p>$$
+F_\mu(S)
+\geq
+\widetilde F(S)
+\geq
+\rho\left(1-\frac{m\tau}{N}\right)\operatorname{OPT}.
+$$</p><p>With $N=\lceil m\tau/\varepsilon\rceil$, this implies</p><p>$$
+F_\mu(S)
+\geq
+\rho(1-\varepsilon)\operatorname{OPT}
+\geq
+(\rho-\varepsilon)\operatorname{OPT}.
+$$</p><p>Consequently, <b>if the supplied discrete assertion admits the uniform formulation above</b>, then for every rational $\varepsilon\in(0,1)$ there is an algorithm, polynomial in $m,\tau,k,L,$ and $1/\varepsilon$, returning a committee satisfying</p><p>$$
+F_\mu(S)
+\geq
+\left(1-\frac1e-\varepsilon\right)\operatorname{OPT}.
+$$</p><p>This does not establish the exact requested factor.</p><h3>An inverse-polynomial excess would give the exact factor</h3><p>Put</p><p>$$
+\alpha=1-\frac1e.
+$$</p><p>Suppose the discrete algorithm instead guarantees</p><p>$$
+\rho\geq\alpha+\eta,
+$$</p><p>where $\eta&gt;0$ is an explicitly available rational number and $1/\eta$ is polynomially bounded in the input parameters. Choose</p><p>$$
+N=\left\lceil\frac{2m\tau}{\eta}\right\rceil.
+$$</p><p>Then</p><p>$$
+F_\mu(S)
+\geq
+\rho\left(1-\frac{\eta}{2}\right)\operatorname{OPT}
+\geq
+\left(\rho-\frac{\eta}{2}\right)\operatorname{OPT}
+\geq
+\left(\alpha+\frac{\eta}{2}\right)\operatorname{OPT}.
+$$</p><p>Here the second inequality uses $\rho\leq1$. This gives the exact requested guarantee in polynomial time.</p><p>One particularly useful possible discrete guarantee is</p><p>$$
+\beta_k
+=
+1-\left(1-\frac1k\right)^k.
+$$</p><p>It satisfies</p><p>$$
+\beta_k-\alpha&gt;\frac{1}{12k}.
+$$</p><p>To verify this, first take $k\geq2$. The inequality</p><p>$$
+\log(1-x)\leq-x-\frac{x^2}{2}
+$$</p><p>for $0&lt;x&lt;1$ follows by integrating $1/(1-t)\geq1+t$. Hence</p><p>$$
+\left(1-\frac1k\right)^k
+\leq
+e^{-1}e^{-1/(2k)}.
+$$</p><p>For $0\leq x\leq1$,</p><p>$$
+1-e^{-x}
+=
+\int_0^x e^{-t}\,dt
+\geq
+\int_0^x(1-t)\,dt
+\geq \frac{x}{2}.
+$$</p><p>It follows that</p><p>$$
+\beta_k-\alpha
+\geq
+e^{-1}\left(1-e^{-1/(2k)}\right)
+\geq
+\frac{1}{4ek}
+&gt;
+\frac{1}{12k}.
+$$</p><p>The last inequality uses $e&lt;3$, which follows from the series for $e$ and $n!\geq2^{n-1}$, with strict inequality for some terms. For $k=1$, the assertion follows from $\beta_1-\alpha=1/e&gt;1/3$.</p><p>Thus a uniform discrete $\beta_k$-approximation would settle the weighted target: taking</p><p>$$
+N=24m\tau k
+$$</p><p>suffices. Such a discrete guarantee has <b>not</b> been established here for the full scoring-table class.</p><h3>5. An exact polynomial-time submodularity criterion</h3><p>The next result is unconditional.</p><p>Because every ranking is a relabeling of the canonical order $1,\ldots,m$, it suffices to examine the function</p><p>$$
+g(X)
+=
+\sum_{j=1}^{\min(k,|X|)}\gamma_j(p_j),
+$$</p><p>where $p_1&lt;\cdots&lt;p_{|X|}$ are the elements of $X\subseteq\{1,\ldots,m\}$.</p><p>Define auxiliary zero tables and layer differences by</p><p>$$
+\gamma_{k+1}(p)=\gamma_{k+2}(p)=0,
+$$</p><p>$$
+\delta_j(p)=\gamma_j(p)-\gamma_{j+1}(p)
+\quad (1\leq j\leq k),
+\qquad
+\delta_{k+1}(p)=0.
+$$</p><p>All $\delta_j(p)$ are nonnegative.</p><h3>Pairwise marginal calculation</h3><p>A set function is submodular exactly when, for every $X$ and distinct $a,b\notin X$,</p><p>$$
+g(X\cup\{a\})+g(X\cup\{b\})
+-
+g(X)-g(X\cup\{a,b\})
+\geq0.
+$$</p><p>Indeed, this inequality says that adding one element cannot increase another element&#x27;s marginal. Applying it successively along a chain proves the general diminishing-returns inequality.</p><p>Assume $a&lt;b$, and put</p><p>$$
+\ell=1+|X\cap\{1,\ldots,b-1\}|.
+$$</p><p>If $\ell&gt;k$, adding $b$ changes neither $g(X)$ nor $g(X\cup\{a\})$, so the displayed expression is zero.</p><p>Suppose $\ell\leq k$. Put $s=\min(k,|X|)$, and denote the retained selected positions after $b$ by</p><p>$$
+b&lt;p_\ell&lt;\cdots&lt;p_s.
+$$</p><p>The list is empty when $s=\ell-1$.</p><p>Adding $b$ to $X$ gives it layer $\ell$ and shifts each retained position $p_i$ from layer $i$ to layer $i+1$. Thus its marginal is</p><p>$$
+\gamma_\ell(b)
++
+\sum_{i=\ell}^{s}
+\bigl(\gamma_{i+1}(p_i)-\gamma_i(p_i)\bigr).
+$$</p><p>After $a$ has also been added, $b$ receives layer $\ell+1$, and the same positions have their layer indices increased by one. The auxiliary zero tables account for positions dropped by truncation at $k$. Subtracting the two marginals gives</p><p>$$
+D(X;a,b)
+=
+\delta_\ell(b)
++
+\sum_{i=\ell}^{s}
+\bigl(\delta_{i+1}(p_i)-\delta_i(p_i)\bigr).
+$$</p><p>This calculation depends on the selected positions before $b$ only through their number.</p><p>For such a configuration to exist, $b-1$ positions must accommodate the $\ell-1$ selected positions before $b$ and the unselected position $a$. Equivalently,</p><p>$$
+b\geq\ell+1.
+$$</p><p>Conversely, whenever this inequality holds, any increasing tail of length at most $k-\ell+1$ is realizable: choose $a=1$ and choose $\ell-1$ positions from $\{2,\ldots,b-1\}$.</p><p>Sets larger than $k$ introduce no additional expressions, because positions below the first $k$ contribute zero throughout the calculation.</p><h3>Dynamic program</h3><p>For $q\in\{1,\ldots,m\}$, define</p><p>$$
+V_{k+1}(q)=0.
+$$</p><p>For $i=k,k-1,\ldots,1$, define</p><p>$$
+V_i(q)
+=
+\min\left(
+0,\;
+\min_{p&gt;q}
+\left[
+\delta_{i+1}(p)-\delta_i(p)+V_{i+1}(p)
+\right]
+\right).
+$$</p><p>An empty inner minimum is ignored.</p><p>The value $V_i(q)$ is the minimum sum obtainable from an increasing tail after $q$, beginning at layer $i$. Choosing zero means taking an empty tail. Otherwise, choose its first position $p$, pay the corresponding summand, and optimize the remaining tail using $V_{i+1}(p)$. This interpretation follows by backward induction on $i$.</p><p>Therefore, for fixed $\ell,b$, the minimum possible pairwise expression is</p><p>$$
+\delta_\ell(b)+V_\ell(b).
+$$</p><p>We obtain the following exact criterion:</p><p>$$
+\boxed{
+g\text{ is submodular}
+\iff
+\delta_\ell(b)+V_\ell(b)\geq0
+\text{ for every }
+1\leq\ell\leq k,\quad \ell+1\leq b\leq m.
+}
+$$</p><p>Necessity follows because every minimizing tail is realizable. Sufficiency follows because every pairwise marginal expression is either zero or one of the expressions bounded by the criterion.</p><p>The direct implementation takes $O(km^2)$ integer operations. It can be reduced to $O(km)$ by computing suffix minima of</p><p>$$
+\delta_{i+1}(p)-\delta_i(p)+V_{i+1}(p)
+$$</p><p>for each row $i$. Every tail contains at most $k$ terms of absolute value at most $A$, so all intermediate integers have polynomial bit length.</p><p>This is consequently a polynomial-time recognition algorithm.</p><h3>6. The requested guarantee on every recognized input</h3><p>If the criterion in Section 5 holds, every $G_r$ is submodular, because it is a relabeling of $g$. Positive weighted sums preserve submodularity. Thus $G$ is normalized, monotone, and submodular.</p><p>Run greedy for $k$ additions, choosing at each step a candidate of maximum marginal value. Let $S_t$ be the committee after $t$ additions, and let $O$ be an optimal size-$k$ committee.</p><p>Monotonicity and diminishing returns give</p><p>$$
+G(O)-G(S_t)
+\leq
+G(O\cup S_t)-G(S_t)
+\leq
+\sum_{c\in O\setminus S_t}
+\bigl(G(S_t\cup\{c\})-G(S_t)\bigr).
+$$</p><p>There are at most $k$ summands. The greedy marginal is therefore at least</p><p>$$
+\frac{G(O)-G(S_t)}{k}.
+$$</p><p>Starting from $G(\varnothing)=0$ and iterating gives</p><p>$$
+F_\mu(S_k)
+=
+G(S_k)
+\geq
+\left(1-\left(1-\frac1k\right)^k\right)G(O)
+\geq
+\left(1-\frac1e\right)\operatorname{OPT}.
+$$</p><p>All evaluations and comparisons can be exact. Write $\mu_r=a_r/b_r$, and put</p><p>$$
+D=\prod_{r\in T}b_r,
+\qquad
+w_r=\frac{a_rD}{b_r}.
+$$</p><p>Then $w_r$ are positive integers, $\sum_rw_r=D$, and</p><p>$$
+DG(S)=\sum_{r\in T}w_rG_r(S).
+$$</p><p>The bit length of $D$ is at most the sum of the denominator bit lengths, up to an additive constant. Moreover,</p><p>$$
+0\leq DG(S)\leq DkA.
+$$</p><p>Thus these integer calculations have polynomial bit length. Greedy uses at most $km$ score evaluations, each computable directly from the $\tau$ rankings. Its running time is polynomial in $m,\tau,k,L$.</p><h3>The recognized subclass strictly enlarges the earlier sufficient subclass</h3><p>The position-drop condition from <code>NOTES</code> is</p><p>$$
+\gamma_j(p)-\gamma_j(p+1)
+\geq
+\gamma_{j+1}(p)-\gamma_{j+1}(p+1)
+$$</p><p>for $j&lt;k$ and $p&lt;m$.</p><p>This condition says that each $\delta_j$ with $j&lt;k$ is nonincreasing in position. The same is true of $\delta_k=\gamma_k$ by the original hypotheses.</p><p>For a nonempty tail, the expression from Section 5 telescopes as</p><p>$$
+D(X;a,b)
+=
+\delta_\ell(b)-\delta_\ell(p_\ell)
++
+\sum_{i=\ell+1}^{s}
+\bigl(\delta_i(p_{i-1})-\delta_i(p_i)\bigr)
++
+\delta_{s+1}(p_s).
+$$</p><p>Every term is nonnegative. An empty tail gives $D(X;a,b)=\delta_\ell(b)\geq0$. Thus the earlier condition implies the exact criterion.</p><p>The converse fails. For every $m\geq3$, take $k=2$ and</p><p>$$
+\gamma_1(p)=3
+\quad\text{for all }p,
+$$</p><p>$$
+\gamma_2(p)=
+\begin{cases}
+2,&amp;p&lt;m,\\
+1,&amp;p=m.
+\end{cases}
+$$</p><p>These tables satisfy all original hypotheses, but violate the position-drop condition at $p=m-1$.</p><p>Let $z$ be the last-ranked candidate, and call the other candidates good. The extended score is:</p><ul><li>$0$ for the empty set;</li><li>$3$ for every singleton;</li><li>$4$ for a pair containing $z$;</li><li>$5$ for every other set of size at least two.</li></ul><p>Adding $z$ to a set containing respectively zero, one, or at least two good candidates has marginal $3,1,$ or $0$.</p><p>For an added good candidate, the marginal depends on the existing number $h$ of good candidates and whether $z$ is present:</p><p>$$
+\begin{array}{c|cc}
+ &amp; z\text{ absent} &amp; z\text{ present}\\
+\hline
+h=0 &amp; 3 &amp; 1\\
+h=1 &amp; 2 &amp; 1\\
+h\geq2 &amp; 0 &amp; 0
+\end{array}
+$$</p><p>As a set grows, $h$ can only increase and $z$ can only change from absent to present. The displayed marginals never increase. Hence this extension is submodular, proving strict enlargement.</p><h3>The criterion does not cover all admissible inputs</h3><p>For example, take $m=4$, $k=3$, and</p><p>$$
+\gamma_1=(1,1,1,1),
+\qquad
+\gamma_2=(1,1,0,0),
+\qquad
+\gamma_3=(0,0,0,0).
+$$</p><p>All original hypotheses hold. In the canonical ranking, let $X=\{3\}$ and add positions $1$ and $2$. Then</p><p>$$
+g(\{3\})=g(\{1,3\})=g(\{2,3\})=1,
+\qquad
+g(\{1,2,3\})=2.
+$$</p><p>The pairwise submodularity expression is therefore $-1$. Thus recognition followed by greedy does not solve the full class.</p><h3>7. Remaining target</h3><p>The mass-compression lemma isolates a concrete route to a complete solution: a uniform discrete guarantee of $\beta_k$, or any inverse-polynomial excess over $1-1/e$, would yield the exact weighted guarantee with only polynomially many rounded voters.</p><p>A uniform discrete guarantee of exactly $1-1/e$ yields arbitrarily close guarantees by this argument, but the proof loses a positive amount and does not establish the exact factor.</p><p>Independently, the submodularity criterion settles the requested guarantee for a larger, polynomially recognizable subclass. Inputs outside that subclass still require another approximation argument or an approximation-hardness reduction.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 4 and 7: completion of USER_TASK: The full input class is not classified: the exact $(1-1/e)$ guarantee is proved only on a recognized subclass, while the transfer for general inputs requires an unestablished uniform discrete algorithm and, for the exact factor through this route, an available inverse-polynomial excess. No approximation-hardness reduction is supplied. This is acknowledged incompleteness rather than a false step in the proved partial results.</li></ul>
+<div class="pre"><p><b>Overall assessment: valid partial progress; the full target remains unresolved.</b> The unconditional arguments are correct, and the approximation transfers are correctly presented as conditional. I found no false mathematical step. The major limitation is that neither a polynomial-time algorithm with the exact requested guarantee for every admissible input nor approximation hardness is established.</p><ul><li><b>Definitions, monotonicity, and elementary cases — verified.</b></li></ul><p>The extension $G_r$ is well-defined for every subset, including subsets larger than $k$. Adding a candidate weakly improves every retained order statistic; when another term is retained, that term is nonnegative. Thus the monotonicity argument is valid.</p><p>The identity $G(S)=F_\mu(S)$ for $|S|=k$ is immediate. The cases $k=1$ and $k=m$ are correctly handled by singleton evaluation and returning $C$, respectively.</p><ul><li><b>The bound on individual ranking scores — verified.</b></li></ul><p>Position monotonicity and layer dominance give $0\leq\gamma_j(p)\leq A$. If $A=0$, all scoring entries vanish, so the zero-score case is fully resolved.</p><p>The first-place masses sum to one. Consequently, the $k$ largest first-place masses sum to at least $k/m$. Each ranking whose first-place candidate is selected contributes at least $A$, giving<br>$$
+   \operatorname{OPT}\geq \frac{kA}{m}.
+   $$<br>Combining this with the per-ranking upper bound $kA$ correctly yields<br>$$
+   f_{m,k}(\operatorname{pos}_r(S))\leq m\operatorname{OPT}.
+   $$<br>This reasoning does not require a lower bound on individual support masses.</p><ul><li><b>Mass compression — verified.</b></li></ul><p>The floor inequalities correctly establish<br>$$
+   N-\tau&lt;N&#x27;\leq N,
+   $$<br>so $N&#x27;&gt;0$ whenever $N&gt;\tau$. Types rounded to zero may be omitted.</p><p>The rounding errors are nonnegative and smaller than $1/N$. Applying the preceding per-ranking bound gives the stated uniform error bound for every size-$k$ committee. Evaluating that bound at an optimal committee proves the lower bound on the rounded optimum.</p><p>For $\varepsilon\in(0,1)$, the selected value<br>$$
+   N=\left\lceil\frac{m\tau}{\varepsilon}\right\rceil
+   $$<br>satisfies $N&gt;\tau$. Computing the multiplicities exactly and explicitly listing at most $N$ rankings takes time polynomial in the stated parameters and $1/\varepsilon$. Binary encoding of the original masses creates no omitted numerical obstacle here.</p><ul><li><b>Conditional transfer from discrete algorithms — verified, but conditional.</b></li></ul><p>Multiplication of the rounded objective by $N$ preserves approximation ratios. Since rounding decreases every committee score, the deduction<br>$$
+   F_\mu(S)\geq\rho\left(1-\frac{m\tau}{N}\right)\operatorname{OPT}
+   $$<br>is correct. The subsequent bound by $(\rho-\varepsilon)\operatorname{OPT}$ uses $\rho\leq1$ correctly.</p><p>The distinction between a uniform algorithm accepting scoring tables as input and an algorithm for each fixed rule family is substantive and correctly identified. The [cited paper’s Theorem 15](https://www.ijcai.org/Proceedings/16/Papers/043.pdf) states a discrete approximation result for polynomial-time computable scoring families; it does not provide an algorithm or proof in that paper. The prover does not treat this citation as establishing the stronger uniform premise, so there is no unjustified theorem application in the transfer argument.</p><p>As written, the transfer proves an arbitrarily close approximation only under its explicit algorithmic premise. It does not establish the exact requested factor.</p><ul><li><b>Transfer using an inverse-polynomial excess — verified.</b></li></ul><p>Given the stated available rational excess $\eta$, the chosen $N$ makes the rounding loss at most $\eta/2$. The inequality<br>$$
+   \rho\left(1-\frac{\eta}{2}\right)\geq\rho-\frac{\eta}{2}
+   $$<br>follows from $\rho\leq1$, and the claimed final guarantee follows.</p><p>The bound on $\beta_k-\alpha$ is also correct. For $k\geq2$, both integral inequalities have the stated ranges and yield<br>$$
+   \beta_k-\alpha\geq\frac{1}{4ek}&gt;\frac{1}{12k}.
+   $$<br>The separate calculation for $k=1$ is valid. Thus $N=24m\tau k$ suffices <b>if</b> a uniform discrete $\beta_k$-approximation exists.</p><p>The prover explicitly acknowledges that this discrete guarantee has not been established for the full input class. This is a missing premise for completing that route, not an error in the conditional implication.</p><ul><li><b>Pairwise marginal calculation and submodularity criterion — verified.</b></li></ul><p>The pairwise inequality stated is equivalent to diminishing returns for a set function on a finite ground set. The explanation by successive additions supplies the relevant equivalence.</p><p>If $\ell&gt;k$, inserting $b$ affects neither truncated score, as claimed. For $\ell\leq k$, the displayed marginal correctly accounts for inserting $b$ and shifting retained tail positions. After insertion of $a&lt;b$, the layer indices increase by one. The auxiliary zero layers correctly handle truncation, including the boundary $\ell=k$.</p><p>Subtracting these marginals gives exactly<br>$$
+   \delta_\ell(b)+
+   \sum_{i=\ell}^{s}\bigl(\delta_{i+1}(p_i)-\delta_i(p_i)\bigr).
+   $$<br>Positions before $b$ affect this expression only through their count.</p><p>The feasibility condition $b\geq\ell+1$ is necessary and sufficient: there must be room for $\ell-1$ selected positions and the additional unselected position $a$. The construction stated in the proof realizes every tail considered by the dynamic program. Extra selected positions beyond the first $k$ cannot affect the expression.</p><p>The recurrence for $V_i(q)$ correctly minimizes over empty tails and increasing nonempty tails. Its backward-induction interpretation establishes both necessity and sufficiency of the boxed criterion.</p><p>The operation counts and polynomial bit-length bounds are valid. This recognizes submodularity of the canonical extension $g$, and hence of each relabeled per-ranking extension. It does not claim to recognize every society for which the weighted sum happens to be submodular.</p><ul><li><b>Greedy guarantee and exact arithmetic — verified.</b></li></ul><p>On recognized inputs, relabeling and positive weighted summation preserve submodularity. Together with the earlier monotonicity and normalization, this supplies every hypothesis needed by the greedy argument.</p><p>The bound comparing the remaining optimum gap with the sum of available marginals is valid. Greedy selects a marginal at least the gap divided by $k$, producing the stated recurrence and the factor $\beta_k$. The comparison $\beta_k\geq1-1/e$ also holds, including $k=1$.</p><p>Clearing denominators by their product yields exact integer comparisons with polynomial bit length. The upper bound $DG(S)\leq DkA$ is correct. Thus the claimed polynomial running time on the recognized subclass is established.</p><ul><li><b>Subclass comparisons and counterexample — verified.</b></li></ul><p>The position-drop condition is explicitly restated, so the unavailable reference to <code>NOTES</code> does not prevent verification. It makes each $\delta_j$ nonincreasing, including $\delta_k$ under the original hypotheses. The displayed telescoping identity is correct, and every term is nonnegative.</p><p>The strict-enlargement example satisfies position monotonicity and layer dominance, while violating the position-drop condition. Its listed scores and marginal table are correct. These marginals never increase under set inclusion, establishing submodularity.</p><p>The final example also satisfies the original hypotheses. Its four scores are correctly computed, and its pairwise expression equals $-1$. This establishes that the recognition criterion excludes some admissible inputs. It supplies no approximation-hardness conclusion, and the prover does not claim one.</p><p><b>Actionable feedback.</b> No repair is needed for the unconditional lemmas or the conditional implications. To resolve <code>USER_TASK</code>, the next output must establish either the exact weighted guarantee for all admissible scoring tables or hardness of achieving that guarantee. If pursuing the proposed compression route, it must substantiate the uniform discrete algorithm and its available inverse-polynomial excess. Repeating the exact discrete factor alone does not close the demonstrated rounding loss.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

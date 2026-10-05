@@ -1,0 +1,243 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ecai-2023-0243 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ecai-2023-0243 <span style="font-weight:normal;color:#8a7350">(d4-conf-ecai-2023-0243)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 9 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a succinct feasible set \(S\), a finite type set \(T\) with rational masses \(\mu_t\) summing to \(1\), and nonnegative utilities \(u_t:S\to\mathbb{Q}_{\ge 0}\), define \(Q_x(q)=\inf\{v:\sum_{t:u_t(x)\le v}\mu_t\ge q\}\) for \(0&lt;q\le1\). For \(\alpha\in(0,1]\) and \(\varepsilon\ge0\), seek a feasible \(x\) for which there are no feasible \(y\) and \(q\in(0,1]\) with \(Q_y(r)\ge Q_x(r)\) for every \(0&lt;r&lt;q\) and \(Q_y(q)&gt;(Q_x(q)+\varepsilon)/\alpha\). Can a weighted ordered-tail adaptation of Algorithm 1, using lower-tail integrals \(\int_0^q Q_x(r)\,dr\), return such a solution with the guarantee \((\alpha^2/(1-\alpha+\alpha^2),\,\varepsilon/(1-\alpha+\alpha^2))\) in time polynomial in the decision description, \(\tau=|T|\), and the mass bit length \(L\), given approximate solvers for its ordered-tail subproblems?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: \(T\) lists the \(\tau\ge1\) types with positive binary-rational masses \(\mu_t\), with \(\sum_t\mu_t=1\); \(\tau\) is the support size, not the number of possible types.<br>Let \(S\subseteq\mathbb Q^m\) be a nonempty succinctly represented feasible set, with feasible decisions encoded in at most \(B\) bits and polynomial-time evaluable utilities \(u_t:S\to\mathbb Q_{\ge0}\). Let \(N\) be the decision and utility description length and \(L\) the total mass bit length.<br>Define \(Q_x(q)=\inf\{v\in\mathbb R:\sum_{t:u_t(x)\le v}\mu_t\ge q\}\) for \(0&lt;q\le1\), and \(A_x(q)=\int_0^q Q_x(r)\,dr\), with \(A_x(0)=0\). Equal utilities are pooled; quantiles use this endpoint convention without interpolation.<br>A feasible \(x\) is \((a,e)\)-approximately leximin-optimal if no \(y\in S\) and \(q\in(0,1]\) satisfy both \(Q_y(r)\ge Q_x(r)\) for every \(0&lt;r&lt;q\) and \(Q_y(q)&gt;(Q_x(q)+e)/a\).<br>Fix binary-rational \(\alpha\in(0,1]\) and \(\varepsilon\ge0\). An ordered-tail oracle receives rational \(0=q_0&lt;q_1&lt;\cdots&lt;q_k&lt;q\le1\) and bounds \(b_0=0,b_1,\ldots,b_k\in\mathbb Q\), and maximizes \(F(x)=(A_x(q)-b_k)/(q-q_k)\) subject to \(x\in S\) and \(A_x(q_j)\ge b_j\) for \(1\le j\le k\).<br>On nonempty subproblems with nonnegative optimal value, the oracle returns a feasible \(x\) satisfying \(F(x)\ge\alpha\max F-\varepsilon\), in polynomial time in its encoded input length; feasibility is exact and the returned objective is the actual \(F(x)\).<br>Can an iterative adaptation using these ordered-tail oracles return an \(\left(\alpha^2/(1-\alpha+\alpha^2),\varepsilon/(1-\alpha+\alpha^2)\right)\)-approximately leximin-optimal decision in time polynomial in \(m,\tau,N,L,B\) and the bit lengths of \(\alpha,\varepsilon\), uniformly over all admissible oracle outputs?<br>For a finite list of equally weighted agents, the ordered-outcomes iteration obtains exactly these approximation parameters from approximate residual ordered-sum solvers. [Hartman et al.](https://arxiv.org/html/2303.12506v4)<br>No result settling this positive-rational-mass oracle problem was identified in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Made the computational representation explicit: nonempty rational feasible decisions have an encoding bound B, and utilities are polynomial-time evaluable. This supplies finite attainable outcomes and excludes unattained optima and unrepresentable outputs.</li><li>Made alpha and epsilon binary-rational inputs and specified all running-time parameters.</li><li>Defined the otherwise unspecified weighted ordered-tail subproblem by retaining prior integral lower bounds and maximizing the residual integral divided by the newly considered mass. This normalization preserves utility units for the additive error and recovers the discrete residual ordered-sum objective for equal masses.</li><li>Required deterministic oracle guarantees, exact feasibility, and actual attained objective values; the guarantee must hold for every admissible oracle output.</li><li>Restricted oracle approximation promises to nonempty subproblems with nonnegative optimum, consistent with the source&#x27;s nonnegative single-objective approximation domain.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and new partial result</h3><p>The requested uniform polynomial-time guarantee remains <b>unresolved</b>. The following result extends the exact-oracle case from the notes to approximate oracles.</p><p><b>Theorem.</b> For every admissible $\alpha&gt;0$ and $\varepsilon\ge0$, the supplied ordered-tail oracle suffices to compute an <b>exactly leximin-optimal</b> decision, uniformly over all admissible oracle outputs, in time polynomial in<br>$$
+m,\tau,N,L,B,\operatorname{bits}(\alpha),\operatorname{bits}(\varepsilon),\frac1\alpha.
+$$<br>Consequently, the requested approximation guarantee is obtainable in polynomial time whenever $1/\alpha$ is polynomially bounded in the input length. In particular, it is obtainable for $\alpha=1$ and arbitrary $\varepsilon$, and for every fixed positive $\alpha$.</p><p>The dependence on the numerical value $1/\alpha$ prevents this theorem from settling the general question. The proof below establishes that dependence explicitly.</p><h3>1. Finite mass grid and rational separation</h3><p>We use the natural interpretation that each decision encoding determines one decision. Since encodings have length at most $B$, the feasible set is finite. Every nonempty optimization problem considered below therefore attains its optimum.</p><p>Write the masses in reduced form as $\mu_t=a_t/d_t$, and define<br>$$
+D=\operatorname{lcm}_{t\in T}d_t,
+\qquad
+\delta=\frac1D.
+$$<br>Every mass and every sum of masses is an integer multiple of $\delta$. Moreover,<br>$$
+\log_2D\le\sum_{t\in T}\log_2d_t\le L.
+$$<br>Thus $D$ has polynomial encoding length, although its numerical value may be exponential.</p><p>Pooling equal utilities, every quantile breakpoint is a cumulative mass of types. The stipulated endpoint convention consequently makes $Q_x$ constant on every cell<br>$$
+((i-1)\delta,i\delta],
+\qquad 1\le i\le D.
+$$<br>In particular,<br>$$
+A_x(i\delta)-A_x((i-1)\delta)
+=
+\delta Q_x(i\delta).
+$$</p><p>Let $P$ be a polynomial upper bound on the bit lengths of utility numerators and denominators. Such a bound follows from the assumed polynomial-time utility evaluation on decision encodings of length at most $B$. Increase $P$ if necessary so that<br>$$
+0\le u_t(x)\le U:=2^P
+$$<br>for every feasible $x$ and every type $t$. Hence, for $0\le r\le q\le1$,<br>$$
+0\le A_x(q)-A_x(r)\le U(q-r).
+$$</p><p>We also need a uniform separation bound. Fix a rational $p=a/d\in(0,1]$ in reduced form. If the utility denominators at $x$ are $e_1,\ldots,e_\tau$, the denominator of $A_x(p)$ divides<br>$$
+Dd\prod_{t=1}^{\tau}e_t.
+$$<br>Indeed, its full utility-group contributions have masses with denominator dividing $D$, and its final partial contribution has mass $p-c$, where $c$ has denominator dividing $D$.</p><p>Since $e_t\le2^P$, every reduced denominator of $A_x(p)$ is at most<br>$$
+W(p):=Dd\,2^{\tau P}.
+$$<br>Two distinct attainable values of $A_x(p)$ therefore differ by at least<br>$$
+g(p):=\frac1{W(p)^2}.
+$$<br>To justify this, distinct reduced fractions with denominators $v_1,v_2\le W(p)$ differ by a nonzero integer divided by $v_1v_2$.</p><p>Both $g(p)$ and all integrals used below have polynomial bit length when $p$ does.</p><h3>2. Residual tightening removes additive error</h3><p>The key new step is to place the objective quantile very close to a retained checkpoint.</p><p><b>Lemma.</b> Let $X$ be a nonempty feasible set defined by ordered-tail constraints whose last checkpoint is $s$, taking $s=0$ when there are no constraints. Suppose a decision $x_0\in X$ is known. For rational $s&lt;r&lt;1$ and $0&lt;\eta\le U$, one can obtain $x\in X$ satisfying<br>$$
+A_x(r)\ge\max_{y\in X}A_y(r)-\eta
+$$<br>using<br>$$
+n=
+\left\lceil\frac1\alpha\right\rceil
+\left\lceil\log_2\frac{2U}{\eta}\right\rceil
+$$<br>oracle calls. All calls satisfy the oracle promise.</p><p><b>Proof.</b> Put<br>$$
+M=\max_{y\in X}A_y(r),
+\qquad
+b_0=A_{x_0}(r).
+$$<br>Choose the positive rational<br>$$
+h=
+\min\left\{
+\frac{1-r}{2},
+\frac{\alpha\eta}{2(U+\varepsilon)}
+\right\}.
+$$<br>At iteration $j$, retain the original constraints defining $X$, append the checkpoint $r$ with bound $b_j$, and query at $q=r+h$. Let the returned decision be $x_{j+1}$, and set<br>$$
+b_{j+1}=A_{x_{j+1}}(r).
+$$<br>The checkpoint at $r$ is replaced at the next iteration; duplicate checkpoints are never introduced.</p><p>The subproblem is nonempty because the preceding decision satisfies its constraints. Its objective is nonnegative for every feasible decision:<br>$$
+A_x(r+h)\ge A_x(r)\ge b_j.
+$$<br>Thus the oracle promise applies.</p><p>A maximizer $y$ of $A_y(r)$ over the original set $X$ remains feasible, since $b_j\le M$. Its residual objective is at least $(M-b_j)/h$. Therefore the oracle guarantee gives<br>$$
+A_{x_{j+1}}(r+h)-b_j
+\ge
+\alpha(M-b_j)-\varepsilon h.
+$$<br>Using the utility upper bound,<br>$$
+b_{j+1}
+\ge
+b_j+\alpha(M-b_j)-h(U+\varepsilon).
+$$<br>Exact feasibility also gives $b_{j+1}\ge b_j$.</p><p>For $G_j=M-b_j$, we obtain<br>$$
+0\le G_{j+1}
+\le
+(1-\alpha)G_j+h(U+\varepsilon)
+\le
+(1-\alpha)G_j+\frac{\alpha\eta}{2}.
+$$<br>Since $G_0\le U$, induction yields<br>$$
+G_n\le(1-\alpha)^nU+\frac{\eta}{2}.
+$$</p><p>For $0&lt;\alpha&lt;1$,<br>$$
+(1-\alpha)^{\lceil1/\alpha\rceil}
+\le e^{-1}&lt;\frac12.
+$$<br>For $\alpha=1$, the left side is zero. With the stated choice of $n$,<br>$$
+(1-\alpha)^nU
+\le
+2^{-\lceil\log_2(2U/\eta)\rceil}U
+\le\frac{\eta}{2}.
+$$<br>Hence $G_n\le\eta$, proving the lemma.</p><p>The checkpoints $r,r+h$ have polynomial encoding length. Each bound $b_j$ is an actual integral of a returned decision at the fixed rational $r$, so its bit length does not grow with the number of iterations. ∎</p><h3>3. Recovering exact integral maximizers</h3><p><b>Proposition.</b> Suppose $X$ is defined by retained constraints, its last checkpoint is $s&lt;p\le1$, and a decision in $X$ is known. An exact maximizer of $A_x(p)$ over $X$ can be computed with a number of oracle calls polynomial in the encoding lengths and $1/\alpha$.</p><h3>Case $p&lt;1$</h3><p>Apply the lemma with<br>$$
+r=p,
+\qquad
+\eta=\frac{g(p)}2.
+$$<br>Its output satisfies<br>$$
+0\le\max_{y\in X}A_y(p)-A_x(p)\le\frac{g(p)}2.
+$$<br>If this difference were positive, rational separation would make it at least $g(p)$, a contradiction. Thus $x$ is an exact maximizer.</p><h3>Case $p=1$</h3><p>The oracle cannot put its objective quantile beyond $1$. Instead, perturb the integral being optimized slightly to the left.</p><p>Write $g=g(1)$, and choose<br>$$
+\zeta=
+\min\left\{
+\frac{1-s}{2},
+\frac{g}{4U}
+\right\},
+\qquad
+r=1-\zeta.
+$$<br>Then $s&lt;r&lt;1$. Apply the lemma at $r$ with $\eta=g/4$, obtaining $x$ such that<br>$$
+A_x(r)\ge\max_{y\in X}A_y(r)-\frac g4.
+$$<br>Let $y$ maximize $A_y(1)$ over $X$. Since<br>$$
+A_y(r)\ge A_y(1)-U\zeta
+$$<br>and $A_x(1)\ge A_x(r)$, we get<br>$$
+A_x(1)
+\ge
+A_y(1)-U\zeta-\frac g4
+\ge
+A_y(1)-\frac g2.
+$$<br>Rational separation at $1$ forces equality. Thus $x$ exactly maximizes $A_x(1)$.</p><p>In both cases, the logarithm of the required inverse accuracy is polynomial in $\tau,P,L$ and the checkpoint encoding lengths. The lemma therefore supplies the claimed call bound. ∎</p><p>This proposition uses only nonempty subproblems with nonnegative objective. It neither queries an unknown feasibility condition nor relies on oracle behavior outside its promise.</p><h3>4. Compressing exact leximin optimization</h3><p>For completeness, the exact-prefix construction from the notes is proved here, with explicit terminal returns.</p><p>First obtain a known feasible decision by an unconstrained oracle call at $q=1$. Its objective is nonnegative. Thereafter, use the proposition whenever an exact integral maximizer is required.</p><h3>Initialization</h3><p>Exactly maximize $A_x(\delta)$ over $S$. Since every positive mass is at least $\delta$,<br>$$
+\frac{A_x(\delta)}{\delta}
+=
+\min_{t\in T}u_t(x).
+$$<br>Let its optimal value be $\delta v$. Retain<br>$$
+A_x(\delta)\ge\delta v,
+$$<br>and put<br>$$
+s=\delta,
+\qquad
+b=\delta v.
+$$<br>Every retained decision has minimum utility exactly $v$: the constraint gives a minimum at least $v$, and maximality of $v$ gives the reverse inequality.</p><p>If $s=1$, return the maximizing decision.</p><h3>Phase invariant</h3><p>Let $X$ be the set defined by the retained constraints. Maintain:</p><ul><li>A feasible decision in $X$ is known.</li><li>All decisions in $X$ have the same quantile function on $(0,s]$.</li><li>Every decision in $X$ satisfies $A_x(s)=b$.</li><li>The common endpoint value is $Q_x(s)=v$.</li></ul><p>Initialization establishes these properties.</p><p>For $x\in X$, define<br>$$
+c_x=\sum_{t:u_t(x)\le v}\mu_t,
+\qquad
+c=\min_{x\in X}c_x.
+$$<br>The minimum exists because $X$ is finite and nonempty. Also, $c_x\ge s$, and every $c_x$ is a grid point.</p><p>Monotonicity and the endpoint convention give<br>$$
+Q_x(r)=v
+\quad\text{for }s&lt;r\le c_x,
+$$<br>and<br>$$
+Q_x(r)&gt;v
+\quad\text{for }c_x&lt;r\le1.
+$$</p><h3>Finding the end of the common plateau</h3><p>For a grid point $q&gt;s$, define<br>$$
+M(q)=\max_{x\in X}A_x(q),
+\qquad
+H(q)=b+v(q-s).
+$$<br>The proposition computes $M(q)$ exactly. We have<br>$$
+M(q)&gt;H(q)
+\quad\Longleftrightarrow\quad
+q&gt;c.
+$$</p><p>Indeed, if $q\le c$, every retained decision has quantile $v$ throughout $(s,q]$, so its integral is $H(q)$. If $q&gt;c$, a decision attaining $c_x=c$ has quantile strictly larger than $v$ on the positive-length interval $(c,q]$, making its integral strictly larger than $H(q)$.</p><p>Compute $M(1)$. If $M(1)=H(1)$, then $c=1$ and every decision in $X$ has the same complete quantile function. Return the maximizer obtained in this query.</p><p>Otherwise, binary search over grid indices finds the smallest $j$ for which<br>$$
+M(j\delta)&gt;H(j\delta).
+$$<br>The predicate is monotone, and<br>$$
+c=(j-1)\delta.
+$$<br>The search requires $O(1+\log D)$ exact-maximization requests.</p><h3>Fixing the next utility level</h3><p>Put<br>$$
+s&#x27;=j\delta=c+\delta,
+\qquad
+b&#x27;=M(s&#x27;).
+$$<br>For every $x\in X$, grid constancy gives<br>$$
+A_x(s&#x27;)
+=
+b+v(c-s)+\delta Q_x(s&#x27;).
+$$<br>Consequently, maximizing $A_x(s&#x27;)$ exactly maximizes $Q_x(s&#x27;)$ over $X$.</p><p>Define<br>$$
+w=\frac{b&#x27;-b-v(c-s)}{\delta}.
+$$<br>Since $b&#x27;&gt;H(s&#x27;)$, we have $w&gt;v$.</p><p>Append the constraint<br>$$
+A_x(s&#x27;)\ge b&#x27;.
+$$<br>The new feasible set $X&#x27;$ contains the returned maximizer. Because $b&#x27;$ is the maximum over $X$, every decision in $X&#x27;$ has integral exactly $b&#x27;$ and hence endpoint utility exactly $w$.</p><p>Thus all decisions in $X&#x27;$ share the extended prefix: the previous prefix, followed by $v$ through $c$, followed by $w$ on $(c,s&#x27;]$. Replace the state by<br>$$
+(X,s,b,v)\leftarrow(X&#x27;,s&#x27;,b&#x27;,w).
+$$<br>If $s&#x27;=1$, return the retained maximizer immediately. Otherwise begin another phase.</p><h3>Termination</h3><p>Each successful extension introduces a new, strictly larger utility value on a cell of positive mass. The fixed prefix belongs to every retained decision, and each decision has at most $\tau$ distinct utilities. There can therefore be at most $\tau-1$ successful extensions after initialization.</p><p>The total number of exact-maximization requests is<br>$$
+O\bigl(\tau(1+\log D)\bigr).
+$$</p><h3>Exact leximin correctness</h3><p>Let $x^\star$ be the returned decision. Suppose there were $y\in S$ and $q\in(0,1]$ with<br>$$
+Q_y(r)\ge Q_{x^\star}(r)
+\quad\text{for every }0&lt;r&lt;q,
+$$<br>and<br>$$
+Q_y(q)&gt;Q_{x^\star}(q).
+$$<br>By common-grid constancy, the first grid cell on which the two quantile functions differ must favor $y$.</p><p>Such a first favorable difference is impossible:</p><ul><li>In the initial cell, $v$ is the maximum possible minimum utility.</li><li>If $y$ agrees with a previously fixed prefix, it satisfies every retained constraint and therefore belongs to that phase’s set $X$.</li><li>Within the subsequently fixed plateau through $c$, every decision in $X$ has value $v$.</li><li>In the next cell, the algorithm chooses the maximum possible value $w$ over $X$.</li><li>On termination with $M(1)=H(1)$, every remaining retained suffix is identical.</li></ul><p>These cases cover the entire quantile domain. Thus the alleged first favorable difference cannot exist, and $x^\star$ is exactly leximin-optimal.</p><h3>5. Running time and requested parameters</h3><p>The official retained checkpoints are grid points and number at most $\tau$. Their encoding lengths are polynomial in $L$. Their bounds are actual integrals, whose encoding lengths are polynomial in $\tau,P,L$.</p><p>Every exact-maximization request uses a polynomial number of approximate-oracle calls times $1/\alpha$, by Sections 2 and 3. Its temporary checkpoints and bounds also have polynomial encoding length. The complete construction therefore has the running time stated in the theorem, uniformly over all admissible oracle outputs.</p><p>Set<br>$$
+d_\alpha=1-\alpha+\alpha^2,
+\qquad
+a=\frac{\alpha^2}{d_\alpha},
+\qquad
+e=\frac{\varepsilon}{d_\alpha}.
+$$<br>Since $0&lt;a\le1$ and $e\ge0$,<br>$$
+\frac{Q_{x^\star}(q)+e}{a}\ge Q_{x^\star}(q).
+$$<br>Any forbidden witness for the requested parameters would therefore also be a forbidden witness for exact leximin optimality. The constructed decision satisfies the requested guarantee.</p><p>The unresolved issue is exclusively the running time when $1/\alpha$ is exponentially large relative to its encoding length.</p><h3>6. Why the tightening argument does not resolve the general case</h3><p>The dependence on $1/\alpha$ cannot simply be removed from the preceding tightening analysis.</p><p>Consider one type of mass $1$, feasible decisions<br>$$
+S=\{0,1,\ldots,M\},
+$$<br>utility $u(j)=j$, and parameters<br>$$
+\alpha=\frac1M,
+\qquad
+\varepsilon=0.
+$$<br>At a tightening checkpoint $r=1/2$, suppose the current decision is $c&lt;M$ and the bound is $b=rc$. For any permitted $h&gt;0$, the residual objective is<br>$$
+F(j)=\frac rh(j-c)+j.
+$$<br>It is maximized at $j=M$. Nevertheless, returning only $c+1$ is admissible, because<br>$$
+\alpha F(M)
+=
+\frac rh\left(1-\frac cM\right)+1
+\le
+\frac rh+1
+\le
+F(c+1).
+$$<br>It also satisfies the retained constraint exactly as required.</p><p>Thus, even arbitrarily small choices of $h$ allow an admissible sequence that advances the decision by only one unit per call. Starting from $c=1$, exact recovery can require $M-1$ such calls, while $\alpha=1/M$ has encoding length logarithmic in $M$.</p><p>This example concerns the <b>exact-recovery subroutine</b>, not a lower bound for the task’s weaker approximation target. In fact, the one-type approximation problem is handled by a single unconstrained oracle call. A general solution may therefore need to avoid exact recovery rather than accelerate it.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 2, tightening lemma statement and definition of $h$: The lemma does not explicitly require $\eta\in\mathbb Q$. For arbitrary real $\eta$, the prescribed $h$ need not be rational, although oracle queries require rational checkpoints. All actual applications use rational $\eta$, so restricting the lemma statement suffices.</li><li><b>major</b> — Theorem and Section 5, running-time guarantee relative to USER_TASK: The established running time is polynomial in the numerical reciprocal $1/\alpha$, whereas the task requires polynomial time in $\operatorname{bits}(\alpha)$. This acknowledged scope limitation leaves the general target unresolved; it is not a false claim about the partial theorem.</li></ul>
+<div class="pre"><p>The output establishes a substantive partial result: exact leximin optimization using the supplied approximate oracle in time polynomial in the input lengths and the numerical reciprocal $1/\alpha$. It does <b>not</b> settle the requested running time polynomial in $\operatorname{bits}(\alpha)$. The prover accurately acknowledges this limitation.</p><p>The partial theorem is sound in substance. I found one minor domain omission in the tightening lemma and no false central step.</p><h3>Step-by-step verification</h3><h3>1. Finiteness, the mass grid, and separation</h3><p>The explicit interpretation that each decision encoding determines one decision makes $S$ finite, since encoding lengths are bounded by $B$. Consequently, every nonempty subproblem attains its optimum. This is consistent with the intended encoding model.</p><p>Writing $\mu_t=a_t/d_t$ and taking the least common multiple $D$ correctly makes every cumulative mass a multiple of $\delta=1/D$. The bound<br>$$
+\log_2 D\le \sum_t\log_2 d_t\le L
+$$<br>is valid.</p><p>Pooling equal utilities and using the specified endpoint convention correctly gives constancy on<br>$$
+((i-1)\delta,i\delta].
+$$<br>Thus the integral increment identity is valid, including cells whose right endpoint is a quantile breakpoint.</p><p>Polynomial-time utility evaluation supplies a polynomial bound on output bit lengths. Enlarging that bound to obtain $u_t(x)\le U=2^P$ is legitimate, and nonnegative utilities give<br>$$
+0\le A_x(q)-A_x(r)\le U(q-r).
+$$</p><p>For rational $p=a/d$, the proposed denominator bound<br>$$
+Dd\prod_t e_t
+$$<br>is valid for both full-group and partial-group integral contributions. Consequently, distinct attainable values of $A_x(p)$ differ by at least $g(p)=1/W(p)^2$. The separation argument correctly allows different decisions to have different utility denominators.</p><p>The claimed polynomial bit lengths follow from the bounds on $D$, $d$, and the utility encodings.</p><p><b>Finding:</b> Correct.</p><h3>2. Residual tightening</h3><p>The augmented subproblem remains nonempty because the preceding decision satisfies the new checkpoint bound. Every feasible decision has nonnegative residual objective, so the oracle promise applies.</p><p>A maximizer of $A_y(r)$ over the original $X$ remains feasible: every updated bound is an attained value over $X$, hence is at most $M$. The oracle inequality therefore yields the stated bound<br>$$
+A_{x_{j+1}}(r+h)-b_j
+\ge \alpha(M-b_j)-\varepsilon h.
+$$</p><p>Subtracting the tail contribution, bounded by $Uh$, correctly gives<br>$$
+b_{j+1}\ge b_j+\alpha(M-b_j)-h(U+\varepsilon).
+$$<br>Exact checkpoint feasibility also establishes $b_{j+1}\ge b_j$.</p><p>The resulting recurrence and its iteration are valid:<br>$$
+G_n\le (1-\alpha)^nU+\frac{\eta}{2}.
+$$<br>For $0&lt;\alpha&lt;1$, the bound<br>$$
+(1-\alpha)^{\lceil1/\alpha\rceil}\le e^{-1}&lt;\frac12
+$$<br>justifies the stated call count. The separate treatment of $\alpha=1$ is correct.</p><p>Replacing the temporary checkpoint prevents duplicate checkpoints, and computing each new bound from an actual returned decision prevents iterative growth of its encoding length.</p><p><b>Minor issue:</b> The lemma does not explicitly require $\eta$ to be rational. As stated for arbitrary real $\eta$, its prescribed $h$ need not be rational, although oracle inputs must be rational. Every subsequent application uses rational $\eta$, so this omission does not affect the partial theorem.</p><p><b>Minimum clarification:</b> State that $\eta\in\mathbb Q$.</p><h3>3. Recovering exact integral maxima</h3><p>For $p&lt;1$, the chosen accuracy $g(p)/2$ is strictly below the minimum positive separation between attainable integral values. Hence the returned decision must attain the exact maximum.</p><p>For $p=1$, the perturbation satisfies $s&lt;r&lt;1$, and the displayed comparison correctly gives<br>$$
+A_x(1)\ge A_y(1)-\frac g2.
+$$<br>Since both values are attainable at $1$, rational separation forces equality.</p><p>The lemma’s accuracy restriction is satisfied in both cases: $W(p)\ge1$, so the chosen accuracies are at most $1$, while $U\ge1$.</p><p>The inverse accuracies have polynomial logarithmic size. Thus the claimed dependence on $1/\alpha$, rather than on an exponentially small separation value itself, is justified.</p><p><b>Finding:</b> Correct.</p><h3>4. Initialization and phase invariant</h3><p>Every positive mass is at least $\delta$, so<br>$$
+A_x(\delta)=\delta\min_t u_t(x).
+$$<br>Exact maximization therefore fixes the largest possible minimum utility. Every retained decision has minimum exactly $v$, establishing the initial invariant.</p><p>For later phases, the common prefix and its endpoint value imply $c_x\ge s$. Monotonicity and the endpoint convention justify the claimed plateau through $c_x$ and strict increase after it.</p><p>All retained checkpoints remain strictly ordered: the next checkpoint is $c+\delta&gt;s$.</p><p><b>Finding:</b> Correct, including the immediate return when $\delta=1$.</p><h3>5. Plateau search and extension</h3><p>The equivalence<br>$$
+M(q)&gt;H(q)\quad\Longleftrightarrow\quad q&gt;c
+$$<br>is valid. For $q\le c$, every retained decision has the stated plateau. For $q&gt;c$, a decision attaining the minimum $c_x=c$ has strictly larger utility on a positive-length interval.</p><p>The predicate is monotone on grid indices. Since $c$ is itself a grid point, the first successful index satisfies $c=(j-1)\delta$. Binary search therefore uses only logarithmically many exact-maximization requests.</p><p>At $s&#x27;=c+\delta$, every decision shares the prefix through $c$, and grid constancy gives<br>$$
+A_x(s&#x27;)=b+v(c-s)+\delta Q_x(s&#x27;).
+$$<br>Thus maximizing the integral maximizes the endpoint utility. Retaining the attained maximum fixes the new endpoint value and the entire next cell.</p><p><b>Finding:</b> Correct.</p><h3>6. Termination and exact leximin correctness</h3><p>Each successful extension fixes a strictly larger utility value on a cell of positive mass. Every retained decision realizes all previously fixed levels and has at most $\tau$ distinct utility values. Therefore there are at most $\tau-1$ extensions after initialization.</p><p>The first-differing-cell argument matches the task’s definition. A forbidden witness must have a first differing grid cell favoring $y$. Agreement on earlier fixed prefixes places $y$ in the corresponding retained set. The initial maximum, forced plateau, next-cell maximum, or identical terminal suffix rules out that favorable difference.</p><p>Both terminal-return cases are covered.</p><p><b>Finding:</b> Correct.</p><h3>7. Running time and requested approximation parameters</h3><p>The number of retained checkpoints, their bit lengths, and the integral-bound bit lengths are polynomially bounded. Combining the exact-maximization call count with the phase count proves the stated running time polynomial in the encoded inputs and $1/\alpha$.</p><p>The conversion from exact leximin optimality to the requested approximation guarantee is valid because<br>$$
+0&lt;a\le1,\qquad e\ge0,\qquad Q_{x^\star}(q)\ge0,
+$$<br>which imply<br>$$
+\frac{Q_{x^\star}(q)+e}{a}\ge Q_{x^\star}(q).
+$$</p><p><b>Major target limitation:</b> Polynomial dependence on $1/\alpha$ does not establish polynomial dependence on $\operatorname{bits}(\alpha)$. The result resolves the stated restricted regimes, including fixed positive $\alpha$, but leaves the general task unresolved.</p><p><b>Minimum additional requirement:</b> Establish the requested encoding-length running time or establish an impossibility result for that target. The present proof supplies neither.</p><h3>8. Slow exact-recovery example</h3><p>The one-type objective calculation is correct:<br>$$
+F(j)=\frac rh(j-c)+j.
+$$<br>It increases with $j$, so its maximum occurs at $M$. Returning $c+1$ satisfies the retained constraint, and the displayed inequalities correctly verify its admissibility for $\alpha=1/M$ and $\varepsilon=0$.</p><p>Thus an admissible sequence can require $M-1$ tightening calls from the stated starting decision. This demonstrates a limitation of the exact-recovery procedure, not a lower bound for the requested weaker approximation guarantee. The prover explicitly makes that distinction.</p><p><b>Finding:</b> Correct and appropriately limited.</p><h3>Actionable feedback</h3><ul><li>Restrict the tightening lemma to rational $\eta$.</li><li>Retain the partial-result designation: the proof establishes exact optimization with polynomial dependence on $1/\alpha$.</li><li>Do not use the slow-recovery example as an impossibility result for the original approximation task; it only concerns the specified recovery procedure.</li></ul><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,294 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Representation with Incomplete Votes — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Representation with Incomplete Votes <span style="font-weight:normal;color:#8a7350">(aaai23-25702)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.1 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For any m ≥t &gt; k, with probability at least 1 −δ, Algorithm 2 returns a committee that satisfies α-EJR and α-OAS after querying no more than 578Hk m −k t −k   αk2 (1 −α)k + 1 3 log 4mk4 δ  voters. For any fixed δ &gt; 0, if α = 1, this leads to a query complexity of O mk6 log k log m  , and if α &lt; 1, this leads to a query complextiy of O mk3 log k log m  .</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates C, committee size k, query limit t, accuracy parameters alpha and delta, and a hidden society distribution mu over approval types A subset of C, adaptively choose query sets Q of size at most t, observe independent samples A intersect Q from mu, and output a k-member committee satisfying alpha-EJR with probability at least 1-delta while minimizing the worst-case number of samples.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) contain \(m\) candidates, with integers \(1\le k&lt;t\le m\), binary rationals \(0&lt;\alpha\le1\) and \(0&lt;\delta&lt;1\), and a binary-encoded sample budget \(B\ge0\).<br>A society is represented by its support: the list of its \(\tau\) approval types \(A\subseteq C\) with positive binary-rational masses \(\mu(A)\), summing to \(1\). Here \(\tau\) is the support size, not the number of possible approval types; empty approval sets are allowed.<br>The society description is hidden from the querying strategy. Public parameters \(\tau\) and \(L\) specify the support size and an upper bound on its description length; assume this class of societies is nonempty.<br>Each query chooses \(Q\subseteq C\), with \(|Q|\le t\), and observes only \(A\cap Q\) for a fresh independent draw \(A\sim\mu\). Queries and the final committee may be randomized and depend on previous responses.<br>A group consists of real submasses \(0\le g_A\le\mu(A)\). A committee \(W\subseteq C\), with \(|W|=k\), satisfies \(\alpha\)-EJR if, for every integer \(1\le\ell\le k\) and every group with \(\sum_A g_A\ge\ell/(\alpha k)\) and \(\left|\bigcap_{A:g_A&gt;0}A\right|\ge\ell\), some type with \(g_A&gt;0\) satisfies \(|A\cap W|\ge\ell\).<br>Let \(N^*\) be the smallest sample cap for which one strategy, knowing only the public parameters, outputs an \(\alpha\)-EJR committee with probability at least \(1-\delta\) for every admissible hidden society. The cap applies to every execution, including unsuccessful executions.<br>Is deciding whether \(N^*\le B\) solvable in polynomial time, or is it NP-hard? State running times in \(m,\tau,L,k,t,\log(B+1)\) and the bit lengths of \(\alpha,\delta\).<br>For finite electorates, an adaptive algorithm achieves \(\alpha\)-EJR using \(O\!\left(\left\lceil(m-k)/(t-k)\right\rceil k^6\log(k+1)\log(mk/\delta)\right)\) samples; its noisy-query model explicitly includes population-distribution sampling. [Verified bound and model](https://daniel-halpern.com/files/representation-journal.pdf).<br>For complete sampled ballots, population JR requires \(\Omega(k^3)\) samples on some instances. These bounds do not determine the complexity of deciding the exact minimum sample cap. [Verified lower bound](https://arxiv.org/html/2606.10446v1).</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Restored the anchor&#x27;s domain 1 &lt;= k &lt; t &lt;= m and restricted alpha to (0,1] and delta to (0,1), with binary-rational accuracy parameters.</li><li>Normalized total society mass to one and allowed empty approval types, as the approval domain permits.</li><li>Defined continuous voter groups using divisible submasses, with the original weak size threshold and a positive-mass represented type.</li><li>Kept the support description hidden from the strategy; made support size and a description-length bound public to specify the minimax class.</li><li>Interpreted minimizing worst-case samples through its exact budget decision problem, with one uniform strategy for all admissible societies.</li><li>Defined worst-case samples as a deterministic cap on every execution and encoded the budget in binary.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and scope</h3><p><b>The general polynomial-time-versus-NP-hardness classification remains unresolved.</b> I establish several additional structural results and an exact polynomial-time solution for a nontrivial regime with arbitrary support size:</p><ul><li>Every society has a set of at most $\lfloor\alpha k\rfloor$ candidates whose inclusion makes every size-$k$ completion satisfy $\alpha$-EJR.</li><li>When $\alpha k$ is an integer, I characterize exactly the societies attaining the resulting lower bound on the number of valid committees.</li><li>When $\alpha k=1$, I determine the optimal success probability without samples, prove that adaptivity is unnecessary, and solve the decision problem in polynomial time whenever $t\ge m-k$.</li><li>I give a self-contained proof of the one-support formula, restricting conditional probabilities to observations of positive probability.</li></ul><p>Write $b_\alpha,b_\delta$ for the bit lengths of $\alpha,\delta$.</p><p>As in the notes, I use an explicit encoding in which approval sets have $m$-bit incidence vectors and rational masses have a fixed canonical binary numerator–denominator encoding. In particular, changing approval sets while retaining the number of types and the mass vector does not change the description length. The structural results for individual societies do not depend on this convention; the public-class symmetry and admissibility arguments use it.</p><h3>1. Eliminating real submasses</h3><p>Put $s=\alpha k$. For a committee $W$, an integer $\ell$, and an $\ell$-element set $S$, define<br>$$
+M_\mu(S,W,\ell)
+=
+\sum_{\substack{A\supseteq S\\ |A\cap W|&lt;\ell}}\mu(A).
+$$</p><p><b>Lemma 1.</b> A committee $W$ violates $\alpha$-EJR if and only if, for some $1\le\ell\le k$ and some $\ell$-element set $S$,<br>$$
+M_\mu(S,W,\ell)\ge\frac{\ell}{s}.
+$$</p><p><b>Proof.</b> Suppose a group witnesses a violation. Its mass is positive, so its participating types form a nonempty collection. Choose an $\ell$-element subset $S$ of their common intersection. Every participating type contains $S$ and approves fewer than $\ell$ members of $W$. Since $g_A\le\mu(A)$,<br>$$
+M_\mu(S,W,\ell)\ge\sum_A g_A\ge\frac{\ell}{s}.
+$$</p><p>Conversely, suppose the displayed inequality holds. Assign full mass to every type counted in $M_\mu(S,W,\ell)$ and zero mass elsewhere. The positive threshold ensures that some type participates. This group has sufficient mass, its common intersection contains $S$, and none of its participating types approves $\ell$ elected candidates. It therefore witnesses a violation. $\square$</p><p>This gives an exact verification algorithm in<br>$$
+2^m\operatorname{poly}(m,\tau,L,k,b_\alpha)
+$$<br>bit operations.</p><p>If $s&lt;1$, every threshold exceeds the society’s total mass. Hence every committee is valid and $N^*=0$. Below, assume $s\ge1$ and put<br>$$
+r=\lfloor s\rfloor.
+$$</p><h3>2. A valid core of at most $\lfloor\alpha k\rfloor$ candidates</h3><p>For this section, call a set $T$, possibly smaller than $k$, <b>valid for the prescribed thresholds</b> if it satisfies the representation condition in the task with the thresholds $\ell/s$ and utilities $|A\cap T|$.</p><p><b>Theorem 2.</b> Every society has a set $T$ with $|T|\le r$ that is valid for the prescribed thresholds. Consequently, every size-$k$ committee containing $T$ satisfies $\alpha$-EJR.</p><p><b>Proof.</b> Start with all support types remaining and $T=\varnothing$. Process the integers $\ell=r,r-1,\ldots,1$ in descending order.</p><p>At level $\ell$, while there is an $\ell$-element set $S$ such that the total mass of remaining types containing $S$ is at least $\ell/s$:</p><ul><li>add every candidate of $S$ to $T$;</li><li>remove every remaining type containing $S$.</li></ul><p>Every selection removes positive mass, so there are at most $\tau$ selections.</p><p>Suppose the selected levels, with repetitions, are $\ell_1,\ldots,\ell_q$. Their removed collections of types are disjoint, and selection $i$ removes mass at least $\ell_i/s$. Therefore<br>$$
+\frac{\ell_1+\cdots+\ell_q}{s}\le1.
+$$<br>The numerator is an integer, giving<br>$$
+|T|\le\ell_1+\cdots+\ell_q\le\lfloor s\rfloor=r.
+$$</p><p>It remains to prove validity. Suppose, to the contrary, that a group witnesses a violation at level $\ell$ for the final set $T$. Necessarily $\ell\le r$, since otherwise $\ell/s&gt;1$.</p><p>No participating type could have been removed at a level $j\ge\ell$. Such a removed type contains the selected $j$-element set, which remains in $T$, and would approve at least $j\ge\ell$ candidates of $T$, contradicting the alleged violation.</p><p>Thus all participating types remain after processing level $\ell$. Choose an $\ell$-element subset $S$ of their common intersection. The remaining types containing $S$ have total mass at least<br>$$
+\sum_A g_A\ge\frac{\ell}{s}.
+$$<br>This contradicts termination of the selection loop at level $\ell$. Hence $T$ is valid.</p><p>Finally, adding elected candidates cannot decrease any type’s utility. Every size-$k$ completion of $T$ is therefore valid. $\square$</p><p>This is an existence result; the proof does not claim that finding such a core is polynomial-time.</p><p>Let $\mathcal G_\mu$ denote the set of valid size-$k$ committees. The theorem gives<br>$$
+|\mathcal G_\mu|
+\ge
+\binom{m-r}{k-r}.
+$$<br>Indeed, a core of size $a\le r$ has $\binom{m-a}{k-a}$ completions, and this quantity decreases with $a$ because, for $a&lt;k$,<br>$$
+\frac{\binom{m-a-1}{k-a-1}}{\binom{m-a}{k-a}}
+=
+\frac{k-a}{m-a}&lt;1.
+$$</p><h3>3. The optimal strategy without samples</h3><p>Let $\mathcal H$ be the admissible public class, and let $V_0$ be the optimal worst-case success probability using no queries.</p><p><b>Proposition 3.</b> Under the stated encoding convention,<br>$$
+V_0
+=
+\min_{\mu\in\mathcal H}
+\frac{|\mathcal G_\mu|}{\binom{m}{k}}.
+$$<br>Thus a uniformly random size-$k$ committee is optimal without samples.</p><p><b>Proof.</b> Uniform selection succeeds on society $\mu$ with probability $|\mathcal G_\mu|/\binom{m}{k}$.</p><p>For the reverse inequality, fix any output distribution over committees and any admissible society $\mu$. Every candidate permutation of $\mu$ remains admissible. Average the strategy’s success probability over a uniformly random permutation. For every fixed output committee, its inverse image is uniform among all size-$k$ committees. The average success probability is therefore<br>$$
+\frac{|\mathcal G_\mu|}{\binom{m}{k}},
+$$<br>regardless of the strategy’s output distribution. At least one permuted society has success probability no greater than this average. Taking the minimum over $\mu$ proves the claim. $\square$</p><p>In particular, Theorem 2 gives the universal guarantee<br>$$
+V_0\ge
+\rho_r
+:=
+\frac{\binom{m-r}{k-r}}{\binom{m}{k}}
+=
+\frac{\binom{k}{r}}{\binom{m}{r}}.
+$$</p><p>Consequently,<br>$$
+\rho_r\ge1-\delta
+\quad\Longrightarrow\quad
+N^*=0
+$$<br>for every admissible support size and description-length bound.</p><p>The next sections characterize equality when $s=r$ is an integer.</p><h3>4. Extending a prescribed set to a valid committee</h3><p>Assume throughout this section that<br>$$
+s=\alpha k=r\in\{1,\ldots,k\}.
+$$</p><p>A candidate is <b>approved somewhere</b> if its total approval mass is positive.</p><p><b>Lemma 4.</b> Let $D$ be a set of<br>$$
+|D|=k-r+1
+$$<br>candidates containing at least one candidate approved somewhere. Then some $\alpha$-EJR committee contains $D$.</p><p><b>Proof.</b> Define the harmonic numbers and weighted potential by<br>$$
+H_0=0,\qquad
+H_j=\sum_{i=1}^j\frac1i,\qquad
+F_\mu(W)=\sum_A\mu(A)H_{|A\cap W|}.
+$$</p><p>Choose a size-$k$ committee $W\supseteq D$ maximizing $F_\mu$ among all such committees. A maximizer exists because the feasible collection is finite.</p><p>Suppose $W$ violates $\alpha$-EJR at level $\ell$. A witnessing group has a common candidate $z\notin W$: otherwise its common intersection would supply $\ell$ elected candidates to every participating type.</p><p>Write<br>$$
+a=F_\mu(W\cup\{z\})-F_\mu(W).
+$$<br>For every participating type, $|A\cap W|&lt;\ell$, and adding $z$ contributes at least $1/\ell$. Hence<br>$$
+a
+\ge
+\sum_A\frac{g_A}{|A\cap W|+1}
+\ge
+\frac{\sum_Ag_A}{\ell}
+\ge\frac1r.
+$$</p><p>For $y\in W$, define the swap gain and removal loss<br>$$
+d_y
+=
+F_\mu((W\setminus\{y\})\cup\{z\})-F_\mu(W),
+$$<br>$$
+\lambda_y
+=
+F_\mu(W\cup\{z\})
+-
+F_\mu((W\cup\{z\})\setminus\{y\}).
+$$<br>Then<br>$$
+d_y=a-\lambda_y,
+\qquad
+\lambda_y
+=
+\sum_{A:y\in A}
+\frac{\mu(A)}{|A\cap(W\cup\{z\})|}.
+$$<br>Thus $\lambda_y\ge0$, with strict inequality whenever $y$ is approved somewhere.</p><p>Let<br>$$
+c=\mu\bigl(\{A:A\cap(W\cup\{z\})\ne\varnothing\}\bigr)\le1.
+$$<br>A type-by-type calculation gives<br>$$
+\sum_{y\in W}d_y=(k+1)a-c.
+$$<br>To verify it, put $v=|A\cap W|$. If $z\in A$, the sum of the type’s swap contributions is $(k-v)/(v+1)$. If $z\notin A$ and $v&gt;0$, it is $-1$. If neither $z$ nor any member of $W$ is approved, it is zero. These are exactly the contributions to the displayed identity.</p><p>Subtracting the gains for removals in $D$ yields<br>$$
+\begin{aligned}
+\sum_{y\in W\setminus D}d_y
+&amp;=(k+1-|D|)a-c+\sum_{y\in D}\lambda_y\\
+&amp;=ra-c+\sum_{y\in D}\lambda_y\\
+&amp;\ge\sum_{y\in D}\lambda_y\\
+&amp;&gt;0.
+\end{aligned}
+$$<br>The last inequality follows because $D$ contains a candidate approved somewhere.</p><p>Every swap in this sum retains $D$, so maximality of $W$ requires every summand to be nonpositive. This contradicts the strict positive sum. The argument also covers $r=1$, when the sum is empty and the resulting contradiction is immediate. $\square$</p><p>For $\alpha=1$, the lemma says that every candidate approved somewhere belongs to some EJR committee.</p><h3>5. Exact characterization of the extremal societies</h3><p><b>Theorem 5.</b> Suppose $s=\alpha k=r$ is an integer. Then<br>$$
+|\mathcal G_\mu|=\binom{m-r}{k-r}
+$$<br>if and only if the support consists of pairwise disjoint, nonempty approval sets whose union $T$ has size $r$, with<br>$$
+\mu(A)=\frac{|A|}{r}
+$$<br>for every support type.</p><p>For such a society, the valid committees are exactly the size-$k$ committees containing $T$.</p><p><b>Proof.</b></p><h3>Necessity</h3><p>By Theorem 2, some core $T$ has size at most $r$. If its size were smaller than $r$, its completions alone would exceed $\binom{m-r}{k-r}$, by the strict inequality established in Section 2. Therefore $|T|=r$.</p><p>Every completion of $T$ is valid. Since their number already equals $|\mathcal G_\mu|$, the valid committees are exactly those containing $T$.</p><p>First, no candidate outside $T$ is approved anywhere. If such a candidate $x$ existed, choose<br>$$
+D\subseteq C\setminus T,\qquad
+|D|=k-r+1,\qquad x\in D.
+$$<br>This is possible because $m&gt;k$. Lemma 4 supplies a valid committee containing $D$. It cannot also contain $T$, since<br>$$
+|D|+|T|=k+1.
+$$<br>This contradicts the characterization of the valid committees. Thus every support type is a subset of $T$.</p><p>Fix $y\in T$, and choose a $(k-r+1)$-element set $D\subseteq C\setminus T$. The committee<br>$$
+W_y=(T\setminus\{y\})\cup D
+$$<br>does not contain $T$, so it is invalid.</p><p>By Lemma 1, some level $\ell$ and some $\ell$-element set $S$ satisfy<br>$$
+\sum_{\substack{A\supseteq S\\|A\cap W_y|&lt;\ell}}\mu(A)
+\ge\frac{\ell}{r}.
+$$<br>Every counted type is contained in $T$ and has $|A|\ge\ell$. Moreover,<br>$$
+|A\cap W_y|=|A|-\mathbf 1_{\{y\in A\}}&lt;\ell.
+$$<br>These inequalities force $y\in A$ and $|A|=\ell$. Since $A\supseteq S$ and $|S|=\ell$, necessarily $A=S$. Thus a single support type containing $y$ satisfies<br>$$
+\mu(A)\ge\frac{|A|}{r}.
+$$</p><p>Let $\mathcal F$ be the collection of nonempty support types satisfying this inequality. The preceding argument shows that their union is $T$. Consequently,<br>$$
+1
+\ge
+\sum_{A\in\mathcal F}\mu(A)
+\ge
+\frac1r\sum_{A\in\mathcal F}|A|
+\ge
+\frac{|T|}{r}
+=1.
+$$<br>Every inequality is an equality. It follows that:</p><ul><li>all positive mass belongs to $\mathcal F$, so there are no other support types;</li><li>$\mu(A)=|A|/r$ for every type;</li><li>$\sum_A|A|=|\bigcup_A A|$, so the types are pairwise disjoint.</li></ul><p>This proves necessity.</p><h3>Sufficiency</h3><p>Suppose the support has the stated form. A type $A$ of size $a$ has mass $a/r$. Taking its entire mass gives an eligible group at level $\ell=a$. Since this group contains only type $A$, any valid committee must contain all of $A$.</p><p>Therefore every valid committee contains the union $T$.</p><p>Conversely, a committee containing $T$ contains every support approval set. For any eligible group at level $\ell$, every participating type contains the group’s $\ell$ common candidates and therefore approves at least $\ell$ elected candidates. Such a committee is valid.</p><p>The valid committees are precisely the completions of $T$, numbering $\binom{m-r}{k-r}$. $\square$</p><p>A useful special case is the following.</p><p><b>Corollary 6.</b> A society has exactly one $\alpha$-EJR committee if and only if $\alpha=1$ and its support consists of disjoint nonempty approval sets partitioning $k$ candidates, each having mass $|A|/k$.</p><p><b>Proof.</b> If $\alpha&lt;1$, then $r\le k-1$, and Theorem 2 supplies at least<br>$$
+\binom{m-r}{k-r}&gt;1
+$$<br>valid committees. For $\alpha=1$, apply Theorem 5 with $r=k$. $\square$</p><p>In particular, a society with a unique valid committee necessarily has $\tau\le k$.</p><h3>6. Polynomial-time recognition of sharpness for the public class</h3><p>Theorem 5 reduces admissibility of an extremal society to a small integer optimization problem.</p><p>Let $h(m,\tau)$ be the fixed description cost of the headers and $\tau$ incidence vectors. Let $c_r(a)$ be the encoded mass cost of the reduced rational $a/r$, for $1\le a\le r$. These costs are computable in polynomial time in $\log(r+1)$ under the stated encoding.</p><p>An extremal society with $\tau$ types exists within length $L$ exactly when there are positive integers<br>$$
+a_1+\cdots+a_\tau=r
+$$<br>such that<br>$$
+h(m,\tau)+\sum_{i=1}^{\tau}c_r(a_i)\le L.
+$$<br>The approval sets can then be chosen as disjoint blocks of these sizes.</p><p>Define<br>$$
+D(0,0)=0,
+$$<br>with all other initially impossible states having value $+\infty$, and use the recurrence<br>$$
+D(i,j)
+=
+\min_{1\le a\le j}
+\bigl(D(i-1,j-a)+c_r(a)\bigr).
+$$<br>Then admissibility is equivalent to<br>$$
+h(m,\tau)+D(\tau,r)\le L.
+$$<br>If $\tau&gt;r$, it is impossible immediately.</p><p>There are at most $(\tau+1)(r+1)$ states and at most $r$ transitions per state. Thus this test uses<br>$$
+O(\tau r^2)
+$$<br>transitions and polynomial bit cost per transition. Including rational comparisons and binomial computations, its running time is<br>$$
+\operatorname{poly}
+\bigl(m,\tau,L,k,b_\alpha,b_\delta,\log(B+1)\bigr).
+$$</p><p>When $s=r$ is an integer:</p><ul><li>If the test succeeds, then</li></ul><p>$$
+  V_0=\rho_r.
+  $$</p><ul><li>If it fails, every admissible society has an integer number of valid committees strictly exceeding $\binom{m-r}{k-r}$, so</li></ul><p>$$
+  V_0\ge
+  \frac{\binom{m-r}{k-r}+1}{\binom{m}{k}}.
+  $$</p><p>Thus sharpness of the universal zero-sample bound is polynomial-time decidable. In the sharp case, the decision for $B=0$ is exactly the rational comparison $\rho_r\ge1-\delta$.</p><p>For nonintegral $s$, the same disjoint-block construction, with masses $a_i/r$, still attains $\rho_r$ whenever admissible: each block of size $a_i$ has mass at least $a_i/s$ and therefore forces inclusion of the entire block. The necessity direction above is proved only for integral $s$.</p><h3>7. Arbitrary support size when $\alpha k=1$</h3><p>This regime admits additional exact results.</p><p>Let<br>$$
+I_\mu=\bigcap_{A:\mu(A)&gt;0}A,
+\qquad
+U_\mu=\bigcup_{A:\mu(A)&gt;0}A.
+$$</p><p><b>Lemma 7.</b> When $\alpha k=1$:</p><ul><li>if $I_\mu=\varnothing$, every committee is valid;</li><li>if $I_\mu\ne\varnothing$, a committee $W$ is valid exactly when</li></ul><p>$$
+  W\cap U_\mu\ne\varnothing.
+  $$</p><p><b>Proof.</b> Levels $\ell\ge2$ have thresholds exceeding one and impose no requirement. At level one, a group must have mass at least one. Since $g_A\le\mu(A)$ and the masses sum to one, necessarily $g_A=\mu(A)$ for every support type.</p><p>Thus the only potentially eligible group is the entire society. It is cohesive precisely when $I_\mu\ne\varnothing$. Its representation condition requires at least one support type to approve an elected candidate, which is equivalent to $W\cap U_\mu\ne\varnothing$. $\square$</p><p>Notice that representation here depends on hitting the <b>union</b>, once the common intersection is nonempty.</p><h3>7.1 Exact success probability without queries</h3><p><b>Theorem 8.</b> Suppose $\alpha k=1$. If<br>$$
+\tau&gt;2^{m-1},
+$$<br>then $V_0=1$. Otherwise, put<br>$$
+u=1+\lceil\log_2\tau\rceil.
+$$<br>Then<br>$$
+V_0
+=
+1-\frac{\binom{m-u}{k}}{\binom{m}{k}},
+$$<br>where a binomial coefficient is zero when its lower argument exceeds its nonnegative upper argument.</p><p><b>Proof.</b> If $I_\mu\ne\varnothing$, choose $x\in I_\mu$. Every support type contains $x$. If the union has size $v$, there are at most $2^{v-1}$ distinct subsets of the union containing $x$. Therefore<br>$$
+\tau\le2^{v-1},
+\qquad
+v\ge1+\lceil\log_2\tau\rceil=u.
+$$<br>If $\tau&gt;2^{m-1}$, a nonempty common intersection is impossible, so Lemma 7 makes every committee valid.</p><p>Otherwise, for a society with nonempty common intersection and union size $v$, Lemma 7 gives<br>$$
+|\mathcal G_\mu|
+=
+\binom{m}{k}-\binom{m-v}{k}.
+$$<br>This is minimized when $v$ is as small as possible, namely $u$.</p><p>Such a society is admissible under the encoding convention. Choose a $u$-element universe containing $x$, and choose $\tau$ distinct subsets containing $x$. They can be chosen to have union equal to that universe. Indeed, for $u\ge2$,<br>$$
+\tau&gt;2^{u-2},
+$$<br>so a collection of $\tau$ such subsets cannot omit any of the other $u-1$ candidates; omitting one would leave only $2^{u-2}$ possibilities. For $u=1$, necessarily $\tau=1$, and choose the singleton.</p><p>Take the mass vector from any admissible society, whose existence is assumed, and assign it to these new approval types. The mass validity and total description length are preserved.</p><p>This constructs an admissible society attaining the minimum count. Proposition 3 proves the formula. $\square$</p><p>In particular, every committee is valid for every admissible society whenever<br>$$
+\tau&gt;2^{m-k-1}.
+$$<br>This follows from the formula when $\tau\le2^{m-1}$, because then $u&gt;m-k$, and from the first case otherwise.</p><p>The formula is computable in<br>$$
+O(m^3)+
+\operatorname{poly}
+\bigl(\tau,L,k,b_\alpha,b_\delta,\log(B+1)\bigr)
+$$<br>bit operations, using a Pascal table for the binomial coefficients.</p><h3>7.2 Adaptivity is unnecessary</h3><p><b>Proposition 9.</b> When $\alpha k=1$, every capped adaptive strategy can be replaced, without reducing its success probability on any society, by a strategy that chooses all queries before receiving responses.</p><p><b>Proof.</b> Whenever a response contains an approved candidate, output a committee containing that candidate. By Lemma 7, this committee is valid for every possible underlying society.</p><p>Replacing the original strategy’s behavior after its first nonempty response by this rule cannot decrease success.</p><p>Fix the strategy’s internal randomness. Along the hypothetical sequence in which every response is empty, its queries form a fixed list<br>$$
+Q_1,\ldots,Q_B,
+$$<br>after padding with empty queries if necessary, and its final output is a fixed committee $W$.</p><p>Choose this list and $W$ in advance. If any actual response is nonempty, output a committee containing an observed approved candidate; otherwise output $W$. Up to the first nonempty response, this reproduces the modified adaptive strategy. After that response, it succeeds. Averaging over internal randomness proves the claim. $\square$</p><p>For a fixed plan $(Q_1,\ldots,Q_B,W)$ and a society with $I_\mu\ne\varnothing$, its failure probability is exactly<br>$$
+\mathbf 1_{\{W\cap U_\mu=\varnothing\}}
+\prod_{j=1}^{B}
+\left(
+\sum_{A:A\cap Q_j=\varnothing}\mu(A)
+\right).
+$$<br>The product is justified by fresh independent population draws. For societies with $I_\mu=\varnothing$, failure probability is zero.</p><p>This formula reduces the remaining optimization to distributions over fixed query plans, but does not establish a polynomial-time algorithm for that optimization.</p><h3>7.3 A deterministic cap and an exact polynomial regime</h3><p>Put<br>$$
+J=\left\lceil\frac{m-k}{t}\right\rceil.
+$$</p><p><b>Proposition 10.</b> When $\alpha k=1$, a deterministic strategy using at most $J$ samples always succeeds.</p><p><b>Proof.</b> Partition $m-k$ candidates into $J$ disjoint query sets of size at most $t$. If any response is nonempty, elect an observed approved candidate and complete the committee arbitrarily.</p><p>If every response is empty, output the $k$ unqueried candidates.</p><p>If $I_\mu=\varnothing$, every output is valid. Otherwise, every common candidate belongs to every drawn approval set, so an empty response proves that none of those common candidates belongs to its query set. After all empty responses, the nonempty set $I_\mu$ lies among the $k$ unqueried candidates. The output therefore intersects $U_\mu$ and is valid by Lemma 7. $\square$</p><p>When $t\ge m-k$, this cap is one. Combining it with Theorem 8 gives the exact answer:<br>$$
+N^*
+=
+\begin{cases}
+0,&amp;V_0\ge1-\delta,\\
+1,&amp;V_0&lt;1-\delta.
+\end{cases}
+$$</p><p>Thus, for arbitrary $\tau$ and $L$, <b>deciding $N^*\le B$ is polynomial-time solvable whenever $\alpha k=1$ and $t\ge m-k$</b>. Its running time is polynomial in<br>$$
+m,\tau,L,k,t,\log(B+1),b_\alpha,b_\delta.
+$$</p><p>For example, with $m=6$, $k=2$, $\alpha=1/2$, $\tau=3$, and $t=4$, Theorem 8 gives<br>$$
+V_0
+=
+1-\frac{\binom32}{\binom62}
+=
+\frac45.
+$$<br>Hence $N^*=0$ when $\delta\ge1/5$, and $N^*=1$ when $\delta&lt;1/5$.</p><h3>7.4 Exact exponential decision procedure throughout this regime</h3><p>The fixed-plan characterization also gives an exact algorithm for all parameters with $\alpha k=1$.</p><p>If $B\ge J$, answer yes. Otherwise, $B&lt;J\le m$. Enumerate all admissible descriptions of length at most $L$ and all fixed plans. There are fewer than $2^{L+1}$ descriptions and at most<br>$$
+2^{m(B+1)}
+$$<br>plans, since there are at most $2^m$ legal query sets and at most $2^m$ committees.</p><p>Introduce one nonnegative variable per plan, require their sum to be one, and for each admissible society require the weighted sum of the failure probabilities above to be at most $\delta$.</p><p>Proposition 9 proves equivalence between feasibility of this program and $N^*\le B$. All coefficients are rational, with bit lengths polynomial in $BL$. The standard exact rational linear-program feasibility theorem applies: an explicitly represented rational system is decidable in time polynomial in its complete binary encoding length.</p><p>The resulting running time is<br>$$
+2^{O(L+m(B+1))}
+\operatorname{poly}
+\bigl(m,\tau,L,k,t,B,b_\alpha,b_\delta,\log(B+1)\bigr).
+$$<br>Since this branch has $B&lt;J$, it is bounded in the requested parameters by<br>$$
+2^{O(L+mJ)}
+\operatorname{poly}
+\bigl(m,\tau,L,k,t,b_\alpha,b_\delta,\log(B+1)\bigr).
+$$<br>This is an upper bound, not a hardness result.</p><h3>8. Repaired exact formula for one-support societies</h3><p>For completeness, the following restates and proves the one-support result with the conditional-probability domain repaired.</p><p>Assume $\tau=1$. The sole approval type $A$ has mass one. Directly from the definition, validity is equivalent to<br>$$
+|A\cap W|\ge\min(r,|A|),
+\qquad r=\lfloor\alpha k\rfloor.
+$$<br>Indeed, an eligible group exists at level $\ell$ precisely when $\ell\le|A|$ and $\ell\le\alpha k$.</p><p>The case $r=0$ is vacuous. Suppose $r\ge1$, and define<br>$$
+b=\min(Bt,m),\qquad u=m-b,
+$$<br>$$
+\mathcal A
+=
+\{a\in\mathbb Z:0\le a\le r,\ a\le b,\ r-a\le u\}.
+$$</p><p><b>Theorem 11.</b> The optimal worst-case success probability is<br>$$
+V_B
+=
+\frac1{\binom mr}
+\sum_{a\in\mathcal A}
+\binom ba
+\binom{\min(k-a,u)}{r-a}.
+$$<br>Therefore<br>$$
+N^*\le B
+\quad\Longleftrightarrow\quad
+V_B\ge1-\delta.
+$$</p><p><b>Proof of the upper bound.</b> Choose $A$ uniformly among the $r$-element approval sets, all of which are admissible under the encoding convention.</p><p>Responses are deterministic membership information. Repeated tests can be replaced by fresh candidate tests while retaining the original information, and unused query capacity can be filled. Thus, for an upper bound, allow the strategy to test exactly $b$ distinct candidates.</p><p>Conditional on any positive-probability history, the untested approvals are uniform among the untested candidates. Adaptive choices do not disturb this property: each new candidate is chosen using only previously revealed memberships. Consequently, the number $a$ of tested approvals has distribution<br>$$
+\Pr(a)
+=
+\frac{\binom ba\binom u{r-a}}{\binom mr},
+\qquad a\in\mathcal A.
+$$</p><p>For an approval set of size $r$, success requires including all approvals. After observing $a$, the committee must include those $a$ known approvals and can select at most $\min(k-a,u)$ untested candidates. Its conditional success probability is therefore at most<br>$$
+\frac{\binom{\min(k-a,u)}{r-a}}{\binom u{r-a}},
+\qquad a\in\mathcal A.
+$$<br>Every denominator here is positive by the definition of $\mathcal A$. Impossible observations are omitted entirely.</p><p>Averaging gives $V_B$. This bounds the worst-case success of every strategy by its average success under the chosen prior.</p><p><b>Proof of attainment.</b> Choose a uniform random ordering of the candidates and query its first $b$ positions in batches of at most $t$.</p><p>If at least $k$ approvals are observed, output $k$ of them. Otherwise, include all observed approvals, fill the remaining places with the earliest unqueried candidates, and, if needed, use observed disapproved candidates to complete the committee.</p><p>For every $r$-element approval set, the preceding hypergeometric calculation gives success probability exactly $V_B$.</p><p>Fix an ordering. Adding an unqueried approval cannot decrease the number of elected approvals. Adding a queried approval also cannot decrease it: below $k$ observed approvals, it adds one known elected approval and shortens the unqueried filler prefix by at most one; at or above $k$, the elected approval count is already $k$.</p><p>Thus, for $|A|\ge r$, choose an $r$-element subset $T\subseteq A$. Success on $T$ implies success on $A$ for every ordering.</p><p>If $|A|&lt;r$, choose an $r$-element superset $T\supseteq A$. Success on $T$ includes all of $T$. Every queried member of $A$ is elected when running on $A$. If $T$ has unqueried members, its observed approval count is below $k$, and the filler prefix used on $A$ is at least as long as the one used on $T$. Hence every unqueried member of $A$ is also elected. If all of $T$ was queried, this last assertion is vacuous.</p><p>Therefore success on $T$ implies success on $A$ in this case as well. Every approval set consequently has success probability at least $V_B$, proving attainment. $\square$</p><p>A Pascal table computes all needed binomial coefficients in $O(m^3)$ bit operations. Computing $b$ requires binary multiplication and comparison, rather than iterating $B$ times. The decision is polynomial in<br>$$
+m,L,k,t,\log(B+1),b_\alpha,b_\delta.
+$$</p><h3>9. What remains open</h3><p>The missing general result is still either a polynomial-time algorithm for the public-parameter decision problem or a valid hardness reduction whose output contains only those public parameters.</p><p>In particular, hardness of finding or verifying committees for an explicitly supplied society does not supply such a reduction: the society is hidden and universally quantified here.</p><p>The supplied [sampling upper bound](https://daniel-halpern.com/files/representation-journal.pdf) and [population sampling lower bound](https://arxiv.org/html/2606.10446v1) concern information requirements. The results above resolve additional exact regimes and constrain possible extremal societies, but do not classify the full decision problem.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 9 and the overall response to USER_TASK: The general decision problem $N^*\le B$ remains unclassified. The output supplies neither a polynomial-time algorithm for arbitrary public parameters nor an NP-hardness reduction, and explicitly acknowledges this missing result.</li><li><b>minor</b> — Encoding convention in the introduction; Sections 3, 6, 7.1, and 8: Several public-class conclusions depend on fixed-length incidence-vector encoding and approval-set-independent description costs, which USER_TASK does not explicitly specify. Retain this qualification and specify the header and rational encoding needed to make $h(m,\tau)$ and $c_r(a)$ reproducible.</li></ul>
+<div class="pre"><p>The output establishes substantial special-case results, but it does <b>not resolve the general decision problem in <code>USER_TASK</code></b>. Its explicit claim of partial progress is accurate. I found no false mathematical step in the structural results or exact formulas. The principal remaining issue is the missing general complexity classification; a secondary issue is the dependence of several results on an encoding convention that the task does not specify.</p><h3>1. Scope and encoding</h3><p>The prover explicitly assumes fixed-length incidence vectors for approval sets and a canonical numerator–denominator encoding for masses.</p><p>This assumption is essential to several arguments: candidate permutations and replacement of approval sets must preserve admissibility under the description-length bound $L$. The task specifies binary-rational masses but does not explicitly prescribe the approval-set encoding.</p><p><b>Minor issue.</b> The public-class conclusions are conditional on the stated encoding convention. This is a natural, explicitly stated completion of an underspecified aspect of the task, but the conclusions should retain that qualification. To make the description-length tests fully reproducible, the prover should specify the header and rational encoding used to define $h(m,\tau)$ and $c_r(a)$.</p><p>The results concerning an individual society do not require this convention.</p><h3>2. Lemma 1: eliminating real submasses</h3><p>Both implications are correct.</p><p>A violating group has positive total mass, so its participating support is nonempty. Selecting an $\ell$-element subset of its common intersection produces the required $S$. Every participating type is included in the defining sum for $M_\mu(S,W,\ell)$.</p><p>Conversely, assigning full mass to the counted types gives a legitimate group. The positive threshold ensures nonempty participation, and every participating type contains $S$ and approves fewer than $\ell$ committee members.</p><p>The verification bound is valid: there are at most $2^m$ candidate subsets to examine, and the necessary rational additions and comparisons have polynomial bit complexity in the stated parameters.</p><p>The conclusion for $s=\alpha k&lt;1$ is also correct: every eligibility threshold exceeds total mass $1$.</p><h3>3. Theorem 2: existence of a small valid core</h3><p>The construction and proof are sound.</p><ul><li>Each selection removes a nonempty collection of previously remaining support types, giving at most $\tau$ selections.</li><li>Removed masses are disjoint, so their threshold lower bounds imply</li></ul><p>$$
+  \sum_i\ell_i\le s.
+  $$<br>Integrality gives the asserted bound by $\lfloor s\rfloor$.</p><ul><li>A type removed at level $j\ge\ell$ contains the selected $j$ candidates, all of which remain in the final core. Such a type cannot participate in an alleged violation at level $\ell$.</li><li>Consequently, every participating type in that violation remained when the level-$\ell$ loop terminated. Its common $\ell$-element subset would have triggered another selection, a contradiction.</li></ul><p>The completion count and its strict decrease with core size are correct. Strictness uses $m&gt;k$, which follows from $k&lt;t\le m$.</p><p>This establishes existence, not a polynomial-time core-finding algorithm, as the prover correctly notes.</p><h3>4. Proposition 3: optimality without samples</h3><p>The permutation averaging argument is correct under the encoding convention.</p><p>For any fixed committee, its inverse image under a uniform candidate permutation is uniform over all size-$k$ committees. Averaging therefore gives the valid-committee fraction independently of the strategy’s output distribution. At least one admissible permuted society attains success no greater than this average.</p><p>The minimum exists because descriptions of bounded length form a finite class. The resulting guarantee using $\rho_r$ is valid.</p><h3>5. Lemma 4: extension of a prescribed set</h3><p>The potential argument is correct, including its strict inequality.</p><p>A violating group supplies a common candidate $z\notin W$. Otherwise its common intersection would already provide every participating type with at least $\ell$ elected approvals.</p><p>Adding $z$ gives<br>$$
+a\ge\frac{1}{r}.
+$$<br>The removal-loss formula is correct, and its denominator is positive whenever the corresponding type approves the removed candidate.</p><p>The critical identity<br>$$
+\sum_{y\in W}d_y=(k+1)a-c
+$$<br>checks out type by type:</p><ul><li>If $z\in A$, the contribution is $(k-v)/(v+1)$.</li><li>If $z\notin A$ and $v&gt;0$, it is $-1$.</li><li>Otherwise it is $0$.</li></ul><p>Subtracting contributions indexed by $D$ leaves a strictly positive sum because $D$ contains a positively approved candidate. Every remaining swap preserves $D$, contradicting maximality.</p><p>The case $r=1$ is covered: the sum over $W\setminus D$ is empty, and the displayed positive lower bound yields a contradiction directly.</p><h3>6. Theorem 5 and Corollary 6</h3><p>The extremal characterization is correct.</p><p>Equality in the completion bound forces a core $T$ of size exactly $r$ and forces every valid committee to contain it. Lemma 4 then excludes approval of any candidate outside $T$.</p><p>For the committee $W_y$, the inequalities<br>$$
+|A|\ge\ell,\qquad
+|A|-\mathbf 1_{\{y\in A\}}&lt;\ell
+$$<br>indeed force $y\in A$ and $|A|=\ell$. Since $A\supseteq S$ and both have size $\ell$, only the single type $A=S$ can be counted.</p><p>The subsequent chain of inequalities has equal endpoints. Equality forces all mass onto the specified types, exact masses $|A|/r$, and pairwise disjointness.</p><p>The sufficiency argument correctly uses level $\ell=|A|$ to force inclusion of each entire block. These levels lie within the permitted range because $|A|\le r\le k$.</p><p>Corollary 6 follows, including the assertion $\tau\le k$.</p><h3>7. Recognition of sharpness</h3><p>Under the stated additive encoding convention, the dynamic program correctly tests whether an extremal society fits within $L$.</p><p>The positive block sizes must sum to $r$, and every such composition can be realized by disjoint candidate blocks. The recurrence enforces these constraints, and its transition count is $O(\tau r^2)$.</p><p>The conclusions about $V_0$ are correct:</p><ul><li>An admissible extremal society attains $\rho_r$.</li><li>If no extremal society is admissible, integrality of the number of valid committees supplies the stated one-committee improvement.</li></ul><p>The nonintegral construction also works: block mass $a_i/r$ is at least $a_i/s$, so the block forces its inclusion. The prover appropriately does not claim necessity in that case.</p><h3>8. The regime $\alpha k=1$</h3><h3>Lemma 7 and Theorem 8</h3><p>Lemma 7 is correct. A group of mass at least $1$ must use every support type at full mass. Cohesion therefore depends on the common intersection, while representation depends on hitting the union.</p><p>The counting argument in Theorem 8 is sound. A support with nonempty common intersection and union size $v$ has at most $2^{v-1}$ distinct types.</p><p>The construction attaining the minimum union size is also valid. For $u\ge2$, having<br>$$
+\tau&gt;2^{u-2}
+$$<br>prevents omission of any candidate other than the prescribed common candidate. The case $u=1$ is explicitly handled.</p><p>Admissibility of the construction depends on the encoding qualification identified above.</p><h3>Proposition 9</h3><p>The replacement of adaptive queries by a predetermined list is correct.</p><p>After any nonempty response, a committee containing an observed approved candidate is valid. Before the first nonempty response, the strategy follows its all-empty history, which determines a fixed query list after internal randomness is fixed.</p><p>The resulting failure formula correctly uses independence of fresh population draws. “Adaptivity is unnecessary” here concerns query selection; the final committee may still depend on responses, as the proof specifies.</p><h3>Proposition 10 and the polynomial regime</h3><p>The deterministic cap<br>$$
+J=\left\lceil\frac{m-k}{t}\right\rceil
+$$<br>is valid. Along the all-empty history, every common candidate must be among the unqueried candidates. Thus the final committee succeeds whenever cohesion is possible.</p><p>For $t\ge m-k$, combining this cap with the exact zero-sample value establishes the asserted formula for $N^*$ and the polynomial decision procedure. The numerical example gives $V_0=4/5$ correctly.</p><h3>Exponential decision procedure</h3><p>The finite linear program correctly characterizes the decision problem in this regime.</p><p>There are finitely many admissible descriptions and fixed plans; the failure coefficients are rational. Their bit lengths are polynomially bounded using the description length and number of draws. The stated exact rational linear-program feasibility theorem applies to this explicitly represented finite system.</p><p>The enumeration and running-time bounds are valid. The branch restriction $B&lt;J$ removes dependence polynomial in the numerical value of an arbitrarily large binary budget.</p><h3>9. Theorem 11: one-support formula</h3><p>The validity condition<br>$$
+|A\cap W|\ge\min(r,|A|)
+$$<br>follows directly from the eligibility thresholds.</p><p>The upper-bound argument is correct. Under a uniform prior on size-$r$ approval sets, testing distinct candidates preserves conditional uniformity of untested approvals. Allowing exactly $b$ distinct tests can only strengthen the strategy for this upper bound.</p><p>The hypergeometric probabilities and conditional success bound are correct. The set $\mathcal A$ ensures all conditional denominators are positive, including boundary cases with no untested candidates.</p><p>The attainment argument is also sound:</p><ul><li>For $|A|\ge r$, adding approvals cannot decrease the elected approval count under the prescribed strategy.</li><li>For $|A|&lt;r$, success on the chosen size-$r$ superset implies inclusion of every queried approval in $A$ and every unqueried approval in $A$, through the longer filler prefix.</li></ul><p>The formula handles $B=0$ and complete observation. The case $r=0$ is separately declared vacuous. Binary computation of $b$ and polynomial-size binomial arithmetic justify the stated polynomial decision time.</p><h3>10. Remaining blocking issue</h3><p><b>Major incompleteness relative to <code>USER_TASK</code>.</b> No general polynomial-time algorithm or NP-hardness reduction is supplied. The structural results, sharpness test, and exact special cases do not decide the problem for arbitrary public parameters.</p><p>The prover explicitly acknowledges this limitation, so this is not an erroneous claim of a complete solution. The minimum additional work required is precisely the missing general algorithm with its correctness and running-time proof, or a valid hardness reduction to the public-parameter decision problem.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

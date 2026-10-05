@@ -1,0 +1,271 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-wine-2018-0032 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-wine-2018-0032 <span style="font-weight:normal;color:#8a7350">(d4-conf-wine-2018-0032)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved_with_minor_gaps · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> Additive approximation is $\mathrm{NP}$-hard even for $\varepsilon=1/(2m^2)$, uniform dyadic masses, and any fixed rational promise bound $\delta\in(0,1)$. The requested polynomial-time algorithm would imply $\mathrm P=\mathrm{NP}$.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 12 — class: hardness</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite type sets \(T\) and \(S\), rational masses \(\mu_t\) and \(\nu_s\) summing to one on each side, a strict weak order for each type over opposite-side types, a missing-information bound \(\delta\), and rational \(\varepsilon&gt;0\), what is the complexity of computing a feasible mass-matching matrix \(x\) whose objective is within additive \(\varepsilon\) of the minimum? Feasibility requires \(\sum_s x_{ts}=\mu_t\) and \(\sum_t x_{ts}=\nu_s\); the objective is \(Q(x)=\sum_{t,s} A_{ts}(x)B_{st}(x)\), where \(A_{ts}(x)=\sum_{r:\,s\succeq_t r}x_{tr}\) and \(B_{st}(x)=\sum_{q:\,t\succeq_s q}x_{qs}\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Each side is an atomless society given by its support: finite nonempty type sets \(T,S\), with positive binary rational masses \(\mu_t,\nu_s\) summing to one on each side. Set \(\tau=|T|+|S|\), \(m=\max\{|T|,|S|\}\), and let \(L\) be the total input bit length; \(\tau\) counts supported types, not possible preference orders.<br>Each type submits a strict weak order over all opposite-side types; all partners are acceptable. Ties represent missing comparisons, including between distinct individuals of the same type. Write \(a\succeq_i b\) when \(i\) ranks \(a\) above or tied with \(b\).<br>Let \(\mathcal C_t\) and \(\mathcal D_s\) be the tie classes in these orders. The rational bound \(\delta\in(0,1)\) promises \(\delta&#x27;=\tfrac12[\sum_t\mu_t\sum_{C\in\mathcal C_t}(\sum_{s\in C}\nu_s)^2+\sum_s\nu_s\sum_{D\in\mathcal D_s}(\sum_{t\in D}\mu_t)^2]\le\delta\); this measures missing comparisons between independently sampled opposite-side individuals, averaged over both societies.<br>A feasible mass matching is \(x\in\mathbb R_{\ge0}^{T\times S}\) satisfying \(\sum_s x_{ts}=\mu_t\) and \(\sum_t x_{ts}=\nu_s\), without an additional stability restriction.<br>Define \(A_{ts}(x)=\sum_{r\in S:\,s\succeq_t r}x_{tr}\), \(B_{st}(x)=\sum_{q\in T:\,t\succeq_s q}x_{qs}\), \(Q(x)=\sum_{t\in T,s\in S}A_{ts}(x)B_{st}(x)\), and \(Q^*=\min_{x\text{ feasible}}Q(x)\).</p><p>Given binary rational \(\varepsilon&gt;0\), can a feasible rational \(x\) with \(Q(x)\le Q^*+\varepsilon\) be computed in time polynomial in \(m,\tau,L,1/\varepsilon\), or is this additive approximation NP-hard even when \(1/\varepsilon\) is polynomial in \(m+\tau+L\)?</p><p>For finite societies with \(n\) individuals per side, minimizing super-blocking pairs over perfect matchings admits no polynomial-time \((n\sqrt\delta)^{1-\eta}\)-approximation for any constants \(\eta\in(0,1]\), \(\delta\in(0,1)\), unless \(\mathrm P=\mathrm{NP}\); a super-blocking pair is an unmatched pair whose members each rank the other above or tied with their partner. [Menon–Larson](https://arxiv.org/pdf/1804.09156)<br>For fractional marriage matchings, maximizing welfare subject to cardinal stability is NP-hard even without ties; that result concerns a different objective and stability constraint. No result settling the additive approximation of \(Q\) above was identified. [Chen–Roy–Sorge](https://www.ijcai.org/proceedings/2021/0013.pdf)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Defined the missing-information bound using mass-weighted sampling of individuals and averaging equally over the two normalized societies.</li><li>Individuals of the same type are tied; missing comparisons therefore include same-type sampling, while sampling the identical individual has measure zero in an atomless society.</li><li>Used the anchor&#x27;s domain delta in (0,1), complete preference lists, and unrestricted perfect matching feasibility; explicitly required nonnegative matching entries.</li><li>Defined m as the larger opposite-side support size and tau as the combined support size.</li><li>Specified rational output and polynomial dependence on inverse additive tolerance, with hardness asked at inverse-polynomial tolerance.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p><b>The additive approximation problem is $\mathrm{NP}$-hard.</b> More precisely, for every fixed rational $\delta_0\in(0,1)$, this holds on instances satisfying the promise with $\delta=\delta_0$, having uniform dyadic masses and<br>$$
+\varepsilon=\frac{1}{2m^2}.
+$$<br>Consequently, an algorithm with the requested polynomial running time would imply $\mathrm P=\mathrm{NP}$.</p><p>The proof constructs instances for which every feasible fractional matching can be converted, without increasing $Q$, into a matching encoding a graph cut. This controls the optimum over the entire feasible transportation polytope.</p><h3>1. Starting problem and parameters</h3><p>We reduce from unweighted Max-Cut on simple graphs. Its decision version is $\mathrm{NP}$-complete: given a graph and an integer threshold, decide whether some cut contains at least that many edges. This is the Simple Max-Cut result of [Garey, Johnson, and Stockmeyer](https://www.acs.uwinnipeg.ca/ychen2/journalpapers/Garey-Johnson-2maxsat.pdf).</p><p>Let $G=(V,E)$ be such a graph. For each vertex $v$, define<br>$$
+r_v=\max\{3,2\deg(v)\}.
+$$<br>We use a disjoint set $I_v$ of $r_v$ replicas of $v$. Write<br>$$
+I=\bigcup_{v\in V}I_v,\qquad
+R=|I|,\qquad
+r_{\max}=\max_{v\in V}r_v.
+$$</p><p>Add isolated vertices until<br>$$
+R\ge (r_{\max}+2)^2,
+\qquad
+R\ge \left\lceil\frac{1}{\delta_0}\right\rceil.
+$$<br>Each added vertex contributes three replicas and does not change $r_{\max}$ or the maximum cut value. Because $\delta_0$ is fixed and $r_{\max}$ is bounded polynomially in the original graph size, this augmentation has polynomial size. We continue to call the augmented graph $G$.</p><p>Let $N$ be the smallest power of two satisfying<br>$$
+N\ge 2R+1.
+$$<br>Set<br>$$
+D=N-(2R+1),\qquad h=\frac1N.
+$$</p><p>The supported types are<br>$$
+T=\{t_i^0,t_i^1:i\in I\}\cup\{p\}\cup\{p_a:1\le a\le D\},
+$$<br>$$
+S=\{s_i^0,s_i^1:i\in I\}\cup\{q\}\cup\{q_a:1\le a\le D\}.
+$$<br>Every type has mass $h$. Thus both societies have total mass one, and<br>$$
+|T|=|S|=m=N,\qquad \tau=2N.
+$$<br>All masses are positive dyadic rationals.</p><h3>2. Selected pairs and preference orders</h3><p>We first specify a set $\mathcal E$ of selected pairs between different replica blocks.</p><p>For each replica $i$, select the pair<br>$$
+(t_i^1,q).
+$$</p><p>For every vertex $v$ and every ordered pair of distinct replicas $i,j\in I_v$, select<br>$$
+(t_i^1,s_j^0),\qquad (t_i^0,s_j^1).
+$$<br>These pairs will enforce agreement among the replicas of one vertex.</p><p>For each graph edge $e$, choose an orientation $e=(v,w)$. Assign distinct replicas<br>$$
+i_e^+,i_e^-\in I_v,\qquad j_e^+,j_e^-\in I_w.
+$$<br>At each vertex, use different replicas for all its incident-edge assignments. This is possible because the assignments require $2\deg(v)$ replicas and $r_v\ge 2\deg(v)$.</p><p>Select the two pairs<br>$$
+(t_{i_e^+}^1,s_{j_e^+}^1),\qquad
+(t_{i_e^-}^0,s_{j_e^-}^0).
+$$<br>In particular, every replica participates in at most one of these graph-edge pairs.</p><p>The preference orders are as follows.</p><ul><li>Each $t_i^a$, for $a\in\{0,1\}$, ranks $s_i^0$ first. Its second tie class is</li></ul><p>$$
+  \{s_i^1\}\cup\{s:(t_i^a,s)\in\mathcal E\}.
+  $$<br>It ranks all remaining types strictly below this class.</p><ul><li>Each $s_i^b$, for $b\in\{0,1\}$, ranks $t_i^0$ first. Its second tie class is</li></ul><p>$$
+  \{t_i^1\}\cup\{t:(t,s_i^b)\in\mathcal E\}.
+  $$<br>It ranks all remaining types strictly below this class.</p><ul><li>Type $p$ ranks $q$ first and strictly orders all remaining types below it. Type $q$ has first tie class</li></ul><p>$$
+  \{p\}\cup\{t_i^1:i\in I\},
+  $$<br>and strictly orders all remaining types below this class.</p><ul><li>Each $p_a$ ranks $q_a$ first, and each $q_a$ ranks $p_a$ first. Both strictly order all remaining types below their corresponding partner.</li></ul><p>All unspecified strict orders can follow a fixed ordering of type names. These are strict weak orders over all opposite-side types, and all partners remain acceptable.</p><p>Partition the types into corresponding blocks:<br>$$
+(\{t_i^0,t_i^1\},\{s_i^0,s_i^1\}),\qquad
+(\{p\},\{q\}),\qquad
+(\{p_a\},\{q_a\}).
+$$<br>Every type weakly prefers every partner in its own block to every partner outside its block.</p><h3>3. Removing allocations between different blocks</h3><p>We first prove that restricting the matching to these blocks loses no optimality.</p><p><b>Monotonicity lemma.</b> Suppose a feasible matching is changed so that every type’s partner distribution is obtained by moving mass to weakly preferred partners. Then $Q$ cannot increase.</p><p><b>Proof.</b> Fix a row type $t$ and a cutoff type $s$. If $u\succeq_t r$, then transitivity gives<br>$$
+\mathbf 1_{\{s\succeq_t u\}}
+\le
+\mathbf 1_{\{s\succeq_t r\}}.
+$$<br>Consequently, moving allocation from $r$ to $u$ cannot increase $A_{ts}$. The same argument on each column shows that every $B_{st}$ cannot increase. These quantities are nonnegative, so their products and their sum $Q$ cannot increase. $\square$</p><p>Now take any feasible matching $x$. Delete every entry between different blocks, retaining every entry within a block.</p><p>For each block, the total row deficit equals the total column deficit. Indeed, its total row quota equals its total column quota, and the retained internal allocation has the same total when summed by rows or by columns. Therefore its deficits can be filled using only entries within that block.</p><p>This completion is feasible and weakly improves every type’s distribution: all removed partners were outside the type’s block, whereas all newly assigned partners are inside it. By the monotonicity lemma, the resulting matching $y$ satisfies<br>$$
+Q(y)\le Q(x).
+$$<br>For rational $x$, greedy filling of the rational deficits implements this repair in polynomial time.</p><p>In a repaired matching, each replica block has the form<br>$$
+\begin{pmatrix}
+x_{t_i^0s_i^0}&amp;x_{t_i^0s_i^1}\\
+x_{t_i^1s_i^0}&amp;x_{t_i^1s_i^1}
+\end{pmatrix}
+=
+h
+\begin{pmatrix}
+z_i&amp;1-z_i\\
+1-z_i&amp;z_i
+\end{pmatrix},
+\qquad 0\le z_i\le1.
+$$<br>Every singleton block has its unique entry equal to $h$. Denote this block matching by $x(z)$.</p><h3>4. Exact objective on block matchings</h3><p>For a replica block, the internal cumulative sums are<br>$$
+\begin{pmatrix}
+A_{t_i^0s_i^0}&amp;A_{t_i^0s_i^1}\\
+A_{t_i^1s_i^0}&amp;A_{t_i^1s_i^1}
+\end{pmatrix}
+=
+h
+\begin{pmatrix}
+1&amp;1-z_i\\
+1&amp;z_i
+\end{pmatrix},
+$$<br>$$
+\begin{pmatrix}
+B_{s_i^0t_i^0}&amp;B_{s_i^1t_i^0}\\
+B_{s_i^0t_i^1}&amp;B_{s_i^1t_i^1}
+\end{pmatrix}
+=
+h
+\begin{pmatrix}
+1&amp;1\\
+1-z_i&amp;z_i
+\end{pmatrix}.
+$$<br>Thus its four internal pairs contribute<br>$$
+h^2\bigl[1+(1-z_i)+(1-z_i)+z_i^2\bigr]
+=
+h^2\bigl[2+(1-z_i)^2\bigr].
+$$<br>Each singleton block contributes $h^2$.</p><p>For a selected pair between replica blocks, the relevant cumulative row mass is $h(1-z_i)$ when its row is $t_i^0$, and $hz_i$ when its row is $t_i^1$. The relevant cumulative column mass is $h(1-z_j)$ when its column is $s_j^0$, and $hz_j$ when its column is $s_j^1$.</p><p>It follows that:</p><ul><li>The selected pair $(t_i^1,q)$ contributes $h^2z_i$, because $B_{qt_i^1}=h$.</li><li>The two selected pairs for an ordered replica pair $i,j\in I_v$ contribute</li></ul><p>$$
+  h^2\bigl[z_i(1-z_j)+(1-z_i)z_j\bigr].
+  $$</p><ul><li>The selected pairs associated with a graph edge $e=(v,w)$ contribute</li></ul><p>$$
+  h^2\bigl[z_{i_e^+}z_{j_e^+}
+  +(1-z_{i_e^-})(1-z_{j_e^-})\bigr].
+  $$</p><p>Every unselected pair between different blocks has zero cumulative row mass: its row ranks it strictly below all partners receiving allocation. Hence it contributes zero.</p><p>Define<br>$$
+F_v(z)=
+\sum_{i\in I_v}(1-z_i+z_i^2)
++
+\sum_{\substack{i,j\in I_v\\i\ne j}}
+\bigl[z_i(1-z_j)+(1-z_i)z_j\bigr],
+$$<br>and<br>$$
+G(z)=
+\sum_{e=(v,w)\in E}
+\bigl[z_{i_e^+}z_{j_e^+}
++(1-z_{i_e^-})(1-z_{j_e^-})\bigr].
+$$<br>Adding the contributions gives the exact identity<br>$$
+Q(x(z))=
+h^2\left[N+\sum_{v\in V}F_v(z)+G(z)\right].
+$$<br>Here the constant $N$ is the sum of the constant internal contributions: $2R$ from replica blocks and $D+1$ from singleton blocks.</p><h3>5. Rounding fractional replicas without increasing the objective</h3><p><b>Rounding lemma.</b> Fix all coordinates outside a vertex’s replica set $I_v$. Replacing every coordinate in $I_v$ by a common value in $\{0,1\}$ can be done without increasing the objective.</p><p><b>Proof.</b> Write $r=r_v$, so $r\ge3$. Because each replica occurs in at most one product in $G$, and every graph-edge product joins different vertex groups, the dependence of $G$ on this group is<br>$$
+\text{constant}+\sum_{i\in I_v}\ell_i z_i,
+\qquad |\ell_i|\le1.
+$$<br>Indeed, fixing the other endpoint of a product gives a coefficient in $[0,1]$ for a positive literal and in $[-1,0]$ for a complemented literal.</p><p>Let<br>$$
+s=\sum_{i\in I_v}z_i,\qquad
+p=\frac{s}{r},\qquad
+W=\sum_{i\in I_v}(z_i-p)^2.
+$$<br>Expanding the ordered-pair sum gives<br>$$
+\sum_{i\ne j}
+\bigl[z_i(1-z_j)+(1-z_i)z_j\bigr]
+=
+2(r-1)s-2\left(s^2-\sum_i z_i^2\right).
+$$<br>Therefore<br>$$
+F_v(z)=r+(2r-3)s-2s^2+3\sum_i z_i^2,
+$$<br>and substitution of $\sum_i z_i^2=rp^2+W$ yields<br>$$
+F_v(z)-r=r(2r-3)p(1-p)+3W.
+$$</p><p>At the all-zero vector, $F_v$ equals $r$; at the all-one vector, it also equals $r$. Consequently, the weighted average, with weights $1-p$ and $p$, of the two endpoint values of<br>$$
+F_v(z)+\sum_i\ell_i z_i
+$$<br>is<br>$$
+r+p\sum_i\ell_i.
+$$</p><p>For every $u,p\in[0,1]$, convexity of the absolute-value function gives<br>$$
+|u-p|\le (1-u)p+u(1-p).
+$$<br>Summing this inequality at $u=z_i$ gives<br>$$
+\sum_i|z_i-p|\le 2rp(1-p).
+$$<br>Thus the current objective contribution minus the weighted endpoint average satisfies<br>$$
+\begin{aligned}
+F_v(z)+\sum_i\ell_i z_i
+-\left(r+p\sum_i\ell_i\right)
+&amp;=r(2r-3)p(1-p)+3W
++\sum_i\ell_i(z_i-p)\\
+&amp;\ge r(2r-3)p(1-p)+3W-\sum_i|z_i-p|\\
+&amp;\ge r(2r-5)p(1-p)+3W\\
+&amp;\ge0.
+\end{aligned}
+$$<br>The last inequality uses $r\ge3$.</p><p>At least one endpoint value is no larger than its weighted average, so choosing the better common binary value cannot increase the objective. $\square$</p><p>Apply this lemma successively to every vertex group. Each step fixes the other groups and preserves feasibility. We obtain values<br>$$
+z_i=b_v\in\{0,1\}\qquad(i\in I_v)
+$$<br>without increasing $Q$.</p><p>For rational input coordinates, choosing the better of the two endpoint values requires only rational arithmetic and takes polynomial time. Combined with the block repair, this proves:</p><p><b>Every feasible rational matching can be converted in polynomial time, without increasing $Q$, into a matching encoded by a binary assignment $b\in\{0,1\}^V$.</b></p><h3>6. Exact relation to Max-Cut</h3><p>When all replicas of $v$ equal $b_v\in\{0,1\}$,<br>$$
+F_v(z)=r_v.
+$$<br>For each graph edge $e=(v,w)$, its contribution to $G$ becomes<br>$$
+b_vb_w+(1-b_v)(1-b_w)
+=
+\mathbf 1_{\{b_v=b_w\}}.
+$$<br>If $\operatorname{cut}_G(b)$ denotes the number of edges whose endpoints receive different binary values, then<br>$$
+Q(x(b))
+=
+h^2\bigl[N+R+|E|-\operatorname{cut}_G(b)\bigr].
+$$</p><p>Let $C^*$ be the maximum cut size of $G$. We obtain<br>$$
+Q^*=h^2\bigl[N+R+|E|-C^*\bigr].
+$$<br>Both directions are justified:</p><ul><li>Every feasible matching can be repaired and rounded without increasing its objective. Its resulting cut has size at most $C^*$, so its original objective is at least the displayed value.</li><li>A maximum cut supplies a feasible block matching attaining that value.</li></ul><p>This establishes the optimum over all fractional feasible matchings.</p><h3>7. Verification of the missing-comparison promise</h3><p>Every preference order belonging to a replica type has exactly one nontrivial tie class. Its size $k$ satisfies<br>$$
+k\le r_{\max}+2.
+$$<br>To check this bound, its tied class contains its own second-choice internal type, at most $r_v-1$ types from the replica-agreement pairs, at most one type from a graph-edge pair, and possibly the pin type $q$.</p><p>There are $4R$ such orders, counting both societies. Type $q$ has a tie class of size $R+1$. Type $p$ and all additional singleton-block types have only singleton classes.</p><p>With uniform masses $h=1/N$, an order having one tie class of size $k$ and all other classes singleton satisfies<br>$$
+\sum_C\left(\sum_{s\in C}h\right)^2
+=
+\frac{N+k(k-1)}{N^2}.
+$$<br>An entirely strict order has the same expression with the additional term zero.</p><p>Applying the definition of $\delta&#x27;$ therefore gives<br>$$
+\delta&#x27;
+=
+\frac1N+
+\frac{1}{2N^3}
+\left[
+\sum_{\text{replica orders}}k(k-1)+R(R+1)
+\right].
+$$<br>Consequently,<br>$$
+\delta&#x27;
+\le
+\frac1N+
+\frac{4R(r_{\max}+2)^2+R(R+1)}{2N^3}.
+$$<br>Because $N\ge2R+1$, we have<br>$$
+\delta&#x27;
+\le
+\frac{5}{8R}
++\frac{(r_{\max}+2)^2}{4R^2}.
+$$<br>Our choice of isolated-vertex padding now yields<br>$$
+\delta&#x27;
+\le
+\frac{7}{8R}
+\le
+\frac{7\delta_0}{8}
+&lt;
+\delta_0.
+$$<br>Thus the constructed instance satisfies the promised bound with $\delta=\delta_0$.</p><p>The construction has polynomial size for every fixed $\delta_0$. Before padding,<br>$$
+R\le 3|V|+4|E|,
+$$<br>and the required isolated vertices add polynomially many replicas. Also $N$ is bounded by a constant multiple of $R$. Explicitly listing all preference orders uses polynomially many bits, and every mass requires only $O(\log N)$ bits.</p><h3>8. The inverse-polynomial additive gap</h3><p>Suppose the requested approximation algorithm exists. Run it on the constructed instance with<br>$$
+\varepsilon=\frac{h^2}{2}=\frac{1}{2N^2}.
+$$<br>Repair and round its output as above, obtaining a cut $b$. The objective cannot increase, so<br>$$
+Q(x(b))\le Q^*+\frac{h^2}{2}.
+$$<br>Substituting the exact cut formulas gives<br>$$
+h^2\bigl[C^*-\operatorname{cut}_G(b)\bigr]\le\frac{h^2}{2},
+$$<br>hence<br>$$
+0\le C^*-\operatorname{cut}_G(b)\le\frac12.
+$$<br>The difference is an integer, so it must be zero. We have recovered an exact maximum cut. Restricting this cut to the original graph preserves its maximum cut value because the added vertices were isolated.</p><p>Finally,<br>$$
+\frac1\varepsilon=2N^2=2m^2,
+$$<br>and all constructed input parameters are polynomially bounded in the graph size. A running time polynomial in $m,\tau,L,1/\varepsilon$ would therefore solve Max-Cut in polynomial time.</p><p>This proves the claimed additive-approximation hardness.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 1, definition of $r_{\max}$: The source graph is not explicitly required to have $|V|\ge1$. For an empty graph, $r_{\max}=\max_{v\in V}r_v$ is undefined before padding. State that the reduction starts from nonempty Simple Max-Cut instances; this routine restriction does not affect the hardness argument.</li></ul>
+<div class="pre"><p>The reduction is sound in substance and establishes the claimed additive-approximation hardness. I found no false central step or major gap. The only minor omission is that the source graph must be nonempty for $r_{\max}$ to be defined.</p><ul><li><b>Starting problem and construction</b></li></ul><p>The cited starting result is appropriate: deciding whether an unweighted simple graph has a cut of size at least a specified integer is $\mathrm{NP}$-complete. This is the Simple Max-Cut result in the [cited Garey–Johnson–Stockmeyer paper](https://www.acs.uwinnipeg.ca/ychen2/journalpapers/Garey-Johnson-2maxsat.pdf).</p><p>For a nonempty source graph, $r_v\ge3$, and the requirement of two distinct replicas per incident edge is satisfied by $r_v\ge2\deg(v)$. Using distinct replicas across incident-edge assignments ensures that each replica occurs in at most one graph-edge product.</p><p>Adding isolated vertices preserves the maximum cut value and does not change $r_{\max}$. The padding is polynomial for fixed $\delta_0$. The smallest power of two $N$ satisfying $N\ge2R+1$ is bounded by a constant multiple of $R$, so the type sets and explicit preference lists have polynomial size. The uniform masses $1/N$ are positive dyadic rationals and sum to one on each side.</p><p><b>Minor issue:</b> If $V$ is empty, $r_{\max}=\max_{v\in V}r_v$ is undefined before padding. The minimum clarification is to state that the reduction starts from nonempty Simple Max-Cut instances.</p><ul><li><b>Preference orders and block dominance</b></li></ul><p>The preference definitions are internally consistent. The agreement pairs use distinct replica blocks, and the graph-edge pairs join different vertex groups because the graph is simple. Thus no selected external type coincides with an internal first-choice type.</p><p>Every type weakly prefers every internal partner to every external partner. For replica types, the first internal partner is strictly first, and the second internal partner is tied with selected external partners. For $q$, its internal partner $p$ is tied with the selected external types $t_i^1$. The remaining singleton blocks strictly prefer their internal partners.</p><p>This verifies the hypothesis needed for the block repair.</p><ul><li><b>Monotonicity and removal of external allocations</b></li></ul><p>The monotonicity lemma is correct. If $u\succeq_t r$, then<br>$$
+   s\succeq_t u\implies s\succeq_t r
+   $$<br>by transitivity. Therefore moving mass from $r$ to $u$ cannot increase any $A_{ts}$. The same reasoning applies to each $B_{st}$ when a column type’s partners improve.</p><p>Because all cumulative quantities are nonnegative, decreasing both factors cannot increase their product. Hence $Q$ cannot increase.</p><p>After retaining internal allocations, each block has equal total row and column deficits: its original row and column quotas are equal, and both retained totals count the same internal entries. Filling these deficits internally is feasible and improves every affected type’s distribution weakly. Consequently, the repaired matching satisfies $Q(y)\le Q(x)$.</p><p>The displayed parametrization of each replica block follows correctly from its equal row and column sums $h$. Rational greedy completion uses polynomially many rational operations; there is no hidden integrality assumption.</p><ul><li><b>Exact objective on block matchings</b></li></ul><p>Both displayed cumulative-sum matrices are correct under the stated rankings. Their entrywise products give the internal contribution<br>$$
+   h^2\left[1+(1-z_i)+(1-z_i)+z_i^2\right]
+   =
+   h^2\left[2+(1-z_i)^2\right].
+   $$</p><p>The pin pair contributes $h^2z_i$: the row cumulative mass is $hz_i$, while $q$’s cutoff includes its allocated internal partner $p$, giving column cumulative mass $h$.</p><p>The agreement and graph-edge contributions also have the stated literal products. An unselected external pair lies strictly below every internal partner in its row’s order, so its cumulative row mass is zero, including when some internal entries vanish.</p><p>Combining the internal contribution and the pin contribution gives<br>$$
+   h^2\left[2+(1-z_i)^2+z_i\right]
+   =
+   h^2\left[2+(1-z_i+z_i^2)\right].
+   $$<br>Therefore the constant term is indeed $2R+D+1=N$, and<br>$$
+   Q(x(z))=h^2\left[N+\sum_vF_v(z)+G(z)\right]
+   $$<br>is exact.</p><ul><li><b>Rounding lemma</b></li></ul><p>The asserted linear dependence of $G$ on a fixed vertex group is justified. No graph-edge product has both endpoints in that group, and each replica appears in at most one such product. Its coefficient therefore satisfies $|\ell_i|\le1$.</p><p>The expansion of the ordered agreement sum is correct:<br>$$
+   \sum_{i\ne j}\left[z_i(1-z_j)+(1-z_i)z_j\right]
+   =
+   2(r-1)s-2s^2+2\sum_i z_i^2.
+   $$<br>Combining this with the individual terms gives the stated formula for $F_v$. Substituting $s=rp$ and $\sum_i z_i^2=rp^2+W$ correctly yields<br>$$
+   F_v(z)-r=r(2r-3)p(1-p)+3W.
+   $$</p><p>The absolute-value bound follows from convexity on the interval with endpoints $0$ and $1$. Summing it gives precisely $2rp(1-p)$. Thus the current value exceeds the weighted endpoint average by at least<br>$$
+   r(2r-5)p(1-p)+3W\ge0,
+   $$<br>since $r\ge3$.</p><p>Choosing the lower endpoint value therefore cannot increase the objective. The argument also covers $p=0$ and $p=1$. Successive rounding remains valid because each invocation fixes all coordinates outside the current group. It applies to real coordinates as well as rational ones; rationality is needed only for the claimed computational implementation.</p><ul><li><b>Relation to Max-Cut and the fractional optimum</b></li></ul><p>At a common binary value, $F_v=r_v$. Each graph edge contributes<br>$$
+   b_vb_w+(1-b_v)(1-b_w)
+   =
+   \mathbf1_{\{b_v=b_w\}},
+   $$<br>so the displayed cut formula is correct.</p><p>The two directions establishing $Q^*$ are valid. Every feasible real matching can be repaired and rounded without increasing $Q$, giving the claimed lower bound. A maximum cut supplies a feasible rational matching attaining it. Hence the argument controls the entire transportation polytope, rather than just an integral subset.</p><ul><li><b>Missing-comparison promise and encoding</b></li></ul><p>There are $4R$ replica preference orders across both societies. Each has one nontrivial tie class. The stated upper bound $k\le r_{\max}+2$ is valid for both incoming and outgoing selected pairs. Type $q$ has its additional tie class of size $R+1$.</p><p>For a uniform distribution, replacing $k$ singleton classes by one class of size $k$ increases the sum of squared class masses by $k(k-1)/N^2$. Averaging over the $2N$ equally weighted types therefore gives exactly<br>$$
+   \delta&#x27;
+   =
+   \frac1N+
+   \frac{\sum_{\text{replica orders}}k(k-1)+R(R+1)}{2N^3}.
+   $$<br>The baseline $1/N$ correctly includes missing comparisons between individuals of the same opposite-side type.</p><p>The subsequent bound is valid. In particular, using $N\ge2R+1$ and $R\ge1$, the first term is at most $1/(2R)$, the replica excess is at most $(r_{\max}+2)^2/(4R^2)$, and the $q$ excess is at most $1/(8R)$. These give the stated bound with coefficient $5/8$.</p><p>The padding conditions consequently imply<br>$$
+   \delta&#x27;\le\frac{7}{8R}\le\frac{7\delta_0}{8}&lt;\delta_0.
+   $$<br>The input-size estimates are also correct for fixed $\delta_0$.</p><ul><li><b>Additive gap and complexity conclusion</b></li></ul><p>With $\varepsilon=h^2/2$, repairing and rounding an approximation produces a cut satisfying<br>$$
+   0\le C^*-\operatorname{cut}_G(b)\le\frac12.
+   $$<br>Since this difference is an integer, the cut is maximum. Restricting it to the original graph preserves its cut value because the added vertices are isolated.</p><p>Finally, $1/\varepsilon=2m^2$, and every constructed parameter is polynomially bounded in the source input size. A polynomial-time approximation algorithm of the requested kind would therefore solve the $\mathrm{NP}$-complete source problem in polynomial time.</p><p>The minimum requested revision is one sentence restricting the source instances to nonempty graphs. No new lemma or substantive change is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

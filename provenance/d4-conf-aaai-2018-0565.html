@@ -1,0 +1,410 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2018-0565 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2018-0565 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2018-0565)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 2 — class: other</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(n\) items, a distribution \(\mu\) over observable worker types \(t\), type-specific Gaussian response variances \(\sigma_t^2\), per-capita task capacities \(b_t\), a Gaussian prior with variance \(\sigma_x^2\), and a total task budget \(B\), choose query masses \(q_{ijt}\ge 0\) with \(\sum_{i&lt;j}q_{ijt}\le b_t\mu_t\) and \(\sum_{t,i&lt;j}q_{ijt}=B\) to maximize \(\frac12\log\det\!\left(I+\sigma_x^2\sum_{t,i&lt;j}\frac{q_{ijt}}{\sigma_t^2}d_{ij}d_{ij}^{\top}\right)\), where \(d_{ij}=e_i-e_j\). Does this continuous design problem admit an efficient \(\varepsilon\)-optimal algorithm, and how does its optimum compare with the paper’s sequential greedy EIG rule?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>There are \(m=n\ge2\) items. A society is given by its support: \(\tau\) observable worker types with positive binary-rational masses \(\mu_t\), summing to \(1\); \(\tau\) is the support size, not the number of possible types.<br>Each type has binary-rational variance \(\sigma_t^2&gt;0\) and per-capita capacity \(b_t\ge0\). The prior is \(x\sim\mathcal N(0,\sigma_x^2 I_m)\), with binary-rational \(\sigma_x^2&gt;0\); a query of type \(t\) on \(i&lt;j\) observes \(x_i-x_j\) plus independent Gaussian noise of variance \(\sigma_t^2\). Every pair is available, and repeated queries are allowed.<br>The binary-rational budget satisfies \(0&lt;B\le\sum_t b_t\mu_t\). Choose real masses \(q_{ijt}\ge0\) satisfying \(\sum_{i&lt;j}q_{ijt}\le b_t\mu_t\) and \(\sum_{t,i&lt;j}q_{ijt}=B\).<br>With \(d_{ij}=e_i-e_j\), maximize \(F(q)=\frac12\log\det\bigl(I_m+\sigma_x^2\sum_{t,i&lt;j}(q_{ijt}/\sigma_t^2)d_{ij}d_{ij}^{\top}\bigr)\); logarithms are natural. Write \(F^*=\max_q F(q)\). Additive \(\varepsilon\)-optimality means \(F(q)\ge F^*-\varepsilon\), where \(0&lt;\varepsilon&lt;1\) is binary rational; \(L\) is the total input bit length.<br>For comparison, on homogeneous instances \(\tau=1\) with integer \(B\), sequential greedy EIG starts with no observations and makes \(B\) unit queries, each maximizing the posterior-predictive expectation of KL divergence from the current posterior to the updated posterior. Ties use lexicographic order; let \(q^{\mathrm{gr}}\) be its query counts.</p><p>Does this continuous problem admit an additive \(\varepsilon\)-optimal algorithm polynomial in \(m,\tau,L,\log(1/\varepsilon)\), or is achieving this accuracy NP-hard?<br>On the homogeneous integer-budget instances, what is the sharp worst-case gap \(F^*-\mathbb E[F(q^{\mathrm{gr}})]\) as a function of \(m,B,\sigma_x^2/\sigma_1^2\)?</p><p>For discrete Gaussian queries, [Xu et al.](https://ojs.aaai.org/index.php/AAAI/article/view/11619/11478) give rank-one posterior updates and constant-time pairwise EIG evaluation given stored posterior parameters; this is a local computation result, not a global optimality guarantee.<br>For continuous designs, [Alexanderian](https://arxiv.org/html/2212.11466v3) establishes the Gaussian EIG–posterior-log-determinant identity, and [Boyd–Vandenberghe](https://www.seas.ucla.edu/~vandenbe/cvxbook/bv_cvxbook.pdf) treat ordinary fractional D-optimal design as convex optimization; these results do not state the capacity-constrained problem and greedy-gap comparison above.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the distribution to total mass one and identified the item count with m=n.</li><li>Specified binary-rational positive variances, nonnegative capacities, a positive feasible budget, and at least two items.</li><li>Specified a zero-mean isotropic prior, independent Gaussian response noise, no initial observations, availability of every pair, and repeated queries.</li><li>Defined epsilon-optimality additively and efficiency in the binary input model, including logarithmic dependence on inverse accuracy.</li><li>Defined greedy EIG through posterior-predictive expected KL rather than the erroneous displayed simplification.</li><li>Restricted comparison with the original common-variance greedy rule to homogeneous integer-budget instances; specified unit queries, lexicographic ties, and the worst-case additive gap.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Status</h3><p>The continuous problem has an <b>exact rational optimum computable in polynomial time</b>.</p><p>For the greedy comparison, I prove exact gaps:</p><ul><li>for every $m$ when $B\le m+1$;</li><li>for every integer budget when $m\le6$.</li></ul><p>The all-budget formulas for $m=5,6$ and the formula at $B=m+1$ extend the results in the notes. The sharp gap for $m\ge7$ and $B&gt;m+1$ remains unresolved here.</p><h3>2. Proven: an exact polynomial-time continuous optimum</h3><p>Write<br>$$
+r=m-1,\qquad M=\binom m2,\qquad a_t=b_t\mu_t.
+$$<br>Order the supported types so that<br>$$
+\sigma_1^2\le\cdots\le\sigma_\tau^2.
+$$<br>Define<br>$$
+Q_t^*=
+\min\left\{
+a_t,\,
+\max\left\{0,B-\sum_{u&lt;t}a_u\right\}
+\right\},
+\qquad
+S^*=\sum_{t=1}^{\tau}\frac{Q_t^*}{\sigma_t^2}.
+$$<br>Then<br>$$
+q_{ijt}^*=\frac{Q_t^*}{M}
+$$<br>is an exact optimum, with value<br>$$
+F^*=\frac r2\log\left(1+\frac{2\sigma_x^2S^*}{r}\right).
+$$</p><p><b>Proof.</b> For any feasible design, let<br>$$
+Q_t=\sum_{i&lt;j}q_{ijt},
+\qquad
+S=\sum_t\frac{Q_t}{\sigma_t^2},
+\qquad
+L_q=\sum_{t,i&lt;j}\frac{q_{ijt}}{\sigma_t^2}d_{ij}d_{ij}^{\top}.
+$$<br>The matrix $L_q$ is positive semidefinite, annihilates $\mathbf1$, and has trace $2S$. Consequently, its $r$ eigenvalues on $\mathbf1^\perp$, including zeros, have sum $2S$. Concavity of the logarithm gives<br>$$
+F(q)\le
+\frac r2\log\left(1+\frac{2\sigma_x^2S}{r}\right).
+$$</p><p>Put<br>$$
+P=I_m-\frac{\mathbf1\mathbf1^\top}{m}.
+$$<br>Directly comparing diagonal and off-diagonal entries gives<br>$$
+\sum_{i&lt;j}d_{ij}d_{ij}^{\top}=mP.
+$$<br>Therefore uniform allocation within each type gives<br>$$
+L_q=\frac{mS}{M}P=\frac{2S}{r}P,
+$$<br>and attains the preceding bound.</p><p>It remains to maximize $S$ over<br>$$
+0\le Q_t\le a_t,\qquad \sum_tQ_t=B.
+$$<br>If a type of smaller variance has unused capacity while a type of larger variance receives positive mass, transferring mass to the former does not decrease $S$. Successively making these transfers produces the displayed $Q_t^*$. The assumption $B\le\sum_ta_t$ ensures that their sum is $B$.</p><p>All operations producing $q^*$ are rational comparisons and arithmetic. Products and sums of input rationals have polynomial bit length, and the output has $M\tau$ entries. Thus the algorithm runs in time polynomial in $m,\tau,L$. It is additive $\varepsilon$-optimal for every allowed $\varepsilon$, without evaluating any logarithm. $\square$</p><h3>3. Proven: greedy is deterministic, including under the literal KL direction</h3><p>For homogeneous instances, set<br>$$
+\alpha=\frac{\sigma_x^2}{\sigma_1^2}.
+$$<br>Let $L_k$ be the multigraph Laplacian after $k$ unit queries. Gaussian conditioning gives posterior covariance<br>$$
+C_k=\sigma_x^2(I_m+\alpha L_k)^{-1}.
+$$<br>In particular, this covariance depends on the query counts and not on the observed values.</p><p>Here is the precise KL identity needed below. For positive definite covariance matrices $V_1,V_2$,<br>$$
+D_{\mathrm{KL}}\!\left(
+\mathcal N(h_1,V_1)\,\middle\|\,\mathcal N(h_2,V_2)
+\right)
+=
+\frac12\left[
+\log\frac{\det V_2}{\det V_1}
+-m+\operatorname{tr}(V_2^{-1}V_1)
++(h_2-h_1)^\top V_2^{-1}(h_2-h_1)
+\right].
+$$<br>This identity is also stated in [Alexanderian’s Gaussian D-optimality derivation](https://arxiv.org/html/2212.11466v3).</p><p>Suppose the current posterior is $\mathcal N(h,C)$ and the next query uses $d=d_{ij}$. Write $v=\sigma_1^2$ and<br>$$
+s=\frac{d^\top Cd}{v}.
+$$<br>The updated covariance and mean are<br>$$
+C&#x27;=C-\frac{Cdd^\top C}{v+d^\top Cd},
+\qquad
+h&#x27;=h+\frac{Cd}{v+d^\top Cd}(y-d^\top h).
+$$<br>Under the posterior-predictive distribution,<br>$$
+\mathbb E[h&#x27;-h]=0,\qquad
+\mathbb E[(h&#x27;-h)(h&#x27;-h)^\top]=C-C&#x27;.
+$$<br>Also,<br>$$
+C&#x27;^{-1}=C^{-1}+\frac{dd^\top}{v},
+\qquad
+\frac{\det C}{\det C&#x27;}=1+s.
+$$<br>Substituting into the KL identity yields<br>$$
+\mathbb E[D_{\mathrm{KL}}(\text{updated}\,\|\,\text{current})]
+=\frac12\log(1+s).
+$$<br>Indeed, the expected trace and mean terms sum to $m$.</p><p>In the literal direction requested in the question,<br>$$
+\mathbb E[D_{\mathrm{KL}}(\text{current}\,\|\,\text{updated})]
+=s-\frac12\log(1+s),
+$$<br>because<br>$$
+\operatorname{tr}(C&#x27;^{-1}C)=m+s,
+\qquad
+\operatorname{tr}(C&#x27;^{-1}(C-C&#x27;))=s.
+$$<br>Both functions are strictly increasing in $s\ge0$. Thus either convention selects precisely the pairs maximizing<br>$$
+R_k(i,j)=d_{ij}^\top(I_m+\alpha L_k)^{-1}d_{ij}.
+$$</p><p>Lexicographic tie-breaking consequently makes the entire greedy query sequence deterministic. Hence<br>$$
+\mathbb E[F(q^{\mathrm{gr}})]=F(q^{\mathrm{gr}}).
+$$<br>The continuous benchmark is<br>$$
+F^*=\frac r2\log\left(1+\frac{2\alpha B}{r}\right).
+$$</p><p>At fixed $m,B,\alpha$, every feasible homogeneous instance has this same greedy sequence and benchmark: its capacity affects only feasibility. Therefore each exact gap below is also the sharp worst-case gap for its stated parameters.</p><h3>4. Proven: exact gaps for every $m$ through budget $m+1$</h3><h3>4.1. The path-merging phase</h3><p>There is a unique $\rho\in(0,1)$ satisfying<br>$$
+\alpha=\frac{\rho}{(1-\rho)^2},
+$$<br>because the right-hand side increases continuously from zero to infinity.</p><p>For a path on $s$ vertices, define<br>$$
+D_s=\det(I_s+\alpha L_{P_s})
+=
+\frac{1-\rho^{2s}}
+{(1-\rho^2)(1-\rho)^{2s-2}}.
+$$<br>In particular, $D_1=1$.</p><p>Starting with $m$ component sizes equal to $1$, repeatedly replace the two smallest sizes by their sum. Let $\mathcal S_B$ be the resulting multiset after $B$ replacements. For $B\le m-1$,<br>$$
+\boxed{
+F^*-F(q^{\mathrm{gr}})
+=
+\frac r2\log\left(1+\frac{2\alpha B}{r}\right)
+-\frac12\sum_{s\in\mathcal S_B}\log D_s.
+}
+$$</p><p>The following calculation proves the asserted greedy structure.</p><p>Let<br>$$
+K_s=(I_s+\alpha L_{P_s})^{-1}.
+$$<br>For consecutively indexed path vertices,<br>$$
+(K_s)_{ij}
+=
+\frac{1-\rho}{1+\rho}
+\frac{
+\rho^{|i-j|}
++\rho^{i+j-1}
++\rho^{2s+1-i-j}
++\rho^{2s-|i-j|}
+}
+{1-\rho^{2s}}.
+$$<br>For verification when $s\ge2$, put<br>$$
+f_i=\rho^{-i}+\rho^{i-1},
+\qquad
+g_i=\rho^i+\rho^{2s+1-i},
+\qquad
+\kappa=\frac{1-\rho}{(1+\rho)(1-\rho^{2s})}.
+$$<br>For $i\le j$, the proposed entry is $\kappa f_i g_j$. The relation<br>$$
+1+2\alpha=\alpha(\rho+\rho^{-1})
+$$<br>verifies the interior recurrence. The endpoint conditions follow from $f_0=f_1$ and $g_{s+1}=g_s$. The diagonal equation follows from<br>$$
+\alpha(f_{j+1}g_j-f_jg_{j+1})
+=
+\frac{1+\rho}{1-\rho}(1-\rho^{2s})
+=\kappa^{-1}.
+$$<br>The case $s=1$ is direct.</p><p>The maximum diagonal entry occurs at an endpoint and equals<br>$$
+v_s=
+\frac{(1-\rho)(1+\rho^{2s-1})}{1-\rho^{2s}}
+=
+1-\rho+
+\frac{(1-\rho^2)\rho^{2s-1}}{1-\rho^{2s}}.
+$$<br>To see endpoint maximality, the position-dependent diagonal terms are<br>$$
+\rho^{2i-1}+\rho^{2s+1-2i}.
+$$<br>Their exponents have fixed sum; convexity of the exponential makes their sum largest at an endpoint. The last expression for $v_s$ also shows that $v_s&gt;1-\rho$ and that $v_s$ strictly decreases with $s$.</p><p>The covariance between path endpoints is<br>$$
+c_s=\frac{(1-\rho^2)\rho^{s-1}}{1-\rho^{2s}}.
+$$<br>Their pair score is therefore<br>$$
+R_{\mathrm{end}}(s)
+=
+2(v_s-c_s)
+=
+2(1-\rho)\frac{1-\rho^{s-1}}{1+\rho^s}
+&lt;2(1-\rho).
+$$</p><p>Every within-path pair has score below $2(1-\rho)$. Indeed, remove the edges attaching its intervening subpath to the rest of the path. This decreases the positive definite precision matrix, so it increases the inverse in positive semidefinite order. The original score is at most the endpoint score of that isolated subpath.</p><p>Conversely, endpoints in different components of sizes $s,t$ have score<br>$$
+v_s+v_t&gt;2(1-\rho).
+$$<br>Thus greedy joins different components whenever more than one remains. It chooses endpoints, preserving the path structure, and chooses the two smallest components because $v_s$ decreases with $s$. This proves the path-merging rule.</p><p>For completeness, the determinant calculation uses leading tridiagonal determinants $h_k$ satisfying<br>$$
+h_0=1,\qquad h_1=1+\alpha,\qquad
+h_k=(1+2\alpha)h_{k-1}-\alpha^2h_{k-2}.
+$$<br>Solving this recurrence gives<br>$$
+h_k=
+\frac{1+\rho^{2k+1}}{(1+\rho)(1-\rho)^{2k}}.
+$$<br>For $s\ge2$,<br>$$
+D_s=(1+\alpha)h_{s-1}-\alpha^2h_{s-2},
+$$<br>which gives the displayed expression for $D_s$. Determinants multiply across path components, completing the gap proof.</p><h3>4.2. Budget $m$: the cycle</h3><p>Assume $m\ge3$. After $m-1$ queries, greedy has one path on all vertices. The function $R_{\mathrm{end}}(s)$ strictly increases with $s$: writing $t=\rho^s$, its variable factor is<br>$$
+\frac{1-t/\rho}{1+t},
+$$<br>which strictly decreases with $t$.</p><p>Every pair other than the full path’s endpoints spans a shorter subpath. The preceding edge-removal bound therefore proves that the full path’s endpoints uniquely maximize the next score. Greedy closes the path into $C_m$.</p><p>Its determinant is<br>$$
+D_{C_m}
+=
+\prod_{j=0}^{m-1}
+\frac{1-2\rho\cos(2\pi j/m)+\rho^2}{(1-\rho)^2}
+=
+\frac{(1-\rho^m)^2}{(1-\rho)^{2m}}.
+$$<br>The last equality follows by factoring the numerator over the $m$th roots of unity. Hence<br>$$
+\boxed{
+F^*-F(q^{\mathrm{gr}})
+=
+\frac r2\log\left(1+\frac{2\alpha m}{r}\right)
+-\log\left(\frac{1-\rho^m}{(1-\rho)^m}\right).
+}
+$$</p><h3>4.3. New result: budget $m+1$</h3><p>For vertices at cyclic distance $h$, the cycle inverse has entry<br>$$
+(K_{C_m})_{uv}
+=
+\frac{1-\rho}{1+\rho}
+\frac{\rho^h+\rho^{m-h}}{1-\rho^m}.
+$$<br>One verification is to periodize the infinite-line inverse kernel<br>$$
+\frac{1-\rho}{1+\rho}\rho^{|u-v|}.
+$$<br>That kernel satisfies the tridiagonal equations because<br>$$
+1+2\alpha=\alpha(\rho+\rho^{-1}),
+\qquad
+\frac{1-\rho}{1+\rho}\bigl(1+2\alpha(1-\rho)\bigr)=1.
+$$<br>Summing its shifts by multiples of $m$ gives the displayed cycle entry.</p><p>Thus the score at distance $h$ is<br>$$
+R_{C_m}(h)
+=
+\frac{2(1-\rho)}{1+\rho}
+\frac{(1-\rho^h)(1-\rho^{m-h})}{1-\rho^m}.
+$$<br>For integer $h&lt;\lfloor m/2\rfloor$,<br>$$
+\bigl(\rho^{h+1}+\rho^{m-h-1}\bigr)
+-\bigl(\rho^h+\rho^{m-h}\bigr)
+=
+(1-\rho)(\rho^{m-h-1}-\rho^h)&lt;0.
+$$<br>Therefore the score strictly increases up to maximum cyclic distance. All pairs at that distance have the same score.</p><p>Put<br>$$
+h_*=\left\lfloor\frac m2\right\rfloor.
+$$<br>By the matrix determinant lemma, the next query multiplies the determinant by $1+\alpha R_{C_m}(h_*)$. Consequently, for every $m\ge3$,<br>$$
+\boxed{
+F^*-F(q^{\mathrm{gr}})
+=
+\frac r2\log\left(1+\frac{2\alpha(m+1)}r\right)
+-\frac12\log D_{C_m}
+-\frac12\log\bigl(1+\alpha R_{C_m}(h_*)\bigr)
+\quad\text{when }B=m+1.
+}
+$$<br>For $m=3$, this query repeats an existing pair, as permitted.</p><h3>4.4. An unbounded-gap consequence</h3><p>When $B\le\lfloor m/2\rfloor$, greedy produces a matching, so<br>$$
+F^*-F(q^{\mathrm{gr}})
+=
+\frac r2\log\left(1+\frac{2\alpha B}{r}\right)
+-\frac B2\log(1+2\alpha).
+$$</p><p>More generally, the path determinant formula gives<br>$$
+\frac{D_s}{\alpha^{s-1}}
+=
+\frac{1-\rho^{2s}}{1-\rho^2}\rho^{-(s-1)}
+\longrightarrow s
+\qquad\text{as }\alpha\longrightarrow\infty.
+$$<br>Since $\mathcal S_B$ has $m-B$ components,<br>$$
+F^*-F(q^{\mathrm{gr}})
+=
+\frac{r-B}{2}\log\alpha
++\frac r2\log\left(\frac{2B}{r}\right)
+-\frac12\sum_{s\in\mathcal S_B}\log s
++o(1).
+$$<br>Thus the gap is unbounded in $\alpha$ whenever $B&lt;m-1$. Taking $\alpha$ through powers of two respects the rational-input requirement.</p><h3>5. Proven: exact all-budget gaps for $m\le6$</h3><h3>5.1. Two and three vertices</h3><p>For $m=2$, there is only one pair, so the gap is always zero.</p><p>For $m=3$, let the three edge counts be $a,b,c$, with sum $B$. Expansion by principal minors gives<br>$$
+\det(I_3+\alpha L)
+=
+1+2\alpha B+3\alpha^2(ab+ac+bc).
+$$<br>Increasing the count $a$ increases the quadratic term by $b+c=B-a$. Greedy therefore increments a smallest count. The final counts differ by at most one, and<br>$$
+ab+ac+bc=\left\lfloor\frac{B^2}{3}\right\rfloor.
+$$<br>With $\delta_B=0$ if $3$ divides $B$, and $\delta_B=1$ otherwise, the exact gap is<br>$$
+\boxed{
+F^*-F(q^{\mathrm{gr}})
+=
+-\frac12\log\left(
+1-\frac{\delta_B\alpha^2}{(1+\alpha B)^2}
+\right).
+}
+$$</p><h3>5.2. Complete-layer reduction</h3><p>Suppose greedy completes one copy of $K_m$ after $M$ queries, with the same prefix structure for every positive parameter.</p><p>After $k$ such layers,<br>$$
+L_{Mk}=kmP.
+$$<br>Set<br>$$
+c_k=1+m\alpha k,\qquad \beta=\frac{\alpha}{c_k}.
+$$<br>For a prefix Laplacian $L_s$ of the next layer,<br>$$
+\det(I_m+\alpha(kmP+L_s))
+=
+c_k^r\det(I_m+\beta L_s).
+$$<br>Moreover, for every difference vector $d$,<br>$$
+d^\top(I_m+\alpha(kmP+L_s))^{-1}d
+=
+c_k^{-1}d^\top(I_m+\beta L_s)^{-1}d.
+$$<br>Thus score ordering, including ties, is the ordering for parameter $\beta$.</p><p>If<br>$$
+D_s^{(m)}(z)=\det(I_m+zL_s),
+\qquad B=Mk+s,\quad 0\le s&lt;M,
+$$<br>the common scalar factor cancels from the gap:<br>$$
+\boxed{
+F^*-F(q^{\mathrm{gr}})
+=
+\frac r2\log\left(1+\frac{2\beta s}{r}\right)
+-\frac12\log D_s^{(m)}(\beta).
+}
+$$<br>It remains to verify complete layers.</p><h3>5.3. Four vertices</h3><p>Through four queries, the path argument gives an edge, a matching, a path, and a cycle. For the cycle, opposite and adjacent pair scores are respectively<br>$$
+\frac{2}{1+2z},
+\qquad
+\frac1{1+2z}+\frac1{1+4z}.
+$$<br>The opposite pair is strictly preferred.</p><p>After it is added, let $d$ denote the sole missing pair and put $c=1+4z$. On $\mathbf1^\perp$, precision is $cI-zdd^\top$. The missing pair’s score is<br>$$
+\frac2{c-2z}.
+$$<br>A present pair with difference vector $f$ has score<br>$$
+\frac2c+\frac{z(f^\top d)^2}{c(c-2z)}.
+$$<br>Here $(f^\top d)^2$ is either zero or one, so its score is strictly smaller. Query six completes $K_4$.</p><p>The prefix determinants are:</p><p>| $s$ | $D_s^{(4)}(z)$ |<br>|---|---|<br>| $0$ | $1$ |<br>| $1$ | $1+2z$ |<br>| $2$ | $(1+2z)^2$ |<br>| $3$ | $(1+2z)(1+4z+2z^2)$ |<br>| $4$ | $(1+2z)^2(1+4z)$ |<br>| $5$ | $(1+2z)(1+4z)^2$ |</p><p>Their computation follows either from the path determinant or from the precision matrices just displayed. The complete-layer reduction supplies the all-budget gap.</p><h3>5.4. New result: five and six vertices</h3><p>For $m=5$, the lexicographic greedy sequence in each layer is<br>$$
+12,\ 34,\ 15,\ 23,\ 45,\ 13,\ 24,\ 25,\ 14,\ 35.
+$$<br>For $m=6$, it is<br>$$
+12,\ 34,\ 56,\ 13,\ 25,\ 46,\ 16,\ 24,\ 35,\ 14,\ 23,\ 15,\ 26,\ 36,\ 45.
+$$<br>Here $ij$ denotes the pair $\{i,j\}$. Each sequence contains every pair exactly once.</p><p>These statements hold for every positive parameter. Below I give exact polynomial certificates for all comparisons after the cycle; the path-merging proof establishes the preceding queries.</p><p>Define<br>$$
+A_j(z)=1+jz,\qquad H(z)=1+5z+5z^2.
+$$<br>The prefix determinants are:</p><p>| $s$ | $D_s^{(5)}(z)$ | $D_s^{(6)}(z)$ |<br>|---|---|---|<br>| $0$ | $1$ | $1$ |<br>| $1$ | $A_2$ | $A_2$ |<br>| $2$ | $A_2^2$ | $A_2^2$ |<br>| $3$ | $A_1A_2A_3$ | $A_2^3$ |<br>| $4$ | $(1+3z+z^2)H$ | $A_2^2(1+4z+2z^2)$ |<br>| $5$ | $H^2$ | $A_1A_2A_3(1+4z+z^2)$ |<br>| $6$ | $H(1+7z+11z^2)$ | $A_1^2A_3^2A_4$ |<br>| $7$ | $A_2A_3A_4A_5$ | $A_1A_2A_3^2A_5$ |<br>| $8$ | $A_3^2A_5^2$ | $A_3^3(1+7z+8z^2)$ |<br>| $9$ | $A_3A_5^3$ | $A_3^4A_6$ |<br>| $10$ | $A_5^4$ | $A_3^3A_5A_6$ |<br>| $11$ | — | $A_3^2A_5^2A_6$ |<br>| $12$ | — | $A_3A_4A_5A_6^2$ |<br>| $13$ | — | $A_4^2A_6^3$ |<br>| $14$ | — | $A_4A_6^4$ |<br>| $15$ | — | $A_6^5$ |</p><p>Arguments of the $A_j$ and $H$ factors are $z$ throughout the table.</p><p><b>Exact comparison certificate.</b> Let $L_s$ be the Laplacian of the first $s$ listed pairs, and for any candidate pair $e$ define<br>$$
+P_{s,e}(z)=\det(I_m+z(L_s+d_ed_e^\top)).
+$$<br>The determinant lemma gives<br>$$
+P_{s,e}(z)
+=
+D_s^{(m)}(z)
+\left(1+z\,d_e^\top(I_m+zL_s)^{-1}d_e\right).
+$$<br>Thus greedy maximizes $P_{s,e}(z)$.</p><p>Let $e_s$ be the next listed pair. In the following table, $T_s$ is the set of candidates for which<br>$$
+P_{s,e_s}(z)-P_{s,e}(z)
+$$<br>is identically zero. For every other candidate, write<br>$$
+P_{s,e_s}(z)-P_{s,e}(z)
+=
+\sum_{j=2}^{m-1}h_{s,e,j}z^j.
+$$<br>The last column gives the coordinatewise minima of these coefficient vectors over $e\notin T_s$.</p><p>| $m$ | $s$ | $T_s$ | $\bigl(\min h_{s,e,2},\ldots,\min h_{s,e,m-1}\bigr)$ |<br>|---|---|---|---|<br>| $5$ | $5$ | $\{13,14,24,25,35\}$ | $(2,10,10)$ |<br>| $5$ | $6$ | $\{24,25\}$ | $(1,8,15)$ |<br>| $5$ | $7$ | $\{25,35\}$ | $(1,10,25)$ |<br>| $5$ | $8$ | $\{14,35\}$ | $(2,16,30)$ |<br>| $5$ | $9$ | $\{35\}$ | $(3,30,75)$ |<br>| $6$ | $6$ | $\{16,24,35\}$ | $(0,2,8,6)$ |<br>| $6$ | $7$ | $\{24,35\}$ | $(0,2,8,6)$ |<br>| $6$ | $8$ | $\{35\}$ | $(1,14,57,72)$ |<br>| $6$ | $9$ | $\{14,15,23,26,36,45\}$ | $(2,18,54,54)$ |<br>| $6$ | $10$ | $\{23,26,36\}$ | $(1,12,45,54)$ |<br>| $6$ | $11$ | $\{15,26,36,45\}$ | $(1,12,47,60)$ |<br>| $6$ | $12$ | $\{26,36\}$ | $(1,18,108,216)$ |<br>| $6$ | $13$ | $\{36,45\}$ | $(2,32,168,288)$ |<br>| $6$ | $14$ | $\{45\}$ | $(3,54,324,648)$ |</p><p>Here are explicit coefficient identities specifying and verifying the finite calculations in both tables. For any candidate Laplacian $G$,<br>$$
+\det(I_m+zG)=\sum_{j=0}^{m-1}E_j(G)z^j,
+$$<br>where<br>$$
+E_j(G)=\sum_{\substack{U\subseteq\{1,\ldots,m\}\\|U|=j}}\det G[U,U].
+$$<br>Equivalently, starting with $E_0=1$, they can be computed from<br>$$
+jE_j
+=
+\sum_{\ell=1}^{j}
+(-1)^{\ell-1}E_{j-\ell}\operatorname{tr}(G^\ell).
+$$<br>This recurrence follows by differentiating $\det(I_m+zG)$ and expanding<br>$$
+\operatorname{tr}\bigl(G(I_m+zG)^{-1}\bigr)
+=
+\sum_{\ell\ge1}(-1)^{\ell-1}\operatorname{tr}(G^\ell)z^{\ell-1}.
+$$<br>The Laplacian entries used in these calculations are<br>$$
+(L_s)_{ij}
+=
+-\#\{\text{occurrences of }ij\text{ among the first }s\text{ pairs}\}
+\quad(i\ne j),
+$$<br>with diagonal entries equal to the incident counts. These identities give all table entries by integer arithmetic.</p><p>For example, at $m=6,s=6$, the selected pair is $16$. The complete list of difference polynomials, grouped by equal value, is<br>$$
+P_{6,16}-P_{6,e}
+=
+\begin{cases}
+2z^2(1+z)(1+3z)(1+4z),
+&amp;e\in\{12,13,25,34,46,56\},\\
+2z^3(1+z)(1+3z),
+&amp;e\in\{14,15,23,26,36,45\},\\
+0,
+&amp;e\in\{16,24,35\}.
+\end{cases}
+$$<br>The nonzero coefficient vectors are<br>$$
+(2,16,38,24),\qquad (0,2,8,6),
+$$<br>giving the stated coordinatewise minimum.</p><p>Every minimum vector in the certificate is nonnegative and has a positive coordinate. Hence every candidate outside $T_s$ has strictly smaller determinant for every $z&gt;0$. The lexicographically smallest member of $T_s$ is exactly the next listed pair. This proves all remaining greedy choices.</p><p>Both layers therefore complete $K_m$. Applying the complete-layer reduction proves the following all-budget formulas:</p><ul><li>For $m=5$, write $B=10k+s$, with $0\le s&lt;10$, and put $\beta=\alpha/(1+5\alpha k)$. Then</li></ul><p>$$
+  \boxed{
+  F^*-F(q^{\mathrm{gr}})
+  =
+  2\log\left(1+\frac{\beta s}{2}\right)
+  -\frac12\log D_s^{(5)}(\beta).
+  }
+  $$</p><ul><li>For $m=6$, write $B=15k+s$, with $0\le s&lt;15$, and put $\beta=\alpha/(1+6\alpha k)$. Then</li></ul><p>$$
+  \boxed{
+  F^*-F(q^{\mathrm{gr}})
+  =
+  \frac52\log\left(1+\frac{2\beta s}{5}\right)
+  -\frac12\log D_s^{(6)}(\beta).
+  }
+  $$</p><p>In particular, the gap is zero at every complete-layer budget in these cases.</p><h3>6. Proven bounds in the remaining regime</h3><p>The following bounds apply to every $m,B,\alpha$, but are not asserted to be sharp.</p><p>Let<br>$$
+\Delta=F^*-F(q^{\mathrm{gr}}),
+\qquad a=\frac r{2\alpha}.
+$$<br>Then<br>$$
+0\le\Delta
+\le
+\frac12\sum_{j=1}^{r-1}
+\log\left(
+\frac{(a+B)(a+j)}{a(a+B+j)}
+\right).
+$$</p><p><b>Proof.</b> Let $\lambda_1,\ldots,\lambda_r$ be the eigenvalues of $I_m+\alpha L_k$ on $\mathbf1^\perp$. Their sum is $r+2\alpha k$. Averaging scaled pair scores gives<br>$$
+\frac1M\sum_{i&lt;j}\alpha R_k(i,j)
+=
+\frac{2\alpha}{r}\sum_{\ell=1}^{r}\lambda_\ell^{-1}.
+$$<br>Cauchy–Schwarz yields<br>$$
+\sum_{\ell=1}^{r}\lambda_\ell^{-1}
+\ge\frac{r^2}{r+2\alpha k}.
+$$<br>The selected query therefore has scaled score at least $r/(a+k)$, and increases $F$ by at least<br>$$
+\frac12\log\left(1+\frac r{a+k}\right).
+$$<br>Summing and cancelling common factors gives<br>$$
+F(q^{\mathrm{gr}})
+\ge
+\frac12\sum_{j=0}^{r-1}
+\log\left(\frac{a+B+j}{a+j}\right).
+$$<br>Subtracting this from $F^*=\frac r2\log((a+B)/a)$ proves the bound. $\square$</p><p>There is also a lower bound applying to every integral design. Write<br>$$
+B=Mk+s,\qquad 0\le s&lt;M.
+$$<br>Then<br>$$
+\Delta\ge
+\frac{\alpha^2s(M-s)}
+{2M(1+2\alpha B)^2}.
+$$</p><p><b>Proof.</b> Put<br>$$
+H=1+2\alpha B,\qquad c=1+\frac{2\alpha B}{r}.
+$$<br>Every contrast precision eigenvalue lies in $[1,H]$, and their average is $c$. Since $(\log x)&#x27;&#x27;\le-H^{-2}$ on this interval,<br>$$
+\log\lambda
+\le
+\log c+\frac{\lambda-c}{c}
+-\frac{(\lambda-c)^2}{2H^2}.
+$$<br>Summing cancels the linear terms. Therefore, for any integral design $q$,<br>$$
+F^*-F(q)
+\ge
+\frac{\alpha^2}{4H^2}
+\left\|L_q-\frac{2B}{r}P\right\|_{\mathrm F}^2
+\ge
+\frac{\alpha^2}{2H^2}
+\sum_{i&lt;j}\left(q_{ij}-\frac BM\right)^2.
+$$<br>The last inequality uses the two symmetric off-diagonal entries for each pair.</p><p>For integer counts summing to $B$, transferring one unit between counts differing by at least two strictly decreases the final squared sum. Its minimum is attained by $s$ counts equal to $k+1$ and $M-s$ counts equal to $k$, giving minimum $s(M-s)/M$. This proves the assertion. $\square$</p><h3>7. Remaining open point</h3><p>The continuous complexity question is settled exactly. The formulas above determine the sharp greedy gap for every $m$ through $B=m+1$, and for all budgets when $m\le6$.</p><p>The missing result is an exact characterization for $m\ge7$ and $B&gt;m+1$. The general bounds do not determine that value, and the complete-layer argument proved for five and six vertices has not been established for arbitrary $m$.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 1 and 7: scope of the sharp greedy-gap result: The sharp gap remains undetermined for $m\ge7$ and integer $B&gt;m+1$. The general bounds are explicitly non-sharp and do not resolve this part of USER_TASK.</li><li><b>minor</b> — Section 2: rational-input and bit-complexity assertions: The proof assumes rationally encoded capacities $b_t$, while USER_TASK does not separately make their encoding explicit. State the intended binary-rational capacity assumption; under that convention, the exact optimizer and polynomial bit-complexity argument are valid.</li><li><b>minor</b> — Section 6: integral-design lower-bound proof: The symbol $L_q$ was defined as variance-weighted in Section 2, but the Frobenius-norm calculation requires the unweighted homogeneous count Laplacian. Define that convention explicitly or use a distinct symbol. With the earlier definition retained literally, the intermediate inequality fails even for $m=2$, $B=1$, and $\sigma_x^2=\sigma_1^2=2$.</li></ul>
+<div class="pre"><p><b>Overall assessment: partial, with a correct resolution of the continuous complexity question.</b> The continuous optimizer is valid, and the stated greedy-gap formulas and bounds check out. The output explicitly leaves the sharp gap unresolved for $m\ge7$ and $B&gt;m+1$, so it does not fully answer <code>USER_TASK</code>.</p><p>The finite certificates for $m=5,6$ were independently recomputed using exact integer arithmetic. Every prefix determinant, listed tie set, and coordinatewise coefficient minimum agrees with the output. There is no computational error in those tables.</p><p><b>1. Continuous optimum — verified.</b></p><p>For a feasible design, $L_q$ is positive semidefinite, annihilates $\mathbf1$, and has trace $2S$. Thus its $r=m-1$ eigenvalues on $\mathbf1^\perp$ are nonnegative and sum to $2S$. Applying concavity of $\log(1+\sigma_x^2\lambda)$ gives the stated upper bound. Positive definiteness of $I_m+\sigma_x^2L_q$ ensures that all logarithms are defined.</p><p>The identity<br>$$
+\sum_{i&lt;j}d_{ij}d_{ij}^{\top}=mP
+$$<br>is correct. Consequently, uniform allocation within each type produces precisely the contrast eigenvalues required to attain the bound.</p><p>The remaining optimization over type totals is a linear allocation problem with coefficients $1/\sigma_t^2$ in nonincreasing order. The transfer argument correctly establishes optimality of the displayed $Q_t^*$. Equal variances cause no difficulty: transfers between such types preserve the objective. Zero capacities are also handled by the formula. The budget assumption ensures feasibility and $\sum_tQ_t^*=B$.</p><p>The bit-complexity claim is sound under the intended rational encoding of capacities. Sorting, rational arithmetic, and producing $M\tau$ rational entries require polynomial time and polynomial output bit length. No evaluation of logarithms is needed to return an optimal design. This establishes the requested additive approximation guarantee, including its dependence on $\log(1/\varepsilon)$.</p><p><b>Minor encoding clarification.</b> The task explicitly describes several inputs as binary rational but does not separately specify the encoding of $b_t$. The proof assumes rational capacities when asserting rational arithmetic and an exact rational optimizer. The minimum clarification is to state explicitly that the capacities have binary-rational encodings, as the finite-input formulation evidently intends.</p><p><b>2. Gaussian updates and the literal KL direction — verified.</b></p><p>The covariance and mean update formulas have positive denominators because $v&gt;0$ and $C$ is positive definite. The posterior-predictive covariance of the mean increment is correctly given by $C-C&#x27;$.</p><p>The Gaussian KL identity is stated correctly, with the inverse covariance belonging to the distribution in the second argument. It also matches the identity in [Alexanderian’s preliminaries](https://arxiv.org/html/2212.11466v3).</p><p>Both substitutions check out:</p><ul><li>For updated-to-current KL, the expected trace and quadratic terms cancel the dimension term, leaving $\frac12\log(1+s)$.</li><li>For current-to-updated KL, the two relevant traces are $m+s$ and $s$, yielding $s-\frac12\log(1+s)$.</li></ul><p>Both expressions are strictly increasing on $s\ge0$. Therefore the literal KL direction in the task produces the same maximizing pair as the usual EIG direction.</p><p>The covariance depends only on previous query counts. Together with lexicographic tie-breaking, this proves that the greedy sequence and its final objective are deterministic. Removing the expectation is justified.</p><p>At fixed $m,B,\alpha$, homogeneous capacity affects feasibility but neither the benchmark nor the greedy sequence. Accordingly, the exact gaps proved below are indeed sharp worst-case gaps for their stated parameter regimes.</p><p><b>3. Path-merging phase — verified.</b></p><p>The parametrization<br>$$
+\alpha=\frac{\rho}{(1-\rho)^2}
+$$<br>has exactly one solution in $(0,1)$ for every $\alpha&gt;0$.</p><p>The proposed path inverse satisfies the interior recurrence, endpoint conditions, and displayed normalization identity. The formulas were also checked symbolically for path sizes from one through six. These finite checks corroborate the general recurrence verification given in the output.</p><p>The endpoint diagonal formula is correct. Its second expression establishes strict decrease with component size; the position-dependent terms establish endpoint maximality.</p><p>The endpoint covariance and endpoint-pair score simplify as claimed. In particular, every isolated path endpoint score is strictly below $2(1-\rho)$.</p><p>The edge-removal comparison is valid: removing edges subtracts a positive semidefinite matrix from the precision matrix, and inversion reverses the positive definite order. The chosen pair then lies at the endpoints of an isolated subpath. Thus the comparison applies to every within-component pair.</p><p>Pairs in distinct components have zero cross-covariance, and their maximum scores are sums of endpoint diagonal entries. These scores exceed $2(1-\rho)$. Hence greedy must merge components until only one remains, and decreasing $v_s$ forces selection of the two smallest component sizes. Ties between equal sizes do not alter the size multiset.</p><p>The tridiagonal determinant recurrence and its solution give the stated $D_s$. Multiplication across components then proves the gap formula for $B\le m-1$.</p><p><b>4. Budgets $m$ and $m+1$ — verified.</b></p><p>For $m\ge3$, the endpoint score strictly increases with path size. Every other pair spans a shorter subpath, so the edge-removal bound proves that closing the full path is the unique next greedy choice.</p><p>The cycle determinant follows correctly from its Laplacian eigenvalues and the roots-of-unity product.</p><p>The periodized inverse kernel is valid: its shifts converge absolutely because $0&lt;\rho&lt;1$, and the displayed recurrence and normalization verify the precision equation. The resulting cycle pair score is correct.</p><p>The difference calculation proves strict increase up to maximum cyclic distance. All maximizing pairs therefore give the same determinant increment, regardless of which lexicographic tie is selected. The determinant lemma gives precisely the stated formula at $B=m+1$.</p><p>The special case $m=3$ correctly permits a repeated edge. The case $m=2$ is covered separately by its zero-gap result.</p><p><b>5. Unbounded-gap consequence — verified.</b></p><p>When $B\le\lfloor m/2\rfloor$, the component-merging rule produces a matching, giving the stated exact expression.</p><p>The limit<br>$$
+\frac{D_s}{\alpha^{s-1}}\longrightarrow s
+$$<br>is correct. Combining it with the number of components yields the displayed asymptotic expansion for fixed positive integer $B\le m-1$.</p><p>For $B&lt;m-1$, the coefficient of $\log\alpha$ is positive, proving unboundedness as $\alpha$ increases. Restricting $\alpha$ to powers of two is compatible with rational inputs.</p><p>This is an unbounded-gap statement across varying $\alpha$; it does not supply the missing exact gap in the remaining regime.</p><p><b>6. All-budget formulas for $m\le6$ — verified.</b></p><p>For $m=2$, there is only one available pair, so the zero-gap statement is correct.</p><p>For $m=3$, the determinant expansion is correct. At a fixed current budget, comparing candidate increments reduces to comparing $B-a$, so greedy increments a minimum count. The balanced-count identity and the resulting formula with $\delta_B$ are correct.</p><p>The complete-layer reduction correctly distinguishes the constant direction from $\mathbf1^\perp$. This explains the factor $c_k^r$, rather than $c_k^m$, and validates both the determinant and inverse-score identities. Its use is conditional on parameter-independent complete layers, which the subsequent arguments establish for the claimed sizes.</p><p>For $m=4$, both cycle scores and the missing-edge precision calculation are correct. A present pair has strictly smaller score than the missing pair. All six listed prefix determinants were independently verified.</p><p>For $m=5,6$, exact recomputation confirms:</p><ul><li>Every determinant in both prefix tables.</li><li>Every stated set $T_s$.</li><li>Every coordinatewise minimum coefficient vector.</li><li>The lexicographic choice from every tie set.</li><li>Nonnegative coefficients with at least one positive coefficient for every excluded candidate.</li></ul><p>The certificate considers every pair, including already queried pairs, so it correctly accounts for the permission to repeat queries.</p><p>The principal-minor formula and Newton recurrence are valid. The explicit example at $m=6,s=6$ expands to the two coefficient vectors claimed. Consequently, the layer completion and all-budget gap formulas are established.</p><p><b>7. General upper bound — verified.</b></p><p>The contrast precision eigenvalues are positive and sum to $r+2\alpha k$. Averaging pair scores and applying Cauchy–Schwarz gives the stated lower bound on the selected scaled score.</p><p>The determinant increment is therefore bounded below as claimed. The product cancellation over the integer query indices yields the displayed sum over $j$. Subtracting from the continuous benchmark gives exactly the announced upper bound.</p><p>The endpoint $r=1$ gives an empty sum and correctly recovers zero gap for $m=2$.</p><p><b>8. Integral-design lower bound — correct after a minor notation clarification.</b></p><p>The precision eigenvalues lie in $[1,H]$ and have mean $c$. The stated strong-concavity inequality for $\log$ has the correct constant and direction. Summing cancels the linear terms.</p><p>The Frobenius-norm comparison correctly uses the two off-diagonal entries associated with each pair. The balancing argument for integer counts yields the minimum $s(M-s)/M$. Thus the final lower bound is correct.</p><p><b>Minor notation issue.</b> In Section 2, $L_q$ denotes the variance-weighted Laplacian. In Section 6, the lower-bound calculation requires $L_q$ to denote the unweighted homogeneous count Laplacian, but this change is not stated.</p><p>This distinction matters literally. With $m=2$, $B=1$, and $\sigma_x^2=\sigma_1^2=2$, the actual gap is zero. Keeping the Section 2 definition of $L_q$ makes the first Frobenius-norm inequality assert a positive lower bound of $1/36$.</p><p>The minimum clarification is to define the Laplacian used in Section 6 explicitly as the unweighted count Laplacian, or give it a distinct symbol. This is a notation repair; the final bound and its mathematical argument survive it.</p><p><b>9. Outstanding target — major incompleteness.</b></p><p><code>USER_TASK</code> requests the sharp worst-case greedy gap for general homogeneous integer-budget instances. The output supplies that gap only for:</p><ul><li>Every $m$ through $B=m+1$.</li><li>Every budget when $m\le6$.</li></ul><p>For $m\ge7$ and $B&gt;m+1$, it supplies bounds explicitly acknowledged to be non-sharp. Neither those bounds nor the proved small-size complete-layer patterns determine the requested value.</p><p>The prover accurately reports this limitation. There is no unsupported claim of a complete solution, but the assignment remains partially unresolved. Completing it requires a sharp characterization in the remaining regime; no expositional clarification alone will suffice.</p><p>The continuous subproblem is established as polynomial-time solvable. Under the requested JSON convention, however, an overall <code>partial</code> result must have <code>continuous_status</code> set to <code>unresolved</code>.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,390 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2018-0704 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2018-0704 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2018-0704)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Algorithm 1 achieves competitive ratio 1/2.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite type set \(T\), rational type-mass arrival rates over a horizon, ads with type-specific click and continuation probabilities, and a finite typed independent-cascade model with a specified population scaling and limiting diffusion law, allocate each arriving type mass among integral ad sequences without observing prior cascades. What competitive ratio can an online policy achieve against an offline allocation that knows the full arrival stream, and can a greedy mass-allocation policy attain \(1/2\) with efficient approximation in the number of types, ads, input bit length, and requested accuracy?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of \(\tau\) types \(T\) with positive masses \(\mu_t\), each a binary rational, with \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types; \(L\) is the total binary input length.<br>There are \(m\geq1\) ads, rational revenues \(r_i&gt;0\), rational sharing and continuation probabilities \(q_{it},c_{it}\in[0,1]\), and a slot bound \(1\leq k\leq m\). An integral sequence contains at most \(k\) distinct ads, including the empty sequence; its sharing probability is \(p_{it}(\sigma)=q_{it}\prod_{\ell&lt;j}c_{\sigma(\ell),t}\) when \(\sigma(j)=i\), and zero when \(i\) is absent. Sharing and continuation are independent.<br>The horizon consists of \(H\) unit intervals. Nonnegative rational arrival rates \(a_{ht}\) satisfy \(\sum_h a_{ht}\leq\mu_t\); each arriving individual appears once. Rates for interval \(h\) are revealed at its start, with future rates unknown. Immediately and irrevocably split each arriving type mass among integral sequences; observe no sharing or diffusion outcomes.<br>For cumulative assigned masses \(x_{t\sigma}\), seed masses are \(s_{it}=\sum_\sigma x_{t\sigma}p_{it}(\sigma)\). The typed IC scaling has \(N\mu_t\) individuals of type \(t\) and independent directed transmission probabilities \(\min\{\lambda_{iut}/N,1\}\), where the rational intensities \(\lambda_{iut}\geq0\) are known; sequence assignments within each type are exchangeable.<br>Use the following specified limiting diffusion law: \(z_i\) is the componentwise least solution in \([s_i,\mu]\) of \(z_{it}=s_{it}+(\mu_t-s_{it})(1-\exp(-\sum_u\lambda_{iut}z_{iu}))\). Final normalized revenue is \(F(x)=\sum_i r_i\sum_t z_{it}\); each individual contributes at most once per ad, and ads have separate cascades and no budget caps.<br>Let \(\mathrm{OPT}\) be the supremum revenue of feasible allocations knowing all arrival rates but no random outcomes. A policy is \(\beta\)-competitive when \(\mathbb E[F(x)]\geq\beta\mathrm{OPT}\) for every fixed admissible arrival stream.<br>Define greedy refinement \(G_n\) by subdividing each interval into \(n\) equal pieces. In each piece, process types in their listed order and assign its \(a_{ht}/n\) mass to a sequence maximizing the increase in \(F\), breaking ties lexicographically; these assignments prescribe service during that piece. Its limiting revenue is \(\liminf_{n\to\infty}F(G_n)\).</p><p>What worst-case competitive ratio can an online mass-allocation policy achieve?<br>Does greedy&#x27;s limiting revenue always reach \(\tfrac12\mathrm{OPT}\), and is there an online implementation attaining \(\tfrac12-\varepsilon\) in time polynomial in \(m,\tau,H,k,L,1/\varepsilon\), for rational \(0&lt;\varepsilon&lt;\tfrac12\), or does either guarantee fail?</p><p>Discrete non-adaptive sequencing has a greedy \(\tfrac12\)-competitive guarantee; sequence optimization uses polynomial-time dynamic programming given influence marginals, which are estimated by simulation ([Tang, 2018](https://ojs.aaai.org/index.php/AAAI/article/download/11306/11165)).<br>Continuous submodular online learning has approximation-regret guarantees against a fixed hindsight decision, a different benchmark ([Chen–Hassani–Karbasi, 2018](https://proceedings.mlr.press/v84/chen18f.html)). No result settling the specified mass-allocation model was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized total population mass to one and revenue per unit population.</li><li>Specified sparse exchangeable typed IC scaling with transmission intensity divided by population scale, and selected the least-fixed-point limiting diffusion law; neither was specified in the supplied question.</li><li>Represented rational arrival rates by H unit intervals, revealing only the current interval&#x27;s rates, and required cumulative arrivals of each type not to exceed its population mass.</li><li>Carried over distinct arriving individuals, immediate irrevocable allocation, independent sharing and continuation, separate ad cascades, and counting each influenced individual once per ad.</li><li>Specified all sequences of distinct ads up to a slot bound, including the empty sequence, since no additional sequence restrictions were supplied.</li><li>Used positive rational revenues, probabilities including endpoints, nonnegative rational diffusion intensities, and the main model without advertiser budget caps.</li><li>Defined greedy through finite mass refinements and a liminf revenue, with fixed processing and tie-breaking orders, so its meaning does not require differentiability of the limiting law.</li><li>Used an offline supremum with full arrival information but no random-outcome information, and interpreted efficient approximation as a multiplicative competitive ratio loss of epsilon.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Proven guarantees and a sharper obstruction</h3><p>Both proposed guarantees hold:</p><ul><li>Greedy’s specified limiting revenue is at least $\tfrac12\mathrm{OPT}$.</li><li>For every rational $\varepsilon\in(0,\tfrac12)$, a deterministic online policy achieves $\tfrac12-\varepsilon$ in polynomial time.</li></ul><p>Moreover, greedy’s factor $\tfrac12$ is sharp. A different argument bounds the competitive factor of <b>every</b> online policy, including randomized policies, by $\tfrac34$. Thus, if $\beta^\star$ denotes the supremum of achievable uniform competitive factors, the results proved below give<br>$$
+\frac12\leq\beta^\star\leq\frac34.
+$$</p><p>The exact value of $\beta^\star$ remains unresolved. The upper bound improves the bound in the notes.</p><h3>1. The least fixed point has diminishing returns</h3><p>Write $S=(s_{it})_{i,t}$ and<br>$$
+\Phi(S)=\sum_i r_i\sum_t z_{it}(S_i).
+$$<br>Thus $F(x)=\Phi(S(x))$. A seed array is within its coordinate bounds when $0\leq s_{it}\leq\mu_t$.</p><h3>1.1 A branching-tree representation</h3><p>Fix an ad $i$. Construct a rooted multitype tree as follows. A vertex of type $t$ has, independently for each $u$, a Poisson number of type-$u$ children with mean $\lambda_{iut}\mu_u$. Independently mark each type-$u$ vertex with probability $s_{iu}/\mu_u$.</p><p>Let $z^{(D)}_{it}/\mu_t$ be the probability of a mark within distance $D$ of a type-$t$ root. Independence and the Poisson generating function give<br>$$
+z^{(0)}_{it}=s_{it},
+$$<br>$$
+z^{(D+1)}_{it}
+=s_{it}+(\mu_t-s_{it})
+\left(1-\exp\left(-\sum_u\lambda_{iut}z^{(D)}_{iu}\right)\right).
+$$</p><p>These iterates increase and remain bounded by $\mu$. Their limit is a fixed point, by continuity of the displayed map. Every fixed point in $[s_i,\mu]$ dominates every iterate: this follows inductively from monotonicity of that map. Consequently, their limit is exactly the specified least fixed point.</p><p>This argument uses the specified diffusion law directly; it makes no assertion about convergence of finite random graphs.</p><p>Condition on a finite-depth tree containing $N_u$ vertices of type $u$. Its marking probability is<br>$$
+h_N(s_i)=1-\prod_u\left(1-\frac{s_{iu}}{\mu_u}\right)^{N_u}.
+$$<br>For $N_v&gt;0$,<br>$$
+\frac{\partial h_N}{\partial s_{iv}}
+=
+\frac{N_v}{\mu_v}
+\left(1-\frac{s_{iv}}{\mu_v}\right)^{N_v-1}
+\prod_{u\ne v}\left(1-\frac{s_{iu}}{\mu_u}\right)^{N_u}.
+$$<br>For $N_v=0$, this derivative is zero. Every derivative is nonnegative and nonincreasing in every seed coordinate. Integrating these derivatives along nonnegative increments proves diminishing returns for $h_N$.</p><p>Expectations preserve the resulting finite-difference inequalities. Passing to the depth limit also preserves them, because only bounded function values occur in those inequalities. Hence $\Phi$ is nondecreasing and has diminishing returns.</p><h3>1.2 Clipping and concavity</h3><p>Extend $\Phi$ to nonnegative arrays by<br>$$
+\widehat\Phi(S)=\Phi(S\wedge\mu),
+$$<br>where the clipping is performed separately for each ad and type.</p><p>For each finite-tree marking polynomial, clipping changes a coordinate derivative to zero beyond its upper boundary. The derivatives remain nonincreasing. The preceding expectation and limit arguments therefore prove that, whenever $A\leq B$ and $V\geq0$,<br>$$
+\widehat\Phi(A+V)-\widehat\Phi(A)
+\geq
+\widehat\Phi(B+V)-\widehat\Phi(B).
+$$</p><p>Also, $\Phi(0)=0$: iteration from zero remains zero.</p><p>Two concavity properties follow from the same finite-tree calculation.</p><ul><li>Along a nonnegative ray, $\Phi$ is concave. In particular,</li></ul><p>$$
+  \Phi(\alpha S)\geq\alpha\Phi(S),
+  \qquad 0\leq\alpha\leq1.
+  $$</p><ul><li>If only one type-$t$ column varies, then $\Phi$ is concave in that entire column. Indeed, for each ad only one seed coordinate varies, and the concave ad contributions add.</li></ul><p>These assertions do not assume continuity at zero seed mass.</p><h3>2. Greedy’s limiting half guarantee</h3><h3>2.1 Comparison with one sequence per mass piece</h3><p>Consider any finite ordered list of mass pieces. Let $D_j$ be greedy’s seed increment on piece $j$, and let $E_j$ be the increment obtained by assigning an alternative sequence to the same piece. Define<br>$$
+P_j=\sum_{\ell&lt;j}D_\ell,\qquad
+S_G=\sum_jD_j,\qquad
+S_O=\sum_jE_j.
+$$</p><p>Monotonicity, telescoping, and diminishing returns imply<br>$$
+\begin{aligned}
+\Phi(S_O)
+&amp;\leq \widehat\Phi(S_G+S_O)\\
+&amp;\leq \Phi(S_G)
++\sum_j\left[\widehat\Phi(S_G+E_j)-\widehat\Phi(S_G)\right]\\
+&amp;\leq \Phi(S_G)
++\sum_j\left[\Phi(P_j+E_j)-\Phi(P_j)\right].
+\end{aligned}
+$$</p><p>For the second inequality, telescope the $E_j$ increments starting from $S_G$, then move each increment’s base point down to $S_G$. For the third, use $P_j\leq S_G$.</p><p>The arrays $P_j+E_j$ are within their seed bounds: they use earlier processed masses and an alternative assignment of the current piece. Thus the last line uses the original, unclipped function.</p><p>Greedy’s maximizing property gives<br>$$
+\Phi(P_j+E_j)-\Phi(P_j)
+\leq
+\Phi(P_j+D_j)-\Phi(P_j).
+$$<br>The right-hand gains telescope. Therefore<br>$$
+\Phi(S_O)\leq2\Phi(S_G).
+$$</p><h3>2.2 Approximation of arbitrary fractional allocations</h3><p>For each type $t$, define<br>$$
+v_t(\sigma)=\bigl(p_{1t}(\sigma),\ldots,p_{mt}(\sigma)\bigr),
+\qquad
+P_t=\operatorname{conv}\{v_t(\sigma):\sigma\text{ feasible}\}.
+$$<br>The empty sequence supplies the zero vector.</p><p>Let $A_t=\sum_h a_{ht}$. Any offline allocation gives total type-$t$ seeds $A_tv_t$ for some $v_t\in P_t$, provided $A_t&gt;0$. Carathéodory’s theorem yields<br>$$
+v_t=\sum_{\ell=1}^{d_t}\theta_{t\ell}v_t(\sigma_{t\ell}),
+\qquad
+d_t\leq m+1,
+\qquad
+\theta_{t\ell}\geq0,
+\qquad
+\sum_\ell\theta_{t\ell}=1.
+$$</p><p>Put $D=m+1$ and take $n&gt;D$. In every interval, assign<br>$$
+N_{t\ell}=\left\lceil(n-D)\theta_{t\ell}\right\rceil
+$$<br>of that interval’s $n$ type-$t$ pieces to $\sigma_{t\ell}$. This is feasible because<br>$$
+\sum_\ell N_{t\ell}\leq n-D+d_t\leq n.
+$$<br>Assign remaining pieces to the empty sequence.</p><p>The resulting seed array $S^{[n]}$ satisfies<br>$$
+S^{[n]}\geq\left(1-\frac{D}{n}\right)S_O.
+$$<br>Consequently, monotonicity and ray concavity give<br>$$
+\Phi(S^{[n]})
+\geq
+\left(1-\frac{D}{n}\right)\Phi(S_O).
+$$</p><p>The comparison in Section 2.1 applies to this allocation and $G_n$. Since $S_O$ was arbitrary,<br>$$
+F(G_n)\geq
+\frac12\left(1-\frac{m+1}{n}\right)\mathrm{OPT},
+\qquad n&gt;m+1.
+$$<br>Taking the lower limit proves<br>$$
+\boxed{\liminf_{n\to\infty}F(G_n)\geq\tfrac12\mathrm{OPT}.}
+$$</p><p>No offline maximizer or continuity at an activation boundary was assumed.</p><h3>3. A two-stream obstruction: every policy has factor at most $\tfrac34$</h3><p>The construction also proves sharpness of greedy’s half guarantee.</p><p>Take two ads, $k=1$, two intervals, and three types $A,B,C$. Choose rational parameters<br>$$
+0&lt;b&lt;\frac12,\qquad t&gt;0,
+$$<br>and put<br>$$
+\mu_A=M=1-2b,\qquad \mu_B=\mu_C=b.
+$$<br>Both revenues are one. Sharing probabilities are<br>$$
+q_{1A}=q_{2A}=1,\qquad
+q_{1B}=1,\quad q_{2B}=0,\qquad
+q_{1C}=0,\quad q_{2C}=1.
+$$<br>Set all continuation probabilities to zero. The only positive intensities are<br>$$
+\lambda_{1,B,A}=\frac{t}{b},
+\qquad
+\lambda_{2,C,A}=\frac{t}{b}.
+$$</p><p>The first interval brings all mass $M$ of type $A$. The second brings either all mass $b$ of type $B$ or all mass $b$ of type $C$. Both streams are admissible and have the same revealed prefix.</p><h3>3.1 Exact revenue formulas</h3><p>There are no incoming transmission edges to $B$ or $C$, so their final activated masses equal their seed masses. The equations for type $A$ are therefore explicit:<br>$$
+z_{1A}
+=s_{1A}+(M-s_{1A})
+\left(1-\exp\left(-\frac{t}{b}s_{1B}\right)\right),
+$$<br>$$
+z_{2A}
+=s_{2A}+(M-s_{2A})
+\left(1-\exp\left(-\frac{t}{b}s_{2C}\right)\right).
+$$<br>These equations determine the unique fixed point in this acyclic instance.</p><p>Let $Y,W$ be the possibly random first-interval masses assigned to ads one and two. Then<br>$$
+Y+W\leq M.
+$$</p><p>On the stream ending with $B$, the best possible later decision assigns all $b$ mass to ad one, by monotonicity. Conditional on $Y,W$, any policy’s final revenue is consequently at most<br>$$
+b+M(1-e^{-t})+e^{-t}Y+W.
+$$<br>On the stream ending with $C$, the corresponding upper bound is<br>$$
+b+M(1-e^{-t})+Y+e^{-t}W.
+$$</p><p>The law of $(Y,W)$ is the same on both streams. Averaging the conditional upper bounds and using $Y+W\leq M$ gives<br>$$
+\frac{\mathbb E[F_B]+\mathbb E[F_C]}{2}
+\leq
+b+\frac{M(3-e^{-t})}{2}.
+$$</p><p>For the $B$ stream, offline assigns all type-$A$ mass to ad two and all type-$B$ mass to ad one. This is optimal: with $Y+W=M$, the best final revenue equals<br>$$
+b+M(2-e^{-t})-(1-e^{-t})Y,
+$$<br>which is maximized at $Y=0$. By symmetry, the $C$ stream has the same optimum:<br>$$
+\mathrm{OPT}=b+M(2-e^{-t}).
+$$</p><p>At least one of the two fixed streams thus has expected competitive ratio at most<br>$$
+R(b,t)=
+\frac{b+M(3-e^{-t})/2}
+     {b+M(2-e^{-t})}.
+$$</p><p>Take, for example, rational $b_j=1/(j+3)$ and $t_j=j$. Then<br>$$
+\lim_{j\to\infty}R(b_j,t_j)=\frac34.
+$$<br>It follows that<br>$$
+\boxed{\beta^\star\leq\tfrac34.}
+$$<br>This argument applies to randomized policies against fixed admissible streams.</p><h3>3.2 Greedy’s factor is exactly $\tfrac12$</h3><p>Use the same instance and choose the stream ending with $B$.</p><p>Before the second interval, revenue equals $Y+W$: no source type $B$ or $C$ has been seeded. Each positive type-$A$ piece has equal gains from the two singleton sequences. Lexicographic tie-breaking assigns it to ad one. Hence every refinement assigns all $M$ mass to ad one.</p><p>In the second interval, assigning a type-$B$ piece to ad one yields its direct-seed revenue. Type $A$ is already saturated for that ad. Therefore, for every $n$,<br>$$
+F(G_n)=M+b.
+$$<br>Its ratio is<br>$$
+\frac{M+b}{b+M(2-e^{-t})}.
+$$<br>Along the rational parameter sequence above, this tends to $\tfrac12$.</p><p>Together with Section 2, this proves that greedy’s limiting worst-case factor is exactly $\tfrac12$.</p><h3>4. Fractional block greedy reduces the algorithmic question to concave optimization</h3><p>Process the types of each interval in their listed order. A block consists of the interval’s entire mass $d=a_{ht}$ of one type $t$. The rates are known at the interval’s start, so these decisions can be computed then and prescribed for service during the interval.</p><p>Let $E_tv$ denote the seed array whose type-$t$ column is $v$, with other columns zero. At current seeds $S$, define<br>$$
+M(S,d,t)
+=
+\sup_{v\in P_t}
+\left[\Phi(S+dE_tv)-\Phi(S)\right].
+$$<br>This is maximization of a concave function on $P_t$, by Section 1.2.</p><p>Suppose block $j$ obtains gain at least $M_j-\eta_j$. The telescoping comparison from Section 2.1 applies also to fractional block increments, because those increments are nonnegative. It gives<br>$$
+\mathrm{OPT}\leq2\Phi(S_G)+\sum_j\eta_j.
+$$</p><p>For each positive block put<br>$$
+b_j=d_j\max_i r_iq_{it_j}.
+$$<br>Choosing a maximizing singleton on every block yields direct-seed revenue $\sum_j b_j$. Diffusion cannot decrease it, so<br>$$
+B:=\sum_j b_j\leq\mathrm{OPT}.
+$$<br>If $b_j=0$, that type cannot seed any ad and the block can be skipped.</p><p>For the remaining blocks choose<br>$$
+\eta_j=2\varepsilon b_j.
+$$<br>Then<br>$$
+\mathrm{OPT}\leq2\Phi(S_G)+2\varepsilon\mathrm{OPT},
+$$<br>and hence<br>$$
+\Phi(S_G)\geq
+\left(\frac12-\varepsilon\right)\mathrm{OPT}.
+$$</p><p>It remains to prove that the required block approximations are computable in polynomial time.</p><h3>5. Polynomial-time evaluation of the specified least fixed point</h3><p>We prove a value-oracle lemma, including the zero-seed and numerical-conditioning cases.</p><p><b>Lemma.</b> For rational seeds $0\leq s_t\leq\mu_t$, the quantity $\sum_tz_t(s)$ for one ad can be approximated to additive error $\xi&gt;0$ in time polynomial in the rational input length, $\tau$, and $\log(1/\xi)$.</p><p>We use the standard ellipsoid oracle results: weak separation permits weak linear optimization of a compact convex body with explicit inner and outer balls; bounded-encoding rational polytopes admit exact separation, optimization, and constructive vertex decomposition from a linear optimization oracle. These are the relevant consequences of Theorems 3.1, 3.8, and 3.9 of [Grötschel–Lovász–Schrijver](https://ir.cwi.nl/pub/10046/10046D.pdf). The requisite balls and numerical oracles are supplied below.</p><h3>5.1 Restricting to seeded reachable types</h3><p>Suppress the ad index. Form the graph with edge $u\to t$ when $\lambda_{ut}&gt;0$, and let $\mathcal R$ be the set reachable from $\{t:s_t&gt;0\}$.</p><p>Iteration from Section 1 shows that<br>$$
+z_t=0\quad\text{outside }\mathcal R,
+\qquad
+z_t&gt;0\quad\text{on }\mathcal R.
+$$<br>If there are no positive seeds, return zero immediately.</p><p>Let $T_s$ be the fixed-point map. For every $\alpha&gt;1$ and every $t\in\mathcal R$,<br>$$
+T_s(\alpha z)_t&lt;\alpha T_s(z)_t.
+$$<br>If $s_t&gt;0$, strictness follows from the positive constant term. If $s_t=0$, positivity of $z_t$ implies $\sum_u\lambda_{ut}z_u&gt;0$, and strictness follows from<br>$$
+1-e^{-\alpha x}&lt;\alpha(1-e^{-x}),
+\qquad x&gt;0.
+$$</p><p>Every nonnegative vector $v$ supported on $\mathcal R$ with $v\leq T_s(v)$ is dominated by $z$. Otherwise,<br>$$
+\alpha=\max_{t\in\mathcal R}\frac{v_t}{z_t}&gt;1.
+$$<br>At a maximizing coordinate,<br>$$
+v_t\leq T_s(v)_t
+\leq T_s(\alpha z)_t
+&lt;\alpha z_t=v_t,
+$$<br>a contradiction.</p><h3>5.2 Convex constraints</h3><p>Fix $v_t=\mu_t$ when $s_t=\mu_t$, and fix $v_t=0$ outside $\mathcal R$. If no variables remain, return the sum of these fixed coordinates.</p><p>For every remaining coordinate, $s_t&lt;\mu_t$. The postfixed inequality is equivalent, for $v_t&lt;\mu_t$, to<br>$$
+g_t(v):=
+\log\frac{\mu_t-s_t}{\mu_t-v_t}
+-\sum_u\lambda_{ut}v_u
+\leq0.
+$$<br>Each $g_t$ is convex. Fixed coordinates are included in the linear sum.</p><p>The domination proved above implies that maximizing the sum of coordinates subject to these constraints recovers the least fixed-point value. We next introduce caps that make numerical evaluation well conditioned.</p><h3>5.3 An explicit strict interior point</h3><p>Let $\mu_{\min}=\min_t\mu_t$, let $s_{\min}$ be the smallest positive seed, and let $\lambda_{\min}$ be the smallest positive intensity, using $1$ if none exists. Define<br>$$
+b_0=\frac14\min\{s_{\min},\mu_{\min}\},
+\qquad
+\alpha_0=\min\left\{\frac14,\frac{\mu_{\min}\lambda_{\min}}4\right\}.
+$$<br>For each variable coordinate, let $\ell(t)$ be its shortest distance from a positively seeded type and set<br>$$
+w_t=b_0\alpha_0^{\ell(t)}.
+$$<br>Retain the prescribed values on fixed coordinates.</p><p>If $s_t&gt;0$, then $T_s(w)_t\geq s_t\geq4w_t$. Otherwise, a predecessor on a shortest path has value at least $w_t/\alpha_0$. Using<br>$$
+1-e^{-x}\geq\min\{x/2,1/2\},\qquad x\geq0,
+$$<br>and $w_t\leq\mu_{\min}/4$, gives $T_s(w)_t\geq2w_t$.</p><p>Thus, for every variable coordinate,<br>$$
+\begin{aligned}
+g_t(w)
+&amp;=\log\frac{\mu_t-T_s(w)_t}{\mu_t-w_t}\\
+&amp;\leq-\frac{T_s(w)_t-w_t}{\mu_t-w_t}
+\leq-w_t.
+\end{aligned}
+$$<br>The last inequality uses $\mu_t-w_t\leq1$.</p><p>Write $w_{\min}$ for the smallest variable coordinate of $w$. All shortest-path distances are at most $\tau-1$, so $w$ and $w_{\min}$ have polynomial encoding length.</p><p>For $0&lt;\theta&lt;1/4$, let $C_\theta$ be the convex set defined by the $g_t$ constraints and<br>$$
+0\leq v_t\leq(1-\theta/2)\mu_t
+$$<br>on variable coordinates.</p><p>Let $\lambda_{\max}$ be the largest intensity, or zero if all are zero. An inner-ball radius around $w$ is<br>$$
+r=
+\min\left\{
+\frac{w_{\min}}4,\,
+\frac{\mu_{\min}}8,\,
+\frac{w_{\min}}{4(2/\mu_{\min}+\tau\lambda_{\max})}
+\right\}.
+$$<br>Indeed, throughout this ball, variable coordinates remain positive and below $\mu_t/2$, and<br>$$
+\|\nabla g_t\|_1\leq2/\mu_{\min}+\tau\lambda_{\max}.
+$$<br>The resulting change in $g_t$ is at most $w_{\min}/4$, preserving negative slack. The box has diameter at most one, giving an explicit outer-radius bound.</p><p>The feasible vector<br>$$
+(1-\theta)z+\theta w
+$$<br>satisfies the caps, since $w_t\leq\mu_t/4$. Its objective loss is at most $\theta$, because $\sum_t\mu_t=1$. Therefore, including fixed-coordinate contributions,<br>$$
+\sum_tz_t-\theta
+\leq
+\max_{v\in C_\theta}\sum_tv_t
+\leq
+\sum_tz_t.
+$$</p><h3>5.4 A weak separation oracle and accuracy accounting</h3><p>On the capped box,<br>$$
+\|\nabla g_t\|_1\leq
+M_g:=\frac{2}{\theta\mu_{\min}}+\tau\lambda_{\max}.
+$$<br>Gradients are rational and computable exactly.</p><p>For a requested weak-separation tolerance $\delta$, evaluate each $g_t$ with error at most<br>$$
+\gamma=\frac{\delta w_{\min}}8.
+$$<br>First separate any violated box constraint. Otherwise:</p><ul><li>If an estimated $g_t(v)$ exceeds $\gamma$, its true value is positive. Convexity makes its gradient a separating normal. Divide the normal by $\max\{1,\|\nabla g_t(v)\|_1\}$ to give norm at most one.</li><li>If no estimate exceeds $\gamma$, then all true violations are at most $2\gamma$. Mixing $v$ with $w$ with weight</li></ul><p>$$
+  \frac{2\gamma}{w_{\min}+2\gamma}
+  $$<br>makes every constraint nonpositive. Its distance from $v$ is at most $2\gamma/w_{\min}\leq\delta/4$, because the box diameter is at most one.</p><p>This is a valid weak separation oracle with polynomial bit complexity.</p><p>For $0&lt;\xi&lt;1$, choose $\theta=\xi/8$. Request weak optimization with distance and objective errors at most<br>$$
+\kappa=
+\min\left\{
+\frac14,\,
+\frac{\xi}{16(\tau+1+M_g/w_{\min})}
+\right\}.
+$$<br>Clip the returned vector to the capped box. Clipping loses at most $\tau\kappa$ in the objective and leaves violations at most $M_g\kappa$. Mixing with $w$ with weight<br>$$
+\frac{M_g\kappa}{w_{\min}+M_g\kappa}
+$$<br>repairs feasibility and loses at most $M_g\kappa/w_{\min}$.</p><p>Together with the cap loss and optimization error, the total loss is at most<br>$$
+\theta+(\tau+1)\kappa+\frac{M_g\kappa}{w_{\min}}&lt;\xi.
+$$<br>The repaired vector is rational, feasible, and dominated by $z$, so its coordinate sum gives the required approximation.</p><p>If the remaining variable dimension is one, apply the convex-body theorem to $C_\theta\times[-1,1]$ with zero objective coefficient on the added coordinate. The zero-dimensional case was already terminated explicitly. If $\xi\geq1$, returning zero suffices.</p><p>Finally, logarithms of positive rationals admit polynomial-time approximation. For example, reduce the argument to $2^ev$ with $1\leq v&lt;2$, and use<br>$$
+\log v
+=
+2\sum_{j=0}^{\infty}\frac{w^{2j+1}}{2j+1},
+\qquad
+w=\frac{v-1}{v+1},
+\qquad
+0\leq w&lt;\frac13.
+$$<br>The geometric tail bound gives polynomial dependence on the input and accuracy bit lengths. This completes the lemma.</p><p>Applying the lemma separately to ads, with error budgets accounting for their rational revenues, supplies a polynomial-time additive value oracle for $\Phi$.</p><h3>6. Polynomial-time optimization of an arriving block</h3><h3>6.1 Linear optimization over the sequence polytope</h3><p>For rational weights $w_i$, linear optimization over $P_t$ asks for<br>$$
+\max_\sigma
+\sum_j w_{\sigma(j)}q_{\sigma(j),t}
+\prod_{\ell&lt;j}c_{\sigma(\ell),t}.
+$$</p><p>Ads with nonpositive weighted reward can be removed without decreasing the objective. To justify this, remove the last such ad first: its suffix contains only positive weighted rewards, and deletion removes both the nonpositive reward and a continuation discount.</p><p>For the remaining ads put $b_i=w_iq_{it}&gt;0$. Interchanging adjacent ads $i,j$ changes the local objective by<br>$$
+b_i(1-c_{jt})-b_j(1-c_{it}).
+$$<br>Thus an optimum exists with selected ads ordered by nonincreasing<br>$$
+\frac{b_i}{1-c_{it}},
+$$<br>placing positive-reward ads with $c_{it}=1$ first.</p><p>After sorting the remaining $M&#x27;$ ads, use<br>$$
+V_{M&#x27;+1,\ell}=0\quad(0\leq\ell\leq k),
+\qquad
+V_{j,0}=0,
+$$<br>and, for $1\leq j\leq M&#x27;$ and $1\leq\ell\leq k$,<br>$$
+V_{j,\ell}
+=
+\max\{V_{j+1,\ell},\ b_j+c_{jt}V_{j+1,\ell-1}\}.
+$$<br>Backtracking returns a maximizing sequence. The running time and rational bit complexity are polynomial.</p><p>Delete coordinates with $q_{it}=0$, and let $a$ be the remaining dimension. The polytope contains<br>$$
+\operatorname{conv}\{0,q_{it}e_i:q_{it}&gt;0\}.
+$$<br>For $a\geq1$, an explicit interior point and inner radius are<br>$$
+u_i^0=\frac{q_{it}}{2a},
+\qquad
+r_P=\frac{q_{\min}}{4a^2}.
+$$<br>The radius follows by checking nonnegativity and $\sum_i u_i/q_{it}\leq1$ throughout the ball.</p><p>Every sequence-vector coordinate is a product of at most $k$ input probabilities, so vertices have polynomial encoding length. The rational-polytope oracle results therefore provide strong separation and a constructive decomposition of a rational point into at most $a+1$ sequence vectors. Sequence witnesses are retained from the linear-oracle calls used to produce vertices.</p><p>If $a=0$, the block is useless. If $a=1$, its maximizing singleton is optimal by monotonicity. Below assume $a\geq2$, so also $m\geq2$.</p><h3>6.2 Regularization and a Lipschitz bound</h3><p>Consider a block of mass $d&gt;0$ with desired gain error $\eta&gt;0$. Put $R_0=\sum_i r_i$ and use the exploration vector<br>$$
+v_i^0=\frac{q_{it}}m,
+$$<br>which is implemented by equal allocation to all singleton sequences.</p><p>Choose a positive dyadic $\rho$ satisfying<br>$$
+\frac{\eta}{32R_0}&lt;\rho\leq\frac{\eta}{16R_0}.
+$$<br>For the blocks in Section 4, $\eta&lt;R_0$, so $\rho&lt;1/16$.</p><p>Optimize<br>$$
+g_\rho(u)
+=
+\Phi\bigl(S+dE_t((1-\rho)u+\rho v^0)\bigr)-\Phi(S),
+\qquad u\in P_t.
+$$<br>Concavity and nonnegative gains give<br>$$
+\sup_{u\in P_t}g_\rho(u)
+\geq
+M(S,d,t)-\rho R_0
+\geq
+M(S,d,t)-\eta/16.
+$$</p><p>For precision bounds, the univariate parameter is <b>normalized exposure</b>, rather than seed mass. For each eligible ad define<br>$$
+K_i(v)=r_i\sum_u z_{iu}(S_i+dve_t),
+\qquad 0\leq v\leq q_{it}.
+$$<br>This function is nondecreasing, concave, and lies in $[0,r_i]$. At arguments at least $\ell&gt;0$, its secant slopes are at most $r_i/\ell$: concavity bounds them by the secant from zero. Consequently, for the regularized objective a valid coordinate Lipschitz bound is<br>$$
+B_i=\frac{2mr_i}{\rho q_{it}},
+\qquad
+B=\sum_{i:q_{it}&gt;0}B_i.
+$$</p><p>The block mass $d$ is already included in $K_i$’s argument. Equivalently, a seed-space bound proportional to $1/d$ is multiplied by $d$ when changing normalized exposure; the factors cancel.</p><p>The same bounds hold in a small rectangular neighborhood of $P_t$. Indeed, perturbing $u_i$ by at most $\rho q_{it}/(4m)$ keeps its regularized exposure between $\rho q_{it}/(2m)$ and $q_{it}$.</p><h3>6.3 Explicit weak separation for the hypograph</h3><p>Consider<br>$$
+K=\{(u,y):u\in P_t,\ -1\leq y\leq g_\rho(u)\}.
+$$<br>It is a compact convex body. An inner ball is centered at $(u^0,-1/2)$ with radius<br>$$
+r_K=\min\{r_P/2,1/4\},
+$$<br>because $g_\rho\geq0$ on $P_t$. An outer radius is bounded by $a+R_0+2$.</p><p>Here is a weak separation oracle with requested tolerance $\alpha\leq1$.</p><p>First use strong separation for $P_t$, and separate $y&lt;-1$ directly. Otherwise $u\in P_t$ and $y\geq-1$.</p><p>The function $g_\rho$ is a sum of univariate concave functions $f_i(u_i)$. Choose rational<br>$$
+0&lt;h\leq
+\min\left\{
+\frac{\rho q_{\min}}{4m},
+\frac{\alpha}{32B}
+\right\}.
+$$<br>Estimate each endpoint value $f_i(u_i\pm h)$ to error at most<br>$$
+\nu=\frac{\alpha h}{32a},
+$$<br>and form the estimated central secant $\widetilde D_i$.</p><p>For an exact central secant $D_i$, concavity gives a supporting slope at some point of $[u_i-h,u_i+h]$. One proof is to subtract the secant line: the resulting concave function has equal endpoint values and attains a global maximum in that interval. Lipschitz continuity then gives<br>$$
+f_i(v_i)
+\leq f_i(u_i)+D_i(v_i-u_i)+2B_i h.
+$$<br>Endpoint errors change the slope by at most $\nu/h$. Since coordinates of $P_t$ lie in $[0,1]$, summing gives<br>$$
+g_\rho(v)
+\leq
+g_\rho(u)+\widetilde D\cdot(v-u)+\delta_0,
+\qquad
+\delta_0\leq2Bh+\frac{a\nu}{h}\leq\frac{3\alpha}{32}.
+$$</p><p>Estimate $g_\rho(u)$ to error at most $\alpha/16$.</p><ul><li>If $y$ is at most that estimate plus $\alpha/4$, vertical adjustment places $(u,y)$ within $5\alpha/16$ of $K$.</li><li>Otherwise $y-g_\rho(u)&gt;3\alpha/16&gt;\delta_0$. The vector</li></ul><p>$$
+  \frac{(-\widetilde D,1)}{1+\|\widetilde D\|_1}
+  $$<br>has norm at most one and separates the query from $K$.</p><p>All function evaluations use Section 5, and every prescribed tolerance has polynomial encoding length. Thus weak ellipsoid optimization applies.</p><h3>6.4 Recovering an exactly feasible rational point</h3><p>Let $M_\rho=\max_{u\in P_t}g_\rho(u)$. Request weak optimization with errors at most<br>$$
+\kappa=
+\min\left\{
+\frac14,\,
+\frac{\eta}{128(1+B)(1+2/r_P)}
+\right\}.
+$$<br>Let its output be $(v,y)$. There exists $(v^\ast,y^\ast)\in K$ within distance $\kappa$, and<br>$$
+y\geq M_\rho-\kappa,
+\qquad
+g_\rho(v^\ast)\geq M_\rho-2\kappa.
+$$</p><p>An exact rational feasibility repair is<br>$$
+u=(1-\alpha_0)v+\alpha_0u^0,
+\qquad
+\alpha_0=\frac{\kappa}{r_P+\kappa}.
+$$<br>To verify $u\in P_t$, consider any supporting halfspace $w\cdot x\leq b$ with $\|w\|_2=1$. Distance at most $\kappa$ from $P_t$ gives $w\cdot v\leq b+\kappa$, while the inner ball gives $w\cdot u^0\leq b-r_P$. Therefore<br>$$
+w\cdot u
+\leq
+b+(1-\alpha_0)\kappa-\alpha_0r_P=b.
+$$<br>All supporting halfspaces are satisfied.</p><p>Moreover,<br>$$
+\|u-v^\ast\|_\infty
+\leq\kappa+\frac{2\kappa}{r_P},
+$$<br>since $\kappa\leq1/4$ and coordinates of $P_t$ lie in $[0,1]$. Hence<br>$$
+g_\rho(u)
+\geq
+M_\rho-2\kappa-B\kappa(1+2/r_P)
+\geq M_\rho-\eta/16.
+$$</p><p>The value and supporting-plane errors have already been incorporated into the proved weak oracle and the weak-optimization guarantee; they require no additional unaccounted objective error.</p><p>Decompose $u$ into at most $m+1$ sequence vectors. Implement the regularized vector by mixing this decomposition with the singleton exploration allocation.</p><h3>6.5 Uniform bit bounds across the horizon</h3><p>Round each main decomposition coefficient downward to a multiple of $2^{-C}$, and assign the leftover main weight to the empty sequence. Retain exploration separately. The normalized exposure changes by at most<br>$$
+(m+1)2^{-C}
+$$<br>in every coordinate, so the revenue loss is at most<br>$$
+B(m+1)2^{-C}.
+$$</p><p>Here is a uniform precision bound from original input data. Every positive input rational is at least $2^{-L}$, and every revenue is at most $2^L$. On a nonzero block,<br>$$
+\eta=2\varepsilon d\max_i r_iq_{it}
+\geq2\varepsilon\,2^{-3L},
+$$<br>$$
+R_0\leq m2^L,
+\qquad
+\frac1\rho\leq\frac{16m2^{4L}}{\varepsilon},
+\qquad
+B\leq\frac{32m^3 2^{6L}}{\varepsilon}.
+$$<br>Writing $E=\lceil\log_2(1/\varepsilon)\rceil$, the choice<br>$$
+C=12L+4E+8\lceil\log_2(m+1)\rceil+32
+$$<br>ensures<br>$$
+B(m+1)2^{-C}\leq\eta/32.
+$$<br>It also bounds the denominator exponent needed for $\rho$.</p><p>Online, replace $L$ by the cumulative encoding length of initial data and rates revealed so far, and keep precision nondecreasing. This never requires future rates, and its maximum is bounded by the displayed expression using total $L$.</p><p>For a fixed type, all sequence-probability denominators divide the product of its input sharing and continuation denominators. Distinctness of ads ensures no input factor is repeated within a sequence. All arrival denominators likewise divide their total input-denominator product. The rounded mixture coefficients, including exploration, have denominators dividing $m2^{2C_{\max}}$.</p><p>Consequently, stored cumulative seeds have polynomial bit length uniformly across all blocks. Internal oracle precisions are polynomial in this bound and the original data; they are not accumulated into future stored seeds.</p><p>The total block-gain error is bounded by the sum of:</p><ul><li>regularization loss, at most $\eta/16$;</li><li>optimization and exact-feasibility recovery loss, at most $\eta/16$;</li><li>rounding loss, at most $\eta/32$.</li></ul><p>This sum is less than $\eta$. There are at most $H\tau$ blocks, each requiring polynomially many polynomial-time oracle calls. The resulting policy therefore runs in time polynomial in the stated parameters and achieves<br>$$
+\boxed{F(x)\geq(\tfrac12-\varepsilon)\mathrm{OPT}.}
+$$<br>It uses only revealed rates and prior assignments, and observes no diffusion outcomes.</p><h3>7. What remains open</h3><p>The two proposed half guarantees are proved, and greedy’s limiting half factor is sharp. The stronger upper-bound construction establishes<br>$$
+\frac12\leq\beta^\star\leq\frac34.
+$$</p><p>Sharpness for greedy does not establish optimality among all online policies. Closing this interval requires an additional algorithmic guarantee or a stronger obstruction.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Opening competitive-ratio claim and Section 7: The exact optimal uniform competitive factor requested by the broad competitive-ratio question remains unresolved. The output establishes only $\tfrac12\leq\beta^\star\leq\tfrac34$, while correctly resolving both explicit half-guarantee questions.</li><li><b>minor</b> — Sections 6.2 and 6.5: choice and encoding of $\rho$: The interval constraint on the positive dyadic $\rho$ does not by itself bound its denominator exponent, although Section 6.5 asserts that the displayed $C$ bounds it. Specify a bounded-denominator selection rule and verify that exponent bound.</li></ul>
+<div class="pre"><h3>Verification report</h3><p>The proof establishes the two explicit guarantees: greedy’s specified limiting revenue is at least $\tfrac12\mathrm{OPT}$, and a deterministic online policy can attain $\tfrac12-\varepsilon$ in polynomial time. The greedy sharpness example and the $\tfrac34$ upper bound for arbitrary online policies are also valid.</p><p>It does <b>not</b> determine the optimal competitive factor among all online policies. Accordingly, the output is a partial resolution of the full competitive-ratio question, as its concluding statement acknowledges. I found no substantive mathematical error in the established guarantees. There is one minor implementation clarification concerning the choice of numerical precision.</p><h3>1. Diminishing returns and concavity</h3><h3>Branching-tree representation</h3><p>The child means $\lambda_{iut}\mu_u$ have the correct orientation for the specified fixed-point equation. A type-$u$ child has a marked descendant within the relevant depth with probability $z^{(D)}_{iu}/\mu_u$, producing the exponential argument<br>$$
+\sum_u\lambda_{iut}z^{(D)}_{iu}.
+$$</p><p>The initial condition, recurrence, monotonicity, and boundedness are correct. Continuity gives a fixed point at the limit. Inductive domination by every fixed point in $[s_i,\mu]$ correctly identifies this limit as the least fixed point.</p><p>Positive support masses ensure that all marking probabilities and divisions by $\mu_u$ are defined. Finite-depth trees are finite almost surely because their Poisson offspring means are finite.</p><h3>Finite-tree diminishing returns</h3><p>The displayed derivative is correct. It is nonnegative and nonincreasing in every coordinate, including its own coordinate. Coordinates with no vertices contribute zero derivatives. At endpoint coordinates, the polynomial interpretation handles otherwise ambiguous zero-power expressions.</p><p>The proof transfers finite-difference inequalities through expectation and the depth limit; it does not require exchanging differentiation with an infinite-tree expectation. This is an important and valid distinction.</p><h3>Clipping and concavity</h3><p>Clipping preserves the stated diminishing-returns inequalities: a coordinate derivative becomes zero after saturation, preserving its nonincreasing behavior.</p><p>The two concavity assertions also follow from the written finite-tree calculation:</p><ul><li>Along a nonnegative ray, the directional derivative is nonincreasing.</li><li>Within one type column, each ad contribution depends on just one varying seed coordinate, and these univariate concave contributions add.</li></ul><p>Passing these inequalities to the depth limit is valid even if the limiting function is discontinuous at a zero-seed boundary. Also, $\Phi(0)=0$ follows directly from iteration.</p><p><b>Assessment:</b> Section 1 is correct.</p><h3>2. Greedy’s limiting guarantee</h3><h3>Comparison on a finite list of pieces</h3><p>Every inequality in the comparison is justified:</p><ul><li>Monotonicity compares $S_O$ with the clipped sum $S_G+S_O$.</li><li>Telescoping the alternative increments and diminishing returns bound each gain by its gain at base point $S_G$.</li><li>Since $P_j\leq S_G$, diminishing returns allows replacement of that base point by $P_j$.</li><li>The arrays $P_j+E_j$ respect the seed bounds because previously processed masses plus the current piece do not exceed the arriving mass of any type.</li><li>Greedy’s maximizing property bounds each alternative gain by its actual gain.</li><li>Those actual gains telescope.</li></ul><p>Thus the conclusion<br>$$
+\Phi(S_O)\leq2\Phi(S_G)
+$$<br>is valid.</p><h3>Fractional allocation approximation</h3><p>The convex-hull representation is valid whenever $A_t&gt;0$. Types with $A_t=0$ have zero seeds and require no representation.</p><p>Carathéodory’s theorem applies in $\mathbb R^m$, giving at most $m+1$ sequence vectors. The ceiling construction satisfies<br>$$
+\sum_\ell N_{t\ell}\leq n-D+d_t\leq n.
+$$</p><p>Using the same sequence proportions in each interval preserves the desired total type allocation. Nonnegative sequence probabilities give the coordinatewise lower bound on $S^{[n]}$. Monotonicity and ray concavity then justify the revenue bound.</p><p>Taking the supremum over offline allocations does not require an attained offline optimum. Taking the lower limit in $n$ proves exactly the limiting guarantee requested in <code>USER_TASK</code>.</p><p><b>Assessment:</b> Section 2 proves<br>$$
+\liminf_{n\to\infty}F(G_n)\geq\tfrac12\mathrm{OPT}.
+$$</p><h3>3. Upper bound and greedy sharpness</h3><p>The construction satisfies the input restrictions: all support masses are positive, revenues are positive, intensities are nonnegative rational numbers, and both arrival streams are admissible.</p><p>The two explicit diffusion formulas follow from the stated intensities. Types $B$ and $C$ have no incoming transmission, so their activated masses equal their seeds. The remaining equations are acyclic and have a unique solution.</p><p>The conditional revenue bounds are correct. Averaging them gives<br>$$
+b+M(1-e^{-t})+\frac{1+e^{-t}}2(Y+W)
+\leq b+\frac{M(3-e^{-t})}{2}.
+$$</p><p>The offline optimum calculation correctly accounts for the possibility of assigning some mass to the empty sequence: monotonicity allows completion to $Y+W=M$, after which the displayed objective is maximized at the specified endpoint.</p><p>Because the two streams have the same revealed prefix, the first-interval allocation distribution is the same on both. Consequently, the averaging argument yields a fixed adverse stream for each randomized policy. The limiting parameter sequence validly proves the uniform upper bound<br>$$
+\beta^\star\leq\tfrac34.
+$$</p><p>For greedy, positive type-$A$ pieces have equal positive singleton gains, so lexicographic tie-breaking selects ad one. Subsequent type-$B$ allocation cannot add further type-$A$ activation for that ad because it is already saturated. Hence $F(G_n)=M+b$ for every refinement, and the stated limiting ratio is correct.</p><p><b>Assessment:</b> Both the arbitrary-policy upper bound and greedy’s sharp $\tfrac12$ factor are proved. They do not establish that $\tfrac12$ is optimal among all policies.</p><h3>4. Fractional block comparison</h3><p>The block objective is concave by the one-type-column concavity proved earlier. The use of a supremum is appropriate.</p><p>The comparison argument extends to fractional increments because it depends only on nonnegativity, feasibility, and diminishing returns. It gives the stated additive-error inequality.</p><p>The direct-seed benchmark is valid: assigning each block to its best singleton simultaneously realizes direct revenue $\sum_j b_j$, and diffusion cannot reduce that revenue. Therefore $B\leq\mathrm{OPT}$.</p><p>A block with $b_j=0$ has zero sharing probabilities for all ads because revenues are positive; skipping it is justified. For positive blocks, the prescribed errors yield the claimed competitive factor.</p><p><b>Assessment:</b> Section 4 is correct, conditional on the computational guarantees subsequently established.</p><h3>5. Least-fixed-point evaluation</h3><h3>Reachability and postfixed domination</h3><p>Iteration correctly identifies zero activation outside seeded reachability and positive activation inside it.</p><p>The strict scaling inequality is valid in both cases considered: a positive seed supplies strictness through the constant term; an unseeded reachable coordinate has a strictly positive transmission argument.</p><p>The maximum-ratio contradiction correctly proves that every supported nonnegative postfixed vector is dominated by the specified least fixed point. It does not assume uniqueness of unrelated fixed points.</p><h3>Convex formulation and interior point</h3><p>The logarithmic constraint is equivalent to the postfixed inequality on the stated domain, and its convexity is correct.</p><p>The shortest-path construction supplies the asserted strict slack. The inequality<br>$$
+1-e^{-x}\geq\min\{x/2,1/2\}
+$$<br>holds for all $x\geq0$, and the constants suffice to obtain $T_s(w)_t\geq2w_t$ at unseeded variable coordinates.</p><p>The gradient bound and the proposed inner radius preserve both box feasibility and negative constraint slack. Polynomial encoding length follows from the bounded path lengths and rational input parameters.</p><p>The capped comparison vector is feasible by convexity. Fixed coordinates remain fixed, while variable coordinates satisfy the caps. The objective loss is bounded by $\theta$ using $\sum_t\mu_t=1$.</p><h3>Weak oracle and numerical errors</h3><p>The separation branch correctly uses convexity to obtain a separating gradient. The acceptance branch correctly repairs small violations by mixing with the strict interior point.</p><p>The subsequent clipping, feasibility repair, and objective-error accounting are consistent. The selected $\kappa$ makes the total loss strictly smaller than $\xi$.</p><p>The cited [Grötschel–Lovász–Schrijver paper](https://ir.cwi.nl/pub/10046/10046D.pdf) does supply the relevant weak optimization/separation equivalence and rational-polytope results. Its requirements concerning dimension, explicit containing and contained balls, and rational encoding are addressed by the write-up, including the one-dimensional padding.</p><p>The logarithm approximation has geometric convergence at the stated reduced arguments.</p><p><b>Assessment:</b> The value-oracle lemma is established.</p><h3>6. Polynomial-time block optimization</h3><h3>Sequence optimization and polytope access</h3><p>Removing the last nonpositive-reward ad is valid because its remaining suffix has nonnegative value and deleting the ad removes a continuation discount.</p><p>The adjacent-swap expression is correct. Its sign justifies the stated ordering, including continuation probability one. The dynamic program then optimizes over ordered subsequences with at most $k$ ads.</p><p>After deleting zero-sharing coordinates, the singleton simplex supplies full dimension and the stated inner ball. Sequence vectors have polynomial encoding length. The cited rational-polytope results support exact separation and constructive decomposition under these conditions.</p><h3>Regularization and supporting planes</h3><p>Regularization preserves feasibility and loses at most $\rho R_0$ by concavity.</p><p>The normalized-exposure functions have the stated range and concavity. Their positive-exposure slope bounds justify the constants $B_i$. The rectangular neighborhood remains inside the admissible exposure range, so the endpoint evaluations used by the oracle are valid.</p><p>The central-secant supporting-slope argument is correct. The accumulated error<br>$$
+\delta_0\leq2Bh+\frac{a\nu}{h}\leq\frac{3\alpha}{32}
+$$<br>is sufficient for the separation threshold. The acceptance branch likewise meets the requested distance tolerance.</p><h3>Feasibility recovery and rounding</h3><p>The supporting-halfspace calculation correctly places the repaired rational point in $P_t$. The distance bound and Lipschitz loss imply the stated objective guarantee.</p><p>Downward rounding produces a feasible allocation by placing leftover mass on the empty sequence. Exploration remains present, so the Lipschitz estimate continues to apply.</p><p>The displayed input-dependent bounds on $\eta$, $\rho$, and $B$ are sufficient for the rounding estimate. The denominator argument correctly uses distinctness of ads to prevent repeated input factors within a sequence and prevents stored seed encodings from growing recursively with oracle precision.</p><h3>Minor issue: specify the dyadic choice</h3><p>Section 6.2 only requires choosing a positive dyadic $\rho$ in a specified interval. Section 6.5 later asserts that $C$ bounds its denominator exponent.</p><p>The interval alone does not constrain that exponent: it contains dyadic numbers with arbitrarily large denominators. An efficient bounded-denominator selection is clearly intended, but it should be specified.</p><p><b>Minimum clarification:</b> State a dyadic-selection rule and explicitly bound its denominator exponent by the displayed precision budget. This is a routine implementation detail and does not require new mathematics.</p><p><b>Assessment:</b> Subject to this minor clarification, Section 6 establishes the polynomial-time $\tfrac12-\varepsilon$ guarantee.</p><h3>7. Scope of the result</h3><p>The genuine established results are:</p><ul><li>Greedy’s specified limiting guarantee is $\tfrac12$, and this is sharp for greedy.</li><li>A deterministic online implementation achieves $\tfrac12-\varepsilon$ in polynomial time.</li><li>Every online policy has uniform competitive factor at most $\tfrac34$.</li></ul><p>The exact optimal factor remains undetermined. The unresolved interval is substantive incompleteness, rather than an error in the proved bounds. Repairing this part requires additional mathematical results; it cannot be resolved by clarifying the existing write-up.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

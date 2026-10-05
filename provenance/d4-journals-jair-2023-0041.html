@@ -1,0 +1,257 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-journals-jair-2023-0041 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-journals-jair-2023-0041 <span style="font-weight:normal;color:#8a7350">(d4-journals-jair-2023-0041)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 19 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a fixed set of schools \(O\), a finite support \(T\) of strict school rankings, rational masses \(\mu_t\) with \(\sum_{t\in T}\mu_t=1\), and rational per-capita seat supplies \(q_o\) with \(\sum_{o\in O}q_o=1\), take cohort sizes \(N\) for which every \(N\mu_t\) and \(Nq_o\) is integral. Represent each school’s \(Nq_o\) seats as ordered copies, ranked consistently within each school by all types, and run Eager Boston with uniform lotteries among applicants for each available seat. Compute the exact limit, in probability as \(N\to\infty\), of \(X_{t,o}^{(N)}/N\), where \(X_{t,o}^{(N)}\) is the number of type-\(t\) students assigned to school \(o\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(O\) be a nonempty set of \(m\) schools. A society is given by its support: a list \(T\) of \(\tau\) distinct strict rankings of all schools, with positive binary rational masses \(\mu_t\) satisfying \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible rankings. School supplies are binary rationals \(q_o\geq0\) with \(\sum_o q_o=1\); let \(L\) be the total input bit length.<br>For every positive integer \(N\) making all \(N\mu_t\) and \(Nq_o\) integral, create \(N\mu_t\) students of type \(t\) and seats \((o,1),\ldots,(o,Nq_o)\). Expand each school ranking into consecutive blocks of its seats, ordered by increasing index within every block.<br>Eager Boston proceeds in synchronous rounds: every unassigned student applies to her highest-ranked remaining seat; each seat with applicants selects one uniformly, using fresh independent lotteries conditional on the current state. Permanently assign these seats and remove them and their winners at the end of the round; repeat until everyone is assigned.<br>Let \(X_{t,o}^{(N)}\) count type-\(t\) students assigned a seat at school \(o\). Take limits along all admissible cohort sizes, keeping \(O,T,\mu,q\) fixed.</p><p>Do the fractions \(X_{t,o}^{(N)}/N\) converge jointly in probability to a deterministic rational matrix, and is computing that matrix exactly in binary rational encoding polynomial-time in \(m,\tau,L\), or NP-hard?</p><p>For finite explicitly listed societies, sampling one deterministic Eager Boston assignment takes polynomial time when lottery winners can be sampled in polynomial time; this does not establish polynomial-time computation of its expectation ([source](https://par.nsf.gov/servlets/purl/10466783)). No result settling this precise seat-copy limit problem was identified in the search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Interpreted the fixed school set as fixed during cohort replication, while allowing its size to vary across computational inputs.</li><li>Allowed zero school supplies and required nonnegative supplies; schools with zero supply have no seat copies.</li><li>Expanded rankings into consecutive school blocks, with a common increasing order of seat indices within each school.</li><li>Specified fresh independent lotteries conditional on the current state, rather than a priority order reused across rounds.</li><li>Used synchronous rounds and removed both assigned seats and their winners, following the intended mechanism and the corrected published algorithm.</li><li>Made deterministic convergence and rationality part of the question, permitting exact binary rational output without assuming either property.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial solution: convergence, output size, and further complexity bounds</h3><p>The fractions converge jointly in probability to a deterministic rational matrix. Producing that matrix explicitly in binary cannot take polynomial time in general, because one output entry can require exponentially many bits.</p><p>I do not establish $\mathrm{NP}$-hardness. Beyond the output-length obstruction, the following results are proved below:</p><ul><li>Exact binary computation is polynomial-time when $\tau\leq 2$.</li><li>For arbitrary support size, exact entry-threshold queries belong to $\mathrm{P}^{\mathrm{PosSLP}}$.</li><li>The output-length obstruction holds even when every input mass and supply is dyadic.</li></ul><h3>1. A deterministic rational phase algorithm</h3><p>Let $u_t$ denote the remaining mass of type $t$, $c_o$ the remaining supply at school $o$, and $z_{t,o}$ the mass already assigned from type $t$ to school $o$. Initially,<br>$$
+u_t=\mu_t,\qquad c_o=q_o,\qquad z_{t,o}=0.
+$$</p><p>At a nonterminal state, each type with $u_t&gt;0$ chooses its highest-ranked school with positive remaining supply. Denote this school by $b(t)$, and put<br>$$
+G_o=\{t:u_t&gt;0,\ b(t)=o\},
+\qquad
+A_o=\sum_{t\in G_o}u_t.
+$$<br>A school is active if $A_o&gt;0$. Define the phase duration<br>$$
+h=\min_{o:A_o&gt;0}\min\{c_o,A_o\}.
+$$</p><p>For every active school, update simultaneously:<br>$$
+\begin{aligned}
+z_{t,o}&#x27;&amp;=z_{t,o}+h\frac{u_t}{A_o}
+&amp;&amp;\text{for }t\in G_o,\\
+u_t&#x27;&amp;=u_t\left(1-\frac{h}{A_o}\right)
+&amp;&amp;\text{for }t\in G_o,\\
+c_o&#x27;&amp;=c_o-h.
+\end{aligned}
+$$<br>All other coordinates remain unchanged. Every right-hand side uses the state before the phase.</p><h3>Well-definedness and termination</h3><p>The algorithm maintains<br>$$
+u_t+\sum_o z_{t,o}=\mu_t,
+\qquad
+c_o+\sum_t z_{t,o}=q_o.
+$$<br>Indeed, each type’s mass decrement equals its assignment increment, and an active school receives total assigned mass<br>$$
+\sum_{t\in G_o}h\frac{u_t}{A_o}=h.
+$$<br>Consequently,<br>$$
+\sum_t u_t=\sum_o c_o.
+$$</p><p>If some $u_t$ is positive, some $c_o$ is positive. Thus every remaining type has a defined choice. For each active school, both $A_o$ and $c_o$ are positive, so $h&gt;0$. Since $h\leq A_o$ and $h\leq c_o$, the updates preserve nonnegativity.</p><p>At least one school attains the minimum defining $h$. Its supply becomes zero, or its entire applicant group becomes zero. Therefore each phase makes at least one previously positive school-supply coordinate or type-mass coordinate zero. Such coordinates never become positive again.</p><p>The algorithm terminates after at most<br>$$
+K=m+\tau
+$$<br>phases. At termination all student masses are zero, and conservation forces all supplies to be zero.</p><p>All operations are rational, with positive divisors. The final matrix, denoted $z^*$, is therefore deterministic and rational, and satisfies<br>$$
+\sum_o z^*_{t,o}=\mu_t,
+\qquad
+\sum_t z^*_{t,o}=q_o.
+$$</p><h3>2. The stochastic seat-copy process converges to this matrix</h3><h3>2.1. Exact phases in a finite cohort</h3><p>Fix an admissible cohort size $N$. At a phase boundary, let $U_t$ and $C_o$ be the integer numbers of remaining students and seats.</p><p>At every school, the remaining seats form a suffix of its ordered seat block. Every student choosing that school therefore applies to its least-indexed remaining seat. An active school assigns exactly one seat per round.</p><p>Form the applicant groups at the phase boundary, and write<br>$$
+B_o=\sum_{t\in G_o}U_t.
+$$<br>Set<br>$$
+d=\min_{o:B_o&gt;0}\min\{C_o,B_o\}.
+$$</p><p>During the next $d$ rounds, every initially active school assigns exactly $d$ seats. To verify this, before round $r\leq d$ it still has<br>$$
+C_o-(r-1)&gt;0
+\quad\text{seats and}\quad
+B_o-(r-1)&gt;0
+\quad\text{applicants}.
+$$<br>No available school disappears before the last round. Consequently, surviving students retain their school choices throughout these rounds. Individual types can disappear, but this does not change other students’ choices.</p><p>At the end of the phase, a school exhausts its supply or an entire applicant group disappears. The same monotonicity argument as before gives at most $K$ finite phases.</p><h3>2.2. Conditional concentration within a phase</h3><p>Condition on the complete state at the beginning of a phase. At an active school, successive winners are uniform draws without replacement from its $B_o$ initial applicants. This follows directly from the fresh uniform lotteries among the remaining applicants.</p><p>Let $Y_{t,o}$ count the type-$t$ winners at school $o$ during the phase. Its conditional distribution is hypergeometric, with<br>$$
+\mathbb E[Y_{t,o}\mid\text{phase state}]
+=d\frac{U_t}{B_o}.
+$$<br>For $B_o&gt;1$,<br>$$
+\operatorname{Var}(Y_{t,o}\mid\text{phase state})
+=
+d\frac{U_t}{B_o}
+\left(1-\frac{U_t}{B_o}\right)
+\frac{B_o-d}{B_o-1}
+\leq N.
+$$<br>For $B_o=1$, the variance is zero. Chebyshev’s inequality therefore gives<br>$$
+\Pr\left(
+\left|
+\frac{Y_{t,o}}N-\frac dN\frac{U_t}{B_o}
+\right|&gt;\varepsilon
+\ \middle|\ \text{phase state}
+\right)
+\leq \frac{1}{N\varepsilon^2}.
+$$</p><p>Each type belongs to at most one applicant group per phase. Taking a union bound over the at most $K\tau$ relevant observations gives<br>$$
+\Pr(\text{some normalized phase error exceeds }\varepsilon)
+\leq \frac{K\tau}{N\varepsilon^2}.
+$$<br>In particular, for $\varepsilon_N=N^{-1/4}$, the probability that all phase errors are at most $\varepsilon_N$ tends to one.</p><h3>2.3. Identification of the limit, including ties</h3><p>The phase decomposition need not stabilize directly: simultaneous deterministic exhaustion events can separate in finite cohorts. We handle this by allowing phases whose normalized durations vanish.</p><p>Consider any sequence of finite executions, with $N\to\infty$, whose normalized phase errors tend to zero. Pad executions with empty terminal phases to obtain exactly $K$ phases.</p><p>All normalized phase-boundary coordinates and durations lie in $[0,1]$. There are finitely many possible applicant-group patterns. Passing to a subsequence, we may assume that every boundary state and duration converges and that every phase’s group pattern is fixed.</p><p>Consider one phase.</p><p>If $d/N\to0$, every assignment increment at an individual school is at most $d/N$. Every individual type’s mass decrement is also at most $d/N$. Thus this phase makes no change to the limiting state.</p><p>Suppose instead that $d/N\to h&gt;0$. Every active finite school satisfies<br>$$
+\frac{C_o}{N}\geq\frac dN,
+\qquad
+\frac{B_o}{N}\geq\frac dN.
+$$<br>Its limiting supply and applicant mass are therefore positive.</p><p>A type with positive limiting mass is eventually present. Its selected school has positive limiting supply. If a more-preferred school had positive limiting supply, that school would eventually be available in the finite executions, contradicting the type’s choice. Thus every positive-mass limiting type selects its highest-ranked school with positive limiting supply.</p><p>Conversely, every active finite group has positive limiting total mass, because its normalized mass is at least $d/N$. Hence, after ignoring zero-mass types, its limiting group is exactly a group prescribed by the deterministic algorithm.</p><p>The finite minimum therefore converges to<br>$$
+h=\min_{o:A_o&gt;0}\min\{c_o,A_o\}.
+$$<br>The vanishing phase errors imply that each assignment increment converges to<br>$$
+h\frac{u_t}{A_o}.
+$$<br>Thus every positive-duration limiting phase is precisely a phase of the deterministic algorithm.</p><p>Delete the zero-duration phases. The remaining execution starts at $(\mu,q,0)$, follows the deterministic algorithm, and ends with zero remaining student masses, since every finite execution does. Its final matrix is consequently $z^*$.</p><p>To obtain convergence in probability, suppose that it failed. There would be a subsequence, a positive $\delta$, and a positive $\eta$ such that the final normalized matrix stayed at distance at least $\delta$ from $z^*$ with probability at least $\eta$. For sufficiently large $N$, this event intersects the event of phase errors at most $\varepsilon_N$. Choose an execution in each intersection. The subsequence argument just proved would yield a further subsequence converging to $z^*$, a contradiction.</p><p>Therefore, along all admissible cohort sizes,<br>$$
+\left(\frac{X^{(N)}_{t,o}}N\right)_{t,o}
+\xrightarrow{\Pr}
+z^*.
+$$<br>Admissible sizes are unbounded because all input rationals have a common denominator.</p><p>The normalized expectations converge as well. For any entry and any $\varepsilon&gt;0$, boundedness gives<br>$$
+\mathbb E\left|
+\frac{X^{(N)}_{t,o}}N-z^*_{t,o}
+\right|
+\leq
+\varepsilon+
+\Pr\left(
+\left|\frac{X^{(N)}_{t,o}}N-z^*_{t,o}\right|&gt;\varepsilon
+\right).
+$$<br>Taking limits and then letting $\varepsilon$ decrease to zero proves the assertion.</p><h3>3. Exponentially long output, even with dyadic inputs</h3><p>Fix $k\geq2$. Define<br>$$
+R=\frac{k(k+1)}2,
+\qquad
+D=2^{\lceil\log_2(k(k+1)+2)\rceil},
+\qquad
+d=\frac1D.
+$$<br>Thus<br>$$
+D\geq2(R+1),
+\qquad
+kd&lt;\frac12.
+$$</p><p>There are $2k$ schools:<br>$$
+S_1,\ldots,S_k,\quad W_2,\ldots,W_k,\quad Z.
+$$<br>Set<br>$$
+q_{S_i}=d,
+\qquad
+q_{W_i}=(i-1)d,
+\qquad
+q_Z=1-Rd.
+$$<br>The supplies sum to one because the supplies outside $Z$ sum to $Rd$.</p><p>There are $k+2$ types:</p><ul><li>Type $M$ has mass $d$ and ranking beginning $S_1,\ldots,S_k,Z$.</li><li>Type $P_1$ has mass $d$ and ranking beginning $S_1,Z$.</li><li>For $2\leq i\leq k$, type $P_i$ has mass $id$ and ranking beginning $W_i,S_i,Z$.</li><li>Type $F$ has mass $1-(R+1)d$ and ranks $Z$ first.</li></ul><p>Complete each prefix by appending all omitted schools in a fixed order. The rankings are distinct. All masses are positive and sum to one. Every mass and supply is dyadic. Moreover,<br>$$
+\mu_F\geq\frac12,
+\qquad
+q_Z\geq\frac12+d.
+$$</p><h3>3.1. Evolution through the contested schools</h3><p>Use cumulative phase duration as time.</p><p>During the first $kd$ units of time, $Z$ cannot exhaust: it serves at rate at most one and has supply greater than $kd$. Type $F$ also remains positive during this interval, since its mass is at least $1/2&gt;kd$. Thus types reaching $Z$ do not proceed to any appended school.</p><p>Only type $P_i$ initially uses $W_i$. That school serves continuously until time $(i-1)d$, when its supply exhausts and $P_i$ has exactly mass $d$ remaining.</p><p>We now verify inductively that $S_i$ serves during<br>$$
+[(i-1)d,id].
+$$<br>At its starting time, its applicants are the remaining type-$M$ mass, say $x_{i-1}&gt;0$, and mass $d$ of type $P_i$. Its supply is $d$, and its pool has mass $x_{i-1}+d&gt;d$.</p><p>More explicitly, at the beginning of this interval every active waiting school has remaining supply at least $d$ and applicant mass greater than its supply. School $Z$ has remaining supply greater than $d$ and applicant mass at least the remaining mass of $F$, which is greater than $d$. Therefore the next deterministic phase has duration exactly $d$, attained by the supply of $S_i$.</p><p>At its end, $P_i$ proceeds to $Z$ and $M$ proceeds to the next contested school. The remaining distinguished mass obeys<br>$$
+x_0=d,
+\qquad
+x_i
+=
+x_{i-1}\left(1-\frac{d}{x_{i-1}+d}\right)
+=
+\frac{x_{i-1}^2}{x_{i-1}+d}.
+$$</p><h3>3.2. Denominator growth</h3><p>Define positive integers<br>$$
+a_0=1,
+\qquad
+a_{i+1}=a_i(a_i+1).
+$$<br>Substitution in the preceding recurrence proves inductively that<br>$$
+x_i=\frac{d}{a_i}.
+$$<br>After $S_k$ exhausts, all schools except $Z$ have exhausted. Hence<br>$$
+z^*_{M,Z}=x_k=\frac{1}{Da_k}.
+$$<br>This fraction is reduced.</p><p>Since $a_1=2$ and $a_{i+1}\geq a_i^2$,<br>$$
+a_k\geq 2^{\,2^{k-1}}.
+$$<br>The denominator of this single output entry therefore requires at least<br>$$
+2^{k-1}+1
+$$<br>binary bits.</p><p>Meanwhile,<br>$$
+m=2k,\qquad \tau=k+2,\qquad L=O(k^2\log k).
+$$<br>Indeed, all rational inputs have $O(\log k)$ bits, and the explicitly listed rankings require $O(k^2\log k)$ bits.</p><p>Thus the explicit output length is not bounded by any polynomial in $m,\tau,L$. This unconditionally excludes polynomial-time production of the full binary matrix.</p><p>It does not establish $\mathrm{NP}$-hardness.</p><h3>4. General arithmetic and bit-complexity upper bounds</h3><p>The deterministic algorithm performs at most $K$ phases. Finding choices, summing applicant masses, comparing phase candidates, and updating coordinates require polynomially many rational operations per phase.</p><p>Consequently, the algorithm uses polynomially many exact rational operations and comparisons. This operation count does not bound their binary cost.</p><p>For an explicit bit bound, let $D_0$ be the product of all input denominators. Then<br>$$
+\log_2 D_0\leq L.
+$$<br>Suppose all coordinates at the beginning of phase $j$ have common denominator $D_j$. Write<br>$$
+h=\frac b{D_j},
+\qquad
+A_o=\frac{a_o}{D_j}.
+$$<br>For an active school, $a_o$ is a positive integer with $a_o\leq D_j$. If $u_t=p_t/D_j$, its assignment increment is<br>$$
+h\frac{u_t}{A_o}
+=
+\frac{bp_t}{D_j a_o}.
+$$<br>Thus a common denominator for all updated coordinates is<br>$$
+D_{j+1}=D_j\prod_{o:A_o&gt;0}a_o
+\leq D_j^{m+1}.
+$$<br>After at most $K$ phases,<br>$$
+\log_2 D_K\leq (m+1)^K L.
+$$</p><p>All coordinates lie in $[0,1]$, so their numerators have the same bit-length bound, up to an additive constant. Exact integer arithmetic therefore gives an exponential-time algorithm for producing the explicitly encoded matrix.</p><h3>5. New tractable case: support size at most two</h3><p><b>Proposition.</b> If $\tau\leq2$, the limit matrix can be computed exactly in binary in time polynomial in $m$ and $L$.</p><h3>Proof</h3><p>For $\tau=1$, every assignment is obtained by repeatedly taking the minimum of the remaining type mass and its preferred available school’s supply. There are no proportional divisions. All coordinates retain an initial common denominator, so the claim follows.</p><p>Now suppose $\tau=2$. Let $D_0$ be an initial common denominator, with $\log_2 D_0\leq L$.</p><p>Consider phases strictly before the first phase that eliminates a type. We prove the following invariant after $j$ such phases:</p><ul><li>Every supply is an integer multiple of $1/D_0$.</li><li>All student masses and assignment coordinates have a common denominator $Q_j$ satisfying</li></ul><p>$$
+   D_0\mid Q_j,
+   \qquad
+   Q_j\leq D_0^{j+1}.
+   $$</p><p>Initially, take $Q_0=D_0$.</p><p>In a phase that eliminates no type, the duration must equal a school’s remaining supply. Otherwise a minimum attained at some $A_o$ would eliminate that entire group. Therefore<br>$$
+h=\frac b{D_0}
+$$<br>for an integer $b$.</p><p>There are two possible group structures.</p><p><b>The types choose different schools.</b> Each active group is a singleton. Its assignment increment is exactly $h$, and its remaining mass decreases by $h$. Since $D_0\mid Q_j$, all student and assignment coordinates retain denominator $Q_j$. Supplies retain denominator $D_0$.</p><p><b>The types choose the same school.</b> Its applicant mass is the entire remaining student mass. By conservation,<br>$$
+A=u_1+u_2=\sum_o c_o=\frac a{D_0}
+$$<br>for a positive integer $a\leq D_0$. Consequently,<br>$$
+h\frac{u_t}{A}=\frac b a u_t.
+$$<br>All updated student and assignment coordinates admit denominator<br>$$
+Q_{j+1}=aQ_j\leq D_0Q_j.
+$$<br>Supplies still retain denominator $D_0$.</p><p>This proves the invariant. Each phase before any type elimination exhausts a school, so there are at most $m$ such phases.</p><p>Consider the first phase that eliminates a type.</p><p>If the types choose different schools, all candidate durations have denominator dividing $Q_j$: supplies have denominator $D_0$, and student masses have denominator $Q_j$. Hence $h$ has denominator dividing $Q_j$. Singleton updates introduce no further denominator. After this phase, every coordinate, including every supply, has denominator dividing $Q_j$.</p><p>If both types choose the same school, their applicant mass again has denominator $D_0$, and proportional updates introduce at most one factor $a\leq D_0$. In this case, elimination of one type eliminates both, because their remaining masses are multiplied by the same factor.</p><p>After the first type-eliminating phase, at most one type remains. Every subsequent phase uses singleton updates and introduces no new denominator.</p><p>It follows that all coordinates throughout the computation admit a common denominator bounded by<br>$$
+D_0^{m+2}.
+$$<br>Their reduced numerators and denominators therefore have<br>$$
+O((m+2)L+1)
+$$<br>bits. The number of rational operations is polynomial, and arithmetic and comparison on integers of this bit length take polynomial time. This proves the proposition.</p><p>In particular, the entire task is polynomial-time solvable when $m\leq2$, because distinct strict rankings then force $\tau\leq2$.</p><h3>6. New upper bound for exact threshold queries</h3><p>Define the threshold decision problem as follows: given a valid society, a type $t$, a school $o$, and a binary rational $r$, decide whether<br>$$
+z^*_{t,o}&gt;r.
+$$</p><p>Let $\mathrm{PosSLP}$ be the problem of deciding whether an integer produced by a division-free arithmetic circuit over constants $0,1$ and operations $+,-,\times$ is positive.</p><p><b>Proposition.</b> The threshold decision problem belongs to<br>$$
+\mathrm{P}^{\mathrm{PosSLP}}.
+$$<br>Moreover, polynomially sized circuit descriptions representing every matrix entry can be produced in<br>$$
+\mathrm{FP}^{\mathrm{PosSLP}}.
+$$<br>These descriptions are distinct from explicit binary numerator-denominator encodings.</p><h3>Proof</h3><p>Represent each rational coordinate $x$ by a pair of integer arithmetic circuits $(p_x,d_x)$ satisfying<br>$$
+x=\frac{p_x}{d_x},
+\qquad d_x&gt;0.
+$$<br>The circuits need not represent a reduced fraction.</p><p>Each binary input integer can be constructed from $0,1$ using repeated doubling and addition, with a number of gates linear in its bit length.</p><p>Rational operations require only constantly many new gates:<br>$$
+\begin{aligned}
+x+y&amp;=\frac{p_xd_y+p_yd_x}{d_xd_y},\\
+x-y&amp;=\frac{p_xd_y-p_yd_x}{d_xd_y},\\
+xy&amp;=\frac{p_xp_y}{d_xd_y},\\
+\frac{x}{y}&amp;=\frac{p_xd_y}{d_xp_y}
+\qquad\text{when }y&gt;0.
+\end{aligned}
+$$<br>The last denominator is positive because $y&gt;0$ implies $p_y&gt;0$.</p><p>A positivity test for $x$ is a $\mathrm{PosSLP}$ query on $p_x$. A comparison $x&gt;y$ is a query on<br>$$
+p_xd_y-p_yd_x.
+$$</p><p>Use these queries to determine positive remaining coordinates, applicant groups, and the minimum defining each phase duration. Every division in the phase algorithm is by a positive applicant mass, as proved in Section 1. Thus every denominator remains positive.</p><p>There are polynomially many phases, operations, and comparisons. By retaining shared subcircuits as a directed acyclic graph, each arithmetic operation adds only constantly many gates. Circuit sizes and oracle query descriptions therefore remain polynomial.</p><p>After constructing a circuit pair for $z^*_{t,o}$, write $r=v/w$ with $w&gt;0$. The desired comparison is one final query on<br>$$
+p_{z^*_{t,o}}w-vd_{z^*_{t,o}}.
+$$<br>This proves both assertions.</p><p>For context, the theorem of Allender, Bürgisser, Kjeldgaard-Pedersen, and Miltersen places $\mathrm{PosSLP}$ in the counting hierarchy. The circuits constructed above meet its hypotheses: they have no variables, use constants $0,1$, and contain only $+,-,\times$ gates. [On the Complexity of Numerical Analysis](https://people.cs.rutgers.edu/~allender/papers/slp.pdf).</p><p>Consequently, the threshold problem also belongs to the counting hierarchy. Explicitly, define<br>$$
+\mathrm{CH}_0=\mathrm{P},
+\qquad
+\mathrm{CH}_{i+1}=\mathrm{PP}^{\mathrm{CH}_i}.
+$$<br>If $\mathrm{PosSLP}\in\mathrm{CH}_c$, then<br>$$
+\mathrm{P}^{\mathrm{PosSLP}}
+\subseteq
+\mathrm{P}^{\mathrm{CH}_c}
+\subseteq
+\mathrm{PP}^{\mathrm{CH}_c}
+=
+\mathrm{CH}_{c+1}.
+$$<br>The middle inclusion holds because a deterministic oracle computation is a special case of a majority-acceptance oracle computation.</p><h3>7. Remaining complexity question</h3><p>The convergence question is settled affirmatively. Polynomial-time production of the general explicit binary matrix is ruled out by output length, and support size at most two is tractable.</p><p>The unresolved part is $\mathrm{NP}$-hardness. Neither exponentially long output nor the arithmetic-circuit comparison upper bound supplies a hardness reduction. A complete classification requires a specified reduction notion for the exact-output function and a proof of hardness, or a further algorithmic characterization.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 7, Remaining complexity question: The requested general $\mathrm{NP}$-hardness classification remains unresolved. The output-length lower bound excludes polynomial-time explicit binary output, but neither it nor the $\mathrm{P}^{\mathrm{PosSLP}}$ upper bound supplies a hardness reduction. This is acknowledged scope incompleteness, not a false step in the established results.</li></ul>
+<div class="pre"><p>The output establishes convergence to a deterministic rational matrix and a superpolynomial output-length obstruction to general polynomial-time computation in explicit binary encoding. Its additional upper bounds and the tractable case $\tau\leq2$ are also justified.</p><p>It remains a <b>partial resolution of <code>USER_TASK</code></b> because it does not establish $\mathrm{NP}$-hardness. I found no false step or substantive gap in the results actually proved.</p><h3>1. Deterministic phase algorithm</h3><p>The algorithm is well-defined.</p><ul><li>Conservation holds separately for each type and each school because the assignment increments equal their respective mass and supply decrements.</li><li>Summing conservation gives $\sum_tu_t=\sum_oc_o$. Thus, whenever students remain, a positive-supply school exists and every remaining type has a defined choice.</li><li>Every active school has $A_o&gt;0$ and $c_o&gt;0$, so the minimum defining $h$ is positive. The bounds $h\leq A_o$ and $h\leq c_o$ preserve nonnegativity.</li><li>Each phase makes either a previously positive supply coordinate zero or every type mass in a nonempty applicant group zero. These coordinates cannot become positive again.</li></ul><p>Consequently, the bound of $m+\tau$ phases is valid. Conservation at termination gives both required matrix marginals. All divisions have positive rational denominators, so the final matrix is deterministic and rational.</p><p>Zero initial supplies cause no difficulty: the choice rule excludes them. The cases $m=1$ and $\tau=1$ are also covered.</p><p><b>Assessment:</b> Correct.</p><h3>2. Exact finite phases</h3><p>The suffix assertion is valid for the specified seat ordering: all applicants choosing a school target its least-indexed remaining seat, so a school removes seats in increasing index order.</p><p>For every initially active school and every round $r\leq d$,<br>$$
+C_o-(r-1)&gt;0,\qquad B_o-(r-1)&gt;0.
+$$<br>Therefore it assigns exactly one seat in each of those rounds. No school exhausts before the final round of the phase. Surviving students consequently keep their school choices throughout the phase.</p><p>An individual type disappearing does not redirect other students. An entire group disappearing does not replenish any mass or supply. Thus the finite process also has at most $m+\tau$ phases.</p><p><b>Assessment:</b> Correct; the phase decomposition respects synchronous updates.</p><h3>3. Conditional concentration</h3><p>Conditional on the phase-start state, each school&#x27;s sequence of winners is uniform sampling without replacement from its initial applicant group. The absence of changes to school choices during the phase is essential here and was established in Section 2.1.</p><p>The stated hypergeometric expectation and variance are correct. Since $d\leq N$, the variance bound by $N$ is valid. The case $B_o=1$ is correctly handled separately.</p><p>The conditional Chebyshev bound remains valid for random phase-start states. There are at most $(m+\tau)\tau$ relevant type observations, so the union bound is justified without requiring independence between observations.</p><p>With $\varepsilon_N=N^{-1/4}$, the failure probability is bounded by<br>$$
+\frac{(m+\tau)\tau}{N^{1/2}},
+$$<br>which tends to zero for the fixed society required by <code>USER_TASK</code>.</p><p><b>Assessment:</b> Correct.</p><h3>4. Limit identification and simultaneous exhaustion</h3><p>The subsequence argument handles ties adequately.</p><p>For fixed $m$ and $\tau$, there are finitely many group patterns and finitely many phase-boundary coordinates. Padding to $m+\tau$ phases permits a common subsequence on which all these data converge.</p><p>A phase whose normalized duration tends to zero changes every assignment and remaining-mass coordinate by a quantity tending to zero. Deleting such phases therefore preserves the limiting states.</p><p>In a phase with positive limiting duration, every finite active school has limiting supply and limiting applicant mass bounded below by that duration. This excludes active groups supported solely by vanishing type masses.</p><p>Every positive limiting type mass is eventually present. Its selected school has positive limiting supply; any more-preferred school with positive limiting supply would also eventually be available, contradicting its finite choice. Thus the limiting groups agree with the deterministic choice rule.</p><p>Once the group pattern is fixed, the finite minimum is a minimum over a fixed finite collection. Its limit is the deterministic phase duration. The vanishing sampling errors then yield the stated proportional increments.</p><p>Deleting zero-duration phases produces a deterministic execution from the initial state to a terminal state. The uniqueness here is supplied by the explicit deterministic update rule, including simultaneous updates at ties.</p><p>The final contradiction argument correctly converts this pathwise subsequence statement into convergence in probability. The expectation argument is also valid because every normalized entry and its limit lie in $[0,1]$.</p><p><b>Assessment:</b> Correct. No unproved interchange of limits and random phases is required.</p><h3>5. Output-length construction</h3><p>The instance satisfies the input requirements.</p><p>There are $2k$ schools and $k+2$ distinct rankings. The supplies outside $Z$ sum to<br>$$
+kd+\sum_{i=2}^k(i-1)d=Rd.
+$$<br>The masses outside $F$ sum to $(R+1)d$. The bound $D\geq2(R+1)$ ensures positivity of all masses and supplies, including<br>$$
+\mu_F\geq\frac12,\qquad q_Z\geq\frac12+d.
+$$<br>All inputs are dyadic.</p><p>The timing argument is consistent. During the first $kd$ units, neither $Z$ nor type $F$ can exhaust. Consequently, appended schools cannot interfere with the stated prefixes. Each $W_i$ serves only $P_i$ until time $(i-1)d$, leaving exactly mass $d$ of that type.</p><p>At the beginning of the interval for $S_i$, its pool is $x_{i-1}+d&gt;d$. The other active waiting schools have supply at least $d$ and applicant mass exceeding their supply. Both remaining supply at $Z$ and remaining mass of $F$ exceed $d$. Hence the next phase duration is exactly $d$, as claimed.</p><p>The recurrence and its substitution are correct:<br>$$
+x_i=\frac{x_{i-1}^2}{x_{i-1}+d},
+\qquad
+x_i=\frac{d}{a_i},
+\qquad
+a_{i+1}=a_i(a_i+1).
+$$<br>Type $M$ receives no assignment at $Z$ before the contested schools finish, so its final entry there is precisely<br>$$
+z^*_{M,Z}=\frac1{Da_k}.
+$$<br>The fraction is reduced because its numerator is $1$.</p><p>The bound<br>$$
+a_k\geq2^{2^{k-1}}
+$$<br>and the resulting denominator bit-length lower bound are correct. Since the instance length is $O(k^2\log k)$, this output length exceeds every polynomial in the input length.</p><p>The construction establishes exponential growth in the family parameter $k$ and superpolynomial growth relative to input length. The claimed exclusion of polynomial-time explicit binary output follows.</p><p><b>Assessment:</b> Correct. This is an output-length lower bound, not an $\mathrm{NP}$-hardness reduction.</p><h3>6. General bit-complexity upper bound</h3><p>The common-denominator argument is valid. Since total remaining mass is at most $1$, each active numerator satisfies $a_o\leq D_j$. Multiplying by the active $a_o$ supplies a common denominator for both assignment increments and updated coordinates.</p><p>Thus<br>$$
+D_{j+1}\leq D_j^{m+1},
+\qquad
+\log_2D_K\leq(m+1)^KL.
+$$<br>Coordinates lie in $[0,1]$, so their nonnegative numerators satisfy the same bit bound up to an additive constant. Together with polynomially many rational operations, this yields an exponential-time explicit algorithm.</p><p><b>Assessment:</b> Correct.</p><h3>7. Support size at most two</h3><p>The denominator invariant is sound.</p><p>Before a type-eliminating phase, a duration must be attained by a supply: attaining an applicant mass would eliminate the corresponding group. Hence such durations retain denominator $D_0$, and supplies retain that denominator.</p><p>For separate choices, singleton updates introduce no proportional denominator. For a shared choice, conservation gives<br>$$
+A=u_1+u_2=\sum_oc_o=\frac a{D_0},
+$$<br>so at most one additional factor $a\leq D_0$ is needed.</p><p>The first type-eliminating phase is correctly separated into the two possible group structures. With a shared school, the common multiplicative update eliminates both positive types together. With separate schools, the duration has denominator dividing the existing common denominator.</p><p>Afterward, at most one type remains and no further denominator growth occurs. The bound $D_0^{m+2}$ and polynomial binary running time follow.</p><p>The consequence for $m\leq2$ is valid because there are at most two distinct strict rankings.</p><p><b>Assessment:</b> Correct.</p><h3>8. Arithmetic-circuit threshold upper bound</h3><p>The circuit-pair representation correctly maintains positive denominators. Every rational operation adds only constantly many gates when existing circuits are shared.</p><p>Positivity and comparison reduce to integer-circuit sign queries. Every division is by an applicant mass already established to be positive. The number of phases, operations, oracle queries, and circuit gates is polynomial.</p><p>Therefore the threshold problem belongs to $\mathrm{P}^{\mathrm{PosSLP}}$, and shared circuit descriptions can be produced in $\mathrm{FP}^{\mathrm{PosSLP}}$.</p><p>The cited theorem that $\mathrm{PosSLP}$ belongs to the counting hierarchy is supported by the referenced paper. The constructed circuits satisfy its input restrictions. The subsequent inclusion of the threshold problem in the counting hierarchy follows from the stated oracle-class inclusions. [Allender et al., *On the Complexity of Numerical Analysis*](https://people.cs.rutgers.edu/~allender/papers/slp.pdf).</p><p><b>Assessment:</b> Correct.</p><h3>9. Outstanding issue and actionable feedback</h3><p><b>Major — incomplete resolution of the requested complexity question.</b> Section 7 expressly leaves $\mathrm{NP}$-hardness unresolved. Neither the output-size construction nor membership in $\mathrm{P}^{\mathrm{PosSLP}}$ implies such hardness.</p><p>This is a scope limitation, not a false mathematical claim. The prover&#x27;s declaration that its solution is partial accurately reflects what it established.</p><p>To complete that part of <code>USER_TASK</code>, the prover must specify the reduction notion for the exact-output function and supply the corresponding hardness argument. If it instead proves hardness of the threshold decision problem, it must state precisely what that establishes about the original exact-output task. Clarification alone cannot supply the missing result.</p><p>No repairs are needed for the proved convergence, output-length obstruction, restricted polynomial-time algorithm, or upper bounds.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

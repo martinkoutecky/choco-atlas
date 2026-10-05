@@ -1,0 +1,148 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-sagt-2024-0015 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-sagt-2024-0015 <span style="font-weight:normal;color:#8a7350">(d4-conf-sagt-2024-0015)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: polynomial-time · adversarial review: proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> All limits exist. Exact computation of \(x\) and the applicable aggregate \(W\) or \(C\) is possible in time polynomial in \(m,\tau,L\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Given an assignment instance I in the value or metric cost setting, computing the expected social welfare or expected social cost of the outcome of RSD when applied on I is #P-hard.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite agent-type and item-type sets \(T\) and \(G\), rational agent masses \(\mu_t\) and item supplies \(q_g\) summing to \(1\), strict rankings of item types, and either rational values \(v_t(g)\) or metric costs \(c_t(g)\), form each admissible \(N\)-agent instance with \(N\mu_t\) agents of type \(t\) and \(Nq_g\) items of type \(g\). Run the paper&#x27;s uniform-random-order RSD on each finite instance. Establish and compute the limiting expected assignment masses \(x_{tg}=\lim_{N\to\infty}N^{-1}\mathbb{E}[\#\text{ type-}t\text{ agents assigned to type }g]\) and the corresponding per-capita expected welfare \(\sum_{t,g}x_{tg}v_t(g)\), or cost \(\sum_{t,g}x_{tg}c_t(g)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(T\) be the agent-type support and \(G\) the item-type support, with \(\tau=|T|\) and \(m=|G|\). A society is given by its support: the list of its \(\tau\) positive-mass types, each mass a binary rational; \(\tau\) is the support size, not the number of possible types. Supplies are also positive binary rationals, with \(\sum_t\mu_t=\sum_g q_g=1\); let \(L\) be the total input bit length.<br>Each type has a strict ranking of all item types and either nonnegative rational values \(v_t(g)\), ranked in nonincreasing order, or nonnegative rational costs \(c_t(g)\), ranked in nondecreasing order. In the cost setting, the input is promised to admit points \(a_t,b_g\) in a common metric space with \(c_t(g)=d(a_t,b_g)\); points may coincide. The supplied ranking resolves equal values or costs.<br>For every positive integer \(N\) making all \(N\mu_t\) and \(Nq_g\) integral, create those numbers of agents and item copies. RSD uses a uniformly random permutation of all agents; each agent takes one copy of its highest-ranked type still available. Copies within a type are interchangeable.<br>Define \(A^{(N)}_{tg}\) as the number of type-\(t\) agents receiving type-\(g\) items, and \(x_{tg}=\lim_{N\to\infty}\mathbb E[A^{(N)}_{tg}]/N\), along admissible integers. The associated per-capita welfare and cost are \(W=\sum_{t,g}x_{tg}v_t(g)\) and \(C=\sum_{t,g}x_{tg}c_t(g)\).</p><p>Do these limits exist for every input, and is exact computation of \(x\) and the applicable aggregate \(W\) or \(C\) possible in time polynomial in \(m,\tau,L\), or is the computation NP-hard?</p><p>Exact finite-instance RSD expected welfare and metric cost are \(\#\mathrm P\)-hard. [Caragiannis–Homrighausen](https://arxiv.org/abs/2405.14316)<br>Che–Kojima establish convergence of replica RSD assignments to continuum probabilistic serial, including proportionally growing unequal supplies; this covers the limit specified here, so it cannot honestly be presented as an unresolved limit problem. [Primary source](https://www.columbia.edu/~yc2271/files/papers/psrp28.pdf)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Use only positive-mass agent types and positive-supply item types; zero entries are omitted from the supports.</li><li>Require nonnegative rational values or costs and rankings consistent with them; the supplied strict rankings break cardinal ties.</li><li>Interpret metric costs as a rational cross-distance matrix promised to have a common metric realization, allowing agents and items to occupy coincident points.</li><li>Treat copies of an item type as interchangeable; any ordering among copies leaves assignment masses unchanged.</li><li>Take the limit through all positive integers for which every agent count and item count is integral.</li><li>Interpret computation as exact computation, matching the hardness anchor, and measure complexity using total binary input length together with the two support sizes.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>All the limits exist. The limiting allocation \(x\), and hence the applicable aggregate \(W\) or \(C\), can be computed exactly in time polynomial in \(m,\tau,L\).</p><p>The limit is the mass-weighted probabilistic serial allocation. This agrees with the convergence result of [Che–Kojima](https://www.columbia.edu/~yc2271/files/papers/psrp33-EMA.pdf). Below is a self-contained proof for the specified inputs, followed by an exact algorithm and its bit-complexity analysis.</p><h3>1. The continuum allocation</h3><p>Let \(s\) denote time, starting at zero. Each type \(t\) consumes its highest-ranked available item type at rate \(\mu_t\). Write \(z_{tg}(s)\) for its cumulative consumption and<br>\[
+r_g(s)=q_g-\sum_t z_{tg}(s)
+\]<br>for the remaining supply.</p><p>This process has a precise finite-stage construction. At the beginning of a stage, let<br>\[
+S=\{g:r_g&gt;0\},
+\qquad
+h_t(S)=\text{the highest-ranked item in }S,
+\]<br>and define<br>\[
+a_g=\sum_{t:h_t(S)=g}\mu_t.
+\]<br>The duration of the stage is<br>\[
+\Delta=\min_{g\in S:a_g&gt;0}\frac{r_g}{a_g}.
+\]<br>During the stage, update<br>\[
+z_{t,h_t(S)}\leftarrow z_{t,h_t(S)}+\mu_t\Delta,
+\qquad
+r_g\leftarrow r_g-a_g\Delta.
+\]<br>Remove every item whose remaining supply becomes zero, including all simultaneous exhaustions.</p><p>Whenever \(S\) is nonempty, every type chooses an item in \(S\), so \(\sum_g a_g=1\). Thus the minimum exists and is positive. Each stage exhausts at least one item, so there are at most \(m\) stages.</p><p>At elapsed time \(s\), total remaining supply is \(1-s\). Moreover,<br>\[
+\Delta
+\leq
+\sum_{g:a_g&gt;0}a_g\frac{r_g}{a_g}
+=
+\sum_{g:a_g&gt;0}r_g
+\leq 1-s.
+\]<br>Consequently the construction never passes time one. Upon termination all supply is exhausted, so termination occurs exactly at time one. Define<br>\[
+x^*_{tg}=z_{tg}(1).
+\]<br>Then<br>\[
+\sum_g x^*_{tg}=\mu_t,
+\qquad
+\sum_t x^*_{tg}=q_g.
+\]</p><h3>2. Convergence of finite RSD to this allocation</h3><p>Fix an admissible \(N\). After the first \(k\) agents in the random permutation have acted, let \(B_t^{(N)}(k)\) be the number of those agents of type \(t\).</p><p>Define \(F_t^{(N)}(s)\) by linearly interpolating \(B_t^{(N)}(k)/N\) at times \(s=k/N\). Likewise, let \(Y_{tg}^{(N)}(s)\) interpolate the normalized cumulative assignments. In particular,<br>\[
+Y_{tg}^{(N)}(1)=\frac{A_{tg}^{(N)}}N.
+\]<br>Every coordinate of these processes is nondecreasing and \(1\)-Lipschitz, and<br>\[
+\sum_gY_{tg}^{(N)}(s)=F_t^{(N)}(s),
+\qquad
+\sum_{t,g}Y_{tg}^{(N)}(s)=s.
+\]</p><h3>Uniform convergence of type arrivals</h3><p>For a fixed prefix length \(k\), the variable \(B_t^{(N)}(k)\) is hypergeometric. Hence<br>\[
+\mathbb E[B_t^{(N)}(k)]=k\mu_t,
+\qquad
+\operatorname{Var}(B_t^{(N)}(k))\leq N.
+\]<br>Chebyshev’s inequality therefore gives convergence in probability of normalized counts to their means at each fixed time; interpolation contributes at most \(1/N\).</p><p>To obtain uniform convergence, fix a finite grid of mesh at most \(\delta\). A union bound gives convergence simultaneously at its grid points. Between grid points, both \(F_t^{(N)}\) and \(s\mapsto\mu_ts\) are \(1\)-Lipschitz, so the error increases by at most \(2\delta\). First letting \(N\) tend to infinity and then letting \(\delta\) tend to zero proves<br>\[
+\max_t\sup_{0\leq s\leq1}
+\left|F_t^{(N)}(s)-\mu_ts\right|
+\xrightarrow{\mathbb P}0.
+\]</p><h3>Identification of every possible assignment limit</h3><p>Consider any deterministic sequence of permutation realizations along which the preceding arrival error tends to zero. The assignment paths are uniformly bounded and uniformly Lipschitz. By the Arzelà–Ascoli theorem, every subsequence has a further subsequence converging uniformly to a path \(y\).</p><p>Its coordinates are nondecreasing and Lipschitz, and<br>\[
+\sum_g y_{tg}(s)=\mu_ts,
+\qquad
+r_g(s):=q_g-\sum_t y_{tg}(s)\geq0,
+\qquad
+\sum_g r_g(s)=1-s.
+\]</p><p>We now determine its derivatives, which exist almost everywhere.</p><p>If \(r_g(s)=0\), monotonicity and feasibility imply that every coordinate \(y_{tg}\) remains constant thereafter. Thus exhausted items receive no further allocation, apart from irrelevant individual exhaustion times.</p><p>Next suppose \(t\) ranks \(g\) above \(h\). On any closed interval contained in the open set where \(r_g&gt;0\), uniform convergence ensures that item \(g\) remains available throughout the corresponding finite processes, for all sufficiently large \(N\). RSD therefore makes no assignments of \(h\) to type \(t\) on that interval. Consequently \(y_{th}\) is locally constant wherever a better-ranked item has positive remaining supply.</p><p>For \(s&lt;1\), at least one item has positive remaining supply because their total remaining supply is \(1-s\). Let \(h_t(s)\) be type \(t\)’s highest-ranked such item. The preceding observations eliminate every other item from its allocation derivative. Differentiating the row identity therefore yields, almost everywhere,<br>\[
+y&#x27;_{tg}(s)=
+\begin{cases}
+\mu_t,&amp;g=h_t(s),\\
+0,&amp;g\neq h_t(s).
+\end{cases}
+\]</p><p>These equations uniquely determine the path. Indeed, between consecutive exhaustion times the available set is fixed, so all rates are fixed. The next exhaustion occurs after exactly the minimum residual-supply-to-rate ratio from Section 1. Removing all items exhausted at that time and repeating determines the entire path in at most \(m\) stages. Thus \(y=z\).</p><p>It follows that whenever type-arrival errors tend to zero, the assignment paths converge uniformly to \(z\): otherwise a subsequence staying a positive distance away would have a uniformly convergent further subsequence, whose limit was just proved to equal \(z\).</p><p>Combining this deterministic implication with arrival convergence gives<br>\[
+Y_{tg}^{(N)}(1)\xrightarrow{\mathbb P}x^*_{tg}.
+\]<br>For completeness, failure of this implication in probability would allow us to select realizations with arbitrarily small arrival error but assignment error bounded away from zero, contradicting the preceding compactness argument.</p><p>Finally, these normalized assignment variables lie in \([0,1]\). For every \(\varepsilon&gt;0\),<br>\[
+\mathbb E\left|Y_{tg}^{(N)}(1)-x^*_{tg}\right|
+\leq
+\varepsilon+
+\Pr\left(\left|Y_{tg}^{(N)}(1)-x^*_{tg}\right|&gt;\varepsilon\right).
+\]<br>Therefore<br>\[
+\lim_{\substack{N\to\infty\\N\text{ admissible}}}
+\frac{\mathbb E[A_{tg}^{(N)}]}N
+=x^*_{tg}.
+\]<br>This proves existence and identifies the requested limits.</p><h3>3. Exact computation and polynomial bit complexity</h3><p>The stage construction already gives an exact rational algorithm. The remaining issue is whether its intermediate numbers have polynomial bit length.</p><p>Let \(D\) be the product of the input denominators of the masses, and \(E\) the product of the input denominators of the supplies. Write<br>\[
+\mu_t=\frac{M_t}{D},
+\qquad
+q_g=\frac{Q_g}{E}.
+\]<br>Then<br>\[
+\sum_t M_t=D,
+\qquad
+\sum_g Q_g=E,
+\qquad
+\log_2D+\log_2E=O(L).
+\]<br>The products themselves may be large, but their binary encodings have polynomial length.</p><p>Maintain a common denominator \(H\) for every residual supply, allocation entry, and elapsed time:<br>\[
+r_g=\frac{R_g}{H},
+\qquad
+z_{tg}=\frac{Z_{tg}}H,
+\qquad
+s=\frac UH.
+\]<br>Initially take \(H=ED\), \(R_g=DQ_g\), and all allocation and time numerators zero.</p><p>At a stage, put<br>\[
+K_g=\sum_{t:h_t(S)=g}M_t,
+\qquad
+a_g=\frac{K_g}{D}.
+\]<br>Choose an item \(e\) minimizing \(R_g/K_g\) among those with \(K_g&gt;0\). Then<br>\[
+\Delta=\frac{DR_e}{HK_e}.
+\]<br>Using the new denominator \(H&#x27;=HK_e\), the exact updates are<br>\[
+R&#x27;_g=K_eR_g-K_gR_e,
+\]<br>\[
+Z&#x27;_{tg}=
+\begin{cases}
+K_eZ_{tg}+M_tR_e,&amp;g=h_t(S),\\
+K_eZ_{tg},&amp;g\neq h_t(S),
+\end{cases}
+\]<br>and<br>\[
+U&#x27;=K_eU+DR_e.
+\]<br>All comparisons use integer cross multiplication. No rounding is required.</p><p>Since \(1\leq K_e\leq D\), after at most \(m\) stages,<br>\[
+H\leq ED^{m+1}.
+\]<br>Every represented residual, allocation, and elapsed time belongs to \([0,1]\), so its nonnegative numerator is at most \(H\). Thus all stored integers have<br>\[
+O\bigl(1+\log E+(m+1)\log D\bigr)
+=
+O\bigl(1+(m+1)L\bigr)
+\]<br>bits. Products used in comparisons and updates also have polynomial bit length.</p><p>A straightforward implementation scans the listed rankings and updates the allocation matrix at each stage, using \(O(\tau m^2)\) arithmetic operations overall. Standard exact integer arithmetic therefore gives polynomial bit complexity in \(m,\tau,L\).</p><p>The algorithm uses only the \(\tau\) listed positive-mass types. It neither enumerates unlisted rankings nor constructs any replicated finite society.</p><h3>4. Welfare, cost, and the metric promise</h3><p>Having computed \(x=x^*\), calculate the applicable aggregate by exact rational arithmetic:<br>\[
+W=\sum_{t,g}x_{tg}v_t(g),
+\qquad
+C=\sum_{t,g}x_{tg}c_t(g).
+\]<br>There are \(\tau m\) terms. A common denominator can be obtained by multiplying the final allocation denominator by the input denominators of the applicable cardinal data. Its bit length is polynomial, because those input denominators have total bit length at most \(L\). Numerators likewise have polynomial length. Hence the aggregate is exactly computable in polynomial time.</p><p>The cost algorithm needs only the supplied costs and rankings. It therefore applies to every input satisfying the metric promise without reconstructing the metric space. Equal values or costs cause no ambiguity because the supplied strict rankings determine every choice.</p><p>The cited finite-instance hardness concerns exact expectations before replication and passage to the limit. It does not prevent the limiting quantities proved here from having polynomial-time exact algorithms. See [Caragiannis–Homrighausen](https://arxiv.org/abs/2405.14316).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 2, Identification of every possible assignment limit: invocation of Arzelà–Ascoli: The theorem is named without stating its precise applicable form. Its hypotheses are satisfied: the domain is compact, the codomain is fixed finite-dimensional, and the paths are uniformly bounded and equicontinuous. State the theorem and explicitly match these hypotheses.</li><li><b>minor</b> — Section 2, paragraph beginning &#x27;These equations uniquely determine the path.&#x27;: The passage from almost-everywhere derivative equations to fixed-rate stage evolution implicitly uses absolute continuity and the integral representation of Lipschitz functions. State this standard result and explicitly invoke it here; no new mathematics is needed.</li></ul>
+<div class="pre"><p>The output resolves the requested limit and exact-computation questions in substance. The limiting allocation is identified correctly, and the exact algorithm has polynomial bit complexity. I found no false central step, incorrect update, or missing substantive lemma. Two minor theorem-statement omissions remain under the requested verification standard.</p><h3>1. Scope and assumptions</h3><p>The proof addresses the specified support representation: it works with the \(\tau\) listed types and their masses, without enumerating possible rankings.</p><p>Positive masses and supplies, their normalization, and complete strict rankings supply all assumptions needed by the construction. Cardinal values and costs are used only after computing the allocation. Consequently, equal cardinal quantities and coincident metric points do not invalidate any step.</p><p>Rationality also ensures there are arbitrarily large admissible integers \(N\). Thus the limiting sequence in the task is well defined.</p><h3>2. Continuum construction</h3><p>All substantive steps in Section 1 are correct.</p><ul><li>When the available set is nonempty, every type selects exactly one available item. Hence the total consumption rate is \(1\).</li><li>At least one item has positive consumption rate, and each residual supply in the available set is positive. The minimum defining the stage duration therefore exists and is strictly positive.</li><li>The update preserves nonnegative residual supplies because the stage duration is the minimum exhaustion ratio.</li><li>Removing every simultaneous exhaustion ensures that each stage removes at least one item. There are at most \(m\) stages.</li><li>The displayed bound on the stage duration is valid: the minimum is bounded by the weighted average because the positive rates sum to \(1\).</li><li>Total residual supply is \(1-s\). The construction cannot pass time \(1\), and exhausting every supply forces its terminal time to be exactly \(1\).</li></ul><p>The resulting row and column sums are correct. Each type consumes at rate \(\mu_t\) throughout the unit time interval, and each item’s initial supply is exhausted.</p><h3>3. Arrival convergence</h3><p>The probabilistic argument is correct.</p><p>For each prefix, the type count is hypergeometric with the stated mean. The variance bound by \(N\) is valid, including degenerate cases where the count is deterministic. After normalization, Chebyshev’s inequality gives convergence at each fixed time.</p><p>The interpolation error is at most \(1/N\). A finite-grid union bound is applicable because, for a fixed input, both the grid and the type set are finite. The Lipschitz estimate between grid points is correct. The resulting uniform convergence in probability does not require independence between prefix counts.</p><p>No convergence rate uniform over different inputs is needed: this part proves existence separately for every fixed input.</p><h3>4. Identification of subsequential assignment limits</h3><p>The compactness and preference arguments are sound, with one minor presentation issue.</p><p><b>Minor issue 1 — Section 2, invocation of Arzelà–Ascoli.</b><br>The output names the theorem but does not state its precise form, as required by the verification instructions. The needed compactness conclusion is applicable: the domain is compact, the codomain has fixed finite dimension, and the assignment paths are uniformly bounded and equicontinuous.</p><p><b>Minimum clarification:</b> State the version of Arzelà–Ascoli being used and explicitly identify these hypotheses. No additional mathematical argument is required.</p><p>The remaining limit-identification steps check out:</p><ul><li>Uniform convergence preserves monotonicity, Lipschitz bounds, feasibility, and the row and total-allocation identities.</li><li>If an item’s limiting residual supply reaches zero, monotonicity and feasibility force all its allocation coordinates to remain constant afterward.</li><li>On a closed interval where a better-ranked item has positive limiting residual supply, continuity provides a positive minimum residual. Uniform convergence therefore makes that item available in the finite processes for sufficiently large \(N\). The prohibition on choosing a worse item follows.</li><li>Linear interpolation does not undermine this argument: an allocation segment overlapping the interval corresponds to a choice made at its preceding grid point, where the better item is also available.</li><li>At every time strictly before \(1\), positive total residual supply guarantees a highest-ranked available item for every type.</li><li>There are finitely many allocation coordinates and exhaustion times. The derivative exclusions and differentiated row identities can therefore be combined outside a single measure-zero exceptional set.</li></ul><p>The stated derivative equations follow.</p><h3>5. Uniqueness and convergence of expectations</h3><p>The uniqueness argument is correct in substance, but it implicitly uses another standard theorem.</p><p><b>Minor issue 2 — Section 2, “These equations uniquely determine the path.”</b><br>The transition from almost-everywhere derivative equations to fixed-rate evolution on each stage requires absolute continuity and the integral representation of the path. Lipschitz continuity supplies these properties, but the output does not state or explicitly invoke them.</p><p><b>Minimum clarification:</b> State that Lipschitz coordinates are absolutely continuous and that their increments equal the integrals of their derivatives. Explicitly invoke this fact when passing from the derivative equations to the stage evolution.</p><p>With that standard justification, the described uniqueness argument is valid. Availability changes only when an item becomes exhausted; exhausted items never return. The next exhaustion is determined by the minimum residual-to-rate ratio, and simultaneous exhaustions are removed together.</p><p>The subsequent compactness contradiction correctly promotes uniqueness of subsequential limits to convergence of the assignment paths whenever arrival errors vanish.</p><p>The passage to convergence in probability is also valid. If assignment convergence failed, arrival convergence would permit selecting realizations with vanishing arrival error and assignment error bounded away from zero, contradicting the deterministic conclusion.</p><p>Finally, the bounded-variable estimate is correct. It establishes convergence in mean and hence convergence of the normalized expectations along all admissible integers.</p><h3>6. Exact arithmetic and bit complexity</h3><p>The denominator construction and every displayed integer update are correct.</p><ul><li>The products \(D\) and \(E\) are valid common denominators, with total binary length bounded by the input length.</li><li>Initially, \(H=ED\) represents supplies, zero allocations, and zero elapsed time correctly.</li><li>Minimizing \(R_g/K_g\) gives the correct exhaustion choice because the omitted factor \(D/H\) is common and positive.</li><li>The formula for the stage duration is correct.</li><li>Multiplying the denominator by \(K_e\) gives exactly the stated residual, allocation, and time updates.</li><li>The minimizing property ensures that every updated residual numerator is nonnegative.</li><li>Previously exhausted items remain exhausted.</li></ul><p>The denominator bound \(H\leq ED^{m+1}\) is valid because each stage multiplies it by an integer between \(1\) and \(D\), and there are at most \(m\) stages.</p><p>Residual supplies, allocation entries, and elapsed time all lie in \([0,1]\), so their stored numerators are at most the common denominator. Comparison products and update products also have polynomial bit length.</p><p>The claimed \(O(\tau m^2)\) arithmetic-operation bound is consistent with scanning rankings and updating the allocation matrix in each of at most \(m\) stages. Standard exact integer arithmetic therefore yields the asserted polynomial running time.</p><h3>7. Aggregates, metric promise, and cited context</h3><p>The aggregate computation is correct. Multiplying the final allocation denominator by the cardinal-data denominators gives a common denominator of polynomial bit length. Cardinal-data numerators have input-bounded bit length, and summing \(\tau m\) terms preserves polynomial bit length.</p><p>The metric promise introduces no additional computational step: the task supplies the costs, and the algorithm needs no metric realization.</p><p>The convergence discussion is consistent with the asymptotic equivalence established by [Che–Kojima](https://www.columbia.edu/~yc2271/files/papers/psrp33-EMA.pdf). The output’s independent convergence argument handles its claimed input scope directly, so an unstated application of that paper is not carrying the proof.</p><p>The distinction between finite-instance expectations and limiting allocations is legitimate. The finite-instance hardness premise does not contradict the polynomial algorithm established here.</p><h3>Required feedback</h3><p>Only two expositional clarifications are needed: state the applicable Arzelà–Ascoli theorem, and explicitly invoke absolute continuity when integrating the derivative equations. Neither changes the construction, convergence argument, or complexity conclusion.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

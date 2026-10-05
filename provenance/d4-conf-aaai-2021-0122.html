@@ -1,0 +1,225 @@
+<!doctype html><html><head><meta charset="utf-8"><title>On Fair and Efficient Allocations of Indivisible Goods — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>On Fair and Efficient Allocations of Indivisible Goods <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2021-0122)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Given a $k$-ary fair division instance $I = (N,M,V)$ where $k$ is a constant, an allocation that is both EF1 and fPO can be computed in time $\poly{m,n}$.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational type masses \( \mu_t \) with \( \sum_t \mu_t=1 \), rational per-capita supplies \( 0\le \sigma_j\le1 \), and additive \( k \)-ary values \( v_{tj} \) for types \( t\in T=[\tau] \) and goods \( j\in[m] \), find masses \( z_{t,B}\ge0 \) for integral bundles \( B\subseteq[m] \) satisfying \( \sum_B z_{t,B}=\mu_t \) and \( \sum_{t,B:j\in B}z_{t,B}=\sigma_j \), such that every pair of positive-mass cohorts satisfies \( \mathrm{EF1} \) under \( v_t(B)=\sum_{j\in B}v_{tj} \), and no capacity-feasible fractional reallocation weakly improves every supported cohort while strictly improving one. Determine whether such an allocation can be computed in time polynomial in \( m,\tau,k \) and the input bit length, independently of the common population denominator.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive binary-rational masses \(\mu_t\), where \(\sum_t\mu_t=1\); \(\tau\) is the support size, not the number of possible types.<br>There are \(m\ge1\) goods, binary-rational per-capita supplies \(\sigma_j\in[0,1]\), and nonnegative binary-rational additive values \(v_{tj}\). Every good has positive value for some supported type. Each type has at most \(k\) distinct values across goods; these values may differ between types, and \(k\) is an input parameter. Let \(L\) be the total input bit length.<br>An allocation consists of rational masses \(z_{t,B}\ge0\), for integral bundles \(B\subseteq[m]\), satisfying \(\sum_Bz_{t,B}=\mu_t\) and \(\sum_{t,B:j\in B}z_{t,B}=\sigma_j\). Represent it by listing its positive entries; empty bundles are permitted.<br>A supported cohort is a pair \((t,B)\) with \(z_{t,B}&gt;0\). Require EF1 for every ordered pair of supported cohorts, comparing their bundles using the first cohort&#x27;s valuation; removal of at most one good is allowed.<br>A fractional reallocation assigns each supported cohort per-capita quantities \(x_{t,B,j}\in[0,1]\), subject to \(\sum_{t,B}z_{t,B}x_{t,B,j}\le\sigma_j\) for every good. Require that no such reallocation satisfies \(\sum_jv_{tj}x_{t,B,j}\ge v_t(B)\) for every supported cohort, with strict inequality for at least one.</p><p>Is computing such an EF1 and fractionally Pareto-optimal allocation, or reporting that none exists, solvable in time \(\operatorname{poly}(m,\tau,k,L)\), independently of the common population denominator, or is this problem NP-hard?</p><p>For discrete agents and indivisible goods, EF1 and fractional Pareto optimality can be achieved in strongly polynomial time for every fixed \(k\); this does not give a polynomial bound uniform in \(k\). The general discrete search problem belongs to \(\mathrm{PLS}\). [Garg–Murhekar](https://arxiv.org/html/2204.14229v2)<br>No result settling the exact support-and-supply problem above was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified nonnegative binary-rational values, positive integers m and k, and positive value for every good from some supported type, following the discrete domain.</li><li>Specified that k counts distinct values separately for each type and remains an input parameter, preserving the graded question&#x27;s requested polynomial dependence on k.</li><li>Allowed empty bundles and removal of at most one good in EF1, consistent with the intended definition rather than the literal existential quantifier over an empty bundle.</li><li>Defined fractional reallocations using per-capita quantities bounded by one, weighted supply inequalities, and separate utility comparisons for every supported cohort.</li><li>Specified a sparse rational representation of the allocation rather than an explicit table over all bundles.</li><li>Included reporting nonexistence because existence for arbitrary per-capita supplies was not supplied as a promise.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and scope</h3><p>The general complexity question remains unresolved here. I prove two additional results:</p><ul><li>A denominator-independent polynomial-time algorithm exists when every type has at most one distinct positive value: its values lie in $\{0,a_t\}$ for some $a_t&gt;0$.</li><li>Cohort-level fractional Pareto optimality has an exact characterization by multiplicative inequalities on a directed graph, giving a polynomial-time test using rational arithmetic.</li></ul><p>I also reprove the conditional compact-support result needed for the general problem. The verifier’s correction is essential: compact support follows <b>if an EF1 and fractionally Pareto-optimal allocation exists</b>. It does not establish unconditional existence.</p><p>The first result covers arbitrary personalized binary valuations and the entire $k=1$ case. It does not cover types having two distinct positive values.</p><h3>1. A certificate and graph characterization of fractional Pareto optimality</h3><p>Fix a feasible allocation. Index its supported cohorts by $C$. For $c\in C$, write $t(c)$ for its type, $B_c$ for its bundle, $z_c&gt;0$ for its mass, and<br>$$
+b_{cj}=\mathbf 1_{\{j\in B_c\}},
+\qquad
+v_{cj}=v_{t(c)j}.
+$$</p><h3>1.1. The price certificate</h3><p><b>Lemma 1.</b> The allocation is fractionally Pareto optimal if and only if there are $\alpha_c&gt;0$ and $p_j\geq0$ satisfying<br>$$
+j\in B_c\ \Longrightarrow\ \alpha_cv_{cj}\geq p_j,
+\qquad
+j\notin B_c\ \Longrightarrow\ \alpha_cv_{cj}\leq p_j.
+$$</p><p><b>Proof of sufficiency.</b> For any feasible fractional reallocation $x$, an owned good satisfies $x_{cj}-b_{cj}\leq0$, while an unowned good satisfies $x_{cj}-b_{cj}\geq0$. In either case the certificate implies<br>$$
+\alpha_cv_{cj}(x_{cj}-b_{cj})
+\leq p_j(x_{cj}-b_{cj}).
+$$<br>Multiplying by $z_c$ and summing gives<br>$$
+\begin{aligned}
+\sum_c z_c\alpha_c
+\bigl(v_{t(c)}(x_c)-v_{t(c)}(B_c)\bigr)
+&amp;\leq
+\sum_j p_j
+\left(\sum_c z_cx_{cj}-\sigma_j\right)\\
+&amp;\leq0.
+\end{aligned}
+$$<br>A Pareto improvement would make the left side strictly positive, because every $z_c\alpha_c$ is positive. Thus no such improvement exists.</p><p><b>Proof of necessity.</b> Put $U_c=v_{t(c)}(B_c)$ and use total quantities $y_{cj}=z_cx_{cj}$. Consider the linear program<br>$$
+\begin{aligned}
+\text{maximize}\quad&amp;
+\sum_{c,j}v_{cj}y_{cj}\\
+\text{subject to}\quad&amp;
+0\leq y_{cj}\leq z_c,\\
+&amp;\sum_c y_{cj}\leq\sigma_j,\\
+&amp;\sum_jv_{cj}y_{cj}\geq z_cU_c.
+\end{aligned}
+$$<br>The original assignment $y^0_{cj}=z_cb_{cj}$ is feasible, and the feasible region is bounded. Fractional Pareto optimality is equivalent to $y^0$ being optimal: every feasible point weakly improves all cohort utilities, and the objective increases precisely when some cohort improves strictly.</p><p>Assign nonnegative dual variables $p_j$ to the supply constraints, $\lambda_c$ to the utility constraints written with negative signs, and $q_{cj}$ to the upper bounds. The dual inequalities are<br>$$
+p_j+q_{cj}\geq(1+\lambda_c)v_{cj}.
+$$<br>The primal is feasible with finite optimum, so linear-programming duality supplies an optimal dual solution. Set $\alpha_c=1+\lambda_c$.</p><p>Complementary slackness with $y^0$ gives the required inequalities. If $j\in B_c$, then $y^0_{cj}=z_c&gt;0$, so<br>$$
+p_j+q_{cj}=\alpha_cv_{cj},
+$$<br>and therefore $p_j\leq\alpha_cv_{cj}$. If $j\notin B_c$, the upper bound has positive slack, so $q_{cj}=0$, and consequently $p_j\geq\alpha_cv_{cj}$. This proves necessity. $\square$</p><p>In particular, the certificate depends on the supported types and bundles, rather than their masses. Restricting it to a subset of cohorts preserves fractional Pareto optimality whenever the new masses remain feasible.</p><h3>1.2. Eliminating the prices</h3><p>For each good $j$, let<br>$$
+O_j=\{c:j\in B_c\},
+\qquad
+N_j=\{c:j\notin B_c\}.
+$$</p><p>Construct a directed multigraph on $C$. For every good $j$ and every pair $c\in N_j$, $d\in O_j$ with $v_{cj},v_{dj}&gt;0$, introduce an edge<br>$$
+c\longrightarrow d
+\quad\text{of weight}\quad
+w_{cdj}=\frac{v_{cj}}{v_{dj}}.
+$$</p><p><b>Theorem 2.</b> The allocation is fractionally Pareto optimal if and only if both conditions hold:</p><ul><li>There is no good $j$ having an owner $d$ with $v_{dj}=0$ and a nonowner $c$ with $v_{cj}&gt;0$.</li><li>Every directed cycle has edge-weight product at most $1$.</li></ul><p><b>Proof.</b> A certificate from Lemma 1 immediately excludes the first obstruction: it would require<br>$$
+0&lt;\alpha_cv_{cj}\leq p_j\leq\alpha_dv_{dj}=0.
+$$<br>It also implies, for every graph edge,<br>$$
+\alpha_d\geq w_{cdj}\alpha_c.
+$$<br>Multiplying these inequalities around a cycle shows that its weight product cannot exceed $1$.</p><p>Conversely, suppose both conditions hold. For each vertex $d$, define $\alpha_d$ as the maximum product of edge weights along a simple directed path ending at $d$, allowing the length-zero path of product $1$.</p><p>These maxima exist because there are finitely many simple paths. Moreover, deleting a directed cycle from a walk cannot decrease its weight product. Hence any walk can be shortened to a simple path without decreasing its product. Appending an edge $c\longrightarrow d$ to a maximizing path for $c$ therefore proves<br>$$
+\alpha_d\geq w_{cdj}\alpha_c.
+$$</p><p>Define<br>$$
+p_j=\max_{c\in N_j}\alpha_cv_{cj},
+$$<br>with the maximum equal to $0$ when $N_j$ is empty. The nonowner inequalities in Lemma 1 hold by definition.</p><p>For a positive-valued owner $d$, every positive-valued nonowner $c$ supplies a graph edge, so<br>$$
+\alpha_cv_{cj}\leq\alpha_dv_{dj}.
+$$<br>Zero-valued nonowners contribute $0$ to the maximum. Thus $p_j\leq\alpha_dv_{dj}$. For a zero-valued owner, the first condition says that every nonowner has value zero, so $p_j=0$. All certificate inequalities hold, and Lemma 1 applies. $\square$</p><h3>1.3. Exact polynomial-time verification</h3><p>Let $n=|C|$. Initialize $a_c^{(0)}=1$ and perform $n-1$ synchronous rounds<br>$$
+a_d^{(h)}
+=
+\max\left\{
+a_d^{(h-1)},
+\max_{c\longrightarrow d}w_{cdj}a_c^{(h-1)}
+\right\}.
+$$<br>The resulting value is the maximum product over paths of length at most $n-1$ ending at $d$.</p><p>After separately checking the zero-value obstruction, accept exactly when<br>$$
+a_d^{(n-1)}\geq w_{cdj}a_c^{(n-1)}
+$$<br>for every edge.</p><p>If every cycle has product at most $1$, the simple-path argument proves these inequalities. Conversely, if they all hold, multiplying them around any cycle excludes a product greater than $1$.</p><p>There are at most $mn^2$ edges. Every intermediate number is a product of at most $n-1$ input valuation ratios, so it has polynomial bit length. Thus this is a polynomial-time test using exact rational arithmetic, without logarithmic approximations.</p><h3>2. A polynomial algorithm for personalized binary valuations</h3><p>Assume that, for each supported type $t$, there is a positive rational $a_t$ such that<br>$$
+v_{tj}=a_t b_{tj},
+\qquad b_{tj}\in\{0,1\}.
+$$<br>For an identically zero-valued type, take $a_t=1$ and $b_{tj}=0$.</p><p>Say that type $t$ *likes* good $j$ when $b_{tj}=1$, and define the total liking mass<br>$$
+M_j=\sum_t\mu_tb_{tj}.
+$$<br>The premise that every good has positive value somewhere gives $M_j&gt;0$.</p><p><b>Theorem 3.</b> Under this hypothesis, an EF1 and fractionally Pareto-optimal allocation can always be computed in time $\operatorname{poly}(m,\tau,L)$, independently of the common population denominator.</p><h3>2.1. Separate scarce and surplus goods</h3><p>Partition the goods into<br>$$
+S=\{j:\sigma_j&lt;M_j\},
+\qquad
+H=\{j:\sigma_j\geq M_j\}.
+$$</p><p>We first allocate each good in $S$ entirely to people who like it. Subsequently, for every $j\in H$, we give the good to every person who likes it and assign the remaining mass $\sigma_j-M_j$ to people who dislike it.</p><p>The scarce-good allocation will minimize<br>$$
+\Phi=\sum_c z_c|B_c|^2,
+$$<br>where, at this stage, $B_c\subseteq S$ and every cohort likes every good it receives.</p><h3>2.2. A polynomial-size linear program</h3><p>Write $s=|S|$. If $s=0$, start each type with an empty bundle and proceed to Section 2.5.</p><p>For $s&gt;0$, introduce aggregate quantities $y_{tj}$ for $j\in S$, and slot quantities $r_{t\ell}$ for $\ell\in\{1,\ldots,s\}$. Solve<br>$$
+\begin{aligned}
+\text{minimize}\quad&amp;
+\sum_t\sum_{\ell=1}^{s}(2\ell-1)r_{t\ell}\\
+\text{subject to}\quad&amp;
+\sum_t y_{tj}=\sigma_j
+&amp;&amp;\text{for every }j\in S,\\
+&amp;\sum_{j\in S}y_{tj}=\sum_{\ell=1}^{s}r_{t\ell}
+&amp;&amp;\text{for every }t,\\
+&amp;0\leq y_{tj}\leq\mu_t
+&amp;&amp;\text{if }b_{tj}=1,\\
+&amp;y_{tj}=0
+&amp;&amp;\text{if }b_{tj}=0,\\
+&amp;0\leq r_{t\ell}\leq\mu_t.
+\end{aligned}
+$$</p><p>This linear program is feasible. For each scarce good, the eligible capacities sum to $M_j&gt;\sigma_j$, so its supply can be assigned independently among liking types. Each type’s resulting total quantity is at most $s\mu_t$, and therefore fits its slots.</p><p>Let<br>$$
+d_t=\sum_{j\in S}y_{tj},
+\qquad
+u_t=\frac{d_t}{\mu_t}=q_t+\varepsilon_t,
+$$<br>where $q_t=\lfloor u_t\rfloor$ and $0\leq\varepsilon_t&lt;1$.</p><p>For fixed $y$, the strictly increasing slot costs force the cheapest slots to be filled first: moving a positive quantity from a used expensive slot to an unfilled cheaper slot strictly reduces the objective. Consequently, in an optimal solution the slot cost for type $t$ is<br>$$
+\mu_t\left(q_t^2+(2q_t+1)\varepsilon_t\right).
+$$<br>When $u_t=s$, this means all slots are full and the cost is $\mu_ts^2$.</p><h3>2.3. An explicit decomposition into integral bundles</h3><p>We now realize the optimal aggregate quantities using polynomially many cohorts.</p><p>Fix a type $t$, enumerate $S$ as $j_1,\ldots,j_s$, and put<br>$$
+x_i=\frac{y_{t j_i}}{\mu_t},
+\qquad
+c_0=0,
+\qquad
+c_i=\sum_{h=1}^{i}x_h.
+$$<br>Each $x_i$ lies in $[0,1]$. For $u\in[0,1)$, define<br>$$
+B_t(u)=
+\left\{
+j_i:
+\text{there exists }\ell\in\mathbb Z
+\text{ with }c_{i-1}\leq u+\ell&lt;c_i
+\right\}.
+$$</p><p>The intervals $[c_{i-1},c_i)$ partition $[0,u_t)$. Each has length at most $1$, so it contains at most one point of the translated integer lattice $u+\mathbb Z$. Therefore:</p><ul><li>Good $j_i$ belongs to $B_t(u)$ for a set of $u$ of total length $x_i$.</li><li>The bundle cardinality is the number of lattice points in $[0,u_t)$: it is $q_t+1$ when $0\leq u&lt;\varepsilon_t$, and $q_t$ otherwise.</li></ul><p>The first assertion follows by cutting $[c_{i-1},c_i)$ at integer boundaries and translating the pieces into $[0,1)$; their total length remains $x_i$, and their interiors do not overlap.</p><p>Partition $[0,1)$ at the fractional parts of $c_0,\ldots,c_s$, together with the endpoint $1$. On every resulting open interval, $B_t(u)$ is constant. Give that bundle a cohort mass equal to $\mu_t$ times the interval length, using a rational midpoint to identify the bundle.</p><p>There are at most $s+1$ such intervals. This produces rational cohort masses, assigns aggregate quantity $y_{tj}$ of every scarce good, and gives type $t$ a squared-cardinality contribution<br>$$
+\mu_t\left((1-\varepsilon_t)q_t^2+
+\varepsilon_t(q_t+1)^2\right)
+=
+\mu_t\left(q_t^2+(2q_t+1)\varepsilon_t\right).
+$$<br>Thus the resulting allocation attains the linear-program objective.</p><h3>2.4. Why this allocation globally minimizes squared cardinalities</h3><p>Consider any feasible allocation of the scarce goods in which every received good is liked by its recipient. Define<br>$$
+y_{tj}=\sum_{c:t(c)=t,\ j\in B_c}z_c,
+\qquad
+r_{t\ell}=\sum_{c:t(c)=t,\ |B_c|\geq\ell}z_c.
+$$<br>These variables satisfy all constraints of the linear program. Moreover,<br>$$
+\begin{aligned}
+\sum_t\sum_{\ell=1}^{s}(2\ell-1)r_{t\ell}
+&amp;=
+\sum_c z_c\sum_{\ell=1}^{|B_c|}(2\ell-1)\\
+&amp;=\sum_c z_c|B_c|^2.
+\end{aligned}
+$$<br>Hence the linear-program optimum is a lower bound on $\Phi$ for every eligible integral-bundle allocation. Section 2.3 attains that bound. Its allocation therefore globally minimizes $\Phi$.</p><h3>2.5. EF1 for scarce goods, and extension to surplus goods</h3><p>First consider the scarce-good allocation.</p><p>Suppose cohorts $c,d$ violate EF1, with the comparison using type $t=t(c)$. An identically zero-valued type cannot violate EF1, so divide its valuation by $a_t$.</p><p>Put<br>$$
+a=|B_c|,
+\qquad
+r=|B_d|,
+\qquad
+e=\sum_{j\in B_d}b_{tj}.
+$$<br>Cohort $c$ likes every good in its own bundle, so its normalized utility is $a$. If $e=0$, there is no envy. Otherwise removing a liked good from $B_d$ leaves normalized value $e-1$. Failure of EF1 therefore implies<br>$$
+a&lt;e-1,
+\qquad\text{hence}\qquad
+r\geq e\geq a+2.
+$$</p><p>There exists a good $j\in B_d\setminus B_c$ liked by $t$, since $B_d$ contains at least $a+2$ such goods and $B_c$ contains only $a$ goods. Cohort $d$ also likes $j$, because every scarce good was assigned only to a liker.</p><p>Choose rational $\delta$ with<br>$$
+0&lt;\delta\leq\min(z_c,z_d).
+$$<br>Split mass $\delta$ from each cohort, adding $j$ to the first bundle and removing it from the second. Type masses and supplies remain unchanged; the recipient did not already own $j$; and all received goods remain liked.</p><p>The change in $\Phi$ is<br>$$
+\begin{aligned}
+\delta\left((a+1)^2+(r-1)^2-a^2-r^2\right)
+&amp;=2\delta(a-r+1)\\
+&amp;\leq-2\delta&lt;0,
+\end{aligned}
+$$<br>contradicting global minimality. Thus the scarce-good allocation is EF1.</p><p>Now process each $j\in H$. Give it to every liking cohort. Assign its remaining mass<br>$$
+\sigma_j-M_j\leq1-M_j
+$$<br>to disliking cohorts, using a fixed ordering and splitting a boundary cohort if necessary. This assigns the exact supply and creates at most one additional cohort per good.</p><p>Every person of type $t$ now receives every good in $H$ that $t$ likes. Thus, for any two final cohorts $c,d$,<br>$$
+v_{t(c)}(B_c\cap H)\geq v_{t(c)}(B_d\cap H).
+$$<br>Their projections onto $S$ already satisfy EF1. Adding the displayed inequality to that comparison preserves its removal witness, or preserves the comparison without removal when none was needed. The final allocation is EF1.</p><h3>2.6. Fractional Pareto optimality</h3><p>For any feasible fractional reallocation $x$, consider normalized aggregate utility<br>$$
+F(x)=\sum_c\frac{z_c}{a_{t(c)}}v_{t(c)}(x_c)
+=
+\sum_j\sum_{c:b_{t(c)j}=1}z_cx_{cj}.
+$$<br>For each good, the quantity assigned to likers is at most its supply $\sigma_j$ and at most their total mass $M_j$. Therefore<br>$$
+F(x)\leq\sum_j\min(\sigma_j,M_j).
+$$</p><p>Our allocation attains this bound good by good. Scarce goods are assigned entirely to likers, and every liker receives each surplus good.</p><p>Every coefficient $z_c/a_{t(c)}$ is positive. Hence a cohort-level Pareto improvement would strictly increase $F$, contradicting this upper bound. The allocation is fractionally Pareto optimal.</p><h3>2.7. Complexity</h3><p>The linear program has $O(\tau m)$ variables and constraints, with polynomial-size rational data. An optimal rational solution can be computed in polynomial time and has polynomial encoding length.</p><p>The decomposition uses at most $s+1$ cohorts per type. Its endpoints, interval lengths, and bundle tests require only polynomially many rational operations on numbers of polynomial bit length. Processing surplus goods adds at most $|H|$ cohorts.</p><p>Thus the complete construction runs in $\operatorname{poly}(m,\tau,L)$ time. It uses no population replication and no number of operations proportional to a common denominator. The support can further be reduced to at most $m+\tau$ cohorts by the next theorem.</p><h3>3. Conditional compact witnesses for general valuations</h3><p><b>Theorem 4.</b> If a general instance admits an EF1 and fractionally Pareto-optimal allocation, it admits one with at most $m+\tau$ supported cohorts and polynomial encoding length.</p><p><b>Proof.</b> Start with such an allocation and fix its support $C$. Consider the polytope of nonnegative masses on these cohorts satisfying all type-mass and supply equalities.</p><p>This polytope is nonempty. It is bounded because its masses sum to $1$. Choose an extreme point.</p><p>The equality matrix has $m+\tau$ rows. Its columns are zero-one vectors recording the cohort’s type and owned goods. At an extreme point, the columns corresponding to positive variables must be linearly independent: a nonzero dependence would permit sufficiently small perturbations in both directions while preserving nonnegativity and all equalities. Thus at most $m+\tau$ variables are positive.</p><p>The new support is a subset of the old support, so EF1 persists. Fractional Pareto optimality persists by restricting the certificate of Lemma 1.</p><p>For the encoding bound, let $r\leq m+\tau$ be the number of positive variables. Choose $r$ independent rows of their columns, obtaining a nonsingular zero-one matrix $A$. Let $Q$ be the product of the input denominators of the masses and supplies. Its bit length is $O(L)$.</p><p>Cramer’s rule gives denominators dividing $Q\det A$. Hadamard’s inequality yields<br>$$
+|\det A|\leq r^{r/2}.
+$$<br>For a numerator determinant, the replaced column has entries between $0$ and $Q$, hence Euclidean norm at most $Q\sqrt r$. The other columns have norms at most $\sqrt r$. Consequently, each numerator determinant has absolute value at most $Qr^{r/2}$.</p><p>Every mass therefore has bit length<br>$$
+O\!\left(L+r\log(r+1)\right).
+$$<br>Listing the bundles also takes polynomial space. $\square$</p><p>Applied to Theorem 3, this gives unconditional existence with at most $m+\tau$ cohorts <b>within the personalized binary class</b>.</p><h3>3.1. Existence belongs to $\mathrm{NP}$</h3><p>For a general yes-instance, Theorem 4 supplies a certificate with polynomially many cohorts and polynomial-size rational masses.</p><p>Check the type and supply equalities by exact arithmetic. Check EF1 through<br>$$
+v_{t(c)}(B_c)
+\geq
+v_{t(c)}(B_d)-\max_{j\in B_d}v_{t(c)j}
+$$<br>for every ordered pair, defining the maximum as $0$ for an empty bundle. Finally, check fractional Pareto optimality by Theorem 2.</p><p>All checks take polynomial time. Thus the <b>existence decision problem</b> belongs to $\mathrm{NP}$.</p><h3>3.2. An exact denominator-independent finite algorithm</h3><p>There are<br>$$
+N=\tau2^m
+$$<br>possible cohorts. Put $d=m+\tau$ and enumerate supports of size at most $d$.</p><p>For each candidate support:</p><ul><li>Check EF1.</li><li>Check fractional Pareto optimality by Theorem 2.</li><li>Maximize $\delta$ subject to the type and supply equalities and</li></ul><p>$$
+   z_c\geq\delta\geq0.
+   $$<br>Accept precisely when the optimum is positive.</p><p>The third test is equivalent to the existence of strictly positive feasible masses on that support. Theorem 4 guarantees completeness of the enumeration. Its running time is bounded by<br>$$
+(d+1)(\tau2^m)^d\operatorname{poly}(m,\tau,L).
+$$<br>This removes any replication factor involving the population denominator, but is exponential in the structural parameters.</p><h3>4. What remains open</h3><p>The new polynomial algorithm handles arbitrary liking patterns, arbitrary supported masses, arbitrary supplies, and type-dependent positive values $a_t$. Its proof relies on the fact that transferring a liked good preserves normalized aggregate welfare. With distinct positive values within a type, that argument no longer applies: the recipient and donor can value the transferred good differently.</p><p>The general compact-witness theorem remains conditional. Neither it nor the graph test proves existence for every general instance.</p><p>Population replication also does not directly transfer the ordinary discrete result: it introduces multiple copies of each good, while this task permits each individual to receive at most one copy. The ordinary discrete allocation model does not impose that additional restriction. [Garg–Murhekar, problem setting and allocation definitions](https://arxiv.org/html/2204.14229v2)</p><p>Accordingly, I have not established either a polynomial-time algorithm uniform in $k$ or an $\mathrm{NP}$-hardness reduction for the general support-and-supply problem.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Status and scope; Section 4: The requested general complexity classification remains unanswered: no algorithm polynomial uniformly in $m,\tau,k,L$ and no $\mathrm{NP}$-hardness reduction is established. The prover explicitly acknowledges this limitation.</li><li><b>minor</b> — Section 1.3, recurrence invariant: The recurrence maximizes edge-weight products over directed walks of length at most $n-1$, rather than necessarily over simple paths. On inputs with a cycle product greater than $1$, these maxima can differ. Clarify the terminology; the acceptance test and its proof remain valid.</li></ul>
+<div class="pre"><p>The output establishes substantial partial results, but it does <b>not resolve the general problem in USER_TASK</b>. The personalized binary algorithm, fractional Pareto optimality characterization, and conditional compact-witness theorem withstand verification. I found one minor terminology issue in the graph algorithm, with no effect on its correctness.</p><p>The appropriate overall classification is <b>partial</b>. This agrees with the prover’s own stated scope.</p><ul><li><b>Scope and parameter interpretation</b></li></ul><p>The requested conclusion concerns all supported nonnegative additive valuations and a runtime polynomial uniformly in $m,\tau,k,L$, or an $\mathrm{NP}$-hardness result.</p><p>Theorem 3 concerns the subclass<br>$$
+   v_{tj}\in\{0,a_t\},
+   $$<br>with a separate convention for identically zero-valued types. This genuinely covers the entire $k=1$ case: under USER_TASK’s definition, such a type has one value across all goods, which can be positive or zero. Personalized binary valuations with both zero and a positive value generally have $k=2$.</p><p>The prover does not confuse this subclass with all instances having $k=2$. Its restriction to at most one distinct <b>positive</b> value is explicit.</p><p><b>Major scope limitation:</b> neither a polynomial algorithm uniform in $k$ nor a hardness reduction is supplied. The output acknowledges this; it is an unanswered part of the assignment, rather than a false claim of completion.</p><ul><li><b>Lemma 1: the price certificate</b></li></ul><p><b>Sufficiency is correct.</b> For owned goods, the quantity change is nonpositive, so multiplying the owner inequality reverses its direction as required. For unowned goods, the quantity change is nonnegative, so the nonowner inequality gives the same displayed bound.</p><p>Summing uses exact supply feasibility of the original allocation and supply inequalities for the reallocation. A Pareto improvement makes the weighted utility change strictly positive because every $z_c\alpha_c$ is positive. Zero valuations and zero supplies cause no exception.</p><p><b>Necessity is correct.</b> The substitution $y_{cj}=z_cx_{cj}$ is valid because every supported cohort has positive mass. The box constraints become exactly<br>$$
+   0\leq y_{cj}\leq z_c.
+   $$<br>The original assignment is feasible, and these bounds make the feasible region bounded. Consequently, finite-dimensional linear-programming strong duality applies.</p><p>The dual signs and inequalities are correct. In particular, writing each utility constraint with a negative sign produces<br>$$
+   p_j+q_{cj}\geq(1+\lambda_c)v_{cj}.
+   $$<br>Complementary slackness gives equality for an owned good because its primal variable is positive. For an unowned good, the upper-bound constraint has strictly positive slack, forcing $q_{cj}=0$. These are exactly the two claimed certificate inequalities.</p><p>Setting $\alpha_c=1+\lambda_c$ guarantees strict positivity, including for zero-valued cohorts.</p><p><b>The mass-independence consequence is valid</b>, provided the replacement masses give a feasible allocation, as the prover explicitly requires.</p><ul><li><b>Theorem 2: eliminating prices</b></li></ul><p>Both necessary conditions follow correctly from Lemma 1. The zero-valued-owner obstruction is a genuine contradiction, and multiplying the positive-weight inequalities around a cycle gives the stated product bound.</p><p>The converse also stands:</p><ul><li>There are finitely many simple directed paths, and length-zero paths ensure every $\alpha_d$ is positive.</li><li>Removing a cycle whose product is at most $1$ cannot decrease a walk’s product.</li><li>Thus appending an edge to a maximizing simple path yields the required inequality after cycle deletion.</li><li>The prescribed maximum defining $p_j$ satisfies every nonowner inequality.</li><li>Positive-valued owners satisfy their inequalities through graph edges; zero-valued owners satisfy them through the first obstruction condition.</li></ul><p>Empty owner or nonowner sets are handled correctly. In particular, a good with no owners imposes only nonowner lower bounds on its price, while a good with no nonowners can receive price zero.</p><p>No missing substantive hypothesis was found.</p><ul><li><b>Section 1.3: exact verification algorithm</b></li></ul><p>The acceptance criterion is correct. If all cycles have product at most $1$, cycle deletion reduces any relevant walk to a simple path of length at most $n-1$. Conversely, the accepted edge inequalities themselves exclude every cycle with product greater than $1$.</p><p>The edge count is at most $mn^2$. Products retained after the stated rounds contain at most $n-1$ input ratios, so their rational encoding lengths are polynomial. The final edge checks add at most one ratio to a product, preserving that bound. The case $n=1$ requires no rounds and is handled correctly.</p><p><b>Minor terminology issue:</b> the recurrence maximizes products over directed <b>walks</b> of bounded length. If “paths” means paths without repeated vertices, the sentence claiming it maximizes over paths is inaccurate on rejected instances.</p><p>For example, take three cohorts with bundles<br>$$
+   B_1=\{1\},\qquad B_2=\{2\},\qquad B_3=\varnothing,
+   $$<br>valuations<br>$$
+   v_1=(1,2),\qquad v_2=(2,1),\qquad v_3=(0,0),
+   $$<br>masses all equal to $1/3$, and supplies both equal to $1/3$. The graph has the two edges between the first two cohorts, each of weight $2$. After two rounds, the first cohort’s value is $4$, attained by a repeated-vertex walk; the maximum over simple paths ending there is $2$.</p><p>This does not invalidate the test. <b>Minimum clarification:</b> use “walks” for the recurrence’s invariant, reserving “simple paths” for the cycle-deletion argument.</p><ul><li><b>Sections 2.1–2.2: scarce goods and the linear program</b></li></ul><p>The partition correctly handles zero supplies and the equality case $\sigma_j=M_j$. Every $M_j$ is positive by USER_TASK’s assumption.</p><p>Linear-program feasibility is established: each scarce good can independently be assigned within liking-type capacities, and each type’s total assigned quantity is at most $s\mu_t$, its total slot capacity.</p><p>The increasing slot costs force earlier slots to fill before later slots. The displayed objective value is correct:<br>$$
+   \sum_{\ell=1}^{q_t}(2\ell-1)=q_t^2.
+   $$<br>The partially filled next slot contributes $(2q_t+1)\mu_t\varepsilon_t$. The boundary case $u_t=s$ is explicitly handled.</p><ul><li><b>Section 2.3: integral-bundle decomposition</b></li></ul><p>The construction respects the one-copy-per-person restriction. Each half-open interval has length at most $1$ and therefore contains at most one point of $u+\mathbb Z$.</p><p>The marginal inclusion measure of good $j_i$ is $x_i$, including when $x_i=0$ or $x_i=1$. The stated bundle cardinalities are also correct for $\varepsilon_t=0$ and $u_t=s$.</p><p>Fractional endpoints give at most $s+1$ positive-length intervals. Rational midpoints avoid endpoint ambiguity. Discarding the finitely many partition endpoints changes no mass or marginal.</p><p>The reconstructed quantities and squared-cardinality objective match the linear program exactly. Polynomial encoding length is preserved by the rational operations used.</p><ul><li><b>Sections 2.4–2.5: global minimality and EF1</b></li></ul><p>The mapping from any eligible scarce-good allocation to $y_{tj}$ and $r_{t\ell}$ satisfies all linear-program constraints. The identity expressing squared cardinality as the sum of odd slot costs is correct. Thus the constructed allocation globally minimizes $\Phi$ over precisely the eligible allocations used in the exchange argument.</p><p>The EF1 contradiction is valid. A violation implies<br>$$
+   e\geq a+2,\qquad r\geq e,
+   $$<br>because these quantities are integers. Therefore a liked good exists in $B_d\setminus B_c$. Both affected recipients like that good, and splitting positive rational mass preserves type masses, supplies, and eligibility.</p><p>Rechecking the objective change gives<br>$$
+   2\delta(a-r+1)\leq-2\delta&lt;0.
+   $$<br>This contradicts the established minimum. A cohort cannot violate EF1 against itself, so selecting two affected cohorts introduces no self-comparison problem.</p><p>The surplus extension is also correct. The required residual mass lies within the total disliking mass. A prefix assignment in a fixed ordering needs at most one boundary split per good.</p><p>Every final recipient receives all surplus goods that its own type likes. Hence its surplus contribution weakly dominates any other cohort’s surplus contribution under its valuation. Adding this comparison preserves the scarce-good EF1 witness. The case $s=0$ is covered by the initial empty bundles.</p><ul><li><b>Sections 2.6–2.7: fractional Pareto optimality and runtime</b></li></ul><p>The aggregate normalized utility bound is correct:<br>$$
+   F(x)\leq\sum_j\min(\sigma_j,M_j).
+   $$<br>The allocation attains it good by good. All utility weights are positive, including under the convention for zero-valued types. Any cohort-level Pareto improvement would therefore contradict the bound.</p><p>The linear program has polynomial size, rational data, a nonempty bounded feasible region, and a finite optimum. Standard exact polynomial-time rational linear programming applies and provides a polynomial-size optimal solution. The subsequent decomposition and surplus processing also have polynomial size and bit complexity.</p><p>Theorem 3 establishes the claimed denominator-independent polynomial algorithm for its stated subclass.</p><ul><li><b>Theorem 4: conditional compact witnesses</b></li></ul><p>The mass polytope is nonempty and bounded. Linear independence of its positive columns at an extreme point gives at most $m+\tau$ positive entries.</p><p>EF1 survives support deletion. Fractional Pareto optimality survives because Lemma 1’s certificate restricts to the retained cohorts and the new masses remain feasible.</p><p>The encoding calculation is correct. The common denominator product has bit length $O(L)$; Cramer’s rule and the stated Hadamard bounds give mass bit length<br>$$
+   O\!\left(L+r\log(r+1)\right).
+   $$<br>The theorem remains conditional on an existing qualifying allocation. It supplies no unconditional existence result for general valuations.</p><ul><li><b>Sections 3.1–3.2 and the concluding scope statement</b></li></ul><p>The existence decision problem belongs to $\mathrm{NP}$: the compact certificate has polynomial length, and feasibility, EF1, and fractional Pareto optimality can all be checked in polynomial time. The empty-bundle convention in the EF1 test is correct.</p><p>The finite enumeration is complete by Theorem 4. For a feasible candidate support, a positive optimum for $\delta$ is equivalent to strictly positive masses on every listed cohort. The stated support-count bound and exponential runtime bound are valid.</p><p>These results establish neither polynomial-time general search nor hardness.</p><p>The replication caveat is supported by the cited discrete model, whose bundles are subsets of individually indexed items. Replicated copies would be separate items, so its allocation definition does not enforce the original-good restriction. [Garg–Murhekar, allocation definitions](https://arxiv.org/html/2204.14229v2)</p><p><b>Actionable feedback:</b> clarify the walk/path terminology in Section 1.3. The stated partial results require no substantive repair. Completing USER_TASK requires an additional general algorithm or hardness argument; the existing verification and compactness results do not supply one.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

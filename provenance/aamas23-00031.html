@@ -1,0 +1,305 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Efficient Nearly-Fair Division with Capacity Constraints — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Efficient Nearly-Fair Division with Capacity Constraints <span style="font-weight:normal;color:#8a7350">(aamas23-00031)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.14 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Algorithm 1 always returns an allocation that is 𝑤-maximal with positive weights (and thus PO), and satisfies the capacity constraints. The allocation is EF[1,1], and EF1 for a same-sign instance.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finitely many complete two-agent team types \(q\) with rational masses \(\rho_q\), rational item-type supplies \(\nu_o\), category capacities, and additive utilities \(u_{q,i}(o)\), choose masses \(z_{q,P}\) over whole pair configurations \(P=(B_1,B_2)\) such that \(\sum_P z_{q,P}=\rho_q\) and \(\sum_{q,P}z_{q,P}(n_o(B_1)+n_o(B_2))=\nu_o\) for every item type \(o\). Require every used configuration to be \(\mathrm{EF[1,1]}\), or EF1 on same-sign instances, and output positive weights \(\lambda_{q,i}\) certifying that \(z\) maximizes total weighted utility over all feasible configuration-mass assignments, or report that no such assignment exists.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of \(\tau\) ordered two-agent team types \(q\) with positive binary-rational masses \(\rho_q\), normalized by \(\sum_q\rho_q=1\). Here \(\tau\) is the support size, not the number of possible types; each type specifies both agents’ additive rational utilities \(u_{q,i}(o)\), which may be positive, negative, or zero.<br>There are \(m\geq1\) item types with positive binary-rational supplies \(\nu_o\), partitioned into \(k\) nonempty categories \(C_c\). Each category has a positive binary-encoded integer capacity \(s_c\), common to all agents, with \(\sum_{o\in C_c}\nu_o\leq2s_c\). Supplies are measured per unit mass of teams.<br>A configuration \(P=(B_1,B_2)\) consists of two finite multisets of whole item copies, allowing repeated item types, with \(\sum_{o\in C_c}n_o(B_i)\leq s_c\) for each \(i,c\). Counts are encoded in binary; configurations are implicit, and no inventory is prescribed separately for a team.<br>For type \(q\), a configuration is \(\mathrm{EF[1,1]}\) if, for each ordered pair \(i\neq j\), there are submultisets \(T\subseteq B_i\), \(G\subseteq B_j\), each of cardinality at most one, satisfying \(u_{q,i}(B_i\setminus T)\geq u_{q,i}(B_j\setminus G)\); if both are nonempty, their copies must belong to the same category. Empty removals are permitted.<br>An instance is same-sign if, for every \(q,i,c\), all \(u_{q,i}(o)\) in \(C_c\) are nonnegative or all are nonpositive. On these instances require mixed-goods-and-chores EF1 instead.<br>Find nonnegative rational configuration masses \(z_{q,P}\), represented by their nonzero entries, with \(\sum_Pz_{q,P}=\rho_q\) and \(\sum_{q,P}z_{q,P}(n_o(B_1)+n_o(B_2))=\nu_o\) for every \(o\), such that every used configuration satisfies the required fairness condition.<br>Also output rational weights \(\lambda_{q,i}&gt;0\), normalized by \(\sum_{q,i}\lambda_{q,i}=1\), for which \(z\) maximizes \(\sum_{q,P}z_{q,P}\sum_{i=1}^{2}\lambda_{q,i}u_{q,i}(B_i)\) over all assignments satisfying the mass, supply, and capacity constraints, including assignments using unfair configurations; report nonexistence if no such pair \((z,\lambda)\) exists.<br>Is this search problem solvable in polynomial time, or is it NP-hard? State running times in \(m,\tau,k,L\), where \(L\) is the total binary input length, including capacities.<br>For a finite inventory divided between two agents, a polynomial-time algorithm finds a capacity-feasible \(\mathrm{EF[1,1]}\) allocation maximizing utility for positive agent weights, with EF1 on same-sign instances ([Shoshan, Hazon, and Segal-Halevi](https://arxiv.org/pdf/2205.07779)).<br>No result settling this exact configuration-mass problem was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized team masses to sum to one and interpreted supplies per unit team mass.</li><li>Interpreted a complete team type as an ordered pair of utility profiles, with no prescribed team inventory; configurations use integer multisets and may contain repeated item types.</li><li>Specified positive supplies, nonempty categories, and common positive integer capacities; translated the discrete capacity feasibility condition into the aggregate bound that category supply is at most twice its capacity.</li><li>Did not impose the discrete bookkeeping upper bound on capacity by inventory size, since this model has no fixed inventory per team; capacities and configuration counts are encoded in binary.</li><li>Made empty fairness removals explicit and applied the same-category restriction only when both removals are nonempty, consistently with the definition and its EF1 equivalence.</li><li>Specified rational output masses and strictly positive rational weights, normalized globally; the efficiency comparison includes unfair feasible assignments.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial resolution</h3><p>The general problem with freely chosen positive weights remains unclassified. I prove a new polynomial-time case:</p><blockquote><b>If $\tau=1$ and every supply $\nu_o$ is an integer, the requested pair always exists and can be found in $O(m^4)\operatorname{poly}(L)$ time, even with signed utilities and binary-encoded capacities.</b></blockquote><p>The algorithm returns a single configuration. Its running time depends on the number of item types, rather than the possibly enormous number of item copies.</p><p>I also establish polynomial-size certificates and an exact exponential algorithm for the general problem, repairing the rational-point qualification identified in the verifier’s report.</p><h3>1. Definitions and direct fairness tests</h3><p>Write<br>$$
+n_{i,o}(P)=n_o(B_i),
+\qquad
+a_o(P)=n_{1,o}(P)+n_{2,o}(P).
+$$</p><p>An assignment is <b>feasible</b> if it satisfies the prescribed type masses and supplies and uses capacity-feasible configurations. It is <b>fair</b> if every positively used configuration satisfies the fairness condition required by the instance.</p><p>Fix a type $q$, a configuration $P$, and an ordered pair $i\neq j$. Define<br>$$
+D_{q,i}(P)=u_{q,i}(B_i)-u_{q,i}(B_j).
+$$<br>For each category $c$, let<br>$$
+A_{q,i,c}(P)
+=
+\max\left(
+\{0\}\cup
+\{-u_{q,i}(o):o\in C_c,\ n_{i,o}(P)&gt;0\}
+\right),
+$$<br>and<br>$$
+G_{q,i,c}(P)
+=
+\max\left(
+\{0\}\cup
+\{u_{q,i}(o):o\in C_c,\ n_{j,o}(P)&gt;0\}
+\right).
+$$</p><p>Removing an own item changes the utility difference by the negative of its utility; removing an item from the other bundle changes it by its utility. The included zero corresponds to an empty removal. Thus $\mathrm{EF[1,1]}$ for this ordered pair is equivalent to<br>$$
+D_{q,i}(P)
++
+\max_c\bigl(A_{q,i,c}(P)+G_{q,i,c}(P)\bigr)
+\geq 0.
+$$</p><p>Mixed-goods-and-chores EF1 is equivalent to<br>$$
+D_{q,i}(P)
++
+\max\left\{
+\max_c A_{q,i,c}(P),
+\max_c G_{q,i,c}(P)
+\right\}
+\geq 0.
+$$</p><p>On a same-sign instance, each category has $A_{q,i,c}(P)=0$ or $G_{q,i,c}(P)=0$: nonnegative utilities preclude a beneficial own removal, and nonpositive utilities preclude a beneficial other-bundle removal. Consequently, the two displayed tests coincide.</p><p>These formulas give polynomial-time fairness tests with binary counts.</p><h3>2. Unrestricted optimization and a necessary local property</h3><h3>2.1 A compact linear program</h3><p>For fixed positive rational weights $\lambda$, define expected counts<br>$$
+x_{q,i,o}=\sum_P z_{q,P}n_{i,o}(P).
+$$</p><p>Consider the linear program<br>$$
+\max\ \sum_{q,i,o}\lambda_{q,i}u_{q,i}(o)x_{q,i,o}
+$$<br>subject to<br>$$
+\sum_{q,i}x_{q,i,o}=\nu_o
+\quad\text{for every }o,
+$$<br>$$
+\sum_{o\in C_c}x_{q,i,o}\leq \rho_qs_c
+\quad\text{for every }q,i,c,
+$$<br>and<br>$$
+x_{q,i,o}\geq 0.
+$$</p><p><b>Proposition 1.</b> The rational feasible points of this linear program are exactly the expected-count vectors of feasible rational configuration assignments.</p><p><b>Proof.</b> An assignment gives a feasible vector by summing its supply and capacity equations.</p><p>Conversely, let $x$ be a rational feasible vector. For each $q$, put<br>$$
+v_{q,i,o}=\frac{x_{q,i,o}}{\rho_q}.
+$$<br>For a fixed agent-category block, its vector satisfies<br>$$
+v_o\geq 0,
+\qquad
+\sum_{o\in C_c}v_o\leq s_c.
+$$</p><p>Represent this vector by a distribution that chooses $s_ce_o$ with probability $v_o/s_c$ for each $o\in C_c$, and chooses the zero vector with the remaining probability. Every chosen vector has integer counts and respects capacity.</p><p>Couple the $2k$ block distributions using a common parameter in $[0,1]$: place each block’s choices on consecutive intervals having the prescribed probabilities. The union of all interval endpoints partitions $[0,1]$ into intervals on which every block choice is constant. Each interval therefore specifies one configuration.</p><p>There are at most $2m$ internal endpoints, hence at most $2m+1$ configurations. Their probabilities and counts are rationally representable in polynomial space. Multiplying their probabilities by $\rho_q$ gives the desired configuration masses. $\square$</p><p>The qualification “rational feasible points” is essential: irrational linear-programming points cannot be represented by finitely many rational masses.</p><p>The linear program is nonempty because<br>$$
+x_{q,i,o}=\frac{\rho_q\nu_o}{2}
+$$<br>is feasible. It is bounded because<br>$$
+x_{q,i,o}\leq \rho_qs_{c(o)}.
+$$</p><p>Standard rational linear programming therefore supplies a rational optimum in<br>$$
+\operatorname{poly}(m,\tau,k,L+\ell_\lambda)
+$$<br>time, where $\ell_\lambda$ is the encoding length of the weights. Proposition 1 shows that its value is exactly the unrestricted assignment optimum.</p><h3>2.2 Every used configuration is locally optimal</h3><p><b>Proposition 2.</b> Suppose $z$ is globally optimal for positive weights $\lambda$. Every positively used configuration of type $q$ maximizes<br>$$
+\lambda_{q,1}u_{q,1}(B_1)+\lambda_{q,2}u_{q,2}(B_2)
+$$<br>among capacity-feasible divisions of its own inventory.</p><p>In particular,<br>$$
+\lambda_{q,1}D_{q,1}(P)
++
+\lambda_{q,2}D_{q,2}(P)
+\geq 0
+$$<br>for every positively used configuration $P$.</p><p><b>Proof.</b> Replacing a positive-mass configuration by another division of the same inventory preserves its type mass and every supply. An improvement of its weighted utility would therefore improve the global objective.</p><p>Swapping its two bundles is capacity-feasible because capacities are common to the agents. The difference between the current weighted utility and that of the swapped configuration is exactly the displayed expression. Local optimality makes it nonnegative. $\square$</p><p>Thus both agents cannot strictly envy each other in a used configuration. Society-wide optimality additionally permits inventories to move between configurations, so this local property alone does not settle the task.</p><h3>3. A polynomial algorithm for one type and integer supplies</h3><p>Assume throughout this section that $\tau=1$ and every $\nu_o$ is a positive integer. Since type masses sum to one, $\rho_1=1$. Suppress the type index.</p><p>The finite-inventory theorem guarantees fairness together with optimality for <b>some</b> positive weights; it does not guarantee fairness for arbitrary prescribed weights. This is the quantifier in [Shoshan, Hazon, and Segal-Halevi, Theorem 4.14](https://arxiv.org/pdf/2205.07779). The following argument proves that, in the present integer-supply case, its weight-sweep approach can be implemented without expanding binary multiplicities.</p><h3>3.1 Completing each category with dummy copies</h3><p>For category $c$, define<br>$$
+N_c=\sum_{o\in C_c}\nu_o.
+$$<br>Add one dummy type with zero utility for both agents and multiplicity<br>$$
+2s_c-N_c.
+$$<br>This is a nonnegative integer by the input hypothesis.</p><p>The augmented inventory now contains exactly $2s_c$ copies in category $c$. Give each agent exactly $s_c$ augmented copies from that category. Deleting dummy copies produces an original capacity-feasible allocation.</p><p>Dummy copies do not affect utilities or either fairness test: removing a dummy has the same utility effect as an empty removal.</p><p>There are at most<br>$$
+M=m+k\leq 2m
+$$<br>augmented types. All multiplicities remain binary encoded.</p><h3>3.2 Weighted optimization by sorting</h3><p>Use unnormalized positive weights $(r,1)$, where $r&gt;0$. For an augmented type $o$, define<br>$$
+\delta_o(r)=r\,u_1(o)-u_2(o).
+$$</p><p>For a fixed category, the weighted utility equals a constant plus<br>$$
+\sum_{o\in C_c}\delta_o(r)n_{1,o}.
+$$<br>Hence an optimal augmented allocation gives agent 1 the $s_c$ copies with largest $\delta_o(r)$ and gives agent 2 the remaining copies. This allocation is found by sorting types and consuming their binary multiplicities in order.</p><p>This greedy allocation is optimal even among fractional divisions of the fixed inventory. To verify this, choose a cutoff value $\alpha$ so that the greedy count vector $n_1$ fills every type with score greater than $\alpha$, uses no type with score less than $\alpha$, and possibly divides types with score $\alpha$. For every fractional feasible vector $y_1$,<br>$$
+\sum_o n_{1,o}=\sum_o y_{1,o}=s_c.
+$$<br>Therefore<br>$$
+\sum_o\delta_o(r)(n_{1,o}-y_{1,o})
+=
+\sum_o(\delta_o(r)-\alpha)(n_{1,o}-y_{1,o})
+\geq 0.
+$$<br>Each summand is nonnegative: above the cutoff, $n_{1,o}$ is the full multiplicity; below it, $n_{1,o}=0$; at the cutoff, the coefficient vanishes.</p><p>This also certifies optimality against assignments whose configurations have different inventories. Indeed, any feasible assignment has rational expected counts $x_{i,o}$ satisfying<br>$$
+x_{1,o}+x_{2,o}=\nu_o,
+\qquad
+\sum_{o\in C_c}x_{i,o}\leq s_c.
+$$<br>Complete its expected counts with<br>$$
+x_{i,\mathrm{dummy}(c)}
+=
+s_c-\sum_{o\in C_c}x_{i,o}.
+$$<br>These dummy counts are nonnegative and sum to $2s_c-N_c$. Thus the expected vector is a fractional division of the augmented fixed inventory. The greedy bound applies to it.</p><p>Consequently, every augmented greedy optimum, and every tied optimum constructed below, is globally optimal for the original configuration-mass problem.</p><h3>3.3 Only polynomially many weight events occur</h3><p>Two score lines in the same category can change order only at<br>$$
+r=
+\frac{u_2(a)-u_2(b)}{u_1(a)-u_1(b)},
+$$<br>when the denominator is nonzero and the ratio is positive.</p><p>There are at most $O(M^2)$ distinct positive crossing values. They have polynomial encoding length and can be sorted exactly.</p><p>Use a fixed order of type identifiers to break persistent ties.</p><p>For $r$ above every positive crossing, the ordering first prioritizes larger $u_1$. Thus agent 1 receives the top $s_c$ copies according to its own utility in every category. Pairing these top copies with the remaining copies shows<br>$$
+u_1(B_1)\geq u_1(B_2).
+$$<br>The initial allocation is envy-free for agent 1.</p><p>For $r$ below every positive crossing, agent 1 receives the bottom $s_c$ copies according to $u_2$. Agent 2 therefore receives its top copies and is envy-free.</p><p>If there are no positive crossings, the greedy allocation is constant for all $r&gt;0$ and has both endpoint properties.</p><h3>3.4 Connecting consecutive greedy allocations</h3><p>Consider a crossing value $r^\ast$. Let $n_1^+$ be the canonical greedy count vector immediately above it, and let $n_1^-$ be the vector immediately below it.</p><p>In each category, changes occur only within the score group that is tied at the selection cutoff at $r^\ast$. All higher groups remain fully selected, and all lower groups remain unselected. The number selected from the cutoff group is unchanged.</p><p>Therefore the transition can be performed by repeatedly choosing, in one category,</p><ul><li>a type $a$ whose current agent-1 count exceeds its target count; and</li><li>a type $b$ whose current agent-1 count is below its target count,</li></ul><p>and exchanging a copy of $a$ from agent 1 with a copy of $b$ from agent 2.</p><p>These types satisfy<br>$$
+\delta_a(r^\ast)=\delta_b(r^\ast).
+$$<br>Every intermediate allocation remains optimal at weights $(r^\ast,1)$.</p><p>Moreover, put<br>$$
+\Delta_1=u_1(a)-u_1(b),
+\qquad
+\Delta_2=u_2(a)-u_2(b).
+$$<br>Above $r^\ast$, the greedy ordering puts $a$ no later than $b$: some $a$ is selected while some $b$ remains unselected. Hence<br>$$
+\Delta_1\geq 0.
+$$<br>The tie equality gives<br>$$
+\Delta_2=r^\ast\Delta_1\geq 0.
+$$</p><p>Such an exchange changes the utility differences by<br>$$
+D_1^{\mathrm{new}}=D_1^{\mathrm{old}}-2\Delta_1,
+\qquad
+D_2^{\mathrm{new}}=D_2^{\mathrm{old}}+2\Delta_2.
+$$</p><h3>3.5 The first allocation fair for agent 2 is fair for both</h3><p>For an augmented allocation $A$, abbreviate its $\mathrm{EF[1,1]}$ correction by<br>$$
+R_i(A)=\max_c\bigl(A_{i,c}(A)+G_{i,c}(A)\bigr).
+$$</p><p><b>Lemma 3.</b> Consider one tied exchange at positive weights $(r^\ast,1)$, with $\Delta_2=r^\ast\Delta_1$ as above. If the old allocation is not fair for agent 2, then the new allocation is fair for agent 1.</p><p><b>Proof.</b> In the old allocation, agent 2 owns a copy of $b$ and the other agent owns a copy of $a$, in the same category. Therefore<br>$$
+R_2(A^{\mathrm{old}})
+\geq
+\max\{0,-u_2(b)\}+\max\{0,u_2(a)\}
+\geq \Delta_2.
+$$<br>Failure of fairness for agent 2 implies<br>$$
+D_2^{\mathrm{old}}&lt;-\Delta_2.
+$$</p><p>Suppose, for contradiction, that the new allocation fails fairness for agent 1. In that allocation, agent 1 owns $b$ and agent 2 owns $a$. Hence<br>$$
+R_1(A^{\mathrm{new}})
+\geq
+\max\{0,-u_1(b)\}+\max\{0,u_1(a)\}
+\geq \Delta_1,
+$$<br>and thus<br>$$
+D_1^{\mathrm{new}}&lt;-\Delta_1.
+$$<br>Using the exchange equation gives<br>$$
+D_1^{\mathrm{old}}
+=
+D_1^{\mathrm{new}}+2\Delta_1
+&lt;
+\Delta_1.
+$$<br>It follows that<br>$$
+r^\ast D_1^{\mathrm{old}}+D_2^{\mathrm{old}}
+&lt;
+r^\ast\Delta_1-\Delta_2
+=
+0.
+$$<br>This contradicts weighted optimality of the old allocation: swapping its complete bundles is feasible, so Proposition 2 makes this expression nonnegative. $\square$</p><p>Start with the initial greedy allocation. If agent 2 is already fair, both agents are fair because agent 1 is envy-free.</p><p>Otherwise, follow the tied exchanges while decreasing $r$. The final greedy allocation is envy-free for agent 2, so there is a first exchange after which agent 2 is fair. Immediately before that exchange, agent 2 is unfair. Lemma 3 makes the resulting allocation fair for agent 1 as well.</p><p>On same-sign instances, Section 1 shows that the resulting $\mathrm{EF[1,1]}$ allocation is EF1.</p><h3>3.6 Processing huge multiplicities in batches</h3><p>It remains to avoid performing exponentially many single-copy exchanges.</p><p>For a chosen surplus type $a$ and deficit type $b$, exchange up to<br>$$
+t=
+\min\left\{
+n_{1,a}-n_{1,a}^{-},
+\ n_{1,b}^{-}-n_{1,b}
+\right\}
+$$<br>copies. This positive integer is binary encoded.</p><p>After $h$ exchanges,<br>$$
+D_2(h)=D_2(0)+2h\Delta_2.
+$$</p><p>For every integer<br>$$
+1\leq h\leq t-1,
+$$<br>the set of types present in each bundle is constant. The increasing counts are positive throughout this range, and the decreasing counts cannot reach zero before its endpoint. Consequently, $R_2(h)$ is a constant $R_2^\circ$ on this range.</p><p>For $t\geq 2$, compute $R_2^\circ$ at $h=1$. If $\Delta_2&gt;0$, the least interior integer satisfying fairness is<br>$$
+h=
+\max\left\{
+1,\
+\left\lceil
+\frac{-R_2^\circ-D_2(0)}{2\Delta_2}
+\right\rceil
+\right\},
+$$<br>provided it does not exceed $t-1$. If $\Delta_2=0$, either all interior integers satisfy fairness or none do. Check the endpoint $h=t$ separately, because a type may disappear there.</p><p>Thus the first fair allocation in a batch is found using a constant number of fairness evaluations and exact rational calculations. If no allocation in the batch is fair for agent 2, perform the whole batch and continue.</p><p>Each completed batch brings at least one type to its target count. Counts already at their targets are never changed again during that transition. There are therefore at most $O(M)$ batches per crossing value.</p><p>There are $O(M^2)$ crossing values, and a fairness evaluation takes $O(M)$ rational arithmetic operations. Including sorting and construction of the consecutive greedy vectors, the algorithm uses<br>$$
+O(M^4)\operatorname{poly}(L)
+=
+O(m^4)\operatorname{poly}(L)
+$$<br>bit operations. Counts, crossing ratios, and intermediate utility sums all have polynomial encoding length.</p><p>Delete dummy copies from the returned allocation $P$. Output<br>$$
+z_{1,P}=1,
+\qquad
+\lambda_{1,1}=\frac{r}{1+r},
+\qquad
+\lambda_{1,2}=\frac{1}{1+r},
+$$<br>where $r$ is the supporting ratio at which the algorithm stops.</p><p>This proves the announced polynomial-time result.</p><h3>4. Polynomial certificates for the general problem</h3><h3>4.1 A compact optimality certificate</h3><p>The dual of the compact linear program uses unrestricted item prices $p_o$ and nonnegative variables $t_{q,i,c}$, with constraints<br>$$
+p_o+t_{q,i,c(o)}
+\geq
+\lambda_{q,i}u_{q,i}(o).
+$$<br>Its objective is<br>$$
+\sum_o p_o\nu_o
++
+\sum_{q,i,c}\rho_qs_ct_{q,i,c}.
+$$</p><p>For a capacity-feasible configuration, define its gap<br>$$
+g_{q,P}
+=
+\sum_{i,c}s_ct_{q,i,c}
+-
+\sum_{i,o}
+\bigl(\lambda_{q,i}u_{q,i}(o)-p_o\bigr)n_{i,o}(P).
+$$<br>Equivalently,<br>$$
+g_{q,P}
+=
+\sum_{i,c}
+t_{q,i,c}
+\left(s_c-\sum_{o\in C_c}n_{i,o}(P)\right)
++
+\sum_{i,o}
+\bigl(p_o+t_{q,i,c(o)}-\lambda_{q,i}u_{q,i}(o)\bigr)
+n_{i,o}(P).
+$$<br>Every term is nonnegative, so $g_{q,P}\geq 0$.</p><p>For any feasible assignment,<br>$$
+\text{dual objective}-\text{weighted utility}
+=
+\sum_{q,P}z_{q,P}g_{q,P}.
+$$<br>Thus dual feasibility and zero gaps on all positively used configurations certify unrestricted optimality.</p><p>Conversely, the compact primal is nonempty and bounded. Rational linear-programming strong duality supplies a rational optimal dual. Equality of objectives then forces every positive-mass gap to vanish.</p><h3>4.2 Small supports and small weights</h3><p><b>Proposition 4.</b> Every yes-instance has a requested pair using at most $m+\tau$ configurations and having polynomial total encoding length.</p><p><b>Proof.</b> Start with a requested pair and an optimal dual certificate. Restrict to its positively used configurations. They are fair and have zero gaps.</p><p>Their mass equations form<br>$$
+Az=b,
+\qquad z\geq 0,
+$$<br>with $m+\tau$ rows. This polytope is nonempty and bounded, since every mass is bounded by its type mass. A basic feasible solution has at most<br>$$
+\operatorname{rank}(A)\leq m+\tau
+$$<br>positive entries. Keeping these columns preserves fairness and optimality.</p><p>Fix the retained support $S$. To obtain small weights and dual variables, maximize $\epsilon$ subject to<br>$$
+\epsilon\geq 0,
+\qquad
+\lambda_{q,i}\geq\epsilon,
+\qquad
+\sum_{q,i}\lambda_{q,i}=1,
+$$<br>the dual inequalities, and<br>$$
+g_{q,P}=0
+\quad\text{for every }(q,P)\in S.
+$$</p><p>The original positive weights make this system feasible with positive $\epsilon$. Normalization bounds its objective by $1/(2\tau)$. Its coefficients have polynomial encoding length: each configuration count is at most its binary-encoded category capacity.</p><p>The standard rational linear-programming theorem states that a feasible rational linear program with finite optimal value has a polynomial-size rational optimum and can be solved in polynomial time. Applying it here gives positive normalized weights and a polynomial-size dual certificate. The bounded mass system likewise has a polynomial-size rational basic solution. $\square$</p><p>Therefore the decision version of the requested free-weight problem belongs to $\mathrm{NP}$. A verifier checks capacities, fairness, masses, supplies, positive normalized weights, dual feasibility, and zero gaps.</p><h3>5. An exact algorithm for arbitrary instances</h3><p>Put $d_c=|C_c|$. The number of capacity-feasible configurations is<br>$$
+N=
+\prod_{c=1}^k
+\binom{s_c+d_c}{d_c}^{\,2}.
+$$<br>For one agent and category, the binomial coefficient counts nonnegative integer vectors whose sum is at most $s_c$; the square accounts for both agents.</p><p>Enumerate the fair labeled configurations $(q,P)$. For every support $S$ of size at most $m+\tau$, solve:</p><ul><li>Its rational mass-and-supply feasibility system.</li><li>The weight-and-dual linear program from Proposition 4.</li></ul><p>Accept the support exactly when the first system is feasible and the second has positive optimum $\epsilon$. Zero masses may be discarded. Zero gaps certify optimality for any feasible masses on the retained columns.</p><p>Proposition 4 proves completeness of this enumeration. Its running time is at most<br>$$
+(\tau N+1)^{m+\tau}
+\operatorname{poly}(m,\tau,k,L).
+$$<br>Since<br>$$
+N\leq
+\prod_c(s_c+1)^{2d_c},
+$$<br>this is<br>$$
+2^{O\left((m+\tau)
+\left(\sum_c d_c\log(s_c+1)+\log(\tau+1)\right)\right)}
+\operatorname{poly}(m,\tau,k,L),
+$$<br>and in particular<br>$$
+2^{O((m+\tau)(mL+\log(\tau+1)))}
+\operatorname{poly}(m,\tau,k,L).
+$$</p><p>The algorithm produces a requested pair or correctly reports nonexistence.</p><h3>6. A polynomial class with arbitrary rational supplies</h3><p>A second tractable class allows arbitrary $\tau$ and rational supplies.</p><p><b>Proposition 5.</b> Suppose that for every type $q$ there is a positive rational number $\alpha_q$ such that<br>$$
+u_{q,2}(o)=\alpha_q u_{q,1}(o)
+\quad\text{for every }o.
+$$<br>Then the search problem is solvable in<br>$$
+\operatorname{poly}(m,\tau,k,L)
+$$<br>time.</p><p><b>Proof.</b> Choose weights proportional to<br>$$
+\lambda_{q,1}=\alpha_q,
+\qquad
+\lambda_{q,2}=1,
+$$<br>then normalize all weights together. The two agents of each type now have identical weighted utility coefficients.</p><p>Solve the compact unrestricted linear program. Symmetrize its rational optimal solution by setting<br>$$
+\bar x_{q,1,o}
+=
+\bar x_{q,2,o}
+=
+\frac{x_{q,1,o}+x_{q,2,o}}{2}.
+$$<br>Supplies are preserved. Each capacity inequality is preserved by averaging its two feasible left-hand sides. The objective is preserved because the corresponding weighted coefficients are equal.</p><p>For each $q$, decompose the rational common bundle vector<br>$$
+v_{q,o}=\frac{\bar x_{q,1,o}}{\rho_q}
+$$<br>using the block construction in Proposition 1, now with only $k$ blocks. Use each resulting integer bundle twice, as $P=(B,B)$.</p><p>This realizes the optimal expected counts. Identical bundles are exactly envy-free for both agents, including with signed utilities. There are at most $m+1$ configurations per type.</p><p>The proportionality condition can be checked in polynomial time by taking a ratio at a nonzero utility coordinate and verifying all coordinates; if both utility vectors are zero, take $\alpha_q=1$. All subsequent steps use polynomial-time rational arithmetic and linear programming. $\square$</p><h3>7. What remains open</h3><p>The new integer-supply algorithm uses a fixed integral augmented inventory. Its greedy fractional optimum has integral counts, and tied exchanges preserve that inventory. For nonintegral supplies, this argument does not provide a supply-realizing distribution whose every configuration is fair.</p><p>With multiple team types, a society-wide optimum can also move inventory between types. The one-dimensional weight sweep above does not control those transfers.</p><p>Accordingly, the remaining target is to prove either a polynomial-time algorithm for arbitrary rational supplies and arbitrary support size, or hardness for that exact problem with freely chosen positive weights. Hardness with prescribed weights does not establish this claim.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Opening statement and Section 7: The general complexity alternative in USER_TASK remains unresolved: the output provides neither a polynomial-time algorithm for arbitrary rational supplies and arbitrary support size nor hardness for the freely chosen positive-weight problem. The prover explicitly acknowledges this limitation.</li><li><b>minor</b> — Sections 3.3 and 3.6: The algorithm leaves the rational representatives for the initial interval, the no-crossing case, and the immediately-above/below crossing computations implicit. Specify polynomial-bit rational representatives and identify the supporting output weight when the algorithm stops initially.</li><li><b>minor</b> — Section 6, final paragraph of Proposition 5: The proportionality-check description leaves zero-coordinate rejection conditions implicit. Explicitly handle an identically zero first utility vector with a nonzero second vector, require the candidate $\alpha_q$ to be strictly positive, and state the coordinate checks.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial.</b> The output establishes substantial results: two polynomial-time special cases, polynomial-size certificates for yes-instances, and an exact exponential-time algorithm. It does <b>not</b> settle the general polynomial-time-versus-hardness question in <code>USER_TASK</code>, and explicitly acknowledges this.</p><p>I found no false central step. The special-case algorithms are sound in substance, with two minor implementation clarifications identified below.</p><h3>1. Fairness tests</h3><p>The formulas in Section 1 are correct.</p><p>For an ordered pair $i\neq j$, removing an own copy contributes $-u_{q,i}(o)$ to the utility difference, and removing another agent’s copy contributes $u_{q,i}(o)$. Empty removals contribute zero. Within a fixed category, these choices are independent, so their largest combined correction is exactly<br>$$
+A_{q,i,c}(P)+G_{q,i,c}(P).
+$$<br>Taking the maximum over categories also permits a single nonempty removal: the other removal can be empty. Thus the displayed test matches the category restriction in <code>USER_TASK</code>.</p><p>The EF1 test correctly permits at most one removal in total.</p><p>For a same-sign category, either beneficial own removals are impossible or beneficial other-bundle removals are impossible. Consequently,<br>$$
+A_{q,i,c}(P)+G_{q,i,c}(P)
+=
+\max\{A_{q,i,c}(P),G_{q,i,c}(P)\},
+$$<br>and the two global tests coincide.</p><p>Zero utilities, empty bundles, and repeated copies cause no problem. Binary counts suffice for both presence tests and utility calculations.</p><p><b>Assessment:</b> correct.</p><h3>2. Compact unrestricted optimization</h3><h3>Proposition 1</h3><p>The forward implication follows directly from summing configuration masses and capacity inequalities.</p><p>For the converse, positivity of $\rho_q$ justifies division by $\rho_q$, and positivity of $s_c$ justifies the probabilities $v_o/s_c$. Their sum is at most one, so each block distribution is valid.</p><p>The common-parameter coupling preserves every block marginal and produces capacity-feasible integer configurations. Each agent-category block has at most $|C_c|$ internal endpoints. Summing over both agents and all categories gives at most $2m$ internal endpoints and hence at most $2m+1$ configurations.</p><p>Rational input coordinates produce rational endpoints and masses. The claimed polynomial encoding bound follows from the polynomial number of rational arithmetic operations and binary-encoded capacities.</p><p>The restriction to rational feasible vectors is correct.</p><h3>Feasibility, boundedness, and optimization</h3><p>The proposed vector<br>$$
+x_{q,i,o}=\frac{\rho_q\nu_o}{2}
+$$<br>satisfies the supply equalities because the type masses sum to one. Its category totals satisfy the capacity inequalities by the input assumption.</p><p>Nonnegativity and each category bound imply<br>$$
+x_{q,i,o}\leq \rho_qs_{c(o)},
+$$<br>so the feasible region is bounded. Rational linear programming therefore supplies a rational optimum of polynomial encoding length.</p><p>Proposition 1 establishes equality with the unrestricted configuration-assignment optimum.</p><p><b>Assessment:</b> correct.</p><h3>3. Necessary local optimality</h3><p>Proposition 2 uses an admissible replacement: another division of the same inventory preserves every item supply and the relevant type mass.</p><p>Because the configuration has positive mass, any strict improvement of its weighted utility would strictly improve the global objective.</p><p>Swapping the two bundles preserves capacity feasibility because capacities are common to both agents. The weighted difference is indeed<br>$$
+\lambda_{q,1}D_{q,1}(P)+\lambda_{q,2}D_{q,2}(P).
+$$<br>Its nonnegativity excludes simultaneous strict envy.</p><p>The output correctly warns that this local condition does not establish society-wide optimality or solve the general problem.</p><p><b>Assessment:</b> correct.</p><h3>4. One type with integer supplies</h3><h3>External theorem and its role</h3><p>The description of Theorem 4.14 is accurate: it guarantees an allocation maximizing weighted utility for positive weights selected by the algorithm, together with capacity feasibility and the stated fairness properties. It does not assert fairness for every prescribed positive weight vector. The relevant hypotheses are additive utilities, two agents, common category capacities, and a finite feasible inventory. These match the integer-supply setting when copies are viewed individually. [Shoshan, Hazon, and Segal-Halevi, Theorem 4.14](https://arxiv.org/pdf/2205.07779).</p><p>The compressed running-time claim is supported by the output’s own argument, rather than by applying the finite-copy running-time bound directly.</p><h3>Dummy completion</h3><p>The dummy multiplicity is a nonnegative integer. Exact augmented bundle sizes become $s_c$ for each agent and category.</p><p>Deleting dummies preserves original capacities and utility differences. A zero-utility dummy removal has the same utility effect as an empty removal, so it does not create a fairness witness unavailable under the original definition.</p><p>The bound $M\leq 2m$ follows from nonempty categories.</p><h3>Greedy optimization and global optimality</h3><p>The score<br>$$
+\delta_o(r)=ru_1(o)-u_2(o)
+$$<br>is the correct coefficient of the agent-one count after eliminating agent-two counts.</p><p>The cutoff calculation is valid, including tied types and fractional divisions. Above the cutoff, the greedy count is maximal; below it, the greedy count is zero. Thus every summand in the displayed optimality calculation is nonnegative.</p><p>The expected-count dummy completion is also valid: the two dummy counts sum to the available dummy multiplicity. This establishes optimality against assignments with varying inventories, which is essential for <code>USER_TASK</code>.</p><h3>Weight events and transitions</h3><p>The crossing formula is correct when its denominator is nonzero. Identical score lines create persistent ties rather than missing events.</p><p>The extreme-order arguments establish the stated envy-free endpoint properties, including equal utility values and signed utilities.</p><p>At a crossing, only a cutoff tie group can change its selected counts. Surplus-to-deficit exchanges preserve category totals and remain optimal at the crossing weight.</p><p>The sign claims for $\Delta_1$ and $\Delta_2$ are valid: surplus and deficit types retain their respective relationships to the above-crossing greedy selection, even while the transition is processed. The displayed changes in $D_1$ and $D_2$ have the correct signs and factors of two.</p><h3>Lemma 3 and termination</h3><p>Both lower bounds on the fairness corrections are valid. Failure of fairness gives strict inequalities, and the contradiction calculation correctly uses<br>$$
+\Delta_2=r^\ast\Delta_1.
+$$<br>Swapping the old bundles is an admissible comparison at the supporting positive weight.</p><p>The first exchange producing fairness for agent two therefore produces fairness for both agents. The endpoint argument guarantees that such an exchange exists unless the initial allocation already succeeds.</p><h3>Batching</h3><p>The presence sets are constant for integer indices $1\leq h\leq t-1$. Counts can become zero only at the separately tested endpoint.</p><p>The ceiling formula correctly finds the first fair interior integer when $\Delta_2&gt;0$. The separate treatment of $\Delta_2=0$ and $t=1$ is sufficient. Checking the endpoint separately also handles changes in the correction term caused by disappearing types.</p><p>Each completed batch fixes at least one remaining surplus or deficit count. Hence the claimed polynomial batch bound is justified.</p><p>The resulting arithmetic-operation and bit-length bounds support<br>$$
+O(m^4)\operatorname{poly}(L).
+$$</p><p><b>Minor issue:</b> Sections 3.3 and 3.6 do not explicitly specify how rational weights are chosen for the initial interval, the no-crossing case, and the “immediately above/below” greedy computations.</p><p><b>Minimum clarification:</b> specify polynomial-bit rational representatives for those intervals and state which representative supplies the output weight if the algorithm stops initially. This is a routine implementation clarification, not a missing mathematical argument.</p><p><b>Assessment:</b> sound in substance.</p><h3>5. Polynomial certificates</h3><p>The compact dual has the correct signs and objective coefficients. Its item-price variables are unrestricted because supplies are equality constraints; its capacity multipliers are nonnegative.</p><p>The expanded gap expression is correct. Every term is nonnegative under capacity and dual feasibility. Summing gaps against masses gives exactly the dual-objective minus primal-objective difference.</p><p>Strong duality applies because the compact primal is feasible and bounded. Equality of objectives then forces every positively weighted gap to vanish.</p><p>For Proposition 4:</p><ul><li>The restricted mass system is bounded by its type-mass equations.</li><li>A basic feasible solution uses at most $m+\tau$ columns.</li><li>Retaining zero-gap fair columns preserves both fairness and optimality.</li><li>After fixing the support, the weight-and-dual constraints are linear.</li><li>The original positive weights provide a strictly positive feasible $\epsilon$.</li><li>Normalization bounds $\epsilon$ by $1/(2\tau)$.</li><li>All configuration coefficients have polynomial encoding length.</li></ul><p>The rational linear-programming theorem invoked here is stated sufficiently precisely, and its hypotheses hold even though the auxiliary feasible region need not be bounded.</p><p>These arguments establish polynomial-size rational masses, weights, configurations, and dual witnesses. The listed verification checks are polynomial-time checks.</p><p><b>Assessment:</b> correct; the associated existence decision problem belongs to $\mathrm{NP}$. This does not classify the search problem as polynomial-time solvable or hard.</p><h3>6. Exact enumeration algorithm</h3><p>The configuration count<br>$$
+N=\prod_c\binom{s_c+d_c}{d_c}^{\,2}
+$$<br>correctly counts capacity-feasible binary-count configurations.</p><p>Enumerating supports of size at most $m+\tau$ is complete by Proposition 4. The two feasibility tests are sufficient: zero gaps certify optimality for any supply-realizing masses on the selected columns.</p><p>Discarding zero masses is harmless.</p><p>The upper bound<br>$$
+N\leq\prod_c(s_c+1)^{2d_c}
+$$<br>is valid, since each coordinate lies between zero and its category capacity. The subsequent exponential bounds are consistent with binary capacity encoding.</p><p><b>Assessment:</b> correct. This establishes decidability with the stated exponential bound, not the requested complexity classification.</p><h3>7. Positive proportional utilities</h3><p>The selected weights equalize the two weighted utility coefficients within each type. Symmetrization therefore preserves the objective, supplies, and capacity inequalities.</p><p>Applying the block decomposition to the common expected bundle and using each resulting bundle twice realizes the expected counts. Identical bundles are envy-free under signed utilities as well.</p><p>The support and running-time bounds are valid.</p><p><b>Minor issue:</b> the proportionality-check description leaves the zero-coordinate cases implicit. In particular, an identically zero first utility vector and a nonzero second utility vector must be rejected, and a candidate ratio must be strictly positive.</p><p><b>Minimum clarification:</b> state these rejection conditions and how zero coordinates are checked. The proposition’s proof under its stated hypothesis is unaffected.</p><p><b>Assessment:</b> sound in substance.</p><h3>8. Scope and actionable feedback</h3><p>The general target remains unresolved. The output proves neither a polynomial-time algorithm for arbitrary rational supplies and arbitrary support size nor hardness for freely chosen positive weights.</p><p>This is a major task-completion gap, explicitly acknowledged by the prover, rather than a contradiction in its subsidiary arguments.</p><p>The minimum requested follow-up is:</p><ul><li>Make the two routine implementation clarifications above.</li><li>Supply a result covering the general input class and resolving the requested complexity alternative.</li></ul><p>No demonstrated counterexample refutes the established special cases or certificate arguments.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

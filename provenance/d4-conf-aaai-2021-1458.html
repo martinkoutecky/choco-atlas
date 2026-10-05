@@ -1,0 +1,226 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Fair and Efficient Online Allocations with Normalized Valuations — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Fair and Efficient Online Allocations with Normalized Valuations <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2021-1458)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>There is no fair-share algorithm that achieves an approximation to the optimal welfare better than $0.933$.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(T\), two valuation-stream types \(A,B\) with masses \(\mu_A=\mu_B=1/2\), normalized streams \(v_{\theta t}\ge0\) satisfying \(\sum_t v_{\theta t}=1\), and only prefix revelation, determine the best online policy choosing irrevocable \(x_{At},x_{Bt}\ge0\) with \(x_{At}+x_{Bt}\le1\), subject to \(u_\theta=\sum_t v_{\theta t}x_{\theta t}\ge1/2\), maximizing the worst-case ratio \(\frac{u_A+u_B}{\sum_t\max\{v_{At},v_{Bt}\}}\); in particular, determine whether guarded \(p=2.7\) achieves \(0.916\) and whether any fair-share policy can exceed \(0.933\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational; \(\tau\) denotes support size, not the number of possible types. Here \(\tau=2\), with types \(A,B\) and \(\mu_A=\mu_B=1/2\).<br>There are \(m=T\ge1\) unit divisible items. Each type has an additive valuation stream of nonnegative binary rationals satisfying \(\sum_{t=1}^T v_{\theta t}=1\). Let \(L\) be the total input bit length; state running times in \(m,\tau,L\) and any additional parameters.<br>The policy knows the support labels, masses, normalization, and horizon, but learns stream entries only when their item arrives. It is deterministic and chooses irrevocable real allocations \(x_{At},x_{Bt}\ge0\) with \(x_{At}+x_{Bt}\le1\), using only the revealed prefix.<br>Here \(x_{\theta t}\) is the total item fraction allocated to type \(\theta\), and \(u_\theta=\sum_t v_{\theta t}x_{\theta t}\) is its aggregate utility. Fair-share requires \(u_\theta\ge\mu_\theta=1/2\) on every admissible stream. The benchmark is unrestricted offline welfare \(\sum_t\max\{v_{At},v_{Bt}\}\).<br>Guarded poly-proportional allocation with \(p=2.7\) allocates each infinitesimal item fraction in proportions \(v_{At}^p:v_{Bt}^p\) until a type&#x27;s accumulated utility plus its remaining normalized value reaches \(1/2\); it then gives that type the rest of the current item and every subsequent item. Split zero-valued items equally; resolve simultaneous triggers in favor of \(A\).</p><p>What is the optimal uniform worst-case approximation ratio \(\rho^*=\sup_{\mathcal A}\inf_{T,\mathbf v}\frac{u_A^{\mathcal A}(\mathbf v)+u_B^{\mathcal A}(\mathbf v)}{\sum_{t=1}^T\max\{v_{At},v_{Bt}\}}\), where \(\mathcal A\) ranges over fair-share online policies allowed to know \(T\)?</p><p>For two discrete agents and divisible items, guarded \(p=2.7\) guarantees \(0.916\), while no fair-share online algorithm guarantees more than \(0.933\), even knowing the horizon. [Verified results](https://ojs.aaai.org/index.php/AAAI/article/download/16685/16492).<br>Under the aggregate allocation and utility conventions above, these bounds also apply to this two-type model; this is an identification of the stated models, rather than a separate literature result. Search found no result determining the optimal ratio.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Interpreted allocations and utilities as type aggregates, preserving the graded question&#x27;s capacity constraint, utility formula, and fair-share threshold; masses sum to one.</li><li>Restricted stream entries to nonnegative binary rationals to specify finite input encoding; allocations may be real.</li><li>Specified deterministic policies, adversarial streams, known horizon, and a guarantee uniform over all finite horizons.</li><li>Reconciled support presentation with prefix revelation by revealing type labels and masses initially while withholding future valuation entries.</li><li>Restored guarding within an item from the full version; fixed equal splitting on zero-valued items and a deterministic convention for simultaneous triggers.</li><li>Set the item-count variable m equal to T for running-time statements.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial result: a stronger three-item upper bound</h3><p>The exact optimal ratio is not determined here. I establish<br>$$
+\boxed{
+0.916\le \rho^*
+\le \frac{3874814720}{4154778441}
+\approx 0.932616450.
+}
+$$<br>The upper bound strictly improves the verified bound $347/372$. Its proof uses two explicit admissible streams and applies to policies that know the horizon.</p><p>I also prove an exact criterion for whether a revealed prefix permits a fair continuation, and give a direct fairness proof and computational bounds for the guarded policy.</p><h3>1. The three-item adversary</h3><p>Fix any deterministic fair-share online policy and announce $T=m=3$. Consider the following two streams:</p><p>| Item | Stream I: $v_{At}$ | Stream I: $v_{Bt}$ | Stream II: $v_{At}$ | Stream II: $v_{Bt}$ |<br>|---|---:|---:|---:|---:|<br>| $1$ | $214/512$ | $285/512$ | $214/512$ | $285/512$ |<br>| $2$ | $137/512$ | $0$ | $298/512$ | $227/512$ |<br>| $3$ | $161/512$ | $227/512$ | $0$ | $0$ |</p><p>All entries are nonnegative dyadic rationals. Normalization follows from<br>$$
+214+137+161=214+298=512,
+\qquad
+285+227=512.
+$$</p><p>The first item and the announced horizon are identical. Consequently, determinism forces the same first-item fraction allocated to $A$ on both streams. Denote it by $x\in[0,1]$.</p><p>The following inequalities allow fractions to remain unallocated: whenever $A$ receives fraction $w$, feasibility implies that $B$ receives at most $1-w$.</p><h3>Stream I</h3><p>Let $y,z\in[0,1]$ be the fractions of items $2,3$ allocated to $A$. Fairness for $A$ requires<br>$$
+214x+137y+161z\ge256.
+$$<br>Since $y\le1$,<br>$$
+z\ge\frac{119-214x}{161}.
+$$</p><p>Bounding $B$’s allocation by the complementary fractions gives the welfare bound<br>$$
+W_{\mathrm I}
+\le
+1-\frac{71}{512}x
++\frac{137}{512}y
+-\frac{66}{512}z.
+$$<br>The coefficient of $y$ is positive and that of $z$ is negative. Hence<br>$$
+\begin{aligned}
+W_{\mathrm I}
+&amp;\le
+1-\frac{71}{512}x+\frac{137}{512}
+-\frac{66}{512}\frac{119-214x}{161}\\
+&amp;=\frac{96635+2693x}{82432}.
+\end{aligned}
+$$<br>This remains valid when the displayed lower bound on $z$ is negative: multiplying that lower bound by a negative coefficient still produces an upper bound.</p><p>The unrestricted offline benchmark is<br>$$
+\operatorname{OPT}_{\mathrm I}
+=\frac{285+137+227}{512}
+=\frac{649}{512}.
+$$<br>Therefore<br>$$
+\frac{W_{\mathrm I}}{\operatorname{OPT}_{\mathrm I}}
+\le
+\frac{96635+2693x}{104489}.
+$$</p><h3>Stream II</h3><p>Let $y\in[0,1]$ be the fraction of item $2$ allocated to $A$. Fairness for $B$, together with feasibility, implies<br>$$
+\frac12
+\le u_B
+\le
+\frac{285}{512}(1-x)+\frac{227}{512}(1-y).
+$$<br>Thus<br>$$
+285x+227y\le256,
+\qquad
+y\le\frac{256-285x}{227}.
+$$</p><p>The welfare satisfies<br>$$
+\begin{aligned}
+W_{\mathrm {II}}
+&amp;\le1-\frac{71}{512}x+\frac{71}{512}y\\
+&amp;\le1-\frac{71}{512}x
++\frac{71}{512}\frac{256-285x}{227}\\
+&amp;=\frac{525}{454}-\frac{71}{227}x.
+\end{aligned}
+$$<br>Here<br>$$
+\operatorname{OPT}_{\mathrm {II}}
+=\frac{285+298}{512}
+=\frac{583}{512},
+$$<br>so<br>$$
+\frac{W_{\mathrm {II}}}{\operatorname{OPT}_{\mathrm {II}}}
+\le
+\frac{134400-36352x}{132341}.
+$$</p><h3>Eliminating the first allocation</h3><p>Let $r$ be the smaller of the policy’s actual ratios on these two streams. Both inequalities hold:<br>$$
+104489r\le96635+2693x,
+$$<br>$$
+132341r\le134400-36352x.
+$$<br>Multiply the first by $36352$ and the second by $2693$, then add. The terms involving $x$ cancel:<br>$$
+\begin{aligned}
+&amp;(36352\cdot104489+2693\cdot132341)r\\
+&amp;\qquad\le36352\cdot96635+2693\cdot134400.
+\end{aligned}
+$$<br>The two integer expressions are respectively $4154778441$ and $3874814720$. Therefore<br>$$
+r\le\frac{3874814720}{4154778441}.
+$$</p><p>For every deterministic fair-share policy, at least one of the two admissible streams has ratio at most this constant. Taking the supremum over policies proves the claimed uniform upper bound.</p><p>The improvement over the previous bound is strict:<br>$$
+\frac{347}{372}
+-\frac{3874814720}{4154778441}
+=
+\frac{2978959}{16619113764}&gt;0.
+$$</p><p>This construction has $m=3$, $\tau=2$, and constant input bit length $L$. Constructing it requires constant time.</p><h3>2. An exact criterion for fair continuation</h3><p>Consider a revealed prefix with at least one item remaining. Write<br>$$
+U_\theta=\text{utility already allocated to type }\theta,
+$$<br>$$
+R_\theta=1-\sum_{\text{revealed }t}v_{\theta t},
+\qquad
+d_\theta=\max\left\{0,\frac12-U_\theta\right\}.
+$$<br>Thus $R_\theta$ is the total value still to arrive, and $d_\theta$ is the remaining utility deficit.</p><p><b>Proposition.</b> There exists an online continuation that satisfies fairness for every admissible suffix if and only if:</p><ul><li>$R_\theta=0$ implies $d_\theta=0$;</li><li>defining $q_\theta=d_\theta/R_\theta$ when $R_\theta&gt;0$, and $q_\theta=0$ otherwise,</li></ul><p>$$
+   q_A+q_B\le1.
+   $$</p><p><b>Necessity.</b> If $R_\theta=0$ and $d_\theta&gt;0$, no future allocation can supply the missing utility.</p><p>Otherwise, an admissible suffix places all residual values $(R_A,R_B)$ in the next item and gives every subsequent item zero value. The residual values are binary rationals because the revealed prefix is rational. On this item, each type with positive residual value must receive fraction at least $d_\theta/R_\theta$. Item feasibility therefore requires $q_A+q_B\le1$.</p><p><b>Sufficiency.</b> Allocate fraction $q_\theta$ of every remaining item to type $\theta$. This uses only information available at the prefix and is feasible because the fractions sum to at most $1$. The additional utility is exactly $q_\theta R_\theta=d_\theta$ when $R_\theta&gt;0$. Types with zero residual value already have their fair share. Thus every type finishes with utility at least $1/2$. $\square$</p><p>At the terminal prefix, the condition is simply $d_A=d_B=0$.</p><p>Consequently, every fair-share policy must satisfy this criterion after each nonterminal reachable prefix. Checking it takes $O(\tau)$ exact real operations. If the state quantities are rational with total encoding length $B$, elementary rational arithmetic gives an $O(\tau B^2)$ bit-time bound.</p><h3>3. Direct fairness proof for the guarded policy</h3><p>The following argument applies to every fixed $p&gt;0$, including $p=27/10$.</p><p>Before a trigger, an item with values $(a,b)$ is allocated in fractions<br>$$
+q_A=\frac{a^p}{a^p+b^p},
+\qquad
+q_B=\frac{b^p}{a^p+b^p}.
+$$<br>For $(a,b)=(0,0)$, use equal division as stipulated.</p><p>For a processed prefix, possibly ending partway through an item, let $H_\theta$ be the total value of all processed item fractions to type $\theta$. Let $U_\theta$ be its allocated utility and set<br>$$
+\ell_\theta=H_\theta-U_\theta.
+$$<br>Since every processed fraction is completely allocated, $\ell_\theta$ is the value to $\theta$ of the fractions allocated to the other type. Normalization gives<br>$$
+U_\theta+(1-H_\theta)=1-\ell_\theta.
+$$<br>Thus the trigger condition is precisely $\ell_\theta=1/2$.</p><h3>A pointwise inequality</h3><p>For all $a,b\ge0$,<br>$$
+bq_B
+\ge
+\left(1+\frac2p\right)aq_B-\frac ap.
+$$<br>When either value is zero, the inequality follows directly from the allocation rule.</p><p>For $a,b&gt;0$, put $r=b/a$. Multiplying the claimed inequality by $p(1+r^p)/a$ reduces it to<br>$$
+h(r):=pr^{p+1}-(p+1)r^p+1\ge0.
+$$<br>Its derivative is<br>$$
+h&#x27;(r)=p(p+1)r^{p-1}(r-1).
+$$<br>Therefore $h$ decreases on $(0,1)$ and increases on $(1,\infty)$. Since $h(1)=0$, the inequality holds.</p><h3>Utility at a trigger</h3><p>Suppose $A$ triggers first. Apply the pointwise inequality to every processed item fraction, multiplying by the processed fraction where necessary, and sum. Before the trigger,<br>$$
+U_B\ge
+\left(1+\frac2p\right)\ell_A-\frac{H_A}{p}.
+$$<br>At the trigger, $\ell_A=1/2$, giving the stronger bound<br>$$
+\boxed{
+U_B\ge\frac12+\frac{1-H_A}{p}.
+}
+$$<br>In particular, $B$ already has its fair share.</p><p>Moreover,<br>$$
+U_A+(1-H_A)=\frac12.
+$$<br>Giving $A$ the rest of the current item and every subsequent item therefore makes its final utility exactly $1/2$. The case where $B$ triggers first follows by exchanging the type labels.</p><p>If neither type triggers, neither loss can pass $1/2$: during each item the losses vary continuously, and crossing that threshold would cause a trigger. At the end $H_\theta=1$, so<br>$$
+u_\theta=1-\ell_\theta\ge\frac12.
+$$</p><p>Finally, simultaneous triggers cause no problem. At an $A$ trigger, the displayed margin implies $U_B\ge1/2+(1-H_A)/p$. A simultaneous $B$ trigger requires $U_B+(1-H_B)=1/2$. Nonnegativity forces<br>$$
+1-H_A=1-H_B=0,
+\qquad U_B=\frac12.
+$$<br>Both types then already have their fair shares and all remaining values are zero. The stipulated tie rule is harmless.</p><p>This proves fairness without importing the paper’s fairness lemma.</p><h3>4. The lower bound and computational model</h3><p>The supplied welfare theorem states that guarded $p=2.7$ achieves ratio at least $0.916$. Its hypotheses match this problem: two normalized additive valuation rows, divisible items, irrevocable online allocations, and unrestricted offline welfare as benchmark. Here the aggregate utilities are exactly those two utilities, and the masses specify the thresholds $1/2$. The policy does not require knowledge of the horizon, so allowing that knowledge preserves its guarantee. Hence $\rho^*\ge0.916$. [Theorem 3 of Gkatzelis, Psomas, and Tan](https://ojs.aaai.org/index.php/AAAI/article/download/16685/16492).</p><p>The welfare guarantee is the imported result; the fairness argument above is independent.</p><h3>Exact real arithmetic</h3><p>Maintain $\ell_A,\ell_B$ until a trigger. For the current item, compute the proportional fractions and the candidate processed fractions<br>$$
+f_\theta=
+\frac{1/2-\ell_\theta}{v_{\theta t}(1-q_\theta)}
+$$<br>when the denominator is positive; otherwise set $f_\theta=+\infty$. Process proportionally until the earliest candidate trigger, or until the item ends.</p><p>For $p=27/10$, each power can be computed with a fixed number of multiplications and a nonnegative tenth-root extraction. In a model where these operations and exact comparisons have unit cost, the policy uses $O(m\tau)$ operations and $O(\tau)$ working real registers, with $\tau=2$. Reading the binary input additionally requires $O(L)$ decoding work.</p><p>This is a real-arithmetic bound, not a polynomial bit-time claim.</p><h3>Exact symbolic bit computation</h3><p>An exact implementation can return symbolic algebraic representations of its real allocations.</p><p>For a positive-valued item $(a_i,b_i)$, its fraction $q_i$ allocated to $A$ is the unique solution in $(0,1)$ of<br>$$
+b_i^{27}q_i^{10}=a_i^{27}(1-q_i)^{10}.
+$$<br>Uniqueness follows because $q_i/(1-q_i)$ is strictly increasing there. Items with a zero value have rational proportional fractions.</p><p>Before the first trigger,<br>$$
+\ell_A=\sum_{i&lt;t}a_i(1-q_i),
+\qquad
+\ell_B=\sum_{i&lt;t}b_iq_i.
+$$<br>Testing whether a candidate trigger occurs within the current item uses linear polynomials in the $q_i$. Comparing the two candidate trigger fractions, after multiplying by positive denominators, uses polynomials of degree at most $2$.</p><p>Each exact comparison can therefore be decided by an existential real formula containing at most $m$ variables and $O(m)$ integer polynomials of degree at most $10$. Clearing rational denominators gives coefficient bit lengths $O(L+\log(m+1))$.</p><p>A standard single-block quantifier-elimination theorem uses $s^{k+1}d^{O(k)}$ integer arithmetic operations for $k$ variables, $s$ polynomials, and degree bound $d$, with intermediate integer bit lengths at most $Hd^{O(k)}$ when input coefficient lengths are at most $H$. [Theorem 2.27 in Basu’s survey](https://www.math.purdue.edu/~sbasu/raag_survey2011_final-sep4-2014.pdf).</p><p>Applying that theorem with $k\le m$, $s=O(m)$, and $d=10$, and using elementary integer arithmetic, gives the conservative total bit-time bound<br>$$
+(L+\log(m+1))^2(m+1)^{O(m)}
+$$<br>for $\tau=2$. The allocation expressions themselves use the specified algebraic roots and rational arithmetic. This establishes exact implementability, while leaving polynomial bit-time implementation unproved.</p><h3>5. What remains open</h3><p>The upper-bound proof supplies a stricter impossibility bound, not an optimal policy. Neither its sharpness for horizon $3$ nor its sharpness over arbitrary horizons has been established.</p><p>The outstanding target is to determine the exact value within<br>$$
+\left[
+0.916,\,
+\frac{3874814720}{4154778441}
+\right].
+$$</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Opening claim and Section 5, What remains open: The exact optimal uniform ratio requested by USER_TASK is not determined: the established lower and upper bounds differ, and neither an attaining policy nor a matching impossibility result is proved. This is acknowledged target incompleteness, not an error in the established bounds.</li><li><b>minor</b> — Opening comparison and Section 1, comparison with the previous bound: The attribution of $347/372$ as the previous verified bound lacks a precise supporting source. USER_TASK and the cited conference paper state $0.933$. Supply the source establishing the exact earlier constant and its applicable model; the displayed subtraction and the new upper bound are correct.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Verdict: partial, with a valid stronger upper bound.</b> The output establishes<br>$$
+0.916\le \rho^*\le \frac{3874814720}{4154778441}
+\approx 0.932616449956206.
+$$<br>The adversarial construction, continuation criterion, and direct fairness proof are correct. The computational bounds are valid under the stated computational models. However, the exact optimal ratio requested by <code>USER_TASK</code> remains undetermined, as the prover explicitly acknowledges.</p><h3>1. Three-item upper bound</h3><h3>Admissibility and indistinguishability</h3><p>Both streams have nonnegative dyadic entries and normalized valuation rows. The displayed normalization identities are correct. The zero-valued final item in Stream II is admissible.</p><p>Both streams announce the same horizon and reveal identical first-item values. A deterministic policy therefore chooses the same first allocation to $A$, denoted by $x$, on both streams. Knowing the horizon does not distinguish them.</p><p>Allowing unallocated fractions causes no problem: replacing $B$’s allocation by its upper bound, the complementary fraction, only increases the welfare expressions because valuations are nonnegative.</p><h3>Stream I</h3><p>Fairness for $A$ gives<br>$$
+214x+137y+161z\ge256.
+$$<br>Using $y\le1$ correctly yields<br>$$
+z\ge\frac{119-214x}{161}.
+$$</p><p>The welfare upper bound is correctly expanded:<br>$$
+W_{\mathrm I}
+\le\frac{512-71x+137y-66z}{512}.
+$$<br>The subsequent substitutions preserve the inequality directions. In particular, a negative lower bound on $z$ remains usable because its coefficient in the welfare expression is negative.</p><p>Rechecking the arithmetic gives<br>$$
+W_{\mathrm I}\le\frac{96635+2693x}{82432}.
+$$<br>The benchmark is correctly computed as<br>$$
+\operatorname{OPT}_{\mathrm I}=\frac{649}{512},
+$$<br>and hence<br>$$
+\frac{W_{\mathrm I}}{\operatorname{OPT}_{\mathrm I}}
+\le\frac{96635+2693x}{104489}.
+$$</p><p>Not using fairness for $B$ merely weakens this upper bound; it does not invalidate it.</p><h3>Stream II</h3><p>Fairness for $B$ and feasibility correctly imply<br>$$
+285x+227y\le256.
+$$<br>The welfare expression and its substitution are correct:<br>$$
+W_{\mathrm {II}}
+\le1-\frac{71}{512}x+\frac{71}{512}y
+\le\frac{525}{454}-\frac{71}{227}x.
+$$<br>The benchmark and normalized bound also check:<br>$$
+\operatorname{OPT}_{\mathrm {II}}=\frac{583}{512},
+\qquad
+\frac{W_{\mathrm {II}}}{\operatorname{OPT}_{\mathrm {II}}}
+\le\frac{134400-36352x}{132341}.
+$$</p><p>If the displayed upper bound on $y$ were negative, the policy could not satisfy fairness on this stream. Thus this possibility introduces no exception for a fair-share policy.</p><h3>Elimination and uniform quantifiers</h3><p>For the smaller actual ratio $r$, both displayed linear inequalities hold. The chosen positive multipliers cancel $x$, and the integer calculations are correct:<br>$$
+36352\cdot104489+2693\cdot132341=4154778441,
+$$<br>$$
+36352\cdot96635+2693\cdot134400=3874814720.
+$$<br>Consequently,<br>$$
+r\le\frac{3874814720}{4154778441}.
+$$</p><p>The quantifier argument is valid: every deterministic fair-share policy fails to exceed this constant on at least one of these two fixed admissible streams. Taking the supremum over policies therefore preserves the upper bound.</p><p>The claimed numerical difference is also correct:<br>$$
+\frac{347}{372}-\frac{3874814720}{4154778441}
+=\frac{2978959}{16619113764}&gt;0.
+$$</p><p><b>Minor issue — provenance of the earlier exact constant.</b> Neither <code>USER_TASK</code> nor the cited conference paper supplies the exact earlier bound $347/372$; the paper states $0.933$. The new bound does strictly improve the supplied $0.933$ bound, independently of this attribution. Minimum clarification: provide a precise source for the earlier exact constant and its applicable model. [Cited paper, Theorem 4](https://ojs.aaai.org/index.php/AAAI/article/download/16685/16492).</p><h3>2. Fair-continuation criterion</h3><p>The proposition is correct for an admissible revealed prefix after completed items.</p><ul><li>If a type has zero remaining value and positive deficit, fairness is impossible.</li><li>Concentrating both residual values in the next item produces an admissible suffix with the announced horizon, using zero-valued items afterward. The residual values are binary rationals.</li><li>Feasibility on that item requires the sum of the necessary fractions to be at most one.</li><li>Conversely, allocating the fixed fractions defined at the prefix on every remaining item is online, feasible, and supplies each positive-residual type exactly its deficit.</li><li>The separate terminal condition correctly handles the absence of further items.</li></ul><p>Real-valued previously allocated utilities do not invalidate the argument: real continuation fractions are permitted.</p><p>The operation count $O(\tau)$ is valid when the state is already available. The conditional rational-state bound $O(\tau B^2)$ is a conservative elementary-arithmetic bound. It does not assert that every permitted policy has a rational state.</p><p>No substantive gap is present.</p><h3>3. Direct fairness proof</h3><h3>Loss interpretation</h3><p>Because the guarded policy fully allocates every processed fraction,<br>$$
+\ell_\theta=H_\theta-U_\theta
+$$<br>has the stated interpretation. Normalization correctly identifies the trigger condition with<br>$$
+\ell_\theta=\frac12.
+$$<br>This remains valid partway through an item because $H_\theta$ includes only the processed fraction.</p><h3>Pointwise inequality</h3><p>For positive $a,b$, the stated multiplication correctly reduces the inequality to<br>$$
+h(r)=pr^{p+1}-(p+1)r^p+1\ge0.
+$$<br>Its derivative is correctly computed:<br>$$
+h&#x27;(r)=p(p+1)r^{p-1}(r-1).
+$$<br>For every fixed $p&gt;0$, this establishes the claimed minimum at $r=1$.</p><p>The cases with a zero value also satisfy the inequality under the stipulated allocation rule. The proof does not incorrectly extend its division by $p$ to $p=0$.</p><h3>Trigger and terminal cases</h3><p>Summing over processed fractions correctly gives<br>$$
+U_B\ge\left(1+\frac2p\right)\ell_A-\frac{H_A}{p}.
+$$<br>At an $A$ trigger, this becomes<br>$$
+U_B\ge\frac12+\frac{1-H_A}{p}.
+$$<br>Thus $B$ already satisfies fairness, while allocating all remaining fractions to $A$ supplies exactly its remaining deficit.</p><p>The no-trigger case is justified by continuity and stopping at the first threshold. The simultaneous-trigger argument correctly forces both remaining normalized values to be zero, so the tie rule cannot harm fairness.</p><p>No substantive gap is present.</p><h3>4. Imported lower bound</h3><p>The imported theorem is accurately stated and applicable. The cited paper uses two normalized additive agents, irrevocable allocations of divisible items, and unrestricted offline welfare. Its guarded rule allows a trigger within an item, matching the policy here. Theorem 3 states the $0.916$ guarantee for $p=2.7$. Restricting inputs to binary rationals preserves that guarantee. [Cited paper, model and Theorem 3](https://ojs.aaai.org/index.php/AAAI/article/download/16685/16492).</p><p>The identification with the two aggregate types follows from the utility and allocation conventions explicitly supplied in <code>USER_TASK</code>. No additional population-scaling assumption is needed.</p><h3>5. Computational claims</h3><p>The real-arithmetic implementation correctly computes candidate trigger locations from current losses and constant loss rates within an item. Its bounds,<br>$$
+O(m\tau)
+$$<br>operations and $O(\tau)$ working real registers, are valid under the explicitly assumed unit-cost root extraction and exact comparison model. The additional input-decoding work is correctly separated.</p><p>For exact symbolic computation:</p><ul><li>For items with both values positive, the displayed degree-ten equation and interval restriction uniquely identify the proportional fraction.</li><li>Items with a zero value have rational proportional fractions.</li><li>Before the first trigger, accumulated losses are linear expressions in the selected roots.</li><li>Finite trigger comparisons require polynomials of degree at most two after multiplication by positive denominators.</li><li>The root constraints and comparison predicates therefore fit the stated variable, polynomial-count, degree, and coefficient-length bounds.</li></ul><p>The specialization of Basu’s Theorem 2.27 to one existential block with no free variables supports both the arithmetic-operation and intermediate-bit-length bounds stated by the prover. [Basu’s survey, Theorem 2.27](https://www.math.purdue.edu/~sbasu/raag_survey2011_final-sep4-2014.pdf).</p><p>Polynomially many comparisons, formula construction, and symbolic expression output fit within the conservative total bound<br>$$
+(L+\log(m+1))^2(m+1)^{O(m)}
+$$<br>for $\tau=2$. This establishes exact symbolic implementability, without establishing polynomial bit-time computation or a complexity classification of the optimal-ratio problem.</p><h3>6. Outstanding target and required feedback</h3><p><b>Major incompleteness relative to <code>USER_TASK</code>.</b> The output provides unequal lower and upper bounds, without an attaining policy or a matching impossibility result. Therefore it does not determine the optimal uniform ratio.</p><p>This is an acknowledged limitation, not a false step in the upper-bound proof. Completing the assigned task requires additional mathematics; clarification alone cannot close the interval.</p><p>The direction is promising because the improved upper bound is rigorously established and remains valid with horizon knowledge.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

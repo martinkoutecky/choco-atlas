@@ -1,0 +1,255 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-9287809809827066310e321a0e9de948b8e0c7eb — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-9287809809827066310e321a0e9de948b8e0c7eb <span style="font-weight:normal;color:#8a7350">(s5-9287809809827066310e321a0e9de948b8e0c7eb)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 2.4 — class: other</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Let S ≥2 and n = 2S. Then there exists an election (P, S) such that the set of winners under STV is disjoint from the set of winners under sequential RCV.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a rational distribution \(\mu\) over complete rankings and a seat count \(S\), compute the size-\(S\) committees selected by sequential RCV and STV, using a fixed tie-breaking rule and STV quota \(1/(S+1)\), and determine whether the committees are disjoint.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) contain \(m\) candidates and let \(2\le S\le m\) be an integer seat count. A society is given by its support: the list of its \(\tau\) complete strict rankings with positive masses, each a binary rational, summing to \(1\). Here \(\tau\) is the support size, not the number of possible rankings. Let \(L\) be the total input bit length; state running times in \(m,\tau,L,S\). Fix a total priority order on candidates for all ties.<br>Sequential RCV runs weighted IRV repeatedly for \(S\) seats, each time using the original masses and rankings with only previously elected candidates deleted; eliminations from earlier IRV runs are reset.<br>For STV, initially assign each ranking&#x27;s mass to its first candidate and fix \(q=1/(S+1)\). Continuing candidates are neither elected nor eliminated. Each tally is the total current weight assigned to that candidate.<br>If any continuing candidate has tally at least \(q\), elect one with maximum tally, resolving ties by priority. If its tally is \(a\), multiply every weight assigned to it by \((a-q)/a\) and transfer the resulting weights to their highest-ranked continuing candidates. Otherwise eliminate a minimum-tally candidate, resolving ties by priority, and transfer all its current weights in the same manner.<br>Stop after \(S\) elections; if the number of continuing candidates equals the remaining vacancies, elect them all. All arithmetic and comparisons are exact, without rounding. Output both committees and whether their intersection is empty.</p><p>Is computing both committees and testing their disjointness solvable in polynomial time in \(m,\tau,L,S\), or is this problem NP-hard?</p><p>For finite electorates, disjoint committees exist for every \(S\ge2\) with \(m=2S\), also extending to \(m\ge2S\); this is an existence result, not a complexity classification. [Source](https://arxiv.org/pdf/2306.17341)<br>An exact-rational weighted-transfer STV implementation is documented with quota \(1/(S+1)\), but elects only strictly above quota; it supplies no complexity classification for the problem defined here. [Source](https://yingtongli.me/blog/2021/07/24/opentally-wigm.html)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Made the distribution normalization explicit: positive support masses sum to one, and rankings are complete and strict.</li><li>Specified the seat domain as integers from two through the candidate count, retaining the anchor&#x27;s multiwinner condition without imposing its existential construction&#x27;s candidate count.</li><li>Resolved unspecified simultaneous quota eligibility by electing a maximum-tally eligible candidate one at a time, using a fixed total priority order for ties.</li><li>Interpreted reaching quota as a weak inequality, consistent with the supplied discrete description.</li><li>Specified that surplus factors multiply current ballot weights, including weights received through earlier transfers, with exact arithmetic and no rounding.</li><li>Restored the remaining-candidates stopping condition and the reset of original masses and earlier eliminations between sequential RCV runs.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial results: exponential growth of reduced STV fractions</h3><p>I do not settle the unrestricted polynomial-time versus $\mathsf{NP}$-hardness classification.</p><p>The main new result is an explicit family, with $m=2S$ and $\tau=S+1$, in which a current STV weight has a <b>reduced denominator containing at least $2^{S-2}$ bits before the final election</b>. Thus the large integers in the earlier simulation are not merely an artifact of failing to reduce fractions.</p><p>This is not a computational hardness proof: the STV committee in that family is easy to identify directly. I also prove a refined exact simulation bound that isolates which transfers can cause quadratic denominator growth.</p><h3>1. Representation and conservation of weight</h3><p>Index the input rankings by $i\in\{1,\ldots,\tau\}$, and write their masses as<br>$$
+p_i=\frac{a_i}{b_i}&gt;0.
+$$<br>Define<br>$$
+d=S+1,\qquad
+E_0=\prod_{i=1}^{\tau}b_i,\qquad
+h_i=a_i\frac{E_0}{b_i}.
+$$<br>Then<br>$$
+p_i=\frac{h_i}{E_0},
+\qquad
+\sum_{i=1}^{\tau}h_i=E_0.
+$$<br>The integers $E_0$ and $h_i$ have $O(L)$ bits and can be computed in polynomial time. Indeed, the sum of the bit lengths of the input denominators is at most $L$.</p><p>Each ranking has one current weight and one current assignment. The specified transfer rule never splits a ranking’s weight between candidates.</p><p>An elimination preserves total current weight. A quota election with tally $a$ removes exactly<br>$$
+a-a\frac{a-q}{a}=q=\frac1d.
+$$<br>Consequently, after $k$ individual quota elections, before termination, total current weight is<br>$$
+1-\frac{k}{d}=\frac{d-k}{d}.
+$$</p><p>Transfers needed for subsequent counting always have destinations. Before an elimination, the number of continuing candidates exceeds the remaining vacancies, so another continuing candidate remains. After an election that leaves a vacancy, at least one continuing candidate also remains. Complete rankings therefore prevent exhaustion at these steps.</p><p>The transfer after the final election can be omitted, since it cannot affect the requested committees.</p><h3>2. Exact algorithms and their bit complexity</h3><p>Put<br>$$
+b=L+\left\lceil\log_2(S+1)\right\rceil+2.
+$$</p><h3>2.1 Sequential RCV is polynomial-time computable</h3><p>In every IRV run, represent the original masses by the integers $h_i$ with common denominator $E_0$. Every tally is a sum of some $h_i$, so every tally numerator lies between $0$ and $E_0$.</p><p>Tally comparisons are integer comparisons. A strict majority is tested by comparing twice a tally numerator with $E_0$. The denominator and original weights never change.</p><p>For each run, maintain a pointer into each ranking, advancing past previously elected candidates and candidates eliminated in that run. Every pointer advances at most $m$ times. Each run has at most $m$ counting rounds.</p><p>Using schoolbook integer arithmetic, a conservative bit-time bound is<br>$$
+O\!\left(Sm(\tau+m)b^2\right).
+$$<br>Resetting the elimination set between runs, while retaining previously elected candidates as deleted, implements the specified sequential RCV rule.</p><h3>2.2 A division-free exact STV simulation</h3><p>Maintain nonnegative integers $N_i$ and a positive integer $E$ such that<br>$$
+w_i=\frac{N_i}{dE}.
+$$<br>Initially take<br>$$
+E=E_0,\qquad N_i=dh_i.
+$$</p><p>For each continuing candidate $c$, define<br>$$
+A_c=\sum_{\text{rankings assigned to }c}N_i.
+$$<br>Its tally is $A_c/(dE)$, and the quota test is exactly<br>$$
+\frac{A_c}{dE}\ge\frac1d
+\quad\Longleftrightarrow\quad
+A_c\ge E.
+$$<br>Thus the weak quota inequality in the task is preserved.</p><p>Eliminations change only assignments. If candidate $c$ is elected, put $A=A_c$ and update, using the old values on the right,<br>$$
+E&#x27;=EA,
+$$<br>$$
+N_i&#x27;=
+\begin{cases}
+N_i(A-E),&amp;\text{if ranking }i\text{ was assigned to }c,\\
+N_iA,&amp;\text{otherwise}.
+\end{cases}
+$$<br>For an assigned ranking,<br>$$
+\frac{N_i&#x27;}{dE&#x27;}
+=
+\frac{N_i}{dE}\frac{A-E}{A}
+=
+w_i\frac{a-q}{a}.
+$$<br>For every other ranking, its weight is unchanged. Since $A\ge E&gt;0$, the denominator stays positive and the new numerators are nonnegative. Equality $A=E$ correctly produces zero transferred weights.</p><p>Let $D=dE$. Since total current weight is at most $1$,<br>$$
+N_i\le D,\qquad A_c\le D.
+$$<br>Therefore an election update satisfies<br>$$
+D&#x27;=DA\le D^2.
+$$<br>Eliminations do not enlarge the integers. At most $S-1$ election updates are needed, so all maintained integers have<br>$$
+O(2^S b)
+$$<br>bits.</p><p>There are at most $m$ candidate-removal rounds. Recomputing tallies and selecting a candidate uses $O(\tau+m)$ arithmetic operations per round, and the ranking pointers advance at most $\tau m$ times overall. Hence both committees and their intersection can be computed in<br>$$
+O\!\left(m(\tau+m)4^S b^2\right)
+$$<br>bit operations.</p><p>This proves polynomial-time solvability for fixed $S$. It does not establish polynomial time when $S$ varies.</p><h3>3. New result: reduced fractions can require exponentially many bits</h3><h3>Proposition</h3><p>For every $S\ge2$, there is an instance with $m=2S$, $\tau=S+1$, and input length<br>$$
+L=O\!\left(S^2\log(S+1)\right)
+$$<br>such that, immediately before the final STV election, one current weight has a reduced denominator with at least $2^{S-2}$ bits.</p><p>The family can be restricted to $S+1$ being a power of two, so all input masses are dyadic rationals.</p><h3>Construction</h3><p>Let the candidates be<br>$$
+c_1,\ldots,c_S,\ z,\ u_1,\ldots,u_{S-1}.
+$$<br>Every ranking has mass<br>$$
+q=\frac1{S+1}.
+$$<br>There are $S+1$ rankings:</p><ul><li>One distinguished ranking is</li></ul><p>$$
+  c_1\succ c_2\succ\cdots\succ c_S\succ z
+  \succ u_1\succ\cdots\succ u_{S-1}.
+  $$</p><ul><li>For each $j\in\{1,\ldots,S\}$, one ranking starts</li></ul><p>$$
+  c_j\succ z,
+  $$<br>then lists all other $c$-candidates, and finally all $u$-candidates, in any fixed orders.</p><p>These rankings are complete, strict, and distinct. Their masses sum to $1$.</p><p>Define integers<br>$$
+y_0=1,\qquad y_{k+1}=y_k(y_k+1),
+$$<br>and weights<br>$$
+\delta_k=\frac{q}{y_k}.
+$$</p><h3>Proof of the election sequence</h3><p>I prove by induction that after $k$ elections, for $0\le k\le S-1$:</p><ul><li>The elected candidates are $c_1,\ldots,c_k$.</li><li>The distinguished ranking has weight $\delta_k$.</li><li>Candidate $c_{k+1}$ has tally $q+\delta_k$.</li><li>Every $c_j$ with $j&gt;k+1$ has tally $q$.</li><li>Candidate $z$ has tally $q-\delta_k$.</li><li>Every $u_j$ has tally zero.</li></ul><p>For $k=0$, the distinguished ranking and the first auxiliary ranking both support $c_1$. Thus $c_1$ has tally $2q$, every other $c_j$ has tally $q$, and $z$ and the $u$-candidates have zero tally. Since $\delta_0=q$, all assertions hold.</p><p>Suppose they hold after $k$ elections, with another transfer required. Candidate $c_{k+1}$ is the unique maximum-tally continuing candidate, with tally $q+\delta_k&gt;q$. Its surplus factor is<br>$$
+\frac{\delta_k}{q+\delta_k}
+=
+\frac1{y_k+1}.
+$$<br>The distinguished ranking therefore receives new weight<br>$$
+\frac{\delta_k}{y_k+1}
+=
+\frac{q}{y_k(y_k+1)}
+=
+\delta_{k+1},
+$$<br>and transfers to $c_{k+2}$.</p><p>The auxiliary ranking originally supporting $c_{k+1}$ still has weight $q$ before this election. Its transferred weight is<br>$$
+\frac{q}{y_k+1}
+=
+\delta_k-\delta_{k+1}.
+$$<br>It transfers to $z$, whose new tally becomes<br>$$
+q-\delta_k+\delta_k-\delta_{k+1}
+=
+q-\delta_{k+1}.
+$$<br>All other auxiliary rankings remain at their original candidates with weight $q$. This proves the induction step.</p><p>The terminal bulk-election rule never intervenes: after $k$ elections, the number of continuing candidates is $2S-k$, while the remaining vacancies number $S-k$. No elimination occurs, because a quota-eligible candidate is always present.</p><p>Thus STV elects<br>$$
+\{c_1,\ldots,c_S\}.
+$$</p><h3>Proof of the bit-length lower bound</h3><p>We have $y_1=2$. For every $k\ge1$,<br>$$
+y_{k+1}=y_k(y_k+1)\ge y_k^2.
+$$<br>Induction gives<br>$$
+y_k\ge 2^{2^{k-1}}.
+$$</p><p>Immediately before the final election, the distinguished ranking has weight<br>$$
+\delta_{S-1}
+=
+\frac1{(S+1)y_{S-1}}.
+$$<br>This fraction is already reduced, since its numerator is $1$. Its denominator therefore has at least<br>$$
+\log_2 y_{S-1}\ge 2^{S-2}
+$$<br>bits.</p><p>Each input ranking lists $2S$ candidates, and there are $S+1$ rankings. Their encoding, together with the masses, has length $O(S^2\log(S+1))$. Hence the reduced denominator length is superpolynomial in the input length along this family.</p><h3>What this proves—and what it leaves open</h3><p>This rules out a general polynomial bound on the lengths of explicitly stored reduced current weights. Reducing every fraction after each operation does not repair that simulation approach.</p><p>It does not rule out a different polynomial-time committee algorithm. In this very family, the committee follows directly from the induction without expanding any $y_k$.</p><h3>4. New refinement: which transfers require denominator squaring?</h3><p>The generic update from Section 2 is unnecessary in two broader circumstances.</p><p>For a quota election, let $I$ be the indices of its <b>positive-weight</b> contributing rankings. Let $J$ be the indices of all currently positive-weight rankings. Define the current multiplier of ranking $i$ by<br>$$
+g_i=\frac{w_i}{p_i}.
+$$</p><p>Call an election update exceptional if both:</p><ul><li>$I$ is a proper subset of $J$;</li><li>the multipliers $g_i$, for $i\in I$, are not all equal.</li></ul><p>Let $r$ be the number of exceptional updates performed before termination, omitting the final election’s transfer.</p><h3>4.1 All positive weights contribute</h3><p>Suppose $I=J$, and $k$ quota elections have already occurred. The elected tally is the total current weight,<br>$$
+a=\frac{d-k}{d}.
+$$<br>Its surplus factor is<br>$$
+\frac{d-k-1}{d-k}.
+$$<br>Thus the exact update can be represented by<br>$$
+E&#x27;=E(d-k),\qquad
+N_i&#x27;=N_i(d-k-1)
+$$<br>for every ranking. Zero weights remain zero.</p><p>This enlarges the denominator by a factor at most $d$.</p><h3>4.2 Contributing rankings share a multiplier</h3><p>Suppose all $g_i$ for $i\in I$ equal a common value $\lambda$. Put<br>$$
+H=\sum_{i\in I}h_i.
+$$<br>Then<br>$$
+a=\sum_{i\in I}w_i
+=
+\lambda\frac{H}{E_0},
+$$<br>so, for each $i\in I$,<br>$$
+\frac{w_i}{a}=\frac{h_i}{H}.
+$$<br>Its new weight is therefore<br>$$
+w_i&#x27;
+=
+w_i-q\frac{w_i}{a}
+=
+w_i-\frac{h_i}{dH}.
+$$<br>An exact integer update is<br>$$
+E&#x27;=EH,
+$$<br>$$
+N_i&#x27;=
+\begin{cases}
+N_iH-Eh_i,&amp;i\in I,\\
+N_iH,&amp;i\notin I.
+\end{cases}
+$$<br>Indeed, dividing the first expression by $dEH$ gives precisely the displayed new weight. Nonnegativity follows from the quota condition and the original surplus formula.</p><p>Here $H\le E_0$, so denominator growth is again multiplication by an input-sized integer.</p><p>This case is detectable exactly. Since<br>$$
+g_i=\frac{E_0N_i}{dEh_i},
+$$<br>we have<br>$$
+g_i=g_j
+\quad\Longleftrightarrow\quad
+N_i h_j=N_j h_i.
+$$</p><h3>4.3 Refined bit-time bound</h3><p>Use the two special updates whenever applicable and the generic update otherwise.</p><p>Let<br>$$
+M=\max\{d,E_0\}.
+$$<br>For $D=dE$, a nonexceptional update satisfies<br>$$
+D&#x27;\le DM,
+$$<br>while an exceptional update satisfies<br>$$
+D&#x27;\le D^2.
+$$</p><p>Writing $t=\log_2D$, each nonexceptional update adds at most $\log_2M$, and each exceptional update doubles $t$. There are at most $S-1$ updates. Every additive increment is doubled at most $r$ times, so<br>$$
+t\le
+2^r\left(\log_2(dE_0)+(S-1)\log_2M\right).
+$$<br>Consequently, all maintained integers have<br>$$
+O\!\left(2^r(S+1)b\right)
+$$<br>bits.</p><p>The extra multiplier comparisons use $O(\tau)$ integer multiplications per election. Combining this simulation with sequential RCV yields the bit-time bound<br>$$
+O\!\left(
+m(\tau+m)4^r(S+1)^2b^2
+\right).
+$$</p><p>Thus, for every fixed bound on $r$, both committees are computable in polynomial time on instances whose executions satisfy that bound. The algorithm detects the applicable cases itself; it does not require the election sequence in advance.</p><p>Initially every multiplier is $1$, so the first quota election is nonexceptional. In particular,<br>$$
+r\le S-2.
+$$<br>The refined bound still does not become polynomial for unrestricted $r$.</p><h3>5. Small support: polynomial computation, and a sharp intersection boundary</h3><h3>5.1 Support size at most two</h3><p>When $\tau\le2$, every quota election either receives all positive weights or receives just one positive ranking. The former is covered by Section 4.1; the latter necessarily has a common multiplier. Thus $r=0$, and the refined algorithm is polynomial-time.</p><p>Moreover, the committees always intersect.</p><p>If all rankings have the same first choice $a$, that candidate wins the first IRV run and is elected by STV, unless the initial bulk-election rule already elects everyone.</p><p>Otherwise there are two distinct first choices, $a$ and $b$, with masses $u$ and $1-u$.</p><p>If $u\ne1/2$, the heavier first choice has a strict majority and wins the first IRV run. It is also STV’s unique initial maximum, with tally greater than $1/2\ge q$, and is elected first.</p><p>If $u=1/2$, IRV eliminates every zero-tally candidate before either $a$ or $b$. Its first winner is therefore one of them.</p><p>STV elects one of $a,b$ first, unless a bulk election already includes both. After that election, the other retains tally at least $1/2$, whereas every outside candidate has tally at most<br>$$
+\frac12-q&lt;\frac12.
+$$<br>The other first choice is consequently elected next, or included in a terminal bulk election. Since $S\ge2$, both first choices belong to the STV committee.</p><p>In every case, the first sequential RCV winner belongs to the STV committee.</p><h3>5.2 Three rankings already permit disjoint committees</h3><p>The intersection property cannot be extended to $\tau=3$, even for $S=2$ and $m=4$.</p><p>Consider the following support:</p><p>| Ranking | Mass |<br>|---|---:|<br>| $a\succ b\succ c\succ d$ | $9/32$ |<br>| $b\succ c\succ a\succ d$ | $10/32$ |<br>| $d\succ a\succ b\succ c$ | $13/32$ |</p><p>In the first IRV run, $c$ has zero tally and is eliminated. Candidate $a$, with tally $9/32$, is then the unique minimum. Its mass transfers to $b$, giving $b$ a strict majority of $19/32$.</p><p>For the second run, delete $b$ and reset eliminations. The initial positive tallies are $9/32$ for $a$, $10/32$ for $c$, and $13/32$ for $d$. Eliminating $a$ transfers its mass to $c$, which wins with $19/32$. Thus sequential RCV elects<br>$$
+\{b,c\}.
+$$</p><p>For STV, $q=1/3$. Initially $d$ is the unique maximum, with tally $13/32&gt;q$. Its surplus is<br>$$
+\frac{13}{32}-\frac13=\frac7{96}.
+$$<br>That surplus transfers to $a$, whose tally becomes<br>$$
+\frac9{32}+\frac7{96}=\frac{17}{48}.
+$$<br>This exceeds both $q=16/48$ and $b$’s tally $10/32=15/48$. Hence STV elects<br>$$
+\{d,a\}.
+$$<br>The committees are disjoint, independently of the priority order.</p><p>Therefore three is the minimum support size permitting disjoint committees for $S=2$. This is an existence statement, not a hardness reduction.</p><h3>6. General arithmetic-circuit upper bound</h3><p>Define $\mathrm{PosSLP}$ to be the following decision problem: given a division-free integer straight-line program using constants $0,1$ and operations $+,-,\times$, decide whether its output is positive.</p><p>Store the integers in the generic STV simulation as arithmetic-circuit outputs, rather than expanding their binary representations.</p><p>The initial integers have polynomial bit length and can be constructed from $0,1$ using repeated doubling and addition. Every subsequent update uses only permitted operations. With shared subcircuits, at most $m$ rounds and $O(\tau+m)$ arithmetic operations per round produce polynomial-size circuits.</p><p>All comparisons can be answered by $\mathrm{PosSLP}$ queries. For example,<br>$$
+A_c&gt;A_{c&#x27;}
+\quad\Longleftrightarrow\quad
+A_c-A_{c&#x27;}&gt;0,
+$$<br>and<br>$$
+A_c\ge E
+\quad\Longleftrightarrow\quad
+E-A_c\text{ is not positive}.
+$$<br>Equality and the fixed priority order can therefore be handled exactly.</p><p>Assignments, ranking pointers, elected sets, and eliminated sets require only polynomial storage. It follows that<br>$$
+\text{committee computation}\in
+\mathsf{FP}^{\mathrm{PosSLP}},
+$$<br>$$
+\text{disjointness testing}\in
+\mathsf{P}^{\mathrm{PosSLP}}.
+$$</p><p>Allender, Bürgisser, Kjeldgaard-Pedersen, and Miltersen prove that $\mathrm{PosSLP}$ lies in the counting hierarchy, hence in $\mathsf{PSPACE}$. Their theorem applies because our queries are polynomial-size, division-free integer programs with the specified constants and operations. [On the Complexity of Numerical Analysis](https://people.cs.rutgers.edu/~allender/papers/slp.pdf).</p><p>Simulating the polynomially many adaptive oracle calls with reusable polynomial space gives polynomial-space algorithms for the requested outputs.</p><h3>7. Unresolved classification</h3><p>The unrestricted classification remains unproved here.</p><p>The new denominator construction eliminates one possible route to polynomial time: explicit reduced fractions do not always have polynomial bit length. It does not eliminate algorithms that compare succinct representations or exploit other properties of the count.</p><p>Conversely, neither exponentially large denominators nor membership in $\mathsf{P}^{\mathrm{PosSLP}}$ supplies an $\mathsf{NP}$-hardness reduction. Resolving the task requires a general polynomial bit-time algorithm or a valid hardness reduction for the specified output or disjointness problem.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 2, 4, 6, and 7; resolution of USER_TASK: The unrestricted classification is not established: the explicit simulation bounds are exponential in $S$ or $r$, the oracle and polynomial-space bounds do not establish polynomial time, and no applicable $\mathsf{NP}$-hardness reduction is provided. This is an acknowledged scope shortfall, not a false step in the partial results.</li></ul>
+<div class="pre"><p>The output establishes valid partial results, but it does <b>not resolve the unrestricted complexity classification requested in USER_TASK</b>. I found no false central step or substantive gap in the auxiliary arguments. The major outstanding issue is the explicitly acknowledged absence of either a general polynomial-time algorithm or an applicable hardness reduction.</p><h3>1. Scope and input representation</h3><p>The output correctly distinguishes the support size $\tau$ from the number of possible rankings. Its algorithms operate on the listed rankings and do not enumerate unlisted rankings.</p><p>Writing the masses as $p_i=a_i/b_i$ uses the natural interpretation of binary-encoded rational inputs. If “binary rational” is intended specifically to mean dyadic rational, the denominator construction still supplies an infinite admissible subfamily by restricting $S+1$ to powers of two. The construction for every $S$ uses general rational masses; that stronger statement depends on the broader interpretation.</p><p>The fixed priority order is compatible with every algorithm described. The explicit denominator family and disjointness example have unique relevant choices, so neither depends on a particular priority order.</p><h3>2. Representation and conservation</h3><p>The common-denominator initialization is correct:</p><p>$$
+E_0=\prod_i b_i,\qquad h_i=a_iE_0/b_i,\qquad \sum_i h_i=E_0.
+$$</p><p>Each division defining $h_i$ is exact. Since the sum of the input denominator bit lengths is bounded by $L$, the stated $O(L)$ bit bounds are valid.</p><p>The one-weight-per-ranking representation faithfully implements the task. Multiplication by a surplus factor and transfer to one next continuing candidate do not split a ranking’s surviving weight.</p><p>The conservation calculation is correct. An individual quota election removes exactly $q$, including the equality case $a=q$. Thus, before any terminal bulk election, after $k$ quota elections the total current weight is</p><p>$$
+1-kq=\frac{d-k}{d}.
+$$</p><p>The destination argument also respects the terminal rule. An elimination occurs only when more candidates continue than vacancies remain. An election requiring further counting leaves a continuing candidate. Complete rankings therefore prevent positive-weight exhaustion during relevant transfers.</p><p>Omitting the final transfer is valid because the required output contains committees and their intersection, not terminal weights.</p><h3>3. Sequential RCV and the generic STV simulation</h3><h3>Sequential RCV</h3><p>The integer-tally representation is correct. Every tally is a sum of original $h_i$, and its numerator is bounded by $E_0$. Testing strict majority by comparing twice the numerator with $E_0$ correctly uses the original total mass.</p><p>The pointer accounting and elimination reset implement the specified repeated IRV procedure. At most $m$ rounds and $\tau m$ pointer advances per run support the conservative bound</p><p>$$
+O\!\left(Sm(\tau+m)b^2\right).
+$$</p><p>This establishes polynomial-time committee computation for sequential RCV.</p><h3>Generic STV</h3><p>The invariant</p><p>$$
+w_i=\frac{N_i}{dE}
+$$</p><p>holds initially. The quota comparison $A_c\ge E$ exactly implements the task’s weak quota threshold.</p><p>The election update is algebraically correct. For contributing rankings,</p><p>$$
+\frac{N_i(A-E)}{dEA}
+=
+\frac{N_i}{dE}\frac{A-E}{A}.
+$$</p><p>For other rankings, multiplication of both numerator and denominator by $A$ preserves their weights. Since $A\ge E&gt;0$, no division by zero or negative weight occurs. At $A=E$, the contributing weights become zero as required.</p><p>The size bound follows from total current weight being at most $1$:</p><p>$$
+N_i\le D,\qquad A_c\le D,\qquad D&#x27;=DA\le D^2.
+$$</p><p>There are at most $S-1$ relevant election updates, because the final transfer is omitted and a bulk election requires no subsequent count. Hence the claimed $O(2^Sb)$ integer bit length and</p><p>$$
+O\!\left(m(\tau+m)4^Sb^2\right)
+$$</p><p>simulation bound are justified. The latter also absorbs the sequential RCV computation since $S\le m$ and its dependence on $S$ is smaller.</p><p>The conclusion is correctly limited to polynomial time for fixed $S$.</p><h3>4. Exponential reduced-denominator construction</h3><p>The construction contains exactly $2S$ candidates and $S+1$ distinct complete rankings. Distinctness holds even for $S=2$: the distinguished ranking and the auxiliary ranking beginning with $c_1$ differ in their second choices. The masses are positive and sum to $1$.</p><p>The induction assertions are correct at $k=0$. At each subsequent relevant step, $c_{k+1}$ has tally $q+\delta_k$, which strictly exceeds both the untouched candidates’ tally $q$ and $z$’s tally $q-\delta_k$. Thus its selection is forced.</p><p>The surplus factor is correctly computed:</p><p>$$
+\frac{\delta_k}{q+\delta_k}=\frac1{y_k+1}.
+$$</p><p>The distinguished ranking’s new weight is $\delta_{k+1}$. The auxiliary ranking’s transfer is also correct:</p><p>$$
+\frac{q}{y_k+1}
+=
+\delta_k-\delta_{k+1}.
+$$</p><p>Its destination is $z$, which remains continuing. The resulting tally of $z$ is therefore $q-\delta_{k+1}$. All untouched auxiliary rankings retain weight $q$.</p><p>The induction only needs transfers through $k=S-2$; consequently, the reference to $c_{k+2}$ does not run beyond the candidate list.</p><p>No elimination occurs, and the terminal bulk rule cannot intervene because</p><p>$$
+2S-k&gt;S-k.
+$$</p><p>The claimed STV committee follows.</p><p>The denominator lower bound is valid. From $y_1=2$ and $y_{k+1}\ge y_k^2$,</p><p>$$
+y_k\ge 2^{2^{k-1}}
+$$</p><p>for $k\ge1$. Immediately before the final election, the distinguished weight is</p><p>$$
+\frac1{(S+1)y_{S-1}},
+$$</p><p>whose numerator is $1$, so no cancellation is possible. Its denominator has at least $2^{S-2}$ bits. This includes the boundary case $S=2$.</p><p>The input-length estimate is correct under ordinary explicit ranking encoding. Therefore this family establishes superpolynomial growth in explicitly stored reduced current weights.</p><p>The output correctly avoids interpreting this representation lower bound as computational hardness.</p><h3>5. Refined simulation bound</h3><p>Both special updates are valid.</p><p>When every positive weight contributes, the elected tally equals the conserved total weight. The stated factor and update follow, and denominator growth is bounded by multiplication by $d$.</p><p>When contributing rankings share a multiplier, their relative shares satisfy</p><p>$$
+\frac{w_i}{a}=\frac{h_i}{H}.
+$$</p><p>The integer update consequently represents the stated weight subtraction exactly. The quota condition guarantees nonnegativity, and $H&gt;0$ because a quota-eligible tally has a positive contributor. Also, $H\le E_0$.</p><p>The multiplier-equality test is valid because all input masses are positive:</p><p>$$
+g_i=g_j
+\quad\Longleftrightarrow\quad
+N_ih_j=N_jh_i.
+$$</p><p>The exceptional/nonexceptional classification covers all quota updates. The logarithmic recurrence correctly accounts for additive denominator growth and subsequent doublings, yielding</p><p>$$
+O\!\left(2^r(S+1)b\right)
+$$</p><p>bits and the stated running time.</p><p>The first quota election is nonexceptional because all initial multipliers equal $1$. Thus $r\le S-2$ is correct, including executions that terminate earlier.</p><p>These are valid restricted polynomial-time results, not an unrestricted classification.</p><h3>6. Small-support claims</h3><p>For $\tau\le2$, every quota election has either one positive contributor or all positive contributors. Therefore $r=0$, establishing the claimed polynomial running time.</p><p>The intersection argument covers all relevant cases:</p><ul><li>A common first choice wins the first IRV run and belongs to the STV committee.</li><li>Unequal masses give the heavier first choice a strict majority and the unique largest initial STV tally.</li><li>Equal masses imply that the first IRV winner is one of the two first choices. After STV elects one, the other retains tally at least $1/2$, while every outside candidate has tally at most $1/2-q$. Therefore the other is elected next or included in a terminal bulk election.</li></ul><p>The assumption $S\ge2$ is essential and is explicitly used.</p><p>The three-ranking example is correct. Sequential RCV produces $\{b,c\}$, with winning tallies $19/32$ in both runs. For STV,</p><p>$$
+\frac{13}{32}-\frac13=\frac7{96},
+\qquad
+\frac9{32}+\frac7{96}=\frac{17}{48}.
+$$</p><p>The latter exceeds both $q=16/48$ and $b$’s tally $15/48$, so STV produces $\{d,a\}$. All decisive comparisons are strict.</p><p>Combining this example with the preceding impossibility result correctly establishes the minimum support size for disjoint committees when $S=2$.</p><h3>7. Arithmetic-circuit and space upper bounds</h3><p>The circuit simulation is valid. Initialization produces polynomial-length integers, and every subsequent numerical update uses only addition, subtraction, and multiplication. Shared subcircuits keep the representation polynomial in size.</p><p>The displayed positivity queries correctly handle strict comparison and the weak quota condition. Equality and priority ties can also be resolved through these queries. The number and sizes of the adaptive queries remain polynomial.</p><p>The cited theorem applies to the exact straight-line-program model defined in the output: integer programs using constants $0,1$ and operations $+,-,\times$. The source confirms membership of $\mathrm{PosSLP}$ in the counting hierarchy and its containment in $\mathsf{PSPACE}$. [Allender et al., *On the Complexity of Numerical Analysis*](https://people.cs.rutgers.edu/~allender/papers/slp.pdf).</p><p>Thus the claimed oracle upper bounds are justified. Reusing polynomial space between adaptive oracle calls also justifies polynomial-space committee computation and disjointness testing. These are upper bounds, not hardness results.</p><h3>8. Outstanding issue and actionable feedback</h3><p><b>Major issue — requested classification remains unresolved.</b> No presented result establishes unrestricted polynomial-time solvability or applicable $\mathsf{NP}$-hardness. The output acknowledges this accurately; the issue is incomplete resolution of USER_TASK, not an invalid auxiliary proof.</p><p>No mathematical repair is needed for the established partial results. To complete the assignment, the prover must supply either:</p><ul><li>an exact algorithm with polynomial bit-time bounds for unrestricted $m,\tau,L,S$; or</li><li>a valid hardness reduction for the specified committee computation or disjointness problem, including its encoding, transfer rules, quota equality convention, terminal rule, and deterministic ties.</li></ul><p>The denominator construction alone cannot supply the missing classification.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

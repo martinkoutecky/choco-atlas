@@ -1,0 +1,197 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-atal-2021-0118 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-atal-2021-0118 <span style="font-weight:normal;color:#8a7350">(d4-conf-atal-2021-0118)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Algorithm 2 implements buy in time O(log𝑛 vals).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given an LMSR tree \(T\), a population scale \(N\), and a rational distribution \(\mu\) over finitely many order types \(t=(I_t,q_t)\), compute the updated tree and batch cost for aggregate flow \(\Delta=\sum_t N\mu_tq_t\mathbf{1}_{I_t}\). For \(d\) distinct intervals and \(n_0\) prior endpoints, can this be done in \(O(d\log(n_0+2d))\) arithmetic operations?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>An LMSR market has outcome domain \([0,1)\), uniform reference measure, and positive binary-rational liquidity \(b\). Its state is represented by a full AVL tree \(T\): node intervals partition their parent interval, the root interval is \([0,1)\), and every leaf interval has positive length. Endpoints are dyadic rationals of unrestricted precision; each node has a signed binary-rational share quantity \(s_z\).<br>The represented liability is \(\theta_T(x)=\sum_{z:x\in I_z}s_z\). Cached normalizers satisfy \(S_z=e^{s_z/b}|I_z|\) at leaves and \(S_z=e^{s_z/b}(S_{\mathrm{left}(z)}+S_{\mathrm{right}(z)})\) internally. The input tree is promised valid.<br>A society is given by its support: the list of the \(\tau\) types with positive mass, each with its mass as a binary rational. Here \(\tau\) is the support size, not the number of possible types. A type is \(t=(I_t,q_t)\), with \(I_t=[\alpha_t,\beta_t)\), \(0\leq\alpha_t&lt;\beta_t\leq1\), dyadic endpoints, and signed binary-rational \(q_t\); masses satisfy \(\sum_t\mu_t=1\).<br>Given positive binary-rational population scale \(N\), define \(\Delta(x)=\sum_tN\mu_tq_t\mathbf1_{I_t}(x)\). Compute a valid updated tree representing \(\theta_T+\Delta\) and the total batch charge \(b\log\bigl(\int_0^1e^{(\theta_T(x)+\Delta(x))/b}\,dx\,/\,\int_0^1e^{\theta_T(x)/b}\,dx\bigr)\).<br>Let \(m\) be the initial number of leaves, \(n_0=m+1\) its number of distinct endpoints, \(d\) the number of distinct support intervals, and \(L\) the total input encoding length. Exact transcendental values are represented by shared expression circuits using rational constants, arithmetic, \(\exp\), and \(\log\); cached input values use the same representation.<br>Is this exact batch-update-and-charge problem solvable in polynomial time in \(m,\tau,L\), or is it NP-hard?<br>In the tractable case, can updating an already stored tree and computing the charge use \(O(\tau+d\log(n_0+2d))\) arithmetic operations, counting comparisons, \(\exp\), and \(\log\) at unit cost?<br>The discrete single-interval update has an \(O(\log n_{\mathrm{vals}})\) algorithm, where \(n_{\mathrm{vals}}\) counts distinct traded endpoints; share quantities may be arbitrary signed reals. The construction also supports unspecified endpoint precision, but these statements concern single orders rather than support-encoded batches. [Verified source](https://arxiv.org/pdf/2102.07308).</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the distribution masses to sum to one and made the population scale N a separate positive binary rational, independent of outcome precision.</li><li>Retained signed quantities, allowing both purchases and short sales; required nonempty intervals and positive liquidity.</li><li>Used dyadic endpoints of unrestricted precision, preserving the finite-grid endpoint domain without requiring a prescribed precision.</li><li>Specified the uniform reference measure and integral LMSR batch charge, consistent with the tree&#x27;s interval-length normalizers.</li><li>Defined m as the initial leaf count and counted boundary endpoints, giving n_0=m+1.</li><li>Specified exact expression circuits for transcendental values so polynomial bit complexity has a finite output interpretation.</li><li>Included the support-processing term tau in the arithmetic bound and interpreted the update as operating on an already stored tree.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Results established</h3><p>The exact batch-update-and-charge problem is <b>polynomial-time solvable</b> with the specified circuit representation.</p><p>For an arbitrary support list, a deterministic stored-tree algorithm uses<br>$$
+O\!\left(\tau\log(d+1)+d\log(n_0+2d)\right)
+$$<br>unit-cost operations. If equal support intervals are already grouped consecutively, the requested bound<br>$$
+O\!\left(\tau+d\log(n_0+2d)\right)
+$$<br>holds.</p><p>A new lower bound below shows that the requested bound is impossible in a precisely defined endpoint-comparison model. That lower bound does <b>not</b> settle the question for algorithms allowed to use arithmetic on endpoint values to determine share quantities or tree structure. Thus the unrestricted operation-bound question remains unresolved here.</p><h3>2. Polynomial-time construction of the updated tree</h3><p>For bit complexity, I use the usual explicit encoding of rational numbers: numerators and denominators are written in binary. Finite binary fractions are a special case. Unrestricted endpoint precision is allowed, and its explicit encoding contributes to $L$. The argument works whether “binary-rational” quantities mean finite binary fractions or arbitrary rationals encoded this way.</p><p>Define<br>$$
+a_t=N\mu_tq_t.
+$$<br>All these quantities are rational; under the finite-binary-fraction interpretation, they are dyadic.</p><h3>Endpoint refinement</h3><p>Let $E_0$ be the set of initial leaf endpoints, and define<br>$$
+E=E_0\cup\{\alpha_t,\beta_t:t\text{ belongs to the support}\}.
+$$<br>Write the distinct elements in increasing order as<br>$$
+0=e_0&lt;e_1&lt;\cdots&lt;e_M=1.
+$$<br>Since there are $d$ distinct support intervals, their endpoints contribute at most $2d$ additional points. Therefore<br>$$
+M+1\leq n_0+2d,
+\qquad
+M\leq m+2d.
+$$</p><p>For each $i$ with $0\leq i&lt;M$, define the atomic interval<br>$$
+J_i=[e_i,e_{i+1}).
+$$<br>Every $J_i$ lies in one initial leaf: otherwise an initial leaf boundary would lie strictly inside $J_i$, contradicting the definition of consecutive elements of $E$.</p><p>Likewise, every support indicator $\mathbf 1_{I_t}$ is constant on $J_i$, because both endpoints of $I_t$ belong to $E$.</p><h3>Computing the updated liabilities</h3><p>Traverse the initial tree while maintaining the sum of quantities on the path from the root. At a node $z$, add $s_z$ before processing its children or recording its leaf value. This computes, for every initial leaf $\ell$,<br>$$
+\lambda_\ell=\sum_{z\text{ on the root-to-}\ell\text{ path}}s_z.
+$$<br>By the definition of the represented liability,<br>$$
+\theta_T(x)=\lambda_\ell
+\quad\text{for every }x\in I_\ell.
+$$</p><p>The batch contribution can be computed by an endpoint sweep. For each supported type, create two event records:<br>$$
+(\alpha_t,a_t),
+\qquad
+(\beta_t,-a_t).
+$$<br>Sort these records by their endpoints and combine events at equal endpoints.</p><p>Sweep through $E$ in increasing order. At $e_i$, first add every event located at $e_i$ to the running total $\delta_i$. Then<br>$$
+\delta_i=\sum_{t:\,\alpha_t\leq e_i&lt;\beta_t}a_t.
+$$<br>Indeed, a type starts contributing at its left endpoint and stops contributing at its right endpoint. Processing both kinds of events before the following atom implements the half-open convention, including coincident starts and ends.</p><p>Let $\ell(i)$ be the initial leaf containing $J_i$, and set<br>$$
+v_i=\lambda_{\ell(i)}+\delta_i.
+$$<br>For every $x\in J_i$, the constancy properties proved above give<br>$$
+v_i=\theta_T(x)+\Delta(x).
+$$<br>This argument permits arbitrary signs and cancellations among the $a_t$.</p><h3>Constructing an AVL tree</h3><p>Construct a full binary tree whose ordered leaves are $J_0,\ldots,J_{M-1}$. For a consecutive block containing $r\geq2$ leaves, recursively divide it into blocks of sizes<br>$$
+\left\lfloor\frac r2\right\rfloor
+\quad\text{and}\quad
+\left\lceil\frac r2\right\rceil.
+$$<br>The interval of each internal node is the union of its leaf intervals.</p><p>Assign $v_i$ to leaf $J_i$ and assign zero to every internal node. Consequently, the represented liability on $J_i$ is exactly $v_i$.</p><p>Here is an explicit verification of height balance. With leaf height zero, the construction on $r$ leaves has height<br>$$
+H(r)=\lceil\log_2 r\rceil.
+$$<br>For $r=1$, this is immediate. For $r\geq2$, induction gives<br>$$
+H(r)=1+\left\lceil\log_2\left\lceil\frac r2\right\rceil\right\rceil
+=\lceil\log_2 r\rceil.
+$$<br>To verify the last identity, put $k=\lceil\log_2r\rceil$. If $k=1$, then $r=2$. If $k\geq2$, then<br>$$
+2^{k-1}&lt;r\leq2^k
+$$<br>implies<br>$$
+2^{k-2}&lt;\left\lceil\frac r2\right\rceil\leq2^{k-1}.
+$$</p><p>The two child block sizes are equal or consecutive positive integers. For every positive integer $a$,<br>$$
+a+1\leq2a
+$$<br>implies<br>$$
+\lceil\log_2(a+1)\rceil
+\leq
+\lceil\log_2a\rceil+1.
+$$<br>Thus the child heights differ by at most one.</p><p>Every leaf interval has positive length because the endpoints were strictly sorted and deduplicated. Child intervals partition their parent interval, and the root interval is $[0,1)$. The constructed tree therefore satisfies the required structural conditions.</p><h3>3. Exact caches, charge, and bit complexity</h3><h3>The normalizer identity</h3><p>For any node $z$, define its subtree liability on $I_z$ by<br>$$
+f_z(x)=
+\sum_{\substack{w\text{ in the subtree of }z\\x\in I_w}}s_w.
+$$<br>I claim that the stipulated cache recurrence gives<br>$$
+S_z=\int_{I_z}e^{f_z(x)/b}\,dx.
+$$</p><p>At a leaf, $f_z=s_z$ throughout $I_z$, so<br>$$
+\int_{I_z}e^{f_z(x)/b}\,dx
+=e^{s_z/b}|I_z|.
+$$</p><p>At an internal node, its child intervals partition $I_z$. On either child interval, the subtree liability equals $s_z$ plus that child’s subtree liability. Hence, using the inductive hypothesis,<br>$$
+\int_{I_z}e^{f_z(x)/b}\,dx
+=
+e^{s_z/b}
+\left(S_{\mathrm{left}(z)}+S_{\mathrm{right}(z)}\right).
+$$<br>This is precisely the internal cache recurrence, proving the claim by induction.</p><p>Compute the new caches bottom-up. Preserve the input root circuit as $Z_{\mathrm{old}}$, and denote the new root circuit by $Z_{\mathrm{new}}$. The identity just proved gives<br>$$
+Z_{\mathrm{old}}=\int_0^1e^{\theta_T(x)/b}\,dx,
+$$<br>and<br>$$
+Z_{\mathrm{new}}
+=\int_0^1e^{(\theta_T(x)+\Delta(x))/b}\,dx.
+$$<br>Thus the exact charge is represented by<br>$$
+b\log\!\left(\frac{Z_{\mathrm{new}}}{Z_{\mathrm{old}}}\right).
+$$<br>Both normalizers are finite and strictly positive: their integrands are positive, finite step functions on a finite partition of $[0,1)$. The division and logarithm are therefore defined.</p><p>Each new node requires only a constant number of circuit gates. Sharing the old root circuit avoids expanding or copying its expression. No transcendental comparison or numerical evaluation is required.</p><h3>Polynomial bit complexity</h3><p>The initial traversal takes $O(m)$ rational additions and comparisons. Traversing children in increasing interval order also produces the sorted initial endpoint list in $O(m)$ operations.</p><p>Sorting the $2\tau$ support events takes<br>$$
+O\!\left(\tau\log(\tau+1)\right)
+$$<br>rational comparisons. Combining events, merging their endpoints with the initial endpoint list, and computing the atom values take $O(m+\tau)$ additional operations.</p><p>All rational operands have polynomial bit length. Each $a_t$ is a product of three input rationals. Each path sum, event sum, or atom value is a sum of at most $O(m+\tau)$ input-derived rational terms.</p><p>For arbitrary binary-encoded rational terms, a common denominator can be chosen as the product of their denominators. Its bit length is at most the sum of their denominator bit lengths. Adding the resulting integer numerators increases their maximum bit length by at most the logarithm of the number of terms. Consequently, a crude bound of<br>$$
+O\!\left((m+\tau+1)L+\log(m+\tau+1)\right)
+$$<br>suffices for all these rational values. Endpoint differences and division by $b$ also have polynomial bit length.</p><p>The output contains $O(m+d)$ tree nodes and newly created cache gates. Standard exact rational arithmetic and sorting therefore give polynomial bit time in $m,\tau,L$.</p><p>This proves polynomial-time solvability of the exact problem.</p><h3>4. Updating the stored tree</h3><p>For each distinct support interval $J$, define<br>$$
+A_J=\sum_{t:\,I_t=J}N\mu_tq_t.
+$$<br>Then, pointwise on $[0,1)$,<br>$$
+\Delta(x)=\sum_JA_J\mathbf1_J(x).
+$$<br>Thus one signed single-interval update per distinct interval suffices. A zero coefficient may be skipped.</p><p>The supplied single-order result supports arbitrary signed quantities, local cache maintenance, and AVL balancing in logarithmic time. These are the properties established by Theorem 2 and Appendix A.2 of the [verified source](https://arxiv.org/pdf/2102.07308).</p><p>To check its applicability to continuous uniform measure, choose a common dyadic precision $K$ for the initial and support endpoints. Every liability encountered is constant on each interval<br>$$
+[j2^{-K},(j+1)2^{-K}).
+$$<br>Therefore<br>$$
+\int_0^1e^{\theta(x)/b}\,dx
+=
+2^{-K}\sum_{j=0}^{2^K-1}e^{\theta(j2^{-K})/b}.
+$$<br>The same identity holds for each subtree interval and subtree liability. Thus the normalized discrete caches coincide with the continuous caches. The grid is only a proof device; it need not be enumerated.</p><p>An interval update on $[\alpha,\beta)$ may be implemented through<br>$$
+\mathbf1_{[\alpha,\beta)}
+=
+\mathbf1_{[\alpha,1)}-\mathbf1_{[\beta,1)}.
+$$<br>If $\beta=1$, the second suffix is empty and is omitted. If $\alpha=0$, the first suffix is the whole domain. Hence no suffix primitive needs to be invoked at the excluded outcome $1$.</p><p>Throughout the batch, at most $2d$ endpoints are added. Once the $A_J$ are available, the updates consequently cost<br>$$
+O\!\left(d\log(n_0+2d)\right).
+$$<br>Preserving the old root circuit and forming the final charge require only constant additional operations.</p><p>A balanced comparison dictionary keyed by $(\alpha_t,\beta_t)$ aggregates the support in<br>$$
+O\!\left(\tau\log(d+1)\right)
+$$<br>operations. This proves the deterministic stored-tree bound stated in Section 1.</p><p>If equal intervals occur in consecutive groups, adjacent-key comparisons and additions aggregate them in $O(\tau)$ operations, proving the requested sharper bound for that input class. It also holds when all support intervals are distinct.</p><p>These bounds concern modifying the stored structure and returning its handle. Serializing the whole updated tree has an additional cost proportional to its size.</p><h3>5. A lower bound in the endpoint-comparison model</h3><p>The following result is new progress on the sharper question. Its model restriction is essential.</p><p><b>Model assumption.</b> Endpoint values affect tree structure and share quantities only through comparisons of endpoint keys. Arithmetic on endpoint values may form cache circuits, but those arithmetic results do not influence tree structure, share quantities, or control flow.</p><p>Thus, after fixing the transcript of endpoint comparisons, the output topology and node share quantities are fixed. Output endpoints may be copied input keys or constants independent of the variable endpoint values. This describes comparison-based aggregation and interval-update implementations, but it is narrower than unrestricted rational arithmetic.</p><p><b>Proposition.</b> In this model, some valid batches require<br>$$
+\Omega(\tau\log d)
+$$<br>endpoint comparisons, even when $m=d+1$.</p><h3>Construction</h3><p>Let $k\geq2$ be a power of two, and put<br>$$
+d=k,\qquad \tau=k^2.
+$$<br>Choose the fixed dyadic anchors<br>$$
+c_j=\frac{j}{2k},
+\qquad 1\leq j\leq k.
+$$<br>The initial tree has leaf endpoints<br>$$
+0,c_1,\ldots,c_k,1
+$$<br>and all node quantities zero. A valid AVL tree exists by the construction in Section 2. Its number of leaves is $m=k+1$.</p><p>Set<br>$$
+b=1,\qquad N=\tau,\qquad \mu_i=\frac1\tau,
+\qquad q_i=2^{i-1}.
+$$<br>These are valid binary-rational inputs, and the masses sum to one.</p><p>For $1\leq i\leq k$, give type $i$ the interval $[c_i,1)$. For each remaining index, independently choose<br>$$
+x_i\in\{c_1,\ldots,c_k\}
+$$<br>and give type $i$ the interval $[x_i,1)$.</p><p>The quantities $q_i$ are distinct, so all $\tau$ types are distinct even when intervals coincide. Every anchor interval occurs among the first $k$ types, so there are exactly $d=k$ distinct support intervals.</p><p>There are<br>$$
+k^{\tau-k}
+$$<br>possible assignments of the variable endpoints.</p><h3>Distinct assignments require distinct liabilities</h3><p>The updated liability is<br>$$
+\Delta(x)=\sum_{j=1}^kA_j\mathbf1_{[c_j,1)}(x),
+$$<br>where<br>$$
+A_j=
+\sum_{\substack{i:\,\text{type }i\\
+\text{uses }[c_j,1)}}2^{i-1}.
+$$<br>Each $A_j$ is positive because the first $k$ types include its anchor interval.</p><p>The binary expansion of $A_j$ identifies exactly which type indices use that interval. No carries occur: each power $2^{i-1}$ appears at most once in a given sum. Therefore the vector $(A_1,\ldots,A_k)$ determines the entire endpoint assignment.</p><p>Also, $A_j$ is the jump of the liability at $c_j$. Thus different assignments produce different represented liabilities.</p><h3>One terminal transcript cannot serve two assignments</h3><p>Fix a terminal comparison transcript reached on one of these inputs.</p><p>By the model assumption, the output topology and all node share quantities are fixed by this transcript. Any output endpoint is either an anchor-valued input key or a constant fixed independently of the variable assignment.</p><p>Every $c_j$ must be a leaf boundary in the output. Otherwise $c_j$ would lie strictly inside a leaf, where the represented liability is constant, contradicting its positive jump $A_j$.</p><p>Consequently, the output’s distinct leaf endpoints are exactly the union of:</p><ul><li>all the fixed anchors and $0,1$;</li><li>the fixed constant endpoints used by this transcript.</li></ul><p>Variable input keys contribute no other values. Hence the ordered leaf endpoint list is fixed across all assignments reaching this transcript.</p><p>Because the topology is fixed, each node covers a fixed consecutive block of these leaves. Its interval is therefore fixed as well. Together with the fixed node quantities, this makes the represented liability fixed.</p><p>But different assignments have different liabilities. Thus each terminal transcript serves at most one assignment.</p><h3>Counting transcripts</h3><p>An endpoint comparison has at most three outcomes. A comparison tree of maximum depth $h$ has at most $3^h$ terminal transcripts. Hence<br>$$
+3^h\geq k^{\tau-k},
+$$<br>which implies<br>$$
+h\geq(\tau-k)\log_3k
+=\Omega(\tau\log d).
+$$</p><p>For this family,<br>$$
+n_0=k+2
+$$<br>and the requested bound would be<br>$$
+O\!\left(k^2+k\log(3k+2)\right)=O(k^2).
+$$<br>The proved lower bound is<br>$$
+\Omega(k^2\log k).
+$$<br>Therefore the requested bound is impossible in the stated endpoint-comparison model.</p><h3>6. Why the unrestricted operation bound remains open here</h3><p>The preceding counting argument relies on share quantities being fixed once the endpoint-comparison transcript is fixed. Arithmetic on endpoint values invalidates that premise.</p><p>For example, suppose all variable suffix endpoints belong to known distinct anchors $c_1,\ldots,c_d$. Define<br>$$
+P_j(u)=
+\prod_{\substack{1\leq h\leq d\\h\neq j}}
+\frac{u-c_h}{c_j-c_h}.
+$$<br>All denominators are nonzero. Direct substitution gives<br>$$
+P_j(c_j)=1,
+\qquad
+P_j(c_h)=0\quad(h\neq j).
+$$<br>Consequently, for weights $w_i$,<br>$$
+A_j=\sum_iw_iP_j(x_i)
+$$<br>computes the aggregate at anchor $c_j$ without comparing the variable endpoint keys.</p><p>This formula does not establish the requested bound. It does show why a terminal transcript can produce different share quantities when endpoint arithmetic is allowed, so the comparison-model proof cannot be extended merely by counting assignments.</p><p>The remaining substantive question is whether the full stated arithmetic primitives permit a deterministic algorithm achieving the sharper bound on arbitrary support lists, or whether a lower bound covering that broader model can be proved.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 2, Computing the updated liabilities: The endpoint sweep does not explicitly initialize its running total. State that it starts at zero before processing events at $e_0=0$.</li><li><b>minor</b> — Section 4, Updating the stored tree: The stored-tree operation bound implicitly assumes locally available AVL height metadata and access to the search path. State these representation assumptions explicitly and separate any initial metadata preprocessing from the stored-tree update bound.</li><li><b>major</b> — Sections 1 and 6, unrestricted operation-bound question: The requested bound $O(\tau+d\log(n_0+2d))$ remains unproved and unrefuted for arbitrary support lists under the full allowed arithmetic model. The lower bound applies only to the explicitly restricted endpoint-comparison model.</li></ul>
+<div class="pre"><p>The output is <b>partial</b>. It rigorously establishes polynomial-time solvability with shared expression circuits. It also establishes the stated slower stored-tree bound and a lower bound in its restricted comparison model. It does <b>not</b> resolve the requested operation bound for arbitrary support lists under the full allowed arithmetic model.</p><p>No central mathematical assertion in the established results is refuted.</p><h3>Step-by-step verification</h3><h3>1. Endpoint refinement and liability computation</h3><p>The refinement is correct. Each distinct support interval contributes at most two endpoints, so<br>$$
+M+1\leq n_0+2d,\qquad M\leq m+2d.
+$$<br>Including every original leaf boundary ensures that each atom $J_i$ belongs to exactly one original leaf. Including both endpoints of every support interval ensures that its indicator is constant throughout each atom.</p><p>The root-to-leaf accumulation correctly computes $\lambda_\ell$, including the leaf’s own quantity. Assigning<br>$$
+v_i=\lambda_{\ell(i)}+\delta_i
+$$<br>therefore gives the desired updated liability, provided the sweep running total starts at zero.</p><p>Processing all events at an endpoint before recording the value on the following atom correctly implements half-open intervals. Coincident starts and ends, negative quantities, and cancellations cause no difficulty.</p><p><b>Minor issue:</b> The sweep’s initial running total is not explicitly specified.</p><p><b>Minimum clarification:</b> State that the running total is initialized to zero before processing events at $e_0=0$. No event processing at $e_M=1$ is needed to compute the atom values.</p><h3>2. Construction of the updated AVL tree</h3><p>The recursive split into blocks of sizes $\lfloor r/2\rfloor$ and $\lceil r/2\rceil$ produces a full binary tree with the required ordered leaves.</p><p>The height calculation is correct:<br>$$
+H(r)=\lceil\log_2 r\rceil.
+$$<br>The induction includes $r=1$ and handles $r=2$ separately in the logarithmic identity. For larger $r$, the stated inequalities establish the identity.</p><p>The two child sizes are equal or consecutive positive integers. The supplied inequality correctly bounds their height difference by one. Thus the construction satisfies AVL balance.</p><p>Strict endpoint ordering gives positive leaf lengths. Internal intervals are consecutive unions, their children partition them, and the root is $[0,1)$. Assigning zero to internal nodes and $v_i$ to leaves represents exactly $\theta_T+\Delta$.</p><p>This part is fully correct, including the single-leaf case.</p><h3>3. Cache identity and exact charge</h3><p>The induction proving<br>$$
+S_z=\int_{I_z}e^{f_z(x)/b}\,dx
+$$<br>is valid. At an internal node, the parent quantity contributes a common multiplicative factor, and the two child intervals partition the integration domain.</p><p>At the root, $f_z$ is the represented liability. Consequently, the old and new root circuits represent the required integrals, and<br>$$
+b\log\!\left(\frac{Z_{\mathrm{new}}}{Z_{\mathrm{old}}}\right)
+$$<br>is exactly the requested charge.</p><p>Both normalizers are finite and positive because all liabilities are finite on a finite partition and every leaf has positive length. Division and logarithm are therefore well-defined.</p><p>Creating a constant number of gates per new node and sharing the old circuit is consistent with the specified representation. This argument does not require evaluating or comparing transcendental values.</p><h3>4. Polynomial bit complexity</h3><p>The operation counts for traversal, sorting, merging, and construction are sound.</p><p>The rational-size argument is also sound. Products defining $a_t$ have polynomial bit length. Path sums and event sums contain only polynomially many input-derived terms. The common-denominator argument bounds their bit lengths polynomially, and the stated bound is conservative.</p><p>Endpoint differences and division by positive rational $b$ preserve polynomial bit length. The number of new nodes and circuit gates is $O(m+d)$; the retained input circuit contributes at most its input encoding size.</p><p>Thus the output genuinely establishes polynomial-time solvability in $m,\tau,L$. This conclusion is independent of the subsequent unresolved sharper bound.</p><h3>5. Stored-tree algorithm and cited theorem</h3><p>Aggregation by interval is algebraically correct:<br>$$
+\Delta(x)=\sum_J A_J\mathbf1_J(x).
+$$<br>Zero aggregates may be skipped without changing the liability.</p><p>The cited result is applicable in substance. Algorithm 2 accepts an arbitrary real share quantity and performs a suffix update; Theorem 2 gives logarithmic running time. Appendix A.2 describes local rotations that maintain the represented state and normalizers. These properties match the invocation here. [Source: Algorithm 2, Theorem 2, and Appendix A.2](https://arxiv.org/pdf/2102.07308).</p><p>The common dyadic grid argument correctly transfers normalized discrete caches to uniform continuous integrals. It is an identity used to justify the transfer, not a requirement to enumerate the grid. Unrestricted endpoint precision therefore does not introduce exponentially many executed operations.</p><p>The suffix decomposition is correct. The cases $\alpha=0$ and $\beta=1$ are explicitly handled, so the excluded outcome $1$ is never passed to the suffix primitive.</p><p>With at most $2d$ additional endpoints, the total update cost after aggregation is<br>$$
+O\!\left(d\log(n_0+2d)\right).
+$$<br>The balanced dictionary contributes<br>$$
+O\!\left(\tau\log(d+1)\right).
+$$<br>Consecutive grouping permits linear aggregation. When $d=\tau$, the dictionary overhead is absorbed into the requested bound, so the assertion for distinct intervals is also valid.</p><p><b>Minor issue:</b> The stored-tree representation’s auxiliary AVL metadata is implicit. The cited algorithm requires locally available heights and a way to retrace the search path. The input description explicitly specifies intervals, quantities, and normalizers, but does not explicitly list this metadata.</p><p><b>Minimum clarification:</b> State that the already stored AVL tree includes its usual height metadata, and that parent access or a search-path stack is available. If metadata must first be constructed from the input, report that preprocessing separately. This is a routine representation clarification under the natural reading of “already stored tree.”</p><p>The distinction between returning a stored-tree handle and serializing the complete tree is correctly stated.</p><h3>6. Restricted comparison lower bound</h3><p>The constructed family satisfies the problem’s input promises:</p><ul><li>The anchors are dyadic because $k$ is a power of two.</li><li>The initial tree has $m=k+1$ positive-length leaves.</li><li>The masses are positive dyadics and sum to one.</li><li>The quantities make all supported types distinct.</li><li>The first $k$ types ensure that exactly $d=k$ intervals occur.</li></ul><p>The identity $N\mu_i=1$ is correct, so the aggregate jump at each anchor is the stated sum of distinct powers of two. Its binary expansion identifies the contributing indices without carries. Different endpoint assignments therefore yield different liabilities.</p><p>Under the explicitly restricted model, fixing the endpoint-comparison transcript fixes topology and quantities. Every anchor must remain a leaf boundary because its jump is positive. Variable endpoint keys introduce no values outside the fixed anchors; any additional constant endpoints are fixed by the transcript. Hence the ordered endpoint list, node intervals, and represented liability are fixed.</p><p>The resulting injectivity of assignments into terminal transcripts is valid. Counting at most three comparison outcomes gives<br>$$
+h\geq(\tau-k)\log_3k=\Omega(\tau\log d).
+$$<br>For $\tau=k^2$, the requested bound is $O(k^2)$, whereas this lower bound is $\Omega(k^2\log k)$. The claimed impossibility follows <b>within that restricted model</b>.</p><p>No extension to unrestricted endpoint arithmetic follows from this argument.</p><h3>7. Endpoint-arithmetic example and remaining scope</h3><p>The interpolation example is correct. Distinct anchors make all denominators nonzero, and substitution yields the stated indicator values. Thus endpoint arithmetic can make share quantities vary even when the endpoint-comparison transcript is fixed.</p><p>The prover correctly presents this as a limitation of its lower-bound argument, not as an algorithm achieving the desired complexity.</p><p><b>Major unresolved requirement:</b> The user asks whether arbitrary support lists admit<br>$$
+O\!\left(\tau+d\log(n_0+2d)\right)
+$$<br>operations under the full stated primitives. Neither the grouped-input algorithm nor the restricted-model lower bound answers that question.</p><p><b>Minimum additional work:</b> Supply an algorithm meeting that bound for arbitrary support lists, or an impossibility argument covering arithmetic on endpoint values that can influence quantities, structure, and control flow. Clarifying the existing comparison proof alone cannot discharge this requirement.</p><h3>Adjudication</h3><p>The polynomial-time result stands. The prover’s explicit claim of partial completion is accurate, and the restricted lower bound is genuine progress. The sole major deficiency is the unanswered unrestricted operation-bound question; the two additional issues are routine expositional clarifications.</p><p>The required JSON convention assigns <code>&quot;unresolved&quot;</code> when the overall result is partial, even though the polynomial-time subquestion has been proved.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

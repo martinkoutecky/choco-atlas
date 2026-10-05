@@ -1,0 +1,265 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-eec7a7160c5dd3db0fa03d328387eb66867c5df6 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-eec7a7160c5dd3db0fa03d328387eb66867c5df6 <span style="font-weight:normal;color:#8a7350">(s5-eec7a7160c5dd3db0fa03d328387eb66867c5df6)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite support rational distribution \(\mu_0\) over initial opinions in \(\mathbb{Q}^d\) and a common confidence radius \(\epsilon&gt;0\), define each round by moving all mass at each support point \(x\) to \(g_{\mu_k}(x)=\frac{\sum_{y:\|x-y\|_2\le\epsilon}\mu_k(y)y}{\sum_{y:\|x-y\|_2\le\epsilon}\mu_k(y)}\), combining masses at coincident points. Compute the least \(t_*\) such that \(\mu_{t_*}=\mu_{t_*+1}\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(m=d\geq1\) be the opinion dimension. A society is given by its support: \(\tau\geq1\) distinct types \(x_i\in\mathbb Q^d\), each with positive binary rational mass \(w_i\), where \(\sum_iw_i=1\). Here \(\tau\) is the support size, not the number of possible types.<br>The input also contains a common binary rational confidence radius \(\epsilon&gt;0\). Let \(L\) be the total binary input length; measure running times in \(m,\tau,L\).<br>Starting from \(\mu_0=\sum_iw_i\delta_{x_i}\), update synchronously at integer rounds. For \(S_k=\operatorname{supp}(\mu_k)\), define<br>\(g_{\mu_k}(x)=\frac{\sum_{y\in S_k:\|x-y\|_2\leq\epsilon}\mu_k(y)y}{\sum_{y\in S_k:\|x-y\|_2\leq\epsilon}\mu_k(y)}\), and \(\mu_{k+1}=\sum_{x\in S_k}\mu_k(x)\delta_{g_{\mu_k}(x)}\).<br>Thus each point includes its own mass, the confidence boundary is included, and coincident images have their masses added. All updates and equality comparisons are exact.<br>Compute, in binary, \(t_* = \min\{k\in\mathbb Z_{\geq0}:\mu_k=\mu_{k+1}\}\).</p><p>Is computing \(t_*\) solvable in time polynomial in \(m,\tau,L\), or is it NP-hard?</p><p>For \(n\) explicitly listed equal-weight agents, synchronous homogeneous dynamics terminate within \(n^8+n\) rounds, independently of dimension ([source](https://arxiv.org/html/1412.6546)).<br>No result settling the exact computation problem for support-encoded binary rational masses was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The confidence radius had no finite encoding specified; take it to be a positive binary rational included in the input.</li><li>Make the distribution normalization explicit: positive masses sum to one, with nonempty support.</li><li>Use m=d for the required running-time convention, and define L as the total binary input length.</li><li>Specify binary encoding of the computed termination round and exact arithmetic and equality.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and new partial result</h3><p>I do not settle the general polynomial-time versus $\mathsf{NP}$-hardness question. I prove a further bound that depends on the smallest mass, rather than on a common denominator.</p><p>Let<br>$$
+\alpha=\min_{1\leq i\leq\tau}w_i.
+$$</p><p><b>Theorem.</b> The dynamics terminate, and<br>$$
+t_*\leq \tau-1+
+\left\lfloor\frac{\tau(\tau-1)^2}{16\alpha^4}\right\rfloor.
+$$<br>This bound is independent of the opinion dimension, the confidence radius, and the initial coordinates. It holds even for arbitrary positive real masses.</p><p>For the rational inputs in the task, this yields an exact algorithm whose running time is polynomial in<br>$$
+m,\tau,L,\left\lceil\frac1\alpha\right\rceil.
+$$<br>Consequently, exact computation is polynomial-time whenever the minimum mass is bounded below by the reciprocal of a fixed polynomial in $m,\tau,L$, even if the common mass denominator is exponentially large.</p><p>All results used below are stated and justified here.</p><h3>1. A weighted energy inequality</h3><p>Consider any current society<br>$$
+\mu=\sum_{i=1}^{r}v_i\delta_{z_i},
+$$<br>where the $z_i$ are distinct, the masses $v_i$ are positive, and $\sum_i v_i=1$. Define<br>$$
+N_i=\{j:\|z_i-z_j\|_2\leq\epsilon\},
+\qquad
+H_i=\sum_{j\in N_i}v_j.
+$$<br>Its updated positions and displacements are<br>$$
+y_i=\frac{\sum_{j\in N_i}v_jz_j}{H_i},
+\qquad
+\Delta_i=y_i-z_i.
+$$</p><p>Define the energy intrinsically on the measure by<br>$$
+\mathcal E(\mu)
+=\sum_{i,j=1}^{r}v_iv_j
+\min\{\|z_i-z_j\|_2^2,\epsilon^2\}.
+$$<br>It satisfies<br>$$
+0\leq\mathcal E(\mu)\leq\epsilon^2.
+$$</p><p><b>Lemma 1.</b> If $\mu&#x27;$ is the updated measure, then<br>$$
+\mathcal E(\mu)-\mathcal E(\mu&#x27;)
+\geq
+4\sum_{i=1}^{r}v_i^2\|\Delta_i\|_2^2
++
+2\sum_{\substack{i&lt;j\\j\in N_i}}
+v_iv_j\|\Delta_i+\Delta_j\|_2^2.
+$$<br>In particular,<br>$$
+\mathcal E(\mu)-\mathcal E(\mu&#x27;)
+\geq4\sum_i v_i^2\|\Delta_i\|_2^2.
+$$</p><p><b>Proof.</b> Freeze the current confidence graph and put<br>$$
+b_{ij}=
+\begin{cases}
+v_iv_j,&amp;j\in N_i,\\
+0,&amp;j\notin N_i.
+\end{cases}
+$$<br>The matrix $(b_{ij})$ is symmetric, $b_{ii}=v_i^2$, and<br>$$
+\sum_jb_{ij}=v_iH_i.
+$$<br>For a tuple of positions $u=(u_1,\ldots,u_r)$, write<br>$$
+Q(u)=\sum_{i,j}b_{ij}\|u_i-u_j\|_2^2.
+$$</p><p>For a current confidence edge, the contribution to $\mathcal E(\mu)$ is its squared distance. For a current nonedge, it is $\epsilon^2$. At the next round, each truncated contribution is at most the corresponding frozen expression. Therefore<br>$$
+\mathcal E(\mu)-\mathcal E(\mu&#x27;)
+\geq Q(z)-Q(y).
+$$<br>This remains valid if updated positions coincide: grouping coincident positions multiplies their summed masses and gives exactly the same double sum.</p><p>The update rule gives<br>$$
+\sum_jb_{ij}(z_i-z_j)=-v_iH_i\Delta_i.
+$$<br>Expanding $Q(y)-Q(z)$ and using symmetry yields<br>$$
+Q(y)-Q(z)
+=
+4\sum_i\Delta_i\cdot
+\sum_jb_{ij}(z_i-z_j)
++
+\sum_{i,j}b_{ij}\|\Delta_i-\Delta_j\|_2^2.
+$$<br>Consequently,<br>$$
+Q(z)-Q(y)
+=
+2\sum_i v_iH_i\|\Delta_i\|_2^2
++
+2\sum_{i,j}b_{ij}\Delta_i\cdot\Delta_j.
+$$<br>Separating the diagonal terms and grouping each unordered edge gives<br>$$
+Q(z)-Q(y)
+=
+4\sum_i v_i^2\|\Delta_i\|_2^2
++
+2\sum_{\substack{i&lt;j\\j\in N_i}}
+v_iv_j\|\Delta_i+\Delta_j\|_2^2.
+$$<br>Every term on the right is nonnegative. This proves the lemma. $\square$</p><h3>Stationarity, including equality of measures</h3><p><b>Corollary 2.</b> A society is stationary if and only if every two distinct support points are at distance strictly greater than $\epsilon$.</p><p><b>Proof.</b> If this separation condition holds, every support point averages only itself.</p><p>Conversely, suppose $\mu=\mu&#x27;$. Their energies are equal, so Lemma 1 and positivity of all masses imply $\Delta_i=0$ for every $i$. Taking scalar products of the update identities with $z_i$ and summing gives<br>$$
+\sum_i v_iH_i z_i\cdot\Delta_i
+=
+-\sum_{\substack{i&lt;j\\j\in N_i}}
+v_iv_j\|z_i-z_j\|_2^2.
+$$<br>The left side is zero. Every summand on the right is nonnegative before its minus sign, so every confidence edge joins coincident positions. Since current support points are distinct, no edge can join two different support points. $\square$</p><p>Thus equality of consecutive measures cannot conceal a nontrivial permutation of moving positions.</p><p>In particular, for $\tau=1$, we have $t_*=0$. For $\tau=2$, we have $t_*=0$ if the distance exceeds $\epsilon$, and $t_*=1$ otherwise. The remaining argument addresses arbitrary support size.</p><h3>2. A quantitative decrease for a noncomplete component</h3><p>Form the undirected confidence graph on the current support, with an edge between distinct points at distance at most $\epsilon$.</p><p><b>Lemma 3.</b> Suppose every current mass is at least $\alpha&gt;0$. If a connected component $C$ has $s$ vertices and diameter greater than $\epsilon$, then<br>$$
+\mathcal E(\mu)-\mathcal E(\mu&#x27;)
+\geq
+\frac{16\alpha^4\epsilon^2}{s(s-1)^2}.
+$$</p><p><b>Proof.</b> Choose $p,q\in C$ with $\|z_p-z_q\|_2&gt;\epsilon$, and define the unit vector<br>$$
+e=\frac{z_p-z_q}{\|z_p-z_q\|_2}.
+$$<br>For $i\in C$, put<br>$$
+u_i=e\cdot z_i,
+\qquad
+R=\max_{i\in C}u_i-\min_{i\in C}u_i,
+\qquad
+c=\frac{\max_{i\in C}u_i+\min_{i\in C}u_i}{2}.
+$$<br>Then<br>$$
+R\geq u_p-u_q=\|z_p-z_q\|_2&gt;\epsilon,
+\qquad
+|u_i-c|\leq\frac R2.
+$$</p><p>Define the scalar graph energy<br>$$
+F=\sum_{\substack{i&lt;j\\i,j\in C\\j\in N_i}}
+v_iv_j(u_i-u_j)^2.
+$$<br>Connectivity supplies a simple path between vertices attaining the minimum and maximum of $u_i$. If it has $\ell$ edges, then $\ell\leq s-1$. Cauchy–Schwarz along this path gives<br>$$
+R^2\leq
+\ell\sum_{\text{path edges }\{i,j\}}(u_i-u_j)^2.
+$$<br>Since every edge weight $v_iv_j$ is at least $\alpha^2$,<br>$$
+F\geq\frac{\alpha^2R^2}{s-1}.
+$$</p><p>Write $\delta_i=e\cdot\Delta_i$. No confidence edge leaves $C$, so the projected update equations give<br>$$
+v_iH_i\delta_i
+=\sum_{j\in N_i}v_iv_j(u_j-u_i).
+$$<br>Multiplying by $u_i-c$, summing over $C$, and grouping unordered edges yields<br>$$
+F=-\sum_{i\in C}v_iH_i(u_i-c)\delta_i.
+$$<br>Another application of Cauchy–Schwarz gives<br>$$
+F\leq
+\left(\sum_{i\in C}v_i^2\delta_i^2\right)^{1/2}
+\left(\sum_{i\in C}H_i^2(u_i-c)^2\right)^{1/2}.
+$$<br>Because $H_i\leq1$ and $|\delta_i|\leq\|\Delta_i\|_2$, this implies<br>$$
+F\leq
+\left(\sum_{i\in C}v_i^2\|\Delta_i\|_2^2\right)^{1/2}
+\frac{\sqrt{s}R}{2}.
+$$<br>Combining the lower and upper bounds for $F$ and cancelling $R&gt;0$ gives<br>$$
+\sum_{i\in C}v_i^2\|\Delta_i\|_2^2
+\geq
+\frac{4\alpha^4R^2}{s(s-1)^2}.
+$$<br>Lemma 1 now implies<br>$$
+\mathcal E(\mu)-\mathcal E(\mu&#x27;)
+\geq
+\frac{16\alpha^4R^2}{s(s-1)^2}
+\geq
+\frac{16\alpha^4\epsilon^2}{s(s-1)^2}.
+$$<br>$\square$</p><h3>3. The termination bound</h3><p><b>Theorem 4.</b> Starting from $\tau$ support points with minimum mass $\alpha$, the dynamics terminate and satisfy<br>$$
+t_*\leq \tau-1+
+\left\lfloor\frac{\tau(\tau-1)^2}{16\alpha^4}\right\rfloor.
+$$</p><p><b>Proof.</b> Support size never increases: the next support is the image of the current support under the averaging map. Moreover, every current atom carries the sum of the masses of a nonempty group of original atoms. Hence every current mass remains at least $\alpha$.</p><p>Call an update a *merging update* if it strictly reduces support size. There are at most $\tau-1$ such updates.</p><p>Consider a nonstationary update that is not a merging update. By Corollary 2, its confidence graph has a component containing at least two vertices. Such a component cannot be complete: in a complete component, every point averages exactly the whole component and all its positions coincide after the update, causing a merger.</p><p>Thus this update has a connected component of size $s\leq\tau$ with diameter greater than $\epsilon$. For $\tau\geq2$, Lemma 3 shows that its energy decrease is at least<br>$$
+\eta=\frac{16\alpha^4\epsilon^2}{\tau(\tau-1)^2}.
+$$<br>All other updates also have nonnegative energy decrease. Since the initial energy is at most $\epsilon^2$ and energy is always nonnegative, the number of nonstationary updates without a merger is at most<br>$$
+\left\lfloor\frac{\epsilon^2}{\eta}\right\rfloor
+=
+\left\lfloor\frac{\tau(\tau-1)^2}{16\alpha^4}\right\rfloor.
+$$</p><p>These bounds apply to every finite prefix of nonstationary updates. An infinite sequence of such updates would contradict their bounded total number. Therefore a stationary round exists.</p><p>There are exactly $t_*$ nonstationary updates before the first stationary round. Adding the bounds for the two kinds of updates proves the result. For $\tau=1$, stationarity is immediate and the displayed bound equals zero. $\square$</p><p>This proof requires neither rational masses nor replication into equal-weight agents.</p><h3>4. Exact computation and binary bit complexity</h3><p>Let<br>$$
+U=\left\lceil\frac1\alpha\right\rceil.
+$$</p><p><b>Proposition 5.</b> For the inputs in the task, exact round-by-round computation of $t_*$ takes time polynomial in $m,\tau,L,U$.</p><p><b>Proof.</b> Write the masses in reduced form as $w_i=p_i/q_i$, and compute<br>$$
+N=\operatorname{lcm}(q_1,\ldots,q_\tau),
+\qquad
+a_i=Nw_i.
+$$<br>The $a_i$ are positive integers, $\sum_i a_i=N$, and<br>$$
+\log_2N\leq\sum_i\log_2q_i\leq L.
+$$<br>These quantities are computable in polynomial time.</p><p>Retain the original $\tau$ labels and their fixed integer masses $a_i$, allowing label positions $z_i(k)$ to coincide. Define<br>$$
+A_i(k)=
+\sum_{\substack{j\\\|z_i(k)-z_j(k)\|_2\leq\epsilon}}a_j.
+$$<br>Then<br>$$
+z_i(k+1)=
+\frac{
+\sum_{\substack{j\\\|z_i(k)-z_j(k)\|_2\leq\epsilon}}
+a_jz_j(k)
+}{A_i(k)}.
+$$<br>Coincident labels have identical neighborhoods and updates. Therefore these labeled updates implement exactly the required aggregation of masses.</p><p>Let $Q_0$ be the product of the denominators of all input coordinates. All initial coordinates have denominator $Q_0$, with $\log_2Q_0\leq L$. Recursively use the common denominator<br>$$
+Q_{k+1}=Q_k\prod_{i=1}^{\tau}A_i(k).
+$$<br>Because $1\leq A_i(k)\leq N$, every updated coordinate can be represented with this denominator, and<br>$$
+\log_2Q_k\leq L+k\tau\log_2N.
+$$</p><p>Every position remains in the convex hull of the initial positions. Each coordinate thus has absolute value at most $2^L$, so its numerator with denominator $Q_k$ has bit length<br>$$
+O\bigl(L+k\tau\log_2(N+1)\bigr).
+$$<br>Intermediate arithmetic has polynomially bounded bit length in the same parameters.</p><p>Confidence tests use the exact rational comparison<br>$$
+\sum_{h=1}^{m}
+\bigl(z_{i,h}(k)-z_{j,h}(k)\bigr)^2
+\leq\epsilon^2.
+$$<br>Clearing positive denominators gives an integer comparison, including equality at the confidence boundary. Coordinate equality tests and updates also use exact integer arithmetic.</p><p>At each round, halt if every pair of labels at distinct positions is farther apart than $\epsilon$. By Corollary 2, this is precisely the stationarity condition. Testing before updating returns the required first stationary index.</p><p>Theorem 4 bounds the number of updates by a polynomial in $\tau,U$. Consequently, both the number of arithmetic operations and their operand bit lengths are polynomial in $m,\tau,L,U$. $\square$</p><h3>Consequences</h3><p>For any fixed polynomial $p$, the promise<br>$$
+\alpha\geq\frac1{p(m,\tau,L)}
+$$<br>makes the algorithm polynomial-time.</p><p>This condition permits exponentially large common denominators. For example, for $b\geq3$, the three masses<br>$$
+w_1=\frac14+2^{-b},
+\qquad
+w_2=\frac14,
+\qquad
+w_3=\frac12-2^{-b}
+$$<br>have minimum mass $\alpha=1/4$ and least common denominator $2^b$. Nevertheless, Theorem 4 gives<br>$$
+t_*\leq2+\frac{3\cdot2^2}{16(1/4)^4}=194
+$$<br>for every allowed choice of positions and radius.</p><p>For arbitrary inputs, $\alpha\geq2^{-L}$, so $U\leq2^L+1$. Proposition 5 therefore also gives a general exact algorithm with running time<br>$$
+\operatorname{poly}(m,\tau,L)\,2^{O(L)}.
+$$<br>Since $\tau\alpha\leq1$, we have $\tau\leq U$. The termination bound then gives<br>$$
+t_*\leq U+\frac{U^7}{16},
+$$<br>so the binary output has $O(L)$ bits.</p><h3>5. Exponential duration still occurs</h3><p>For completeness, the slow example from the notes can be proved directly.</p><p>Take $m=1$, $\epsilon=1$, and positions $-1,0,1$. For an integer $b\geq2$, put<br>$$
+r=2^{-b},
+\qquad
+w_1=w_3=\frac{1-r}{2},
+\qquad
+w_2=r.
+$$<br>The minimum mass is $\alpha=r$, and the input length is $L=\Theta(b)$.</p><p>Set<br>$$
+q=\frac{1-r}{1+r}.
+$$<br>As long as the outer points are not neighbors, symmetry keeps the middle point at zero. Each outer point averages itself and the midpoint, multiplying its position by $q$. Thus the positions are<br>$$
+-q^k,\quad0,\quad q^k
+$$<br>until<br>$$
+K=\min\{k\geq0:q^k\leq1/2\}.
+$$<br>The midpoint edges persist because $q^k\leq1$. At round $K$, all three points are mutual neighbors and merge at zero in the next update. Before that update, the outer positions strictly contract. Hence<br>$$
+t_*=K+1.
+$$</p><p>For the lower bound, put<br>$$
+u=\frac{2r}{1+r},
+\qquad
+k_0=2^{b-2}=\frac1{4r}.
+$$<br>Here $q=1-u$ and $0&lt;u&lt;1$. Bernoulli’s inequality gives<br>$$
+q^{k_0}\geq1-k_0u
+=1-\frac1{2(1+r)}
+&gt;\frac12.
+$$<br>Therefore $K&gt;2^{b-2}$.</p><p>For the upper bound, take $B=2^b=1/r$. Another application of Bernoulli’s inequality gives<br>$$
+q^{-B}
+=
+\left(1+\frac{2r}{1-r}\right)^B
+\geq1+\frac2{1-r}&gt;3.
+$$<br>Thus $q^B&lt;1/2$, so $K\leq2^b$. We obtain<br>$$
+2^{b-2}+1&lt;t_*\leq2^b+1.
+$$<br>In particular, $t_*=2^{\Theta(L)}$ with only three support points.</p><h3>The slow example itself is computable in polynomial time</h3><p>The following known theorem is applicable: for fixed numbers of factors, two products of positive integer powers can be compared, including equality, in time polynomial in the binary lengths of their bases and exponents. This is unconditional. [Etessami–Stewart–Yannakakis, Proposition 3.7(2)](https://arxiv.org/html/1304.5429)</p><p>For the present example,<br>$$
+q=\frac{2^b-1}{2^b+1},
+$$<br>and, for $k\geq1$,<br>$$
+q^k\leq\frac12
+\quad\Longleftrightarrow\quad
+2(2^b-1)^k\leq(2^b+1)^k.
+$$<br>The left side has two factors and the right side has one. All bases have $O(b)$ bits. Binary search for $K$ in the proved interval $[1,2^b]$ uses $O(b)$ comparisons, each with an $O(b)$-bit exponent. The cited theorem therefore gives polynomial total running time.</p><p>Thus even a family with exponential duration can have polynomial-time exact computation of its termination round.</p><h3>6. Remaining open point</h3><p>The new bound establishes polynomial-time exact computation for all inputs with inverse-polynomial minimum mass, extending the denominator-based sufficient condition.</p><p>It does not handle arbitrary exponentially small masses in polynomial time. I have proved neither a general polynomial-time algorithm nor an $\mathsf{NP}$-hardness reduction. Resolving the original question requires one of those additional arguments.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 4–6: scope relative to USER_TASK: The unrestricted polynomial-time versus $\mathsf{NP}$-hardness question remains unresolved. The proved algorithm is polynomial in $U=\lceil1/\alpha\rceil$, which can be exponential in $L$, and no general polynomial-time algorithm or hardness reduction is supplied. This is task incompleteness, not a defect in the proved partial results.</li></ul>
+<div class="pre"><p>The output establishes a correct partial result. The energy inequality, termination bound, exact simulation algorithm, and slow example are sound as written. However, it explicitly leaves the general polynomial-time versus $\mathsf{NP}$-hardness question unresolved, so the appropriate overall status is <b>partial</b>.</p><p>The only major issue is incompleteness relative to <code>USER_TASK</code>. I found no mathematical error or substantive gap in the results actually claimed and proved.</p><ul><li><b>Definitions and applicability to the task</b></li></ul><p>The proof uses the required synchronous update, includes each point’s own mass, and includes the confidence boundary. Its energy is defined on the measure, so aggregation of coincident images is handled consistently.</p><p>The extension to positive real masses retains the assumptions that the support is finite and the masses sum to $1$. Under those assumptions, $\alpha&gt;0$, and the asserted extension is valid.</p><ul><li><b>Lemma 1: weighted energy inequality</b></li></ul><p>The frozen coefficients satisfy<br>$$
+   b_{ij}=b_{ji},\qquad b_{ii}=v_i^2,\qquad \sum_jb_{ij}=v_iH_i.
+   $$<br>These statements follow from symmetric Euclidean confidence neighborhoods and self-inclusion.</p><p>The comparison<br>$$
+   \mathcal E(\mu)-\mathcal E(\mu&#x27;)\geq Q(z)-Q(y)
+   $$<br>is correct: on an old edge, the new truncated squared distance is at most the new squared distance; on an old nonedge, it is at most $\epsilon^2$. Old boundary edges cause no exception.</p><p>Grouping coincident images preserves the weighted double sum, including zero contributions between coincident labels. Thus the comparison remains valid after aggregation.</p><p>I checked the quadratic expansion and its constants. Substitution of the update identity gives exactly<br>$$
+   Q(z)-Q(y)
+   =
+   4\sum_i v_i^2\|\Delta_i\|_2^2+
+   2\sum_{\substack{i&lt;j\\j\in N_i}}
+   v_iv_j\|\Delta_i+\Delta_j\|_2^2.
+   $$<br>Both terms are nonnegative. The lemma is correct.</p><ul><li><b>Corollary 2: stationarity as equality of measures</b></li></ul><p>If distinct support points are separated by distances strictly greater than $\epsilon$, the update fixes every point.</p><p>Conversely, equality of consecutive measures gives equality of their energies. Lemma 1 and positive masses then force every $\Delta_i$ to vanish. The subsequent scalar-product identity has the correct sign and counts each unordered edge once. It forces every confidence-edge squared distance to be zero.</p><p>Since the current support consists of distinct points, no edge between distinct support points remains. This proves the stated equivalence and rules out stationarity arising from a nontrivial permutation of positions.</p><p>The cases $\tau=1$ and $\tau=2$ are correctly treated, including distance exactly $\epsilon$.</p><ul><li><b>Lemma 3: quantitative decrease</b></li></ul><p>The diameter hypothesis supplies the stated pair $p,q$ and a well-defined unit vector $e$. Its projected range satisfies $R&gt;\epsilon&gt;0$, so the later cancellation of $R$ is legitimate.</p><p>A simple path between projection extrema has at most $s-1$ edges. The path Cauchy–Schwarz estimate and the lower bound $v_iv_j\geq\alpha^2$ correctly give<br>$$
+   F\geq\frac{\alpha^2R^2}{s-1}.
+   $$<br>The hypothesis implies $s\geq2$, so this denominator is nonzero.</p><p>No confidence edge leaves the component. Grouping the projected update identities therefore gives the stated identity for $F$. The second Cauchy–Schwarz estimate correctly uses $v_i\delta_i$ in one factor and $H_i(u_i-c)$ in the other.</p><p>Mass normalization gives $H_i\leq1$, and the midpoint choice gives $|u_i-c|\leq R/2$. Consequently, the displacement bound and the final constant $16$ are correct. No dependence on dimension is introduced.</p><ul><li><b>Theorem 4: finite termination and round count</b></li></ul><p>Support size cannot increase. Each current atom contains the combined mass of a nonempty group of original atoms, so every current mass remains at least $\alpha$.</p><p>There can be at most $\tau-1$ updates that reduce support size. In a nonstationary update without a merger, the graph has a nontrivial component. Any complete nontrivial component would merge in that update, so such a component must be noncomplete. By the graph definition, this means its diameter is greater than $\epsilon$.</p><p>Replacing its size $s$ by $\tau$ weakens the lower bound in the correct direction. Hence every nonstationary update without a merger decreases energy by at least the stated $\eta$.</p><p>The energy budget bounds the number of those updates by<br>$$
+   \left\lfloor\frac{\tau(\tau-1)^2}{16\alpha^4}\right\rfloor.
+   $$<br>Applying the count to every finite prefix validly excludes an infinite sequence of nonstationary updates. The indexing is also correct: precisely $t_*$ nonstationary updates precede the first stationary round.</p><p>The displayed termination bound is therefore established, including its separate $\tau=1$ case.</p><ul><li><b>Proposition 5: exact binary computation</b></li></ul><p>The common mass denominator $N$ and integer masses $a_i$ satisfy the claimed size bounds and are computable by standard exact integer arithmetic.</p><p>Retaining original labels is consistent with aggregation: coincident labels have identical neighborhoods, remain coincident after updating, and contribute their combined mass to every neighborhood sum.</p><p>The denominator recurrence<br>$$
+   Q_{k+1}=Q_k\prod_{i=1}^{\tau}A_i(k)
+   $$<br>is valid because every individual update denominator divides this common denominator. Its logarithmic growth bound is correct.</p><p>Convex-hull preservation bounds coordinate magnitudes, giving the asserted numerator bit lengths. Exact squared-distance comparisons require no square-root computation and correctly include equality at the confidence boundary. The sums, products, and denominator clearing have polynomial bit complexity in the stated parameters.</p><p>The stopping test correctly ignores coincident labels and applies Corollary 2 to the aggregated support. Testing before updating returns the first stationary index.</p><p>Thus the runtime claim polynomial in $m,\tau,L,U$ is proved. It does <b>not</b> imply polynomial time in $m,\tau,L$ for unrestricted inputs.</p><ul><li><b>Consequences and numerical checks</b></li></ul><p>The inverse-polynomial minimum-mass promise yields polynomial time as claimed.</p><p>For the three-mass example, all masses are positive for $b\geq3$, the minimum is $1/4$, and the least common denominator is $2^b$. The numerical bound evaluates correctly to $194$.</p><p>The general bounds $\alpha\geq2^{-L}$ and $U\leq2^L+1$ support the stated exponential-time upper bound. Using $\tau\leq U$ also justifies<br>$$
+   t_*\leq U+\frac{U^7}{16}.
+   $$<br>Hence the binary output length is $O(L)$.</p><ul><li><b>Exponential-duration example</b></li></ul><p>Before the outer points become neighbors, their neighborhoods consist of themselves and the midpoint. The stated contraction factor $q$ is correct, and symmetry fixes the midpoint.</p><p>The midpoint edges persist throughout the contraction. The definition of $K$ correctly includes the boundary case $q^K=1/2$. At round $K$, the graph is complete, and the next update merges all points at zero. Thus $t_*=K+1$.</p><p>Both Bernoulli estimates satisfy their required domains and integer-exponent hypotheses. The strict lower bound and upper bound are correctly propagated to $t_*$. Together with $L=\Theta(b)$, they establish exponential duration with three support points.</p><ul><li><b>Polynomial computation of the slow example</b></li></ul><p>The cited theorem is accurately stated for this application. Proposition 3.7(2) gives unconditional polynomial-time inequality testing for products of integer powers when both factor counts are fixed; its proof also handles equality. [Etessami–Stewart–Yannakakis, Proposition 3.7](https://arxiv.org/html/1304.5429#S3)</p><p>Here the factor counts are two and one, all bases are positive integers of $O(b)$ bits, and the positive exponents have $O(b)$ bits. Since $0&lt;q&lt;1$, the predicate is monotone in $k$. Binary search over the proved interval therefore gives the asserted polynomial-time computation.</p><p>Exponential duration consequently does not establish computational hardness, and the prover correctly avoids that inference.</p><ul><li><b>Major issue: the original classification remains unresolved</b></li></ul><p>The unrestricted inputs allow exponentially small $\alpha$. The established simulation bound is then exponential in input length. The special-family algorithm supplies no general algorithm, and the output supplies no hardness reduction.</p><p>This is a limitation of task completion, not an error in the partial proofs. No clarification alone can settle the missing classification. The minimum additional substantive contribution is either a general polynomial-time exact algorithm with binary complexity analysis or a valid $\mathsf{NP}$-hardness reduction under a specified reduction notion.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

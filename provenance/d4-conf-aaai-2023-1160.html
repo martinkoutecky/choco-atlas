@@ -1,0 +1,456 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2023-1160 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2023-1160 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2023-1160)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.2 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>The output of weighted LSR (Algorithm 4) is the maximum weighted log-likelihood estimate: θMLE q := arg max θ m X l=1 ql · log PPL(πl, zl | θ) . As noted before, the EMM algorithm is an alterna- tive approach that exactly solves the M-step using the (weighted) MM algorithm. In other words, assuming perfect numerical precision and the same initialization, EMM and EM-LSR will produce the same ﬁnal estimate. However, our EM-LSR algorithm is often much faster than EMM (e.g., Figure 1).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(n\) items, a finite support \(S\subseteq\mathfrak{S}_n\) of rankings with positive rational masses \(\mu_\pi\) summing to \(1\), and fixed nonnegative rational component weights \(q_\pi\) with \(\sum_{\pi\in S}\mu_\pi q_\pi&gt;0\), find a normalized utility vector \(\theta\) maximizing \(\sum_{\pi\in S}\mu_\pi q_\pi\log P_{\mathrm{PL}}(\pi\mid\theta)\), assuming a finite maximum exists. What are the exact and additive-approximation complexities in the support size and input bit length?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list \(S\subseteq\mathfrak S_m\) of \(\tau\) strict full rankings of \(m\ge2\) items, most preferred first, with positive binary-rational masses \(\mu_\pi\) summing to \(1\). Here \(\tau=|S|\) is the support size, not the number of possible rankings.<br>Each ranking also has a fixed binary-rational weight \(q_\pi\ge0\), with \(\sum_{\pi\in S}\mu_\pi q_\pi&gt;0\). Utilities lie in \(\mathbb R^m\), normalized by \(\sum_i\theta_i=0\).<br>Define \(P_{\mathrm{PL}}(\pi\mid\theta)=\prod_{r=1}^{m-1}\frac{e^{\theta_{\pi_r}}}{\sum_{j=r}^m e^{\theta_{\pi_j}}}\) and \(F(\theta)=\sum_{\pi\in S}\mu_\pi q_\pi\log P_{\mathrm{PL}}(\pi\mid\theta)\), using natural logarithms. Promise that a finite maximizer exists.<br>Exact optimization means computing maximizing worths \(p_i&gt;0\), \(\sum_i p_i=1\), represented as real algebraic numbers by integer polynomials and rational isolating intervals; these specify \(\theta_i=\log p_i-m^{-1}\sum_j\log p_j\).<br>For binary-rational \(0&lt;\varepsilon&lt;1\), additive approximation means computing rational normalized utilities \(\widehat\theta\) with \(F(\widehat\theta)\ge\max_\theta F(\theta)-\varepsilon\). Let \(L\) be the total input bit length.</p><p>Is exact optimization polynomial-time solvable in \(m,\tau,L\), or NP-hard?<br>Is additive approximation polynomial-time solvable in \(m,\tau,L,\log(1/\varepsilon)\), or NP-hard?</p><p>For finite weighted ranking datasets, weighted Luce spectral ranking is proved to converge to the weighted MLE; this is an iterative convergence result, without a polynomial bit-complexity guarantee. [Nguyen and Zhang](https://andersonyezhang.github.io/PDF/AAAI23.pdf).<br>The same result permits arbitrary nonnegative ranking weights, but no separate bound settling either complexity question above was verified.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Renamed the item count from n to m to use the requested running-time convention; tau counts only explicitly listed positive-mass ranking types.</li><li>Specified normalization as zero-sum real utilities, following the normalization operator in the discrete definition.</li><li>Specified exact output through algebraic normalized worths and centered logarithms, since exact utilities need not be rational.</li><li>Specified additive error in the original, unrescaled weighted log-likelihood, with rational normalized utility output and binary-rational accuracy input.</li><li>Restricted to at least two items to exclude the vacuous one-item case.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Proven results and remaining question</h3><p><b>Additive approximation is polynomial-time solvable</b> in $m,\tau,L,\log(1/\varepsilon)$.</p><p><b>The general exact-optimization question remains unresolved here.</b> I prove uniqueness and algebraicity of the optimum, a bound on its algebraic degree, and polynomial-time exact solvability for fixed $m$.</p><p>I also resolve a family with variable $m$: for two equally weighted opposite rankings, the maximizing worths have an explicit sine formula and polynomial-size algebraic representations. Thus this family does not supply an exponential-output obstruction.</p><p>All arguments below are self-contained apart from precisely stated algorithmic theorems.</p><h3>1. Normalization and uniqueness</h3><p>Discard rankings with $q_\pi=0$, and define</p><p>$$
+a_\pi=\mu_\pi q_\pi,\qquad
+W=\sum_\pi a_\pi,\qquad
+\alpha_\pi=\frac{a_\pi}{W},\qquad
+\alpha_{\min}=\min_\pi\alpha_\pi.
+$$</p><p>The hypotheses give $W&gt;0$. All remaining $\alpha_\pi$ are positive, and their sum is $1$. These rational numbers have polynomial bit length and are computable in polynomial time.</p><p>Write</p><p>$$
+A_{\pi,r}=\{\pi_r,\ldots,\pi_m\},
+$$</p><p>and define the normalized negative log-likelihood</p><p>$$
+g(\theta)
+=
+-\frac{F(\theta)}{W}
+=
+\sum_\pi\alpha_\pi
+\sum_{r=1}^{m-1}
+\left[
+\log\left(\sum_{j\in A_{\pi,r}}e^{\theta_j}\right)
+-\theta_{\pi_r}
+\right].
+$$</p><p>Every stage loss is nonnegative because its denominator includes its numerator.</p><p>For a nonempty set $A$, put</p><p>$$
+s_j=\frac{e^{\theta_j}}{\sum_{k\in A}e^{\theta_k}}
+\qquad(j\in A).
+$$</p><p>Direct differentiation gives</p><p>$$
+v^{\mathsf T}
+\nabla^2\log\left(\sum_{j\in A}e^{\theta_j}\right)v
+=
+\sum_{j\in A}s_jv_j^2
+-
+\left(\sum_{j\in A}s_jv_j\right)^2.
+$$</p><p>This is a variance, so it is nonnegative. Since every $s_j&gt;0$, it vanishes exactly when $v$ is constant on $A$.</p><p>Every ranking contributes a first-stage term with $A=\{1,\ldots,m\}$, and the normalized weights of these terms sum to $1$. Consequently, $\nabla^2g$ is positive definite on</p><p>$$
+V=\left\{\theta\in\mathbb R^m:\sum_i\theta_i=0\right\}.
+$$</p><p>Indeed, a nonzero vector in $V$ cannot be constant on all items. Thus $g$ is strictly convex on $V$.</p><p>Under the finite-maximizer promise, there is therefore exactly one optimal normalized utility vector $\theta^*$. The correspondence</p><p>$$
+p_i=\frac{e^{\theta_i}}{\sum_j e^{\theta_j}},
+\qquad
+\theta_i=\log p_i-\frac1m\sum_j\log p_j
+$$</p><p>is a bijection between $V$ and the positive simplex. Hence the maximizing worth vector $p^*$ is also unique.</p><h3>2. Existence and a polynomial bound on optimal utilities</h3><h3>2.1. An existence criterion</h3><p>Consider the following condition:</p><blockquote>For every nonempty proper subset $H$ of the items, some positive-weight ranking places an item outside $H$ before an item in $H$.</blockquote><p>This condition is necessary for a finite maximizer.</p><p>To prove necessity, suppose it fails for $H$. Every active ranking then places all items of $H$ before all items outside $H$. Increase the utilities in $H$ together. At a stage whose winner belongs to $H$, the derivative of the log choice probability is</p><p>$$
+1-
+\frac{\sum_{j\in A\cap H}e^{\theta_j}}
+{\sum_{j\in A}e^{\theta_j}}.
+$$</p><p>It is nonnegative, and the first stage makes it strictly positive. Once the winner is outside $H$, no item of $H$ remains, so the derivative is zero. Thus $F$ has a strictly positive derivative in this direction at every finite point. Subtracting the direction&#x27;s mean preserves normalization and preserves the derivative, because $F$ is invariant under common utility shifts. A finite maximizer is impossible.</p><p>The condition is also sufficient. Let</p><p>$$
+R_\theta=\max_i\theta_i-\min_i\theta_i.
+$$</p><p>If $R_\theta=0$, the inequality below follows from $g\ge0$. Otherwise, sort the utilities and choose an adjacent gap of size at least $R_\theta/(m-1)$. Define the lower and upper groups by their positions in this sorted order. The selected gap is positive, so every utility in the upper group exceeds every utility in the lower group by at least that gap.</p><p>The condition supplies an active ranking with a lower-group winner while an upper-group item remains. This is a modeled stage, since that winner cannot be last. Its loss is at least the selected gap. Consequently,</p><p>$$
+g(\theta)\ge
+\frac{\alpha_{\min}}{m-1}R_\theta.
+$$</p><p>On $V$, bounded range implies bounded coordinates: zero lies between the smallest and largest coordinates, so $|\theta_i|\le R_\theta$. The displayed inequality therefore makes every sublevel set bounded. These sets are closed by continuity, and minimizing over a nonempty compact sublevel set gives a finite minimum.</p><p>Thus the condition characterizes finite existence. It can also be checked in polynomial time: form the directed graph containing an edge from every earlier-ranked item to every later-ranked item in each active ranking. The condition says that every nonempty proper vertex subset has an incoming edge, which is equivalent to strong connectivity.</p><h3>2.2. Bounding every optimal adjacent gap</h3><p>Sort $\theta^*$ and consider a positive adjacent gap $d$. Let $H$ be the items above that gap and $C$ its complement.</p><p>At a stage with remaining set $A$, define</p><p>$$
+s_H=
+\frac{\sum_{j\in A\cap H}e^{\theta_j^*}}
+{\sum_{j\in A}e^{\theta_j^*}}.
+$$</p><p>When utilities in $H$ increase together, the derivative of the log choice probability is $1-s_H$ if the winner belongs to $H$, and $-s_H$ otherwise.</p><p>For a winner in $H$, comparison with that winner&#x27;s worth gives</p><p>$$
+1-s_H\le m e^{-d}.
+$$</p><p>The existence condition supplies a stage with a winner in $C$ and an item of $H$ remaining. At that stage,</p><p>$$
+s_H\ge\frac{1}{1+m e^{-d}}.
+$$</p><p>Stationarity makes the total weighted derivative zero. There are $m-1$ stages per ranking, and the ranking weights sum to $1$, so the total positive contribution is at most $m(m-1)e^{-d}$. The distinguished negative contribution has magnitude at least $\alpha_{\min}/(1+m e^{-d})$. Therefore</p><p>$$
+\frac{\alpha_{\min}}{1+m e^{-d}}
+\le
+m(m-1)e^{-d}.
+$$</p><p>If $d\ge\log m$, the denominator on the left is at most $2$, yielding</p><p>$$
+d\le
+\log\left(\frac{2m(m-1)}{\alpha_{\min}}\right).
+$$</p><p>If $d&lt;\log m$, this bound also holds because $2m(m-1)/\alpha_{\min}\ge m$. A zero adjacent gap satisfies the bound immediately. Summing all adjacent gaps gives</p><p>$$
+\max_i\theta_i^*-\min_i\theta_i^*
+\le
+(m-1)\log\left(\frac{2m(m-1)}{\alpha_{\min}}\right).
+$$</p><p>Write $\alpha_{\min}=u/v$ with positive integers $u,v$, and let $b$ be the binary length of $v$. Then $\alpha_{\min}&gt;2^{-b}$. Since</p><p>$$
+\log(2m(m-1))&lt;2m,
+$$</p><p>the integer</p><p>$$
+B=(m-1)(b+2m)+1
+$$</p><p>strictly exceeds the optimal utility range. Its numerical value is polynomially bounded in the input parameters.</p><h3>3. Polynomial-time additive approximation</h3><h3>3.1. A bounded rational-coordinate problem</h3><p>Set $d=m-1$, and use coordinates</p><p>$$
+t(x)=(x_1,\ldots,x_d,0),
+\qquad
+f(x)=g(t(x)).
+$$</p><p>The optimum is represented by</p><p>$$
+x_i^*=\theta_i^*-\theta_m^*,
+$$</p><p>so $|x_i^*|&lt;B$. Consider the box</p><p>$$
+D=[-2B,2B]^d.
+$$</p><p>The optimum has distance greater than $B$ from every face.</p><p>A stage gradient in full utility coordinates is a probability vector minus the winner&#x27;s coordinate vector. Its Euclidean norm is at most $2$. Restricting to the first $d$ coordinates cannot increase that norm. Thus</p><p>$$
+\|\nabla f(x)\|_2\le 2(m-1)\le M,
+\qquad M=2m.
+$$</p><p>In particular, $f$ is globally $M$-Lipschitz. The box lies in a ball centered at zero with rational radius</p><p>$$
+R=2Bm.
+$$</p><h3>3.2. Polynomial-time finite-precision evaluation</h3><p>At rational $x\in D$, both $f(x)$ and $\nabla f(x)$ can be approximated to absolute error $\zeta$ in time polynomial in the input parameters, the bit length of $x$, and $\log(1/\zeta)$.</p><p>Here is an explicit construction. For each stage, let</p><p>$$
+u=\max_{j\in A}t_j(x),
+\qquad
+Z=\sum_{j\in A}e^{t_j(x)-u}.
+$$</p><p>Its loss is</p><p>$$
+u-t_{\pi_r}(x)+\log Z.
+$$</p><p>The exponential arguments belong to $[-4B,0]$, and $1\le Z\le m$.</p><p>For $z\in[-4B,0]$, Taylor&#x27;s theorem bounds the degree-$n$ exponential remainder by</p><p>$$
+\frac{|z|^{n+1}}{(n+1)!}.
+$$</p><p>Using $k!\ge(k/e)^k$, a degree bounded by a constant times</p><p>$$
+B+\log(1/\rho)+1
+$$</p><p>suffices for absolute error $\rho$. Rational evaluation has polynomial bit complexity. Clamp each approximation to $[0,1]$, which cannot increase its error. The term with argument zero is evaluated exactly as $1$, so the resulting rational sum $\widetilde Z$ lies in $[1,m]$ and satisfies</p><p>$$
+|Z-\widetilde Z|\le m\rho.
+$$</p><p>For the logarithm, use</p><p>$$
+\log\widetilde Z
+=
+2\sum_{k=0}^{\infty}\frac{w^{2k+1}}{2k+1},
+\qquad
+w=\frac{\widetilde Z-1}{\widetilde Z+1}
+\le\frac{m-1}{m+1}.
+$$</p><p>After $n$ terms the tail is at most</p><p>$$
+\frac{2w^{2n+1}}{(2n+1)(1-w^2)}.
+$$</p><p>Polynomially many terms in $m$ and $\log(1/\rho)$ make this at most $\rho$. Since both sums are at least $1$,</p><p>$$
+|\log Z-\log\widetilde Z|\le m\rho.
+$$</p><p>Thus each stage-value error is at most $(m+1)\rho$, and the total value error is at most $m^2\rho$.</p><p>Gradient probabilities are computed by rational division. If $y,\widetilde y\in[0,1]$ are corresponding exponential terms, then</p><p>$$
+\left|\frac{y}{Z}-\frac{\widetilde y}{\widetilde Z}\right|
+\le
+|y-\widetilde y|
++
+|\widetilde y|\frac{|Z-\widetilde Z|}{Z\widetilde Z}
+\le
+(m+1)\rho.
+$$</p><p>Summing stage errors and using $\sum_\pi\alpha_\pi=1$ bounds the Euclidean gradient error by $2m^3\rho$. Choosing sufficiently small $\rho$, for example</p><p>$$
+\rho=\min\left\{1,\frac{\zeta}{4m^3}\right\},
+$$</p><p>proves the oracle claim. Only the listed rankings and their stages are evaluated.</p><h3>3.3. A finite-precision ellipsoid algorithm</h3><p>I use the following standard finite-precision ellipsoid theorem. Starting from a rational ball of radius $R$, rational central cuts can be processed so that the next ellipsoid contains the intersection of the previous ellipsoid with the supplied halfspace, and after $T$ cuts the volume is at most</p><p>$$
+e^{-T/[4(d+1)]}\operatorname{vol}(B_d(0,R)).
+$$</p><p>The implementation uses polynomial time and rational encoding lengths in the dimension, number of cuts, initial encoding length, and cut encoding lengths. Dimension one can instead use rational interval bisection. These are bit-complexity properties of the ellipsoid method, as treated by [Grötschel, Lovász, and Schrijver](https://link.springer.com/chapter/10.1007/978-3-642-78240-4_4).</p><p>Set</p><p>$$
+\delta=\min\{1,\varepsilon/W\},
+\qquad
+\xi=\delta/16,
+\qquad
+\eta=\frac{\delta}{16R},
+\qquad
+r=\frac{\delta}{4M}.
+$$</p><p>At each ellipsoid center $x$:</p><ul><li>If $x\notin D$, use a central cut from a violated box constraint.</li><li>If $x\in D$, compute a rational $\widetilde f(x)$ with error at most $\xi$, and a rational vector $h$ with</li></ul><p>$$
+   \|h-\nabla f(x)\|_2\le\eta.
+   $$<br>Record the point and approximate value.</p><ul><li>If $h\ne0$, supply the central cut</li></ul><p>$$
+   h^{\mathsf T}(z-x)\le0.
+   $$<br>If $h=0$, return $x$.</p><p>In the zero-vector case, convexity gives</p><p>$$
+f(x)-f(x^*)
+\le
+\nabla f(x)^{\mathsf T}(x-x^*)
+\le
+2R\eta
+=
+\delta/8.
+$$</p><p>For the remaining case, define</p><p>$$
+K=B_d(x^*,r).
+$$</p><p>This ball lies in $D$, because $r&lt;B$. Lipschitz continuity gives</p><p>$$
+f(z)\le f(x^*)+\delta/4
+\qquad(z\in K).
+$$</p><p>Suppose every recorded center satisfies</p><p>$$
+f(x)&gt;f(x^*)+\delta/2.
+$$</p><p>Convexity then implies, for every $z\in K$,</p><p>$$
+\nabla f(x)^{\mathsf T}(z-x)
+\le f(z)-f(x)
+&lt;-\delta/4.
+$$</p><p>Both points belong to $D$, so $\|z-x\|_2\le2R$. Therefore</p><p>$$
+h^{\mathsf T}(z-x)
+&lt;
+-\delta/4+2R\eta
+=
+-\delta/8.
+$$</p><p>Every objective cut consequently preserves $K$. Every box cut preserves $D$, and hence also preserves $K$.</p><p>Choose an integer $T$ satisfying</p><p>$$
+T&gt;4d(d+1)\log(R/r).
+$$</p><p>If every recorded center were more than $\delta/2$ suboptimal, the final ellipsoid would contain $K$ while having volume smaller than that of $K$, a contradiction. Hence a recorded center has value at most $f(x^*)+\delta/2$.</p><p>Return the recorded point $\widehat x$ with the smallest approximate value. Accounting for the two value errors gives</p><p>$$
+f(\widehat x)
+\le
+f(x^*)+\delta/2+2\xi
+=
+f(x^*)+5\delta/8
+&lt;
+f(x^*)+\delta.
+$$</p><h3>3.4. Output and complexity</h3><p>Define rational normalized utilities by</p><p>$$
+\widehat\theta
+=
+t(\widehat x)
+-
+\frac1m\left(\sum_{i=1}^{m-1}\widehat x_i\right)\mathbf1.
+$$</p><p>Their sum is zero, and shift invariance preserves the objective. Thus</p><p>$$
+F(\widehat\theta)
+\ge
+F(\theta^*)-W\delta
+\ge
+F(\theta^*)-\varepsilon.
+$$</p><p>The bound $B$ is polynomial in the input parameters, and</p><p>$$
+\log(1/\delta)
+\le
+\log(1/\varepsilon)+\log\max\{1,W\}.
+$$</p><p>The latter additional term is polynomially bounded by the input length. Therefore the iteration count, oracle precision requirements, and rational encoding lengths are polynomially bounded in</p><p>$$
+m,\tau,L,\log(1/\varepsilon).
+$$</p><p>This proves polynomial-time additive approximation.</p><h3>4. General exact optimization: algebraicity and degree bounds</h3><h3>4.1. A compressed polynomial system</h3><p>Let $\mathcal A$ be the family of distinct proper remaining sets occurring at modeled stages:</p><p>$$
+\mathcal A
+=
+\{A_{\pi,r}:2\le r\le m-1\}.
+$$</p><p>Put</p><p>$$
+K=|\mathcal A|\le\tau(m-2),
+\qquad
+\beta_A
+=
+\sum_{\substack{\pi,r\\A_{\pi,r}=A}}\alpha_\pi,
+\qquad
+s_A(p)=\sum_{j\in A}p_j.
+$$</p><p>Also define the weighted number of modeled selections of item $i$:</p><p>$$
+c_i
+=
+\sum_\pi\alpha_\pi
+\sum_{r=1}^{m-1}\mathbf1_{\{\pi_r=i\}}.
+$$</p><p>Each ranking has $m-1$ modeled selections and $m-2$ proper remaining sets, so</p><p>$$
+\sum_i c_i=m-1,
+\qquad
+\sum_{A\in\mathcal A}\beta_A=m-2.
+$$</p><p>On the positive simplex, the utility score equations are</p><p>$$
+E_i(p)
+=
+c_i-p_i
+-
+\sum_{\substack{A\in\mathcal A\\i\in A}}
+\beta_A\frac{p_i}{s_A(p)}
+=
+0.
+$$</p><p>The term $p_i$ collects the first stages, whose total normalized weight is $1$. Summing the equations gives the identity</p><p>$$
+\sum_iE_i(p)=0.
+$$</p><p>Let</p><p>$$
+Q(p)=\prod_{A\in\mathcal A}s_A(p),
+$$</p><p>with $Q=1$ if $\mathcal A$ is empty. On the positive simplex, $Q&gt;0$. Hence the first $m-1$ equations are equivalent to</p><p>$$
+P_i(p)
+=
+(c_i-p_i)Q(p)
+-
+\sum_{\substack{A\in\mathcal A\\i\in A}}
+\beta_Ap_i
+\prod_{\substack{B\in\mathcal A\\B\ne A}}s_B(p)
+=
+0.
+$$</p><p>Their degrees are at most</p><p>$$
+D=K+1\le1+\tau(m-2).
+$$</p><p>After substituting</p><p>$$
+p_m=1-\sum_{i=1}^{m-1}p_i
+$$</p><p>and clearing rational coefficient denominators, these are integer polynomial equations in $m-1$ variables. Together with positivity, they have exactly one solution: the score equations express stationarity in utility-ratio coordinates, and strict convexity makes every stationary point the unique optimum.</p><h3>4.2. Algebraicity and computability</h3><p>The admissible solution set is a singleton defined by rational polynomial equalities and inequalities. By real quantifier elimination, each coordinate projection is a singleton defined by a Boolean combination of signs of rational univariate polynomials.</p><p>Some nonzero defining polynomial must vanish at the projected coordinate. Otherwise all defining signs would be constant in a neighborhood, and that singleton would contain a neighborhood. This is impossible.</p><p>Thus every $p_i^*$ is algebraic. Effective elimination followed by univariate root isolation computes the required integer polynomials and rational isolating intervals.</p><p>For fixed $m$, this computation is polynomial-time. Indeed:</p><ul><li>The degree bound $D$ is polynomial in the input parameters.</li><li>There are at most $\binom{D+m-1}{m-1}$ monomials, polynomially many for fixed $m$.</li><li>After substitution, each linear factor $s_A$ has coefficient absolute sum at most $m$. Products of $K$ factors therefore have coefficient bit length bounded by a polynomial in $K\log m$ and the rational input length.</li></ul><p>Real quantifier elimination has polynomial bit complexity when the number of variables is fixed; the requisite degree and intermediate-bit-length bounds are stated in [Basu’s survey, Theorem 2.18](https://www.math.purdue.edu/~sbasu/raag_survey2011_final.pdf). Polynomial-time univariate root isolation and refinement then supply the requested output; see [Sagraloff’s root-isolation analysis](https://arxiv.org/abs/1011.0344).</p><p>The exponent of this fixed-dimensional algorithm depends on $m$.</p><h3>4.3. The optimum is a nonsingular algebraic root</h3><p>There is also a quantitative algebraic-degree bound.</p><p>Use simplex coordinates $y_i=p_i$ for $i&lt;m$, and utility-ratio coordinates</p><p>$$
+x_i=\log(p_i/p_m).
+$$</p><p>Their Jacobian is</p><p>$$
+\frac{\partial x_i}{\partial y_j}
+=
+\frac{\mathbf1_{\{i=j\}}}{p_i}+\frac1{p_m}.
+$$</p><p>This matrix is positive definite, since for every nonzero real vector $v$,</p><p>$$
+v^{\mathsf T}\frac{\partial x}{\partial y}v
+=
+\sum_{i=1}^{m-1}\frac{v_i^2}{p_i}
++
+\frac{\left(\sum_{i=1}^{m-1}v_i\right)^2}{p_m}
+&gt;0.
+$$</p><p>Recall $f(x)=g(x_1,\ldots,x_{m-1},0)$. Its Hessian is positive definite: a nonzero direction $(v,0)$ is nonconstant on all $m$ items. The score relation is</p><p>$$
+E_i(p(x))=-\frac{\partial f}{\partial x_i}.
+$$</p><p>At the optimum, differentiation therefore gives</p><p>$$
+D_yE(p^*)
+=
+-\nabla^2f(x^*)\,D_yx(p^*),
+$$</p><p>which is nonsingular. Since $E_i(p^*)=0$,</p><p>$$
+D_y(QE)(p^*)=Q(p^*)D_yE(p^*)
+$$</p><p>is also nonsingular. Clearing coefficient denominators preserves nonsingularity.</p><p>Thus the optimum is an isolated nonsingular complex zero of the polynomial system, not merely an isolated real solution.</p><p>Let</p><p>$$
+\mathbb K=\mathbb Q(p_1^*,\ldots,p_{m-1}^*).
+$$</p><p>Each embedding of $\mathbb K$ into $\mathbb C$ produces a distinct solution tuple of the same rational polynomial equations. Its Jacobian determinant remains nonzero under the embedding, so every such tuple is an isolated complex zero.</p><p>The affine Bézout theorem bounds the number of isolated zeros of $m-1$ polynomials of degrees at most $D$ by $D^{m-1}$, even if other components have positive dimension. A statement covering isolated solutions appears in [Mondal’s treatment, Theorem I.2](https://pinakimondal.org/wp-content/uploads/2021/12/p1_to_16.pdf). Since number fields in characteristic zero have as many embeddings as their degrees,</p><p>$$
+[\mathbb K:\mathbb Q]
+\le
+D^{m-1}
+\le
+\bigl(1+\tau(m-2)\bigr)^{m-1}.
+$$</p><p>Every worth coordinate therefore has algebraic degree bounded by the same quantity. This is an upper bound, not an output-size lower bound.</p><h3>5. A variable-dimensional exact family: opposite rankings</h3><p>Suppose the two active rankings are</p><p>$$
+(1,2,\ldots,m)
+\quad\text{and}\quad
+(m,m-1,\ldots,1),
+$$</p><p>with equal effective weights. Equivalently, their normalized weights are both $1/2$.</p><h3>5.1. Explicit maximizing worths</h3><p>Define</p><p>$$
+\phi=\frac{\pi}{m+1},
+\qquad
+t=1-\cos\phi,
+\qquad
+p_i=\frac{t\sin(i\phi)}{\sin\phi}
+\quad(1\le i\le m).
+$$</p><p>I prove that these are the maximizing worths.</p><p>Every $p_i$ is positive because $0&lt;i\phi&lt;\pi$. Let</p><p>$$
+s_k=\sum_{i=1}^k p_i,
+\qquad s_0=0.
+$$</p><p>The cosine-difference identity</p><p>$$
+\cos((i-\tfrac12)\phi)-\cos((i+\tfrac12)\phi)
+=
+2\sin(i\phi)\sin(\phi/2)
+$$</p><p>telescopes to give</p><p>$$
+s_k
+=
+\frac12
+\left(
+1-\frac{\cos((k+\tfrac12)\phi)}{\cos(\phi/2)}
+\right).
+$$</p><p>At $k=m$, the cosine in the numerator is $-\cos(\phi/2)$, so $s_m=1$. The worths are normalized. They are also palindromic:</p><p>$$
+p_i=p_{m+1-i}.
+$$</p><p>Two identities will verify stationarity:</p><p>$$
+p_{k+1}-p_k=t(1-2s_k),
+$$</p><p>and</p><p>$$
+p_kp_{k+1}=2t\,s_k(1-s_k)
+\qquad(1\le k\le m-1).
+$$</p><p>The first follows from the sine-difference formula and the displayed expression for $s_k$. For the second, put $z=(k+\tfrac12)\phi$ and use</p><p>$$
+\sin(k\phi)\sin((k+1)\phi)
+=
+\cos^2(\phi/2)-\cos^2z.
+$$</p><p>Then</p><p>$$
+s_k(1-s_k)
+=
+\frac{\cos^2(\phi/2)-\cos^2z}{4\cos^2(\phi/2)},
+$$</p><p>while the corresponding expression for $p_kp_{k+1}$ has multiplier $t^2/\sin^2\phi$. Their ratio is</p><p>$$
+\frac{4t^2\cos^2(\phi/2)}{\sin^2\phi}
+=
+\frac{t^2}{\sin^2(\phi/2)}
+=
+2t.
+$$</p><p>For $m=2$, the formula gives $p_1=p_2=1/2$, which directly maximizes the likelihood. Assume henceforth $m\ge3$.</p><p>For arbitrary positive worths, write $T=\sum_i p_i$. The normalized log-likelihood is $H(p)-\log T$, where</p><p>$$
+H(p)
+=
+\sum_{i=1}^m c_i\log p_i
+-\frac12\sum_{k=2}^{m-1}\log s_k
+-\frac12\sum_{k=1}^{m-2}\log(T-s_k),
+$$</p><p>with</p><p>$$
+c_1=c_m=\frac12,
+\qquad
+c_i=1\quad(2\le i\le m-1).
+$$</p><p>On the simplex, maximizing the likelihood is equivalent to maximizing $H$.</p><p>Let $G_i=\partial H/\partial p_i$. For an interior index $2\le i\le m-2$, differentiation and cancellation of common terms gives</p><p>$$
+G_i-G_{i+1}
+=
+\frac1{p_i}-\frac1{p_{i+1}}
++
+\frac12\left(\frac1{1-s_i}-\frac1{s_i}\right).
+$$</p><p>The two proved identities imply</p><p>$$
+\frac1{p_i}-\frac1{p_{i+1}}
+=
+\frac{p_{i+1}-p_i}{p_ip_{i+1}}
+=
+\frac{1-2s_i}{2s_i(1-s_i)}.
+$$</p><p>The other term is its negative. Hence $G_i=G_{i+1}$.</p><p>At the first endpoint,</p><p>$$
+G_1-G_2
+=
+\frac1{2p_1}-\frac1{p_2}+\frac1{2(1-p_1)}.
+$$</p><p>Here $p_1=t$ and $p_2=2t(1-t)$, so this difference is zero.</p><p>The function $H$ is invariant under reversal of the item labels. At a palindromic worth vector, its gradient is consequently palindromic as well. Thus the last endpoint difference also vanishes. All coordinates of the gradient are equal, proving stationarity on the simplex.</p><p>The transformation from normalized utilities to positive normalized worths is a smooth bijection. This simplex stationarity therefore gives utility stationarity. Strict concavity of the utility log-likelihood, proved in Section 1, establishes the unique global maximum:</p><p>$$
+\boxed{
+p_i^*
+=
+\tan\left(\frac{\pi}{2(m+1)}\right)
+\sin\left(\frac{i\pi}{m+1}\right)
+}.
+$$</p><p>In particular, the existence promise holds for this family.</p><h3>5.2. Polynomial-size exact output</h3><p>Define integer polynomials recursively by</p><p>$$
+U_0(C)=1,\qquad
+U_1(C)=2C,\qquad
+U_{k+1}(C)=2C\,U_k(C)-U_{k-1}(C).
+$$</p><p>Induction using the sine addition formula gives</p><p>$$
+U_k(\cos\phi)
+=
+\frac{\sin((k+1)\phi)}{\sin\phi}.
+$$</p><p>Consequently,</p><p>$$
+c=\cos\left(\frac{\pi}{m+1}\right)
+$$</p><p>is the largest real root of $U_m$, whose $m$ distinct roots are</p><p>$$
+\cos\left(\frac{j\pi}{m+1}\right),
+\qquad 1\le j\le m.
+$$</p><p>The maximizing worths satisfy</p><p>$$
+p_i^*=(1-c)U_{i-1}(c).
+$$</p><p>For each coordinate, form the integer resultant</p><p>$$
+R_i(X)
+=
+\operatorname{Res}_C
+\left(
+U_m(C),\,
+X-(1-C)U_{i-1}(C)
+\right).
+$$</p><p>It is nonzero: the product formula for the resultant expresses it, up to a nonzero constant, as the product over the roots of $U_m$ of the corresponding linear factors in $X$. It has degree at most $m$ and vanishes at $p_i^*$.</p><p>The sum of absolute coefficients of $U_k$ is at most $3^k$. This follows by induction from the recurrence, because</p><p>$$
+2\cdot3^k+3^{k-1}&lt;3^{k+1}.
+$$</p><p>The Sylvester matrix defining $R_i$ has order at most $2m$ and entries of coefficient absolute sum at most $1+2\cdot3^m$. Its determinant therefore has coefficient absolute sum at most</p><p>$$
+H=(2m)!\,(1+2\cdot3^m)^{2m}.
+$$</p><p>Thus $R_i$ has degree at most $m$ and coefficient bit length</p><p>$$
+O(m^2+m\log m).
+$$</p><p>Fraction-free computation of these Sylvester determinants takes polynomial time, since the matrix order, polynomial degrees, and coefficient bit lengths are polynomially bounded.</p><p>For completeness, identifying the intended root also requires only polynomial precision. Let $Q_i$ be the primitive squarefree part of $R_i$. It divides $R_i$. By the Cauchy root bound, every root of $R_i$ has absolute value at most $1+H$. Vieta&#x27;s formulas therefore bound the coefficients of $Q_i$ by</p><p>$$
+H_0=H(2+H)^m.
+$$</p><p>For a squarefree integer polynomial of degree $e\ge2$, its nonzero integer discriminant satisfies</p><p>$$
+1
+\le
+|a_e|^{2e-2}
+\prod_{j&lt;k}|z_j-z_k|^2.
+$$</p><p>Using $|a_e|\le H_0$ and $|z_j-z_k|\le4H_0$ shows that any two distinct roots are separated by at least</p><p>$$
+\Delta=(4H_0)^{-m^2}.
+$$</p><p>For a degree-one polynomial there is only one root, so no separation requirement is needed. The bit length of $\Delta$ is polynomial in $m$.</p><p>On $[0,1]$, the derivative of $(1-C)U_{i-1}(C)$ has absolute value at most</p><p>$$
+A=2m3^{m-1}.
+$$</p><p>Isolate and refine the largest root $c$ of $U_m$ to a rational $\bar c\in[0,1]$ with</p><p>$$
+|\bar c-c|&lt;\frac{\Delta}{16A}.
+$$</p><p>The polynomial-time root-isolation and refinement theorem applies because $U_m$ has degree $m$, polynomial coefficient bit length, and simple roots; the requested refinement precision also has polynomial bit length.</p><p>Put</p><p>$$
+a_i=(1-\bar c)U_{i-1}(\bar c).
+$$</p><p>The mean value theorem gives $|a_i-p_i^*|&lt;\Delta/16$. Therefore</p><p>$$
+\left(a_i-\frac{\Delta}{4},\,
+a_i+\frac{\Delta}{4}\right)
+$$</p><p>contains $p_i^*$ and no other distinct root of $Q_i$. These rational isolating intervals and integer polynomials supply exactly the required representation in polynomial time.</p><h3>5.3. Algebraic degree can grow even with two rankings</h3><p>This family also demonstrates growing algebraic degree, although only linearly.</p><p>Let $r=m+1$ be an odd prime and set</p><p>$$
+\zeta=e^{2\pi\mathrm{i}/r},
+\qquad
+a=\frac{r+1}{2}.
+$$</p><p>The polynomial</p><p>$$
+\Phi_r(X)=1+X+\cdots+X^{r-1}
+$$</p><p>is irreducible: $\Phi_r(X+1)$ satisfies Eisenstein&#x27;s criterion at $r$. Hence</p><p>$$
+[\mathbb Q(\zeta):\mathbb Q]=r-1.
+$$</p><p>Since $a$ is coprime to $r$, $\mathbb Q(\zeta^a)=\mathbb Q(\zeta)$. Moreover,</p><p>$$
+c=\cos(\pi/r)
+=
+-\frac{\zeta^a+\zeta^{-a}}2.
+$$</p><p>The nonreal number $\zeta^a$ satisfies</p><p>$$
+Z^2+2cZ+1=0.
+$$</p><p>Thus $\mathbb Q(\zeta)$ has degree exactly $2$ over the real field $\mathbb Q(c)$: the degree is at most $2$ by this equation and cannot be $1$ because $\zeta^a$ is nonreal. Therefore</p><p>$$
+[\mathbb Q(c):\mathbb Q]
+=
+\frac{r-1}{2}.
+$$</p><p>Since $p_1^*=1-c$,</p><p>$$
+\deg_{\mathbb Q}(p_1^*)=\frac m2.
+$$</p><p>This establishes unbounded exact algebraic degree with support size $2$, while remaining compatible with the polynomial-time exact algorithm for this family.</p><h3>6. What remains open</h3><p>The additive-approximation question is settled by Section 3.</p><p>For exact optimization, the results proved here establish algebraicity, computability, fixed-$m$ polynomial time, and polynomial time for equally weighted opposite rankings with arbitrary $m$. The general degree bound</p><p>$$
+\bigl(1+\tau(m-2)\bigr)^{m-1}
+$$</p><p>does not give a uniform polynomial bound on exact output length. The opposite-ranking family gives only a linear degree lower bound.</p><p>What remains is a uniform polynomial-time exact algorithm with output-size control, or a rigorous hardness or superpolynomial-output result for general variable-$m$ datasets. No such classification is proved here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 4 and 6: general exact optimization: The exact-optimization question for variable $m$ remains unanswered. Algebraicity, fixed-$m$ polynomial time, a general degree upper bound, and a special-family algorithm establish neither uniform polynomial-time exact optimization nor hardness.</li><li><b>minor</b> — Sections 3.2–3.4: finite-precision ellipsoid implementation: The write-up does not explicitly close the dependence between query encoding lengths and cut encoding lengths. Identify the finite-precision ellipsoid theorem precisely and state uniform encoding bounds for centers, oracle outputs, and cuts in terms of the original input and prescribed precision.</li><li><b>minor</b> — Section 4.2: root isolation after quantifier elimination: The cited isolation result assumes squarefree input, whereas elimination polynomials need not be squarefree. State the isolation/refinement guarantee, squarefree preprocessing, and how the projected singleton formula selects the intended root.</li></ul>
+<div class="pre"><p>The output is <b>partial</b>. It gives a sound additive-approximation argument, subject to minor implementation clarifications, and substantial correct results about exact optimization. It explicitly leaves the general exact-optimization question unanswered. I found no false central mathematical step.</p><h3>1. Normalization and uniqueness</h3><p>The removal of rankings with zero weight is valid. At least one ranking remains because $W&gt;0$. The normalized weights $\alpha_\pi$ are positive rationals summing to $1$; computing them has polynomial bit complexity.</p><p>The displayed Hessian calculation is correct. It is a weighted variance, and its nullspace consists exactly of vectors constant on the remaining set. Every active ranking contributes a first-stage term involving all items. Consequently, the Hessian of $g$ is positive definite on $V$.</p><p>Thus strict convexity, uniqueness under the finite-existence promise, and the bijection between normalized utilities and positive normalized worths are all established correctly. No connectivity hypothesis is needed for this strict-convexity claim; connectivity enters the existence argument.</p><p><b>Assessment:</b> Correct.</p><h3>2. Existence criterion and utility bound</h3><h3>2.1. Existence criterion</h3><p>The necessity argument is correct. Failure of the stated condition means that every active ranking places every item of $H$ before every item outside $H$. Increasing the utilities of $H$ then strictly increases the likelihood at every finite point. The first-stage derivative is strictly positive because both groups have positive total worth.</p><p>Subtracting the direction’s mean preserves normalization and does not change the derivative, by shift invariance.</p><p>The sufficiency argument also checks out:</p><ul><li>An adjacent utility gap of size at least $R_\theta/(m-1)$ exists.</li><li>Applying the condition to the upper group supplies an active ranking in which a lower-group item precedes an upper-group item.</li><li>That lower-group selection is a modeled stage, and its loss is at least the selected gap.</li><li>Its normalized ranking weight is at least $\alpha_{\min}$.</li></ul><p>Therefore the claimed coercive bound holds:</p><p>$$
+g(\theta)\ge \frac{\alpha_{\min}}{m-1}R_\theta.
+$$</p><p>On $V$, this bounds every coordinate on every sublevel set. Continuity and compactness then give existence.</p><p>The directed-graph characterization is correct: the condition is exactly that every nonempty proper vertex subset has an incoming edge, equivalently strong connectivity.</p><p><b>Assessment:</b> Correct.</p><h3>2.2. Optimal adjacent gaps</h3><p>Both stagewise estimates are valid. For a winner in $H$, every remaining item in $C$ has worth at most $e^{-d}$ times the winner’s worth. This justifies</p><p>$$
+1-s_H\le me^{-d}.
+$$</p><p>At the distinguished stage with a winner in $C$ and an item of $H$ remaining, comparing the total remaining worth of $C$ with that upper-group item gives</p><p>$$
+s_H\ge \frac{1}{1+me^{-d}}.
+$$</p><p>Stationarity is applicable to the group-shift direction after centering it. The total positive contribution is at most $m(m-1)e^{-d}$, and the distinguished negative contribution has the claimed lower bound. Hence the resulting inequality and its two-case resolution are correct.</p><p>The conversion to an integer bound $B$ also checks out. The denominator bit length gives $\alpha_{\min}&gt;2^{-b}$, and the displayed bound on $\log(2m(m-1))$ is valid for $m\ge2$.</p><p><b>Assessment:</b> Correct. The polynomial bound on the numerical size of the optimal utilities is genuine progress.</p><h3>3. Additive approximation</h3><h3>3.1. Coordinates, domain, and Lipschitz bound</h3><p>The coordinates $x_i=\theta_i-\theta_m$ correctly represent the shift-invariant objective. The optimum lies strictly inside the stated box.</p><p>A stage gradient is a probability vector minus a coordinate vector, so the norm bound used in the proof is valid, though conservative. Summing over stages gives the claimed global Lipschitz bound.</p><p>The radius $R$ contains the box. The distance bound $\|z-x\|_2\le2R$ is therefore valid whenever both points are in the box.</p><p><b>Assessment:</b> Correct.</p><h3>3.2. Finite-precision oracle</h3><p>The numerical construction is valid:</p><ul><li>Subtracting the largest remaining utility places all exponential arguments in $[-4B,0]$.</li><li>Taylor’s remainder bound is correct on this interval.</li><li>The asserted polynomial degree follows from the factorial estimate.</li><li>Clamping to $[0,1]$ does not increase approximation error.</li><li>Evaluating the zero argument exactly ensures $\widetilde Z\ge1$.</li><li>The logarithm series and its tail bound are correct.</li><li>The probability-division error estimate uses denominators bounded below by $1$.</li></ul><p>The aggregate value and Euclidean-gradient bounds are conservative but valid. The proposed choice of $\rho$ suffices for both oracle requirements.</p><p>Exact rational evaluation of the finite series has polynomial bit complexity in the stated query length and precision parameters. Only explicitly listed rankings are evaluated; there is no hidden enumeration of all rankings.</p><p><b>Assessment:</b> Correct.</p><h3>3.3. Ellipsoid correctness and error accounting</h3><p>The geometric argument checks out.</p><p>If $h=0$, the gradient approximation and convexity give the stated suboptimality bound.</p><p>Otherwise, under the assumption that every recorded center is more than $\delta/2$ suboptimal, every objective cut preserves the comparison ball. The calculation</p><p>$$
+-\delta/4+2R\eta=-\delta/8
+$$</p><p>is correct. Box cuts preserve the entire box and hence the comparison ball.</p><p>The volume contradiction uses the correct dimension factor: the ratio of the initial ball’s volume to the comparison ball’s volume is $(R/r)^d$. The displayed condition on $T$ is sufficient.</p><p>Choosing the smallest approximate recorded value incurs two value errors, so the final bound $5\delta/8$ is correct.</p><p><b>Minor issue — encoding-length bookkeeping.</b> The quoted ellipsoid theorem bounds complexity in terms of the supplied cut lengths, while the oracle construction bounds its complexity in terms of the query length. The write-up does not explicitly close this dependence by specifying uniformly bounded oracle output encodings and the corresponding ellipsoid rounding precision.</p><p>This is an implementation clarification, not a missing optimization argument. Minimum clarification: identify the finite-precision ellipsoid result precisely and state the bounds on centers, cut vectors, and recorded values in terms of the original input and prescribed precision. A chapter-level citation alone makes this particular implementation claim harder to audit.</p><h3>3.4. Output guarantee and overall complexity</h3><p>The returned utilities are rational and normalized. Shift invariance transfers the coordinate-space guarantee correctly.</p><p>The scaling choice is correct in both cases of the minimum defining $\delta$:</p><p>$$
+W\delta\le\varepsilon.
+$$</p><p>The bound on $\log(1/\delta)$ correctly accounts for potentially large binary-rational weights through $W$.</p><p><b>Assessment:</b> Additive approximation is established in substance, with the minor encoding clarification above.</p><h3>4. General exact optimization</h3><h3>4.1. Polynomial system</h3><p>The compressed score equations correctly aggregate first-stage and proper remaining-set terms. The identities for the sums of $c_i$ and $\beta_A$ are correct, including when $m=2$.</p><p>The assertion $\sum_iE_i(p)=0$ is valid on the simplex, which is the domain specified in this section.</p><p>Clearing the positive denominators preserves the equations on the positive simplex. The degree bound $D=K+1$ is correct. Substituting for $p_m$ does not increase that degree.</p><p>The uniqueness statement is justified: the first $m-1$ score equations imply the last equation on the simplex, and utility stationarity together with strict convexity identifies the unique optimum. Extraneous roots outside the positive simplex do not affect this claim.</p><p><b>Assessment:</b> Correct.</p><h3>4.2. Algebraicity and fixed-dimensional computation</h3><p>The singleton-projection argument is correct. If no nonzero defining polynomial vanished at the projected point, all relevant signs would remain unchanged in a neighborhood, contradicting the singleton property.</p><p>The fixed-dimensional polynomial-time claim is supported by the cited quantifier-elimination theorem: its operation counts, output degrees, and intermediate integer bit lengths are polynomial when the variable counts are fixed. The expanded polynomial system has the required polynomial encoding size for fixed $m$. [Basu, Theorem 2.18](https://www.math.purdue.edu/~sbasu/raag_survey2011_final.pdf).</p><p><b>Minor issue — root-isolation hypotheses and selection.</b> The cited root-isolation result assumes a squarefree polynomial. General elimination polynomials need not be squarefree, and merely isolating their roots does not identify which root satisfies the projected singleton formula. The write-up abbreviates these steps. [Sagraloff’s root-isolation paper](https://arxiv.org/pdf/1011.0344).</p><p>Minimum clarification: state the applicable isolation/refinement guarantee, mention squarefree preprocessing, and explain how the projected formula selects the intended isolated root. These are routine algorithmic details.</p><p><b>Assessment:</b> Algebraicity and fixed-$m$ polynomial-time exact solvability are established in substance.</p><h3>4.3. Nonsingularity and algebraic degree</h3><p>The Jacobian of the utility-ratio coordinates is correct and positive definite. The Hessian of $f$ is positive definite because a nonzero direction with last coordinate zero cannot be constant across all items.</p><p>The score-gradient relation and chain-rule calculation have the correct sign and dimensions. Multiplication by $Q$ preserves nonsingularity at a root because $Q(p^*)&gt;0$ and the terms involving derivatives of $Q$ are multiplied by vanishing scores.</p><p>A nonsingular square-system root is isolated over the complex numbers. Every field embedding preserves the polynomial equations and the nonzero Jacobian determinant. Distinct embeddings give distinct coordinate tuples because those coordinates generate the field.</p><p>The stated affine Bézout bound does cover isolated solutions even when other components have positive dimension. Its hypotheses match this application. [Mondal, Theorem I.2](https://pinakimondal.org/wp-content/uploads/2021/12/p1_to_16.pdf).</p><p><b>Assessment:</b> Correct. The field-degree bound is established, but is not a lower bound on required output size.</p><h3>5. Opposite-ranking family</h3><h3>5.1. Formula and optimality</h3><p>The trigonometric calculations check out:</p><ul><li>All proposed worths are positive.</li><li>The telescoping prefix-sum formula is correct.</li><li>The total worth is $1$.</li><li>The worth vector is palindromic.</li><li>Both identities involving adjacent worths and prefix sums are correct.</li></ul><p>The expression $H(p)-\log T$ correctly represents the normalized log-likelihood for arbitrary positive worths.</p><p>The interior gradient differences have the correct denominator ranges and signs. The two identities cancel these differences exactly. The first endpoint calculation also vanishes with the displayed values of $p_1$ and $p_2$.</p><p>Reversal invariance supplies the other endpoint. For $m=3$, the interior range is empty, but the two endpoint arguments still cover all adjacent gradient differences. The case $m=2$ is separately handled.</p><p>Simplex stationarity transfers to utility stationarity, where strict concavity establishes global optimality and uniqueness.</p><p><b>Assessment:</b> Correct.</p><h3>5.2. Exact representation and bit complexity</h3><p>The recurrence, root description of $U_m$, and expression for each worth coordinate are correct.</p><p>The resultant is nonzero and vanishes at the desired worth. Its degree and coefficient-size bounds are valid. The Sylvester determinant estimate is conservative and has polynomial bit length.</p><p>The coefficient bound for the primitive squarefree part follows from the root bound and Vieta’s formulas. The discriminant argument yields a valid, deliberately conservative separation bound. The derivative bound is also valid.</p><p>The proposed refinement precision therefore identifies the desired worth root unambiguously, and the final interval contains that root and no other distinct root.</p><p><b>Assessment:</b> Correct. This family has polynomial-time exact output in the representation required by the task.</p><h3>5.3. Growing algebraic degree</h3><p>The Eisenstein argument, cyclotomic-field degree, identity expressing $c$, and quadratic extension argument are correct. The nonreal generator cannot belong to the real field $\mathbb Q(c)$.</p><p>Thus the degree of the first worth coordinate is indeed $m/2$ for the specified prime-indexed family.</p><p><b>Assessment:</b> Correct. This establishes unbounded degree, but only linear growth.</p><h3>6. Missing target and actionable feedback</h3><p><b>Major scope issue:</b> General exact optimization for variable $m$ is not classified. The prover acknowledges this accurately. Neither fixed-dimensional algorithms nor the displayed degree upper bound establish a uniform polynomial-time algorithm. The special opposite-ranking family and its linear degree lower bound establish no general hardness or superpolynomial-output obstruction.</p><p>Minimum requirements for another round are:</p><ul><li>Supply a result resolving the general exact question, or retain the explicit partial designation.</li><li>Specify the finite-precision encoding bounds used by the approximation implementation.</li><li>State the root-isolation hypotheses and the routine preprocessing and root-selection steps.</li></ul><p>The direction is promising. The established mathematics contains substantial progress, and I found no reason to reject its central arguments.</p><p>Under the requested JSON convention, the overall partial status forces <code>continuous_status</code> to be <code>unresolved</code>, despite the substantive polynomial-time additive-approximation result.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

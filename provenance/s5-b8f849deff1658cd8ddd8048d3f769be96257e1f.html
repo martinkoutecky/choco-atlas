@@ -1,0 +1,155 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-b8f849deff1658cd8ddd8048d3f769be96257e1f — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-b8f849deff1658cd8ddd8048d3f769be96257e1f <span style="font-weight:normal;color:#8a7350">(s5-b8f849deff1658cd8ddd8048d3f769be96257e1f)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> Yes. A uniform exactly BIC transformation achieves $W(M)\geq W(A)$ with at most $m$ allocation-oracle calls and $m$ cost-oracle calls per invocation, and polynomial expected preprocessing and implementation time. It permits tag-dependent oracle allocation distributions.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.1 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>In the black-box model and general cost settings, for any ǫ &gt; 0, a BIC algorithm A′ can be computed from any algorithm A. Its expected social welfare satisﬁes A′ ≥A −ǫ, and its runtime is polynomial in n and 1/ǫ.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given  cohorts with rational masses , where each member of cohort  independently draws a private value from a finite rational-supported prior , and a per-capita feasibility and cost model with integral service decisions, consider a cohort-symmetric black-box allocation rule that takes aggregate report measures and a tagged agent’s report and returns a feasible allocation. Can one construct a BIC mechanism with expected per-capita social welfare at least , using runtime polynomial in , the input bit length , and ? BIC is required for each tagged agent against truthful reports from the other members of the population.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: \(\tau\) publicly known cohort types with positive binary-rational masses \(w_j\), normalized by \(\sum_j w_j=1\); \(\tau\) is the support size, not the number of possible types. Each cohort is atomless. Its members independently draw private service values from an explicitly listed rational prior \(F_j\) with nonempty finite support \(V_j\subseteq[0,1]\). Put \(m=\sum_j|V_j|\), and let \(L\) be the input bit length.<br>Use the exact aggregation convention: truthful report masses are \(\mu^*_{jv}=w_jF_j(v)\), and a single tagged agent&#x27;s deviation leaves these masses unchanged. Reports in cohort \(j\) belong to \(V_j\).<br>An allocation at report masses \(\mu\) is represented by rational served masses \(0\leq s_{jv}\leq\mu_{jv}\), realized by measurable subsets receiving binary service. Cohort symmetry means a tagged agent reporting \(v\) receives service with conditional probability \(s_{jv}/\mu_{jv}\) when \(\mu_{jv}&gt;0\); zero-mass report cells have separately specified tagged service probabilities.<br>The report-independent per-capita cost is \(c(t)\in\mathbb Q_{\geq0}\cup\{\infty\}\), where \(t_j=\sum_v s_{jv}\); infinite cost denotes infeasibility, and \(c(0)=0\). No downward closure or cost monotonicity is assumed. Welfare under truthful reports is \(W=\mathbb E[\sum_{j,v}v s_{jv}-c(t)]\).<br>You have query access to a possibly randomized allocation oracle \(A\), accepting any rational aggregate report measures and a tagged cohort/report and returning a jointly realizable feasible allocation as above, together with tagged service. Cost evaluation is also available by oracle. Replies have polynomial encoding length; count oracle calls and all other bit operations. Priors can be sampled conditionally on any nonempty subset of their supports.<br>A mechanism must provide such allocations and tagged payments, with risk-neutral utility \(vx-p\). Payments may have either sign and must have finite expectations. Require exact BIC for every tagged agent against every allowed report when others report truthfully; expectations include all mechanism randomness, including randomized preprocessing.<br>Is there a uniform black-box transformation that, for every such \(A\) and rational \(0&lt;\varepsilon&lt;1\), constructs and implements a BIC mechanism \(M\) satisfying \(W(M)\geq W(A)-\varepsilon\), with expected preprocessing and per-invocation time polynomial in \(m,\tau,L,1/\varepsilon\) and the invocation&#x27;s encoding length?<br>For finite independent single-parameter agents with values in \([0,1]\), an additive-loss black-box BIC transformation runs in time polynomial in \(n,1/\varepsilon\); with exact functional access, welfare can be preserved without loss. [Hartline–Lucier](https://arxiv.org/pdf/0909.4756v2).<br>No result settling this exact atomless aggregate-oracle problem was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Reconstructed the corrupted welfare threshold as the oracle&#x27;s expected welfare minus epsilon, preserving the anchor&#x27;s additive approximation guarantee.</li><li>Normalized positive cohort masses to total mass one and defined m as the total number of listed cohort/value support entries.</li><li>Adopted an atomless population with exact truthful aggregate masses; individual deviations have zero aggregate effect.</li><li>Restricted reports to the explicitly listed finite value supports, with values normalized to [0,1] as in the discrete sampling model.</li><li>Specified integral service through measurable served subsets, represented computationally by served masses and consistent tagged service probabilities.</li><li>Made feasibility and cost depend on total served masses by cohort, with arbitrary nonnegative rational costs, infinity for infeasibility, and a feasible zero-cost empty allocation; the discrete proof explicitly relies on the empty allocation.</li><li>Specified aggregate allocation and cost oracle access, polynomial reply encodings, conditional prior sampling, and accounting for oracle calls and bit operations.</li><li>Allowed signed payments with finite expectations and interpreted runtime as expected preprocessing plus aggregate or tagged invocation time.</li><li>Required exact BIC in expectation over all mechanism randomness, including preprocessing.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result and benchmark interpretation</h3><p><b>Yes. A uniform transformation achieves exact BIC with no welfare loss.</b> It uses at most $m$ allocation-oracle calls and $m$ cost-oracle calls per invocation, with polynomial expected bit complexity.</p><p>The repair to the previous argument is to query <b>every allowed tag</b>, independently of the actual tagged report, and select the best realized candidate. This avoids assuming that the allocation distribution returned by $A$ is independent of its tag input.</p><p>I use the allocation-level welfare specified in the task: welfare is computed from the returned society-wide served-mass vector. The construction dominates every fixed-tag truthful evaluation of $A$, and every probability mixture of those evaluations. Thus it covers both a tag-independent allocation oracle and a tag-dependent oracle evaluated using a fixed or randomly sampled truthful tag.</p><h3>1. Explicit treatment of tag dependence</h3><p>Let<br>$$
+\mathcal T=\{(j,v):1\leq j\leq\tau,\ v\in V_j\},
+\qquad |\mathcal T|=m.
+$$</p><p>For each $a\in\mathcal T$, let $S^a$ denote the random served-mass vector returned by a query $A(\mu^*,a)$. Define its allocation welfare by<br>$$
+Z_a=
+\sum_{j,v}vS^a_{jv}
+-
+c\!\left(\left(\sum_v S^a_{jv}\right)_{j=1}^{\tau}\right),
+\qquad
+W_a(A)=\mathbb E[Z_a].
+$$</p><p>No equality between these distributions or expectations is assumed.</p><p>If the truthful benchmark supplies tag $a$ with probability $\rho_a$, the law of total expectation gives<br>$$
+W(A)=\sum_{a\in\mathcal T}\rho_a W_a(A).
+$$</p><p>This includes a fixed tag, and the natural protocol that samples a truthful member, for which $\rho_{(j,v)}=w_jF_j(v)$.</p><p>We will prove the stronger guarantee<br>$$
+W(M)\geq
+\max\left\{0,\max_{a\in\mathcal T}W_a(A)\right\}.
+$$</p><p>Consequently, the transformation need not know which tag-selection protocol defines the benchmark.</p><h3>2. Rearranging one feasible allocation</h3><p>Fix any valid rational report masses $\mu$ and any feasible served-mass vector $s$ returned by the oracle. Write<br>$$
+t_j=\sum_{v\in V_j}s_{jv}.
+$$</p><p>For each cohort, construct a vector $R_\mu(s)$ that preserves $t_j$ and serves higher reports first.</p><p>If $t_j=0$, set every served mass in that cohort to zero.</p><p>Otherwise, enumerate its support as<br>$$
+v_{j1}&gt;v_{j2}&gt;\cdots&gt;v_{jk_j}.
+$$</p><p>Feasibility gives<br>$$
+0&lt;t_j\leq\sum_{\ell=1}^{k_j}\mu_{jv_{j\ell}}.
+$$</p><p>Hence there is a smallest index $h_j$ such that<br>$$
+\sum_{\ell=1}^{h_j}\mu_{jv_{j\ell}}\geq t_j.
+$$</p><p>Put<br>$$
+b_j=v_{jh_j},
+\qquad
+r_j=t_j-\sum_{\ell&lt;h_j}\mu_{jv_{j\ell}}.
+$$</p><p>By minimality,<br>$$
+0&lt;r_j\leq\mu_{jb_j}.
+$$</p><p>In particular, the boundary cell has positive mass. Define<br>$$
+s&#x27;_{jv}=
+\begin{cases}
+\mu_{jv},&amp;v&gt;b_j,\\
+r_j,&amp;v=b_j,\\
+0,&amp;v&lt;b_j.
+\end{cases}
+$$</p><p>Then<br>$$
+0\leq s&#x27;_{jv}\leq\mu_{jv},
+\qquad
+\sum_v s&#x27;_{jv}=t_j.
+$$</p><p>Thus $s&#x27;=R_\mu(s)$ preserves the entire vector of cohort totals. Because cost and infeasibility depend only on that vector, $s&#x27;$ has exactly the same finite cost as $s$ and is feasible.</p><h3>Welfare comparison</h3><p>For a cohort with $t_j&gt;0$, preservation of its total implies<br>$$
+\sum_v v(s&#x27;_{jv}-s_{jv})
+=
+\sum_v(v-b_j)(s&#x27;_{jv}-s_{jv}).
+$$</p><p>Each summand on the right is nonnegative:</p><ul><li>For $v&gt;b_j$, both $v-b_j&gt;0$ and $s&#x27;_{jv}-s_{jv}=\mu_{jv}-s_{jv}\geq0$.</li><li>For $v&lt;b_j$, both $v-b_j&lt;0$ and $s&#x27;_{jv}-s_{jv}=-s_{jv}\leq0$.</li><li>For $v=b_j$, the summand is zero.</li></ul><p>When $t_j=0$, the cell bounds force both allocations to serve zero mass in that cohort. Therefore<br>$$
+\sum_{j,v}v\,R_\mu(s)_{jv}-c(t)
+\geq
+\sum_{j,v}v s_{jv}-c(t).
+$$</p><p>This is a pointwise comparison, requiring neither downward closure nor cost monotonicity.</p><h3>3. The transformation</h3><p>Preprocessing sorts each cohort’s support in decreasing order and fixes an enumeration of $\mathcal T$.</p><p>On an invocation with report masses $\mu$ and actual tagged cohort/report $(j,r)$:</p><ul><li>For every $a\in\mathcal T$, query $A(\mu,a)$. Retain its served-mass vector $S^a$ and discard its tagged-service output.</li><li>Construct $R_\mu(S^a)$ for every reply. Evaluate its cost and compute its report-welfare score</li></ul><p>$$
+   H_a(\mu)=
+   \sum_{j,v}v\,R_\mu(S^a)_{jv}
+   -
+   c\!\left(\left(\sum_v S^a_{jv}\right)_{j=1}^{\tau}\right).
+   $$</p><ul><li>Include the all-zero allocation as an additional candidate, with score zero. It is feasible because $c(0)=0$.</li><li>Choose a candidate with maximum score, using a fixed rule to break ties.</li><li>Return that candidate’s served masses, together with tagged service and payment as defined below.</li></ul><p>All query tags, their order, the scores, and the selection rule are independent of the actual tagged cohort/report. The actual report is used only to determine tagged service and payment after a candidate has been selected.</p><p>Every selected allocation is feasible: it is either the zero allocation or a rearrangement preserving the totals of a feasible oracle reply.</p><h3>4. Tagged service, payments, and realizability</h3><p>For a selected rearranged candidate, define tagged service probabilities separately in each cohort.</p><p>If $t_j=0$, set<br>$$
+q_j(v)=0
+\quad\text{for every }v\in V_j.
+$$</p><p>Otherwise, using its boundary $b_j$ and remainder $r_j$, set<br>$$
+q_j(v)=
+\begin{cases}
+1,&amp;v&gt;b_j,\\
+r_j/\mu_{jb_j},&amp;v=b_j,\\
+0,&amp;v&lt;b_j.
+\end{cases}
+$$</p><p>These definitions also specify probabilities for zero-mass report cells. For every positive-mass cell,<br>$$
+q_j(v)=\frac{s&#x27;_{jv}}{\mu_{jv}}.
+$$</p><p>For the actual tagged report $r$, return binary service $X$ with probability $q_j(r)$ and payment<br>$$
+P=
+\begin{cases}
+b_jX,&amp;t_j&gt;0,\\
+0,&amp;t_j=0.
+\end{cases}
+$$</p><p>For the zero candidate, return $X=P=0$.</p><h3>Joint realizability</h3><p>Only a boundary cell can be partially served. Its service fraction is rational; write it as $a/d$, where $0&lt;a\leq d$.</p><p>Use the standard divisibility theorem for finite atomless measures: a measurable set of finite mass admits a measurable subset of any prescribed mass between zero and its total mass. The measure restricted to a positive-mass report cell is finite and atomless, so repeated application partitions that cell into $d$ measurable pieces of equal mass.</p><p>Choose uniformly among $d$ cyclic shifts and serve $a$ consecutive pieces. Every realization serves exactly the required boundary mass, and every member of that cell has service probability $a/d$. Serve cells above the boundary fully and cells below it not at all.</p><p>Applying this construction in every cohort realizes the returned masses and tagged-service probabilities jointly. Tagged service can be coupled to the corresponding cyclic shift. Under the task’s stipulated representation, the algorithm outputs the rational masses and tagged outcome; it does not enumerate the measurable partition.</p><p>Finally,<br>$$
+0\leq P\leq1,
+$$<br>so payments have finite expectations.</p><h3>5. Exact incentive compatibility</h3><p>Fix any tagged agent in cohort $j$, with true value $v\in V_j$, while all others report truthfully.</p><p>By the exact aggregation convention, every allowed report leaves the aggregate masses equal to $\mu^*$. Every oracle query therefore has the same input under every deviation: the masses are unchanged, and the query tags are the fixed enumeration of $\mathcal T$.</p><p>Consequently, the distribution of the complete candidate collection and the selected allocation is independent of this agent’s report. We may couple those random choices identically across all reports.</p><p>Condition on a selected candidate. If $t_j=0$, every report gives utility zero. Otherwise, conditional expected utility from report $r$ is<br>$$
+U_j(v,r)=(v-b_j)q_j(r).
+$$</p><p>There are three cases.</p><ul><li>If $v&gt;b_j$, truthful reporting gives $q_j(v)=1$. Since $q_j(r)\leq1$,</li></ul><p>$$
+  U_j(v,v)=v-b_j\geq(v-b_j)q_j(r)=U_j(v,r).
+  $$</p><ul><li>If $v&lt;b_j$, truthful reporting gives $q_j(v)=0$. Since $q_j(r)\geq0$,</li></ul><p>$$
+  U_j(v,v)=0\geq(v-b_j)q_j(r)=U_j(v,r).
+  $$</p><ul><li>If $v=b_j$, every report gives expected utility zero.</li></ul><p>Thus every incentive inequality holds conditional on every selected candidate. Averaging over oracle randomness, selection randomness, and service randomness preserves the inequalities exactly. Preprocessing is deterministic.</p><p>The mechanism is therefore exactly BIC for every tagged agent against every allowed report.</p><h3>6. Welfare guarantee without tag consistency</h3><p>Evaluate the mechanism at truthful masses $\mu^*$, and let $H$ be its selected allocation’s welfare.</p><p>For each queried tag $a$, the rearrangement inequality gives<br>$$
+H_a(\mu^*)\geq Z_a.
+$$</p><p>Selection then gives, simultaneously for every $a$,<br>$$
+H=\max\left\{0,\max_{a\in\mathcal T}H_a(\mu^*)\right\}
+\geq Z_a.
+$$</p><p>Taking expectations yields<br>$$
+W(M)=\mathbb E[H]\geq W_a(A)
+\quad\text{for every }a\in\mathcal T.
+$$</p><p>This argument does not require independence between the candidate replies; it requires only that each query have its prescribed oracle law.</p><p>For any truthful benchmark tag distribution $\rho$,<br>$$
+W(M)
+\geq
+\sum_{a\in\mathcal T}\rho_aW_a(A)
+=
+W(A).
+$$</p><p>The zero candidate also ensures $H\geq0$. At truthful masses, gross value is at most one, and costs are nonnegative, so<br>$$
+0\leq H\leq1.
+$$</p><p>Thus the transformed welfare expectation is finite. In particular,<br>$$
+W(M)\geq W(A)-\varepsilon
+$$<br>for every permitted $\varepsilon$.</p><h3>7. Oracle calls and bit complexity</h3><p>Let $B$ be the invocation’s encoding length.</p><p>Sorting the explicitly listed rational supports takes polynomial preprocessing time in $m,\tau,L$.</p><p>Each invocation uses:</p><ul><li>exactly $m$ allocation-oracle calls;</li><li>at most $m$ cost-oracle calls;</li><li>polynomially many exact rational arithmetic operations to compute totals, rearrangements, scores, and the maximum.</li></ul><p>Each rearrangement processes $m$ cells, so all candidates require polynomially many operations. By the polynomial reply-length promise, the arithmetic operands have polynomial encoding length in the stated parameters and $B$. Sums, differences, products, divisions by positive rationals, and exact comparisons retain polynomial bit complexity.</p><p>For tagged service, an exact rational Bernoulli draw with probability $a/d$ can be implemented by sampling a uniform integer below $d$. Draw $\lceil\log_2d\rceil$ fair bits and reject integers outside that range. Each trial succeeds with probability greater than one half, except cases handled directly. The expected number of trials is therefore less than two, and expected sampling time is polynomial in the encoding length of $d$.</p><p>The construction is independent of $\varepsilon$, hence satisfies the requested polynomial dependence on $1/\varepsilon$.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><p><b>The submitted argument resolves the task as stated.</b> The transformation preserves welfare, satisfies exact BIC, and has the claimed polynomial expected implementation time under the task’s served-mass representation and oracle reply-length promise. I found no major or minor issues.</p><h3>1. Benchmark and tag dependence</h3><p>The prover explicitly allows the distribution of the returned allocation to depend on the oracle’s tagged input. It defines a separate truthful welfare benchmark $W_a(A)$ for each allowed tag $a$.</p><p>For a benchmark using a fixed distribution $\rho$ over truthful tags, the identity</p><p>$$
+W(A)=\sum_{a\in\mathcal T}\rho_aW_a(A)
+$$</p><p>is valid. Querying every allowed tag and establishing domination of every $W_a(A)$ consequently covers both fixed-tag evaluations and the stated mixtures.</p><p>The later comparison does not require independence between oracle replies. It does require each query to have the oracle law associated with its input, which the prover explicitly states.</p><h3>2. Rearrangement and feasibility</h3><p>The boundary construction is valid, including when some report cells have zero mass.</p><p>For $t_j&gt;0$, feasibility ensures that a boundary index exists. Minimality of that index gives exactly</p><p>$$
+0&lt;r_j\leq\mu_{jb_j}.
+$$</p><p>Thus division by the boundary mass is legitimate. The constructed allocation respects every cell bound and preserves each cohort’s total served mass.</p><p>The inference that feasibility and cost are preserved uses precisely the task’s assumption that cost and infeasibility depend only on the vector $t$. No downward closure or cost monotonicity is needed.</p><p>For $t_j=0$, nonnegativity forces every original served mass in that cohort to be zero, so the separately defined zero allocation is consistent.</p><h3>3. Welfare comparison</h3><p>The displayed identity</p><p>$$
+\sum_v v(s&#x27;_{jv}-s_{jv})
+=
+\sum_v(v-b_j)(s&#x27;_{jv}-s_{jv})
+$$</p><p>follows from preservation of the cohort total.</p><p>All three sign checks are correct:</p><ul><li>Above the boundary, the served-mass difference is nonnegative.</li><li>Below the boundary, the served-mass difference is nonpositive.</li><li>At the boundary, the value coefficient is zero.</li></ul><p>Therefore rearrangement weakly increases gross value while preserving cost. This establishes the claimed pointwise welfare comparison for every feasible reply.</p><h3>4. Candidate selection</h3><p>Every selected candidate is feasible. The additional zero candidate is feasible because $c(0)=0$.</p><p>The entire candidate-generation and selection procedure depends on aggregate masses and the fixed enumeration of allowed tags, independently of the actual tagged report. The fixed tie-breaking rule preserves this independence.</p><p>Exact aggregation is essential here: a tagged deviation leaves the aggregate masses unchanged. The prover uses this assumption correctly in the incentive argument.</p><h3>5. Tagged service and joint realizability</h3><p>For every positive-mass report cell, the proposed tagged probability equals the required served fraction. Zero-mass report cells also receive explicit probabilities, as required by the task.</p><p>The cited divisibility theorem applies: every positive-mass report cell carries a finite atomless measure. Its repeated application permits the stated finite partition into equal-mass measurable pieces.</p><p>For a boundary fraction $a/d$, every cyclic shift serves exactly $a$ pieces, and every piece belongs to exactly $a$ of the $d$ possible shifts. Consequently, every member has service probability $a/d$, while the realized served mass is exact. Fully served and unserved cells present no additional difficulty.</p><p>The distinction between existence of the measurable realization and computation of its representation is handled explicitly. The task permits allocations to be represented by rational served masses; the algorithm therefore need not enumerate a partition whose number of pieces may be large.</p><p>Since $b_j\in[0,1]$ and $X$ is binary, the payment bound</p><p>$$
+0\leq P\leq1
+$$</p><p>is correct and guarantees finite expected payments.</p><h3>6. Exact BIC</h3><p>At truthful aggregate masses, the selected candidate’s distribution is independent of the tagged agent’s report. Conditioning on that candidate is therefore legitimate for comparing all allowed reports.</p><p>The conditional expected utility formula</p><p>$$
+U_j(v,r)=(v-b_j)q_j(r)
+$$</p><p>correctly accounts for both service and payment randomness.</p><p>The three incentive cases are exhaustive and correct:</p><ul><li>If $v&gt;b_j$, truthful reporting obtains service probability one, maximizing utility.</li><li>If $v&lt;b_j$, truthful reporting obtains service probability zero, maximizing utility.</li><li>If $v=b_j$, every report gives zero utility.</li></ul><p>The zero-total case likewise gives zero utility under every report. Averaging these conditional inequalities preserves them exactly. Thus the proof establishes BIC for every tagged agent and every allowed deviation.</p><h3>7. Welfare guarantee and expectations</h3><p>At truthful masses, candidate selection gives the pointwise inequalities</p><p>$$
+H\geq H_a(\mu^*)\geq Z_a
+$$</p><p>for every queried tag. Taking expectations therefore establishes domination of every fixed-tag benchmark and every stated mixture.</p><p>The zero candidate guarantees nonnegative selected welfare. Truthful gross value is at most one, and costs are nonnegative, so</p><p>$$
+0\leq H\leq1.
+$$</p><p>The transformed welfare expectation is consequently finite. An original benchmark with arbitrarily negative welfare causes no expectation ambiguity relevant to the comparison: its realized welfare is bounded above, and its expectation may be negative infinity.</p><p>The resulting guarantee $W(M)\geq W(A)$ implies the requested additive guarantee for every permitted $\varepsilon$.</p><h3>8. Oracle calls and bit complexity</h3><p>The stated call counts are correct: each invocation makes $m$ allocation queries and at most $m$ cost queries.</p><p>The arithmetic operates on polynomially many rational numbers of polynomial encoding length. Computing totals, boundaries, welfare scores, comparisons, and boundary probabilities retains polynomial bit complexity.</p><p>The exact Bernoulli sampler also meets the expected-time requirement. Rejection sampling a uniform integer below $d$ has acceptance probability greater than one half for the nontrivial cases, so its expected number of trials is less than two.</p><p>The potentially large numerical denominator does not imply a large computation: the sampler uses its binary encoding length, and measurable partitions are not enumerated. Preprocessing is deterministic and polynomial. Independence from $\varepsilon$ satisfies the required polynomial dependence on $1/\varepsilon$.</p><p><b>Repair feedback:</b> None required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

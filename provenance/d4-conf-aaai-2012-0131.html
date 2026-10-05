@@ -1,0 +1,226 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2012-0131 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2012-0131 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2012-0131)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> Constructive Schulze addition is $\mathrm{NP}$-complete; destructive Schulze addition is in $\mathrm{P}$; constructive and destructive ranked-pairs addition are both $\mathrm{NP}$-complete.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Schulze and ranked pairs resist constructive CONTROL-ADD-ALT. Ranked pairs resists destructive CONTROL-ADD-ALT.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given old alternatives \(C\), possible additions \(C&#x27;\), a rational mass distribution \(\mu\) over complete rankings of \(C\cup C&#x27;\), a favored alternative \(c\in C\), a quota \(k\), and the rule and control mode, is there a set \(S\subseteq C&#x27;\) with \(|S|\le k\) such that, after restricting each ranking to \(C\cup S\), \(c\) is the unique winner in the constructive case or is no longer the unique winner in the destructive case?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given disjoint finite sets of old alternatives \(C\ne\varnothing\) and possible additions \(C&#x27;\), let \(m=|C\cup C&#x27;|\). The input includes \(c\in C\), an integer quota \(0\le k\le |C&#x27;|\), a rule (Schulze or ranked pairs), and a mode (constructive or destructive).<br>A society is given by its support: the list of the \(\tau\) strict complete rankings of \(C\cup C&#x27;\) with positive mass, each mass a binary rational, with masses summing to \(1\). Here \(\tau\) is the support size, not the number of possible rankings; let \(L\) be the total input bit length. State running times in \(m,\tau,L,k\).<br>For distinct alternatives define \(D(a,b)=\mu(a\succ b)-\mu(b\succ a)\). On any retained set \(A\), use the complete directed graph with edge weights \(D(a,b)\), including zero and negative weights.<br>For Schulze, let \(B_A(a,b)\) be the maximum, over simple directed paths from \(a\) to \(b\) in \(A\), of the minimum edge weight. Its winner set is \(W(A)=\{a\in A: B_A(a,b)\ge B_A(b,a)\text{ for every }b\in A\setminus\{a\}\}\).<br>For ranked pairs, process all ordered pairs of distinct retained alternatives in decreasing order of \(D(a,b)\), breaking ties lexicographically by fixed alternative labels. Starting with an empty directed graph, lock each edge unless it creates a directed cycle; \(W(A)\) is the singleton containing the final graph&#x27;s unique source. The tie order is restricted from the full alternative set and cannot be changed by the controller.<br>A feasible action selects \(S\subseteq C&#x27;\) with \(|S|\le k\), restricts every ranking to \(A=C\cup S\), and preserves its mass. Success means \(W(A)=\{c\}\) constructively and \(W(A)\ne\{c\}\) destructively.</p><p>For each of the four rule–mode combinations, is deciding whether a successful action exists in \(\mathrm{P}\), or is it \(\mathrm{NP}\)-hard?</p><p>With explicitly listed unweighted voters, constructive addition control is \(\mathrm{NP}\)-hard for both rules, and destructive addition control is \(\mathrm{NP}\)-hard for ranked pairs ([Parkes–Xia, 2012](https://cdn.aaai.org/ojs/8258/8258-13-11786-1-2-20201228.pdf)).<br>Destructive addition control for discrete Schulze elections is still listed as open in [Maushagen et al., 2024](https://www.ijcai.org/proceedings/2024/0326.pdf). No result for exactly the rational-mass support model above was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Made the distribution normalization explicit: all listed masses are positive binary rationals and sum to one.</li><li>Specified strict complete rankings, disjoint alternative sets, a nonempty old set, and an integer quota between zero and the number of possible additions.</li><li>Defined m as the total number of old and possible alternatives and L as the total input bit length.</li><li>Extended pairwise margins to mass differences and retained zero and negative edges in the Schulze path definition.</li><li>Settled unspecified ranked-pairs tie-breaking by a fixed lexicographic order on ordered pairs of alternative labels, restricted consistently after additions.</li><li>Retained both modes for both rules, including destructive Schulze control, although that combination is outside the anchor&#x27;s hardness claims.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Classification</h3><p>For the exact rules and success conditions in the question, the classification is:</p><p>| Rule | Constructive addition | Destructive addition |<br>|---|---|---|<br>| Schulze | $\mathrm{NP}$-complete | $\mathrm{P}$ |<br>| Ranked pairs | $\mathrm{NP}$-complete | $\mathrm{NP}$-complete |</p><p>The main result proved below is the polynomial-time algorithm for destructive Schulze addition. Its essential step is to replace an initially witnessing opponent by the <b>last vertex on a witnessing path that is unreachable from $c$ above a chosen threshold</b>.</p><p>The 2024 paper lists destructive Schulze addition as open in both winner models. The argument below supplies an algorithm for the particular unique-winner destruction objective specified here. [Maushagen et al., Section 6](https://www.ijcai.org/proceedings/2024/0326.pdf)</p><p>All arguments include zero and negative margins. If $m=1$, the sole alternative is always the unique winner, so constructive control succeeds and destructive control fails.</p><h3>2. Exact preprocessing and verification</h3><p>Put $U=C\cup C&#x27;$ and<br>$$
+h=\left\lceil\log_2(m+1)\right\rceil.
+$$</p><p>Index alternatives in their fixed label order. This preserves the prescribed lexicographic tie-breaking.</p><h3>2.1. Computing margins</h3><p>Write the $\tau$ input masses as $p_i/q_i$. Define<br>$$
+Q=\prod_{i=1}^{\tau}q_i,
+\qquad
+w_i=p_i(Q/q_i).
+$$</p><p>Then $w_i$ are positive integers and<br>$$
+\sum_{i=1}^{\tau}w_i=Q.
+$$</p><p>For distinct $a,b\in U$, let $\varepsilon_i(a,b)$ equal $1$ if ranking $i$ places $a$ above $b$, and $-1$ otherwise. Thus<br>$$
+M(a,b)=\sum_{i=1}^{\tau}w_i\varepsilon_i(a,b),
+\qquad
+D(a,b)=\frac{M(a,b)}{Q}.
+$$</p><p>The integers $Q,w_i,M(a,b)$ have $O(L)$ bits: the bit length of $Q$ is bounded by the sum of the denominator bit lengths, while $w_i\le Q$ and $|M(a,b)|\le Q$.</p><p>Restricting a ranking does not change a retained pairwise comparison. Therefore this matrix serves every feasible action.</p><p>Using schoolbook arithmetic, a conservative preprocessing bound, including sorting margin values, is<br>$$
+T_{\mathrm{pre}}
+=
+O\!\left(
+\tau L^2+\tau m^2L+m^2Lh
+\right).
+$$</p><h3>2.2. Compressing weights without changing outcomes</h3><p>Let the distinct positive margin magnitudes be<br>$$
+0&lt;\delta_1&lt;\cdots&lt;\delta_q.
+$$<br>There are at most $\binom m2$ of them. On the occurring margin values, define<br>$$
+f(0)=0,
+\qquad
+f(\delta_j)=2j,
+\qquad
+f(-\delta_j)=-2j.
+$$</p><p>This is strictly increasing and preserves antisymmetry. Put<br>$$
+F(a,b)=f(D(a,b)).
+$$</p><p>For every simple path $P$,<br>$$
+\min_{e\in P}F(e)
+=
+f\!\left(\min_{e\in P}D(e)\right).
+$$<br>Because there are finitely many simple paths between distinct vertices,<br>$$
+B_A^F(a,b)=f(B_A^D(a,b)).
+$$<br>Consequently, all Schulze winner comparisons, including equalities, are preserved on every retained set.</p><p>For ranked pairs, the transformation preserves the ordering and equality classes of edge weights. Labels remain unchanged, so the full processing order is unchanged. Induction over that order shows that every locking decision is unchanged.</p><p>Thus, after preprocessing, both rules can use integer weights with $O(h)$ bits.</p><h3>2.3. Verifying an action</h3><p>For Schulze, max–min Floyd–Warshall computes strongest-path values. Initialize off-diagonal entries with the edge weights, diagonal entries with a formal $+\infty$, and apply<br>$$
+B(a,b)\leftarrow
+\max\{B(a,b),\min\{B(a,z),B(z,b)\}\}.
+$$</p><p>The recurrence is valid with negative weights. Concatenation produces walks, and deleting a cycle cannot decrease a walk’s minimum edge weight. Hence allowing walks gives the same maximum bottleneck as allowing simple paths between distinct endpoints.</p><p>Verification takes<br>$$
+O(m^3h)
+$$<br>bit operations after preprocessing.</p><p>For ranked pairs, filter the precomputed edge order to the retained alternatives and maintain the locked graph’s transitive closure. An edge $a\to b$ creates a cycle exactly when $b$ already reaches $a$. An accepted insertion updates the closure in $O(m^2)$ table operations, giving the conservative verification bound<br>$$
+O(m^4h).
+$$</p><p>The final acyclic graph has a unique source. For every pair of distinct vertices, processing an edge either establishes reachability in its direction or rejects it because reverse reachability already exists. Thus every pair is comparable by final reachability. Two distinct sources would contradict this comparability, and every nonempty finite acyclic graph has a source.</p><p>A certificate lists at most $k$ additions and uses $O(kh)$ bits. Therefore all four problems belong to $\mathrm{NP}$.</p><h3>3. Unique Schulze victory and strict path dominance</h3><p>We first prove the criterion needed by the destructive algorithm.</p><p><b>Lemma.</b> For every retained set $A$ containing $c$,<br>$$
+W(A)=\{c\}
+\quad\Longleftrightarrow\quad
+B_A(c,d)&gt;B_A(d,c)
+\text{ for every }d\in A\setminus\{c\}.
+$$</p><p><b>Proof.</b> For distinct $a,b,z\in A$, concatenating strongest paths and removing cycles gives<br>$$
+B_A(a,z)\ge
+\min\{B_A(a,b),B_A(b,z)\}.
+$$</p><p>Define $a\triangleright b$ when<br>$$
+B_A(a,b)&gt;B_A(b,a).
+$$<br>This relation is asymmetric. We show it is transitive.</p><p>Suppose $a\triangleright b$ and $b\triangleright z$. These assumptions exclude $z=a$. Write<br>$$
+x=B_A(a,b),
+\qquad
+y=B_A(b,z),
+\qquad
+t=B_A(z,a).
+$$</p><p>If $t\ge\min\{x,y\}$, then:</p><ul><li>When $x\le y$,</li></ul><p>$$
+  B_A(b,a)\ge\min\{y,t\}\ge x,
+  $$<br>contradicting $a\triangleright b$.</p><ul><li>When $y\le x$,</li></ul><p>$$
+  B_A(z,b)\ge\min\{t,x\}\ge y,
+  $$<br>contradicting $b\triangleright z$.</p><p>Hence<br>$$
+B_A(z,a)&lt;\min\{x,y\}\le B_A(a,z),
+$$<br>which proves transitivity.</p><p>By definition, Schulze winners are exactly the vertices having no incoming $\triangleright$ relation. In a finite transitive asymmetric relation, every dominated vertex is dominated by an undominated vertex. Indeed, repeatedly choose an incoming dominator. Repetition would, by transitivity, contradict asymmetry, so the process terminates; transitivity makes its terminal vertex dominate the initial vertex.</p><p>If $c$ is the sole undominated vertex, this observation shows that $c\triangleright d$ for every $d\ne c$. Conversely, if $c\triangleright d$ for every $d\ne c$, then $c$ is undominated and every other vertex is dominated. This proves the lemma. $\square$</p><p>Negating its conclusion gives<br>$$
+W(A)\ne\{c\}
+\quad\Longleftrightarrow\quad
+\exists d\in A\setminus\{c\}:
+B_A(d,c)\ge B_A(c,d).
+$$</p><h3>4. A polynomial algorithm for destructive Schulze addition</h3><h3>4.1. Threshold graphs</h3><p>For a vertex set $X$ and a threshold $t$, define:</p><ul><li>$G_{&gt;t}(X)$ to contain precisely the edges with $D(a,b)&gt;t$;</li><li>$G_{\ge t}(X)$ to contain precisely the edges with $D(a,b)\ge t$.</li></ul><p>Reachability includes a length-zero path from a vertex to itself.</p><p>For distinct endpoints, finiteness of the simple-path set gives<br>$$
+B_X(a,b)&gt;t
+\quad\Longleftrightarrow\quad
+b\text{ is reachable from }a\text{ in }G_{&gt;t}(X),
+$$<br>and likewise with $\ge t$.</p><p>Let $\mathcal T$ be the set of all occurring edge weights:<br>$$
+\mathcal T=\{D(a,b):a,b\in U,\ a\ne b\}.
+$$<br>Its size is at most $m(m-1)$.</p><h3>4.2. Safe sets for a threshold and opponent</h3><p>Fix $t\in\mathcal T$ and $d\in U\setminus\{c\}$. Define<br>$$
+V_0=C\cup\{d\}
+$$<br>and<br>$$
+R_{t,d}
+=
+\{r\in V_0:
+d\text{ is reachable from }r
+\text{ in }G_{&gt;t}(V_0)\}.
+$$<br>In particular, $d\in R_{t,d}$.</p><p>If $c\in R_{t,d}$, discard this pair $(t,d)$.</p><p>Otherwise, define the allowable additional alternatives<br>$$
+E_{t,d}
+=
+\left\{
+x\in C&#x27;\setminus\{d\}:
+D(x,r)\le t
+\text{ for every }r\in R_{t,d}
+\right\},
+$$<br>and put<br>$$
+V_{t,d}=V_0\cup E_{t,d}.
+$$</p><p><b>Safe-set property.</b> There is no path from $c$ to $d$ in $G_{&gt;t}(V_{t,d})$.</p><p><b>Proof.</b> No vertex of $V_0\setminus R_{t,d}$ has an edge of weight greater than $t$ into $R_{t,d}$. Such an edge, followed by a path to $d$, would put that vertex in $R_{t,d}$.</p><p>By definition, no vertex of $E_{t,d}$ has an edge of weight greater than $t$ into $R_{t,d}$ either.</p><p>Thus $G_{&gt;t}(V_{t,d})$ has no edge entering $R_{t,d}$ from its complement. Since $c\notin R_{t,d}$ and $d\in R_{t,d}$, the claimed path cannot exist. $\square$</p><h3>4.3. The algorithm</h3><p>For every pair $(t,d)$ not discarded above, find a minimum-cost path from $d$ to $c$ in<br>$$
+G_{\ge t}(V_{t,d}).
+$$</p><p>Assign vertex cost $0$ to old alternatives and $1$ to possible additions. Specifically, initialize the distance at $d$ as<br>$$
+\mathbf 1_{\{d\in C&#x27;\}},
+$$<br>and assign an edge $a\to b$ cost<br>$$
+\mathbf 1_{\{b\in C&#x27;\}}.
+$$</p><p>A simple path’s cost is exactly its number of additional alternatives. All costs are nonnegative, so a minimum-cost walk can be made simple by deleting cycles without increasing cost. Standard shortest-path algorithms therefore compute the required minimum.</p><p>Return <b>yes</b> if any such minimum is at most $k$; otherwise return <b>no</b>.</p><h3>4.4. Soundness</h3><p>Suppose the algorithm finds a simple path $P$ of cost at most $k$ for $(t,d)$. Select<br>$$
+S=V(P)\cap C&#x27;,
+\qquad
+A=C\cup S.
+$$<br>Then $|S|\le k$, and $P$ proves<br>$$
+B_A(d,c)\ge t.
+$$</p><p>Also $A\subseteq V_{t,d}$. By the safe-set property, there is no path from $c$ to $d$ in $G_{&gt;t}(A)$. Therefore<br>$$
+B_A(c,d)\le t.
+$$</p><p>Consequently,<br>$$
+B_A(d,c)\ge t\ge B_A(c,d),
+$$<br>and the lemma in Section 3 shows that $W(A)\ne\{c\}$. Thus every accepted instance has a successful feasible action.</p><h3>4.5. Completeness: changing the witnessing opponent</h3><p>Suppose a feasible action $S$ succeeds, and write<br>$$
+A=C\cup S.
+$$<br>By Section 3, some $d_0\in A\setminus\{c\}$ satisfies<br>$$
+B_A(d_0,c)\ge B_A(c,d_0).
+$$</p><p>Set<br>$$
+t=B_A(d_0,c).
+$$<br>Choose a simple path $P$ from $d_0$ to $c$ attaining this value. Its minimum edge weight is $t$, so $t\in\mathcal T$, and every edge of $P$ has weight at least $t$.</p><p>Let<br>$$
+H=
+\{v\in A:
+v\text{ is reachable from }c
+\text{ in }G_{&gt;t}(A)\}.
+$$</p><p>We have $c\in H$. On the other hand, $d_0\notin H$, because otherwise<br>$$
+B_A(c,d_0)&gt;t=B_A(d_0,c),
+$$<br>contradicting the choice of $d_0$.</p><p>Travel along $P$ from $d_0$ toward $c$, and let $d$ be the <b>last vertex outside $H$</b>. Let $P^\star$ be the suffix of $P$ beginning at $d$. Every vertex of $P^\star$ after $d$ belongs to $H$.</p><p>We prove that the algorithm accepts at the pair $(t,d)$.</p><p>First, $C\cup\{d\}\subseteq A$. If $c$ belonged to $R_{t,d}$, the corresponding path within $C\cup\{d\}$ would also be present in $A$, putting $d$ in $H$. Therefore<br>$$
+c\notin R_{t,d}.
+$$<br>This pair is not discarded.</p><p>Next, consider any additional alternative $x$ on $P^\star$ other than $d$. Then $x\in H$. Suppose there were $r\in R_{t,d}$ with<br>$$
+D(x,r)&gt;t.
+$$<br>There would then be:</p><ul><li>a path from $c$ to $x$ in $G_{&gt;t}(A)$;</li><li>the edge $x\to r$ of weight greater than $t$;</li><li>a path from $r$ to $d$ in $G_{&gt;t}(C\cup\{d\})$.</li></ul><p>Their concatenation establishes reachability from $c$ to $d$ in $G_{&gt;t}(A)$, contradicting $d\notin H$. Hence<br>$$
+D(x,r)\le t
+\text{ for every }r\in R_{t,d},
+$$<br>so $x\in E_{t,d}$.</p><p>All old alternatives are included in $V_{t,d}$, as is $d$. Thus the entire suffix $P^\star$ lies in $V_{t,d}$. Its edges have weight at least $t$, and its number of additional alternatives is at most<br>$$
+|S|\le k.
+$$<br>The shortest-path calculation therefore finds cost at most $k$.</p><p>This proves completeness.</p><h3>5. Running times in $m,\tau,L,k$</h3><p>After the preprocessing of Section 2, each threshold and opponent pair requires:</p><ul><li>reverse reachability within $C\cup\{d\}$;</li><li>checking the defining inequalities for allowable additions;</li><li>a shortest-path computation on at most $m$ vertices.</li></ul><p>Each operation takes $O(m^2h)$ bit operations. For the shortest-path computation, ordinary Dijkstra with linear scanning suffices; finite relevant distances are at most $m$.</p><p>There are $O(m^2)$ thresholds and at most $m-1$ opponents. Hence destructive Schulze addition is decidable in<br>$$
+O\!\left(
+\tau L^2+\tau m^2L+m^2Lh+m^5h
+\right)
+$$<br>bit operations.</p><p>There is no exponential dependence on $k$. Indeed, minimizing the path cost over all processed pairs computes the minimum number of additions needed for destructive success; the algorithm then compares that minimum with $k$.</p><p>For the other three combinations, exact enumeration gives explicit upper bounds. Put<br>$$
+H_k=\sum_{j=0}^{k}\binom{|C&#x27;|}{j}.
+$$<br>Then the running times are<br>$$
+O(T_{\mathrm{pre}}+H_km^3h)
+$$<br>for constructive Schulze addition, and<br>$$
+O(T_{\mathrm{pre}}+H_km^4h)
+$$<br>for either ranked-pairs mode.</p><p>Since<br>$$
+H_k\le(k+1)m^k,
+$$<br>all combinations are polynomial-time solvable for fixed $k$. The hardness classifications concern unrestricted input quota.</p><h3>6. Transferring the three hardness results</h3><p>The known theorem used here is that, with explicitly listed unweighted strict-ranking voters, constructive alternative addition is $\mathrm{NP}$-hard for Schulze and ranked pairs, and destructive alternative addition is $\mathrm{NP}$-hard for ranked pairs. Its Schulze objective is unique victory; its ranked-pairs results apply to any fixed tie-breaking mechanism. The paper explicitly permits negative Schulze path weights and defines the same addition quota and destructive objective used here. [Parkes–Xia, Theorem 3 and definitions](https://cdn.aaai.org/ojs/8258/8258-13-11786-1-2-20201228.pdf)</p><p>To transfer this theorem, take an explicitly listed electorate with $n\ge1$ voters. Group identical rankings. If ranking $R$ occurs $t_R$ times, give it mass<br>$$
+\mu(R)=\frac{t_R}{n}.
+$$</p><p>This transformation is polynomial-time: there are at most $n$ support rankings, and each numerator and denominator has $O(\log(n+1))$ bits. For every pair,<br>$$
+D_{\mathrm{support}}(a,b)
+=
+\frac{D_{\mathrm{unweighted}}(a,b)}{n}.
+$$</p><p>For Schulze, positive scaling multiplies every path strength and strongest-path value by the same factor, preserving the entire winner set.</p><p>For ranked pairs, positive scaling preserves the complete edge order, including ties. Labels are unchanged. Induction over the processed edges therefore preserves the locked graph and its source.</p><p>Both statements hold for every retained set $C\cup S$. Consequently, the transformation preserves success of every feasible action, in either mode.</p><p>The three cited hardness results therefore apply to the rational-support model. Together with the $\mathrm{NP}$ membership proved in Section 2, they establish the three $\mathrm{NP}$-completeness entries in the table.</p><h3>7. Equivalence with polynomially sized unweighted electorates</h3><p>For completeness, the reverse transformation from the notes also holds, with the all-zero case made explicit.</p><p>Use the compressed even antisymmetric matrix $F$ from Section 2. For an unordered pair oriented so that<br>$$
+F(a,b)=2j&gt;0,
+$$<br>list the remaining alternatives as $r_1,\ldots,r_{m-2}$. Introduce $j$ copies of each ranking<br>$$
+a\succ b\succ r_1\succ\cdots\succ r_{m-2}
+$$<br>and<br>$$
+r_{m-2}\succ\cdots\succ r_1\succ a\succ b.
+$$</p><p>One pair of these rankings contributes margin $2$ to $a$ against $b$. Every other contribution cancels: the remaining alternatives reverse their mutual order, and each is below $a,b$ in one ranking and above them in the other.</p><p>Summing these gadgets realizes exactly $F$. Write $u=\binom m2$. If $F$ is nonzero, the actual number of constructed voters is<br>$$
+n_F=
+\sum_{\{a,b\}\subseteq U}|F(a,b)|
+\le 2u^2.
+$$</p><p>If $F$ is identically zero, instead use an arbitrary ranking and its reverse, and explicitly set<br>$$
+n_F=2.
+$$<br>This includes $m=1$.</p><p>Thus the electorate has polynomial size, with encoding length<br>$$
+O(m^5h),
+$$<br>and construction time<br>$$
+O(T_{\mathrm{pre}}+m^5h).
+$$</p><p>Section 2 proved that $F$ preserves both rules on every retained set. Keeping $C,C&#x27;,c,k$, the rule, and the mode unchanged therefore gives a polynomial-time many-one reduction back to explicitly listed unweighted elections.</p><p>Accordingly, the classification above also applies to the corresponding unweighted problems. In particular, the destructive Schulze algorithm does not rely on rational masses or support compression.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><p><b>The prover’s classification is correct for the rules and success conditions in <code>USER_TASK</code>.</b> The destructive Schulze algorithm has a valid soundness and completeness proof, and the three hardness transfers satisfy the cited theorem’s hypotheses. I found no major or minor mathematical issues requiring repair.</p><p>| Rule | Constructive addition | Destructive addition |<br>|---|---|---|<br>| Schulze | $\mathrm{NP}$-complete | $\mathrm{P}$ |<br>| Ranked pairs | $\mathrm{NP}$-complete | $\mathrm{NP}$-complete |</p><h3>1. Exact preprocessing</h3><h3>Computing margins</h3><p>The common-denominator construction is correct. Since each mass is positive and the masses sum to $1$, the resulting integers satisfy<br>$$
+w_i&gt;0,\qquad \sum_i w_i=Q.
+$$<br>Consequently, $w_i\le Q$ and $|M(a,b)|\le Q$. The product defining $Q$ has bit length bounded by the sum of the input denominator bit lengths, so all these integers have $O(L)$ bits.</p><p>Restriction preserves every comparison between retained alternatives. Thus the same margin matrix correctly represents every feasible action.</p><p>The preprocessing bound<br>$$
+O(\tau L^2+\tau m^2L+m^2Lh)
+$$<br>is conservative and valid: common-denominator arithmetic fits the first term, accumulation of pairwise margins fits the second, and sorting $O(m^2)$ integer margins using $O(L)$-bit comparisons fits the third.</p><h3>Compressing weights</h3><p>The map $f$ is strictly increasing on every occurring edge weight and preserves antisymmetry. Both the minimum along a path and the maximum over the finite collection of simple paths therefore commute with $f$.</p><p>This establishes preservation of all Schulze comparisons, including ties, on every retained set. For ranked pairs, preservation of weight order and equality classes, together with unchanged labels, preserves the complete processing order and every locking decision.</p><p>Compressed weights require $O(h)$ bits because their magnitudes are at most $2\binom m2$.</p><h3>2. Verification and membership in $\mathrm{NP}$</h3><p>The Schulze verification procedure is valid with zero and negative weights. The formal diagonal value $+\infty$ is appropriate for empty paths. Cycle deletion cannot decrease a walk’s bottleneck, so the max–min recurrence computes the specified simple-path strengths for distinct endpoints.</p><p>The bound $O(m^3h)$ follows from the number of updates and the compressed weight size.</p><p>For ranked pairs, an insertion creates a cycle exactly when the proposed target already reaches the proposed source. Maintaining transitive closure gives the stated conservative bound $O(m^4h)$.</p><p>The unique-source argument is also correct. After all ordered pairs have been processed, every pair of distinct alternatives is comparable by reachability: accepting an edge establishes forward reachability, while rejection requires existing reverse reachability. The final graph remains acyclic, and comparability excludes two distinct sources.</p><p>A certificate naming at most $k$ additions has $O(kh)$ bits after indexing alternatives. Checking feasibility and computing the winner set takes polynomial time. All four problems therefore belong to $\mathrm{NP}$.</p><h3>3. The unique-winner criterion</h3><p>The lemma in Section 3 is proved correctly.</p><p>The bottleneck inequality follows from concatenation and cycle removal. In the transitivity argument, the cases $x\le y$ and $y\le x$ exhaust all possibilities, including equality. In each case, the hypothesis<br>$$
+t\ge\min\{x,y\}
+$$<br>contradicts one of the assumed strict comparisons. Therefore strict path dominance is transitive and asymmetric.</p><p>The finite-relation argument is sufficient: following incoming dominators terminates, and transitivity makes the terminal undominated vertex dominate the initial vertex. Consequently, a sole undominated vertex must strictly dominate every other vertex.</p><p>The negation used by the algorithm is thus justified:<br>$$
+W(A)\ne\{c\}
+\quad\Longleftrightarrow\quad
+\exists d\ne c:\ B_A(d,c)\ge B_A(c,d).
+$$<br>It correctly covers both multiple-winner outcomes containing $c$ and outcomes in which $c$ is not a winner. The singleton retained set satisfies the original lemma vacuously.</p><h3>4. Destructive Schulze algorithm</h3><h3>Threshold reachability</h3><p>For distinct endpoints, the stated strict and weak threshold equivalences hold. There are finitely many simple paths, their bottlenecks are attained, and threshold reachability can be represented by a simple path through cycle deletion.</p><p>Allowing length-zero reachability correctly ensures $d\in R_{t,d}$ and $c\in H$.</p><h3>Safe-set property</h3><p>The proof checks every possible edge entering $R_{t,d}$ from its complement:</p><ul><li>An old vertex outside $R_{t,d}$ cannot have an edge of weight greater than $t$ into it, because that would make the vertex reach $d$.</li><li>Every allowed addition is explicitly required to have no such edge.</li></ul><p>Since $c\notin R_{t,d}$ and $d\in R_{t,d}$, the claimed absence of a strict-threshold path from $c$ to $d$ follows.</p><h3>Path costs</h3><p>The initial charge counts $d$ when it is an addition, and each edge charges its destination when that destination is an addition. For a simple path, this counts each selected additional alternative exactly once.</p><p>The costs are nonnegative. Removing cycles cannot increase cost, so shortest-walk optimization yields the required minimum simple-path cost. The hypotheses for the cited shortest-path method are satisfied.</p><h3>Soundness</h3><p>For an accepted path, the selected action contains exactly its additional vertices and respects the quota. Its edges establish<br>$$
+B_A(d,c)\ge t.
+$$<br>Because the retained set is contained in the safe set, it has no strict-threshold path from $c$ to $d$, giving<br>$$
+B_A(c,d)\le t.
+$$<br>The unique-winner criterion then establishes destructive success. No additional assumption is needed.</p><h3>Completeness</h3><p>This is the decisive part of the proof, and every step is justified.</p><p>The successful action supplies an opponent $d_0$ satisfying the non-strict reverse comparison. Its strongest-path value $t$ is an occurring edge weight, so the algorithm enumerates it.</p><p>The set $H$ contains $c$ and excludes $d_0$. Hence the witnessing path has a last vertex $d$ outside $H$, and $d\ne c$. Every later vertex of its suffix belongs to $H$.</p><p>The pair $(t,d)$ cannot be discarded: a strict-threshold path from $c$ to $d$ inside $C\cup\{d\}$ would also exist inside the successful retained set.</p><p>For every later additional vertex $x$, the proposed forbidden edge into $R_{t,d}$ would concatenate with the specified paths to make $d$ reachable from $c$ above threshold $t$. This contradicts $d\notin H$. Therefore every such $x$ belongs to $E_{t,d}$.</p><p>The suffix consequently lies entirely in the algorithm’s allowable set, meets the threshold, and uses at most $|S|\le k$ additions. The algorithm accepts. There is no completeness gap.</p><h3>5. Running times and edge cases</h3><p>There are $O(m^2)$ thresholds and at most $m-1$ opponents. Reverse reachability, allowable-set construction, and dense shortest-path computation each fit $O(m^2h)$ per pair. Finite shortest-path costs are at most $m$ because a simple path contains at most $m$ vertices.</p><p>The resulting bound<br>$$
+O(\tau L^2+\tau m^2L+m^2Lh+m^5h)
+$$<br>is valid.</p><p>The enumeration bounds for the other modes also hold. The estimate<br>$$
+\sum_{j=0}^{k}\binom{|C&#x27;|}{j}\le(k+1)m^k
+$$<br>covers $k=0$, so the fixed-quota polynomial-time claim is correct.</p><p>The write-up handles $m=1$ explicitly. Empty addition sets, quota zero, all-zero margins, and negative thresholds cause no failure in the argument.</p><h3>6. Hardness transfers</h3><p>The cited theorem matches the necessary hypotheses. Parkes–Xia’s Theorem 3 establishes the three claimed addition-control hardness results. Their definitions use unique victory for Schulze, the quota “at most,” and failure of unique victory for destruction; their ranked-pairs results apply to arbitrary fixed tie-breaking. Their Schulze definition explicitly allows negative path weights. [Parkes–Xia, definitions and Theorem 3](https://cdn.aaai.org/ojs/8258/8258-13-11786-1-2-20201228.pdf)</p><p>Grouping identical unweighted rankings and assigning mass $t_R/n$ is polynomial in the explicitly listed electorate’s encoding length. It scales every margin by the same positive factor. This preserves Schulze comparisons and ranked-pairs processing, including ties, for every feasible retained set.</p><p>Thus the transfers establish all three hardness claims. Together with membership in $\mathrm{NP}$, they establish the three completeness claims.</p><p>The historical statement about destructive Schulze addition being open in both winner models is also accurately attributed to the cited conclusion. That statement does not invalidate the independently supplied algorithm. [Maushagen et al., Section 6](https://www.ijcai.org/proceedings/2024/0326.pdf)</p><h3>7. Reverse transformation</h3><p>The two-ranking gadget contributes margin $2$ to its designated pair and cancels every other pairwise contribution. Repeating and summing the gadgets therefore realizes exactly $F$.</p><p>Writing $u=\binom m2$, each magnitude is at most $2u$, and there are at most $u$ contributing pairs. Hence<br>$$
+n_F=\sum_{\{a,b\}}|F(a,b)|\le 2u^2.
+$$<br>The stated encoding and construction bounds follow.</p><p>The all-zero case is correctly handled by a ranking and its reverse, including $m=1$. Preservation on all retained subsets was already established in Section 2, so the reverse reduction is justified.</p><p>No additional clarification or missing lemma is required. The direction is fully verified as written.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

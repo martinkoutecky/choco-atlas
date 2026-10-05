@@ -1,0 +1,266 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Online Approval Committee Elections — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Online Approval Committee Elections <span style="font-weight:normal;color:#8a7350">(ijcai22-00036)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.1 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For all Thiele rules, including PAV, fCCAV , if the number of voters is constant then an optimal safe policy can be computed in polynomial time. Small values of n are realistic: we can think of a small jury, or of the interpretation of voters as criteria. A subclass of Thiele rules for which the problem is still tractable consists of rules such that the number of values of the score vector is bounded by a constant. This is the case for MAV and CCAV, but also for other rules such as truncated PAV, deﬁned by the vector (1, 1/2, 0, . . . , 0).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\), \(k\), voter types \(T\) with rational masses \(\mu\), a fixed Thiele utility \(f\), and an explicitly represented known rational distribution \(P\) over signatures \(a\in\{0,1\}^{\tau}\), each of \(m\) candidates is revealed sequentially with a signature drawn from \(P\). Find an irrevocable safe policy selecting exactly \(k\) candidates that maximizes \(\mathbb{E}_{P}[\sum_{t\in T}\mu_t f(\sum_{q\in W}a_t^q)]\), with complexity studied especially for fixed \(\tau\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list \(T\) of \(\tau\geq1\) types with positive binary-rational masses \(\mu_t\), where \(\sum_{t\in T}\mu_t=1\). Here \(\tau\) is the support size, not the number of possible approval patterns.<br>The input includes integers \(1\leq k\leq m\), with \(m\) encoded in unary, and a distribution \(P\) represented by a list of distinct signatures \(a\in\{0,1\}^{\tau}\) and positive binary-rational probabilities summing to \(1\). Let \(s=|\operatorname{supp}(P)|\) and let \(L\) be the total input bit length.<br>Fix a utility \(f:\mathbb{Z}_{\geq0}\to\mathbb{Q}\) whose values are exactly computable in time polynomial in the argument; no sign, monotonicity, or concavity restriction is imposed.<br>There are \(m\) distinct candidate arrivals with signatures drawn independently from \(P\); coordinate \(a_t\) specifies whether every member of type \(t\) approves that candidate. Equal signatures may recur.<br>A deterministic policy observes the current signature and past observations and decisions, then immediately and irrevocably accepts or rejects the candidate. It is safe if it selects exactly \(k\) candidates on every sequence of signatures from the support of \(P\); ties between optimal actions may be resolved arbitrarily.<br>For the selected arrival positions \(W\), maximize \(\mathbb{E}[\sum_{t\in T}\mu_t f(\sum_{q\in W}a_t^q)]\). A policy may be represented by an algorithm computing its next decision; running time includes preprocessing and execution over the horizon.</p><p>For each fixed \(f\), is exact optimal safe-policy computation polynomial-time in \(m,k,\tau,s,L\), or is it NP-hard? Does the classification change when \(\tau\) is fixed?</p><p>For discrete voters under independent approvals with one common approval probability, an optimal safe policy for every Thiele utility is computable in polynomial time when the voter count is constant ([Online Approval Committee Elections](https://www.ijcai.org/proceedings/2022/0036.pdf)).<br>No result settling exactly the rational-mass, explicitly represented joint-signature model was identified in the search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the positive rational masses to sum to one because the society is a distribution over types.</li><li>Specified independent, identically distributed candidate signatures across arrivals; correlations among type coordinates remain permitted by the given joint distribution.</li><li>Required a nonempty society and integers satisfying 1 ≤ k ≤ m.</li><li>Restricted the fixed real-valued utility to exactly computable rational values with polynomial evaluation time, making bit complexity well-defined; retained the unrestricted signs and shape of the stated discrete utility definition.</li><li>Encoded the horizon m in unary so polynomial time in m is polynomial time in the input representation.</li><li>Allowed repeated signatures for distinct candidates and required safety on every supported arrival sequence.</li><li>Specified deterministic policies, arbitrary resolution of optimal-action ties, and algorithmic policy representation, counting preprocessing and execution time.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial classification, with two additional hardness results</h3><p>The fixed-$\tau$ question is completely resolved: <b>every permitted fixed utility admits a polynomial-time exact optimal safe policy</b>.</p><p>For variable $\tau$, the following classifications are proved below.</p><p>| Fixed utility | Complexity of exact optimal safe-policy computation |<br>|---|---|<br>| Affine $f$ | Polynomial time |<br>| $f(j)=\beta+\alpha\min\{1,j\}$, with $\alpha&gt;0$ | NP-hard |<br>| Strictly increasing, discretely concave $f$ satisfying $f(1)-f(0)&gt;f(2)-f(1)$ | NP-hard |<br>| $f(j)=\alpha j^2+\beta j+\gamma$, with $\alpha&lt;0$ | NP-hard |</p><p>The last two rows extend the results in the notes. The classification for arbitrary fixed non-affine utilities remains open in this write-up.</p><h3>1. An exact dynamic program for arbitrary utilities</h3><p>Let $\mathcal A=\operatorname{supp}(P)$, and write $p_a=P(a)$. Define<br>$$
+U(x)=\sum_{t\in T}\mu_t f(x_t).
+$$</p><p>Before an arrival, record:</p><ul><li>$r$: the number of arrivals remaining;</li><li>$b$: the number of candidates still required;</li><li>$x_t$: the number of selected candidates approved by type $t$.</li></ul><p>A feasible state satisfies $0\leq b\leq r$ and $0\leq x_t\leq k-b$. Let $V(r,b,x)$ be the maximum expected terminal utility of a safe continuation from this state.</p><p>The state is sufficient: past selections affect the objective only through $x$, and future signatures are independent of the complete history.</p><p>The boundary rules are<br>$$
+V(r,0,x)=U(x)
+$$<br>and, when $b=r&gt;0$,<br>$$
+V(r,r,x)=\sum_{a\in\mathcal A}p_aV(r-1,r-1,x+a).
+$$<br>For $0&lt;b&lt;r$,<br>$$
+V(r,b,x)=
+\sum_{a\in\mathcal A}p_a
+\max\left\{
+V(r-1,b,x),\,
+V(r-1,b-1,x+a)
+\right\}.
+$$</p><p>These equations follow by induction on $r$. After observing $a$, rejection and acceptance lead to the two displayed successor states. Both actions are feasible exactly when $0&lt;b&lt;r$. The induction hypothesis identifies their optimal continuation values, so taking their maximum after observing $a$, and then averaging, gives the optimal value.</p><p>Choosing a maximizing action yields a deterministic policy. Rejecting when $b=0$ and accepting when $b=r$ preserves feasibility and guarantees exactly $k$ selections on every support sequence.</p><h3>State count and exact arithmetic</h3><p>There are at most<br>$$
+(m+1)(k+1)^{\tau+1}
+$$<br>states, with at most $s$ transitions per state.</p><p>For bit complexity, let $D$ be the product of the denominators of all probabilities, and let $B$ be the product of the denominators of all masses and of $f(0),\ldots,f(k)$. Inductively, every value $V(r,b,x)$ has denominator dividing $BD^r$. Taking a maximum selects one of two rational numbers and introduces no new denominator.</p><p>Furthermore,<br>$$
+|V(r,b,x)|\leq \max_{0\leq j\leq k}|f(j)|,
+$$<br>because terminal utilities are mass-weighted averages of these values, and continuation values are expectations of terminal utilities.</p><p>The input denominators contribute polynomially many bits. Exact polynomial-time computability of the fixed $f$ implies polynomial output length for all its values through $k$. Since $r\leq m$ and $m$ is unary encoded, all arithmetic has polynomial bit complexity.</p><p><b>Proved conclusion.</b> For every fixed $\tau$, preprocessing and execution of an exact optimal safe policy take polynomial time.</p><h3>2. Affine utilities are tractable for variable $\tau$</h3><p>Suppose<br>$$
+f(j)=\alpha j+\beta.
+$$<br>Define<br>$$
+w(a)=\alpha\sum_{t\in T}\mu_ta_t.
+$$<br>For every selected committee,<br>$$
+\sum_{t\in T}\mu_t f\left(\sum_{q\in W}a_t^q\right)
+=
+\beta+\sum_{q\in W}w(a^q).
+$$</p><p>Thus previously accumulated utility is an additive constant, and approval-count vectors are unnecessary. Let $G(r,b)$ be the optimal expected sum of values from the remaining selections. Then<br>$$
+G(r,0)=0,\qquad
+G(r,r)=r\sum_{a\in\mathcal A}p_aw(a),
+$$<br>and, for $0&lt;b&lt;r$,<br>$$
+G(r,b)=
+\sum_{a\in\mathcal A}p_a
+\max\left\{
+G(r-1,b),\,
+w(a)+G(r-1,b-1)
+\right\}.
+$$</p><p>There are $O(mk)$ states and $O(mks)$ transitions. The exact-arithmetic argument from Section 1 applies. Negative slopes cause no difficulty because the boundary rule still forces acceptance when $b=r$.</p><h3>3. A device for proving hardness of the first decision</h3><p>All subsequent reductions use perfect three-dimensional matching. Its input consists of disjoint sets $X,Y,Z$, each of size $q$, and distinct triples $E\subseteq X\times Y\times Z$. The question is whether $q$ triples cover every element exactly once. This problem is NP-complete. [Karp, *Reducibility Among Combinatorial Problems*](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/Karp.pdf).</p><p>We may impose any fixed lower bound on $q$: add fresh elements and their unique disjoint triples. Every perfect matching must contain those added triples, so this preserves the answer.</p><p>We may also require every element of $X$ to occur in a triple. A missing element immediately certifies a NO instance, which can be mapped to a fixed NO instance satisfying this restriction.</p><h3>First-decision lemma</h3><p>Suppose a polynomial-time construction supplies:</p><ul><li>a committee size $k$;</li><li>a distinguished signature $a^\star$;</li><li>ordinary signatures, including a dummy signature;</li><li>positive rational numbers $g,\Omega$ and a rational benchmark $H$;</li></ul><p>with the following properties.</p><ul><li>Every size-$k$ committee containing $a^\star$ has utility at most $H$.</li><li>In every instance, some committee containing exactly one $a^\star$ has utility $H$.</li><li>In a YES instance, some committee omitting $a^\star$ has utility $H+g$.</li><li>In a NO instance, every committee omitting $a^\star$ has utility at most $H-g$.</li><li>All terminal utilities lie in an interval of length at most $\Omega$.</li></ul><p>Assume all numbers and signatures have polynomial encoding length, and the target committees in properties 2 and 3 use only ordinary signatures besides the one specified $a^\star$.</p><p>Then exact optimal safe-policy computation is NP-hard.</p><h3>Proof</h3><p>Let $N$ be the number of ordinary signatures other than the dummy. Choose the least power of two $h$ with<br>$$
+h\geq4N.
+$$<br>Give each of those $N$ signatures probability $1/h$.</p><p>Choose the least positive integer $R$ satisfying<br>$$
+2^R\geq \frac{8k\Omega}{g},
+$$<br>and set<br>$$
+B=hR,\qquad m=1+kB.
+$$<br>Choose the least integer $e$ with $2^e\geq8m$, and put<br>$$
+P(a^\star)=\delta=2^{-e},\qquad
+P(a^{\mathrm{dummy}})=1-\frac Nh-\delta.
+$$</p><p>All probabilities are positive dyadic rationals. The dummy probability is at least $5/8$, so every ordinary signature has probability at least $1/h$. Because $\Omega$ and $g$ have polynomial encoding length, $R$ is polynomially bounded. Hence the unary horizon and the entire construction have polynomial size.</p><p>Condition on the first signature being $a^\star$. Partition the remaining $kB$ arrivals into $k$ blocks of length $B$.</p><p>For any ordinary target signature, its probability of being absent from an assigned block is at most<br>$$
+(1-1/h)^{hR}\leq2^{-R}.
+$$<br>Indeed,<br>$$
+(1-1/h)^{-h}
+=
+\left(1+\frac1{h-1}\right)^h
+\geq1+\frac h{h-1}&gt;2.
+$$</p><p>Assign each still-required selection to a separate block and accept the first occurrence of its target there. <b>The number of scheduled targets equals the number of selections still required:</b> $k$ after rejecting the initial signature, and $k-1$ after accepting it.</p><p>Make this policy safe by accepting whenever the remaining arrivals equal the remaining selection requirement, and rejecting after filling the committee. On the event that all assigned targets occur, this override does not change the intended selections. At any unintended arrival, all still-required target positions lie later, so the number of arrivals remaining is strictly greater than the number of selections required.</p><p>The union bound gives failure probability at most<br>$$
+k2^{-R}\leq \frac{g}{8\Omega}.
+$$<br>Consequently, a target committee of utility $J$ is attained by a safe policy with expected utility at least<br>$$
+J-\frac g8.
+$$<br>This follows because both $J$ and every possible failure utility lie in an interval of length at most $\Omega$.</p><p>Let $A$ and $Q$ denote the optimal conditional values after accepting and rejecting the initial $a^\star$. Properties 1 and 2 give<br>$$
+H-\frac g8\leq A\leq H.
+$$</p><p>In a YES instance, property 3 gives<br>$$
+Q\geq H+g-\frac g8&gt;H\geq A.
+$$<br>Thus every optimal policy rejects.</p><p>In a NO instance, another distinguished arrival occurs with probability at most<br>$$
+(m-1)\delta\leq\frac18.
+$$<br>Without such an arrival, property 4 bounds every terminal utility by $H-g$. If another distinguished arrival occurs, every terminal utility is at most $H$, by properties 1 and 4. Therefore<br>$$
+Q\leq H-g+\frac g8
+=H-\frac{7g}{8}
+&lt;H-\frac g8\leq A.
+$$<br>Thus every optimal policy accepts.</p><p>The initial distinguished signature has positive probability. A globally optimal policy must therefore take a conditionally optimal action there; replacing a strictly inferior action and its continuation would improve its unconditional expectation.</p><p>A single call to an exact optimal-policy algorithm, followed by inspecting its first decision on $a^\star$, decides perfect three-dimensional matching. The inequalities are strict, so tie-breaking is irrelevant. This proves the lemma.</p><h3>4. Coverage hardness, with explicit parameter choices</h3><p>Fix<br>$$
+f(j)=\min\{1,j\}.
+$$<br>Take a three-dimensional matching instance with $q\geq2$ and every element of $X$ occurring in some triple.</p><p>Choose the least integer $d$ with<br>$$
+2^d\geq2(10q+1),
+$$<br>and write $u=2^{-d}$. Give each element of $X$ mass $2u$, each element of $Y\cup Z$ mass $4u$, one private type mass $u$, and one never-approving filler type mass<br>$$
+1-(10q+1)u.
+$$<br>All masses are positive dyadic rationals.</p><p>Each triple signature approves precisely its three element types. The distinguished signature approves every type in $Y\cup Z$ and the private type. The dummy approves no type.</p><p>Set<br>$$
+k=q,\qquad H=(10q-1)u,\qquad g=u.
+$$</p><p>A committee containing the distinguished signature covers at most all of $Y\cup Z$, the private type, and $q-1$ elements of $X$. Its utility is therefore at most<br>$$
+8qu+u+2(q-1)u=H.
+$$<br>This bound is attained by choosing the distinguished signature and $q-1$ triples with distinct $X$-coordinates.</p><p>A perfect matching has utility<br>$$
+10qu=H+g.
+$$</p><p>If no perfect matching exists, a committee omitting the distinguished signature cannot cover all $3q$ elements. Otherwise, at most $q$ triple positions would cover all $3q$ elements, forcing exactly $q$ triples with no repeated incidence—a perfect matching. Thus some element of mass at least $2u$ is uncovered, giving utility at most<br>$$
+10qu-2u=H-g.
+$$</p><p>All utilities lie in $[0,1]$, so take $\Omega=1$. Section 3 supplies explicit polynomial-size choices of the distribution and horizon and proves NP-hardness.</p><p>Positive affine transformations preserve optimal policies. Hence the same result holds for<br>$$
+f(j)=\beta+\alpha\min\{1,j\},\qquad \alpha&gt;0.
+$$</p><h3>5. New hardness result: strictly increasing concave utilities</h3><p><b>Theorem.</b> Suppose the fixed utility is strictly increasing and discretely concave, and satisfies<br>$$
+f(1)-f(0)&gt;f(2)-f(1).
+$$<br>Then exact optimal safe-policy computation is NP-hard when $\tau$ varies.</p><p>Here discrete concavity means that<br>$$
+\Delta_j=f(j+1)-f(j)
+$$<br>is nonincreasing in $j$. Strict increase means $\Delta_j&gt;0$ for every $j$.</p><h3>5.1. Constructing a unique maximum at one approval</h3><p>Set $k=q\geq2$, and define<br>$$
+r_-=\frac{\Delta_{q-1}}{\Delta_0},
+\qquad
+r_+=\frac{\Delta_{q-2}}{\Delta_1}.
+$$<br>Since $\Delta_{q-2}\geq\Delta_{q-1}&gt;0$ and $\Delta_0&gt;\Delta_1&gt;0$,<br>$$
+r_-&lt;r_+.
+$$<br>Choose<br>$$
+w=\frac{r_-+r_+}{2},
+\qquad
+h(x)=wf(x)+f(q-x)
+\quad(0\leq x\leq q).
+$$</p><p>Its successive differences are<br>$$
+h(x+1)-h(x)=w\Delta_x-\Delta_{q-x-1}.
+$$<br>They are nonincreasing: as $x$ increases, the first term does not increase, while the subtracted marginal does not decrease.</p><p>Moreover,<br>$$
+h(1)-h(0)=w\Delta_0-\Delta_{q-1}&gt;0,
+$$<br>and<br>$$
+h(2)-h(1)=w\Delta_1-\Delta_{q-2}&lt;0.
+$$<br>Thus $h$ has a unique maximum at $1$. Define<br>$$
+\eta=\min\{h(1)-h(0),\,h(1)-h(2)\}&gt;0.
+$$<br>The nonincreasing successive differences imply<br>$$
+h(1)-h(x)\geq\eta
+\qquad\text{whenever }x\neq1.
+$$</p><h3>5.2. Types and signatures</h3><p>For each of the $3q$ elements, introduce two complementary types with unnormalized weights $w$ and $1$.</p><p>The first type approves exactly those signatures said to contain that element; the second approves every other signature. Consequently, a size-$q$ committee containing the element $x$ times contributes $h(x)$ from this pair.</p><p>Introduce a private type of weight<br>$$
+p=\frac{\eta}{2\Delta_{q-1}},
+$$<br>approving every signature except the distinguished signature.</p><p>The signatures are:</p><ul><li>one signature for each triple, containing its three elements;</li><li>a distinguished signature containing all $3q$ elements;</li><li>a dummy containing none of the elements.</li></ul><p>The complementary types and private type make these signatures distinct.</p><p>To obtain positive dyadic masses, choose a positive integer $D$ clearing the denominators of $w$ and $p$. The resulting weights $Dw,D,Dp$ are positive integers. Let $S$ be their total over all types, choose the least integer $\ell$ with $2^\ell\geq2S$, and multiply every weight by $u=2^{-\ell}$. Add a never-approving filler type of mass $1-uS$.</p><p>Write $\sigma=uD$.</p><h3>5.3. Terminal-score separation</h3><p>For a committee, let $z$ be its number of distinguished signatures and let $x_e$ be its number of selected signatures containing element $e$. Its utility is<br>$$
+U=C+\sigma\sum_e\bigl(h(x_e)-h(1)\bigr)
++\sigma p\bigl(f(q-z)-f(q)\bigr),
+$$<br>where the committee-independent constant is<br>$$
+C=\sigma\bigl(3qh(1)+pf(q)\bigr)+(1-uS)f(0).
+$$<br>Set<br>$$
+g=\frac{\sigma\eta}{2},
+\qquad H=C-g.
+$$</p><p>Every element term is nonpositive. If $z\geq1$, strict increase gives<br>$$
+f(q-z)-f(q)\leq-\Delta_{q-1}.
+$$<br>Therefore every committee containing the distinguished signature has utility at most<br>$$
+C-\sigma p\Delta_{q-1}=H.
+$$<br>The distinguished signature together with $q-1$ dummies attains $H$: every element count equals $1$, and $z=1$.</p><p>A perfect matching has $z=0$ and every element count equal to $1$, so its utility is<br>$$
+C=H+g.
+$$</p><p>In a NO instance, a committee omitting the distinguished signature must have some element count different from $1$. Indeed, if every count were $1$, the total $3q$ incidences would require exactly $q$ triples, with no repeated incidence. Therefore its utility is at most<br>$$
+C-\sigma\eta=H-g.
+$$</p><p>These are precisely the terminal bounds required by Section 3.</p><h3>5.4. Encoding and horizon bounds</h3><p>All quantities are obtained from $f(0),\ldots,f(q)$ using polynomially many rational operations, and have polynomial bit length. Clearing denominators and dyadic normalization retain polynomial bit length.</p><p>Take<br>$$
+\Omega=\max_{0\leq j\leq q}f(j)-\min_{0\leq j\leq q}f(j)&gt;0.
+$$<br>Every terminal utility lies between these extrema, because the masses sum to one. Although $g$ may be very small, its encoding length is polynomial. Hence the least $R$ satisfying the inequality in Section 3 is polynomially bounded, and the unary horizon is polynomially bounded.</p><p>The first-decision lemma proves the theorem.</p><p>For example, this settles the harmonic utility<br>$$
+f(0)=0,\qquad f(j)=\sum_{i=1}^j\frac1i,
+$$<br>whose marginals are $\Delta_j=1/(j+1)$.</p><h3>6. New hardness result: every strictly concave quadratic</h3><p><b>Theorem.</b> For every fixed rational quadratic<br>$$
+f(j)=\alpha j^2+\beta j+\gamma,\qquad \alpha&lt;0,
+$$<br>exact optimal safe-policy computation is NP-hard when $\tau$ varies.</p><p>This theorem allows arbitrary signs and sizes of $\beta$ and $\gamma$.</p><h3>6.1. Normalize the utility</h3><p>Subtracting a constant and multiplying by a positive constant preserve all optimal policies. Clearing the fixed coefficient denominators therefore reduces the proof to<br>$$
+\phi(j)=-aj^2+bj,
+$$<br>where $a$ is a positive integer and $b$ is an integer.</p><p>Choose a fixed integer $d\geq1$ with<br>$$
+2ad&gt;b.
+$$<br>Pad the matching instance, if necessary, so that $q\geq2$ and<br>$$
+2a(q-1)&gt;b.
+$$<br>Set<br>$$
+k=q+d,\qquad M=2ak-2b,\qquad R_0=aM.
+$$</p><p>For $t\in\{d,d+1\}$, define<br>$$
+W_t=2a(k-t)-b,\qquad V_t=2at-b.
+$$<br>All these weights are positive integers by the choices of $d$ and $q$.</p><p>For<br>$$
+h_t(x)=W_t\phi(x)+V_t\phi(k-x),
+$$<br>direct expansion gives<br>$$
+h_t(x)=h_t(t)-R_0(x-t)^2.
+$$<br>Indeed, $W_t+V_t=M$, so the quadratic coefficient is $-aM=-R_0$, and the linear coefficient is<br>$$
+b(W_t-V_t)+2akV_t
+=
+4a(ak-b)t
+=
+2R_0t.
+$$</p><h3>6.2. Weights, types, and signatures</h3><p>Define<br>$$
+\lambda=2ad+a-b&gt;0,
+$$<br>$$
+F=\max_{0\leq j\leq k}|\phi(j)-\phi(d)|,
+\qquad
+K=F+2\lambda+1.
+$$</p><p>Use the following positive integer weights:</p><ul><li>a complementary baseline pair with weights $KW_d,KV_d$;</li><li>for each element, a complementary pair with weights $2\lambda W_{d+1},2\lambda V_{d+1}$;</li><li>a private type of weight $R_0$.</li></ul><p>There are four kinds of signatures.</p><ul><li>A baseline signature approves the first baseline type, every first element type, and the private type.</li><li>Each triple signature approves its three first element types.</li><li>The distinguished signature approves every first element type and the private type.</li><li>A dummy approves none of the first element types or the private type.</li></ul><p>The first baseline type approves only the baseline signature. Each second type in a complementary pair approves precisely the signatures its first type does not approve.</p><p>These signatures are distinct. In particular, the baseline pair distinguishes the baseline signature from the distinguished signature.</p><p>Let $S$ be the sum of all integer weights. Choose the least $\ell$ with $2^\ell\geq2S$, put $u=2^{-\ell}$, and multiply all weights by $u$. Add a never-approving filler type of mass $1-uS$. All masses are positive dyadic rationals.</p><h3>6.3. Exact terminal-utility identity</h3><p>For a committee, let:</p><ul><li>$z$ be the number of baseline signatures;</li><li>$h$ be the number of distinguished signatures;</li><li>$x_e$ be the number of selected triple signatures containing element $e$.</li></ul><p>The first element-type count is $z+h+x_e$, and the private-type count is $z+h$.</p><p>Using the identity from Section 6.1, the utility is exactly<br>$$
+U=C-uKR_0(z-d)^2
+-2u\lambda R_0\sum_e\bigl(z+h+x_e-(d+1)\bigr)^2
++uR_0\bigl(\phi(z+h)-\phi(d)\bigr),
+$$<br>where<br>$$
+C=u\left(
+Kh_d(d)+6q\lambda h_{d+1}(d+1)+R_0\phi(d)
+\right).
+$$<br>The filler contributes zero because $\phi(0)=0$.</p><p>Set<br>$$
+g=u\lambda R_0,\qquad H=C-g.
+$$</p><h3>6.4. Terminal-score bounds</h3><p><b>Incorrect baseline count.</b> If $z\neq d$, the baseline square costs at least $uKR_0$. The private term is at most $uR_0F$, and the element squares are nonpositive. Hence<br>$$
+U-C\leq-uR_0(K-F)
+=-uR_0(2\lambda+1)&lt;-2g.
+$$</p><p><b>A committee containing the distinguished signature.</b> If $z=d$ and $h\geq1$, then<br>$$
+\phi(d+h)-\phi(d)
+=-(2ad-b)h-ah^2
+\leq-\lambda.
+$$<br>Thus $U\leq C-g=H$. If $z\neq d$, the preceding bound is stronger. Therefore every committee containing the distinguished signature has utility at most $H$.</p><p>This bound is attained by selecting $d$ baseline signatures, one distinguished signature, and $q-1$ dummies. Every element count is $d+1$, and the private difference is exactly $-\lambda$.</p><p><b>A YES instance.</b> Select $d$ baseline signatures and the $q$ triples of a perfect matching. Then $z=d$, $h=0$, and every $x_e=1$. Every penalty vanishes, so the utility is<br>$$
+C=H+g.
+$$</p><p><b>A NO instance without the distinguished signature.</b> The case $z\neq d$ was already bounded by $C-2g$. If $z=d$ and $h=0$, there are $q$ remaining positions. Some $x_e$ differs from $1$; otherwise those positions contain a perfect matching. The corresponding integer square is at least $1$, yielding<br>$$
+U\leq C-2g=H-g.
+$$</p><p>Again, all hypotheses of the first-decision lemma hold.</p><h3>6.5. Polynomial construction size</h3><p>The constants $a,b,d,\lambda$ depend only on the fixed utility. We have<br>$$
+M=O(k),\qquad R_0=O(k),\qquad F=O(k^2),\qquad K=O(k^2),
+$$<br>and consequently $S=O(k^3)$. All masses and benchmark values have polynomial encoding length.</p><p>Take<br>$$
+\Omega=\max_{0\leq j\leq k}\phi(j)-\min_{0\leq j\leq k}\phi(j)=O(k^2).
+$$<br>The least dyadic normalization satisfies $u&gt;1/(4S)$, so $g$ is bounded below by an inverse polynomial in $k$. Therefore the block exponent in Section 3 is $O(\log k)$, and its unary horizon is polynomial in the matching input size.</p><p>This proves NP-hardness for $\phi$, and hence for the original quadratic $f$.</p><h3>7. Other tractable restrictions and remaining open points</h3><p>For completeness, every permitted fixed $f$ is also tractable when either $s$ or $k$ is fixed.</p><p>Index the signatures by $a^1,\ldots,a^s$, and record their selected multiplicities $c_1,\ldots,c_s$. These determine all approval counts:<br>$$
+x_t=\sum_{i=1}^s c_i a_t^i.
+$$<br>Their total determines the remaining requirement:<br>$$
+b=k-\sum_i c_i.
+$$</p><p>There are<br>$$
+\binom{k+s}{s}
+$$<br>nonnegative multiplicity vectors with total at most $k$. Replacing $x$ by this vector in the dynamic program gives at most<br>$$
+(m+1)\binom{k+s}{s}
+$$<br>states. This is polynomial for fixed $s$, and, by<br>$$
+\binom{k+s}{s}=\binom{k+s}{k},
+$$<br>also for fixed $k$. The bit-complexity proof from Section 1 applies unchanged.</p><p>The unresolved part is the unrestricted classification for each fixed utility. The proofs above do not settle, for example, $f(j)=j^2$, arbitrary oscillating utilities, or all concave utilities whose first strict decrease in marginal utility occurs later. No universal non-affine hardness claim is made.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 3, first-decision lemma: choice of $h$ and ordinary-signature probability bound: The lemma does not exclude $N=0$, for which its construction permits $h=1$. Then the dummy probability is less than $1/h$, and the displayed binomial expression divides by $h-1$. Explicitly restrict the lemma to $N\geq1$ or specify an admissible lower bound on $h$. Every presented application already satisfies $N\geq1$.</li><li><b>minor</b> — Section 3, first-decision lemma: polynomial unary-horizon claim: Polynomial encoding length of $k$ alone does not make $m=1+khR$ polynomially bounded numerically. State that $k$ is polynomially bounded in the source input length. The applications already satisfy this through $k=q$ or $k=q+d$, with fixed $d$.</li><li><b>major</b> — Overall response and Section 7, remaining open points: The requested classification for every permitted fixed utility when $\tau$ varies is not resolved. The prover explicitly leaves utilities outside the established classes open, including $f(j)=j^2$. Completing this part requires substantive additional mathematics.</li></ul>
+<div class="pre"><p>The output establishes substantial correct results, but it does <b>not resolve the full task</b>. The fixed-$\tau$ classification is established, as are the affine algorithm and the three stated hardness classes. The arbitrary-fixed-utility classification for variable $\tau$ remains explicitly unresolved.</p><p>I found no error invalidating those established results. The general first-decision lemma needs two minor scope clarifications; its actual applications satisfy both.</p><ul><li><b>Dynamic program for arbitrary utilities: verified.</b></li></ul><p>The state $(r,b,x)$ contains all information needed for continuation optimization: $x$ determines the effect of prior selections, and independence makes future arrivals independent of the remaining history.</p><p>The boundary conditions correctly enforce safety:</p><ul><li>When $b=0$, every subsequent candidate must be rejected.</li><li>When $b=r&gt;0$, every subsequent candidate must be accepted.</li><li>When $0&lt;b&lt;r$, both actions admit safe continuations.</li></ul><p>Both successor states satisfy the stated count bounds. In particular, acceptance changes the requirement to $b-1$, and<br>$$
+   x_t+a_t\leq k-b+1=k-(b-1).
+   $$</p><p>Taking the maximum <b>after observing the signature</b> correctly reflects the information available to the policy. Averaging those maxima therefore gives the optimal conditional expectation. The induction on $r$ is valid, including the terminal state $(0,0,x)$.</p><p>The state bound<br>$$
+   (m+1)(k+1)^{\tau+1}
+   $$<br>is valid. Each transition also requires operations on signatures and count vectors, but this only adds polynomial overhead.</p><p>The exact-arithmetic argument is sound. Terminal utilities have denominators dividing $B$. At depth $r$, every summand can be represented with denominator dividing $BD^r$; maximization introduces no new denominator. The magnitude bound follows from positive masses summing to one and from taking expectations.</p><p>Polynomial-time exact evaluation of the fixed $f$ implies polynomial output length for $f(0),\ldots,f(k)$. Consequently, the denominator products, numerators, and comparisons have polynomial bit complexity. Unary encoding of $m$ controls the factor $D^m$.</p><p><b>Established:</b> every permitted fixed $f$ has a polynomial-time exact optimal safe policy when $\tau$ is fixed.</p><ul><li><b>Affine utilities: verified.</b></li></ul><p>The identity<br>$$
+   \sum_t\mu_t f\left(\sum_{q\in W}a_t^q\right)
+   =
+   \beta+\sum_{q\in W}\alpha\sum_t\mu_t a_t^q
+   $$<br>uses precisely $\sum_t\mu_t=1$ and is correct.</p><p>Prior utility is therefore an additive constant, so $(r,b)$ suffices. The recurrence correctly adds the observed candidate’s weight only upon acceptance. The forced-selection boundary<br>$$
+   G(r,r)=r\sum_a p_aw(a)
+   $$<br>follows from linearity of expectation.</p><p>The argument covers positive, zero, and negative slopes. Its state count and arithmetic bounds establish polynomial time for variable $\tau$.</p><ul><li><b>Matching source problem and restrictions: verified.</b></li></ul><p>The cited source establishes completeness of three-dimensional matching in the perfect-matching formulation: selecting as many triples as there are elements in each coordinate set, with no repeated coordinate. Relabeling the three coordinate sets as disjoint sets gives the formulation used here. [Karp, *Reducibility Among Combinatorial Problems*](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/Karp.pdf).</p><p>Padding with fresh elements and their unique triples preserves both YES and NO answers. The restriction that every element of $X$ occurs in a triple is also legitimate: instances violating it are immediately recognizable NO instances and can be replaced by a fixed restricted NO instance.</p><ul><li><b>First-decision lemma: verified for the applications, with two minor scope issues.</b></li></ul><p>For $N\geq1$, the probability construction is valid. The choice of $h$ gives<br>$$
+   \frac Nh\leq\frac14,
+   $$<br>and $\delta\leq1/(8m)\leq1/8$, so the dummy has probability at least $5/8$. Since $h\geq4$, every ordinary signature, including the dummy, has probability at least $1/h$.</p><p>The displayed binomial estimate correctly proves<br>$$
+   (1-1/h)^{hR}\leq2^{-R}.
+   $$</p><p>The scheduled-target policy is safe after adding the stated override. On the event that every assigned target occurs, the override cannot force an unintended acceptance: at an unintended position, all still-required target positions remain later, so the current position supplies an additional remaining arrival beyond those required selections. Repeated target signatures cause no difficulty because they are assigned to separate blocks.</p><p>The union bound and interval-length assumption correctly give an expected loss of at most $g/8$. No assumption that utilities are nonnegative is used.</p><p>The conditional comparisons are correct:</p><ul><li>In a YES instance, rejection has value greater than $H$, while acceptance has value at most $H$.</li><li>In a NO instance, the probability of a later distinguished arrival is at most $1/8$. Without one, the terminal bound is $H-g$; with one, the terminal bound is at most $H$. Thus rejection has value at most $H-7g/8$, strictly below the acceptance lower bound $H-g/8$.</li></ul><p>Positive probability of the initial distinguished signature makes its strict conditional preference necessary for global optimality. The policy-computation model in <code>USER_TASK</code> permits inspecting that first action, with execution time included.</p><p><b>Minor issue: the lemma does not exclude $N=0$.</b> Under the usual interpretation, its construction then permits $h=1$. The asserted dummy probability bound $P(a^{\mathrm{dummy}})\geq1/h$ is false because $\delta&gt;0$. The displayed binomial expression also divides by $h-1$. Concretely, a dummy target can be absent from a block with positive probability, whereas the claimed comparison with $(1-1/h)^{hR}$ would give zero.</p><p><b>Minimum clarification:</b> explicitly restrict this lemma’s application to $N\geq1$, or state an admissible lower bound on $h$. All reductions presented already have $N\geq1$.</p><p><b>Minor issue: polynomial encoding length of $k$ does not imply a polynomial unary horizon.</b> The generic lemma assumes polynomial encoding lengths, but<br>$$
+   m=1+khR
+   $$<br>has polynomial unary length only if the numerical value of $k$ is polynomially bounded in the source input length. Polynomial binary length alone is insufficient.</p><p><b>Minimum clarification:</b> include that numerical bound among the lemma’s hypotheses. The applications already satisfy it through $k=q$ or $k=q+d$, with fixed $d$.</p><p>These are scope corrections to the reusable lemma, not gaps in the supplied hardness reductions.</p><ul><li><b>Coverage hardness: verified.</b></li></ul><p>The element and private masses total $(10q+1)u$. The chosen normalization leaves a strictly positive filler mass and makes every mass dyadic.</p><p>A committee containing the distinguished signature covers all $Y$ and $Z$ types and the private type, but at most $q-1$ different $X$ types. The resulting bound is exactly<br>$$
+   8qu+u+2(q-1)u=(10q-1)u=H.
+   $$<br>The restriction on $X$ ensures attainment using $q-1$ triples with distinct $X$ coordinates.</p><p>A perfect matching attains $10qu=H+g$. Conversely, covering all $3q$ elements using at most $q$ triple positions forces exactly $q$ triples and no repeated incidence. Thus a NO instance leaves an element of mass at least $2u$ uncovered, giving the stated $H-g$ bound. This reasoning accommodates repeated signatures and dummy selections.</p><p>The utility range $[0,1]$ is valid. All first-decision hypotheses hold, including the clarified size conditions.</p><p>Positive affine transformation preserves optimal actions because it transforms every expected objective by the same positive scale and additive constant.</p><p><b>Established:</b> the entire stated positive-scale coverage class is $\mathrm{NP}$-hard.</p><ul><li><b>Strictly increasing concave utilities: verified.</b></li></ul><p>Strict increase ensures all denominators in $r_-$, $r_+$, and $p$ are positive. Concavity and $\Delta_0&gt;\Delta_1$ give the strict inequality $r_-&lt;r_+$, including $q=2$.</p><p>The successive-difference formula for $h$ is correct. Its differences are nonincreasing, the first is positive, and the second is negative. Hence $1$ is its unique maximum. The stated uniform gap $\eta$ follows from those same difference bounds for every integer $x\neq1$ in the specified domain.</p><p>The complementary types contribute exactly $h(x)$ because a committee has exactly $q$ selected positions. The private count is $q-z$, so the terminal-utility identity is correct.</p><p>The choices<br>$$
+   p=\frac{\eta}{2\Delta_{q-1}},
+   \qquad
+   g=\frac{\sigma\eta}{2}
+   $$<br>give exactly the claimed penalty $g$ for one distinguished selection. Additional distinguished selections cannot increase the private term. One distinguished signature and $q-1$ dummies attain $H$.</p><p>A perfect matching attains $C$. In a NO instance without the distinguished signature, at least one element count differs from $1$, producing a penalty at least $\sigma\eta=2g$. This verifies the separation.</p><p>Denominator clearing, normalization, and evaluation of the fixed utility have polynomial bit complexity. A potentially small $g$ only affects the logarithmic block exponent through its polynomial encoding length.</p><p><b>Established:</b> the stated strictly increasing concave class is $\mathrm{NP}$-hard. The harmonic example satisfies its hypotheses.</p><ul><li><b>Strictly concave quadratics: verified.</b></li></ul><p>Positive scaling and constant subtraction justify normalization to $\phi$. The choices of $d$ and the padded $q$ make all $W_t,V_t$ positive for $t=d,d+1$, and ensure $R_0&gt;0$.</p><p>I checked the critical expansion:<br>$$
+   W_t+V_t=M,
+   $$<br>and<br>$$
+   b(W_t-V_t)+2akV_t
+   =
+   4a(ak-b)t
+   =
+   2R_0t.
+   $$<br>Therefore the asserted square identity is correct.</p><p>The signature definitions yield baseline count $z$, element counts $z+h+x_e$, and private count $z+h$. Substitution gives the exact displayed terminal identity, including its constant term. The filler contributes zero for $\phi$.</p><p>All separation bounds check out:</p><ul><li>If $z\neq d$, the baseline penalty exceeds the maximum private compensation by more than $2g$.</li><li>If $z=d$ and $h\geq1$, the private difference is at most $-\lambda$.</li><li>The displayed committee containing one distinguished signature attains $H$.</li><li>A perfect matching with $d$ baseline selections attains $C$.</li><li>In a NO instance with $z=d$ and $h=0$, an integer element deviation contributes a penalty at least $2g$.</li></ul><p>The estimates for $F$, $K$, $S$, and the unary horizon are valid. In particular, the normalization bound $u&gt;1/(4S)$ gives the claimed inverse-polynomial lower bound on $g$.</p><p><b>Established:</b> every fixed quadratic with negative quadratic coefficient is $\mathrm{NP}$-hard, without restrictions on its other coefficients.</p><ul><li><b>Fixed signature support or fixed committee size: verified.</b></li></ul><p>Selected multiplicities determine every approval count and the remaining requirement. The number of multiplicity vectors with total at most $k$ is<br>$$
+   \binom{k+s}{s}.
+   $$<br>This is polynomial when either $s$ or $k$ is fixed. Computing terminal utilities introduces polynomial dependence on $\tau$, so it does not invalidate either conclusion.</p><ul><li><b>Remaining task-level issue: the unrestricted classification is incomplete.</b></li></ul><p><b>Severity: major scope omission, explicitly acknowledged by the prover.</b></p><p><code>USER_TASK</code> asks for a classification for each permitted fixed utility. The output leaves utilities outside its proved classes unresolved, including $f(j)=j^2$ and arbitrary oscillating utilities.</p><p>This does not contradict the prover’s own partial claim, and it does not undermine the results verified above. Nevertheless, the requested overall classification has not been supplied.</p><p><b>Minimum additional work:</b> classify the remaining fixed utilities, or provide a complete classification statement accounting for them. This requires substantive additional mathematics; clarification of the existing arguments cannot settle it.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

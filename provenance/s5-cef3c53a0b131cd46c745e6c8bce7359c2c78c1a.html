@@ -1,0 +1,89 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-cef3c53a0b131cd46c745e6c8bce7359c2c78c1a — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-cef3c53a0b131cd46c745e6c8bce7359c2c78c1a <span style="font-weight:normal;color:#8a7350">(s5-cef3c53a0b131cd46c745e6c8bce7359c2c78c1a)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> Every valid snapshot is feasible, and a colored assembly can be computed online in time polynomial in \(m,\tau,L,\log(n+1)\) per update.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 8.1 — class: other</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>In any admissible timed run of GFP, for every time 𝑡, every community 𝑓 in𝐺𝑡, and every child𝑣∈children𝑡(𝑓), seats𝑡(𝑣, 𝑓) ≥  share𝑡(𝑣, 𝑓)  .</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a dynamic federation with parent assembly size \(n\), a stream of membership changes, and a rational distribution \(\mu\) over complete membership-signature types, compute an integral colored assembly at every update so each child \(v\) receives at least \(\left\lfloor n\sum_{\theta:v\in S_\theta(f)}\mu_\theta/|S_\theta(f)|\right\rfloor\) seats, where \(S_\theta(f)\) is the set of children of \(f\) containing type \(\theta\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>At each update, the input supplies a federation DAG on \(m\) communities, a distinguished parent \(f\) with nonempty child set \(C_f\), and its population distribution. Leaves have disjoint populations; a complete membership-signature type specifies one leaf and membership in precisely its ancestors. Every community below \(f\) has positive population mass.<br>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational. Here \(\tau\) is the support size, not the number of possible types; \(\sum_\theta\mu_\theta=1\) normalizes the population of \(f\). Each positive-mass type represents a nonatomic pool of distinct individuals, so every non-leaf child contains at least \(n+1\) individuals.<br>Let \(n\geq1\) be a binary-encoded integer and \(S_\theta(f)=\{v\in C_f:\theta\text{ belongs to }v\}\), which must be nonempty. Define \(q_v=\left\lfloor n\sum_{\theta:v\in S_\theta(f)}\mu_\theta/|S_\theta(f)|\right\rfloor\).<br>A colored assembly is represented by binary-encoded counts \(x_{\theta,c}\in\mathbb Z_{\geq0}\), where \(c\in C_f\cup\{\bot\}\), \(\bot\) means uncolored, and \(x_{\theta,v}=0\) whenever \(v\notin S_\theta(f)\). Require \(\sum_{\theta,c}x_{\theta,c}=n\) and \(\sum_\theta x_{\theta,v}\geq q_v\) for every child \(v\). Seats use distinct individuals; multiple seats may use the same type.<br>Updates arrive online as explicit valid snapshots. Assembly replacement is unrestricted, and the constraints must hold after maintenance at each update. Let \(L\) be the total bit length of the current snapshot.</p><p>Can a feasible colored assembly be computed online in time polynomial in \(m,\tau,L,\log(n+1)\) per update, or is deciding feasibility of a single snapshot NP-hard?</p><p>For finite populations, a greedy maintenance protocol is proved to preserve child representation floors at observable states, assuming every non-leaf child has at least \(n+1\) members ([Shapiro and Talmon](https://arxiv.org/html/2505.02208v6)). That guarantee concerns finite individuals; no result settling this explicitly supported nonatomic formulation was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the distribution to the distinguished parent&#x27;s population, with positive rational support masses summing to one; excluded empty child populations and empty membership sets.</li><li>Required complete signatures to arise from a federation DAG with disjoint leaf populations: each individual belongs to one leaf and its ancestors.</li><li>Interpreted each positive-mass type as a nonatomic pool, permitting repeated types but distinct individuals in the assembly. The discrete non-leaf population restriction of at least n+1 individuals therefore holds automatically; probability mass is not an integer seat capacity.</li><li>Interpreted child seat guarantees as colored-seat quotas, following the maintenance rule. A seat has one eligible child color or is uncolored; colored quotas also imply the required membership-based representation floors.</li><li>Made updates explicit valid snapshots and required fairness after instantaneous maintenance, with unrestricted assembly replacement and no additional long-run participation requirement.</li><li>Used binary encoding for the assembly size and compressed integer type-color counts for output, so complexity does not depend on explicitly listing n individuals.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><p><b>Result.</b> Every valid snapshot admits a feasible colored assembly, and such an assembly can be computed online in time polynomial in \(m,\tau,L,\log(n+1)\). The construction below colors every seat and works for arbitrary overlaps among children.</p><p><b>Feasibility identity.</b> Write \(C=C_f\), \(k=|C|\), and \(S_\theta=S_\theta(f)\). Define<br>\[
+s_\theta=|S_\theta|,
+\qquad
+w_v=\sum_{\theta:\,v\in S_\theta}\frac{\mu_\theta}{s_\theta}.
+\]<br>Every \(s_\theta\) is positive by hypothesis. Interchanging the finite sums gives<br>\[
+\sum_{v\in C}w_v
+=
+\sum_\theta\frac{\mu_\theta}{s_\theta}
+\sum_{v\in S_\theta}1
+=
+\sum_\theta\mu_\theta
+=
+1.
+\]<br>Consequently, the required floors satisfy<br>\[
+Q:=\sum_{v\in C}q_v
+=
+\sum_{v\in C}\lfloor nw_v\rfloor
+\leq
+\sum_{v\in C}nw_v
+=
+n.
+\]<br>Thus the floors collectively require at most \(n\) seats.</p><p>Each child has positive population mass. Because the support lists all positive-mass types, for every \(v\in C\) there is a supported type \(\theta_v\) with \(v\in S_{\theta_v}\). Choose one such witness for each child.</p><p><b>Assembly construction.</b> Initialize every count to zero, and for each \(v\in C\) set<br>\[
+x_{\theta_v,v}=q_v.
+\]<br>These assignments concern different type-color pairs because their colors differ, even when several children share the same witness type.</p><p>Choose any supported type \(\theta_0\) and any \(v_0\in S_{\theta_0}\), which exist by normalization and the nonempty-signature hypothesis. Increase \(x_{\theta_0,v_0}\) by \(n-Q\). Set every uncolored count to zero.</p><p>All counts are nonnegative integers. Every nonzero colored count uses a permitted membership pair. Moreover,<br>\[
+\sum_{\theta,c}x_{\theta,c}=Q+(n-Q)=n,
+\qquad
+\sum_\theta x_{\theta,v}\geq q_v
+\quad\text{for every }v\in C.
+\]<br>Hence these counts satisfy all stated assembly constraints.</p><p>They also admit realization by distinct individuals. For each type, the construction requests finitely many individuals from its positive-mass nonatomic pool. Every singleton has mass zero, so removing any finite set leaves that pool with positive mass. Inductively, any requested finite number of distinct individuals can be chosen. Individuals of different complete types are distinct because the type classes are disjoint.</p><p><b>Exact arithmetic and bit complexity.</b> Under the usual binary rational encoding, write<br>\[
+\mu_\theta=\frac{a_\theta}{b_\theta},
+\qquad a_\theta,b_\theta\in\mathbb Z_{&gt;0}.
+\]<br>A common denominator sufficient for all calculations is<br>\[
+D=\prod_{\theta=1}^{\tau}b_\theta s_\theta.
+\]<br>Its binary length is at most<br>\[
+O\!\left(L+\tau\log(m+1)\right),
+\]<br>since the denominator encodings contribute at most \(L\) bits and \(s_\theta\leq m\).</p><p>For each child, compute the integer<br>\[
+A_v=
+\sum_{\theta:\,v\in S_\theta}
+a_\theta\frac{D}{b_\theta s_\theta}.
+\]<br>Every displayed division is exact, and \(A_v=Dw_v\). Because the \(w_v\) are nonnegative and sum to one, \(A_v\leq D\). Therefore<br>\[
+q_v=\left\lfloor\frac{nA_v}{D}\right\rfloor
+\]<br>can be computed by integer multiplication and division on numbers of bit length<br>\[
+O\!\left(L+\tau\log(m+1)+\log(n+1)\right).
+\]<br>There are at most \(\tau m\) summands across all children. Standard exact integer arithmetic consequently gives polynomial running time. Membership sets and witnesses can be obtained by scanning supplied signatures, or by computing ancestor reachability in the DAG, also in polynomial time.</p><p>Every output count is at most \(n\). Even a dense table containing all \(\tau(k+1)\) counts therefore has polynomial size,<br>\[
+O\!\left(\tau(m+1)\log(n+1)\right).
+\]<br>The algorithm performs arithmetic on counts without enumerating the \(n\) seats.</p><p><b>Online consequence.</b> At each update, recompute this assembly from the current snapshot. Unrestricted replacement makes the construction independent of previous assemblies, and the proof ensures feasibility after every maintenance operation. This establishes the stated nonatomic formulation directly; the finite-population maintenance setting of [Shapiro and Talmon](https://arxiv.org/html/2505.02208v6) requires no additional theorem application here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verdict</h3><p>The prover fully resolves the task. Every valid snapshot is feasible, and the proposed construction runs in polynomial time per update. No major or minor mathematical issues were found.</p><h3>Step-by-step verification</h3><ul><li><b>The weights are well-defined and normalized.</b> Each supported type has \(s_\theta=|S_\theta|&gt;0\), so every division defining \(w_v\) is valid. Interchanging the finite sums counts each type exactly \(s_\theta\) times and gives</li></ul><p>\[
+   \sum_{v\in C}w_v=\sum_\theta\mu_\theta=1.
+   \]<br>This calculation is correct, including when children overlap.</p><ul><li><b>The total floor requirement is at most the assembly size.</b> Since \(n w_v\geq0\), each \(q_v=\lfloor n w_v\rfloor\) is a nonnegative integer. Summing the inequalities \(\lfloor n w_v\rfloor\leq n w_v\) yields \(Q\leq n\). This establishes precisely the bound needed for the construction.</li></ul><ul><li><b>All required witnesses exist.</b> Every child has positive population mass, and the support contains every positive-mass type. Therefore each child belongs to the membership set of at least one supported type. Normalization also ensures that the support is nonempty, and the nonempty-signature assumption supplies the pair \((\theta_0,v_0)\).</li></ul><ul><li><b>The count construction satisfies every assembly constraint.</b> Assigning \(q_v\) to \((\theta_v,v)\) uses an allowed membership pair. Different children have different colors, so their assignments cannot overwrite the same coordinate, even when their witness types coincide. The final increment is nonnegative because \(Q\leq n\). It produces exactly \(n\) seats and preserves every child’s floor. Zero uncolored counts are permitted. The argument covers zero floors, \(Q=n\), a single supported type, a single child, and \(n=1\).</li></ul><ul><li><b>Repeated use of a type is realizable by distinct individuals.</b> The task explicitly permits multiple seats from the same type and supplies a positive-mass nonatomic pool for each supported type. Removing finitely many individuals leaves positive mass, so any finite requested count can be realized using distinct individuals. Different complete types are disjoint. No finite-population capacity constraint obstructs this construction.</li></ul><ul><li><b>The exact arithmetic and bit bounds are valid.</b> The product \(D=\prod_\theta b_\theta s_\theta\) is divisible by every \(b_\theta s_\theta\), so the displayed divisions are exact. Its bit length is bounded by the total denominator encoding length plus \(\sum_\theta\log s_\theta\), giving the stated polynomial bound. The identity \(A_v=Dw_v\) is correct, and normalization implies \(0\leq A_v\leq D\). Thus computing \(q_v\) requires integer operations on numbers of the stated bit length. There are at most \(\tau m\) summands, and extracting memberships or computing DAG reachability is polynomial. The dense output table also has the claimed polynomial size.</li></ul><ul><li><b>The online conclusion follows under the specified update model.</b> Each update supplies a valid explicit snapshot, replacement is unrestricted, and feasibility is required after maintenance. Recomputing independently at every update therefore meets the task. The prover does not invoke the cited finite-population theorem, so no external theorem hypotheses require verification.</li></ul><h3>Required clarification</h3><p>None. The argument is self-contained and establishes both universal feasibility and the requested polynomial-time online construction.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

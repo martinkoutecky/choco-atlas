@@ -1,0 +1,247 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Learning Coalition Structures with Games — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Learning Coalition Structures with Games <span style="font-weight:normal;color:#8a7350">(aaai24-28856)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.2 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>IG solves the CSL problem with a sample complexity upper bounded by n log2 n + 3n.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(\tau\) rational-mass types with finite rational action and payoff descriptions, all copies of each type constrained to one unknown coalition block \(\Pi\), adaptively design factorized normal-form games and default type-action profiles, receive one bit indicating whether the profile is a Nash equilibrium under coalition aggregate payoff \(\sum_{t\in B}\mu_tu_t\), and recover \(\Pi\) with minimum worst-case queries.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of \(\tau\geq1\) labeled types with positive binary-rational masses \(\mu_t\), normalized by \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types. An unknown partition \(\Pi\) assigns each entire type to one nonempty coalition; singleton coalitions are allowed, and the number of coalitions is unknown.<br>Each query freely specifies finitely many explicitly tabulated normal-form factors with nonempty finite action sets and arbitrary signed rational payoffs. A type&#x27;s action is a tuple of its factor actions, its payoff \(u_t\) is the sum of its factor payoffs, and the query specifies a pure default profile \(a\). All mass of a type uses the same action, including during deviations.<br>The oracle returns one exactly when no block \(B\in\Pi\) can strictly increase \(\sum_{t\in B}\mu_tu_t(a)\) by jointly changing the actions of any or all of its types, holding other blocks fixed. Equal-payoff deviations do not invalidate equilibrium. Queries may depend on previous oracle answers; oracle calls have unit cost.<br>Let \(Q(\mu)\) be the minimum worst-case query count of a deterministic adaptive strategy that identifies every possible \(\Pi\) exactly. The computational input is the mass list and a binary integer budget \(q\geq0\). Let \(L\) be the input bit length; when describing query construction, let \(m\) be the maximum factor action-set size, \(k\) the number of factors, and \(L_G\) their total binary description length. State running times in these quantities and \(\tau\).<br>Is deciding whether \(Q(\mu)\leq q\) polynomial-time solvable in \(\tau,L\), or is it NP-hard?<br>For discrete agents, Iterative Grouping uses at most \(n\log_2 n+3n\) queries, while every exact single-bit learner needs at least \(\lceil\log_2 B_n\rceil=n\log_2 n-O(n\log_2\log_2 n)\), where \(B_n\) is the Bell number. These bounds concern query counts rather than computing the exact minimum. [Xu, Ling, and Fang](https://arxiv.org/html/2312.09058v2).<br>No result settling this precise mass-based, minimum-query problem was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the positive rational masses to total mass one, following the distribution interpretation.</li><li>Interpreted factorization as a product of explicitly tabulated normal-form games, with Cartesian-product action sets and additive payoffs.</li><li>Treated action sets and payoff tables as freely designed for each query, rather than immutable characteristics restricting the learner.</li><li>Used pure default profiles as specified by the graded type-action question, and required uniform actions within each type during defaults and deviations.</li><li>Included every joint deviation by a coalition, allowing any subset of its types to change actions; only strict payoff improvements invalidate equilibrium.</li><li>Made exact minimum worst-case queries precise using deterministic strategies, worst case over all partitions, and the binary-budget decision problem.</li><li>Separated unit-cost oracle queries from query-description construction costs and defined the relevant representation parameters.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Rigorous partial solution</h3><p>The complexity classification remains unresolved. I prove that the masses have no effect on the optimum and that, under polynomial-time many-one reductions,<br>$$
+\text{the decision problem is NP-hard}
+\quad\Longleftrightarrow\quad
+\mathsf P=\mathsf{NP}.
+$$<br>This does not establish polynomial-time solvability.</p><p>Beyond repairing the sparse-language reduction in the notes, I establish two further exact cases:<br>$$
+Q_5=6,\qquad Q_6=8.
+$$<br>I also give an exhaustive algorithm with a substantially smaller running-time bound than enumerating all subfamilies of the partition universe.</p><h3>1. Definitions and removal of the masses</h3><p>Let<br>$$
+T=\{1,\ldots,\tau\},
+$$<br>and let $\mathcal P_\tau$ be the set of partitions of $T$. Write $B_\tau=|\mathcal P_\tau|$ for the Bell number.</p><p>A coalition is <b>profitable</b> in a query if it has a permitted deviation whose mass-weighted payoff gain is strictly positive.</p><p>Consider two positive normalized rational mass vectors $\mu$ and $\nu$ on the same labeled support. Given a query for $\mu$, replace every factor payoff by<br>$$
+u&#x27;_{t,f}=\frac{\mu_t}{\nu_t}u_{t,f}.
+$$<br>Keep all action sets and the default profile unchanged. For every coalition $C$ and every permitted deviation,<br>$$
+\sum_{t\in C}\nu_t
+\bigl(u&#x27;_t(a&#x27;_C,a_{-C})-u&#x27;_t(a)\bigr)
+=
+\sum_{t\in C}\mu_t
+\bigl(u_t(a&#x27;_C,a_{-C})-u_t(a)\bigr).
+$$<br>Thus the transformation preserves strict profitability, including deviations in which some coalition members retain their default actions. It consequently preserves the oracle answer for every partition.</p><p>Applying this transformation at every node of an adaptive strategy preserves its answer paths and its query count. Transforming in both directions proves<br>$$
+Q(\mu)=Q(\nu).
+$$<br>Relabeling the support also preserves the optimum. Hence there is a sequence $Q_\tau$, depending only on the support size, such that<br>$$
+Q(\mu)=Q_\tau.
+$$</p><p>Positivity of all masses is necessary for this argument: it ensures that every multiplier is defined.</p><p><b>Running time.</b> Rescaling preserves the number $k$ of factors and the maximum action-set size $m$. It takes time polynomial in $\tau,L,L_G$ and the encoding length of $\nu$, by exact rational arithmetic. No expansion of the product action space is needed.</p><h3>2. Exact characterization of the available tests</h3><h3>2.1 Every query is a forbidden-block test</h3><p>For a query $G$, define<br>$$
+\mathcal F_G=
+\left\{
+C\subseteq T:
+C\ne\varnothing
+\text{ and }C\text{ is profitable in }G
+\right\}.
+$$<br>Whether $C$ is profitable depends on its members, the query, and the default actions outside $C$. It does not depend on the partition of those outside types.</p><p>The oracle therefore answers one exactly when<br>$$
+\Pi\cap\mathcal F_G=\varnothing.
+$$</p><h3>2.2 Every forbidden-block family is realizable</h3><p>Fix a nonempty subset $B\subseteq T$, and choose $r\in B$. Construct one factor in which $r$ has two actions, default and toggle, while every other type has one action.</p><p>All payoffs at the default profile are zero. At the toggle profile, set<br>$$
+\mu_tu_t=
+\begin{cases}
+\frac32-|B|,&amp;t=r,\\
+1,&amp;t\in B\setminus\{r\},\\
+-1,&amp;t\notin B.
+\end{cases}
+$$<br>These are rational payoffs because every $\mu_t$ is positive and rational.</p><p>A coalition not containing $r$ cannot change this factor’s profile. If $r\in C$, its gain from toggling is<br>$$
+\begin{aligned}
+\frac32-|B|
++|C\cap(B\setminus\{r\})|
+-|C\setminus B|
+&amp;=
+\frac12-|B\setminus C|-|C\setminus B|.
+\end{aligned}
+$$<br>For $C=B$, the gain is $\frac12$. For every other $C$ containing $r$, at least one of the two set differences is nonempty, so the gain is at most $-\frac12$. Thus this factor makes exactly $B$ profitable.</p><p>For an arbitrary family<br>$$
+\mathcal F\subseteq 2^T\setminus\{\varnothing\},
+$$<br>include one such factor for every $B\in\mathcal F$.</p><p>Factor actions can be chosen independently, and factor gains add. If a coalition has a positive-gain deviation in one factor, it can change only that factor. Conversely, a positive total gain must include a positive gain in at least one factor. Therefore the combined query has forbidden family exactly $\mathcal F$.</p><p>An all-zero factor implements the empty family.</p><p>Consequently, the available tests are exactly<br>$$
+\Pi\longmapsto
+\mathbf 1[\Pi\cap\mathcal F=\varnothing],
+\qquad
+\mathcal F\subseteq 2^T\setminus\{\varnothing\}.
+$$</p><p><b>Construction costs.</b> For nonempty $\mathcal F$, this construction has<br>$$
+k=|\mathcal F|,\qquad m=2,
+$$<br>and only two profiles per factor. Put<br>$$
+s=L+\log_2(\tau+1).
+$$<br>The description length is $O(k\tau s)$, and a conservative construction-time bound using elementary exact rational arithmetic is $O(k\tau s^3)$. The model permits $k$ to be exponential in $\tau$.</p><p>For completeness, the forbidden family of an arbitrary supplied query can also be computed by finite enumeration. For each factor, enumerate all nonempty coalitions and their factor deviations. The number of coalition-action pairs is at most<br>$$
+\prod_{t\in T}(1+|A_{t,f}|)
+\le (m+1)^\tau.
+$$<br>The total time is therefore<br>$$
+O\!\left(k(m+1)^\tau
+\operatorname{poly}(\tau,L,L_G)\right).
+$$<br>Checking factors separately suffices because a coalition can retain the default in every other factor, and a positive total gain requires some positive factor gain.</p><h3>2.3 Tests on a restriction of the partition</h3><p>The following extension will be needed for the six-type construction.</p><p>For $S\subseteq T$, define the restricted partition<br>$$
+\Pi|_S=
+\{C\cap S:C\in\Pi,\ C\cap S\ne\varnothing\}.
+$$<br>Its members are nonempty, disjoint, and cover $S$.</p><p>Fix $\varnothing\ne B\subseteq S$ and $r\in B$. Modify the preceding factor by assigning mass-weighted toggle payoffs<br>$$
+\mu_tu_t=
+\begin{cases}
+\frac32-|B|,&amp;t=r,\\
+1,&amp;t\in B\setminus\{r\},\\
+-1,&amp;t\in S\setminus B,\\
+0,&amp;t\notin S.
+\end{cases}
+$$<br>For a coalition containing $r$, the gain is<br>$$
+\frac12-|B\setminus C|-|(C\cap S)\setminus B|.
+$$<br>This is positive exactly when $C\cap S=B$. Coalitions excluding $r$ cannot change the profile.</p><p>Combining these factors realizes every test<br>$$
+\mathbf 1[(\Pi|_S)\cap\mathcal F=\varnothing]
+$$<br>for a family of nonempty subsets of $S$, with the same construction bounds as above.</p><h3>3. General lower and upper bounds</h3><h3>3.1 Information lower bound</h3><p>A deterministic strategy using at most $q$ queries has at most $2^q$ answer leaves. Exact identification requires a distinct leaf for every partition. Hence<br>$$
+Q_\tau\ge
+\left\lceil\log_2 B_\tau\right\rceil.
+$$</p><h3>3.2 Pair tests and insertion</h3><p>For distinct types $i,j$, give only $i$ a toggle action. At toggle, assign mass-weighted payoffs $-1$ to $i$, $2$ to $j$, and zero to every other type.</p><p>A coalition containing $i$ gains<br>$$
+-1+2\mathbf 1[j\in C].
+$$<br>Thus the oracle answers zero exactly when $i$ and $j$ belong to the same block. Testing all pairs gives<br>$$
+Q_\tau\le h_\tau:=\binom{\tau}{2}.
+$$</p><p>A stronger bound follows by insertion. Suppose the restriction to the first $i-1$ types has been identified and has $r$ blocks. Choose one representative from each block.</p><p>Type $i$ either joins one of those $r$ represented blocks or belongs to a block containing no earlier type. There are $r+1$ possibilities. Assign them distinct binary codes of length<br>$$
+c=\left\lceil\log_2(r+1)\right\rceil,
+$$<br>using the zero code for the last possibility.</p><p>For each bit, combine pair factors between $i$ and the representatives whose codes have that bit set. The oracle answers zero exactly when the correct representative has that bit. Indeed, the representatives belong to distinct actual blocks, so at most one can share a block with $i$.</p><p>The $c$ answers therefore identify the correct possibility. Induction gives<br>$$
+Q_\tau\le U_\tau:=
+\sum_{i=2}^{\tau}\left\lceil\log_2 i\right\rceil
+\le
+(\tau-1)\left\lceil\log_2\tau\right\rceil.
+$$<br>Each insertion query has $m=2$ and at most $\tau-1$ factors. The whole strategy can be constructed and executed, excluding unit-cost oracle calls, in time polynomial in $\tau,L$.</p><h3>4. New exact cases: five and six types</h3><p>The key is a six-bit code for partitions of five types with several partitions identifiable from the first five bits.</p><p>For a nonempty block $B\subseteq\{1,\ldots,5\}$, assign an integer code $c(B)$ between zero and $63$. Its binary expansion has six bits. The assignments are as follows; entries in each row correspond in order.</p><p>| Blocks | Codes |<br>|---|---|<br>| All singletons | $0$ |<br>| $\{1,2\},\{1,3\},\{1,4\},\{1,5\},\{2,3\}$ | $20,6,19,36,48$ |<br>| $\{2,4\},\{2,5\},\{3,4\},\{3,5\},\{4,5\}$ | $40,13,24,10,34$ |<br>| $\{1,2,3\},\{1,2,4\},\{1,2,5\},\{1,3,4\},\{1,3,5\}$ | $9,16,32,33,17$ |<br>| $\{1,4,5\},\{2,3,4\},\{2,3,5\},\{2,4,5\},\{3,4,5\}$ | $5,3,4,8,2$ |<br>| $\{1,2,3,4\},\{1,2,3,5\},\{1,2,4,5\},\{1,3,4,5\},\{2,3,4,5\}$ | $47,55,58,59,61$ |<br>| $\{1,2,3,4,5\}$ | $62$ |</p><p>Define the signature of a partition by bitwise OR:<br>$$
+\sigma(\Pi)=\bigvee_{B\in\Pi}c(B).
+$$<br>For each bit position, query the family of blocks whose codes contain that bit. By Section 2, the negated oracle answer is precisely that bit of $\sigma(\Pi)$.</p><h3>4.1 Verification that all signatures are distinct</h3><p>The following table lists the signatures grouped by block sizes.</p><p>| Block sizes | Signatures |<br>|---|---|<br>| $1,1,1,1,1$ | $0$ |<br>| $2,1,1,1$ | $6,10,13,19,20,24,34,36,40,48$ |<br>| $2,2,1$ | $15,27,28,29,30,31,38,42,44,46,50,51,52,54,60$ |<br>| $3,1,1$ | $2,3,4,5,8,9,16,17,32,33$ |<br>| $3,2$ | $14,22,23,26,39,43,45,53,56,57$ |<br>| $4,1$ | $47,55,58,59,61$ |<br>| $5$ | $62$ |</p><p>For rows with only one nonsingleton block, the signature is its assigned code. The two remaining rows require OR calculations.</p><p>For the $2,2,1$ row, grouping by the remaining singleton gives:<br>$$
+\begin{array}{c|ccc}
+\text{Singleton}&amp;\multicolumn{3}{c}{\text{Signatures}}\\
+1&amp;50&amp;42&amp;29\\
+2&amp;38&amp;27&amp;60\\
+3&amp;54&amp;31&amp;44\\
+4&amp;30&amp;15&amp;52\\
+5&amp;28&amp;46&amp;51
+\end{array}
+$$<br>For example, with singleton $1$, the three pairings give<br>$$
+48\vee34=50,\qquad
+40\vee10=42,\qquad
+13\vee24=29.
+$$</p><p>For the $3,2$ row, listing the pair and its complementary triple gives:<br>$$
+\begin{array}{c|cccccccccc}
+\text{Pair}&amp;12&amp;13&amp;14&amp;15&amp;23&amp;24&amp;25&amp;34&amp;35&amp;45\\
+\text{Signature}&amp;22&amp;14&amp;23&amp;39&amp;53&amp;57&amp;45&amp;56&amp;26&amp;43
+\end{array}
+$$<br>Here, for example, $12$ denotes the pair $\{1,2\}$.</p><p>These calculations enumerate all partitions of five types. Every displayed signature is distinct, both within and between rows. There are<br>$$
+1+10+15+10+10+5+1=52
+$$<br>of them. Thus six nonadaptive queries identify every partition.</p><p>Since<br>$$
+32&lt;B_5=52\le64,
+$$<br>the information lower bound proves<br>$$
+\boxed{Q_5=6}.
+$$</p><h3>4.2 The early identification property</h3><p>The unused six-bit signatures are exactly<br>$$
+1,7,11,12,18,21,25,35,37,41,49,63.
+$$<br>For the all-singleton partition and every partition with one pair and three singletons, toggling the least significant bit of its signature produces one of these unused values:<br>$$
+\begin{array}{c|rrrrrrrrrrr}
+\text{Signature}&amp;0&amp;6&amp;10&amp;13&amp;19&amp;20&amp;24&amp;34&amp;36&amp;40&amp;48\\
+\text{Toggled value}&amp;1&amp;7&amp;11&amp;12&amp;18&amp;21&amp;25&amp;35&amp;37&amp;41&amp;49
+\end{array}
+$$</p><p>Two six-bit values have the same five most significant bits exactly when they are equal or differ only in the least significant bit. Consequently, each of these eleven partitions is identified by the five most significant bits alone.</p><p>Use the following adaptive strategy: query those five bits first. If their prefix identifies one of these eleven partitions, stop. Otherwise, query the remaining bit. This strategy uses:</p><ul><li>five queries for every partition with at least four blocks;</li><li>at most six queries for every other partition.</li></ul><h3>4.3 Inserting a sixth type</h3><p>First identify the restriction to the first five types using the preceding adaptive strategy. Section 2.3 makes all its queries available even when those five types share blocks with type $6$.</p><p>Let the identified restriction have $r$ blocks.</p><p>If $r\ge4$, the first stage uses five queries. Inserting type $6$ uses at most<br>$$
+\left\lceil\log_2(r+1)\right\rceil\le3
+$$<br>more queries.</p><p>If $r\le3$, the first stage uses at most six queries. Insertion uses at most<br>$$
+\left\lceil\log_2(r+1)\right\rceil\le2
+$$<br>more queries.</p><p>Both cases use at most eight queries. Identifying the restriction and the block joined by type $6$, or determining that it starts a new block, identifies the whole partition.</p><p>The Bell numbers satisfy<br>$$
+B_0=1,\qquad
+B_{n+1}=\sum_{j=0}^{n}\binom nj B_j.
+$$<br>To justify this recurrence, choose the $j$ elements outside the block containing a designated element; their partition can be chosen in $B_j$ ways. It gives<br>$$
+B_0,\ldots,B_6=1,1,2,5,15,52,203.
+$$<br>Since<br>$$
+128&lt;203\le256,
+$$<br>eight queries are necessary. Therefore<br>$$
+\boxed{Q_6=8}.
+$$</p><p>All queries in these five- and six-type constructions have $m=2$ and at most $26$ factors. Their construction time and description length are polynomial in $L$.</p><h3>5. Complexity consequences and the repaired sparse reduction</h3><p>Let $A$ be the language of valid mass-list and budget encodings satisfying $Q(\mu)\le q$. Reject malformed encodings. Validity, including positivity and exact normalization, can be checked in polynomial time by rational arithmetic.</p><p>Here, NP-hardness means hardness under deterministic polynomial-time many-one reductions.</p><h3>5.1 Reduction to a sparse language</h3><p>Define<br>$$
+S=
+\{\mathtt{YES}\}
+\cup
+\left\{
+1^\tau\#\operatorname{bin}(q):
+\tau\ge1,\ 0\le q&lt;h_\tau,\ Q_\tau\le q
+\right\},
+$$<br>where binary integer encodings are canonical.</p><p>Given a valid instance of $A$:</p><ul><li>if $q\ge h_\tau$, output $\mathtt{YES}$;</li><li>otherwise, output $1^\tau\#\operatorname{bin}(q)$.</li></ul><p>Malformed instances map to a fixed string outside $S$.</p><p>The pair-test bound and mass invariance prove that this reduction preserves membership. Its output length is polynomial because the explicit mass list implies $\tau\le L$.</p><p>A language is sparse if its number of members of length at most $N$ is bounded by a polynomial in $N$. Here that number is at most<br>$$
+1+\sum_{\tau=1}^{N}h_\tau=O(N^3).
+$$<br>Thus $S$ is sparse.</p><p>Mahaney’s theorem states that a sparse language cannot be NP-hard under polynomial-time many-one reductions unless $\mathsf P=\mathsf{NP}$. The sparse language need not itself belong to $\mathsf{NP}$. This formulation is given in [Grochow’s exposition](https://arxiv.org/abs/1610.05825).</p><p>If $A$ were NP-hard, composing its hardness reductions with the reduction to $S$ would make $S$ NP-hard. The theorem therefore applies and yields<br>$$
+A\text{ is NP-hard}\Longrightarrow\mathsf P=\mathsf{NP}.
+$$</p><h3>5.2 Reverse reduction, including out-of-range budgets</h3><p>The reverse reduction must treat the budget restriction as part of membership in $S$.</p><p>Map $\mathtt{YES}$ to the one-type instance with mass $1$ and budget zero. Map every string failing the required syntax, or satisfying $q\ge h_\tau$, to the two-type instance with masses $\frac12,\frac12$ and budget zero. This is a no-instance because there are two possible partitions.</p><p>For a remaining string $1^\tau\#\operatorname{bin}(q)$, put<br>$$
+d=\left\lceil\log_2\tau\right\rceil
+$$<br>and construct<br>$$
+\mu_t=2^{-d}\quad(1\le t&lt;\tau),\qquad
+\mu_\tau=\frac{2^d-\tau+1}{2^d}.
+$$<br>All masses are positive, since $2^d\ge\tau$, and<br>$$
+\sum_{t=1}^{\tau}\mu_t
+=
+\frac{\tau-1+2^d-\tau+1}{2^d}=1.
+$$<br>They are dyadic rationals with total description length $O(\tau\log_2(\tau+1))$. Mass invariance proves that the resulting instance is in $A$ exactly when the original string is in $S$.</p><p>Thus $A$ and $S$ are polynomial-time many-one equivalent. In particular, syntactically valid strings with $q\ge h_\tau$ map to no-instances, repairing the issue identified by the verifier.</p><h3>5.3 Exact conditional hardness statement</h3><p>Conversely, if $\mathsf P=\mathsf{NP}$, satisfiability can be decided in polynomial time. Decide a satisfiability instance and output either the fixed yes-instance or the fixed no-instance above. This gives a polynomial-time many-one reduction from satisfiability to $A$.</p><p>Hence<br>$$
+\boxed{
+A\text{ is NP-hard}
+\quad\Longleftrightarrow\quad
+\mathsf P=\mathsf{NP}.
+}
+$$<br>This equivalence does not determine whether $A$ belongs to $\mathsf P$.</p><h3>5.4 Polynomial-size advice</h3><p>There is also an unconditional nonuniform upper bound:<br>$$
+A\in\mathsf P/\mathsf{poly}.
+$$<br>For inputs of length $N$, provide the advice list<br>$$
+Q_1,Q_2,\ldots,Q_N.
+$$<br>The bound $Q_\tau\le U_\tau$ shows that each entry needs $O(\log_2(\tau+1))$ bits, so the whole list has length $O(N\log_2(N+1))$.</p><p>After validating an input, compute $\tau$ and compare its budget with the advised value $Q_\tau$. This takes polynomial time. The missing ingredient for a uniform polynomial-time algorithm is computing the advice values uniformly.</p><h3>6. A smaller exhaustive-search bound</h3><p>The query characterization permits exact computation without enumerating all $2^{B_\tau}$ candidate families.</p><p>Let<br>$$
+N_\tau=2^\tau-1,\qquad M_\tau=2^{N_\tau}.
+$$<br>There are $N_\tau$ nonempty possible blocks and $M_\tau$ forbidden-block families.</p><p>A query history consists of forbidden families<br>$$
+\mathcal F_1,\ldots,\mathcal F_\ell
+$$<br>and their answers. Let $H$ denote the partitions consistent with this history.</p><p>Define a recursive predicate $E(H,d)$, meaning that $H$ can be identified with at most $d$ additional queries:</p><ul><li>If $|H|\le1$, return true.</li><li>If $|H|&gt;1$ and $d=0$, return false.</li><li>Otherwise enumerate every forbidden family $\mathcal F$. Let</li></ul><p>$$
+   H_1=\{\Pi\in H:\Pi\cap\mathcal F=\varnothing\},
+   \qquad H_0=H\setminus H_1.
+   $$<br>Return true if, for some $\mathcal F$, both $E(H_1,d-1)$ and $E(H_0,d-1)$ are true.</p><p>This recursion is correct by induction on $d$. A successful choice supplies the root query and successful strategies for both branches. Conversely, the root query of any successful strategy has a forbidden family included in the enumeration, and its two continuations must satisfy the recursive conditions.</p><p>There is no need to store $H$ explicitly. Enumerate all partitions and check them against the stored history. Partition enumeration uses polynomial space in $\tau$: for example, assign each type its block’s least element, giving an injective representation among $\tau^\tau$ strings. Thus<br>$$
+B_\tau\le\tau^\tau.
+$$</p><p>If $q\ge U_\tau$, answer yes immediately. Otherwise the recursive depth is at most $U_\tau$. At depth $d$, each forbidden family causes at most two calls of depth $d-1$. The work per call, apart from recursion, is bounded by<br>$$
+2^{O(\tau\log_2(\tau+1))}
+\operatorname{poly}(U_\tau).
+$$<br>This includes partition enumeration, history checking, and enumeration overhead.</p><p>The resulting deterministic running-time bound is<br>$$
+\boxed{
+2^{O\!\left(2^\tau\,\tau\log_2(\tau+1)\right)}
++\operatorname{poly}(L).
+}
+$$<br>A depth-first implementation stores at most $U_\tau$ forbidden-family bit vectors, each of length $N_\tau$, together with loop counters and polynomial-size partition-enumeration state. Its space bound is<br>$$
+\boxed{
+O\!\left(2^\tau\,\tau\log_2(\tau+1)\right)
++\operatorname{poly}(L).
+}
+$$</p><p>These bounds prove uniform computability, but remain far from polynomial time.</p><h3>7. What remains open</h3><p>The numerical masses cannot encode an instance-specific source of hardness in this model: arbitrary rational payoff rescaling removes them exactly. The unresolved problem is the uniform computation of the sequence $Q_\tau$.</p><p>The finite constructions prove that the Bell-number lower bound is attained for support sizes five and six. They do not establish its attainability for general support size, nor a polynomial-time algorithm for the threshold decision problem.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 6, the work-per-call estimate and its inclusion of enumeration overhead: The stated per-invocation nonrecursive bound omits enumeration of $M_\tau=2^{2^\tau-1}$ forbidden families. Clarify whether the smaller estimate is per candidate family and explicitly account for the enumeration loop. The final resource bounds survive this routine accounting clarification.</li><li><b>major</b> — Sections 5.3 and 7, resolution of USER_TASK: The output does not establish a uniform polynomial-time algorithm or an unconditional hardness classification for the threshold decision problem. The equivalence between $\mathsf{NP}$-hardness and $\mathsf P=\mathsf{NP}$ is valid but leaves the requested classification unresolved, as the prover acknowledges.</li></ul>
+<div class="pre"><h3>Verification report</h3><p>The output is a <b>correct substantive partial solution</b>, with one minor error in the running-time accounting. It establishes mass invariance, an exact characterization of realizable queries, general query bounds, the exact values $Q_5=6$ and $Q_6=8$, and the claimed conditional hardness equivalence. It does <b>not</b> settle the polynomial-time classification requested by <code>USER_TASK</code>, as the prover explicitly acknowledges.</p><h3>1. Mass invariance</h3><p><b>Verified.</b></p><p>For every type, factor, and action profile, the rescaling<br>$$
+u&#x27;_{t,f}=\frac{\mu_t}{\nu_t}u_{t,f}
+$$<br>preserves that type’s mass-weighted payoff contribution. Consequently, the displayed equality holds for every coalition and every permitted deviation.</p><p>All relevant hypotheses are satisfied:</p><ul><li>Both mass vectors have strictly positive entries, so division is defined.</li><li>The query permits arbitrary signed rational payoffs, so the rescaled payoffs are admissible.</li><li>The transformation preserves action sets, defaults, and the requirement that an entire type uses one action.</li><li>Applying the transformation at each strategy node preserves every answer path.</li></ul><p>Transforming in both directions therefore proves $Q(\mu)=Q(\nu)$. The conclusion that the optimum depends only on the labeled support size is justified.</p><p>The polynomial-time rescaling claim is also valid: rational multiplication and division increase encoding lengths by polynomial amounts and do not require expanding the product of factor action spaces.</p><h3>2. Characterization of realizable tests</h3><h3>2.1 Every query induces a forbidden-block family</h3><p><b>Verified.</b></p><p>Profitability of a fixed coalition depends only on its available actions, its members’ payoffs, and the default actions outside it. The partition of the outside types is irrelevant because they remain at the default profile.</p><p>Thus the oracle returns one exactly when none of the actual blocks belongs to $\mathcal F_G$. This uses the task’s strict-profitability convention correctly.</p><h3>2.2 Every forbidden-block family is realizable</h3><p><b>Verified, including singleton blocks.</b></p><p>For a coalition containing $r$, the stated gain simplifies correctly to<br>$$
+\frac12-|B\setminus C|-|C\setminus B|.
+$$<br>It equals $\frac12$ when $C=B$ and is at most $-\frac12$ otherwise. A coalition excluding $r$ cannot change the factor’s profile.</p><p>When $B=\{r\}$, the same calculation remains valid: the designated singleton is profitable, while every strict superset incurs a negative gain.</p><p>Combining factors preserves exactly the union of their profitable-coalition families. The argument uses both necessary properties of the model:</p><ul><li>Factor actions can be changed independently.</li><li>Total payoffs are sums of factor payoffs.</li></ul><p>A positive total gain must contain a positive factor gain, and a coalition can realize a positive factor gain while retaining defaults in all other factors. There is therefore no interference between factors.</p><p>The empty-family construction is valid. The description-length and construction-time bounds are consistent with two profiles per factor and polynomial-size rational payoffs.</p><h3>2.3 Computing the forbidden family of a supplied query</h3><p><b>Verified.</b></p><p>For one factor, the number of coalition-action pairs is bounded by<br>$$
+\prod_{t\in T}(1+|A_{t,f}|).
+$$<br>For each type, the enumeration either excludes it from the coalition or includes it with one of its factor actions. Including its default action is permitted and necessary.</p><p>The bound by $(m+1)^\tau$ follows. Exact rational comparisons correctly distinguish positive gains from zero gains. Checking factors separately is justified by the same additive argument used above.</p><h3>2.4 Restriction tests</h3><p><b>Verified.</b></p><p>The modified gain is<br>$$
+\frac12-|B\setminus C|-|(C\cap S)\setminus B|.
+$$<br>For coalitions containing $r$, this is positive exactly when $C\cap S=B$. Types outside $S$ contribute zero and therefore impose no additional restriction.</p><p>The construction realizes precisely the claimed tests on $\Pi|_S$, including cases where a restricted block extends outside $S$.</p><h3>3. General bounds and insertion</h3><h3>3.1 Information lower bound</h3><p><b>Verified.</b></p><p>A deterministic binary-answer strategy of worst-case depth at most $q$ has at most $2^q$ leaves, even when it stops early on some paths. Exact identification requires distinct leaves for the $B_\tau$ partitions. Hence<br>$$
+Q_\tau\ge\lceil\log_2 B_\tau\rceil.
+$$</p><h3>3.2 Pair tests</h3><p><b>Verified.</b></p><p>Only coalitions containing $i$ can toggle. Their gain is positive exactly when they also contain $j$. Thus the oracle returns zero exactly when the two types share a block.</p><p>Testing all pairs determines the partition and proves the stated upper bound.</p><h3>3.3 Insertion strategy</h3><p><b>Verified.</b></p><p>Representatives of different blocks of the identified restriction belong to different actual blocks. Therefore type $i$ can share a block with at most one representative.</p><p>Combining the pair factors for a selected code bit produces a negative oracle answer exactly when the correct representative’s code has that bit set. If type $i$ shares no block with an earlier type, every answer corresponds to the zero code.</p><p>The coding argument and induction establish $U_\tau$. For $\tau=1$, the sum is empty and gives the correct zero-query bound.</p><p>The polynomial-time implementation claim is justified by the polynomial number of queries and the polynomial description size of each insertion query.</p><h3>4. Exact cases</h3><h3>4.1 Five types</h3><p><b>Verified by independent exhaustive recomputation.</b></p><p>I recomputed the bitwise-OR signatures of all partitions from the supplied block-code table. The checks confirm:</p><ul><li>There are exactly $52$ partitions.</li><li>All $52$ signatures are distinct.</li><li>The displayed signature rows and complementary-block calculations agree with the code table.</li><li>The unused signatures are exactly the twelve listed values.</li></ul><p>The negated oracle answers recover the signature bits. Consequently, six nonadaptive queries identify the partition. Together with<br>$$
+32&lt;52\le64,
+$$<br>this proves $Q_5=6$.</p><h3>4.2 Early identification</h3><p><b>Verified.</b></p><p>For each of the eleven specified partitions, toggling the least significant signature bit produces an unused signature. Independent enumeration confirms that each corresponding five-bit prefix occurs for exactly one partition.</p><p>Those eleven partitions are exactly the partitions with at least four blocks. The claimed adaptive stopping rule is therefore valid.</p><h3>4.3 Six types</h3><p><b>Verified.</b></p><p>Restriction tests allow the first stage to identify the partition induced on the first five types, regardless of where type $6$ belongs.</p><p>The two query-count cases are correct:</p><ul><li>For $r\ge4$, five initial queries and at most three insertion queries suffice.</li><li>For $r\le3$, at most six initial queries and at most two insertion queries suffice.</li></ul><p>The Bell-number recurrence is correctly justified, and the listed values yield $B_6=203$. Thus the information lower bound matches the eight-query strategy.</p><p>The claim of at most $26$ factors per query is valid and conservative. The signature-bit queries actually use at most twelve factors.</p><h3>5. Complexity consequences</h3><h3>5.1 Reduction to a sparse language</h3><p><b>Verified.</b></p><p>The reduction handles valid instances with large budgets using the pair-test upper bound, and rejects malformed instances separately. For the remaining instances, mass invariance preserves membership.</p><p>The explicit support list ensures $\tau\le L$, so the unary support-size encoding has polynomial length. Canonical binary budget encodings give at most $h_\tau$ relevant strings for each support size. The cumulative sparsity bound $O(N^3)$ is valid.</p><p>The stated version of Mahaney’s theorem is correct: it applies to sparse languages that are $\mathsf{NP}$-hard under polynomial-time many-one reductions, without requiring membership in $\mathsf{NP}$. This is explicitly the formulation in [Grochow’s Theorem 2.1](https://arxiv.org/html/1610.05825v1).</p><p>All hypotheses are satisfied after composing the reductions. Hence the implication from hardness of $A$ to $\mathsf P=\mathsf{NP}$ follows.</p><h3>5.2 Reverse reduction</h3><p><b>Verified.</b></p><p>The fixed instances have the claimed answers:</p><ul><li>One type with budget zero is a yes-instance.</li><li>Two types with budget zero form a no-instance, since two different partitions must be distinguished.</li></ul><p>Mapping syntactically valid but out-of-range budgets to the fixed no-instance correctly respects the definition of $S$.</p><p>The constructed masses are positive dyadic rationals, normalize exactly, and have polynomial total encoding length. No unintended interpretation of “binary-rational” is needed.</p><p>The reductions therefore establish polynomial-time many-one equivalence of $A$ and $S$.</p><h3>5.3 Conditional hardness equivalence</h3><p><b>Verified.</b></p><p>Under $\mathsf P=\mathsf{NP}$, the proposed satisfiability reduction can decide its input and select the fixed yes-instance or no-instance in polynomial time. Combined with the preceding implication, this proves the displayed equivalence.</p><p>This establishes neither an unconditional hardness result nor membership of $A$ in $\mathsf P$. The prover states that limitation accurately.</p><h3>5.4 Polynomial-size advice</h3><p><b>Verified.</b></p><p>Each advice value $Q_\tau$ has logarithmic encoding length under the established upper bound. The full advice list is polynomial in input length, and validation followed by a budget comparison is polynomial-time.</p><p>The distinction between nonuniform advice and uniform computation is correctly maintained.</p><h3>6. Exhaustive algorithm and resource bounds</h3><h3>6.1 Correctness of the recursion</h3><p><b>Verified.</b></p><p>The base cases are appropriate, including empty consistent sets. The recursive characterization follows directly from the exhaustive characterization of available queries.</p><p>Non-splitting queries cause no termination problem because the remaining depth decreases. The preliminary upper-bound check ensures bounded recursion depth even when the supplied budget is very large.</p><p>The partition representation and history-based consistency checking suffice for finite enumeration without storing every partition.</p><h3>6.2 Minor issue: the per-call work bound</h3><p>The following statement is false as written:</p><blockquote>“The work per call, apart from recursion, is bounded by”</blockquote><p>followed by<br>$$
+2^{O(\tau\log_2(\tau+1))}\operatorname{poly}(U_\tau),
+$$<br>and the assertion that this includes enumeration overhead.</p><p>An invocation can enumerate all<br>$$
+M_\tau=2^{2^\tau-1}
+$$<br>forbidden families. That enumeration alone exceeds the claimed per-call bound. For example, with the full partition universe and one remaining query, when there are more than two partitions no candidate can succeed, so the invocation exhausts the family enumeration.</p><p><b>Severity: minor.</b> This is a bookkeeping error in an intermediate estimate. The final displayed running-time bound already accommodates the forbidden-family branching, and the space bound is consistent with the described depth-first implementation.</p><p><b>Minimum clarification required:</b> State precisely whether the smaller work estimate applies per candidate family or per recursive invocation, and explicitly account for the family-enumeration loop in the running-time justification.</p><p>No additional mathematical construction is required.</p><h3>7. Resolution of the assigned task</h3><p>The output engages the target and proves substantial structural results. Its final unresolved point is nevertheless exactly the central question in <code>USER_TASK</code>: whether the threshold decision problem has a uniform polynomial-time algorithm or an unconditional hardness classification.</p><p><b>Severity: major as an incompleteness of the assigned task, not as a false proof claim.</b> The prover explicitly labels its solution partial.</p><p>To complete the assignment, the prover would need a rigorous classification addressing that remaining question. Neither the finite exact cases, the advice bound, nor the conditional hardness equivalence supplies such a classification.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,128 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-0d94dd4ac159081515d07365155d2d43edcffeec — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-0d94dd4ac159081515d07365155d2d43edcffeec <span style="font-weight:normal;color:#8a7350">(s5-0d94dd4ac159081515d07365155d2d43edcffeec)</span></h1>
+<p class="banner">NEW RESULT — discrete: parameterized → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> The rational-mass problem is $\mathrm{NP}$-complete and $\mathrm{W}[2]$-hard parameterized by $k$, hence not $\mathrm{FPT}$ unless $\mathrm{FPT}=\mathrm{W}[2]$. Exact verification takes $O(\tau L^2+(\tau m+m^2)L)$ bit operations. Enumeration takes $O(\tau L^2+(\sum_{j=0}^{\min\{k,|D|\}}\binom{|D|}{j})(\tau m+m^2)L)$ and establishes membership in $\mathrm{XP}$.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Both constructive and destructive control by adding candidates in fallback voting are W[2]-hard.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given qualified candidates \(C\), spoiler candidates \(D\), target \(p\in C\), action limit \(k\), and a finite support \(T\) of complete fallback ballot types over \(C\cup D\), with positive rational masses \(\mu_t\) summing to \(1\), decide whether some \(D&#x27;\subseteq D\), \(|D&#x27;|\le k\), makes \(p\) the unique fallback winner. For each proposed \(D&#x27;\), restrict ballots to \(C\cup D&#x27;\), then compute level scores from the masses of types that approve each candidate within their first \(i\) approved positions; use the paper&#x27;s strict-majority threshold \(1/2\), and its total-approval fallback if no level has a strict majority.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given disjoint finite candidate sets \(C,D\), a target \(p\in C\), and a positive integer \(k\) encoded in binary, put \(m=|C\cup D|\).<br>A ballot type specifies an approval subset \(A_t\subseteq C\cup D\), possibly empty, and a strict linear order on \(A_t\); all remaining candidates are disapproved and unranked.<br>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass \(\mu_t\) a binary rational, with \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types; let \(L\) be the total input bit length.<br>For \(D&#x27;\subseteq D\), restrict each ballot to \(E=C\cup D&#x27;\) by removing absent candidates and retaining approval status and relative order; approved positions are then consecutive.<br>For \(a\in E\), its level score \(s_i(a)\) is the mass approving it within the first \(i\) approved positions, and its total approval score \(s(a)\) is the mass approving it.<br>At the smallest level \(1\le i\le |E|\) where some \(s_i(a)&gt;1/2\), all candidates maximizing \(s_i\) win. If no such level exists, all candidates maximizing \(s\) win. Ties are retained.<br>The decision problem asks whether some \(D&#x27;\subseteq D\) with \(|D&#x27;|\le k\) makes \(p\) the unique winner.</p><p>Is this rational-mass decision problem in \(\mathrm{P}\) or \(\mathrm{NP}\)-hard? If it is \(\mathrm{NP}\)-hard, is it \(\mathrm{FPT}\) parameterized by \(k\)? State running times in \(m,\tau,L,k\).</p><p>For finite unweighted electorates, this control problem is [\(\mathrm{NP}\)-hard](https://arxiv.org/pdf/1004.3398) and [\(\mathrm{W}[2]\)-hard parameterized by \(k\)](https://arxiv.org/pdf/1004.3659).<br>No result addressing exactly the stated rational-mass problem was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Made the qualified and spoiler candidate sets explicitly disjoint.</li><li>Specified the action limit as a positive integer encoded in binary, following the anchor&#x27;s problem definition.</li><li>Interpreted complete fallback ballot types as approval subsets with strict orders on approved candidates; empty approval subsets are allowed and disapproved candidates are unranked.</li><li>Specified that restriction preserves approval status and relative order and closes gaps in approved positions.</li><li>Specified the earliest-majority stopping rule, maximization of scores at that level, and retention of all ties, including in the total-approval fallback.</li><li>Defined m as the total number of qualified and spoiler candidates and L as the total input encoding length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Classification</h3><p>The rational-mass problem is <b>$\mathrm{NP}$-complete</b> and <b>$\mathrm{W}[2]$-hard parameterized by $k$</b>. Consequently, it is not fixed-parameter tractable unless $\mathrm{FPT}=\mathrm{W}[2]$.</p><p>The proof consists of a parameter-preserving reduction from the finite-electorate problem and a polynomial-time verifier using exact arithmetic. No unconditional separation of these complexity classes is asserted.</p><h3>1. Normalizing an explicit electorate preserves every outcome</h3><p>Consider a finite unweighted instance with $N&gt;0$ explicitly listed voters. Group identical ballots into distinct types $t$, and let $n_t$ be the multiplicity of type $t$. Construct the rational society with the same candidate sets, target, and budget, assigning mass</p><p>$$
+\mu_t=\frac{n_t}{N}.
+$$</p><p>Every listed mass is positive, and their sum is $1$. The number of types satisfies $\tau\le N$. Each numerator and denominator requires $O(\log(N+1))$ bits, so grouping and normalization take polynomial time and produce an instance of polynomial length.</p><p>Fix any $D&#x27;\subseteq D$, and put $E=C\cup D&#x27;$. Let $v_i^E(a)$ denote the number of original voters approving $a$ within the first $i$ approved positions after restriction to $E$. Let $v^E(a)$ denote its total approval count. By construction,</p><p>$$
+s_i^E(a)=\frac{v_i^E(a)}{N},
+\qquad
+s^E(a)=\frac{v^E(a)}{N}.
+$$</p><p>These identities hold even if distinct original types become identical after restriction: their contributions simply add. Therefore,</p><p>$$
+s_i^E(a)&gt;\frac12
+\quad\Longleftrightarrow\quad
+v_i^E(a)&gt;\frac N2.
+$$</p><p>Division by the same positive number also preserves every score comparison and tie. Thus the two instances have the same first majority level and exactly the same winner set. If no majority level exists, they have the same approval-score maximizers.</p><p>This proves, simultaneously for every permitted $D&#x27;$,</p><p>$$
+p\text{ is the unique winner in the original instance}
+\quad\Longleftrightarrow\quad
+p\text{ is the unique winner in the rational instance}.
+$$</p><p>The transformation leaves $k$ unchanged.</p><h3>2. Transferring the hardness results</h3><p>The finite-electorate results used here concern exactly constructive control by adding at most $k$ candidates, with success requiring the target to be the unique winner:</p><ul><li>Theorem 3.7 of [*Control Complexity in Fallback Voting*](https://arxiv.org/pdf/1004.3398) proves $\mathrm{NP}$-hardness.</li><li>Theorem 3.1 of [the parameterized-complexity paper](https://arxiv.org/pdf/1004.3659) proves $\mathrm{W}[2]$-hardness with parameter $k$; its Section 2 explicitly specifies the unique-winner model and positive budgets.</li></ul><p>Their ballot and winner conventions agree with the task: only approved candidates are ranked, restriction retains approvals and relative order, majority is strict, and winning ties are retained.</p><p>Composing either hardness reduction with the normalization above gives a reduction to the stated rational-mass problem. Polynomial construction and preservation of yes-instances prove $\mathrm{NP}$-hardness. Since the normalization also preserves $k$, it is an FPT reduction and transfers $\mathrm{W}[2]$-hardness.</p><p>In particular, an algorithm with running time $f(k)L^c$, where $f$ is computable and $c$ is independent of $k$, would imply $\mathrm{FPT}=\mathrm{W}[2]$.</p><h3>3. Exact verification and membership in $\mathrm{NP}$</h3><p>Write each input mass as</p><p>$$
+\mu_t=\frac{a_t}{b_t},
+\qquad a_t,b_t\text{ positive integers},
+$$</p><p>and define</p><p>$$
+Q=\prod_{t=1}^{\tau}b_t,
+\qquad
+w_t=a_t\frac{Q}{b_t}.
+$$</p><p>The weights $w_t$ are integers satisfying</p><p>$$
+\sum_{t=1}^{\tau}w_t=Q.
+$$</p><p>The bit length of $Q$ is $O(L)$, because the sum of the input denominators’ bit lengths is at most $L$. Every $w_t$ and every score sum is at most $Q$, hence also has $O(L)$ bits. Using schoolbook integer arithmetic, computing $Q$ and all $w_t$ takes</p><p>$$
+O(\tau L^2)
+$$</p><p>bit operations.</p><p>For a proposed $D&#x27;$, put $E=C\cup D&#x27;$ and $n=|E|\le m$. Scan each approved order, removing absent candidates and assigning consecutive positions to the retained candidates. Define</p><p>$$
+H_{a,j}
+=
+\sum_{\substack{t:\ a\text{ has approved}\\
+\text{position }j\text{ after restriction}}}w_t.
+$$</p><p>Building this table requires at most $O(\tau m)$ additions. Its prefix sums give integer level scores</p><p>$$
+S_i(a)=\sum_{j=1}^{i}H_{a,j}=Q\,s_i(a).
+$$</p><p>Computing all prefix sums and inspecting every candidate at every level requires $O(m^2)$ additions or comparisons. Each costs $O(L)$ bit operations. Majority is checked exactly by</p><p>$$
+2S_i(a)&gt;Q.
+$$</p><p>At the first majority level, accept precisely when $S_i(p)$ strictly exceeds every competing score. If no majority occurs, apply the same strict comparison to $S_n$, which equals the scaled total approval score.</p><p>Thus, after preprocessing the weights, verification takes</p><p>$$
+O\bigl((\tau m+m^2)L\bigr)
+$$</p><p>bit operations. Including preprocessing, the bound is</p><p>$$
+O\bigl(\tau L^2+(\tau m+m^2)L\bigr).
+$$</p><p>A certificate is a bit vector specifying $D&#x27;\subseteq D$. Its length is at most $m$, and its cardinality can be compared with the binary-encoded $k$ in polynomial time. This proves membership in $\mathrm{NP}$ and, together with Section 2, $\mathrm{NP}$-completeness.</p><h3>4. Deterministic running time and the parameterized conclusion</h3><p>Let</p><p>$$
+d=|D|,
+\qquad K=\min\{k,d\},
+\qquad
+B(d,K)=\sum_{j=0}^{K}\binom dj.
+$$</p><p>Enumerating all permitted subsets and verifying each, while computing the integer weights only once, gives the deterministic bound</p><p>$$
+O\left(
+\tau L^2+
+B(d,K)(\tau m+m^2)L
+\right).
+$$</p><p>We have</p><p>$$
+B(d,K)\le 2^d
+\qquad\text{and}\qquad
+B(d,K)\le(d+1)^K\le m^K.
+$$</p><p>For the second bound, index the spoilers by $1,\ldots,d$ and encode each subset by its increasing list padded to length $K$ with zeros. This is an injection into the length-$K$ sequences over an alphabet of size $d+1$. The last inequality uses $p\in C$, so $d+1\le m$. These bounds also hold when $K=0$.</p><p>Consequently, a bound expressed only in the requested quantities is</p><p>$$
+O\left(
+\tau L^2+
+\min\left\{2^m,m^{\min\{k,m\}}\right\}
+(\tau m+m^2)L
+\right).
+$$</p><p>For each fixed $k$, this is polynomial, giving an $\mathrm{XP}$ algorithm. Its exponent depends on $k$, so this enumeration does not establish FPT. The transferred $\mathrm{W}[2]$-hardness excludes an FPT algorithm under the standard assumption $\mathrm{FPT}\ne\mathrm{W}[2]$.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s claimed resolution is correct. The output establishes $\mathrm{NP}$-completeness and $\mathrm{W}[2]$-hardness parameterized by $k$, together with valid verification and enumeration bounds. I found no major or minor issues requiring repair.</p><ul><li><b>The cited hardness results apply.</b></li></ul><p>Theorem 3.7 of [*Control Complexity in Fallback Voting*](https://arxiv.org/pdf/1004.3398) includes constructive control by adding a limited number of candidates. Its problem definition requires adding at most the budget and making the designated candidate the unique winner. Ballots rank only approved candidates; empty and full approval sets are allowed. Winner determination uses strict majority, maximum level scores at the first majority level, and total approval scores if no majority occurs. These conventions match <code>USER_TASK</code>.</p><p>Although that paper’s general control definition allows a nonnegative budget, its hardness construction uses a positive budget and a nonempty electorate. Consequently, the task’s positive-budget requirement and the normalization’s assumption $N&gt;0$ do not obstruct the hardness transfer.</p><p>Theorem 3.1 of [*Parameterized Control Complexity in Fallback Voting*](https://arxiv.org/pdf/1004.3659) establishes $\mathrm{W}[2]$-hardness for constructive candidate addition. Section 2 specifies the unique-winner objective, addition of at most $k$ candidates, and parameter $k$. Its construction also has a nonempty electorate. The cited parameterized result therefore applies to the source problem used here.</p><ul><li><b>Grouping and normalization give a valid polynomial reduction.</b></li></ul><p>Grouping identical explicitly listed ballots produces positive integer multiplicities $n_t$ whose sum is $N$. Hence the masses<br>$$
+   \mu_t=\frac{n_t}{N}
+   $$<br>are positive and sum to $1$. There are at most $N$ distinct types, and each numerator and denominator has $O(\log(N+1))$ bits. Both construction time and output length are polynomial in the explicit source input length.</p><p>For every fixed permitted subset $D&#x27;$, restriction acts identically on the original ballots and their grouped representatives. Thus both score identities stated by the prover are correct:<br>$$
+   s_i^E(a)=\frac{v_i^E(a)}{N},
+   \qquad
+   s^E(a)=\frac{v^E(a)}{N}.
+   $$<br>Distinct types becoming identical after restriction causes no difficulty: their masses add.</p><p>Because $N&gt;0$, normalization preserves strict majority thresholds, all score comparisons, and all ties. It therefore preserves the first majority level and its winner set, or the approval winner set when no majority exists. This establishes equivalence in both directions for every permitted $D&#x27;$, and consequently equivalence of the decision instances.</p><p>Candidate sets, target, and budget are unchanged. In particular, the parameter is preserved exactly. The transformation is polynomial-time and hence is also an FPT reduction. Both hardness transfers are justified.</p><ul><li><b>The integer arithmetic is exact and has polynomial bit complexity.</b></li></ul><p>The product<br>$$
+   Q=\prod_{t=1}^{\tau}b_t
+   $$<br>has $O(L)$ bits because the sum of denominator encoding lengths is bounded by $L$. Each $b_t$ divides $Q$, so every<br>$$
+   w_t=a_t\frac{Q}{b_t}
+   $$<br>is an integer. Normalization gives<br>$$
+   \sum_t w_t=Q.
+   $$<br>Positivity then ensures each weight is at most $Q$. Each individual candidate’s histogram entry and cumulative score is also at most $Q$, since a ballot contributes its weight at most once to that candidate.</p><p>Schoolbook multiplication, exact division, and multiplication for the weights fit the stated preprocessing bound<br>$$
+   O(\tau L^2).
+   $$<br>This reasoning does not require the input fractions to be reduced.</p><ul><li><b>The certificate verifier implements the stated election rule.</b></li></ul><p>Filtering approved orders and assigning consecutive retained positions implements the task’s restriction operation. There are at most $\tau m$ retained candidate occurrences, so the histogram construction uses at most $O(\tau m)$ additions.</p><p>The histogram prefix sums satisfy<br>$$
+   S_i(a)=Q\,s_i(a).
+   $$<br>There are at most $m^2$ candidate-level entries. Additions, score comparisons, and the exact majority test<br>$$
+   2S_i(a)&gt;Q
+   $$<br>each require $O(L)$ bit operations.</p><p>At the first majority level, strict superiority over every competitor is exactly the unique-winner condition. If no majority occurs, $S_n(a)$ equals the scaled total approval score, so the same comparison correctly checks unique approval victory.</p><p>A subset certificate has at most $m$ bits, and checking its cardinality against binary-encoded $k$ is polynomial. The stated total verification bound<br>$$
+   O\bigl(\tau L^2+(\tau m+m^2)L\bigr)
+   $$<br>is valid and establishes membership in $\mathrm{NP}$.</p><ul><li><b>The enumeration bounds and parameterized conclusion are correct.</b></li></ul><p>With $d=|D|$ and $K=\min\{k,d\}$, the number of permitted subsets is exactly<br>$$
+   B(d,K)=\sum_{j=0}^{K}\binom dj.
+   $$<br>Precomputing weights once and verifying every subset gives the stated deterministic bound.</p><p>The inequality $B(d,K)\le 2^d$ is valid. The padded increasing-list encoding is injective, so $B(d,K)\le(d+1)^K$ is also valid. Since $p\in C$, one has $d+1\le m$. The displayed bound using only $m,\tau,L,k$ is therefore a valid, potentially looser upper bound:<br>$$
+   O\left(
+   \tau L^2+
+   \min\left\{2^m,m^{\min\{k,m\}}\right\}
+   (\tau m+m^2)L
+   \right).
+   $$</p><p>For fixed $k$, this is polynomial and establishes an $\mathrm{XP}$ algorithm. The $\mathrm{W}[2]$-hardness conclusion excludes FPT under $\mathrm{FPT}\ne\mathrm{W}[2]$, exactly as stated; it does not assert an unconditional separation.</p><ul><li><b>Edge cases and scope are handled.</b></li></ul><p>Empty approval sets contribute zero. Exact half-mass scores do not trigger majority. Ties prevent unique victory. If $D$ is empty, then $K=0$ and enumeration checks precisely the empty subset. If $p$ is the only participating candidate, the comparison against competitors is vacuous, correctly recognizing its unique victory even when all scores are zero.</p><p>The proof uses $\tau$ only as the number of supplied positive-mass types. It never assumes access to, or enumerates, all possible ballot types.</p><p>No additional clarification is needed to make the argument verifiable.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

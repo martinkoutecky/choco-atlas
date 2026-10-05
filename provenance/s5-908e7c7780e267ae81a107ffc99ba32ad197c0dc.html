@@ -1,0 +1,326 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-908e7c7780e267ae81a107ffc99ba32ad197c0dc — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-908e7c7780e267ae81a107ffc99ba32ad197c0dc <span style="font-weight:normal;color:#8a7350">(s5-908e7c7780e267ae81a107ffc99ba32ad197c0dc)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.1 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>characterizes the conditions under which majority voting is the optimal weighting strategy. When we repeatedly sample from the same LLM agent, for example, in computing self-consistency within reasoning or fine-tuning (Wang et al., 2022; Chen et al., 2023b; Shao et al., 2024), majority voting is optimal.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite set of labels \(S\), pipeline types \(T\), type masses \(\mu_t\), known accuracies \(x_t\), and response masses \(\nu_t(s)\) for one question, find a Bayes-optimal label under the paper&#x27;s uniform-prior, shuffled-label, conditionally independent model. Is the answer always a maximizer over \(s\in S\) of \(\ell(s)=\sum_{t\in T}\left[\nu_t(s)\log x_t+(\mu_t-\nu_t(s))\log\frac{1-x_t}{K-1}\right]\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(S\) be a label set with \(m=K=|S|\ge2\). A society is given by its support \(T\): the list of \(\tau\) pipeline types with positive binary-rational masses \(\mu_t\), where \(\sum_t\mu_t=1\); \(\tau\) counts supported types, not possible types.<br>Each type has a known binary-rational accuracy \(x_t\in[0,1]\). Observed binary-rational response masses satisfy \(\nu_t(s)\ge0\) and \(\sum_{s\in S}\nu_t(s)=\mu_t\). Let \(L\) be the total input bit length.<br>To define Bayesian evidence for rational masses, let \(D\) be the least positive integer making all \(D\mu_t\) and \(D\nu_t(s)\) integral, and interpret the observation as these response counts among \(D\mu_t\) independent agents of each type.<br>The true shuffled label \(S^*\) is uniform on \(S\). Conditional on \(S^*=s\), all agents respond independently; a type-\(t\) agent chooses \(s\) with probability \(x_t\), and each other label with probability \((1-x_t)/(K-1)\).<br>Promise that the observed counts have positive marginal probability. A Bayes-optimal label maximizes posterior correctness; any maximizing label is acceptable.<br>Define \(\ell(s)=\sum_{t\in T}[\nu_t(s)\log x_t+(\mu_t-\nu_t(s))\log((1-x_t)/(K-1))]\), with \(0\log0=0\) and \(a\log0=-\infty\) for \(a&gt;0\).</p><p>Is exact Bayes-optimal label selection polynomial-time in \(m,\tau,L\), or is it NP-hard, in the standard Turing model?<br>Does \(\operatorname{argmax}_{s\in S}\ell(s)\) always equal the set of Bayes-optimal labels?</p><p>Discrete: Optimal Weight is Bayes-optimal under the stated symmetric, conditionally independent model, using weights \(\log((K-1)x_i/(1-x_i))\) for interior accuracies. [Ai et al.](https://arxiv.org/html/2510.01499v2)<br>Adjacent arithmetic result: comparison of products with binary-encoded integer exponents is polynomial-time for a fixed number of factors, and conditionally polynomial-time in general under the Lang–Waldschmidt conjecture; this does not itself classify the mass-selection problem. [Etessami, Stewart, and Yannakakis](https://arxiv.org/abs/1304.5429)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized type masses to sum to one and required response masses to partition each type&#x27;s mass.</li><li>Defined Bayesian evidence for fractional masses through the finite independent-agent realization obtained from their least common denominator.</li><li>Set the label count to m=K and required at least two labels and nonempty support.</li><li>Encoded accuracies and response masses as binary rationals and used exact computation in the standard Turing model.</li><li>Retained accuracies in [0,1], supplied extended-log conventions at endpoints, and excluded observations of zero marginal probability.</li><li>Allowed any posterior-maximizing label to resolve ties.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Status of the two questions</h3><p>The posterior question has a complete affirmative answer:<br>$$
+\operatorname{argmax}_{s\in S}\ell(s)
+=
+\{\text{Bayes-optimal labels}\}.
+$$<br>This includes accuracies equal to zero or one.</p><p>I do <b>not</b> resolve the unconditional complexity question for variable support size. Below I prove the product-comparison equivalence from the notes and strengthen the partial results in three ways:</p><ul><li>Deciding whether a specified label is optimal admits a polynomial-time many-one reduction from product comparison.</li><li>For two labels, I characterize the distinction between general binary-encoded rational accuracies and dyadic accuracies.</li><li>A label whose posterior correctness is within any prescribed multiplicative factor of optimal can be selected unconditionally in polynomial time.</li></ul><p>Throughout, a *dyadic rational* means a rational whose reduced denominator is a power of two. The general reduction uses only dyadic inputs, so it applies under either interpretation of “binary-rational.”</p><h3>2. The posterior identity, including zero accuracies</h3><p>Let $E$ be the observed count event. Define<br>$$
+N_t=D\mu_t,\qquad n_t(u)=D\nu_t(u),\qquad
+q_t=\frac{1-x_t}{K-1}.
+$$<br>By the definition of $D$, these counts are integers, and<br>$$
+\sum_{u\in S}n_t(u)=N_t.
+$$</p><p>Conditional on $S^*=s$, the responses of type $t$ have probabilities $x_t$ for label $s$ and $q_t$ for every other label. Independence therefore gives<br>$$
+\Pr(E\mid S^*=s)
+=
+C_E\prod_{t\in T}
+x_t^{n_t(s)}q_t^{N_t-n_t(s)},
+$$<br>where<br>$$
+C_E=\prod_{t\in T}\frac{N_t!}{\prod_{u\in S}n_t(u)!}.
+$$<br>The coefficient $C_E$ is positive and independent of $s$. Here and below, a zero-probability outcome with count zero contributes the factor $0^0=1$.</p><p>If every factor with positive exponent has positive base, taking logarithms gives<br>$$
+\Pr(E\mid S^*=s)=C_E\exp(D\ell(s)).
+$$<br>If a factor has base zero and positive exponent, the likelihood is zero and $\ell(s)=-\infty$, so the same identity holds with $\exp(-\infty)=0$.</p><p>The uniform prior and the positive-marginal-probability promise now imply<br>$$
+\Pr(S^*=s\mid E)
+=
+\frac{\exp(D\ell(s))}
+{\sum_{u\in S}\exp(D\ell(u))}.
+$$<br>The denominator is positive. Since $D&gt;0$, the map $a\mapsto\exp(Da)$ preserves order and ties on $\mathbb R\cup\{-\infty\}$. Consequently,<br>$$
+\boxed{
+\operatorname{argmax}_{s\in S}\ell(s)
+=
+\{\text{Bayes-optimal labels}\}.
+}
+$$</p><h3>3. Exact selection reduces to product comparison</h3><p>Define $\mathsf{PoE}_{\ge}$ to be the decision problem<br>$$
+\prod_{i=1}^{n}a_i^{b_i}
+\ \ge\
+\prod_{j=1}^{r}c_j^{d_j},
+$$<br>where bases are positive integers and exponents are nonnegative integers, all encoded in binary. Empty products equal one.</p><h3>3.1. Removing labels with zero likelihood</h3><p>A label $s$ has positive likelihood if and only if every type satisfies the following conditions:<br>$$
+x_t=0\ \Longrightarrow\ \nu_t(s)=0,
+\qquad
+x_t=1\ \Longrightarrow\ \nu_t(s)=\mu_t.
+$$<br>Indeed, when $x_t=0$, the likelihood vanishes exactly when $n_t(s)&gt;0$. When $x_t=1$, it vanishes exactly when $N_t-n_t(s)&gt;0$. Interior accuracies impose no further restriction.</p><p>Let $F$ be the labels satisfying these conditions. Exact rational arithmetic determines $F$ in polynomial time. The promise implies $F\ne\varnothing$, and every optimal label belongs to $F$.</p><p>Put<br>$$
+I=\{t\in T:0&lt;x_t&lt;1\},
+\qquad
+r_t=\frac{(K-1)x_t}{1-x_t}.
+$$<br>On $F$, endpoint types contribute constants independent of the label. For interior types,<br>$$
+\nu_t(s)\log x_t+
+(\mu_t-\nu_t(s))\log q_t
+=
+\mu_t\log q_t+\nu_t(s)\log r_t.
+$$<br>Thus, for a finite constant $C$,<br>$$
+\ell(s)=C+\sum_{t\in I}\nu_t(s)\log r_t
+\qquad(s\in F).
+$$</p><h3>3.2. Comparing two feasible labels</h3><p>Write $r_t=p_t/q_t&#x27;$ with positive integer numerator and denominator. For $s,u\in F$, let<br>$$
+\delta_t=D\bigl(\nu_t(s)-\nu_t(u)\bigr)\in\mathbb Z.
+$$<br>Then<br>$$
+D\bigl(\ell(s)-\ell(u)\bigr)
+=
+\sum_{t\in I}\delta_t\log(p_t/q_t&#x27;).
+$$<br>Define<br>$$
+A_{s,u}
+=
+\prod_{\delta_t&gt;0}p_t^{\delta_t}
+\prod_{\delta_t&lt;0}(q_t&#x27;)^{-\delta_t},
+$$<br>and<br>$$
+B_{s,u}
+=
+\prod_{\delta_t&gt;0}(q_t&#x27;)^{\delta_t}
+\prod_{\delta_t&lt;0}p_t^{-\delta_t}.
+$$<br>All these products are positive, and<br>$$
+\boxed{
+\ell(s)\ge\ell(u)
+\quad\Longleftrightarrow\quad
+A_{s,u}\ge B_{s,u}.
+}
+$$</p><h3>3.3. Encoding size</h3><p>After reducing the input mass fractions, $D$ is the least common multiple of their denominators. Hence<br>$$
+D\le \prod_{\text{mass denominators }b}b,
+$$<br>so its binary length is $O(L)$. Computing it by successive greatest-common-divisor calculations takes polynomial time.</p><p>Also,<br>$$
+0\le D\nu_t(s)\le D,
+\qquad
+|\delta_t|\le D.
+$$<br>Thus every exponent has $O(L)$ bits. The numerators and denominators of $r_t$ have polynomial bit length as well.</p><p>Each comparison is therefore a polynomial-size instance of $\mathsf{PoE}_{\ge}$. A tournament using at most $m-1$ comparisons selects an optimal label. This proves a polynomial-time Turing reduction from exact selection to $\mathsf{PoE}_{\ge}$.</p><h3>4. Product comparison reduces to selection with three labels and dyadic inputs</h3><p>The converse requires representing arbitrary integer bases using dyadic accuracies.</p><h3>4.1. A representation lemma</h3><p>For three labels, define<br>$$
+r(x)=\frac{2x}{1-x}.
+$$</p><p><b>Lemma.</b> For every positive integer $a$, one can construct in polynomial time dyadic accuracies $x_j\in[1/2,1)$ and integer coefficients $z_j$ such that<br>$$
+\log a=\sum_jz_j\log r(x_j).
+$$<br>The complete representation has size polynomial in the binary length of $a$.</p><p><b>Proof.</b> Write<br>$$
+a=2^v u,
+$$<br>where $u$ is odd. If $u&gt;1$, choose the integer $k$ satisfying<br>$$
+2^{k-1}&lt;u&lt;2^k.
+$$<br>Set<br>$$
+c=2^k-u,\qquad x=\frac{u}{2^k}.
+$$<br>Since $u$ is odd,<br>$$
+0&lt;c&lt;2^{k-1},
+$$<br>and $c$ is odd. Moreover,<br>$$
+\frac12&lt;x&lt;1,
+\qquad
+r(x)=\frac{2u}{c}.
+$$<br>Consequently,<br>$$
+\log u=\log r(x)-\log2+\log c.
+$$</p><p>The binary length of $c$ is strictly smaller than that of $u$. Repetition therefore reaches one after at most the binary length of $a$ steps. If the successive accuracies are $x_1,\ldots,x_h$, telescoping gives<br>$$
+\log a
+=
+\sum_{j=1}^{h}\log r(x_j)+(v-h)\log2.
+$$<br>Finally,<br>$$
+r(1/2)=2.
+$$<br>Each constructed accuracy has at most the original base’s binary length in its numerator and denominator, and all operations are polynomial-time integer operations. This proves the lemma. $\square$</p><h3>4.2. Constructing the society</h3><p>Given a product-comparison instance, write<br>$$
+P=\prod_i a_i^{b_i},
+\qquad
+Q=\prod_j c_j^{d_j},
+\qquad
+\Lambda=\log(P/Q).
+$$<br>Applying the lemma to every base and multiplying by its signed exponent yields<br>$$
+\Lambda=\sum_{j=1}^{r}z_j\log r(x_j),
+$$<br>where zero coefficients are discarded and<br>$$
+\frac12\le x_j&lt;1.
+$$<br>The representation has polynomial size: it introduces at most a linear number of terms per base bit length, and multiplying binary-encoded coefficients increases their bit lengths only polynomially.</p><p>Let<br>$$
+M=\sum_{j=1}^{r}|z_j|,
+$$<br>and choose a power of two $H&gt;M$. If $M=0$, take $H=1$.</p><p>Use labels $S=\{1,2,3\}$. For every remaining term, create a type with accuracy $x_j$ and mass<br>$$
+\mu_j=\frac{|z_j|}{H}.
+$$<br>Assign all its response mass to label $1$ when $z_j&gt;0$, and to label $2$ when $z_j&lt;0$.</p><p>Add an auxiliary type with<br>$$
+x_{\mathrm{aux}}=\frac12,
+\qquad
+\mu_{\mathrm{aux}}=1-\frac MH,
+$$<br>and responses<br>$$
+\nu_{\mathrm{aux}}(1)
+=
+\nu_{\mathrm{aux}}(2)
+=
+\frac{\mu_{\mathrm{aux}}}{2},
+\qquad
+\nu_{\mathrm{aux}}(3)=0.
+$$</p><p>All supported masses are positive and sum to one. Every response row sums to its type mass. All accuracies and masses are dyadic, and their encoding length is polynomial. Every conditional response probability is positive because all accuracies lie strictly between zero and one; therefore the observation satisfies the promise.</p><p>For this society, define<br>$$
+W(s)=\sum_t\nu_t(s)\log r(x_t).
+$$<br>Its maximizers are exactly those of $\ell$. Every constructed weight is positive because $r(x_t)\ge2$. Hence<br>$$
+W(3)=0,
+\qquad
+W(1),W(2)\ge
+\frac{\mu_{\mathrm{aux}}}{2}\log2&gt;0.
+$$<br>Label $3$ cannot maximize. The auxiliary contribution cancels between the other labels, giving<br>$$
+W(1)-W(2)=\frac{\Lambda}{H}.
+$$<br>Thus:</p><ul><li>If $P&gt;Q$, label $1$ is uniquely optimal.</li><li>If $P&lt;Q$, label $2$ is uniquely optimal.</li><li>If $P=Q$, labels $1$ and $2$ are both optimal.</li></ul><h3>4.3. Decision reduction and arbitrary tie handling</h3><p>Consider the decision problem: given a valid society and a specified label, is that label Bayes-optimal? The construction proves<br>$$
+P\ge Q
+\quad\Longleftrightarrow\quad
+\text{label }1\text{ is Bayes-optimal}.
+$$<br>Therefore $\mathsf{PoE}_{\ge}$ has a polynomial-time <b>many-one reduction</b> to this decision problem, already with three labels and dyadic interior accuracies.</p><p>For an oracle that returns an arbitrary optimal label, equality must be handled separately. The theorem needed is that equality of products of positive integer bases with binary-encoded exponents is decidable in polynomial time. After removing zero exponents and unit bases, its hypotheses apply directly; empty products are handled separately. [Etessami, Stewart, and Yannakakis, Proposition 2.1](https://arxiv.org/html/1304.5429v3#S2)</p><p>First test $P=Q$. If they differ, one selection-oracle call distinguishes their strict ordering through its unique optimal label. Together with Section 3, this establishes<br>$$
+\boxed{
+\text{Exact selection is polynomial-time}
+\quad\Longleftrightarrow\quad
+\mathsf{PoE}_{\ge}\in\mathsf P.
+}
+$$<br>The equivalence concerns the existence of a polynomial-time algorithm that may return any maximizing label.</p><h3>5. A sharper characterization for two labels</h3><h3>5.1. General binary-encoded rational accuracies</h3><p>When $K=2$, the weight is<br>$$
+\log\frac{x}{1-x}.
+$$<br>For every integer $a&gt;1$, taking<br>$$
+x=\frac{a}{a+1}
+$$<br>gives<br>$$
+\frac{x}{1-x}=a.
+$$</p><p>Thus arbitrary product comparison reduces directly to two-label selection: express $\Lambda$ as a signed sum of logarithms of the input bases, assign masses $|z_j|/H$ to their corresponding types, and place their responses on label $1$ or $2$ according to the coefficient’s sign. Add the remaining mass as an auxiliary type with accuracy $1/2$, splitting its responses equally.</p><p>The auxiliary weight is zero, and the resulting score difference is $\Lambda/H$. All accuracies are interior, all masses are dyadic, and the construction has polynomial size. Equality preprocessing handles arbitrary oracle ties exactly as in Section 4.</p><p>Therefore, for general binary-encoded rational accuracies, the full product-comparison equivalence already holds with two labels.</p><h3>5.2. Dyadic accuracies</h3><p>Define $\mathsf{OddPoE}_{\ge}$ by restricting $\mathsf{PoE}_{\ge}$ to odd positive integer bases.</p><p><b>Proposition.</b> Exact two-label selection with dyadic inputs is polynomial-time Turing equivalent to $\mathsf{OddPoE}_{\ge}$.</p><p><b>Forward reduction.</b> Write an interior dyadic accuracy in reduced form as<br>$$
+x=\frac{n}{2^k},
+\qquad
+0&lt;n&lt;2^k.
+$$<br>Here $k\ge1$ and $n$ is odd. Therefore<br>$$
+\frac{x}{1-x}
+=
+\frac{n}{2^k-n}
+$$<br>has odd numerator and odd denominator. After removing infeasible labels, the comparison construction in Section 3 consequently uses only odd bases.</p><p><b>Reverse reduction.</b> For any odd integer $u&gt;1$, use<br>$$
+2^{k-1}&lt;u&lt;2^k,\qquad
+c=2^k-u,\qquad
+x=\frac{u}{2^k}.
+$$<br>Now the two-label odds ratio satisfies<br>$$
+\frac{x}{1-x}=\frac{u}{c},
+$$<br>so<br>$$
+\log u=\log\frac{x}{1-x}+\log c.
+$$<br>The integer $c$ is positive, odd, and has strictly smaller binary length. Iteration expresses $\log u$ as a sum of logarithms of dyadic two-label odds ratios, in polynomial size.</p><p>Apply this representation to all odd bases. The signed-mass construction from Section 5.1 then produces a dyadic two-label society whose score difference is $\Lambda/H$. Polynomial-time product equality testing again handles ties. This proves the proposition.</p><p>This characterizes the restricted problem; it does not establish a complexity separation between odd-base and unrestricted product comparison.</p><h3>6. Exact consequences of the reductions</h3><h3>6.1. Fixed number of distinct interior accuracies</h3><p>Let $d$ be the number of distinct values among the interior accuracies. Types sharing an accuracy have the same odds ratio. In a comparison, group their integer exponents:<br>$$
+\Delta_x
+=
+\sum_{\substack{t\in I\\x_t=x}}\delta_t.
+$$<br>Each grouped exponent is the difference between two response counts in that group, so<br>$$
+|\Delta_x|\le D.
+$$<br>The comparison products then have at most $d$ factors each.</p><p>The arithmetic theorem used here states that product comparison is unconditionally polynomial-time when both factor counts are fixed constants, and is polynomial-time for unrestricted factor counts assuming the Lang–Waldschmidt conjecture. [Etessami, Stewart, and Yannakakis, Proposition 3.7](https://arxiv.org/html/1304.5429v3#S3)</p><p>Its fixed-factor hypothesis applies when $d$ is fixed. Hence exact selection is polynomial-time for every fixed number of distinct interior accuracies, even if $\tau$ varies. Fixed $\tau$ is a special case.</p><p>The general conditional theorem applies to the polynomial-size comparison instances from Section 3. Thus, under the Lang–Waldschmidt conjecture, exact selection is polynomial-time for unrestricted support size.</p><h3>6.2. Posterior ties are polynomial-time decidable</h3><p>For two given labels, feasibility distinguishes a zero posterior from a positive posterior. Two infeasible labels both have posterior zero. For two feasible labels,<br>$$
+\Pr(S^*=s\mid E)=\Pr(S^*=u\mid E)
+\quad\Longleftrightarrow\quad
+A_{s,u}=B_{s,u}.
+$$<br>The product-equality theorem therefore decides posterior equality in polynomial time.</p><p>Consequently, once one optimal label is known, the entire optimal-label set can be recovered in polynomial time by testing equality with every other label. The unresolved difficulty is ordering unequal scores.</p><h3>7. Unconditional polynomial-time approximation of posterior correctness</h3><p>The count interpretation permits a useful guarantee stronger than merely approximating the mass-normalized score.</p><p><b>Proposition.</b> Given a valid society and a rational tolerance $0&lt;\varepsilon&lt;1$, one can select a label $\widehat s$ satisfying<br>$$
+\Pr(S^*=\widehat s\mid E)
+\ge
+e^{-\varepsilon}
+\max_{s\in S}\Pr(S^*=s\mid E)
+\ge
+(1-\varepsilon)
+\max_{s\in S}\Pr(S^*=s\mid E).
+$$<br>The algorithm runs in time polynomial in $m,\tau,L$ and the encoding length of $\varepsilon$. In particular, for $\varepsilon=2^{-j}$ its running time is polynomial in $m,\tau,L,j$.</p><h3>7.1. Polynomial-time logarithm approximation</h3><p>For completeness, the logarithms can be approximated using rational arithmetic alone.</p><p>For a positive integer $a$, write<br>$$
+a=2^k y,\qquad 1\le y&lt;2,
+$$<br>and put<br>$$
+z=\frac{y-1}{y+1}.
+$$<br>Then $0\le z&lt;1/3$. Integrating the geometric series for $2/(1-z^2)$ gives<br>$$
+\log y
+=
+2\sum_{h=0}^{\infty}\frac{z^{2h+1}}{2h+1}.
+$$<br>After $N$ terms, the remainder is at most<br>$$
+2\sum_{h=N}^{\infty}z^{2h+1}
+\le
+\frac{2(1/3)^{2N+1}}{1-1/9}
+&lt;
+3\cdot9^{-N}.
+$$<br>The same bound approximates $\log2$ by using $z=1/3$. Since<br>$$
+\log a=k\log2+\log y,
+$$<br>the combined error is at most<br>$$
+3(k+1)9^{-N}.
+$$</p><p>Therefore error at most $2^{-j}$ requires only<br>$$
+N=O\bigl(j+\log(k+1)\bigr)
+$$<br>terms. Every term is rational. If $a$ has $b$ bits, straightforward exact summation uses rational numbers with polynomial bit length in $N$ and $b$: the powers have bit length $O(Nb)$, and even multiplying all term denominators gives bit length $O(N^2b+N\log N)$.</p><p>Thus $\log a$ can be approximated in time polynomial in $b$ and $j$. Approximating $\log p-\log q$ proves the corresponding result for a positive rational $p/q$.</p><h3>7.2. Approximating the count-scaled scores</h3><p>Remove infeasible labels as in Section 3. For $s\in F$, define<br>$$
+B(s)=\sum_{t\in I}n_t(s)\log r_t.
+$$<br>Because $\ell(s)=C+B(s)/D$, posterior ratios satisfy<br>$$
+\frac{\Pr(S^*=s\mid E)}{\Pr(S^*=u\mid E)}
+=
+\exp\bigl(B(s)-B(u)\bigr)
+\qquad(s,u\in F).
+$$</p><p>Approximate every $\log r_t$ by a rational $\widetilde w_t$ with<br>$$
+|\widetilde w_t-\log r_t|
+\le
+\frac{\varepsilon}{2D},
+$$<br>and compute<br>$$
+\widetilde B(s)=\sum_{t\in I}n_t(s)\widetilde w_t.
+$$<br>For every label,<br>$$
+\sum_{t\in I}n_t(s)
+\le
+\sum_{t\in T}N_t
+=
+D.
+$$<br>Hence<br>$$
+|\widetilde B(s)-B(s)|\le\frac{\varepsilon}{2}.
+$$</p><p>Select $\widehat s$ maximizing the rational values $\widetilde B(s)$. If $s_{\max}$ maximizes $B$, then<br>$$
+\begin{aligned}
+B(s_{\max})-B(\widehat s)
+&amp;\le
+\bigl(\widetilde B(s_{\max})+\varepsilon/2\bigr)
+-
+\bigl(\widetilde B(\widehat s)-\varepsilon/2\bigr)\\
+&amp;\le\varepsilon.
+\end{aligned}
+$$<br>Therefore<br>$$
+\frac{\Pr(S^*=\widehat s\mid E)}
+{\Pr(S^*=s_{\max}\mid E)}
+=
+\exp\bigl(B(\widehat s)-B(s_{\max})\bigr)
+\ge e^{-\varepsilon}.
+$$<br>The inequality $e^{-\varepsilon}\ge1-\varepsilon$ completes the correctness proof.</p><p>Finally, $D$ has $O(L)$ bits. The required logarithmic precision therefore uses<br>$$
+O\bigl(L+\log(1/\varepsilon)\bigr)
+$$<br>bits after the binary point. Section 7.1 and exact rational comparisons give the claimed polynomial running time.</p><p>This approximation theorem does not provide an exact algorithm: it supplies no polynomial precision bound that separates every pair of unequal scores.</p><h3>8. What remains unresolved</h3><p>The posterior identity is fully proved. For the complexity question, exact selection is polynomial-time equivalent to general product comparison, even on three-label dyadic instances. The new two-label characterization and posterior approximation theorem do not settle that exact comparison problem.</p><p>An unconditional polynomial-time algorithm or an $\mathsf{NP}$-hardness proof remains necessary to answer the first question. The reductions above transfer hardness under polynomial-time Turing reductions; the specified-label optimality decision problem also receives the explicit many-one reduction in Section 4.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 1 and 8: unconditional complexity classification: The output proves reductions and supplementary results but establishes neither an unconditional polynomial-time algorithm nor $\mathsf{NP}$-hardness for exact selection with unrestricted support size. This is an acknowledged incompleteness of the assigned task, not a false step in the supplied proofs.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial, with sound proved content.</b> The posterior identity is fully established. The reductions, restricted complexity results, and approximation guarantee are correct as written. The unconditional complexity question remains unanswered, as the prover explicitly acknowledges.</p><p>The only major issue is incomplete resolution of the assigned task; it is not a false step in the supplied arguments.</p><h3>1. Posterior identity and endpoint accuracies</h3><p><b>Section 2 is correct.</b></p><ul><li>The definition of $D$ makes $N_t=D\mu_t$ and $n_t(u)=D\nu_t(u)$ integers, with</li></ul><p>$$
+   \sum_{u\in S}n_t(u)=N_t.
+   $$<br>These are valid counts for the stipulated observation.</p><ul><li>Conditional independence gives the stated product of multinomial probabilities. The coefficient</li></ul><p>$$
+   C_E=\prod_{t\in T}\frac{N_t!}{\prod_{u\in S}n_t(u)!}
+   $$<br>is strictly positive and independent of the candidate true label. Thus it cancels in posterior comparisons.</p><ul><li>The logarithmic identity correctly handles zero probabilities. A zero base with a positive count produces both zero likelihood and score $-\infty$. A zero count contributes neither a likelihood penalty nor a logarithmic penalty under the stated conventions.</li></ul><ul><li>The uniform prior yields the displayed posterior formula. The positive-marginal-probability promise ensures that at least one likelihood is positive, so the denominator is nonzero.</li></ul><ul><li>Multiplication by $D&gt;0$ and exponentiation preserve the ordering of finite scores and their ties, while mapping $-\infty$ to zero. Therefore the equality of maximizing sets follows, including endpoint accuracies.</li></ul><p>No clarification or repair is needed for this part.</p><h3>2. Reduction from exact selection to product comparison</h3><p><b>Sections 3.1–3.3 are correct.</b></p><h3>Feasibility filtering</h3><p>For $x_t=0$, the correct-label probability is zero, while the other-label probability is positive because $K\ge2$. Consequently, positive likelihood requires exactly $\nu_t(s)=0$.</p><p>For $x_t=1$, every other-label probability is zero, so positive likelihood requires exactly $\nu_t(s)=\mu_t$.</p><p>Interior accuracies impose no zero-likelihood restriction. These conditions are necessary and sufficient. The promise therefore ensures $F\ne\varnothing$.</p><p>On $F$, endpoint contributions are finite and independent of the label. The decomposition<br>$$
+\ell(s)=C+\sum_{t\in I}\nu_t(s)\log r_t
+$$<br>is valid.</p><h3>Pairwise comparison</h3><p>The quantities<br>$$
+\delta_t=D(\nu_t(s)-\nu_t(u))
+$$<br>are integers. Moving numerator and denominator factors according to the sign of $\delta_t$ gives precisely<br>$$
+D(\ell(s)-\ell(u))=\log(A_{s,u}/B_{s,u}).
+$$<br>All bases are positive, so the asserted comparison equivalence follows without additional hypotheses.</p><h3>Encoding and running time</h3><p>The least-common-multiple construction of $D$ has polynomial bit complexity: its bit length is bounded by the sum of the bit lengths of the mass denominators. The bounds on $\delta_t$ are valid because every response mass lies in $[0,1]$.</p><p>The rational odds ratios also have polynomial-size numerators and denominators. The construction uses succinct products rather than expanding their potentially enormous values.</p><p>A tournament of at most $m-1$ comparisons selects a maximizer and permits arbitrary tie handling. This establishes the claimed polynomial-time Turing reduction.</p><h3>3. Reverse reduction using three labels and dyadic inputs</h3><p><b>Sections 4.1–4.3 are correct.</b></p><h3>Representation lemma</h3><p>For an odd integer $u&gt;1$, the chosen $k$ exists because $u$ cannot be a power of two. The integer<br>$$
+c=2^k-u
+$$<br>is positive, odd, and strictly less than $2^{k-1}$. Hence its binary length is strictly smaller than that of $u$.</p><p>The accuracy $x=u/2^k$ is dyadic and belongs to $(1/2,1)$. The identity<br>$$
+r(x)=\frac{2u}{c}
+$$<br>gives the stated logarithmic recursion. Strictly decreasing binary length guarantees termination at one. Telescoping and the additional accuracy $1/2$ correctly account for the powers of two.</p><p>The cases $a=1$ and $a$ a power of two are covered by an empty recursion and the coefficient of $\log2$. The representation has polynomial encoding length.</p><h3>Society construction</h3><p>Discarding zero coefficients makes every constructed term mass positive. Choosing $H&gt;M$ makes the auxiliary mass positive. All masses sum to one, and every response row has the prescribed sum.</p><p>All accuracies are interior, so every conditional response probability is positive. Thus the constructed observation satisfies the promise.</p><p>The positive auxiliary contribution ensures<br>$$
+W(1)&gt;W(3),\qquad W(2)&gt;W(3),
+$$<br>including the case $M=0$. The identity<br>$$
+W(1)-W(2)=\Lambda/H
+$$<br>then gives exactly the three claimed optimal-label cases.</p><p>Although $M$ can be numerically large, its binary length is polynomial in the source input length. Therefore $H$, the dyadic masses, and the complete society retain polynomial encoding size.</p><h3>Decision reduction and ties</h3><p>The specified-label decision reduction is valid even at equality:<br>$$
+P\ge Q
+\quad\Longleftrightarrow\quad
+1\text{ is optimal}.
+$$</p><p>For selection, equality preprocessing is essential because an oracle may return either tied label. The prover explicitly supplies that preprocessing.</p><p>The cited equality theorem concerns products of positive integer bases with positive binary-encoded integer exponents. Removing unit bases and zero exponents supplies those hypotheses; empty products can be checked separately. The theorem and its polynomial-time conclusion match [Etessami, Stewart, and Yannakakis, Proposition 2.1](https://arxiv.org/html/1304.5429v3#S2).</p><p>Thus the claimed polynomial-time equivalence holds under either stated interpretation of binary-rational inputs.</p><h3>4. Two-label characterizations</h3><p><b>Sections 5.1–5.2 are correct.</b></p><p>For general rational accuracies, $x=a/(a+1)$ is interior for every integer $a&gt;1$ and has odds ratio $a$. Unit bases contribute zero logarithmic weight and need no corresponding positive-mass type. The signed-mass construction and zero-weight auxiliary type give the claimed score difference. Equality preprocessing handles ties.</p><p>For dyadic accuracies, a reduced interior representation<br>$$
+x=\frac{n}{2^k}
+$$<br>has $k\ge1$ and odd $n$. Both $n$ and $2^k-n$ are positive odd integers. Hence the forward reduction uses only odd bases.</p><p>The reverse recursion for an odd base is valid:<br>$$
+\log u=\log\frac{u}{c}+\log c.
+$$<br>The same strict decrease of binary length establishes termination and polynomial representation size. The resulting accuracies and masses are dyadic.</p><p>The claimed Turing equivalence with $\mathsf{OddPoE}_{\ge}$ follows. The prover correctly refrains from asserting a complexity separation between odd-base and general product comparison.</p><h3>5. Restricted exact algorithms and posterior ties</h3><p><b>Sections 6.1–6.2 are correct.</b></p><p>Grouping equal interior accuracies leaves at most $d$ factors on each side of a comparison. The bound<br>$$
+|\Delta_x|\le D
+$$<br>holds because each grouped response count is between zero and $D$.</p><p>The cited arithmetic result provides unconditional polynomial-time comparison when both factor counts are fixed constants, and polynomial-time comparison for unrestricted factor counts under the Lang–Waldschmidt conjecture. These statements match [Etessami, Stewart, and Yannakakis, Proposition 3.7](https://arxiv.org/html/1304.5429v3#S3). The constructed instances satisfy its integer-base and binary-exponent requirements after routine removal of trivial factors.</p><p>Accordingly, the fixed-$d$ and conditional unrestricted conclusions follow. The fixed-$d$ statement is a result for each fixed constant $d$, rather than a uniform polynomial bound when $d$ varies.</p><p>Posterior-equality testing also follows correctly:</p><ul><li>Two infeasible labels both have posterior zero.</li><li>One feasible and one infeasible label have different posteriors.</li><li>Two feasible labels have equal posteriors exactly when their comparison products are equal.</li></ul><p>Once an optimal label is available, equality tests therefore recover all optimal labels in polynomial time.</p><h3>6. Approximation guarantee</h3><p><b>Sections 7.1–7.2 are correct.</b></p><h3>Logarithm approximation</h3><p>The logarithmic series is valid on the stated domain. Its remainder satisfies<br>$$
+2\sum_{h=N}^{\infty}z^{2h+1}
+\le
+\frac{2(1/3)^{2N+1}}{1-1/9}
+=
+\frac34\,9^{-N}
+&lt;
+3\,9^{-N}.
+$$<br>The same bound applies at $z=1/3$ for $\log2$.</p><p>Combining approximations to $\log2$ and $\log y$ gives the asserted bound $3(k+1)9^{-N}$. The term count needed for error $2^{-j}$ is therefore as claimed.</p><p>The exact rational summation has polynomial bit complexity under the supplied denominator-size bounds. Subtracting sufficiently accurate approximations to $\log p$ and $\log q$ also gives the stated rational-logarithm approximation result.</p><h3>Count-scaled score approximation</h3><p>The use of<br>$$
+B(s)=\sum_{t\in I}n_t(s)\log r_t
+$$<br>is correct and essential: posterior ratios involve count-scaled scores.</p><p>Since the nonnegative counts satisfy<br>$$
+\sum_{t\in I}n_t(s)\le D,
+$$<br>approximating each weight to error at most $\varepsilon/(2D)$ gives score error at most $\varepsilon/2$.</p><p>Maximizing the approximated scores then loses at most $\varepsilon$ in the exact count-scaled score. The posterior ratio is consequently at least $e^{-\varepsilon}$, and the inequality $e^{-\varepsilon}\ge1-\varepsilon$ supplies the stated guarantee.</p><p>The required precision is polynomial in $L$ and the binary encoding length of $\varepsilon$. The case with no interior types is also covered: all feasible scores are zero, so any feasible label suffices.</p><p>This proves an approximation theorem, without establishing a sufficient precision bound for exact selection.</p><h3>7. Blocking issue and actionable feedback</h3><p><b>Major issue — the unconditional complexity question is not resolved.</b></p><p>Sections 1 and 8 explicitly acknowledge that the output supplies neither an unconditional polynomial-time exact-selection algorithm nor an $\mathsf{NP}$-hardness proof for unrestricted support size.</p><p>The product-comparison equivalence is substantive progress, but it does not itself select either answer requested by the task. Restricted algorithms, conditional algorithms, and approximation guarantees do not close that gap.</p><p><b>Minimum additional requirement:</b> supply one of the missing unconditional complexity results, with its Turing-model running-time analysis or a precisely specified hardness reduction. This requires new mathematics; no expositional clarification can complete the first question.</p><p>No other mathematical errors, unverified theorem applications, or necessary minor repairs were identified.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -29,6 +29,7 @@
 
 <h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given two complete additive types \(a,b\) with \(\mu_a=\mu_b=1/2\), a finite set \(G\) of indivisible good slots with \(q_g=1/2\) for every \(g\in G\), and mass variables \(y_{t,B}\ge 0\) for integral bundles \(B\subseteq G\), compute \(\mathrm{EF1}^{\infty}(I)=\max_y \sum_{t,B}y_{t,B}v_t(B)\) subject to \(\sum_B y_{t,B}=\mu_t\), \(\sum_{t,B:g\in B}y_{t,B}=q_g\), and population-EF1 for every pair of positive-support bundles; compare this optimum with the unrestricted welfare optimum and determine the worst-case ratio.</p></div>
 <h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><h3>Definitions</h3><p>An instance has \(T=\{a,b\}\), masses \(\mu_a=\mu_b=1/2\), and a finite set \(G\) of good slots, each with supply \(q_g=1/2\). Each type has a nonnegative additive rational valuation \(v_t\), normalized by \(v_t(G)=1\).<br>A population allocation is \(y_{t,B}\ge0\), for \(t\in T\) and \(B\subseteq G\), with \(\sum_B y_{t,B}=\mu_t\) and \(\sum_{t,B:g\in B}y_{t,B}=q_g\). Its welfare is \(\sum_{t,B}y_{t,B}v_t(B)\).<br>It is population-EF1 if, for all \(t,t&#x27;\in T\) and all \(B,C\) with \(y_{t,B},y_{t&#x27;,C}&gt;0\), some \(D\subseteq C\) with \(|D|\le1\) satisfies \(v_t(B)\ge v_t(C\setminus D)\). Let \(\mathrm{EF1}^{\infty}(I)\) maximize welfare subject to these conditions, and let \(\mathrm{OPT}^{\infty}(I)\) be the same maximum without population-EF1.</p><h3>Target</h3><p>Is computing \(\mathrm{EF1}^{\infty}(I)\) in polynomial time, or is it NP-hard?<br>What is \(\sup_I \mathrm{OPT}^{\infty}(I)/\mathrm{EF1}^{\infty}(I)\)?</p><h3>Nearest known results</h3><p>For two discrete agents with normalized additive valuations, a polynomial-time algorithm finds an EF1 allocation of welfare at least \(\sqrt{3}/2\) of optimum; the discrete EF1 price lies between \(8/7\) and \(2/\sqrt{3}\).<br>For arbitrary numbers of discrete agents, the EF1 price is \(\Theta(\sqrt n)\), with the upper bound obtained algorithmically.<br>For divisible goods, the price of envy-freeness is \(\Theta(\sqrt n)\); this does not impose supportwise EF1 over integral bundles.</p></div>
+
 <h2>Prover output (gpt-6-astra / medium, Bolzano prover prompt)</h2><div class="pre"><p><b>Results proved.</b> Exact computation of \(\mathrm{EF1}^{\infty}(I)\) is NP-hard. Its rational-threshold decision version is NP-complete. For the welfare ratio, I prove<br>\(
 \frac87\le \sup_I\frac{\mathrm{OPT}^{\infty}(I)}{\mathrm{EF1}^{\infty}(I)}
 \le\frac2{\sqrt3}.
@@ -41,25 +42,25 @@ x_g=2\sum_{B:g\in B}y_{a,B}.
 \mathrm{OPT}^{\infty}(I)=\frac12\sum_g\max\{v_a(g),v_b(g)\}.
 \)<br>Indeed, the marginal expression gives the upper bound, and assigning each good entirely to a type valuing it most attains it.</p><p>Let \(M_b=\max_gv_b(g)\). Population-EF1 implies, for every supported type-\(b\) bundle \(B\) and type-\(a\) bundle \(C\),<br>\(
 v_b(B)\ge v_b(C)-M_b.
-\)<br>Average this inequality over the conditional distributions of both bundles. Their expected values under \(v_b\) are respectively \(1-\sum_gv_b(g)x_g\) and \(\sum_gv_b(g)x_g\). Hence every population-EF1 allocation satisfies<br>\(
+\)<br>Average this inequality over the conditional distributions of both bundles. Their expected values under \(v_b\) are respectively \(1-\sum_gv_b(g)x_g\) and \(\sum_gv_b(g)x_g\). Hence every population-EF1 allocation satisfies<br>\[
 \sum_gv_b(g)x_g\le\frac{1+M_b}{2}.
 \tag{1}
-\)</p><p><b>2. NP-hardness: construction from PARTITION.</b></p><p>Use the standard NP-complete problem PARTITION: given positive binary-encoded integers \(d_1,\ldots,d_n\), with \(D=\sum_i d_i\), decide whether some subset sums to \(D/2\).</p><p>Create goods \(A,P,h,g_1,\ldots,g_n\). Call \(h,g_1,\ldots,g_n\) the small goods. Define valuations by</p><p>| Good | Type \(a\) | Type \(b\) |<br>|---|---:|---:|<br>| \(A\) | \(19/30\) | \(1/2\) |<br>| \(P\) | \(0\) | \(1/6\) |<br>| \(h\) | \(11/60\) | \(1/6\) |<br>| \(g_i\) | \(11d_i/(60D)\) | \(d_i/(6D)\) |</p><p>The small goods have total value \(1/3\) for type \(b\), and type \(a\) values each of them at \(11/10\) times its type-\(b\) value. Therefore both valuations are nonnegative and normalized:<br>\(
+\]</p><p><b>2. NP-hardness: construction from PARTITION.</b></p><p>Use the standard NP-complete problem PARTITION: given positive binary-encoded integers \(d_1,\ldots,d_n\), with \(D=\sum_i d_i\), decide whether some subset sums to \(D/2\).</p><p>Create goods \(A,P,h,g_1,\ldots,g_n\). Call \(h,g_1,\ldots,g_n\) the small goods. Define valuations by</p><p>| Good | Type \(a\) | Type \(b\) |<br>|---|---:|---:|<br>| \(A\) | \(19/30\) | \(1/2\) |<br>| \(P\) | \(0\) | \(1/6\) |<br>| \(h\) | \(11/60\) | \(1/6\) |<br>| \(g_i\) | \(11d_i/(60D)\) | \(d_i/(6D)\) |</p><p>The small goods have total value \(1/3\) for type \(b\), and type \(a\) values each of them at \(11/10\) times its type-\(b\) value. Therefore both valuations are nonnegative and normalized:<br>\(
 v_b(G)=\frac12+\frac16+\frac13=1,
 \qquad
 v_a(G)=\frac{19}{30}+\frac{11}{30}=1.
-\)<br>All numbers have polynomial encoding length. Give each good supply \(1/2\), as required.</p><p>I claim that<br>\(
+\)<br>All numbers have polynomial encoding length. Give each good supply \(1/2\), as required.</p><p>I claim that<br>\[
 \mathrm{EF1}^{\infty}(I)\ge\frac{139}{240}
 \quad\Longleftrightarrow\quad
 \text{the PARTITION instance is a yes-instance}.
 \tag{2}
-\)</p><p><b>3. Universal upper bound for the constructed instance.</b></p><p>For any population-EF1 allocation, put<br>\(
+\]</p><p><b>3. Universal upper bound for the constructed instance.</b></p><p>For any population-EF1 allocation, put<br>\(
 z=x_A,\qquad r=x_P,\qquad
 s=\sum_{g\text{ small}}v_b(g)x_g.
-\)<br>Here \(M_b=1/2\). Inequality (1) gives<br>\(
+\)<br>Here \(M_b=1/2\). Inequality (1) gives<br>\[
 \frac12z+\frac16r+s\le\frac34.
 \tag{3}
-\)</p><p>The welfare identity becomes<br>\(
+\]</p><p>The welfare identity becomes<br>\(
 2W=1+\frac{2}{15}z-\frac16r+\frac1{10}s.
 \)<br>Substituting the bound on \(s\) from (3),<br>\(
 2W
@@ -68,10 +69,10 @@ s=\sum_{g\text{ small}}v_b(g)x_g.
 \le
 1+\frac3{40}+\frac1{12}
 =\frac{139}{120}.
-\)<br>Thus \(W\le139/240\).</p><p>Moreover, equality forces<br>\(
+\)<br>Thus \(W\le139/240\).</p><p>Moreover, equality forces<br>\[
 z=1,\qquad r=0,\qquad s=\frac14.
 \tag{4}
-\)<br>The first two conclusions follow because the coefficient of \(z\) is strictly positive and that of \(r\) strictly negative. Equality in the preceding substitution then gives the value of \(s\).</p><p><b>4. Equality forces an actual partition.</b></p><p>Suppose a population-EF1 allocation attains \(139/240\). By (4), every supported type-\(a\) bundle contains \(A\) and excludes \(P\); every supported type-\(b\) bundle excludes \(A\) and contains \(P\).</p><p>For a supported type-\(a\) bundle \(C\), write<br>\(
+\]<br>The first two conclusions follow because the coefficient of \(z\) is strictly positive and that of \(r\) strictly negative. Equality in the preceding substitution then gives the value of \(s\).</p><p><b>4. Equality forces an actual partition.</b></p><p>Suppose a population-EF1 allocation attains \(139/240\). By (4), every supported type-\(a\) bundle contains \(A\) and excludes \(P\); every supported type-\(b\) bundle excludes \(A\) and contains \(P\).</p><p>For a supported type-\(a\) bundle \(C\), write<br>\(
 s(C)=\sum_{\substack{g\in C\\g\text{ small}}}v_b(g).
 \)<br>The good \(A\) has type-\(b\) value \(1/2\), while every small good has value at most \(1/6\). Therefore the minimum value remaining after deleting at most one good from \(C\) is exactly \(s(C)\).</p><p>Population-EF1 consequently requires<br>\(
 v_b(B)\ge s(C)
@@ -97,10 +98,10 @@ W
 \)<br>and<br>\(
 (v_b(g_1),v_b(g_2),v_b(p))
 =\left(\frac13+\varepsilon,\frac13+\varepsilon,\frac13-2\varepsilon\right).
-\)<br>Both valuations are normalized. Write \(c=1/3+\varepsilon\) and \(d=1/3-2\varepsilon\).</p><p>I first show that every population-EF1 allocation satisfies<br>\(
+\)<br>Both valuations are normalized. Write \(c=1/3+\varepsilon\) and \(d=1/3-2\varepsilon\).</p><p>I first show that every population-EF1 allocation satisfies<br>\[
 x_{g_1}+x_{g_2}\le1.
 \tag{5}
-\)</p><p>If no supported type-\(a\) bundle contains both \(g_1\) and \(g_2\), (5) follows by averaging their number in a type-\(a\) bundle.</p><p>Otherwise, choose a supported type-\(a\) bundle containing both. Deleting at most one good leaves type-\(b\) value at least \(c\). Every supported type-\(b\) bundle must therefore have value at least \(c\). A bundle containing neither \(g_1\) nor \(g_2\) has value at most \(d&lt;c\), so every type-\(b\) bundle contains at least one of them. Averaging and using the supply constraints gives<br>\(
+\]</p><p>If no supported type-\(a\) bundle contains both \(g_1\) and \(g_2\), (5) follows by averaging their number in a type-\(a\) bundle.</p><p>Otherwise, choose a supported type-\(a\) bundle containing both. Deleting at most one good leaves type-\(b\) value at least \(c\). Every supported type-\(b\) bundle must therefore have value at least \(c\). A bundle containing neither \(g_1\) nor \(g_2\) has value at most \(d&lt;c\), so every type-\(b\) bundle contains at least one of them. Averaging and using the supply constraints gives<br>\(
 (1-x_{g_1})+(1-x_{g_2})\ge1,
 \)<br>which again proves (5).</p><p>The welfare identity now gives<br>\(
 2W

@@ -1,0 +1,81 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-atal-2021-0250 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-atal-2021-0250 <span style="font-weight:normal;color:#8a7350">(d4-conf-atal-2021-0250)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\)-complete; no algorithm polynomial in \(m,\tau,L\) exists unless \(\mathrm{P}=\mathrm{NP}\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.2 — class: hardness</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite project set \(P\), supported voter types \(\Pi_1,\ldots,\Pi_\tau\) that are partitions of \(P\), positive rational masses \(\mu_1,\ldots,\mu_\tau\) summing to \(1\), and a rational threshold \(q\), does there exist a partition \(S\) of \(P\) such that \(\sum_{i=1}^{\tau}\mu_i\,|\{A\in\Pi_i:A\in S\}|\ge q\)? Equivalently, find a partition \(S\) maximizing this mass-weighted total complementarity utility.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given a finite project set \(P\) with \(m\ge 1\), a society is given by its support: an explicit list of \(\tau\ge 1\) distinct partition types \(\Pi_1,\ldots,\Pi_\tau\), each with positive binary rational mass \(\mu_i\), where \(\sum_{i=1}^{\tau}\mu_i=1\). Here \(\tau\) is the support size, not the number of possible partition types. Let \(L\) be the total bit length of the input, including a binary rational threshold \(q\in\mathbb{Q}\).<br>For an output partition \(S\) of \(P\), type \(i\) has complementarity utility \(u_i(S)=|\{A\in\Pi_i:A\in S\}|\): only exact block matches count. Any partition of \(P\) is admissible, including partitions containing blocks absent from every supported type.<br>The decision problem asks whether some \(S\) satisfies \(\sum_{i=1}^{\tau}\mu_i u_i(S)\ge q\). State running times in \(m,\tau,L\).</p><p>Is this mass-weighted complementarity partition aggregation decision problem solvable in polynomial time in \(m,\tau,L\), or is it NP-hard?</p><p>For a finite list of voters with unweighted total complementarity utility, the corresponding decision problem is NP-hard. [Source](https://www.ifaamas.org/Proceedings/aamas2021/pdfs/p665.pdf)<br>No result explicitly treating this normalized rational-mass formulation was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Made the input encoding explicit: partition types are listed explicitly and L is the total input bit length.</li><li>Used distinct supported types, combining identical partitions into one type with their summed mass.</li><li>Made the nonempty-domain convention explicit by taking m and tau at least one.</li><li>Kept the output domain as all partitions of P, without restricting output blocks to blocks submitted by supported types.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The decision problem is \(\mathrm{NP}\)-complete under polynomial-time many-one reductions. Thus it has no algorithm polynomial in \(m,\tau,L\) unless \(\mathrm{P}=\mathrm{NP}\).</p><p>The normalization of masses does not remove hardness: repeated voters can be compressed into distinct partition types, with their multiplicities represented by rational masses.</p><h3>Reduction from unweighted complementarity aggregation</h3><p>We use the following known result: given a project set \(P\), an explicit list of voter partitions \(R_1,\ldots,R_n\), and an integer threshold \(K\), deciding whether a partition \(S\) satisfies<br>\(\sum_{j=1}^{n}|\{A\in R_j:A\in S\}|\ge K\)<br>is \(\mathrm{NP}\)-hard. The utility is precisely the exact-block-match utility in the question, and the output may be any partition of \(P\). This is Total-COMP in Definition 2.3 and Section 4.1, with hardness established by Theorem 4.2 of [Jain, Talmon, and Bulteau (2021)](https://www.ifaamas.org/Proceedings/aamas2021/pdfs/p665.pdf).</p><p>Take such an instance with \(n\ge 1\). Group identical voter partitions. Let \(\Pi_1,\ldots,\Pi_\tau\) be the resulting distinct types, and let \(c_i\) denote the number of voters whose partition equals \(\Pi_i\). Define<br>\(\mu_i=c_i/n\) and \(q=K/n\).</p><p>This gives a valid instance of the requested formulation:</p><ul><li>Each \(\mu_i\) is a positive rational number.</li><li>The supported partitions are distinct, and \(\tau\le n\).</li><li>Because \(\sum_{i=1}^{\tau}c_i=n\), the masses sum to one.</li><li>The project set and the admissible output partitions are unchanged.</li></ul><p>For every partition \(S\) of \(P\), grouping the identical summands gives<br>\[
+\sum_{i=1}^{\tau}\mu_i u_i(S)
+=
+\frac{1}{n}\sum_{i=1}^{\tau}c_i|\{A\in\Pi_i:A\in S\}|
+=
+\frac{1}{n}\sum_{j=1}^{n}|\{A\in R_j:A\in S\}|.
+\]<br>Since \(n&gt;0\), this proves the equivalence<br>\[
+\sum_{i=1}^{\tau}\mu_i u_i(S)\ge q
+\quad\Longleftrightarrow\quad
+\sum_{j=1}^{n}|\{A\in R_j:A\in S\}|\ge K.
+\]<br>Consequently, the original instance is a yes-instance exactly when the constructed instance is a yes-instance. This equivalence includes outputs containing unsupported blocks.</p><p>The construction has polynomial bit complexity. Canonically representing each partition by its project-to-block labels allows identical types to be grouped in polynomial time. Each mass \(c_i/n\) requires \(O(\log(n+1))\) bits, and \(K/n\) requires \(O(\log(|K|+1)+\log(n+1))\) bits. Thus the output length is polynomial in the original explicit input length. No voter expansion is needed.</p><p>This establishes \(\mathrm{NP}\)-hardness.</p><h3>Membership in \(\mathrm{NP}\) and verification time</h3><p>Relabel the projects as \(P=\{1,\ldots,m\}\). A certificate assigns each project a block label in \(\{1,\ldots,m\}\); projects with the same label form one block. Every partition has such a representation, using \(O(m\log(m+1))\) bits.</p><p>Represent blocks by incidence vectors of length \(m\). Each input partition and the certificate partition have at most \(m\) blocks. Comparing every pair of blocks therefore computes all utilities \(u_i(S)\) in \(O(\tau m^3)\) elementary bit comparisons.</p><p>The threshold comparison can also be performed exactly in polynomial time. Write \(\mu_i=a_i/b_i\) and \(q=c/d\), with positive denominators, and define<br>\[
+D=d\prod_{i=1}^{\tau}b_i.
+\]<br>Then the required comparison is the integer comparison<br>\[
+\sum_{i=1}^{\tau}a_i u_i(S)\frac{D}{b_i}
+\ge
+c\frac{D}{d}.
+\]<br>The bit length of \(D\) is \(O(L)\), because the total encoded denominator length is at most \(L\). Moreover, \(0\le u_i(S)\le m\) and \(\sum_i\mu_i=1\), so the integer on the left is at most \(mD\). All integers involved have \(O(L+\log(m+1))\) bits, including the right side.</p><p>Using schoolbook integer arithmetic, a conservative total verification bound, including representation conversion, is<br>\[
+O\!\left(
+\tau m^3+
+(\tau+1)\bigl(L+m\log(m+1)\bigr)^2
+\right).
+\]<br>This is polynomial in \(m,\tau,L\), proving membership in \(\mathrm{NP}\).</p><h3>Conclusion and deterministic upper bound</h3><p>Combining the reduction and certificate verification proves \(\mathrm{NP}\)-completeness.</p><p>For an explicit deterministic upper bound, enumerate all \(m^m\) project-to-block label assignments and verify each. These assignments represent every partition, although some partitions occur repeatedly. The resulting running time is<br>\[
+O\!\left(
+m^m\left[
+\tau m^3+
+(\tau+1)\bigl(L+m\log(m+1)\bigr)^2
+\right]
+\right).
+\]<br>The hardness transfer and exact rational verification settle the normalized support formulation completely.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The output <b>proves the requested problem is \(\mathrm{NP}\)-complete</b>. The cited theorem applies to the exact utility and admissible partitions in the task; the normalization reduction and verification bounds are sound. No major or minor mathematical issues were found.</p><ul><li><b>The cited hardness result matches the source problem.</b></li></ul><p>The prover states the source decision problem precisely: explicit voter partitions, an integer threshold, and total exact-block-match utility.</p><p>I checked the cited paper. Definition 2.3 specifies the decision threshold for total utility; Section 4.1 defines COMP by exact membership of a voter’s block in the output partition; Theorem 4.2 establishes NP-hardness of Total-COMP. The paper’s aggregation domain consists of partitions of the project set, without a restriction to supported blocks. Thus the citation supplies the required hardness result with matching hypotheses. [Jain, Talmon, and Bulteau (2021)](https://www.ifaamas.org/Proceedings/aamas2021/pdfs/p665.pdf)</p><p>The restriction to source instances with \(n\ge 1\) is legitimate: the cited hardness construction produces a nonempty voter list and a nonempty project set.</p><ul><li><b>The constructed support instance satisfies every input requirement.</b></li></ul><p>Grouping identical voter partitions produces distinct types \(\Pi_1,\ldots,\Pi_\tau\). Their multiplicities satisfy \(c_i\ge 1\), \(\tau\ge 1\), and \(\sum_i c_i=n\). Consequently, each \(\mu_i=c_i/n\) is a positive binary rational and their sum is exactly one.</p><p>The threshold \(q=K/n\) is a permitted rational threshold. The construction preserves the project set and all admissible output partitions. No assumption of equal masses or distinct source voters is introduced.</p><ul><li><b>The reduction’s equivalence holds for every admissible output.</b></li></ul><p>For each partition \(S\), every voter in group \(i\) has exactly utility \(u_i(S)\). Therefore the displayed grouping identity is correct:<br>\[
+   \sum_{i=1}^{\tau}\mu_i u_i(S)
+   =
+   \frac{1}{n}\sum_{j=1}^{n}|\{A\in R_j:A\in S\}|.
+   \]</p><p>Since \(n&gt;0\), multiplying the threshold inequality by \(n\) preserves its direction and yields precisely the source inequality. The same \(S\) witnesses both inequalities, establishing both directions of the existential equivalence.</p><p>Unsupported output blocks cause no exception: they contribute zero to both objectives, and the identity still holds. Negative or zero thresholds also cause no problem.</p><ul><li><b>The construction is a polynomial-time many-one reduction.</b></li></ul><p>Canonical project-to-block labels permit equality testing and grouping of explicit partitions in polynomial time. There are at most \(n\) resulting types, each already represented in the source input.</p><p>Both numerator and denominator of \(c_i/n\) have \(O(\log(n+1))\) bits. The stated bound for \(K/n\) correctly includes the signed numerator’s magnitude and the denominator. Reducing fractions, if required by the encoding, does not enlarge them and takes polynomial time.</p><p>Since the voter list is explicit, \(n\) is bounded by its input length. Thus the output length and construction time are polynomial in the source input length. The hardness claim follows.</p><ul><li><b>The certificate represents exactly the allowed output partitions.</b></li></ul><p>Assigning each project a label in \(\{1,\ldots,m\}\) defines a partition through its nonempty label classes. Unused labels do not create empty blocks. Conversely, every partition has at most \(m\) blocks and admits such an assignment.</p><p>The certificate length \(O(m\log(m+1))\) is correct, including \(m=1\). It is polynomial in the explicit input size. No restriction on supported blocks enters this representation.</p><ul><li><b>Utility computation and rational comparison are correct.</b></li></ul><p>There are at most \(m\) blocks in each partition. Comparing at most \(m^2\) pairs of length-\(m\) incidence vectors per type gives the claimed \(O(\tau m^3)\) bit-comparison bound. Exact vector equality implements the stated utility.</p><p>With positive denominators,<br>\[
+   D=d\prod_{i=1}^{\tau}b_i
+   \]<br>is positive and divisible by each denominator. Hence clearing denominators gives exactly the displayed integer inequality, including when \(q\) is negative.</p><p>The denominator bit lengths sum to at most \(L\), so \(D\) has \(O(L)\) bits. The left integer is nonnegative and at most \(mD\), using \(u_i(S)\le m\) and normalized masses. The right integer has \(O(L)\) bits in magnitude because both \(c\) and \(D\) do. These bounds also cover the intermediate products and sums in the indicated computation.</p><p>Schoolbook arithmetic therefore supports the conservative verification bound<br>\[
+   O\!\left(
+   \tau m^3+
+   (\tau+1)\bigl(L+m\log(m+1)\bigr)^2
+   \right).
+   \]<br>This establishes membership in \(\mathrm{NP}\).</p><ul><li><b>The conclusion and deterministic upper bound follow.</b></li></ul><p>Combining the valid hardness reduction with membership in \(\mathrm{NP}\) establishes \(\mathrm{NP}\)-completeness. The conditional exclusion of a polynomial-time algorithm unless \(\mathrm{P}=\mathrm{NP}\) is correctly stated.</p><p>There are exactly \(m^m\) label assignments, and every partition occurs among them. Repeated representations affect efficiency but not correctness. Multiplying the verification bound by \(m^m\) yields the stated deterministic upper bound, valid also for \(m=1\).</p><p>No additional clarification or repair is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

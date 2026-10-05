@@ -1,0 +1,72 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ijcai-2015-0255 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ijcai-2015-0255 <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2015-0255)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable in \(m,\tau,L\): sort items by decreasing expected positional weight \(s_i=\sum_{t=1}^{\tau}\mu_t w_{t(i)}\), using exact integer arithmetic.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 3 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Assume a scoring rule with strictly decreas- ing weights w(r) &gt; w(s) if r &lt; s with r, s ∈{1, ..., n}. The positional Spearman distance with weights w charac- terizes the scoring rule with the same weights; π∗ SR = arg minπ∈Sn Pm u=1 dP S(π, σu).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(\tau\) ranking types \(t\in S_n\) with positive rational masses \(\mu_t\) summing to \(1\), and fixed strictly decreasing rational weights \(w\), find a ranking \(\rho\in S_n\) minimizing \(\sum_t \mu_t d_{PS}(\rho,t)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(m\geq 1\) be the number of items. A ranking \(\pi\in S_m\) maps each item to its position, with position \(1\) best. A society is given by its support: the list of the \(\tau\) distinct ranking types with positive mass, each mass \(\mu_t\) a binary rational, with \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number \(m!\) of possible types.<br>A common weight vector \(w\in\mathbb{Q}^m\) is supplied in binary and satisfies \(w_1&gt;\cdots&gt;w_m\); its entries may have either sign. Define positional Spearman distance by \(d_{PS}(\rho,t)=\sum_{i=1}^{m}(w_{\rho(i)}-w_{t(i)})^2\). Let \(L\) be the total input bit length.<br>Find a full ranking \(\rho\in S_m\) minimizing \(\sum_t\mu_t d_{PS}(\rho,t)\); any minimizer is acceptable.</p><p>Is computing such an optimal ranking possible in time polynomial in \(m,\tau,L\), or is this optimization problem NP-hard?</p><p>For an explicitly listed finite society, positional Spearman minimizers are precisely the rankings returned by the positional scoring rule with the same strictly decreasing weights, yielding a polynomial-time algorithm. This establishes the discrete analogue; it does not state a complexity result for binary-encoded rational-mass support input.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Interpreted &#x27;fixed weights&#x27; as one supplied rational vector common to every distance evaluation, allowing a uniform problem with varying numbers of items.</li><li>Allowed weights of either sign because the discrete scoring-rule definition imposes only their ordering.</li><li>Resolved ties by accepting any minimizing full ranking, consistent with allowing multiple equally good aggregate rankings.</li><li>Used m for the number of items and defined L as the total input bit length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The problem is <b>polynomial-time solvable</b>, including for binary-encoded rational masses. Compute each item’s expected positional weight and rank the items in decreasing order of these scores. The rational arithmetic can be performed exactly with polynomially many bits.</p><h3>1. Reduction to positional scores</h3><p>For each item \(i\), define<br>\(s_i=\sum_{t=1}^{\tau}\mu_t w_{t(i)}\).</p><p>Expanding the objective gives<br>\(
+F(\rho)
+=\sum_{i=1}^{m}w_{\rho(i)}^2
+-2\sum_{i=1}^{m}w_{\rho(i)}s_i
++\sum_{t=1}^{\tau}\mu_t\sum_{i=1}^{m}w_{t(i)}^2.
+\)</p><p>Because every ranking is a permutation, both \(\sum_i w_{\rho(i)}^2\) and \(\sum_i w_{t(i)}^2\) equal \(\sum_{j=1}^{m}w_j^2\). Using \(\sum_t\mu_t=1\), we obtain<br>\(
+F(\rho)=2\sum_{j=1}^{m}w_j^2-2\sum_{i=1}^{m}w_{\rho(i)}s_i.
+\)</p><p>Thus minimizing \(F\) is equivalent to maximizing<br>\(H(\rho)=\sum_i w_{\rho(i)}s_i\).<br>This identity holds regardless of the signs of the weights.</p><h3>2. Sorting the scores is optimal</h3><p>Write the items in their order under a ranking as \(i_1,\ldots,i_m\), so that \(\rho(i_j)=j\). Suppose adjacent positions satisfy \(s_{i_j}&lt;s_{i_{j+1}}\). Swapping these two items changes \(H\) by<br>\(
+(w_j-w_{j+1})(s_{i_{j+1}}-s_{i_j})&gt;0,
+\)<br>since the weights are strictly decreasing.</p><p>Repeatedly swapping adjacent score inversions terminates: each swap decreases the number of pairs whose earlier item has strictly smaller score. The resulting score sequence is nonincreasing, and \(H\) never decreases.</p><p>Every ranking with nonincreasing scores has the same value of \(H\), because the numerical score sequence is the same; only items with equal scores can exchange positions. Consequently, every such ranking maximizes \(H\). Conversely, any ranking whose scores are not nonincreasing has an adjacent inversion and therefore cannot maximize \(H\).</p><p>Hence the minimizers are precisely the rankings that order items by decreasing \(s_i\), with arbitrary tie-breaking.</p><h3>3. Exact computation has polynomial bit complexity</h3><p>Write the input rationals as<br>\(w_j=a_j/b_j\) and \(\mu_t=p_t/q_t\), with integer numerators and positive integer denominators. Define<br>\(
+B=\prod_{j=1}^{m}b_j,\qquad
+Q=\prod_{t=1}^{\tau}q_t,
+\)<br>and the integers<br>\(
+W_j=a_j(B/b_j),\qquad
+P_t=p_t(Q/q_t).
+\)</p><p>For each item, compute the integer<br>\(
+S_i=\sum_{t=1}^{\tau}P_tW_{t(i)}.
+\)<br>Then \(s_i=S_i/(BQ)\). Because the denominator \(BQ\) is common and positive, sorting the integers \(S_i\) sorts the scores exactly.</p><p>We now bound all intermediate integer sizes. Since \(L\) is the total input bit length, the products \(B\) and \(Q\) each have \(O(L+1)\) bits. Also, \(|a_j|\leq 2^L\), so the coarse bound \(|W_j|\leq 2^{2L}\) suffices. Positivity and normalization of the masses imply<br>\(
+P_t&gt;0,\qquad \sum_{t=1}^{\tau}P_t=Q.
+\)<br>Therefore<br>\(
+|S_i|
+\leq\sum_tP_t|W_{t(i)}|
+\leq Q\max_j|W_j|
+\leq 2^{3L}.
+\)<br>The same bound applies to every partial sum used to compute \(S_i\). Thus all required integers have \(O(L+1)\) bits.</p><p>Constructing these integers requires \(O(m+\tau+m\tau)\) integer arithmetic operations. Sorting requires \(O(m\log m)\) integer comparisons. Integer multiplication, exact division, addition, and comparison on these bit lengths all take polynomial time.</p><h3>4. Algorithm and conclusion</h3><ul><li>Compute \(B,Q\), the integers \(W_j,P_t\), and each integer score \(S_i\).</li><li>Sort the items by decreasing \(S_i\), breaking ties arbitrarily.</li><li>Assign positions \(1,\ldots,m\) in that order.</li></ul><p>The resulting ranking is optimal, and the running time is polynomial in \(m,\tau,L\). This directly handles the rational-mass support representation without expanding masses into repeated voters.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover fully resolves the task. The argument is correct and rigorous for binary-encoded rational masses, including signed weights, tied scores, and \(m=1\). No major or minor issues were found.</p><h3>1. Objective reduction</h3><p>The definition \(s_i=\sum_{t=1}^{\tau}\mu_t w_{t(i)}\) is well-defined for every item.</p><p>Expanding each squared difference gives the displayed expression for \(F(\rho)\). The first term uses \(\sum_t\mu_t=1\). Because \(\rho\) and every support ranking \(t\) are permutations, their squared-weight sums equal \(\sum_j w_j^2\). Therefore<br>\[
+F(\rho)=2\sum_{j=1}^{m}w_j^2-2\sum_{i=1}^{m}w_{\rho(i)}s_i
+\]<br>is correct. Its first term is independent of \(\rho\), so minimizing \(F\) is equivalent to maximizing \(H\). No assumption on the signs of the weights is needed.</p><h3>2. Optimality and characterization of minimizers</h3><p>For an adjacent pair with \(s_{i_j}&lt;s_{i_{j+1}}\), the stated change in \(H\),<br>\[
+(w_j-w_{j+1})(s_{i_{j+1}}-s_{i_j}),
+\]<br>is correct and strictly positive.</p><p>The termination argument is valid: swapping an adjacent strict inversion removes that pair’s inversion, while preserving the total inversion contributions involving every other item. Thus the nonnegative integer inversion count strictly decreases.</p><p>Starting from any ranking, this process reaches a nonincreasing score sequence with no smaller value of \(H\). Every nonincreasing arrangement has the same numerical score sequence and hence the same \(H\). Together, these facts establish that every sorted ranking is globally optimal.</p><p>Conversely, any sequence that is not nonincreasing contains an adjacent strict inversion, which permits a strict improvement. The characterization of all minimizers, including arbitrary tie-breaking, follows.</p><h3>3. Exact arithmetic and bit complexity</h3><p>The positive denominator products \(B\) and \(Q\) are valid common denominators. All displayed divisions are exact, and<br>\[
+S_i=\sum_t P_tW_{t(i)},\qquad s_i=\frac{S_i}{BQ}
+\]<br>holds exactly. Sorting the integer scores therefore preserves all score comparisons and ties.</p><p>The bit bounds are valid. The aggregate encoded lengths of the denominators bound the bit lengths of their products by \(O(L+1)\). The coarse bounds on \(W_j\), \(Q\), and \(S_i\) follow.</p><p>Normalization gives \(\sum_tP_t=Q\), with every \(P_t&gt;0\). Consequently, the absolute-value bound also applies to partial sums despite possibly negative weights. Intermediate products, denominator products, and exact-division operands likewise have \(O(L+1)\) bits.</p><p>The stated arithmetic-operation and comparison counts are polynomial in \(m,\tau\). Standard exact integer arithmetic on the established bit lengths takes polynomial time. There is no expansion into a potentially exponentially large voter list.</p><h3>4. Scope and edge cases</h3><p>The algorithm outputs the required item-to-position permutation. Equal scores may be ordered arbitrarily. For \(m=1\), the unique ranking is returned and the optimality argument remains valid. Positive masses summing to one ensure the support is nonempty.</p><p>The proof establishes a polynomial-time algorithm for the precise rational-mass support representation in the task. No additional clarification or repair is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

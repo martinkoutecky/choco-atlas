@@ -1,0 +1,189 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-90c91b68ceb9ec60047eaceaba80cbf253b9a70d — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-90c91b68ceb9ec60047eaceaba80cbf253b9a70d <span style="font-weight:normal;color:#8a7350">(s5-90c91b68ceb9ec60047eaceaba80cbf253b9a70d)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: hardness</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(n\) candidates and a hidden unit-mass society over strict rankings \(\pi\), restricted to Plackett–Luce masses \(\mu_\pi=\prod_{r=1}^{n}\theta_{\pi(r)}/\sum_{s=r}^{n}\theta_{\pi(s)}\), where \(1/C\leq\theta_i\leq1\) and \(\max_i\theta_i=1\), an oracle accepts an \(l\)-candidate query, samples a voter independently from the society, and returns that voter’s highest-ranked queried candidate. What is the minimum worst-case number of adaptive queries needed to output, with probability at least \(1-\delta\), a permutation \(\Pi\) such that every pair with \(\Pi(i)&lt;\Pi(j)\) satisfies \(\theta_i\geq\theta_j-\epsilon\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>No faithful open proof task can be supplied from these inputs.<br>The anchor is an information-theoretic query lower bound, not computational hardness for a finite-agent problem. The proposed Plackett–Luce society gives exactly the same oracle law: a query \(S\) returns \(i\in S\) with probability \(\theta_i/\sum_{j\in S}\theta_j\).<br>The required explicit support input also conflicts with the stipulated hidden society: revealing its masses changes the learner’s information.<br>Known results: the oracle ranking problem has a worst-case expected-query lower bound \(\Omega(n\epsilon^{-2}\log(n/\delta))\), and an algorithm that terminates and returns a correct ranking within \(O(n\epsilon^{-2}\log(n/\delta))\) queries with probability at least \(1-\delta\), for fixed bounded score ratios. [Verified source](https://arxiv.org/pdf/1806.02970).</p></div>
+
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Scope and proved conclusions</h3><p>The supplied task does not define a finite-agent computational problem to classify. I therefore address its substantive issue: whether replacing the sampling oracle by a hidden Plackett–Luce society changes the information available to the learner or establishes computational hardness.</p><p>The results below prove that:</p><ul><li>Independently sampling from the hidden society reproduces the oracle, including for adaptive learners.</li><li>Explicit rational support permits exact recovery of the score order in polynomial time in the input length, without queries.</li><li>The stated high-probability query upper bound can be converted into an expected-query upper bound of the same asymptotic order.</li></ul><p>These results do not classify an unspecified finite-agent problem.</p><h3>1. Definitions and access assumptions</h3><p>Let $[n]=\{1,\ldots,n\}$ and let $\theta_1,\ldots,\theta_n$ be positive scores. A query to a nonempty set $S\subseteq[n]$ returns a winner $W\in S$ with conditional probability</p><p>$$
+\Pr_\theta(W=i\mid S,\text{past history})
+=
+\frac{\theta_i}{\sum_{j\in S}\theta_j}.
+$$</p><p>Thus each response uses fresh randomness, even when the learner chooses $S$ adaptively.</p><p>A ranking is a permutation $\sigma=(\sigma(1),\ldots,\sigma(n))$, listed from highest to lowest. A weighted society is a probability distribution on rankings. Its sampling implementation draws a fresh ranking for each query and returns the highest-ranked member of the query set. The learner observes only that winner.</p><p>Since multiplying all scores by the same positive constant preserves every query probability, normalize $\max_i\theta_i=1$. For $\epsilon&gt;0$, a ranking $\sigma$ is an $\epsilon$-ranking if</p><p>$$
+a&lt;b
+\quad\Longrightarrow\quad
+\theta_{\sigma(a)}\ge\theta_{\sigma(b)}-\epsilon.
+$$</p><p>Uniform correctness means that the learner returns an $\epsilon$-ranking with probability at least $1-\delta$ on <b>every admissible score vector</b>. This requirement is essential to any worst-case query lower bound.</p><h3>2. The hidden society reproduces the oracle exactly</h3><h3>Proposition 1: Exponential construction</h3><p>Let $X_1,\ldots,X_n$ be independent exponential random variables with rates $\theta_1,\ldots,\theta_n$. Rank alternatives in increasing order of their $X_i$. This gives the Plackett–Luce distribution</p><p>$$
+\Pr_\theta(\sigma)
+=
+\prod_{k=1}^{n}
+\frac{\theta_{\sigma(k)}}{\sum_{r=k}^{n}\theta_{\sigma(r)}}.
+$$</p><p>Furthermore, for every nonempty $S$ and every $i\in S$,</p><p>$$
+\Pr_\theta(i\text{ is highest in }S)
+=
+\frac{\theta_i}{\sum_{j\in S}\theta_j}.
+$$</p><p><b>Proof.</b> Independent continuous random variables have no ties with probability one, so the construction gives a ranking almost surely.</p><p>Fix a permutation $\sigma$. On the event that the ranking is $\sigma$, write</p><p>$$
+y_1=X_{\sigma(1)},
+\qquad
+y_k=X_{\sigma(k)}-X_{\sigma(k-1)}
+\quad (2\le k\le n).
+$$</p><p>The event corresponds to $y_k&gt;0$ for every $k$. This linear change of variables has Jacobian determinant $1$, and</p><p>$$
+\sum_{k=1}^{n}\theta_{\sigma(k)}X_{\sigma(k)}
+=
+\sum_{s=1}^{n}
+y_s\sum_{k=s}^{n}\theta_{\sigma(k)}.
+$$</p><p>Integrating the joint exponential density therefore gives</p><p>$$
+\Pr_\theta(\sigma)
+=
+\prod_{s=1}^{n}
+\left(
+\theta_{\sigma(s)}
+\int_0^\infty
+e^{-y_s\sum_{k=s}^{n}\theta_{\sigma(k)}}\,dy_s
+\right)
+=
+\prod_{s=1}^{n}
+\frac{\theta_{\sigma(s)}}{\sum_{k=s}^{n}\theta_{\sigma(k)}}.
+$$</p><p>All integrands are nonnegative, so the factorization is justified by Tonelli’s theorem.</p><p>For the query statement, $i$ is highest in $S$ exactly when $X_i&lt;X_j$ for every $j\in S\setminus\{i\}$. Independence yields</p><p>$$
+\Pr_\theta(i\text{ is highest in }S)
+=
+\int_0^\infty
+\theta_i e^{-\theta_i t}
+\prod_{j\in S\setminus\{i\}}e^{-\theta_jt}\,dt
+=
+\frac{\theta_i}{\sum_{j\in S}\theta_j}.
+$$</p><p>Positivity of the scores ensures convergence. $\square$</p><h3>Proposition 2: Adaptive transcript equivalence</h3><p>For any learner whose information about $\theta$ consists solely of query winners, the oracle and the independently sampled society give the same distribution of queries, responses, stopping time, and output.</p><p><b>Proof.</b> Couple the learner’s private randomness identically in the two implementations. Before each query, if their histories agree, the learner chooses the same set $S$.</p><p>By Proposition 1, both implementations have the same conditional winner distribution. Use one fresh uniform random variable to select the winner in both implementations, assigning intervals of lengths</p><p>$$
+\frac{\theta_i}{\sum_{j\in S}\theta_j},
+\qquad i\in S,
+$$</p><p>in a fixed order. Their winners, and hence their updated histories, agree.</p><p>Induction makes every finite history identical under this coupling. Using the same infinite sequence of fresh uniform variables gives identical complete runs, including nontermination. Consequently, any stopping rule and output determined by the learner’s history agree.</p><p>For a query count $T$ with values in the nonnegative integers or infinity,</p><p>$$
+\mathbb E_\theta[T]
+=
+\sum_{t=0}^{\infty}\Pr_\theta(T&gt;t).
+$$</p><p>This follows by writing $T=\sum_{t=0}^{\infty}\mathbf 1_{\{T&gt;t\}}$ and applying monotone convergence. Thus expected query counts also agree, including infinite expectations. $\square$</p><p>Fresh sampling is necessary. If one sampled ranking were reused, two identical queries would always have the same winner. For a two-element set, the independent oracle has positive probability of different winners.</p><h3>3. Explicit support changes the information available</h3><h3>Proposition 3: Polynomial-time recovery from explicit rational support</h3><p>Suppose the input lists rankings $\sigma_1,\ldots,\sigma_m$ and positive rational masses $w_1,\ldots,w_m$, summing to $1$. Assume the listed distribution is promised to equal a Plackett–Luce distribution with positive scores.</p><p>Then an exact decreasing score order is computable without queries, in polynomial time in the explicit input’s bit length.</p><p><b>Proof.</b> If $n=1$, return the unique ranking. Otherwise fix a reference alternative $r$. For each $i\ne r$, compute</p><p>$$
+p_i
+=
+\sum_{\substack{1\le a\le m\\
+i\text{ precedes }r\text{ in }\sigma_a}}
+w_a.
+$$</p><p>Proposition 1, applied to $\{i,r\}$, gives</p><p>$$
+p_i=\frac{\theta_i}{\theta_i+\theta_r}.
+$$</p><p>Since both scores are positive, $0&lt;p_i&lt;1$. Hence</p><p>$$
+q_r=1,
+\qquad
+q_i=\frac{p_i}{1-p_i}=\frac{\theta_i}{\theta_r}
+\quad(i\ne r).
+$$</p><p>Sorting the $q_i$ in decreasing order gives the exact score order. Equal values permit arbitrary tie-breaking.</p><p>For bit complexity, write $w_a=u_a/v_a$, with positive integer denominators, and set</p><p>$$
+D=\prod_{a=1}^{m}v_a.
+$$</p><p>The bit length of $D$ is at most the sum of the input denominator bit lengths, up to a constant. Compute</p><p>$$
+A_i
+=
+\sum_{\substack{1\le a\le m\\
+i\text{ precedes }r\text{ in }\sigma_a}}
+u_a\frac{D}{v_a}.
+$$</p><p>Then $p_i=A_i/D$ and $q_i=A_i/(D-A_i)$. Because the masses sum to $1$, we have $0&lt;A_i&lt;D$.</p><p>Scanning the rankings requires polynomially many operations in the input length. All integers used above have polynomially bounded bit length. Comparisons between ratios use cross multiplication of such integers, so sorting also has polynomial bit complexity. $\square$</p><p>This proof does not require a polynomial-time procedure for checking the Plackett–Luce promise.</p><h3>Corollary: Exact Plackett–Luce support is factorial</h3><p>Every factor in Proposition 1’s permutation formula is positive. Therefore every one of the $n!$ rankings has positive mass.</p><p>Consequently, an explicit list representing the <b>entire</b> positive-score Plackett–Luce distribution must contain at least $n!$ distinct rankings. Polynomial time in that list’s length need not be polynomial time in $n$.</p><p>This support-size conclusion concerns the full distribution. It does not rule out a different, smaller distribution having the same winner probabilities.</p><h3>4. The known query bounds and their quantifiers</h3><p>For</p><p>$$
+n\ge12,\qquad
+2\le l\le n,\qquad
+0&lt;\epsilon\le\sqrt{1/32},\qquad
+0&lt;\delta&lt;1/4,
+$$</p><p>the supplied lower-bound premise, supported by Theorem 3, concerns algorithms uniformly correct over admissible instances. For every such algorithm $A$, some instance satisfies</p><p>$$
+\mathbb E_\theta[T_A]
+=
+\Omega\!\left(n\epsilon^{-2}\log(n/\delta)\right).
+$$</p><p>Queries have fixed size $l$. The restriction $n\ge12$ ensures the reduction uses $k=\lfloor n/2\rfloor\ge6$. [Ren, Liu, and Shroff, Theorems 1 and 3](https://arxiv.org/pdf/1806.02970).</p><p>For a fixed score-ratio bound $C\ge1$, Theorem 5 gives an algorithm $A_\eta$ and a constant $K_C&gt;0$ satisfying, uniformly when $\max_{i,j}\theta_i/\theta_j\le C$,</p><p>$$
+\Pr_\theta\!\left(
+T_{A_\eta}\le K_Cn\epsilon^{-2}\log(n/\eta)
+\ \text{and its output is an }\epsilon\text{-ranking}
+\right)
+\ge1-\eta.
+$$</p><p>Its parameter condition is met by choosing</p><p>$$
+\alpha=\frac{1}{4(C+1)}
+\le\frac{l-1}{4(l+C-1)}.
+$$</p><p>Indeed, after multiplying positive denominators, this is $C(l-2)\ge0$. [Ren, Liu, and Shroff, Theorem 5](https://arxiv.org/pdf/1806.02970).</p><p>These are approximate-ranking guarantees. The lower bound is not asserted for every restricted ratio class: if $C=1$, all scores are equal and every ranking is correct without queries.</p><h3>5. A further proved result: an expected-query upper bound</h3><p>The preceding high-probability guarantee alone does not bound the original algorithm’s expectation. The following construction repairs that limitation.</p><h3>Proposition 4: Truncation and restart</h3><p>Assume the uniform guarantee for $A_\eta$ in Section 4. There is a learner that terminates almost surely, returns an $\epsilon$-ranking with probability at least $1-\delta$, and satisfies uniformly</p><p>$$
+\mathbb E_\theta[T]
+=
+O_C\!\left(n\epsilon^{-2}\log(n/\delta)\right).
+$$</p><p><b>Proof.</b> Put</p><p>$$
+H=n\epsilon^{-2},
+\qquad
+L=\log(n/\delta).
+$$</p><p>For stages $r=1,2,\ldots$, set</p><p>$$
+\eta_r=\delta\,2^{-r},
+\qquad
+B_r=\left\lceil K_CH\log(n/\eta_r)\right\rceil.
+$$</p><p>At stage $r$, run a fresh copy of $A_{\eta_r}$, using fresh private randomness and oracle responses. Return its output if it terminates using at most $B_r$ queries. Otherwise discard its state after that budget and proceed to stage $r+1$.</p><p>Let $R_r$ be the event that stage $r$ is reached. Conditional on any history reaching that stage, its fresh run satisfies the assumed uniform guarantee. In particular, its conditional probability of exceeding the budget is at most $\eta_r$. Therefore</p><p>$$
+\Pr_\theta(R_{r+1})
+\le\eta_r\Pr_\theta(R_r)
+\le\eta_r.
+$$</p><p>The events $R_r$ decrease with $r$. Since $\eta_r$ tends to zero,</p><p>$$
+\Pr_\theta(\text{infinitely many stages})
+=
+\lim_{r\to\infty}\Pr_\theta(R_r)
+=
+0.
+$$</p><p>Each stage uses finitely many queries, so the procedure terminates almost surely.</p><p>If a reached stage returns an incorrect output within its budget, the joint success event in the hypothesis has failed. Thus</p><p>$$
+\Pr_\theta(R_r\text{ and stage }r\text{ returns incorrectly})
+\le\eta_r.
+$$</p><p>A union bound gives</p><p>$$
+\Pr_\theta(\text{incorrect final output})
+\le\sum_{r=1}^{\infty}\eta_r
+=\delta.
+$$</p><p>It remains to bound the expectation. Pathwise,</p><p>$$
+T\le\sum_{r=1}^{\infty}B_r\mathbf 1_{R_r}.
+$$</p><p>Tonelli’s theorem and the reach-probability bound imply</p><p>$$
+\mathbb E_\theta[T]
+\le B_1+\sum_{r=2}^{\infty}B_r\eta_{r-1}.
+$$</p><p>Since $\log(n/\eta_r)=L+r\log2$,</p><p>$$
+B_r\le K_CH(L+r\log2)+1.
+$$</p><p>The geometric-series identities</p><p>$$
+\sum_{r=2}^{\infty}2^{-(r-1)}=1,
+\qquad
+\sum_{r=2}^{\infty}r\,2^{-(r-1)}=3
+$$</p><p>now yield</p><p>$$
+\mathbb E_\theta[T]
+\le
+K_CH(L+\log2)+1
++
+\delta\bigl(K_CH(L+3\log2)+1\bigr).
+$$</p><p>For $n\ge2$, $0&lt;\epsilon&lt;1$, and $0&lt;\delta&lt;1/4$, this is $O_C(HL)$, as claimed. $\square$</p><p>By Proposition 2, this expected-query guarantee also holds for the independently sampled hidden society.</p><h3>6. What remains unspecified</h3><p>The hidden society preserves the oracle’s information and query complexity exactly. Revealing explicit support supplies additional information and, under the stated promise, permits exact score ranking without sampling.</p><p>Thus the proposed representation does not by itself establish computational hardness. Even its full explicit support has factorial size, so it cannot directly serve as a polynomial-size output of a reduction when $n$ grows.</p><p>A computational classification still requires a specified finite-agent problem: its input encoding, required output, access model, and correctness criterion. No such target is supplied here. The subsidiary results are complete; the overall status remains partial.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 6, sentence claiming factorial support cannot be a polynomial-size reduction output when $n$ grows: Factorial size in $n$ does not imply superpolynomial size in an unspecified source-input length $N$. For example, when $N=n!$, the full uniform-score distribution has an explicit encoding polynomial in $N$ while $n$ grows. Specify the relation between $n$ and $N$, or limit the statement to factorial support size in $n$.</li></ul>
+<div class="pre"><p>The substantive arguments are correct. The output establishes oracle equivalence, polynomial-time recovery under an explicit rational-support promise, and the stated expected-query guarantee. It does not establish computational hardness or classify a finite-agent problem, and it expressly acknowledges that limitation.</p><p>The only identified mathematical issue is a minor overstatement about factorial support and reduction output size. The overall classification is <b>partial</b>, consistent with the prover’s own claim; this does not mean that an available, well-defined computational target was left unsolved. <code>USER_TASK</code> expressly supplies no such target.</p><h3>1. Scope and definitions</h3><p>The prover correctly distinguishes information-theoretic query complexity from computational complexity. Its decision to verify subsidiary statements is consistent with the supplied task.</p><p>The access assumptions are explicit: scores are positive, queries are nonempty, each response uses fresh randomness, and the learner observes only winners. Normalizing the maximum score to $1$ preserves the oracle probabilities and makes the additive approximation criterion well-defined.</p><p>The definition of an $\epsilon$-ranking matches the definition in the cited paper, after translating between a permutation listing alternatives and a permutation assigning ranks. Uniform correctness is appropriately required across instances, rather than merely at the instance used to measure query complexity.</p><p><b>Finding:</b> Correct; no issue.</p><h3>2. Proposition 1: Exponential construction</h3><p>Each step checks out:</p><ul><li>Independent exponential variables with positive rates are continuous, so ties have probability zero.</li><li>The change from ordered arrival times to successive spacings is invertible on the relevant region and has determinant $1$.</li><li>The identity</li></ul><p>$$
+   \sum_{k=1}^{n}\theta_{\sigma(k)}X_{\sigma(k)}
+   =
+   \sum_{s=1}^{n}y_s\sum_{k=s}^{n}\theta_{\sigma(k)}
+   $$<br>is correct.</p><ul><li>The exponential density is nonnegative and measurable, so Tonelli’s theorem permits the iterated integration and factorization.</li><li>Every tail-rate sum is positive, and the displayed integrals yield precisely the claimed permutation probabilities.</li><li>For a query subset, independence gives the displayed product of survival probabilities. Integrating yields the claimed winner law.</li></ul><p>The singleton-query case also works: the probability is $1$. For $n=1$, the permutation formula likewise gives $1$.</p><p><b>Finding:</b> Correct and rigorous.</p><h3>3. Proposition 2: Adaptive transcript equivalence</h3><p>The coupling uses identical learner randomness and identical conditional winner distributions whenever the histories agree. The fresh uniform variables therefore preserve equality of histories inductively.</p><p>The argument extends to stopping decisions, outputs, and infinite runs because all these are determined by the same coupled histories and private randomness. The expectation identity is valid for a nonnegative integer-valued query count, including an infinite count, by monotone convergence.</p><p>The observation about reusing a single sampled ranking is also correct. For a two-element query set with positive scores, both oracle outcomes have positive probability, whereas a reused ranking fixes the winner.</p><p><b>Finding:</b> Correct under the explicitly stated winner-only, fresh-sampling access model.</p><h3>4. Proposition 3: Explicit rational support</h3><p>The recovery argument is valid under its promise:</p><ul><li>Summing the listed masses for rankings in which $i$ precedes $r$ computes the pairwise precedence probability exactly.</li><li>Proposition 1 identifies that probability as</li></ul><p>$$
+   p_i=\frac{\theta_i}{\theta_i+\theta_r}.
+   $$</p><ul><li>Positivity ensures $0&lt;p_i&lt;1$, so the recovered ratios are defined.</li><li>Sorting those ratios recovers a decreasing score order, with arbitrary tie-breaking permitted.</li><li>The common denominator has bit length bounded by the total denominator encoding length. The numerators, denominator differences, and comparison products all have polynomially bounded bit length.</li><li>Scanning and sorting require polynomially many such arithmetic operations.</li></ul><p>The separate treatment of $n=1$ avoids the reference-comparison construction in that case. Promise verification is correctly excluded from the claim.</p><p><b>Finding:</b> Correct. This proves polynomial time in the explicit input length, not polynomial time in the number of alternatives alone.</p><h3>5. Factorial support and the reduction claim</h3><p>The support corollary is correct: every permutation has positive probability, so an explicit representation of the entire positive-score Plackett–Luce distribution must list at least $n!$ distinct rankings.</p><p>The prover also correctly limits this observation to the full distribution and does not claim it excludes a smaller distribution reproducing only winner probabilities.</p><p>There is, however, one overstatement in Section 6:</p><blockquote>“Even its full explicit support has factorial size, so it cannot directly serve as a polynomial-size output of a reduction when $n$ grows.”</blockquote><p><b>Issue — minor:</b> Growth of $n$ alone does not establish superpolynomial output size relative to a reduction’s source-input length. Those are different size parameters.</p><p>A concrete failure mode is source-input length $N=n!$: the full uniform-score distribution can be listed with $n!$ rankings and rational mass $1/n!$ per ranking, using polynomially many bits in $N$, while $n$ grows.</p><p><b>Minimum clarification:</b> State the relation between $n$ and the source-input length, or restrict the conclusion to the already established fact that full support is factorial in $n$. This wording issue does not affect any proposition or the conclusion that no computational-hardness reduction has been supplied.</p><h3>6. Cited query bounds and quantifiers</h3><p>The cited source supports the theorem applications. Its approximation criterion and fixed-size query model match those used here. The bounded-ratio assumption is stated in the source. [Ren, Liu, and Shroff, Sections 2, 4, and 5](https://arxiv.org/pdf/1806.02970).</p><p>For the lower bound, the prover correctly states a worst-case expected-query assertion for uniformly correct algorithms. Its additional restriction $n\ge12$ ensures that the cited top-selection reduction meets the underlying requirement $k\ge6$.</p><p>For the upper bound, the source supplies the joint high-probability termination and correctness guarantee used in Section 4. Choosing<br>$$
+\alpha=\frac{1}{4(C+1)}
+$$<br>satisfies the required parameter restriction because its cross-multiplied form is $C(l-2)\ge0$. The dependence of the resulting constant on fixed $C$ is appropriately retained. [Ren, Liu, and Shroff, Theorems 1, 3, and 5](https://arxiv.org/pdf/1806.02970).</p><p>The qualification concerning $C=1$ is correct and prevents an unjustified assertion of the lower bound for every restricted ratio class.</p><p><b>Finding:</b> The cited applications are supported; no hardness conclusion follows from them.</p><h3>7. Proposition 4: Truncation and restart</h3><p>Under the stated query-algorithm model, the construction and calculations are valid.</p><p>Fresh runs preserve the uniform guarantee conditional on reaching a stage. The joint guarantee implies both that the budget-overrun probability is at most $\eta_r$ and that an incorrect return within budget has probability at most $\eta_r$.</p><p>The reach-event bound is sufficient for almost-sure termination. The union bound over incorrect returns gives total error probability at most $\delta$.</p><p>The pathwise query bound and its expectation are valid by nonnegativity. Both geometric-series identities are correct, and substituting them gives precisely the displayed expectation bound. The stated parameter range makes the additive ceiling terms absorbable into $O_C(HL)$.</p><p>By Proposition 2, transferring this guarantee to the independently sampled society is justified.</p><p><b>Finding:</b> Correct. The output properly distinguishes the original high-probability guarantee from the expectation guarantee established by the restart construction.</p><h3>8. Final adjudication and feedback</h3><p>The subsidiary results constitute genuine proved content. No central false step, missing lemma, or unsupported theorem application was found.</p><p>The minimum repair is to qualify the reduction-size sentence identified above. A computational classification would additionally require a specified computational problem, but supplying one would change the task rather than repair these proofs. The query results and explicit-support result do not establish a representation-dependent classification of one common computational problem.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

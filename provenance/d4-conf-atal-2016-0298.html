@@ -1,0 +1,187 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Achieving Fully Proportional Representation by Clustering Voters — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Achieving Fully Proportional Representation by Clustering Voters <span style="font-weight:normal;color:#8a7350">(d4-conf-atal-2016-0298)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 1 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>If the satisfaction function used by R is polynomially bounded, then the clustering procedure runs in polynomial time. Naturally, the clustering heuristic never outputs a solu- tion that is worse than the initial assignment. Also, as we will also see in the experimental evaluation of our heuristics, the choice of the initial committee W1 is very important and needs to balance two factors. On the one hand, the commit- tee W1 should be of a relatively high quality, so that the algorithm starts near a very good solution.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), committee size \(k\), complete ranking types \(T\), rational masses \(\mu\), satisfaction function \(\gamma\), an initial committee \(W_1\), and canonical deterministic tie-breaking, repeatedly compute a maximum-satisfaction assignment \(x_{t,c}\), replace each representative by a candidate maximizing satisfaction over its assigned mass, and recompute the assignment; determine the first terminal pair \((W,x)\) and the complexity of doing so in the mass bit model.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C=\{c_1,\ldots,c_m\}\), \(1\le k\le m\), and let \(W_1\subseteq C\) have size \(k\). Use the Chamberlin–Courant assignment rule.<br>A society is given by its support: the list of the \(\tau\) strict complete ranking types with positive mass, each mass \(\mu_t\) a binary rational, with \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible rankings. Let \(L\) be the total input bit length.<br>The input satisfaction table \(\gamma:\{1,\ldots,m\}\to\mathbb Z_{\ge0}\) is nonincreasing and satisfies \(\gamma(1)\le p(m)\), for a fixed polynomial \(p\). Put \(s_{t,c}=\gamma(\operatorname{rank}_t(c))\).<br>For a committee \(W\), an assignment consists of divisible masses \(x_{t,c}\ge0\), with \(\sum_c x_{t,c}=\mu_t\) and \(x_{t,c}=0\) outside \(W\); there are no representative capacity constraints. Choose the lexicographically least assignment maximizing \(\sum_{t,c}x_{t,c}s_{t,c}\), ordering coordinates by the listed types and candidate indices.<br>Compute \(x_1\) for \(W_1\). At iteration \(i\ge2\), each \(c\in W_{i-1}\) chooses a candidate \(d\in C\) maximizing \(\sum_t x_{i-1,t,c}s_{t,d}\); retain \(c\) if it is a maximizer, and otherwise choose the smallest-index maximizer. Form \(W_i\) from the distinct choices, fill any vacant places with the smallest-index candidates outside that set, and compute \(x_i\) canonically as above.<br>Stop at the first \(i\ge2\) with \(x_i=x_{i-1}\), comparing matrices on all of \(T\times C\), and output \((W_i,x_i)\).</p><p>Is computing this first terminal pair polynomial-time solvable in \(m,\tau,k,L\), or is it NP-hard?</p><p>For explicit finite electorates, the corresponding clustering procedure has a polynomial-time bound when integer satisfaction scores are polynomially bounded and representative ties favor incumbents ([source](https://www.ifaamas.org/Proceedings/aamas2016/pdfs/p296.pdf)). No result settling the specified rational-mass iteration was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The assignment rule was unspecified; selected Chamberlin–Courant, the uncapacitated interpretation, from the two rules covered by the anchor.</li><li>Normalized positive rational masses to sum to one and allowed each type&#x27;s mass to be split among representatives.</li><li>Restored the anchor&#x27;s restriction to nonnegative, nonincreasing integer satisfaction scores bounded by a fixed polynomial in the number of candidates.</li><li>Made canonical assignment tie-breaking precise using the lexicographically least optimal matrix in input type and candidate order; representative ties retain the incumbent before using candidate order.</li><li>Restored the omitted committee completion step: merge duplicate representative choices and fill vacancies deterministically by candidate order.</li><li>Defined termination by equality of consecutive assignments, including zero columns for candidates outside the committee, and required a nonempty size-k initial committee with 1 ≤ k ≤ m.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial results: a new polynomial case and an exact three-level simulation</h3><h3>1. Status</h3><p>I do not resolve the general polynomial-time-versus-hardness question.</p><p>I prove two additional results:</p><ul><li>The iteration is polynomial-time computable when the number of <b>distinct mass values</b> is fixed, independently of their denominators.</li><li>A precisely defined paired-candidate process with arbitrary utilities in $\{0,1,2\}$ can be simulated, update for update, by the specified ranking-based procedure using a common satisfaction table with values $\{0,1,2\}$. The simulation never produces collisions or requires committee filling.</li></ul><p>The second result supplies a concrete restricted process whose endpoint hardness would establish hardness for the original task. I do not prove that remaining hardness claim.</p><h3>2. Canonical assignments, strict improvement, and exact computation</h3><p>Identify candidates with their indices. For a committee $W$, define<br>$$
+h_t(W)=\max_{c\in W}s_{t,c},
+\qquad
+a_W(t)=\max\{c\in W:s_{t,c}=h_t(W)\}.
+$$</p><h3>Lemma 1: the canonical assignment is indivisible</h3><p>The prescribed canonical assignment is<br>$$
+x_{W,t,c}=
+\begin{cases}
+\mu_t,&amp;c=a_W(t),\\
+0,&amp;c\ne a_W(t).
+\end{cases}
+$$</p><p><b>Proof.</b> For each type $t$, every feasible assignment satisfies<br>$$
+\sum_{c\in W}x_{t,c}s_{t,c}\le \mu_t h_t(W).
+$$<br>There are no capacity constraints, so these bounds can be attained simultaneously.</p><p>A maximizing assignment can place positive mass only on satisfaction-maximizing candidates: any positive allocation below $h_t(W)$ produces a strictly positive loss that another type cannot compensate for.</p><p>Within the maximizing candidates of a row, lexicographic minimization sets all coordinates before the largest-index maximizing candidate to zero. This is feasible, and the row-sum constraint then places the entire mass on that last candidate. Different rows have independent constraints, proving the formula. $\square$</p><p>Thus define the committee score by<br>$$
+F(W)=\sum_{t=1}^{\tau}\mu_t h_t(W).
+$$</p><h3>Lemma 2: changing any representative strictly increases the committee score</h3><p>Let $\phi(c)$ be the choice made by incumbent $c\in W$. If $\phi(c)\ne c$, then<br>$$
+\sum_t x_{W,t,c}s_{t,\phi(c)}
+&gt;
+\sum_t x_{W,t,c}s_{t,c},
+$$<br>and $\phi(c)\notin W$.</p><p>Moreover, if $W&#x27;$ is the completed next committee, any representative change implies<br>$$
+F(W&#x27;)&gt;F(W).
+$$</p><p><b>Proof.</b> Incumbent-favoring ties give the first strict inequality.</p><p>If type $t$ is assigned to $c$, then $s_{t,c}\ge s_{t,d}$ for every $d\in W$. Consequently,<br>$$
+\sum_t x_{W,t,c}s_{t,c}
+\ge
+\sum_t x_{W,t,c}s_{t,d}
+\qquad(d\in W).
+$$<br>A strictly improving replacement therefore lies outside $W$.</p><p>To handle simultaneous changes and collisions, define<br>$$
+y_{t,d}=\sum_{\{c\in W:\phi(c)=d\}}x_{W,t,c}.
+$$<br>This assignment has row sums $\mu_t$, and every candidate receiving positive mass belongs to $W&#x27;$. It is therefore feasible for $W&#x27;$. Its score is<br>$$
+\sum_{c\in W}\sum_t x_{W,t,c}s_{t,\phi(c)}.
+$$<br>Each incumbent weakly improves its cluster score, and every changed incumbent strictly improves it. Hence, if any incumbent changes,<br>$$
+F(W&#x27;)
+\ge
+\sum_{c\in W}\sum_t x_{W,t,c}s_{t,\phi(c)}
+&gt;
+F(W).
+$$<br>$\square$</p><p>If no incumbent changes, the committee and its canonical assignment remain unchanged. Conversely, equal consecutive assignment matrices have equal scores, so Lemma 2 excludes a representative change. Therefore the specified stopping condition is equivalent to having no representative changes.</p><p>Let $I$ be the first terminal iteration index. Since every nonterminal transition strictly increases $F$, no committee repeats before the terminal comparison. There are only $\binom{m}{k}$ committees, giving<br>$$
+I\le \binom{m}{k}+1.
+$$<br>In particular, termination always occurs.</p><p>Each iteration is computable exactly in polynomial time. To see the bit-complexity bound, write each mass as a binary-encoded fraction and let $Q$ be the product of its denominators. The bit length of $Q$ is at most the sum of their bit lengths. With $w_t=Q\mu_t$, representative comparisons use the integers<br>$$
+\sum_{\{t:a_W(t)=c\}}w_t s_{t,d}.
+$$<br>These are bounded by $Q\gamma(1)$ and have polynomial bit length. Canonical ownership, representative selection, filling, and assignment comparison all require polynomially many arithmetic operations.</p><p>Keeping only the current committee, owners, and arithmetic data uses polynomial space. Thus the endpoint is computable in polynomial space and in time<br>$$
+2^{O(m)}\operatorname{poly}(m,\tau,k,L).
+$$</p><p>The elementary boundary cases are also settled: $k=m$ gives $I=2$, and $k=1$ gives $I\le3$, because the first representative update chooses a population-wide satisfaction maximizer.</p><h3>3. New polynomial case: finitely many distinct masses</h3><p>Let $\alpha_1,\ldots,\alpha_d$ be the distinct values among the positive masses. Define<br>$$
+T_j=\{t:\mu_t=\alpha_j\},
+\qquad
+n_j=|T_j|,
+\qquad
+\Delta=\gamma(1)-\gamma(m).
+$$</p><h3>Theorem 3</h3><p>For every instance,<br>$$
+I\le 1+\prod_{j=1}^{d}(n_j\Delta+1).
+$$<br>Consequently, for each fixed $d$, the first terminal pair is computable in polynomial time in $m,\tau,k,L$.</p><p><b>Proof.</b> For every committee $W$, define the integer<br>$$
+Z_j(W)=\sum_{t\in T_j}\bigl(h_t(W)-\gamma(m)\bigr).
+$$<br>Since satisfaction values are integers,<br>$$
+Z_j(W)\in\{0,1,\ldots,n_j\Delta\}.
+$$<br>Also, using $\sum_t\mu_t=1$,<br>$$
+F(W)
+=
+\gamma(m)+\sum_{j=1}^{d}\alpha_j Z_j(W).
+$$</p><p>If two visited committees have the same vector<br>$$
+\bigl(Z_1(W),\ldots,Z_d(W)\bigr),
+$$<br>they have the same score. Lemma 2 therefore prevents repetition of such a vector across strict transitions.</p><p>There are at most<br>$$
+\prod_{j=1}^{d}(n_j\Delta+1)
+$$<br>possible vectors. If there are $s$ strict transitions, the initial committee and the committees reached through those transitions give $s+1$ distinct vectors. The terminal comparison occurs at index $s+2$, proving the bound.</p><p>Finally,<br>$$
+\prod_{j=1}^{d}(n_j\Delta+1)
+\le
+(\tau\Delta+1)^d.
+$$<br>For fixed $d$, this is polynomial because $\Delta\le p(m)$. Combining it with polynomial time per iteration completes the proof. $\square$</p><p>This argument does not require the distinct masses to be separated numerically, or their denominators to be small. For example, it applies to instances with arbitrarily large binary denominators but only two distinct mass values.</p><h3>4. New exact simulation using three satisfaction levels</h3><h3>4.1. The paired utility process</h3><p>Define the following auxiliary process.</p><p>There are $q\ge2$ disjoint candidate pairs<br>$$
+P_g=\{2g-1,2g\},
+\qquad
+g=1,\ldots,q.
+$$<br>A state $W$ contains exactly one candidate from each pair.</p><p>There are types with positive rational weights $w_t$ summing to one and arbitrary utilities<br>$$
+u_{t,c}\in\{0,1,2\}
+\qquad(c\in\{1,\ldots,2q\}).
+$$</p><p>At each state:</p><ul><li>Type $t$ is assigned wholly to the largest-index member of $W$ maximizing $u_{t,c}$.</li><li>Each selected candidate optimizes its assigned cluster’s weighted utility <b>within its own pair</b>, retaining itself in a tie.</li><li>All pair choices are updated simultaneously.</li><li>The process stops at its first update with no pair change.</li></ul><p>This auxiliary definition does not assume that utility rows arise from rankings or share a common multiset of utilities.</p><h3>Theorem 4: exact simulation</h3><p>Every instance of this paired process can be transformed in polynomial time into an instance of the original procedure with<br>$$
+m=8q,
+\qquad
+k=q,
+$$<br>and satisfaction table<br>$$
+\gamma(r)=
+\begin{cases}
+2,&amp;1\le r\le 2q,\\
+1,&amp;2q&lt;r\le 4q,\\
+0,&amp;4q&lt;r\le 8q.
+\end{cases}
+$$</p><p>Starting from the corresponding committee, the original procedure produces exactly the paired process’s committees at every iteration. No added candidate enters a committee, no collision occurs, and no filling is required. The first terminal iteration agrees in both processes.</p><p>This construction belongs to the task’s allowed input family whenever $p(8q)\ge2$.</p><h3>4.2. Construction of the rankings and masses</h3><p>Put $n=2q$. Retain the $n$ original candidates, with their original indices. Add two sets of candidates, indexed after them:</p><ul><li>a set $D_0$ of size $n-2$;</li><li>a set $D_1$ of size $2n+2$.</li></ul><p>The total number is<br>$$
+n+(n-2)+(2n+2)=4n=8q.
+$$</p><p>We construct each satisfaction row to have exactly $n$ entries equal to $2$, exactly $n$ equal to $1$, and exactly $2n$ equal to $0$. Such a row is realizable by a strict complete ranking under the displayed common table: rank all score-$2$ candidates first, then all score-$1$ candidates, then all score-$0$ candidates, ordering candidates strictly within each block.</p><p><b>Original types.</b> For type $t$, preserve its utilities on the original candidates:<br>$$
+s_{t,c}=u_{t,c}.
+$$<br>Give it score $0$ on every member of $D_0$.</p><p>Let<br>$$
+a_{t,j}=|\{c\in\{1,\ldots,n\}:u_{t,c}=j\}|
+\qquad(j=0,1,2).
+$$<br>Then $a_{t,0}+a_{t,1}+a_{t,2}=n$. Assign scores on $D_1$ with the following multiplicities:<br>$$
+\begin{array}{c|c}
+\text{Score}&amp;\text{Multiplicity}\\ \hline
+2&amp;n-a_{t,2}\\
+1&amp;n-a_{t,1}\\
+0&amp;n+2-a_{t,0}
+\end{array}
+$$<br>These multiplicities are nonnegative and sum to $2n+2$. The complete row consequently has the required counts $n,n,2n$.</p><p><b>Guard types.</b> For each pair $P_g$, add a type $b_g$ with:</p><ul><li>score $2$ on the two members of $P_g$;</li><li>score $0$ on all other original candidates;</li><li>score $2$ on every member of $D_0$;</li><li>score $1$ on $n$ members of $D_1$, and score $0$ on the other $n+2$.</li></ul><p>Its score counts are again exactly $n,n,2n$.</p><p>Assign masses<br>$$
+\mu_t=\frac{w_t}{3q+1},
+\qquad
+\mu_{b_g}=\frac{3}{3q+1}.
+$$<br>They are positive and satisfy<br>$$
+\sum_t\mu_t+\sum_{g=1}^{q}\mu_{b_g}
+=
+\frac{1+3q}{3q+1}
+=
+1.
+$$<br>Their binary encoding lengths are polynomially bounded by the auxiliary input length.</p><p>If constructed rankings coincide, combine their masses. This preserves every representative score and committee update because coincident rankings have identical satisfaction rows and canonical owners. Guard rankings are distinct from one another, and from original-type rankings: on the nonempty set $D_0$, guards have score $2$ whereas original types have score $0$. Original-type assignments can be reconstructed from their original rows after computing the terminal committee.</p><h3>4.3. Proof of update correspondence</h3><p>Suppose the current committee $W$ contains exactly one original candidate from each pair.</p><p>For an original type, satisfaction on $W$ equals its auxiliary utility. Lemma 1 therefore gives exactly the auxiliary canonical owner.</p><p>Guard $b_g$ has score $2$ on its pair’s selected member and score $0$ on every other selected member. It is consequently assigned wholly to its pair’s selected member.</p><p>Fix a selected candidate $c\in P_g$, and let $c&#x27;$ be its counterpart. Let $B_c$ be the original types currently assigned to $c$, and define<br>$$
+H_c(d)=\sum_{t\in B_c}w_t s_{t,d}.
+$$<br>Multiply all scores of this cluster by $3q+1$, which does not change comparisons. The scores of its own pair are<br>$$
+6+H_c(c)
+\qquad\text{and}\qquad
+6+H_c(c&#x27;).
+$$<br>The constant $6$ comes from guard weight $3$ and guard satisfaction $2$.</p><p>Now consider all competing candidates.</p><p><b>Other original candidates and candidates in $D_1$.</b> The guard gives each of them satisfaction at most $1$. Original types have satisfaction at most $2$, and<br>$$
+\sum_{t\in B_c}w_t\le1.
+$$<br>Their cluster score is therefore at most<br>$$
+3+2\sum_{t\in B_c}w_t\le5.
+$$<br>The incumbent’s score is at least $6$, so none can maximize this cluster.</p><p><b>Candidates in $D_0$.</b> They receive score $2$ from the guard and score $0$ from every original type. Their cluster score is exactly $6$, which is at most the incumbent’s score.</p><p>It follows that:</p><ul><li>If $H_c(c&#x27;)\le H_c(c)$, the incumbent is a global maximizer and is retained.</li><li>If $H_c(c&#x27;)&gt;H_c(c)$, the counterpart has score strictly greater than the incumbent and strictly greater than every candidate outside the pair. It is the unique global maximizer.</li></ul><p>Since the counterpart is an original candidate,<br>$$
+H_c(c&#x27;)-H_c(c)
+=
+\sum_{t\in B_c}w_t\bigl(u_{t,c&#x27;}-u_{t,c}\bigr).
+$$<br>Thus the choice agrees exactly with the auxiliary pair-restricted update.</p><p>Every choice lies in its incumbent’s own pair. The pairs are disjoint, so all $q$ choices are distinct. There is no collision or vacancy. Starting from the corresponding initial committee, induction proves correspondence at every iteration.</p><p>Finally, whenever a pair changes, its guard’s positive mass moves between two different matrix coordinates. Hence consecutive assignment matrices differ. If no pair changes, the committee and canonical assignment remain identical. The first terminal iteration therefore agrees in both processes.</p><p>The construction and recovery of the auxiliary terminal committee are polynomial-time operations. This proves Theorem 4. $\square$</p><p>For completeness, the auxiliary endpoint always exists. On corresponding committees,<br>$$
+F_{\mathrm{constructed}}(W)
+=
+\frac{6q+\sum_t w_t\max_{c\in W}u_{t,c}}{3q+1}.
+$$<br>A paired change is a representative change in the constructed instance, so Lemma 2 strictly increases the auxiliary weighted score as well. There are only $2^q$ paired states.</p><h3>5. What remains open</h3><p>Theorem 3 gives a denominator-independent polynomial algorithm for an additional class of instances.</p><p>Theorem 4 shows that the common-ranking satisfaction table does not prevent the original procedure from expressing arbitrary three-valued utility rows in the paired process. It also shows that collisions and filling need not be involved in a potential hardness construction.</p><p>However, <b>the complexity of computing the paired process’s endpoint has not been established here</b>. The simulation is therefore a proved reduction framework, not a hardness proof. A hardness result for that endpoint would transfer immediately to the original problem, already with constant maximum satisfaction $2$.</p><p>Nor would an exponential trajectory alone settle endpoint hardness: an algorithm might compute the endpoint without following every update.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 1 and 5: general complexity classification: The assigned question remains unresolved. The fixed-$d$ polynomial bound addresses a restricted family, and Theorem 4 supplies a simulation without establishing hardness of the auxiliary endpoint problem. This is a scope deficiency, not an identified false step in the partial proofs.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial, with sound proved content.</b> The output explicitly declines to resolve the general complexity question. Its termination argument, polynomial algorithm for a fixed number of distinct masses, and conditional simulation theorem are correct as written. None establishes polynomial-time solvability or hardness for the full input family.</p><p>The unresolved target is a <b>major scope issue</b>, not an identified error in the proofs of the partial results.</p><h3>1. Canonical assignment</h3><p>Lemma 1 correctly characterizes the prescribed lexicographically least maximizing assignment.</p><p>For each type, the row contribution is bounded by $\mu_t h_t(W)$. Because rows have independent constraints and there are no capacities, all these bounds are simultaneously attainable. Consequently, a globally maximizing assignment cannot put positive mass on a candidate whose satisfaction is below that row’s maximum.</p><p>Among the maximizing candidates, lexicographic minimization in increasing candidate-index order places zero mass at every coordinate before the largest-index maximizer. The row-sum constraint then forces that candidate to receive all of $\mu_t$.</p><p>Thus the formula using $a_W(t)$ is correct. Ties in satisfaction, coordinates outside the committee, and the ordering of types introduce no omitted cases.</p><p><b>Finding:</b> correct and rigorous.</p><h3>2. Strict improvement and stopping</h3><p>The first inequality in Lemma 2 follows from the incumbent tie rule: an incumbent changes only when its current score is strictly below the maximum.</p><p>The claim that a changed representative lies outside $W$ is also justified. Every type assigned to $c$ weakly prefers $c$, in satisfaction terms, to every member of $W$. Summing with the nonnegative assignment masses preserves that inequality. An empty cluster has all representative scores equal to zero and therefore retains its incumbent.</p><p>The proposed assignment $y$ correctly handles simultaneous updates and collisions. Its row sums remain $\mu_t$, and all its positive coordinates lie in the completed committee. No capacity restriction prevents combining masses at a common selected candidate. Filling adds candidates without invalidating this assignment.</p><p>Its objective value is exactly the sum of the individual cluster scores after representative selection. Hence any change gives a strict increase in $F$.</p><p>The stopping equivalence follows:</p><ul><li>If no representative changes, the committee remains unchanged, and its canonical assignment remains unchanged.</li><li>If consecutive assignment matrices are equal, their objective values are equal, which excludes a representative change by Lemma 2.</li></ul><p><b>Finding:</b> correct and rigorous, including collisions and empty clusters.</p><h3>3. Termination, computational bounds, and boundary cases</h3><p>Strict improvement prevents a committee from recurring along the transitions preceding termination. If there are $s$ strict transitions, they visit $s+1$ distinct committees; the subsequent terminal comparison occurs at index $s+2$. This establishes<br>$$
+I\le \binom{m}{k}+1.
+$$</p><p>The exact arithmetic argument is valid. The product $Q$ of the input denominators has bit length bounded by their total encoding length, up to a routine additive constant. Each $w_t=Q\mu_t$ is an integer, and<br>$$
+\sum_t w_t=Q.
+$$<br>Thus every representative comparison integer is nonnegative and at most $Q\gamma(1)$. Its bit length is polynomial in the input length. Ownership, tie resolution, filling, and equality comparison can all be performed exactly in polynomial time per iteration.</p><p>Since $\binom{m}{k}\le 2^m$, the stated exponential-time bound follows. Retaining only the current state and arithmetic data gives polynomial space.</p><p>The boundary cases are correct:</p><ul><li>For $k=m$, every incumbent retains itself, so $I=2$.</li><li>For $k=1$, the first update chooses a population-wide maximizing candidate; that candidate is retained at the next update, so $I\le3$.</li></ul><p><b>Finding:</b> correct. These bounds establish termination and resource upper bounds, but do not settle the requested polynomial-time-versus-hardness question.</p><h3>4. Fixed number of distinct masses</h3><p>Theorem 3 is valid.</p><p>Each $h_t(W)-\gamma(m)$ is an integer between zero and $\Delta$, so<br>$$
+0\le Z_j(W)\le n_j\Delta.
+$$<br>The identity<br>$$
+F(W)=\gamma(m)+\sum_{j=1}^{d}\alpha_j Z_j(W)
+$$<br>correctly uses the normalization of the masses.</p><p>Repeated vectors would give repeated scores, which strict improvement excludes. Injectivity of the map from vectors to scores is unnecessary: the argument only needs equal vectors to imply equal scores.</p><p>There are at most<br>$$
+\prod_{j=1}^{d}(n_j\Delta+1)
+$$<br>vectors. Counting the initial state, strict transitions, and final comparison gives the claimed bound with the correct indexing.</p><p>For fixed $d$,<br>$$
+\prod_{j=1}^{d}(n_j\Delta+1)\le(\tau\Delta+1)^d
+$$<br>is polynomial because $\Delta\le p(m)$. The argument is independent of numerical separation between distinct masses and of the magnitudes of their denominators.</p><p>The restriction that $d$ is fixed is essential to the stated polynomial conclusion; the output states it explicitly.</p><p><b>Finding:</b> correct restricted polynomial-time result.</p><h3>5. Three-level simulation</h3><h3>Construction and admissibility</h3><p>The candidate counts are consistent:<br>$$
+n+(n-2)+(2n+2)=4n=8q.
+$$</p><p>For an original type, the multiplicities assigned on $D_1$ are nonnegative and sum to $2n+2$. Including the original candidates and $D_0$ gives exactly $n$ scores equal to two, $n$ equal to one, and $2n$ equal to zero.</p><p>For a guard, the corresponding counts are<br>$$
+2+(n-2)=n,\qquad n,\qquad (n-2)+(n+2)=2n.
+$$<br>Thus every constructed row is realizable by a strict complete ranking under the common table.</p><p>The constructed masses are positive, sum to one, and have polynomial encoding length. The ranking construction also has polynomial size.</p><p>The restriction $q\ge2$ ensures $D_0$ is nonempty. This supports the stated distinction between guard rankings and original-type rankings. Different guards also have different satisfaction rows on the original candidates.</p><p>Combining identical rankings preserves canonical ownership and all weighted representative scores. Recovering original-type assignments from the terminal committee is justified by their preserved utility rows.</p><p>The satisfaction-bound qualification is explicit: this construction belongs to the permitted family when $p(8q)\ge2$. The simulation should be read with that qualification.</p><p><b>Finding:</b> correct construction.</p><h3>Update correspondence</h3><p>At a corresponding committee, original types have precisely their auxiliary owners. Each guard is assigned uniquely to the selected candidate in its own pair.</p><p>After multiplying cluster scores by $3q+1$, the two own-pair candidates have scores<br>$$
+6+H_c(c),\qquad 6+H_c(c&#x27;).
+$$</p><p>Every other original candidate or member of $D_1$ has score at most<br>$$
+3+2\sum_{t\in B_c}w_t\le5.
+$$<br>Every member of $D_0$ has score exactly six. These bounds are valid even when $B_c$ is empty.</p><p>If the counterpart does not strictly improve $H_c$, the incumbent is a global maximizer and is retained. If it does strictly improve $H_c$, it beats the incumbent and every candidate outside the pair, making it the unique global maximizer.</p><p>Consequently, every update agrees with the auxiliary process. Choices stay within disjoint pairs, so collisions and filling cannot occur.</p><p>A changed pair moves its guard’s positive mass between different candidate coordinates, ensuring that consecutive assignment matrices differ. An unchanged committee has the same canonical assignment. Therefore the stopping events correspond exactly.</p><p>Finally, the displayed potential identity has the correct guard contribution $6q$, and establishes termination of the auxiliary process through Lemma 2.</p><p><b>Finding:</b> correct conditional reduction framework. No endpoint-hardness conclusion follows without a hardness result for the auxiliary process.</p><h3>6. Blocking issue and actionable feedback</h3><p><b>Major — the assigned general complexity question remains unresolved.</b> Neither the fixed-$d$ bound nor the simulation classifies the full rational-mass problem.</p><p>No repair to the proved lemmas is needed on the evidence presented. To complete the assignment, the prover must supply either a polynomial-time algorithm for unrestricted instances or a hardness proof for the specified endpoint computation. If pursuing the simulation, the missing component is endpoint hardness for the precisely defined paired process, with the satisfaction-bound qualification preserved.</p><p>An exponential trajectory alone would not supply that component. The output correctly acknowledges this limitation.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,195 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ijcai-2022-0014 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ijcai-2022-0014 <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2022-0014)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved_with_minor_gaps · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> Such a decentralized Thompson-sampling policy exists under the stated exact public-matrix model. It satisfies the stronger regret upper bound $R_p(T)\le O(m^2+L+\log(\tau+1)+\log(1/\Delta))$ with the required polynomial per-employer, per-round computation.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Let ρ = λN−1(1 −λ). Following Algorithm 1, the stable regret of each player pi satisﬁes Ri(T) ≤ 2N 5K2 log T ρN 4  4 + 6 log T ρ(∆−2ε)2 + C ρε6  + 6 + 6N 4 ρN 4  · ∆i,max (3) =O N 5K2 log2 T ρN 4∆2 · ∆i,max  , (4) for any ε such that ∆−2ε &gt; 0, where C is a universal constant. Due to the space limit, we provide the proof sketch as well as the full proof in the Appendix.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite employer and worker type sets \(P,A\), rational employer masses \((\alpha_p)_{p\in P}\) summing to \(1\), per-capita worker supplies \((\beta_a)_{a\in A}\) with total supply at least \(1\), known worker-type priorities over employer types, and fixed but policy-unknown Bernoulli reward means \((\mu_{p,a})\) with positive minimum gap \(\Delta\), consider atomless employers who learn from their own feedback and face priority-based acceptance at each round. Is there a decentralized Thompson-sampling policy, with per-employer computation polynomial in \(|P|,|A|,L,1/\Delta\), whose expected regret for every employer type \(p\)—measured against its minimum per-capita payoff over stable mass assignments, multiplied by \(T\)—is \(O(\operatorname{poly}(|P|,|A|,L,1/\Delta)\log^2 T)\), uniformly in the absolute population size?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of its \(\tau\) positive-mass types, each mass a binary rational; \(\tau\) is the support size, not the number of possible types. Here the two sides have finite supports \(P,A\), \(\tau=|P|+|A|\), \(m=|A|\ge2\), and public input bit length \(L\).<br>Employer masses satisfy \(\alpha_p&gt;0\) and \(\sum_p\alpha_p=1\); worker supplies satisfy \(\beta_a&gt;0\) and \(\sum_a\beta_a\ge1\). Each worker type has a public strict priority order \(\succ_a\) over employer types. Everyone finds every opposite-side type acceptable, and employers are indifferent between workers of the same type.<br>The fixed means \(\mu_{p,a}\in[0,1]\) induce strict employer preferences, with \(\Delta=\min_{p,a\ne b}|\mu_{p,a}-\mu_{p,b}|&gt;0\). Neither the means nor \(\Delta\) are supplied to the policy.<br>Each round, every employer requests one worker type. Each worker type accepts requesting mass up to its supply, in descending employer-type priority; a partially accepted employer type is rationed uniformly across its requesting members. Private randomization is interpreted through exact population laws, including the distribution of individual histories.<br>An accepted employer receives an independent Bernoulli reward with its pair&#x27;s mean and observes that reward; rejection gives zero payoff and no reward observation. The accepted mass matrix is public after each round. Employers retain individual histories; rewards and posterior statistics cannot be pooled or communicated.<br>A decentralized Thompson-sampling policy uses only public input, past accepted mass matrices, its own history, and private randomness. Each employer maintains independent \(\operatorname{Beta}(1+s_a,1+f_a)\) posteriors from its own accepted successes and failures, and selects the largest fresh posterior sample in a nonempty history-dependent eligible set; randomized retention of its previous request is allowed.<br>A stable mass assignment is \(x\ge0\) with \(\sum_a x_{p,a}=\alpha_p\) and \(\sum_p x_{p,a}\le\beta_a\), having no \(p,a,b\) with \(x_{p,b}&gt;0\), \(\mu_{p,a}&gt;\mu_{p,b}\), and either \(\sum_qx_{q,a}&lt;\beta_a\) or \(x_{q,a}&gt;0\) for some \(p\succ_a q\).<br>Let \(v_p^-\) be the minimum of \(\alpha_p^{-1}\sum_a\mu_{p,a}x_{p,a}\) over stable mass assignments. Define \(R_p(T)=Tv_p^- -\mathbb E[\sum_{t=1}^T Y_p(t)]\), where \(Y_p(t)\) is the payoff of a representative employer sampled from type \(p\).<br>Count arithmetic on reward counters and posterior sampling as unit-cost operations; all structural rational data retain their binary encoding.<br>Does a decentralized Thompson-sampling policy exist with per-employer, per-round computation polynomial in \(m,\tau,L,1/\Delta\) and \(R_p(T)=O(\operatorname{poly}(m,\tau,L,1/\Delta)\log^2 T)\) for every \(p\) and \(T\ge2\), with constants independent of absolute population scale, or is this guarantee impossible?<br>For finite one-to-one markets, conflict-avoiding Thompson sampling achieves player-pessimal stable regret of order \(\log^2 T\), with exponential dependence on the number of employers ([Kong–Yin–Li](https://arxiv.org/pdf/2204.12048)).<br>No result settling this specified atomless, individual-feedback policy question was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Defined support size across both sides, set m to the worker support size, and defined L using public structural input; unknown reward means are not computational input.</li><li>Required positive supplies, at least two worker types, strict employer preferences, and strict worker priorities to make acceptance and the minimum gap unambiguous; all opposite-side types remain acceptable.</li><li>Resolved within-employer-type priority ties by uniform rationing, independently refreshed each round; independent individual randomization is interpreted through exact population laws over histories.</li><li>Carried public disclosure of successful matches into the mass model as disclosure of the accepted mass matrix; individual rewards and posterior statistics remain private.</li><li>Defined stable mass assignments by positive-mass strict blocking, allowing blocks involving unused worker supply and excluding displacement of equally prioritized members of the same employer type.</li><li>Specified type regret as representative-employer expected payoff against the minimum stable type-average payoff.</li><li>Specified the Thompson-sampling policy class through individual Beta posteriors, posterior-maximizing choices within history-dependent eligible sets, and permitted randomized delays.</li><li>Kept the gap unknown to the policy, as in the discrete algorithm, and used a unit-cost counter-arithmetic and posterior-sampling convention to preserve the stated horizon-independent per-round computation requirement.</li><li>Restricted the regret bound to horizons at least two to avoid the zero logarithm at horizon one; population-scale uniformity refers to rescaling the atomless society.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>A policy exists under the stated exact-population model</h3><p>I interpret the regret requirement as the conventional upper bound on $R_p(T)$.</p><p>The exact public mass matrices make it possible to learn every employer type’s strict preference order using small cohorts that run ordinary two-arm Thompson sampling. No employer shares rewards or posterior parameters. After learning the orders, employers independently implement a stable mass assignment.</p><p>The resulting policy satisfies the stronger bound<br>$$
+R_p(T)\le C\left(m^2+L+\log(\tau+1)+\log(1/\Delta)\right)
+$$<br>for an absolute constant $C$, every employer type $p$, and every $T\ge2$. Its per-employer, per-round computation is polynomial in the parameters requested in the question.</p><p>The construction uses the stated permission to compute from public accepted mass matrices. Their exactness is essential.</p><h3>1. A two-round Thompson-sampling identity</h3><p>Consider an employer whose posteriors for worker types $a$ and $b$ are both initially $\operatorname{Beta}(1,1)$. Suppose it uses eligible set $\{a,b\}$ for two rounds, and its first-round request is accepted.</p><p>In the first round it chooses each type with probability $1/2$.</p><p>If it first chooses $a$, its second-round probability of choosing $a$ is $2/3$ after a success and $1/3$ after a failure. Indeed, for an independent uniform sample $U$ and any random variable $Z$ supported on $[0,1]$,<br>$$
+\Pr(Z&gt;U)=\mathbb E[Z].
+$$<br>The relevant posterior means are those of $\operatorname{Beta}(2,1)$ and $\operatorname{Beta}(1,2)$.</p><p>If it first chooses $b$, its second-round probability of choosing $a$ is $1/3$ after a success and $2/3$ after a failure. Therefore its unconditional second-round probability of requesting $a$ is<br>$$
+\begin{aligned}
+Q_{p,a}
+&amp;=\frac12\left(\frac23\mu_{p,a}+\frac13(1-\mu_{p,a})\right)\\
+&amp;\quad+\frac12\left(\frac13\mu_{p,b}+\frac23(1-\mu_{p,b})\right)\\
+&amp;=\frac12+\frac{\mu_{p,a}-\mu_{p,b}}6.
+\end{aligned}
+$$</p><p>This identity includes boundary means. It requires acceptance in the first round; second-round acceptance does not affect the request probability.</p><p>Under the exact-population interpretation, a cohort of type-$p$ employers with mass $h_p$ consequently requests mass<br>$$
+h_p\left(\frac12+\frac{\mu_{p,a}-\mu_{p,b}}6\right)
+$$<br>at type $a$ in the second round.</p><h3>2. Learning all orders when $m\ge3$</h3><p>Fix a public numbering of the worker types. Let<br>$$
+N=\binom m2,\qquad
+\beta_{\min}=\min_a\beta_a,\qquad
+\eta=\frac12\min\{1,\beta_{\min}\},\qquad
+q=\frac{\eta}{N}.
+$$<br>All these quantities are positive encoded rationals.</p><p>For every unordered pair $E\subseteq A$ of size two, choose publicly a filler type<br>$$
+f(E)\in A\setminus E.
+$$</p><p>At initialization, every employer independently chooses a permanent private label:</p><ul><li>each pair label $E$ has probability $q$;</li><li>a main label has probability $1-\eta$.</li></ul><p>Thus each pair cohort within employer type $p$ has mass<br>$$
+h_p=\alpha_pq.
+$$<br>The total mass of all pair cohorts, across all employer types, is $\eta$.</p><p>Process the $N$ pairs in a fixed public order, using two rounds per pair. During the two rounds for $E=\{a,b\}$:</p><ul><li>employers with label $E$ use eligible set $\{a,b\}$;</li><li>employers with another pair label $E&#x27;$ use singleton eligible set $\{f(E&#x27;)\}$;</li><li>main-label employers use singleton eligible set $\{f(E)\}$.</li></ul><p>Outside its own two-round probe, a pair cohort always requests its filler type.</p><h3>Fresh posteriors and acceptance</h3><p>Before cohort $E=\{a,b\}$ starts its probe, its members have requested only $f(E)$, which is outside $E$. Their posteriors for $a$ and $b$ are therefore still independent $\operatorname{Beta}(1,1)$ distributions.</p><p>During this probe, no main-label employer requests $a$ or $b$. Consequently, the total requesting mass at either tested type is at most $\eta$. Since<br>$$
+\eta\le\frac{\beta_{\min}}2&lt;\beta_a,\beta_b,
+$$<br>every request at either tested type is accepted in both rounds. This conclusion is independent of worker priorities.</p><h3>Public signal</h3><p>Choose $a$ as the publicly designated first member of $E$. The type-$p$ background mass requesting $a$ is the known rational<br>$$
+B_{p,E,a}
+=\alpha_pq\,\bigl|\{E&#x27;\ne E:f(E&#x27;)=a\}\bigr|.
+$$</p><p>Let $X^E_{p,a}$ be the public accepted mass at $(p,a)$ in the second round of this probe. The identity from Section 1 and full acceptance give<br>$$
+X^E_{p,a}
+=B_{p,E,a}+\frac{h_p}{2}
++\frac{h_p}{6}(\mu_{p,a}-\mu_{p,b}).
+$$</p><p>Hence comparison with the known rational threshold<br>$$
+B_{p,E,a}+\frac{h_p}{2}
+$$<br>reveals whether $\mu_{p,a}&gt;\mu_{p,b}$.</p><p>Every employer type is probed simultaneously. After $2N$ rounds, the public matrices contain a signal for every employer-type preference comparison.</p><h3>3. Learning all orders when $m=2$</h3><p>Write the worker types as $1,2$, and define<br>$$
+B=\beta_1+\beta_2,\qquad
+\gamma=\frac{\beta_1}{B},\qquad
+q=\min\{\gamma,1-\gamma\}.
+$$<br>Here $B\ge1$ and $q&gt;0$.</p><p>Every employer independently chooses one of three private cohorts, with probabilities<br>$$
+\gamma-\frac q2,\qquad
+1-\gamma-\frac q2,\qquad
+q.
+$$<br>The first cohort requests type $1$ in both probe rounds; the second requests type $2$; the third uses eligible set $\{1,2\}$ in both rounds.</p><p>In the first round, the total request masses are<br>$$
+r_1=\gamma,\qquad r_2=1-\gamma.
+$$<br>Because $B\ge1$,<br>$$
+\gamma\le\beta_1,\qquad 1-\gamma\le\beta_2.
+$$<br>Thus every first-round request is accepted.</p><p>Put $h_p=\alpha_pq$. Section 1 gives the type-$p$ second-round request mass<br>$$
+r_{p,1}
+=\alpha_p\gamma+\frac{h_p}{6}(\mu_{p,1}-\mu_{p,2}).
+$$<br>Second-round rationing may occur. The following observation handles it.</p><h3>Reconstruction from accepted masses</h3><p>Let $x_{p,a}$ be any round’s accepted matrix, let $r_{p,a}$ be its request matrix, and define<br>$$
+c_a=\sum_p x_{p,a},\qquad s_a=\beta_a-c_a.
+$$</p><p>If $s_a&gt;0$, every request at type $a$ was accepted, so<br>$$
+x_{p,a}=r_{p,a}\quad\text{for every }p.
+$$<br>Thus:</p><ul><li>if $s_1&gt;0$, then $r_{p,1}=x_{p,1}$;</li><li>if $s_2&gt;0$, then $r_{p,1}=\alpha_p-x_{p,2}$.</li></ul><p>If both slacks vanish, total accepted mass is $B$. Total requesting mass is $1$, so $B\le1$. Since $B\ge1$, all requests were accepted and $r_{p,1}=x_{p,1}$.</p><p>Therefore the accepted matrix determines every type’s request masses. Applied to the second probe round, it determines the sign of<br>$$
+r_{p,1}-\alpha_p\gamma
+=\frac{h_p}{6}(\mu_{p,1}-\mu_{p,2}).
+$$</p><p>The next section gives a reconstruction procedure that avoids exact zero tests and arbitrarily delicate slack comparisons.</p><h3>4. Finite precision suffices, without knowing $\Delta$</h3><p>Let $n=|P|$. Public matrix entries are exact observations, but the policy only needs finitely many binary digits of them. At precision level $k$, use dyadic approximations with error at most<br>$$
+\varepsilon=2^{-k}.
+$$<br>All computations thereafter are on encoded rationals.</p><p>For $m\ge3$, approximating $X^E_{p,a}$ to this accuracy approximates its comparison signal with error at most $\varepsilon$.</p><p>For $m=2$, the following bound suffices.</p><h3>Robust reconstruction lemma</h3><p>Suppose<br>$$
+|z_{p,a}-x_{p,a}|\le\varepsilon
+$$<br>for every $p,a$. Compute<br>$$
+\widetilde s_a=\beta_a-\sum_pz_{p,a},
+$$<br>and choose $j\in\{1,2\}$ maximizing $\widetilde s_j$, with a fixed tie rule. Define<br>$$
+\widetilde r_{p,1}=
+\begin{cases}
+z_{p,1},&amp;j=1,\\
+\alpha_p-z_{p,2},&amp;j=2.
+\end{cases}
+$$<br>Then<br>$$
+|\widetilde r_{p,1}-r_{p,1}|
+\le(2n+1)\varepsilon.
+$$</p><p><b>Proof.</b> Each approximate slack has error at most $n\varepsilon$.</p><p>If $s_j&gt;0$, all requests at the selected worker type were accepted. The selected reconstruction formula is then correct up to $\varepsilon$.</p><p>Suppose $s_j=0$. If the other slack also vanishes, Section 3 shows that all requests were accepted, giving the same bound.</p><p>Otherwise, writing the other worker type as $i$, the choice of $j$ implies<br>$$
+s_i\le2n\varepsilon.
+$$<br>The total rejected mass is<br>$$
+d=1-c_1-c_2=1-B+s_i\le s_i\le2n\varepsilon.
+$$<br>For each employer type, its rejected mass is at most $d$. Either candidate $x_{p,1}$ or $\alpha_p-x_{p,2}$ differs from $r_{p,1}$ by at most that rejected mass. Adding the approximation error gives the stated bound. $\square$</p><h3>Certified decoding</h3><p>Use the common error bound<br>$$
+E_k=(2n+1)2^{-k}.
+$$<br>A comparison is certified positive when its approximate signal exceeds $E_k$, and certified negative when it is less than $-E_k$. These certifications cannot be wrong.</p><p>After the $2N$ probe rounds, employers increase $k$ by one each round until every comparison is certified. While waiting, they use a fixed singleton eligible set. This stopping rule does not use $\Delta$.</p><p>In both constructions, every true comparison signal has magnitude at least<br>$$
+\frac{\alpha_{\min}q\Delta}{6},
+\qquad
+\alpha_{\min}=\min_p\alpha_p.
+$$<br>Consequently all comparisons are certified by precision<br>$$
+K=\left\lceil
+\log_2\frac{24(2n+1)}{\alpha_{\min}q\Delta}
+\right\rceil.
+$$<br>This is an analysis bound; the policy does not compute it.</p><h3>Encoding and time bounds</h3><p>A positive rational whose encoding is part of an input of length $L$ is at least $2^{-L}$, and its value is at most $2^L$. Hence<br>$$
+\alpha_{\min}\ge2^{-L},\qquad \beta_{\min}\ge2^{-L}.
+$$</p><p>For $m\ge3$,<br>$$
+q\ge\frac{2^{-(L+1)}}N.
+$$<br>For $m=2$,<br>$$
+q=\frac{\min\{\beta_1,\beta_2\}}{\beta_1+\beta_2}
+\ge2^{-(2L+1)}.
+$$<br>Thus, uniformly over both cases,<br>$$
+\alpha_{\min}q\ge\frac{2^{-(3L+1)}}N.
+$$<br>It follows that<br>$$
+K=O\!\left(L+\log(m+1)+\log(n+1)+\log(1/\Delta)\right).
+$$</p><p>All structural probabilities and thresholds have polynomial encoding length. At each precision level, the policy reads polynomially many public entries to $k$ bits and performs rational computations of polynomial bit complexity. In particular, it requires neither an inverse-supply number of rounds nor exact comparisons between nearly equal public slacks.</p><h3>5. Computing a stable assignment in polynomial time</h3><p>Once the comparisons are certified, every employer can recover every employer type’s true strict worker ordering.</p><p>We use the following known algorithmic theorem: a bipartite stable-allocation instance with rational vertex quotas, rational edge capacities, and strict incident-edge preferences admits a stable allocation computable in polynomial time in graph size and binary input length. Baïou–Balinski established a strongly polynomial algorithm; Dean–Munshi provide a faster algorithm. [Baïou–Balinski](https://pubsonline.informs.org/doi/10.1287/moor.27.3.485.310), [Dean–Munshi](https://people.computing.clemson.edu/~bcdean/stable_alloc.pdf)</p><p>Here standard stable-allocation stability excludes an unsaturated edge whose two endpoints could increase allocation on that edge by using unused quota or reducing allocation on a less preferred incident edge.</p><p>Apply the theorem to the complete bipartite graph on $P,A$, with quotas $\alpha_p,\beta_a$, edge capacities<br>$$
+u_{p,a}=\min\{\alpha_p,\beta_a\},
+$$<br>and the learned employer orders and public worker priorities. Every hypothesis is satisfied, and the resulting instance has polynomial encoding length.</p><p>Let $x$ be the resulting allocation.</p><p>First, every employer quota is filled. Otherwise total employer allocation would be less than $1$. Since total worker quota is at least $1$, some worker quota would also be unfilled. The edge between an unfilled employer $p$ and unfilled worker $a$ satisfies<br>$$
+x_{p,a}&lt;\alpha_p,\qquad x_{p,a}&lt;\beta_a,
+$$<br>so it is unsaturated and blocks through unused quota at both endpoints. This contradicts stability.</p><p>Second, $x$ is stable in the task’s precise sense. A blocking triple $p,a,b$ would give<br>$$
+x_{p,b}&gt;0,\qquad \mu_{p,a}&gt;\mu_{p,b}.
+$$<br>In particular $x_{p,a}&lt;\alpha_p$. The worker-side condition—unused supply or positive allocation to a lower-priority employer—also implies $x_{p,a}&lt;\beta_a$. Hence edge $(p,a)$ is unsaturated, and both endpoints could improve as required by standard stable-allocation blocking. Again this contradicts stability.</p><p>Each employer runs the same deterministic implementation of the algorithm, so they obtain the same rational matrix $x$.</p><h3>The benchmark is well defined</h3><p>The preceding argument establishes existence of a stable mass assignment.</p><p>Within the feasible set, stability is equivalent to requiring, for every triple with $\mu_{p,a}&gt;\mu_{p,b}$,<br>$$
+x_{p,b}=0
+\quad\text{or}\quad
+\left(
+\sum_qx_{q,a}=\beta_a
+\ \text{and}\
+x_{q,a}=0\text{ for every }q\text{ with }p\succ_a q
+\right).
+$$<br>These are finite combinations of closed conditions. Stable assignments therefore form a closed, bounded, nonempty set.</p><p>Since $\alpha_p&gt;0$, the benchmark objective is continuous and takes values in $[0,1]$. Its minimum is attained, so every $v_p^-$ is well defined.</p><h3>6. Implementing the assignment and respecting individual feedback</h3><p>After computing $x$, each type-$p$ employer independently chooses a permanent worker type $a$ with probability<br>$$
+\frac{x_{p,a}}{\alpha_p}.
+$$<br>It subsequently uses singleton eligible set $\{a\}$.</p><p>Under exact population laws, the requesting mass matrix is then exactly $x$ in every round. Its feasibility guarantees that every request is accepted.</p><p>Throughout the entire policy:</p><ul><li>each employer maintains the prescribed posteriors using only its own accepted successes and failures;</li><li>selection within every eligible set uses fresh independent posterior samples;</li><li>cohort labels and the final assignment use private randomness;</li><li>public inference uses only the accepted matrices and known rational thresholds.</li></ul><p>During informative probes, the eligible sets are fixed by the public schedule and private cohort label. The request’s dependence on private rewards is precisely ordinary Thompson sampling. No reward records or posterior parameters are sent or collected, and no public inference is used to update another employer’s posterior.</p><p>Thus the construction satisfies the stated feedback and policy restrictions.</p><h3>7. Regret and computation</h3><p>There are $2N$ probe rounds, at most $K$ decoding rounds, and at most one additional round for computing and initializing the stable assignment. Write<br>$$
+H=2N+K+1.
+$$</p><p>Before permanent assignment, payoffs are nonnegative and $v_p^-\le1$. Thus these rounds contribute at most $H$ to the regret upper bound.</p><p>After permanent assignment, the representative type-$p$ employer’s expected per-round payoff is<br>$$
+v_p(x)=\frac1{\alpha_p}\sum_a\mu_{p,a}x_{p,a}.
+$$<br>Because $x$ is stable,<br>$$
+v_p(x)\ge v_p^-.
+$$<br>Every subsequent round therefore contributes a nonpositive amount to regret. For every horizon,<br>$$
+R_p(T)\le\min\{T,H\}.
+$$<br>Using the bound on $K$,<br>$$
+R_p(T)
+=O\!\left(m^2+L+\log(\tau+1)+\log(1/\Delta)\right)
+$$<br>as an upper bound. Since $T\ge2$, this implies the requested<br>$$
+R_p(T)=O\!\left(\operatorname{poly}(m,\tau,L,1/\Delta)\log^2T\right).
+$$</p><p>The largest precision used is $K$, all structural calculations have polynomial bit complexity, and the stable-allocation computation is polynomial. Posterior sampling and reward-counter operations have the stipulated unit costs. Permanent-assignment rounds require only a singleton posterior sample and a local update.</p><p>All bounds depend on support parameters and encoded masses, with constants independent of absolute population scale.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 4, Encoding and time bounds: reading public entries to finite precision: The polynomial computation claim assumes efficient finite-precision access to exact real public observations. Explicitly state that each public entry admits a deterministic dyadic approximation with error at most $2^{-k}$ at cost polynomial in $k$ and the relevant input dimensions. This is the natural observation interpretation used by the argument, but exactness alone does not specify an access cost.</li></ul>
+<div class="pre"><h3>Verdict</h3><p>The construction is <b>sound under the natural interpretation that exact public matrix observations permit access to finite-precision approximations in polynomial time</b>. The probe identities, acceptance arguments, reconstruction bound, stability argument, and regret calculation all check out.</p><p>There is one <b>minor computational-model clarification</b>: exactness of an observed real number does not itself specify the cost of reading its binary digits. The write-up should explicitly identify the observation-access convention it uses. No new mathematical argument appears necessary under the intended finite-digit interpretation.</p><h3>Step-by-step verification</h3><h3>1. Two-round Thompson-sampling identity</h3><p>The calculation is correct.</p><p>After choosing $a$ initially, its second-round selection probability is $2/3$ following a success and $1/3$ following a failure. After choosing $b$ initially, those probabilities are reversed. Averaging gives exactly<br>$$
+Q_{p,a}=\frac12+\frac{\mu_{p,a}-\mu_{p,b}}6.
+$$</p><p>The required hypotheses are correctly identified: both tested posteriors initially have distribution $\operatorname{Beta}(1,1)$, samples are independent, and every first-round probe request is accepted.</p><p>Boundary means cause no difficulty. Posterior samples have continuous distributions, so sample ties have probability zero. The conversion from an individual selection probability to exact cohort request mass is authorized by the task’s exact-population interpretation.</p><h3>2. Probes for $m\ge3$</h3><p>The cohort probabilities are valid:<br>$$
+Nq=\eta,\qquad 0&lt;\eta\le\frac12.
+$$</p><p>Each pair cohort requests only its filler before its own probe. Because the filler lies outside the tested pair, both tested posteriors remain fresh.</p><p>During a probe, main-label employers request outside the tested pair. All requests at either tested type therefore come from pair cohorts, whose total mass is $\eta$. Since<br>$$
+\eta\le\frac{\beta_{\min}}2&lt;\beta_a,\beta_b,
+$$<br>every tested request is accepted, regardless of worker priorities.</p><p>The background mass formula correctly counts all other pair cohorts whose singleton filler is $a$. Consequently,<br>$$
+X^E_{p,a}-B_{p,E,a}-\frac{h_p}{2}
+=\frac{h_p}{6}(\mu_{p,a}-\mu_{p,b}).
+$$</p><p>Every factor multiplying the mean difference is positive. Thus the public signal correctly determines the comparison, simultaneously for all employer types.</p><h3>3. Probes and reconstruction for $m=2$</h3><p>All three cohort probabilities are nonnegative and sum to one. The initial request masses are correctly calculated as $\gamma$ and $1-\gamma$. The inequalities ensuring first-round acceptance follow from $B\ge1$.</p><p>The second-round request formula is also correct:<br>$$
+r_{p,1}
+=\alpha_p\gamma+\frac{\alpha_pq}{6}(\mu_{p,1}-\mu_{p,2}).
+$$</p><p>The exact reconstruction argument covers every case:</p><ul><li>Positive slack at type $1$ means its accepted masses equal its request masses.</li><li>Positive slack at type $2$ determines type-$1$ requests by subtraction from $\alpha_p$.</li><li>If both slacks vanish, accepted mass is $B$. Since request mass is one and $B\ge1$, necessarily $B=1$, with no rejection.</li></ul><p>This reasoning also covers supplies totaling exactly one and the case of a single employer type.</p><h3>4. Robust reconstruction and certified decoding</h3><p>The reconstruction lemma is correct. Each approximate slack has error at most $n\varepsilon$. If the selected worker type has zero true slack while the other has positive slack, maximality of its approximate slack gives<br>$$
+s_i\le2n\varepsilon.
+$$</p><p>The total rejected mass satisfies<br>$$
+d=1-B+s_i\le s_i.
+$$</p><p>Each employer type’s rejected mass is bounded by $d$. The resulting error bound<br>$$
+|\widetilde r_{p,1}-r_{p,1}|
+\le(2n+1)\varepsilon
+$$<br>is therefore justified.</p><p>Certification using $E_k$ cannot produce an incorrect sign. The stated precision bound gives<br>$$
+E_K\le\frac{\alpha_{\min}q\Delta}{24},
+$$<br>whereas every true signal has magnitude at least $\alpha_{\min}q\Delta/6$. Hence every comparison is certified by that precision.</p><p>The stopping rule does not require knowing $\Delta$.</p><p><b>Minor issue: observation-access convention.</b> The statement that the policy “reads polynomially many public entries to $k$ bits” assumes a computational interface for exact real observations. The task specifies exact public matrices, but does not explicitly define this interface or its cost.</p><p><b>Minimum clarification:</b> State that a public matrix entry admits a deterministic dyadic approximation with error at most $2^{-k}$ at cost polynomial in $k$ and the relevant input dimensions. This is a natural interpretation of the stipulated exact observations; arbitrary alternative representations would require a separate access-cost analysis.</p><h3>5. Encoding and computation bounds</h3><p>The rational size bounds are valid for the ordinary binary encoding assumed in the task. In particular,<br>$$
+\alpha_{\min}\ge2^{-L},\qquad \beta_{\min}\ge2^{-L}.
+$$</p><p>Both case-specific bounds for $q$, and the weaker uniform bound for $\alpha_{\min}q$, are correct. They yield<br>$$
+K=O\!\left(L+\log(m+1)+\log(n+1)+\log(1/\Delta)\right).
+$$</p><p>The structural probabilities and thresholds have polynomial encoding length. There are polynomially many stored probe entries and comparisons. Subject to the observation-access clarification above, the decoding computations have polynomial bit complexity.</p><p>There is no hidden inverse-supply or inverse-employer-mass number of rounds.</p><h3>6. Stable-allocation theorem and its application</h3><p>The cited algorithmic result applies. The [Dean–Munshi paper](https://people.computing.clemson.edu/~bcdean/stable_alloc.pdf) permits nonintegral quotas and edge capacities, requires strict preferences, and describes polynomial algorithms for bipartite stable allocation. Its dummy-vertex convention represents unused quotas and gives the unused-quota blocking interpretation used by the prover.</p><p>The constructed instance satisfies the required hypotheses:</p><ul><li>The graph is finite and bipartite.</li><li>Quotas and capacities are positive rationals.</li><li>Both sides have strict preferences.</li><li>Each capacity is at most its endpoint quotas.</li><li>Graph size and binary input length are polynomial in the public parameters.</li></ul><p>The employer-quota argument is correct: an unfilled employer and an unfilled worker would have an unsaturated connecting edge that blocks through unused quota.</p><p>The conversion to the task’s stability definition also checks out. A proposed blocking triple implies $x_{p,a}&lt;\alpha_p$. Either worker-side blocking condition implies $x_{p,a}&lt;\beta_a$. Thus the edge is unsaturated and blocks in the cited allocation model.</p><p>The compactness argument for the benchmark is valid: stability is expressed by finitely many unions and intersections of closed conditions, within a bounded feasible set. Existence has already been established, and the continuous benchmark objective attains its minimum.</p><h3>7. Policy restrictions and permanent implementation</h3><p>The write-up respects the stated individual-feedback restrictions:</p><ul><li>Tested posteriors use only individual accepted rewards.</li><li>Probe selections are ordinary Thompson-sampling selections.</li><li>Singleton eligible sets still satisfy the prescribed selection rule.</li><li>Cohort and assignment choices use private randomness.</li><li>Public inference uses only permitted public matrices.</li><li>No reward records or posterior parameters are transmitted or used to update another employer’s posterior.</li></ul><p>Inference from aggregate actions is permitted by the stated public-matrix access. The proof does not require a separate reward-sharing channel.</p><p>Independent permanent choices with probabilities $x_{p,a}/\alpha_p$ produce request matrix $x$ under exact population laws. Feasibility then guarantees acceptance of every request.</p><h3>8. Regret and final guarantee</h3><p>The regret argument is correct as a <b>one-sided upper bound</b>, which the prover explicitly states at the outset.</p><p>Before assignment, nonnegative payoffs and $v_p^-\le1$ bound each round’s regret contribution by one. After assignment,<br>$$
+v_p(x)\ge v_p^-,
+$$<br>so subsequent expected contributions are nonpositive. Therefore,<br>$$
+R_p(T)\le\min\{T,H\}.
+$$</p><p>The bound on $H$ yields the claimed horizon-independent upper bound, and hence the requested logarithmic regret upper bound for every $T\ge2$.</p><p>The argument does not establish an absolute-value bound on regret; none is required under the stated conventional interpretation. Its constants depend on encoded support data rather than absolute population scale.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

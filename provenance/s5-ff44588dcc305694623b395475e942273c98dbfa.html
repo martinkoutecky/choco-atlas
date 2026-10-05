@@ -1,0 +1,293 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Proportional Fairness for Harmful Decisions — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Proportional Fairness for Harmful Decisions <span style="font-weight:normal;color:#8a7350">(s5-ff44588dcc305694623b395475e942273c98dbfa)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 6.4 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For an axes-cutting instance, for each i ∈N let αi = ci(ai), where ai ∈A is the alternative that only imposes costs on i, and let δ = min{ci(a) : i ∈N, a ∈A, ci(a) &gt; 0} be the smallest positive cost in the instance. Then, for every 0 &lt; ε ⩽1, the Greedy Frank-Wolfe algorithm finds an ε-approximate zero-respecting Lindahl equilibrium in O( ∑i log(αi/δ) ε2 ) iterations. We prove this result using the methods of Chaudhury et al.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite alternative set \(A\), a finite type set \(T\) with rational masses \(\mu_t\ge0\) satisfying \(\sum_t\mu_t=1\), rational costs \(c_t(a)\), an accuracy parameter \(\varepsilon&gt;0\), and the type-level axes-cutting condition that each \(t\in T\) has an alternative \(a_t\) with \(c_t(a_t)&gt;0\) and \(c_{t&#x27;}(a_t)=0\) for every \(t&#x27;\ne t\), compute a lottery \(x\in\Delta(A)\) and prices \(\pi_t(a)\ge0\) satisfying \(\pi_t(a)=0\) when \(c_t(a)=0\), \(1-\varepsilon\le\pi_t\cdot x\le1+\varepsilon\), \(\pi_t\cdot y\ge\pi_t\cdot x\Rightarrow c_t(y)\ge c_t(x)\) for all \(y\in\mathbb{R}_{\ge0}^{A}\), and \(\sum_{t\in T}\mu_t\pi_t(a)\ge1\) with equality whenever \(x(a)&gt;0\); determine whether this can be done in time polynomial in \(|T|\), \(|A|\), the input encoding length, and \(1/\varepsilon\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list \(T\) of \(\tau\) types with positive binary-rational masses \(\mu_t\), summing to \(1\). Here \(\tau\) is the support size, not the number of possible types.<br>Let \(A\) be a nonempty alternative set, \(m=|A|\), with explicitly given costs \(c_t(a)\in\mathbb{Q}_{\ge0}\). Every alternative has positive cost for some type, and each type&#x27;s cost function is nonconstant.<br>Assume axes-cutting: each \(t\in T\) has an alternative \(a_t\) with \(c_t(a_t)&gt;0\) and \(c_{t&#x27;}(a_t)=0\) for every \(t&#x27;\ne t\). Costs extend linearly: \(c_t(y)=\sum_{a\in A}c_t(a)y(a)\).<br>Given binary-rational \(0&lt;\varepsilon\le1\), compute a rational lottery \(x\in\Delta(A)\) and rational personalized prices \(\pi_t(a)\ge0\) satisfying:<br>\(\pi_t(a)=0\) whenever \(c_t(a)=0\), and \(1-\varepsilon\le\pi_t\cdot x\le1+\varepsilon\) for every \(t\).<br>For every \(t\) and every \(y\in\mathbb{R}_{\ge0}^{A}\), require \(\pi_t\cdot y\ge\pi_t\cdot x\Rightarrow c_t(y)\ge c_t(x)\); such comparison vectors need not be lotteries.<br>For every \(a\), require \(\sum_t\mu_t\pi_t(a)\ge1\), with equality whenever \(x(a)&gt;0\). Let \(L\) be the total binary input length.</p><p>Can this approximate-equilibrium search problem be solved in time polynomial in \(m,\tau,L,1/\varepsilon\), or is it NP-hard?</p><p>For finite lists of equally weighted agents, approximate zero-respecting Lindahl equilibria on axes-cutting instances are computable in polynomial time, with only spending constraints approximated. [Cookson–Ebadian–Peters–Shah](https://arxiv.org/html/2607.26053v1).<br>No published complexity result for exactly the rational-mass formulation above was located in the search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Restricted the unspecified sign of rational costs to nonnegative costs, as required by the public-bads model.</li><li>Removed zero-mass types so that T denotes precisely the positive-mass support; axes-cutting and equilibrium conditions apply to that support.</li><li>Carried over the standing assumptions that every alternative imposes positive cost on some type and every type has a nonconstant cost function.</li><li>Restricted the accuracy parameter to binary-rational 0 &lt; epsilon &lt;= 1, matching the anchor&#x27;s accuracy range and fixing its encoding.</li><li>Specified rational output coordinates for the lottery and prices, giving the search problem a finite binary representation.</li><li>Retained the graded question&#x27;s unit per-type spending normalization and mass-weighted aggregate prices.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial solution: exact computation with few additional constraints</h3><p>The unrestricted complexity question remains unresolved here. I prove a new tractable case that permits arbitrary positive binary-rational masses, including exponentially small ones.</p><p>For each type, normalize its costs by its cheapest axes-cutting alternative. Let $k$ be the number of alternatives whose normalized costs sum to less than $1$. Then an <b>exact rational equilibrium</b> can be computed in time<br>$$
+\binom{\tau+k}{k}\operatorname{poly}(m,\tau,L).
+$$<br>Thus the requested search problem is polynomial-time solvable whenever $k$ is fixed, independently of the numerical value of the smallest mass. When $k\le 1$, an explicit formula avoids vertex enumeration entirely.</p><p>The covering-LP approach is consistent with the formulation in [Cookson–Ebadian–Peters–Shah, Section 6](https://arxiv.org/html/2607.26053v1#S6). All claims used below are proved directly for the rational-mass formulation.</p><h3>1. Normalization and the parameter $k$</h3><p>Call an alternative *pure for type $t$* if it has positive cost for $t$ and zero cost for every other type. Axes-cutting guarantees at least one such alternative for each type.</p><p>Choose a cheapest pure alternative $a_t$ for each type, and define<br>$$
+\alpha_t=c_t(a_t)&gt;0,
+\qquad
+d_t(a)=\frac{c_t(a)}{\alpha_t}.
+$$<br>Then<br>$$
+d_t(a_t)=1,
+\qquad
+d_{t&#x27;}(a_t)=0\quad(t&#x27;\ne t).
+$$<br>The chosen alternatives are distinct: an alternative cannot be pure for two different types.</p><p>Consider the covering polyhedron<br>$$
+Q=
+\left\{
+q\in\mathbb R_{\ge0}^{T}:
+\sum_t d_t(a)q_t\ge1
+\text{ for every }a\in A
+\right\}.
+$$<br>The constraints corresponding to the chosen pure alternatives imply<br>$$
+q_t\ge1\qquad(t\in T).
+$$</p><p>Define<br>$$
+R=
+\left\{
+a\in A:\sum_t d_t(a)&lt;1
+\right\},
+\qquad
+k=|R|.
+$$<br>If $a\notin R$, then every vector satisfying $q_t\ge1$ also satisfies<br>$$
+\sum_t d_t(a)q_t
+\ge
+\sum_t d_t(a)
+\ge1.
+$$<br>Consequently,<br>$$
+Q=
+\left\{
+q\in\mathbb R^T:
+q_t\ge1\text{ for all }t,\quad
+\sum_t d_t(a)q_t\ge1\text{ for all }a\in R
+\right\}.
+$$</p><p>No pure alternative belongs to $R$. Indeed, if $a$ is pure for $t$, minimality of $\alpha_t$ gives<br>$$
+d_t(a)=\frac{c_t(a)}{\alpha_t}\ge1.
+$$<br>In particular,<br>$$
+k\le m-\tau.
+$$</p><p>The normalization and $R$ can be computed using polynomially many exact rational operations, with polynomial encoding length.</p><h3>2. A polynomial-time test that extracts an exact equilibrium</h3><p>For a rational vector $q\in Q$, define the LP value<br>$$
+J(q)=
+\min_{v\in Q}
+\sum_t\frac{\mu_t}{q_t}v_t.
+$$<br>Since $q$ itself is feasible and the masses sum to $1$,<br>$$
+J(q)\le
+\sum_t\frac{\mu_t}{q_t}q_t
+=1.
+$$</p><p><b>Lemma.</b> If $q\in Q$ is rational and $J(q)=1$, an exact rational equilibrium can be computed in polynomial time from $q$ and the input. If $q$ has polynomial encoding length, so does the resulting equilibrium.</p><p><b>Proof.</b> Set<br>$$
+w_t=\frac{\mu_t}{q_t}&gt;0.
+$$<br>Using the original description of $Q$, the primal and dual LPs are<br>$$
+\min_{v\ge0}
+\sum_t w_tv_t
+\quad\text{subject to}\quad
+\sum_t d_t(a)v_t\ge1
+\quad(a\in A),
+$$<br>and<br>$$
+\max_{z\ge0}
+\sum_a z(a)
+\quad\text{subject to}\quad
+\sum_a d_t(a)z(a)\le w_t
+\quad(t\in T).
+$$</p><p>The primal is feasible. Its objective sublevel set through $q$ is bounded, because all $w_t$ are positive and $v\ge0$. Thus it has a finite attained optimum. The dual is feasible at zero, so LP strong duality applies.</p><p>If $J(q)=1$, then $q$ is an optimal primal solution. Choose a rational optimal dual vertex $z$. Strong duality gives<br>$$
+\sum_a z(a)=1.
+$$<br>Thus $x=z$ is a rational lottery.</p><p>For completeness, the primal-dual gap has the decomposition<br>$$
+\sum_t w_tq_t-\sum_a z(a)
+=
+\sum_t q_t\left(w_t-\sum_a d_t(a)z(a)\right)
++
+\sum_a z(a)\left(\sum_t d_t(a)q_t-1\right).
+$$<br>Every summand on the right is nonnegative, and the gap is zero. Since $q_t\ge1$, it follows that<br>$$
+d_t(x)=\frac{\mu_t}{q_t}
+\qquad(t\in T).
+$$<br>It also follows that<br>$$
+x(a)&gt;0
+\quad\Longrightarrow\quad
+\sum_t d_t(a)q_t=1.
+$$</p><p>Define<br>$$
+\pi_t(a)=\frac{q_t}{\mu_t}d_t(a)
+=
+\frac{q_t}{\mu_t\alpha_t}c_t(a).
+$$<br>These prices are nonnegative and respect zero costs. Their spending is exactly<br>$$
+\pi_t\cdot x
+=
+\frac{q_t}{\mu_t}d_t(x)
+=1.
+$$<br>Their aggregate satisfies<br>$$
+\sum_t\mu_t\pi_t(a)
+=
+\sum_t q_td_t(a)
+\ge1,
+$$<br>with equality whenever $x(a)&gt;0$.</p><p>Finally, let<br>$$
+\lambda_t=\frac{q_t}{\mu_t\alpha_t}&gt;0.
+$$<br>For every nonnegative comparison vector $y$,<br>$$
+\pi_t\cdot y\ge\pi_t\cdot x
+\quad\Longrightarrow\quad
+\lambda_tc_t(y)\ge\lambda_tc_t(x)
+\quad\Longrightarrow\quad
+c_t(y)\ge c_t(x).
+$$<br>This proves the required comparison condition for vectors that need not be lotteries.</p><p>To justify the dual-vertex selection, its feasible region is bounded. For each alternative $a$, choose a type $t$ with $d_t(a)&gt;0$; then every feasible $z$ satisfies<br>$$
+z(a)\le\frac{w_t}{d_t(a)}.
+$$<br>Hence a rational optimal dual vertex exists. Rational LP optimization can return such a vertex in polynomial time, and standard determinant bounds give polynomial encoding length when the LP data have polynomial encoding length. The formulas for the prices preserve that bound. $\square$</p><p>This formulation explicitly requires rational input $q$ and a rational dual optimizer; it avoids the rationality qualifications identified in the verifier report.</p><h3>3. Existence of a passing vertex</h3><p>The enumeration algorithm below needs a vertex $q$ with $J(q)=1$. I prove its existence rather than assume it from the notes.</p><p><b>Theorem.</b> There is a vertex $q^\star$ of $Q$ satisfying $J(q^\star)=1$. It is rational with polynomial encoding length. Consequently, every valid instance has an exact rational equilibrium of polynomial encoding length.</p><p><b>Proof.</b> Define<br>$$
+\delta=
+\min\{d_t(a):d_t(a)&gt;0\},
+\qquad
+H=\frac1\delta.
+$$<br>Every alternative has some positive cost, so $\delta&gt;0$. Because a chosen pure alternative has normalized cost $1$, we also have $\delta\le1$ and $H\ge1$.</p><p>The vector $H\mathbf1$ belongs to $Q$: each alternative has a positive normalized cost of at least $\delta$, and its corresponding contribution is at least $\delta H=1$.</p><p>For $q\in Q$, cap each coordinate at $H$:<br>$$
+\bar q_t=\min\{q_t,H\}.
+$$<br>The capped vector remains feasible. To see this, fix an alternative $a$. If no coordinate with $d_t(a)&gt;0$ was capped, its covering sum is unchanged. Otherwise, one capped positive-cost coordinate alone contributes<br>$$
+d_t(a)H\ge\delta H=1.
+$$<br>Also, $\bar q_t\ge1$.</p><p>Consider<br>$$
+F(q)=-\sum_t\mu_t\log q_t.
+$$<br>Capping cannot decrease $F$, because $F$ decreases in each coordinate. Therefore maximizing $F$ over $Q$ is equivalent to maximizing it over the nonempty compact set<br>$$
+Q\cap[1,H]^T.
+$$<br>Continuity gives a global maximizer $q^\star$ on $Q$.</p><p>The Hessian of $F$ is diagonal with entries<br>$$
+\frac{\mu_t}{q_t^2}&gt;0.
+$$<br>Hence $F$ is strictly convex. If $q^\star$ were not a vertex, it could be written as<br>$$
+q^\star=\theta u+(1-\theta)v
+$$<br>for distinct $u,v\in Q$ and $0&lt;\theta&lt;1$. Strict convexity would give<br>$$
+F(q^\star)
+&lt;
+\theta F(u)+(1-\theta)F(v)
+\le F(q^\star),
+$$<br>a contradiction. Thus $q^\star$ is a vertex of $Q$.</p><p>For any $v\in Q$, the segment<br>$$
+q^\star+h(v-q^\star),
+\qquad 0\le h\le1,
+$$<br>is feasible. Global maximality implies that the right derivative of $F$ at $h=0$ is nonpositive:<br>$$
+-\sum_t\frac{\mu_t}{q_t^\star}(v_t-q_t^\star)\le0.
+$$<br>Therefore<br>$$
+\sum_t\frac{\mu_t}{q_t^\star}v_t
+\ge
+\sum_t\mu_t
+=1.
+$$<br>Since equality holds at $v=q^\star$, this proves<br>$$
+J(q^\star)=1.
+$$</p><p>A vertex of a rational polyhedron in $\tau$ dimensions is determined by $\tau$ linearly independent tight constraints. Here their coefficients are normalized input rationals of polynomial encoding length. Clearing denominators and applying Cramer’s rule therefore gives polynomial encoding length for $q^\star$: determinants of integer matrices with polynomial-bit entries have polynomially many bits.</p><p>The extraction lemma now supplies the exact rational equilibrium and its encoding bound. $\square$</p><p>This argument establishes existence of a suitable vertex. It does not give a polynomial-time method for maximizing the convex function $F$.</p><h3>4. Exact computation when $k$ is fixed</h3><p>The reduced description of $Q$ makes its vertices easier to enumerate.</p><p><b>Lemma.</b> At any vertex $q$ of $Q$, at most $k$ coordinates exceed $1$.</p><p>More precisely, let<br>$$
+I=\{t:q_t&gt;1\},
+\qquad
+j=|I|.
+$$<br>There are $j$ tight alternatives $B\subseteq R$ such that the square matrix<br>$$
+\bigl(d_t(a)\bigr)_{a\in B,\ t\in I}
+$$<br>is nonsingular.</p><p><b>Proof.</b> Consider all tight constraints from $R$, restricted to the coordinates in $I$. Suppose their coefficient vectors had rank less than $j$. There would then be a nonzero vector $h$, supported on $I$, such that<br>$$
+\sum_t d_t(a)h_t=0
+$$<br>for every tight alternative $a\in R$.</p><p>For sufficiently small $\rho&gt;0$, both $q+\rho h$ and $q-\rho h$ remain feasible. Indeed:</p><ul><li>Coordinates outside $I$ remain equal to $1$.</li><li>Coordinates in $I$ remain greater than $1$, by choosing $\rho$ sufficiently small.</li><li>Tight alternative constraints are preserved by the equations above.</li><li>Every other alternative constraint has positive slack; finitely many such inequalities remain satisfied for sufficiently small $\rho$.</li></ul><p>Thus $q$ would be the midpoint of two distinct feasible vectors, contradicting its being a vertex.</p><p>The restricted tight vectors therefore have rank $j$. Selecting $j$ independent ones gives $B$, and necessarily $j\le k$. $\square$</p><p><b>Theorem.</b> An exact equilibrium can be computed in time<br>$$
+\binom{\tau+k}{k}\operatorname{poly}(m,\tau,L).
+$$</p><p><b>Proof.</b> For every<br>$$
+0\le j\le\min\{\tau,k\},
+$$<br>enumerate a set $I\subseteq T$ of size $j$ and a set $B\subseteq R$ of size $j$.</p><p>Set $q_t=1$ for $t\notin I$, and solve the equations<br>$$
+\sum_{t\in I}d_t(a)q_t
+=
+1-\sum_{t\notin I}d_t(a)
+\qquad(a\in B).
+$$<br>Skip singular systems. Discard solutions that do not belong to $Q$. For $j=0$, the candidate is $q=\mathbf1$.</p><p>The preceding lemma guarantees that every vertex of $Q$ occurs among these candidates.</p><p>For each feasible candidate, compute $J(q)$ by exact rational LP optimization. Since $J(q)\le1$, an exact comparison determines whether $J(q)=1$. Upon finding equality, apply the extraction lemma.</p><p>The existence theorem guarantees that some candidate passes.</p><p>The number of systems considered is<br>$$
+\sum_{j=0}^{\min\{\tau,k\}}
+\binom{\tau}{j}\binom{k}{j}
+=
+\binom{\tau+k}{k},
+$$<br>by Vandermonde’s identity. Each candidate is obtained from a rational linear system with input coefficients of polynomial encoding length, so it has polynomial encoding length. Feasibility checks, LP optimization, exact comparisons, and equilibrium extraction therefore take polynomial time per candidate. $\square$</p><p>For fixed $k$, this is polynomial in $m,\tau,L$. It outputs spending exactly equal to $1$, so it works for every permitted $\varepsilon$ without any dependence on $1/\varepsilon$.</p><p>In particular, fixing $m-\tau$ suffices because $k\le m-\tau$. The parameter $k$ can be smaller than $m-\tau$, since alternatives with normalized cost sum at least $1$ contribute no additional constraint.</p><h3>5. Explicit equilibria for $k=0$ and $k=1$</h3><h3>5.1 No additional constraint</h3><p>If $k=0$, take<br>$$
+x(a_t)=\mu_t
+$$<br>and give every other alternative probability zero. Define<br>$$
+\pi_t(a)=\frac{d_t(a)}{\mu_t}.
+$$<br>Then $d_t(x)=\mu_t$, so every type spends exactly $1$. Aggregate prices are<br>$$
+\sum_t\mu_t\pi_t(a)=\sum_t d_t(a)\ge1,
+$$<br>with equality at each chosen pure alternative. Positive proportionality to costs proves the comparison condition.</p><p>Thus this is an exact equilibrium.</p><h3>5.2 One additional constraint</h3><p>Suppose $R=\{b\}$. Write<br>$$
+d_t=d_t(b),
+\qquad
+D=1-\sum_t d_t&gt;0.
+$$<br>Some $d_t$ is positive because every alternative has a positive cost for some type.</p><p>Choose<br>$$
+i\in\operatorname*{arg\,min}_{t:d_t&gt;0}\frac{\mu_t}{d_t}.
+$$<br>Define<br>$$
+q_i=1+\frac{D}{d_i},
+\qquad
+q_t=1\quad(t\ne i),
+\qquad
+p=\frac{\mu_i}{d_i+D}.
+$$<br>Set<br>$$
+x(b)=p,
+\qquad
+x(a_i)=0,
+\qquad
+x(a_t)=\mu_t-d_tp\quad(t\ne i),
+$$<br>and assign zero probability to all remaining alternatives.</p><p>These probabilities are nonnegative. If $t\ne i$ and $d_t&gt;0$, the choice of $i$ gives<br>$$
+p=\frac{\mu_i}{d_i+D}
+&lt;
+\frac{\mu_i}{d_i}
+\le
+\frac{\mu_t}{d_t},
+$$<br>so $\mu_t-d_tp&gt;0$. If $d_t=0$, the probability is $\mu_t&gt;0$.</p><p>Their sum is<br>$$
+\begin{aligned}
+p+\sum_{t\ne i}(\mu_t-d_tp)
+&amp;=
+1-\mu_i+
+\left(1-\sum_{t\ne i}d_t\right)p\\
+&amp;=
+1-\mu_i+(D+d_i)p\\
+&amp;=1.
+\end{aligned}
+$$<br>Hence $x$ is a lottery.</p><p>Define prices by<br>$$
+\pi_t(a)=\frac{q_t}{\mu_t}d_t(a).
+$$<br>For $t\ne i$,<br>$$
+d_t(x)=x(a_t)+d_tp=\mu_t.
+$$<br>For $i$,<br>$$
+q_i d_i(x)
+=
+\left(1+\frac{D}{d_i}\right)d_ip
+=
+(d_i+D)p
+=
+\mu_i.
+$$<br>Therefore every type spends exactly $1$.</p><p>The additional constraint is tight:<br>$$
+\sum_t d_tq_t
+=
+\sum_t d_t+D
+=1.
+$$<br>Every remaining alternative has normalized cost sum at least $1$, so $q\ge\mathbf1$ implies aggregate price at least $1$. At a positively used pure alternative $a_t$, we have $t\ne i$ and aggregate price $q_t=1$. At $b$, aggregate price is also $1$.</p><p>Zero-respecting prices and cost minimization follow from positive proportionality to costs. This proves an exact equilibrium, using only polynomially many rational operations.</p><h3>6. A qualification concerning NP-hardness</h3><p>There is also a precise limitation on one natural meaning of NP-hardness for this total search problem.</p><p>Suppose a polynomial-time map sends every Boolean formula $\varphi$ to a valid instance, and a polynomial-time decoder determines whether $\varphi$ is satisfiable from <b>any</b> valid equilibrium output for that instance. Then<br>$$
+\mathrm{NP}=\mathrm{coNP}.
+$$</p><p>To prove this, use the polynomial-size exact equilibrium established above as a certificate for unsatisfiability. A verifier guesses rational $q,x$ and checks the finite conditions<br>$$
+q\in Q,\qquad
+x\ge0,\qquad
+\sum_a x(a)=1,
+$$<br>$$
+q_td_t(x)=\mu_t\quad(t\in T),
+$$<br>and<br>$$
+x(a)&gt;0
+\quad\Longrightarrow\quad
+\sum_t d_t(a)q_t=1.
+$$<br>These conditions are polynomial-time checkable and, with<br>$$
+\pi_t(a)=\frac{q_t}{\mu_t}d_t(a),
+$$<br>certify an exact equilibrium by the calculations in Section 2.</p><p>The verifier then runs the decoder and accepts precisely when it declares $\varphi$ unsatisfiable. Every unsatisfiable formula has an accepting certificate, while no satisfiable formula does, by the decoder’s assumed correctness for every valid equilibrium. Thus unsatisfiability belongs to $\mathrm{NP}$, implying $\mathrm{NP}=\mathrm{coNP}$.</p><p>This is a conditional statement about the specified reduction notion; it does not settle the search problem’s complexity.</p><h3>7. Remaining open point</h3><p>The new algorithm removes any dependence on the smallest mass when $k$ is fixed. For unrestricted $k$ and $\tau$, however, the factor<br>$$
+\binom{\tau+k}{k}
+$$<br>can be exponential.</p><p>I have therefore not proved an algorithm polynomial in $m,\tau,L,1/\varepsilon$ for all instances, nor an NP-hardness reduction for the stated formulation.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 4 and 7; resolution of USER_TASK: The algorithm has running time $\binom{\tau+k}{k}\operatorname{poly}(m,\tau,L)$, which can be exponential when both parameters grow. No unrestricted polynomial-time algorithm or hardness reduction is established. The prover correctly acknowledges this limitation, but the assigned complexity question remains unanswered.</li><li><b>minor</b> — Section 4, vertex-structure lemma, perturbation proof: The assertion that every other alternative constraint has positive slack is false if it includes alternatives outside $R$. In the valid instance with cost vectors $(1,0)$, $(0,1)$, and $(1/4,1/4)$, the vertex $q=(3,1)$ has a tight pure-alternative constraint outside $R$. Restrict the assertion to nontight constraints in $R$ and specify that the reduced description of $Q$ is being used.</li></ul>
+<div class="pre"><p>The output establishes a sound special-case algorithm and polynomial-size exact rational equilibria for every valid instance. It does <b>not</b> resolve the unrestricted complexity question in <code>USER_TASK</code>, as the prover explicitly acknowledges.</p><p>I found one minor wording error in the vertex argument. The substantive results otherwise withstand verification.</p><h3>1. Scope of the result</h3><p>The claimed running time is<br>$$
+\binom{\tau+k}{k}\operatorname{poly}(m,\tau,L),
+$$<br>where $k$ counts alternatives whose normalized costs sum to less than $1$.</p><p>This establishes polynomial-time solvability for every fixed $k$. It does not establish polynomial-time solvability for unrestricted inputs: both $\tau$ and $k$ may grow, and the binomial factor can be exponential. No hardness reduction for the requested formulation is supplied.</p><p><b>Major issue — incomplete resolution of the assigned target.</b> The unrestricted polynomial-time-versus-hardness question remains unanswered. This is a limitation of scope, not an error in the special-case results.</p><p><b>Required additional work:</b> Supply either the requested polynomial-time algorithm for unrestricted inputs or a hardness result under a precisely stated reduction notion. Clarification alone cannot close this gap.</p><h3>2. Normalization and reduction of the covering constraints</h3><p>The normalization is valid.</p><ul><li>Axes-cutting guarantees a nonempty collection of pure alternatives for every type, so the minimum defining $\alpha_t$ exists and is strictly positive.</li><li>Chosen pure alternatives are distinct, because purity requires positive cost for exactly their designated type.</li><li>Their covering constraints imply $q_t\ge1$.</li><li>Since all normalized costs are nonnegative, every constraint with $\sum_t d_t(a)\ge1$ follows from these coordinate lower bounds.</li><li>Every pure alternative has normalized positive cost at least $1$, by the minimality of $\alpha_t$. Thus no pure alternative belongs to $R$, and $k\le m-\tau$ follows.</li></ul><p>The reduced description of $Q$ is therefore correct. Computing the normalization and deciding membership in $R$ uses exact rational arithmetic with polynomial encoding length.</p><p>No issue was found here.</p><h3>3. Extraction from a passing rational vector</h3><p>The extraction lemma is correct.</p><p>For rational $q\in Q$, every coefficient<br>$$
+w_t=\frac{\mu_t}{q_t}
+$$<br>is positive. Feasibility of $q$ and normalization of the masses establish $J(q)\le1$.</p><p>The displayed primal and dual are correctly paired. The primal has a nonempty compact objective sublevel set through $q$: nonnegativity and positive objective coefficients bound every coordinate. Consequently, its minimum is finite and attained. These hypotheses justify the stated strong-duality application.</p><p>The dual is feasible at zero. It is also bounded: every alternative has a positive normalized cost for some type, yielding the stated coordinate bound on $z(a)$. Thus selecting a rational optimal dual vertex is legitimate.</p><p>When $J(q)=1$, the primal-dual gap decomposition is algebraically correct. Every term is nonnegative. Since $q_t\ge1$, zero gap forces<br>$$
+d_t(x)=\frac{\mu_t}{q_t}.
+$$<br>It also forces aggregate-price equality on every positively used alternative.</p><p>The remaining requirements follow exactly as written:</p><ul><li>Strong duality gives $\sum_a x(a)=1$.</li><li>Dual feasibility gives $x\ge0$.</li><li>The prices are nonnegative and zero whenever the corresponding cost is zero.</li><li>Every type spends exactly $1$.</li><li>Aggregate prices satisfy the required inequality and support equality.</li><li>Positive proportionality of prices to costs establishes the comparison implication for every nonnegative real vector $y$, without restricting $y$ to lotteries.</li></ul><p>The polynomial encoding and computation claims are justified by rational linear programming and determinant bounds. For arbitrary supplied $q$, the computational bound necessarily includes its encoding length; the lemma’s subsequent polynomial-length qualification and all algorithmic applications respect this requirement.</p><p>No substantive issue was found.</p><h3>4. Existence of a passing vertex</h3><p>The existence argument is correct, including its treatment of the unbounded feasible region.</p><p>The finite minimum defining $\delta$ is positive. A chosen pure alternative supplies a normalized entry equal to $1$, so $\delta\le1$ and $H\ge1$.</p><p>Both feasibility assertions are valid:</p><ul><li>$H\mathbf1$ covers every alternative.</li><li>Capping any feasible coordinate at $H$ preserves feasibility. If a positive-cost coordinate is capped, that coordinate alone contributes at least $1$ to the relevant covering constraint.</li></ul><p>The direction of the objective inequality is correct: because $F$ decreases in each coordinate, capping cannot decrease $F$. Therefore compact maximization over $Q\cap[1,H]^T$ does produce a global maximizer over $Q$.</p><p>Strict convexity is correctly established using positivity of every mass. The contradiction argument shows that any such global maximizer must be a vertex of $Q$ itself, rather than merely a vertex of the capped region.</p><p>The directional derivative calculation has the correct sign:<br>$$
+-\sum_t\frac{\mu_t}{q_t^\star}(v_t-q_t^\star)\le0.
+$$<br>Its rearrangement establishes $J(q^\star)=1$ for every feasible comparison point $v$.</p><p>Finally, the rationality argument is valid. A vertex is determined by a full-rank selection of tight rational constraints, and the stated denominator-clearing and determinant bounds yield polynomial encoding length.</p><p>This establishes existence and a polynomial output-size bound. The prover correctly refrains from claiming that maximizing this convex objective is a polynomial-time algorithm.</p><h3>5. Vertex structure and enumeration</h3><p>The rank argument correctly establishes that a vertex has at most $k$ coordinates exceeding $1$. If the restricted tight constraints had insufficient rank, the stated perturbation would preserve those constraints and the coordinate lower bounds, contradicting extremality.</p><p>There is one wording error:</p><blockquote>“Every other alternative constraint has positive slack”</blockquote><p><b>Minor issue.</b> Read literally over all alternatives in $A$, this is false. Constraints outside $R$ can also be tight.</p><p>For a concrete valid instance, take two types with masses $\mu_1=\mu_2=1/2$ and cost vectors<br>$$
+c(a_1)=(1,0),\qquad
+c(a_2)=(0,1),\qquad
+c(b)=\left(\frac14,\frac14\right).
+$$<br>Here normalization leaves the costs unchanged, $R=\{b\}$, and $q=(3,1)$ is a vertex. Both the constraint for $b$ and the pure-alternative constraint for $a_2\notin R$ are tight. Thus an alternative constraint outside the tight constraints from $R$ need not have positive slack.</p><p>This does not undermine the rank argument, because the proof is using the reduced description of $Q$, and Section 1 has already established redundancy of the omitted alternative constraints.</p><p><b>Minimum clarification:</b> Restrict “every other alternative constraint” to the nontight constraints indexed by $R$, and explicitly indicate that feasibility is being checked in the reduced description.</p><p>The enumeration argument otherwise checks out:</p><ul><li>Every vertex appears through the sets $I$ and $B$ supplied by the rank lemma.</li><li>The displayed linear system has the correct right-hand side.</li><li>Singular systems can be skipped.</li><li>Feasibility filtering is sufficient; candidates need not be separately certified as vertices.</li><li>The case $j=0$ is explicitly handled.</li><li>The candidate count is correctly computed by Vandermonde’s identity:</li></ul><p>$$
+\sum_{j=0}^{\min\{\tau,k\}}
+\binom{\tau}{j}\binom{k}{j}
+=
+\binom{\tau+k}{k}.
+$$</p><ul><li>Rational linear-system solutions have polynomial encoding length, so exact feasibility checks and LP-value comparisons take polynomial time per candidate.</li><li>The existence theorem guarantees termination with a passing candidate.</li></ul><p>Consequently, the claimed special-case running time is supported.</p><h3>6. Explicit formulas</h3><h3>The case $k=0$</h3><p>The chosen pure alternatives are distinct, so assigning $x(a_t)=\mu_t$ defines a lottery. Purity gives $d_t(x)=\mu_t$, establishing exact spending. Aggregate prices equal $1$ at every used pure alternative and are at least $1$ everywhere else.</p><p>The comparison condition follows from the displayed positive proportionality. This case is correct.</p><h3>The case $k=1$</h3><p>Every denominator is positive: the chosen index satisfies $d_i&gt;0$, and $D&gt;0$.</p><p>The minimum-ratio choice justifies the stated nonnegativity argument. The strict inequality involving $p$ follows from $D&gt;0$, including when minimum ratios tie. Types with $d_t=0$ are explicitly covered.</p><p>The lottery-sum calculation is correct, using<br>$$
+1-\sum_{t\ne i}d_t=D+d_i.
+$$<br>The normalized-cost calculations yield $q_td_t(x)=\mu_t$ for every type. The constraint for $b$ is tight, and all positively used pure alternatives have aggregate price $1$.</p><p>There is no conflict between the probability assignments: $b$ cannot be one of the chosen pure alternatives because $b\in R$.</p><p>The formulas therefore produce an exact rational equilibrium in polynomial time.</p><h3>7. Conditional restriction on hardness reductions</h3><p>The conditional statement is correct under its explicitly specified reduction notion.</p><p>The finite certificate conditions are sufficient to certify an exact equilibrium, by the already verified extraction calculations. Their verification uses polynomial-time rational arithmetic. Section 3 supplies a uniform polynomial bound on certificate length.</p><p>An exact equilibrium is also a valid output for every permitted approximation tolerance. Thus the assumed decoder’s correctness for <b>every</b> valid output applies to these certificates.</p><p>The certificate argument correctly places unsatisfiability in $\mathrm{NP}$ under the stated reduction assumption, implying $\mathrm{NP}=\mathrm{coNP}$.</p><p>This does not rule out other reduction notions or independently establish a hardness classification. The prover expressly states that limitation.</p><h3>8. Citation and overall assessment</h3><p>The cited [Section 6 of Cookson–Ebadian–Peters–Shah](https://arxiv.org/html/2607.26053v1#S6) does contain the covering-constrained negative-log optimization formulation, so the limited consistency claim is supported. The substantive results audited here are proved directly; they do not depend on importing that paper’s equal-weight algorithm into the rational-mass setting.</p><p>The output provides genuine progress: exact rational existence, polynomial certificate size, an enumeration algorithm polynomial for fixed $k$, explicit formulas for $k\le1$, and a correctly qualified restriction on one hardness-reduction notion. The unrestricted task remains unresolved.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

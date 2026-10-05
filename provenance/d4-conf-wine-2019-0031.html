@@ -1,0 +1,184 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-wine-2019-0031 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-wine-2019-0031 <span style="font-weight:normal;color:#8a7350">(d4-conf-wine-2019-0031)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\text{-hard}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 14 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Finding an optimal placement in the SSG on an arbitrary network G = (V, E) with maximum node degree ∆G = max{degG(v) | v ∈V } is NP-hard for τ &gt; 3∆G 3∆G+1.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a connected graph \(G=(V,E)\) with \(|V|\ge 2\), maximum degree \(\Delta_G\), and \(\tau&gt;3\Delta_G/(3\Delta_G+1)\), choose masses \(x_{v,i}\ge 0\) for \(v\in V\) and \(i\in\{R,B\}\), with \(x_{v,R}+x_{v,B}=1/|V|\) for each \(v\) and \(\sum_v x_{v,i}=1/2\) for each type. Define \(r_{v,i}(x)=\frac{\sum_{u\in N(v)}x_{u,i}}{\sum_{u\in N(v)}(x_{u,R}+x_{u,B})}\). Find a feasible allocation maximizing \(\sum_{v,i}x_{v,i}\mathbf{1}[r_{v,i}(x)\ge\tau]\), the mass of content residents, where each district&#x27;s residents see the type mixture across all adjacent districts.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given a connected simple unweighted undirected graph \(G=(V,E)\), let \(m=|V|\ge 2\) and \(\Delta_G=\max_{v\in V}\deg_G(v)\). The input includes a binary rational intolerance threshold \(\theta\) satisfying \(3\Delta_G/(3\Delta_G+1)&lt;\theta&lt;1\).<br>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational; \(\tau\) denotes support size, not the number of possible types. Here the support is \(\{R,B\}\), with \(\tau=2\) and mass \(1/2\) per type, so total mass is \(1\).<br>An allocation consists of divisible real masses \(x_{v,i}\ge 0\) satisfying \(x_{v,R}+x_{v,B}=1/m\) for every \(v\), and \(\sum_{v\in V}x_{v,i}=1/2\) for each \(i\in\{R,B\}\).<br>Let \(N(v)=\{u\in V:\{u,v\}\in E\}\) and \(r_{v,i}(x)=\frac{\sum_{u\in N(v)}x_{u,i}}{\sum_{u\in N(v)}(x_{u,R}+x_{u,B})}\). All type-\(i\) residents at \(v\) are content exactly when \(r_{v,i}(x)\ge\theta\), including equality.<br>Maximize \(F(x)=\sum_{v\in V}\sum_{i\in\{R,B\}}x_{v,i}\mathbf{1}[r_{v,i}(x)\ge\theta]\) over all feasible allocations; no equilibrium or movement constraint is imposed. Let \(L\) be the total binary input length; state running times in \(m,\tau,L\).</p><p>Is exact maximization of \(F\) solvable in polynomial time in \(m,\tau,L\), or is it NP-hard?</p><p>For indivisible residents, maximizing the number content is NP-hard on arbitrary graphs in this threshold regime, even with two equally numerous types and every vertex occupied ([source](https://hpi.de/friedrich/docs/publications/2019/WINE.pdf)).<br>Existing work on continuous type values retains finitely many indivisible agents occupying distinct vertices ([source](https://ceur-ws.org/Vol-3587/9970.pdf)); no result settling this exact divisible-mass problem was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Renamed the intolerance parameter to theta to reserve tau for society support size.</li><li>Added the upper bound theta &lt; 1 from the discrete model and encoded theta as a binary rational input.</li><li>Specified the graph as simple, unweighted, and undirected, with neighborhoods excluding the vertex itself.</li><li>Defined m as the number of districts and L as the total binary input length.</li><li>Allowed divisible real allocation masses and retained all district counts m &gt;= 2; equal type masses do not require an even number of districts.</li><li>Made explicit that optimization ranges over all feasible allocations without a stability requirement.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>Exact maximization is \(\mathrm{NP}\)-hard, even with \(\tau=2\), equal type masses, and an intolerance threshold of binary encoding length \(O(\log m)\).</p><p>The essential step is to control the benefit of divisibility. For a suitable threshold, the divisible optimum determines the indivisible optimum by rounding down its normalized value.</p><h3>1. Normalization and the discrete source problem</h3><p>Write \(d_v=\deg_G(v)\), \(\Delta=\Delta_G\), and introduce<br>\[
+y_v=m x_{v,R}.
+\]<br>Then \(m x_{v,B}=1-y_v\), and feasibility becomes<br>\[
+0\le y_v\le1,\qquad \sum_{v\in V}y_v=\frac m2.
+\]<br>Connectedness and \(m\ge2\) ensure \(d_v\ge1\). The neighborhood fractions are<br>\[
+r_{v,R}=\frac1{d_v}\sum_{u\in N(v)}y_u,\qquad r_{v,B}=1-r_{v,R}.
+\]<br>Let \(H_\theta(y)=mF(x)\). Thus<br>\[
+H_\theta(y)=
+\sum_v y_v\mathbf1[r_{v,R}\ge\theta]
++\sum_v(1-y_v)\mathbf1[r_{v,B}\ge\theta].
+\]</p><p>For an even-order graph, define \(C(G)\) as the maximum number of content vertices among balanced pure assignments \(z\in\{0,1\}^V\), where a vertex is content precisely when every neighbor has its own color.</p><p>We use the following discrete hardness consequence supplied in the question: deciding whether \(C(G)\ge K\) is \(\mathrm{NP}\)-hard on connected simple graphs of even order. The reduction in Theorem 14 of [Echzell et al., *Convergence and Hardness of Strategic Schelling Segregation*](https://hpi.de/friedrich/docs/publications/2019/WINE.pdf) establishes value hardness with two equally numerous types and full occupancy.</p><p>To check the content criterion, a pure vertex with an opposite-colored neighbor has same-color fraction at most<br>\[
+1-\frac1{d_v}\le1-\frac1\Delta
+&lt;\frac{3\Delta}{3\Delta+1}.
+\]<br>Consequently, throughout the stated discrete threshold regime, content is equivalent to having no opposite-colored neighbor. This establishes the formulation of \(C(G)\) used here.</p><h3>2. A rounding lemma for divisible allocations</h3><p><b>Lemma.</b> Suppose \(m\) is even and choose<br>\[
+\varepsilon=\frac1{8m\Delta},
+\qquad
+\theta=1-\varepsilon.
+\]<br>For every feasible divisible allocation \(y\), there is a balanced pure assignment \(z\) with at least<br>\[
+H_\theta(y)-\frac14
+\]<br>content vertices.</p><p><b>Proof.</b> Set<br>\[
+\delta=\Delta\varepsilon=\frac1{8m}.
+\]<br>Define the sets of vertices whose neighborhoods satisfy the respective content conditions:<br>\[
+A=\{v:r_{v,R}(y)\ge\theta\},
+\qquad
+B=\{v:r_{v,B}(y)\ge\theta\}.
+\]<br>Because \(\theta&gt;1/2\) and the two neighborhood fractions sum to one, \(A\cap B=\varnothing\).</p><p>For \(v\in A\),<br>\[
+\sum_{u\in N(v)}(1-y_u)\le d_v\varepsilon.
+\]<br>All summands are nonnegative, so every \(u\in N(v)\) satisfies<br>\[
+1-y_u\le d_v\varepsilon\le\delta.
+\]<br>Similarly, \(v\in B\) implies \(y_u\le\delta\) for every \(u\in N(v)\).</p><p>Let<br>\[
+S_R=\bigcup_{v\in A}N(v),
+\qquad
+S_B=\bigcup_{v\in B}N(v).
+\]<br>These sets are disjoint: membership in both would require \(y_u\ge1-\delta\) and \(y_u\le\delta\), whereas \(\delta&lt;1/2\).</p><p>Moreover, both sets contain at most \(m/2\) vertices. Indeed, balance gives<br>\[
+\frac m2=\sum_v y_v
+\ge |S_R|(1-\delta),
+\]<br>hence<br>\[
+|S_R|\le\frac m2+|S_R|\delta
+\le\frac m2+m\delta
+=\frac m2+\frac18.
+\]<br>Since \(m/2\) and \(|S_R|\) are integers, \(|S_R|\le m/2\). Applying the same argument to \(1-y_v\) gives \(|S_B|\le m/2\).</p><p>We now force the required neighbors to be pure. Define \(q^0\) by<br>\[
+q^0_u=
+\begin{cases}
+1,&amp;u\in S_R,\\
+0,&amp;u\in S_B,\\
+y_u,&amp;u\notin S_R\cup S_B.
+\end{cases}
+\]<br>Its total modification satisfies<br>\[
+D:=\sum_u|q^0_u-y_u|
+\le(|S_R|+|S_B|)\delta
+\le m\delta=\frac18.
+\]<br>Write \(\sum_u q^0_u=m/2+t\). Then \(|t|\le D\).</p><p>We can restore balance by modifying only coordinates in<br>\[
+T=V\setminus(S_R\cup S_B).
+\]<br>Their required total is<br>\[
+k=\frac m2-|S_R|.
+\]<br>The established cardinality bounds imply \(0\le k\le|T|\). Thus, if \(t&gt;0\), free coordinates can be decreased by a total of \(t\); if \(t&lt;0\), they can be increased by a total of \(-t\). Distributing the change until the required total is reached gives a vector \(q\) satisfying<br>\[
+q_{S_R}=1,\qquad q_{S_B}=0,\qquad
+\sum_u q_u=\frac m2,\qquad
+\sum_u|q_u-y_u|\le2D\le\frac14.
+\]</p><p>Consider the linear function<br>\[
+\ell(w)=\sum_{v\in A}w_v+\sum_{v\in B}(1-w_v).
+\]<br>By definition, \(\ell(y)=H_\theta(y)\). Since \(A\cap B=\varnothing\), every coordinate coefficient in \(\ell\) has absolute value at most one. Therefore<br>\[
+\ell(q)\ge H_\theta(y)-\sum_u|q_u-y_u|
+\ge H_\theta(y)-\frac14.
+\]</p><p>Finally, maximize \(\ell\) over the polytope<br>\[
+P=\left\{
+w\in[0,1]^V:
+w_{S_R}=1,\ w_{S_B}=0,\
+\sum_u w_u=\frac m2
+\right\}.
+\]<br>This polytope is nonempty because \(q\in P\), and it is compact. It has an integral maximizer. To see this directly, start with any maximizer. If two free coordinates are fractional, transfer mass between them in the direction that does not decrease \(\ell\), until one becomes integral. Repeat. The remaining free-coordinate sum is the integer \(k\), so exactly one fractional coordinate cannot remain. The resulting maximizer \(z\) is pure and balanced, with \(\ell(z)\ge\ell(q)\).</p><p>Every vertex counted by \(\ell(z)\) is content: a red vertex in \(A\) has all neighbors in \(S_R\), hence all red; a blue vertex in \(B\) has all neighbors in \(S_B\), hence all blue. Thus the content count of \(z\) is at least \(\ell(z)\), proving the lemma. \(\square\)</p><h3>3. Recovering the discrete optimum</h3><p>Let<br>\[
+H^*(G,\theta)=\max_y H_\theta(y).
+\]<br>Existence of this maximum also follows from the finite linear-program formulation below.</p><p>The rounding lemma gives<br>\[
+H^*(G,\theta)\le C(G)+\frac14.
+\]<br>Conversely, a pure assignment achieving \(C(G)\) is feasible for the divisible problem. Each of its monochromatic-neighborhood vertices contributes one to \(H_\theta\), so<br>\[
+H^*(G,\theta)\ge C(G).
+\]<br>Consequently,<br>\[
+C(G)\le H^*(G,\theta)\le C(G)+\frac14,
+\qquad
+C(G)=\left\lfloor H^*(G,\theta)\right\rfloor.
+\]<br>Equivalently,<br>\[
+C(G)=\left\lfloor m\max_x F(x)\right\rfloor.
+\]</p><p>This argument does not assert that a divisible optimum is pure; it only bounds its advantage sufficiently to recover the discrete optimum.</p><h3>4. Polynomial reduction and threshold verification</h3><p>Given a discrete instance \((G,K)\), retain the graph, use the prescribed two masses \(1/2\), and set<br>\[
+\theta=1-\frac1{8m\Delta},
+\qquad
+q=\frac Km.
+\]<br>The chosen threshold satisfies the input promise because<br>\[
+8m\Delta&gt;3\Delta+1,
+\]<br>and therefore<br>\[
+\frac{3\Delta}{3\Delta+1}&lt;\theta&lt;1.
+\]</p><p>The preceding bounds show<br>\[
+C(G)\ge K
+\quad\Longleftrightarrow\quad
+\max_x F(x)\ge\frac Km.
+\]<br>For the reverse implication, if \(C(G)&lt;K\), integrality gives \(C(G)\le K-1\), and hence<br>\[
+m\max_x F(x)\le K-\frac34&lt;K.
+\]</p><p>Because \(1\le\Delta\le m-1\), the threshold has binary encoding length \(O(\log m)\). The graph is unchanged, and computing the new numerical data takes polynomial time in the binary input length. This is a polynomial many-one reduction to the divisible decision problem.</p><p>Thus exact maximization is \(\mathrm{NP}\)-hard. A polynomial-time algorithm in \(m,\tau,L\) would imply \(\mathrm{P}=\mathrm{NP}\), already for \(\tau=2\).</p><h3>5. Exact finite formulation and running time</h3><p>For completeness, exact optimization has a finite linear-program formulation, despite the discontinuous objective.</p><p>For each labeling<br>\[
+\sigma:V\longrightarrow\{\varnothing,R,B\},
+\]<br>use the normalized feasibility constraints and impose<br>\[
+\sum_{u\in N(v)}y_u\ge d_v\theta
+\quad\text{if }\sigma(v)=R,
+\]<br>and<br>\[
+\sum_{u\in N(v)}y_u\le d_v(1-\theta)
+\quad\text{if }\sigma(v)=B.
+\]<br>Maximize the linear objective<br>\[
+\ell_\sigma(y)=
+\sum_{\sigma(v)=R}y_v+
+\sum_{\sigma(v)=B}(1-y_v).
+\]<br>Discard infeasible programs.</p><p>Every feasible point of a labeled program satisfies its selected content conditions, so \(\ell_\sigma(y)\le H_\theta(y)\). Conversely, every feasible allocation belongs to the program labeling all its satisfied content conditions, and that program&#x27;s objective equals \(H_\theta(y)\). Taking the maximum over the finitely many programs therefore gives exactly \(H^*(G,\theta)\). Each feasible program is compact, so this also proves attainment.</p><p>There are \(3^m\) programs, each with \(m\) variables, \(O(m)\) constraints, and polynomial encoding length. Rational linear programming therefore gives an exact algorithm in<br>\[
+3^m\,\operatorname{poly}(m,\tau,L),
+\qquad \tau=2.
+\]<br>For the decision version, guessing a labeling and solving its linear program is a polynomial-time nondeterministic procedure. Combined with the reduction, the decision problem is \(\mathrm{NP}\)-complete.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The output resolves the task. The rounding lemma is valid, the reduction preserves the input promises, and the finite linear-program formulation correctly establishes attainment and the stated exponential running time. I found no mathematical gaps requiring repair.</p><h3>1. Normalization and discrete hardness</h3><p>The substitution \(y_v=mx_{v,R}\) correctly transforms the allocation constraints into<br>\[
+0\le y_v\le 1,\qquad \sum_v y_v=\frac m2.
+\]<br>The neighborhood denominator is \(d_v/m\). Connectedness and \(m\ge2\) ensure \(d_v&gt;0\), so both neighborhood-fraction formulas are valid. Multiplying the objective by \(m\) gives exactly the stated \(H_\theta\).</p><p>For pure assignments, an opposite-colored neighbor implies<br>\[
+r_{v,i}\le 1-\frac1{d_v}\le 1-\frac1\Delta
+&lt;\frac{3\Delta}{3\Delta+1}&lt;\theta.
+\]<br>The strict middle inequality holds for every \(\Delta\ge1\). Conversely, a monochromatic neighborhood has same-color fraction \(1\). Thus the stated definition of \(C(G)\) agrees exactly with discrete content in this regime.</p><p>The discrete hardness invocation matches the cited source. Section 1.2 specifies connected, unweighted, undirected networks; Theorem 14’s construction uses two equally numerous types with full occupancy and relates optimal placement cost to the minimum balanced cut value. Its clique replacement preserves connectedness and simplicity and produces even order from an even-order source graph. Thus the required value-decision hardness for balanced pure assignments is supported. [Echzell et al., Sections 1.2 and 4.1, Theorem 14](https://hpi.de/friedrich/docs/publications/2019/WINE.pdf).</p><h3>2. Rounding lemma</h3><p>Every step of the lemma checks out.</p><ul><li><b>Parameters and disjointness.</b> The chosen values satisfy</li></ul><p>\[
+   \delta=\Delta\varepsilon=\frac1{8m}&lt;\frac12.
+   \]<br>Also \(\theta&gt;1/2\), so a vertex cannot satisfy both neighborhood content conditions. Hence \(A\cap B=\varnothing\).</p><ul><li><b>Forced-neighbor bounds.</b> For \(v\in A\), the nonnegative deficits satisfy</li></ul><p>\[
+   \sum_{u\in N(v)}(1-y_u)\le d_v\varepsilon.
+   \]<br>Each individual deficit is therefore at most \(d_v\varepsilon\le\delta\). The corresponding blue bound follows identically. Consequently, membership in both \(S_R\) and \(S_B\) would require incompatible inequalities \(y_u\ge1-\delta\) and \(y_u\le\delta\).</p><ul><li><b>Cardinality bounds.</b> Balance gives</li></ul><p>\[
+   |S_R|(1-\delta)\le\frac m2,
+   \]<br>and therefore<br>\[
+   |S_R|\le\frac m2+|S_R|\delta\le\frac m2+\frac18.
+   \]<br>Since \(m\) is even, integrality yields \(|S_R|\le m/2\). Applying the same calculation to \(1-y_v\) proves the blue bound. The even-order hypothesis is used correctly here.</p><ul><li><b>Purification cost.</b> Every forced coordinate changes by at most \(\delta\). Disjointness gives</li></ul><p>\[
+   D\le(|S_R|+|S_B|)\delta\le\frac18.
+   \]<br>The total imbalance satisfies \(|t|\le D\) by the triangle inequality.</p><ul><li><b>Restoring balance.</b> The required free-coordinate total is the integer</li></ul><p>\[
+   k=\frac m2-|S_R|.
+   \]<br>The two cardinality bounds imply \(0\le k\le|T|\). The existing free-coordinate sum is \(k+t\), so the required increase or decrease is available within the coordinate bounds. A monotone adjustment changes the free coordinates by total absolute amount \(|t|\). Thus<br>\[
+   \sum_u|q_u-y_u|\le D+|t|\le2D\le\frac14.
+   \]<br>This also covers \(T=\varnothing\): feasibility of the required total then forces \(k=t=0\).</p><ul><li><b>Objective control.</b> The identity \(\ell(y)=H_\theta(y)\) follows directly from the definitions of \(A\) and \(B\), including threshold equality. Because these sets are disjoint, each coordinate coefficient has absolute value at most one. The resulting loss bound is valid.</li></ul><ul><li><b>Integral maximizer.</b> The polytope is nonempty and compact. The proposed transfer between two fractional free coordinates preserves feasibility and can be chosen not to decrease the linear objective. Starting from a maximizer, it remains at the maximum and makes at least one additional coordinate integral. A single fractional coordinate cannot remain because the free-coordinate sum is the integer \(k\). This proves the claimed integral maximizer without an unstated integrality theorem.</li></ul><ul><li><b>Content after rounding.</b> A red vertex in \(A\) has all neighbors forced red; a blue vertex in \(B\) has all neighbors forced blue. For integral \(z\), \(\ell(z)\) counts precisely these selected vertices, each of which is content. Other content vertices can only increase the count.</li></ul><p>The lemma therefore establishes the asserted loss bound of \(1/4\).</p><h3>3. Recovery of the discrete optimum</h3><p>The lemma implies<br>\[
+H^*(G,\theta)\le C(G)+\frac14.
+\]<br>A balanced pure optimum is feasible for the divisible problem and contributes \(C(G)\), giving the reverse bound<br>\[
+H^*(G,\theta)\ge C(G).
+\]<br>Because \(C(G)\) is an integer and the upper error is strictly less than one,<br>\[
+\left\lfloor H^*(G,\theta)\right\rfloor=C(G).
+\]</p><p>The argument correctly bounds the advantage of divisibility; it does not incorrectly claim that a divisible optimum must be pure.</p><h3>4. Reduction and input promises</h3><p>For \(m\ge2\) and \(\Delta\ge1\),<br>\[
+8m\Delta&gt;3\Delta+1.
+\]<br>Thus the selected rational threshold satisfies the required strict promise. Its numerator and denominator have \(O(\log m)\) bits because \(\Delta\le m-1\).</p><p>For integer \(K\), the decision equivalence is correct. If \(C(G)\ge K\), the divisible optimum reaches \(K/m\). If \(C(G)&lt;K\), then<br>\[
+H^*(G,\theta)\le K-1+\frac14=K-\frac34&lt;K.
+\]<br>Hence no divisible allocation reaches \(K/m\).</p><p>The construction retains the graph and sets the prescribed two equal masses. It is polynomial in the binary input length. Hardness on this even-order subclass suffices for the task, which also permits odd-order graphs. Likewise, selecting one valid threshold per reduction instance suffices because \(\theta\) is part of the input; hardness for every fixed threshold is not needed.</p><h3>5. Finite formulation, attainment, and complexity</h3><p>The labeled linear programs are correct:</p><ul><li>Every selected label enforces its corresponding content inequality, including equality.</li><li>Their objectives never exceed the actual objective because omitted contributions are nonnegative.</li><li>Since \(\theta&gt;1/2\), every allocation’s satisfied conditions can be represented by a single label from \(\{\varnothing,R,B\}\) at each vertex.</li><li>For that labeling, the linear objective equals the allocation’s actual objective.</li></ul><p>Consequently, the maximum over these programs equals \(H^*\). Each feasible program has a compact feasible region, and there are finitely many programs, so the optimum is attained.</p><p>There are \(3^m\) programs. Each has \(m\) variables, \(O(m)\) constraints, and polynomial binary encoding length, even though neighborhood constraints can contain \(O(m^2)\) coefficients in total. Exact rational linear programming therefore supports the stated bound<br>\[
+3^m\,\operatorname{poly}(m,\tau,L),\qquad \tau=2.
+\]<br>The formulation also applies when \(m\) is odd.</p><p>For the rational-threshold decision problem, guessing a labeling and checking its linear-program optimum is a polynomial-time nondeterministic procedure. Together with the reduction, this establishes NP-completeness of that decision problem and NP-hardness of exact maximization.</p><p>No corrective feedback is required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

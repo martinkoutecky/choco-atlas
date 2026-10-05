@@ -22,13 +22,14 @@
 </style></head><body>
 <p><a href="../index.html">← back to the atlas</a></p>
 <h1>Selecting Interlacing Committees <span style="font-weight:normal;color:#8a7350">(aamas25-00076)</span></h1>
-<p class="banner">NEW RESULT — prover claims resolved, adversarial review adjudicates proved_with_minor_gaps</p>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved_with_minor_gaps</p>
 <p class="answer"><b>Answer:</b> \(\mathrm{NP\text{-}complete}\)</p>
 <h2>The anchor (named result in the paper)</h2>
 <p>Proposition 4.4 — class: algorithmic</p>
 
 <h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), committee size \(k\), a supplied candidate order, and rational masses \(\mu_t\) on approval types \(I_t\subseteq C\), each an interval, choose \(W\subseteq C\) with \(|W|=k\) maximizing \(Pairs_\infty(\mu,W)=\sum_{t,u}\mu_t\mu_u\mathbf{1}[I_t\cap I_u\cap W\neq\varnothing]\); equivalently, decide whether this value is at least a rational threshold \(q\).</p></div>
 <h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Given a finite candidate set \(C\), an integer \(k\), and approval types \((A_t,\mu_t)\) with \(A_t\subseteq C\), \(\mu_t\in\mathbb{Q}_{\ge 0}\), and \(\sum_t\mu_t=1\), form the graph on positive-mass types in which \(s,t\) are adjacent when \(A_s\cap A_t\cap W\ne\varnothing\). A \(W\)-connected component has mass equal to the sum of its types&#x27; masses, and \(\mathrm{Cons}_\infty(W,\mu)\) is the sum of squared component masses.</p><p>Target: Is deciding whether there exists \(W\subseteq C\) with \(|W|=k\) and \(\mathrm{Cons}_\infty(W,\mu)=1\) solvable in polynomial time, or is it NP-hard?</p><p>Known discrete result: for a finite list of voters, deciding whether a size-\(k\) committee connects all voters is NP-complete.<br>Continuous side: no result for this exact finite approval-type distribution problem is stated in the supplied source.</p></div>
+
 <h2>Prover output (gpt-5.6-sol / xhigh, Bolzano prover prompt)</h2><div class="pre"><h3>Complexity Classification</h3><h3>Theorem</h3><p>The decision problem is \( \mathrm{NP\text{-}complete} \). In particular, it is \( \mathrm{NP\text{-}hard} \) even when every approval type has the same positive mass.</p><h3>Lemma: Consistency One Is Equivalent to Connectivity</h3><p>Fix a committee \(W\). Let the connected components of the graph on positive-mass types be \(K_1,\ldots,K_q\), and define their masses by</p><p>\[
 x_i=\sum_{t\in K_i}\mu_t.
 \]</p><p>Every \(x_i\) is strictly positive, and, because zero-mass types are excluded and the total type mass is \(1\),</p><p>\[
@@ -44,7 +45,7 @@ x_i=\sum_{t\in K_i}\mu_t.
 \]</p><p>Thus</p><p>\[
 \mathrm{Cons}_\infty(W,\mu)=1
 \quad\Longleftrightarrow\quad
-\text{the positive-mass type graph induced by \(W\) is connected.}
+\text{the positive-mass type graph induced by $W$ is connected.}
 \]</p><h3>Membership in \( \mathrm{NP} \)</h3><p>A certificate is a subset \(W\subseteq C\) of size \(k\).</p><p>The verifier checks \(|W|=k\), constructs the graph whose vertices are the positive-mass types, and adds an edge between \(s\) and \(t\) exactly when</p><p>\[
 A_s\cap A_t\cap W\neq\varnothing.
 \]</p><p>These intersections and graph connectivity can be tested in polynomial time. By the lemma, the graph is connected exactly when \(\mathrm{Cons}_\infty(W,\mu)=1\). Therefore the problem belongs to \( \mathrm{NP} \).</p><h3>Reduction from the Discrete Problem</h3><p>Consider an instance of the supplied \( \mathrm{NP\text{-}complete} \) discrete problem. It consists of candidates \(C\), approval sets</p><p>\[
@@ -53,7 +54,7 @@ B_1,\ldots,B_n\subseteq C,
 A_i=B_i,
 \qquad
 \mu_i=\frac{1}{n}
-\quad\text{for every \(i\in\{1,\ldots,n\}\).}
+\quad\text{for every $i\in\{1,\ldots,n\}$.}
 \]</p><p>All masses are positive and satisfy</p><p>\[
 \sum_{i=1}^{n}\mu_i=1.
 \]</p><p>For every committee \(W\subseteq C\) and every pair \(i,j\),</p><p>\[

@@ -1,0 +1,418 @@
+<!doctype html><html><head><meta charset="utf-8"><title>The Grapevine Web: Analysing the Spread of False Information in Social Networks with Corrupted Sources — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>The Grapevine Web: Analysing the Spread of False Information in Social Networks with Corrupted Sources <span style="font-weight:normal;color:#8a7350">(aamas23-00262)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Choosing closest sources is always optimal in the single learner case.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a learner, source-distance types \(D\), distribution \(\mu\), intensity \(\rho\), Markov parameters \(M\), prior \(\theta\), and budget \(\kappa\), choose \(x_d\) with \(0\le x_d\le\mu_d\) and \(\sum_d x_d\le\kappa\) to maximize \(B_\rho(0)-B_\rho(x)\), where source messages are Poisson counts of intensity \(\rho\mu_d\) and corruption changes \(q_{d,1}\) to \(q_{d,0}\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) source-distance types \(d\in D\) with positive masses \(\mu_d\), each a binary rational, with \(\sum_{d\in D}\mu_d=1\). Here \(\tau\) is the support size, not the number of possible types; distances are positive integers encoded in unary, and \(m=\max D\).<br>There is one learner. Inputs also include binary rationals \(\rho&gt;0\), \(\theta\in(0,1)\), \(\kappa\in[0,1]\), \(p\in[0,1]\), and mutation rates \(a,b\in[0,1/2)\) with \(a+b&gt;0\). Let \(L\) be the total input bit length.<br>On states \((0,1,\varnothing)\), the column-stochastic transition matrix is \(M=\begin{pmatrix}p(1-a)&amp;pb&amp;0\\pa&amp;p(1-b)&amp;0\\1-p&amp;1-p&amp;1\end{pmatrix}\); define \(q_{d,j}(i)=(M^d)_{ij}\).<br>The true state is \(1\). An attack chooses real masses \(0\le x_d\le\mu_d\) with \(\sum_d x_d\le\kappa\), changing the initial message of corrupted mass from \(1\) to \(0\) at unit cost per unit mass.<br>Independently for each type, honest and corrupted source-message counts are Poisson with means \(\rho(\mu_d-x_d)\) and \(\rho x_d\); every message then follows an independent chain of length \(d\).<br>The learner observes distance-labelled counts \(N_{d,i}\) for \(i\in\{0,1\}\), but does not know which messages were corrupted and assumes all sources report the world state truthfully. Under an attack, these counts are independent with \(N_{d,i}\sim\operatorname{Pois}(\rho[(\mu_d-x_d)q_{d,1}(i)+x_dq_{d,0}(i)])\).<br>For attainable count vectors \(n\), put \(H_j(n)=\prod_{d\in D}\prod_{i\in\{0,1\}}q_{d,j}(i)^{n_{d,i}}\), using \(0^0=1\), and define the learner&#x27;s posterior \(b(n)=\theta H_1(n)/(\theta H_1(n)+(1-\theta)H_0(n))\). Null messages carry no information because their probability is state-independent.<br>Define \(B_\rho(x)=\mathbb E_x[b(N)]\). The objective is to maximize \(B_\rho(0)-B_\rho(x)\).</p><p>Is deciding, for an additional binary-rational threshold \(t\in[0,1]\), whether some feasible \(x\) satisfies \(B_\rho(0)-B_\rho(x)\ge t\) in \(\mathrm P\), or is it \(\mathrm{NP}\)-hard? State running times in \(m,\tau,L\), with the encoding lengths of \(\rho,\kappa,t\) included in \(L\).</p><p>For finitely many sources and one learner, corrupting the closest sources is optimal, giving a polynomial-time selection algorithm without evaluating expected posteriors ([verified result](https://www.ifaamas.org/Proceedings/aamas2023/pdfs/p2234.pdf)).<br>No result settling this precise Poisson mass problem was located in the search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the distribution to total mass one, with intensity rho supplying the expected total number of source messages; the budget measures corrupted mass.</li><li>Restricted distances to positive integers because the learner is distinct from the sources; chose unary encoding and defined m as the maximum distance.</li><li>Carried over equal propagation probabilities for both message states and mutation rates below one half; corrected the malformed null-state row to make M column-stochastic.</li><li>Required a nondegenerate prior and positive total mutation rate so attacked observations have a defined Bayesian posterior; retained zero individual mutation rates and propagation endpoints.</li><li>Specified independent Poisson splitting into honest and corrupted messages, independent propagation, and observation of distance-labelled counts without corruption labels.</li><li>Defined B_rho as the expected posterior under true state one, while the learner continues using the uncorrupted likelihood model.</li><li>Used the exact rational-threshold decision version of the stated maximization problem, allowing real feasible attack masses and making no objective-evaluation oracle assumption.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and proved progress</h3><p>I do <b>not</b> settle whether the unrestricted exact threshold problem belongs to $\mathrm P$ or is $\mathrm{NP}$-hard.</p><p>The following partial results are proved below:</p><ul><li>The unique optimal attack, when $p&gt;0$, corrupts mass in increasing order of distance and is computable exactly in polynomial time.</li><li>For any rational accuracy $\varepsilon&gt;0$, the optimal gain has a <b>deterministic additive approximation</b> in time</li></ul><p>$$
+   (1+m+\tau+L+\operatorname{bits}(\varepsilon)+\varepsilon^{-1})^{O(1)}.
+   $$<br>In particular, this bound depends polynomially on the encoding length of $\rho$, rather than on its numerical value.</p><ul><li>Even with $m=\tau=1$, the optimal gain can differ from the interior rational threshold $1/2$ by less than $2^{-P(L)}$ for every fixed polynomial $P$. Thus a universal polynomial-bit separation bound cannot finish the exact decision problem.</li></ul><p>The second and third results advance beyond the results in the supplied notes.</p><h3>1. Transition probabilities and posterior</h3><p>Set<br>$$
+s=a+b,\qquad r=1-s.
+$$<br>The hypotheses imply $0&lt;s&lt;1$ and $0&lt;r&lt;1$.</p><p>Conditional on survival, the probability $v_\ell$ that a message is in state $1$ satisfies<br>$$
+v_{\ell+1}=a+rv_\ell.
+$$<br>Solving this recurrence and multiplying by the survival probability $p^d$ gives<br>$$
+\begin{aligned}
+q_{d,0}(0)&amp;=p^d\frac{b+ar^d}{s},
+&amp;
+q_{d,1}(0)&amp;=p^d\frac{b(1-r^d)}{s},
+\\
+q_{d,0}(1)&amp;=p^d\frac{a(1-r^d)}{s},
+&amp;
+q_{d,1}(1)&amp;=p^d\frac{a+br^d}{s}.
+\end{aligned}
+$$<br>In particular, with $c_d=(pr)^d$,<br>$$
+q_{d,0}(0)-q_{d,1}(0)=c_d,
+\qquad
+q_{d,0}(1)-q_{d,1}(1)=-c_d.
+$$</p><p>If $p=0$, every observed count is zero, so $B_\rho(x)=\theta$ for every attack. The decision answer is then yes exactly when $t=0$. Henceforth assume $p&gt;0$.</p><p>The posterior is defined on every nonnegative integer count vector. Indeed:</p><ul><li>If $a,b&gt;0$, every observed-state transition probability is positive.</li><li>If $a=0$, both observed-state probabilities under initial state $1$ are positive, so $H_1(n)&gt;0$.</li><li>If $b=0$, both observed-state probabilities under initial state $0$ are positive, so $H_0(n)&gt;0$.</li></ul><p>Consequently its denominator is positive in every case.</p><p>Write<br>$$
+\lambda_{d,i}(x)
+=
+\rho\bigl[(\mu_d-x_d)q_{d,1}(i)+x_dq_{d,0}(i)\bigr].
+$$<br>The total observed-count mean is independent of the attack:<br>$$
+\sum_{d,i}\lambda_{d,i}(x)
+=
+\Lambda
+:=
+\rho\sum_d\mu_dp^d.
+$$<br>Thus the empty count vector has probability $e^{-\Lambda}&gt;0$ under every attack.</p><h3>2. Exact optimal attack</h3><p>This section supplies a self-contained proof of the selection result used later.</p><p>Let $e_{d,i}$ be the unit count vector for coordinate $(d,i)$, and define<br>$$
+\Delta_d(n)=b(n+e_{d,1})-b(n+e_{d,0}).
+$$</p><h3>2.1. Pointwise ordering</h3><p>For $d&lt;e$, I claim that<br>$$
+\Delta_d(n)\geq\Delta_e(n)\geq0
+$$<br>for every count vector $n$, with both inequalities strict at $n=0$.</p><p>First suppose $a,b&gt;0$. Define<br>$$
+\phi(z)=\frac{z}{1+z},
+\qquad
+Z(n)=\frac{\theta H_1(n)}{(1-\theta)H_0(n)}.
+$$<br>Then $Z(n)&gt;0$ and $b(n)=\phi(Z(n))$. Adding a state-$1$ or state-$0$ observation multiplies the posterior odds by, respectively,<br>$$
+u_d=\frac{a+br^d}{a(1-r^d)},
+\qquad
+v_d=\frac{b(1-r^d)}{b+ar^d}.
+$$<br>Here $u_d&gt;1&gt;v_d&gt;0$. Moreover,<br>$$
+\frac{d}{dy}\frac{a+by}{a(1-y)}
+=
+\frac{a+b}{a(1-y)^2}&gt;0,
+$$<br>and<br>$$
+\frac{d}{dy}\frac{b(1-y)}{b+ay}
+=
+-\frac{b(a+b)}{(b+ay)^2}&lt;0.
+$$<br>Since $r^d&gt;r^e$, we have $u_d&gt;u_e$ and $v_d&lt;v_e$. The strict monotonicity of $\phi$ therefore gives<br>$$
+\Delta_d(n)
+=
+\phi(Z(n)u_d)-\phi(Z(n)v_d)
+&gt;
+\Delta_e(n)&gt;0.
+$$</p><p>If $a=0$, a state-$1$ observation forces posterior $1$. Hence $\Delta_d(n)=0$ if $n$ already contains such an observation. Otherwise both likelihoods are positive, and<br>$$
+\Delta_d(n)=1-\phi\bigl(Z(n)(1-r^d)\bigr).
+$$<br>Because $1-r^d$ increases strictly with $d$, this expression is positive and decreases strictly with $d$.</p><p>If $b=0$, a state-$0$ observation forces posterior $0$. Thus $\Delta_d(n)=0$ if $n$ already contains a state-$0$ observation. Otherwise,<br>$$
+\Delta_d(n)=\phi\left(\frac{Z(n)}{1-r^d}\right),
+$$<br>which is positive and decreases strictly with $d$.</p><p>These cases prove the claim, including strictness at the empty vector.</p><h3>2.2. Ordered derivatives</h3><p>For independent Poisson coordinates with means $\lambda_j$, and any bounded function $f$,<br>$$
+\frac{\partial}{\partial\lambda_j}\mathbb E_\lambda[f(N)]
+=
+\mathbb E_\lambda[f(N+e_j)-f(N)].
+$$<br>To justify differentiation, write the expectation as<br>$$
+e^{-\sum_j\lambda_j}
+\sum_n f(n)\prod_j\frac{\lambda_j^{n_j}}{n_j!}.
+$$<br>The series and its differentiated series converge locally uniformly, as follows by bounding their absolute values using exponential series. This also supplies an analytic extension at zero means.</p><p>Applying the identity to the fixed function $b(n)$ yields<br>$$
+\frac{\partial B_\rho(x)}{\partial x_d}
+=
+-\rho c_d\,\mathbb E_x[\Delta_d(N)].
+$$<br>Each derivative is strictly negative: $\Delta_d$ is nonnegative everywhere and positive at $N=0$, an event of positive probability.</p><p>Furthermore, $d&lt;e$ implies $c_d&gt;c_e&gt;0$. The pointwise ordering above therefore gives<br>$$
+\frac{\partial B_\rho(x)}{\partial x_d}
+&lt;
+\frac{\partial B_\rho(x)}{\partial x_e}
+&lt;0.
+$$<br>Strictness follows from the empty-count event.</p><h3>2.3. Prefix-filling theorem</h3><p>Order the support as $d_1&lt;\cdots&lt;d_\tau$, and define<br>$$
+x^*_{d_j}
+=
+\min\left\{
+\mu_{d_j},
+\max\left\{0,\kappa-\sum_{\ell&lt;j}\mu_{d_\ell}\right\}
+\right\}.
+$$</p><p><b>Theorem.</b> For $p&gt;0$, this is the unique minimizer of $B_\rho(x)$ over feasible attacks.</p><p><b>Proof.</b> The feasible set is compact and $B_\rho$ is continuous, so a minimizer exists.</p><p>Every minimizer exhausts the budget. Otherwise, since $\sum_d\mu_d=1\geq\kappa$, some coordinate has remaining capacity; increasing it slightly preserves feasibility and strictly decreases $B_\rho$.</p><p>Suppose a budget-exhausting vector has $d&lt;e$ with $x_d&lt;\mu_d$ and $x_e&gt;0$. For sufficiently small $\eta&gt;0$, transferring mass $\eta$ from $e$ to $d$ remains feasible. Along this transfer,<br>$$
+\frac{d}{d\eta}B_\rho(x+\eta e_d-\eta e_e)
+=
+\frac{\partial B_\rho}{\partial x_d}
+-
+\frac{\partial B_\rho}{\partial x_e}
+&lt;0.
+$$<br>Such a vector cannot minimize $B_\rho$.</p><p>A vector with no such pair fills an initial sequence of types, possibly fills the next partially, and leaves every subsequent type uncorrupted. Budget exhaustion uniquely determines this vector as $x^*$. $\square$</p><p>This proof is independent of the finite-source result in the [cited AAMAS paper](https://www.ifaamas.org/Proceedings/aamas2023/pdfs/p2234.pdf).</p><p>Sorting and rational prefix arithmetic compute $x^*$ in polynomial time. Its coordinates have $O(L)$ bits: the product of the input denominators supplies a common denominator of $O(L)$ bits, and all relevant masses lie in $[0,1]$. A conservative elementary-arithmetic bound is<br>$$
+O\bigl(L+\tau L^3+\tau\log(\tau+1)\log(m+1)\bigr).
+$$</p><p>Define the optimal gain<br>$$
+G^*=B_\rho(0)-B_\rho(x^*).
+$$<br>The original decision problem is precisely whether $G^*\geq t$.</p><h3>3. A deterministic approximation lemma</h3><p>Let<br>$$
+f(z)=\frac{1}{1+e^{-z}}.
+$$<br>Then $0&lt;f(z)&lt;1$ and<br>$$
+0&lt;f&#x27;(z)\leq\frac14.
+$$</p><p><b>Lemma.</b> Let $N_1,\ldots,N_n$ be independent Poisson variables with rational means $\lambda_i\geq0$. Suppose $\alpha$ and $w_i$ are logarithms of positive rationals, and let $S$ denote the total encoding length of these rational data. For rational $0&lt;\varepsilon&lt;1$, one can approximate<br>$$
+E=\mathbb E f\left(\alpha+\sum_{i=1}^n w_iN_i\right)
+$$<br>by a rational number with absolute error at most $\varepsilon$, deterministically in time<br>$$
+(1+n+S+\operatorname{bits}(\varepsilon)+\varepsilon^{-1})^{O(1)}.
+$$</p><p>The crucial point is that this running time has no polynomial dependence on the numerical values of the large means.</p><h3>3.1. A Poisson-to-normal bound</h3><p>Write $d_K$ for Kolmogorov distance, the supremum of the difference between distribution functions.</p><p>We use the classical Berry–Esseen theorem in the following deliberately loose form: for independent identically distributed variables with mean $\mu$, positive variance $v$, and finite third absolute central moment $\beta$,<br>$$
+d_K\left(\sum_{j=1}^{\ell}X_j,\mathcal N(\ell\mu,\ell v)\right)
+\leq
+\frac{\ell\beta}{(\ell v)^{3/2}}.
+$$<br>The admissibility of constant $1$ follows, for example, from the stronger constants discussed in [Korolev and Shevtsova](https://arxiv.org/pdf/0912.2795).</p><p>Here is its implication for a Poisson variable. If $P_h\sim\operatorname{Pois}(h)$, then<br>$$
+\mathbb E|P_h-h|^3
+\leq
+\mathbb E(P_h+h)^3
+=
+h+6h^2+8h^3.
+$$<br>The last equality follows from<br>$$
+\mathbb EP_h=h,\quad
+\mathbb EP_h^2=h+h^2,\quad
+\mathbb EP_h^3=h+3h^2+h^3.
+$$</p><p>For fixed $\lambda&gt;0$, split $\operatorname{Pois}(\lambda)$ into $\ell$ independent $\operatorname{Pois}(\lambda/\ell)$ variables. The Berry–Esseen hypotheses hold because their variance is positive and all their moments are finite. It follows that<br>$$
+d_K\bigl(\operatorname{Pois}(\lambda),\mathcal N(\lambda,\lambda)\bigr)
+\leq
+\frac1{\sqrt{\lambda}}
++
+\frac{6\sqrt{\lambda}}{\ell}
++
+\frac{8\lambda^{3/2}}{\ell^2}.
+$$<br>The distribution on the left is independent of $\ell$. Letting $\ell$ tend to infinity proves<br>$$
+d_K\bigl(\operatorname{Pois}(\lambda),\mathcal N(\lambda,\lambda)\bigr)
+\leq\frac1{\sqrt{\lambda}}.
+$$</p><p>For any smooth monotone function $g$ taking values in $[0,1]$,<br>$$
+|\mathbb Eg(X)-\mathbb Eg(Y)|\leq d_K(X,Y).
+$$<br>Indeed, integration against the tail distributions gives a bound by<br>$$
+d_K(X,Y)\int_{\mathbb R}|g&#x27;(u)|\,du,
+$$<br>and the integral is at most $1$. This applies to $g(u)=f(c+wu)$ for every real $c,w$, including negative $w$.</p><h3>3.2. Replace only large means</h3><p>The case $n=0$ requires only evaluation of $f(\alpha)$, so assume $n\geq1$. Put<br>$$
+\delta=\frac{\varepsilon}{20},
+\qquad
+H=\left(\frac n\delta\right)^2.
+$$<br>Call a coordinate large if $\lambda_i\geq H$, and small otherwise.</p><p>Replace each large $N_i$ by an independent normal variable<br>$$
+Y_i\sim\mathcal N(\lambda_i,\lambda_i).
+$$<br>Conditioning on all other coordinates makes the integrand a monotone function of the coordinate being replaced. Therefore the preceding bound and a telescoping argument give total expectation error at most<br>$$
+\sum_{\text{large }i}\lambda_i^{-1/2}
+\leq\frac n{\sqrt H}
+=\delta.
+$$</p><p>The weighted sum of the replacement normals is a single normal variable:<br>$$
+\sum_{\text{large }i}w_iY_i=M+\sigma Z,
+$$<br>where $Z\sim\mathcal N(0,1)$ is independent of the small coordinates, and<br>$$
+M=\sum_{\text{large }i}\lambda_iw_i,
+\qquad
+\sigma^2=\sum_{\text{large }i}\lambda_iw_i^2.
+$$<br>If there are no large coordinates, set $M=\sigma=0$.</p><h3>3.3. Truncate the small total count</h3><p>Let<br>$$
+T=\sum_{\text{small }i}N_i,
+\qquad
+\Lambda_s=\sum_{\text{small }i}\lambda_i&lt;nH.
+$$<br>Thus $T\sim\operatorname{Pois}(\Lambda_s)$. Choose<br>$$
+K=
+\left\lceil2nH\right\rceil
++
+\left\lceil\log_2(1/\delta)\right\rceil
++2.
+$$<br>Markov’s inequality applied to $2^T$, together with $\mathbb E2^T=e^{\Lambda_s}$ and $e&lt;4$, gives<br>$$
+\Pr(T&gt;K)
+\leq2^{-K}e^{\Lambda_s}
+\leq2^{2nH-K}
+\leq\delta.
+$$</p><p>Because the integrand lies in $[0,1]$, replacing the expectation by its conditional expectation given $T\leq K$ changes its value by at most $\delta$.</p><p>Notice that<br>$$
+K=O\bigl(n^3\delta^{-2}+\log(1/\delta)\bigr),
+$$<br>regardless of the numerical values of the large means.</p><h3>3.4. Round the small likelihood contributions</h3><p>The logarithm of a positive rational with encoding length at most $S$ has absolute value at most $S\log 2$. We may therefore take<br>$$
+W=S+1
+$$<br>as a bound for every $|w_i|$.</p><p>Put<br>$$
+\eta=\frac{\delta}{K+1}.
+$$<br>For each small coordinate, first approximate $w_i$ by a rational within $\eta/2$, then round that approximation to a nearest multiple $\eta s_i$, where $s_i$ is an integer. This avoids needing an exact comparison involving an irrational logarithm and guarantees<br>$$
+|w_i-\eta s_i|\leq\eta.
+$$<br>On $T\leq K$,<br>$$
+\left|
+\sum_{\text{small }i}w_iN_i
+-
+\eta\sum_{\text{small }i}s_iN_i
+\right|
+\leq\eta K&lt;\delta.
+$$<br>The Lipschitz bound for $f$ makes the resulting expectation error at most $\delta/4$.</p><p>Furthermore,<br>$$
+|s_i|\leq\frac{W+1}{\eta}.
+$$<br>Consequently the integer score<br>$$
+z=\sum_{\text{small }i}s_iN_i
+$$<br>lies, on $T\leq K$, in $[-D,D]$, where<br>$$
+D=
+\left\lceil\frac{K(W+1)}{\eta}\right\rceil
+=
+O\left(\frac{WK^2}{\delta}\right).
+$$</p><h3>3.5. Compute the rounded distribution by dynamic programming</h3><p>Introduce formal variables $y,u$ and form the Laurent polynomial<br>$$
+\prod_{\text{small }i}
+\left(
+\sum_{k=0}^K
+\frac{\lambda_i^k}{k!}\,y^k u^{s_i k}
+\right),
+$$<br>discarding terms with $y$-degree greater than $K$ during multiplication.</p><p>Let $c_{k,z}$ be the resulting coefficient of $y^ku^z$. It is exactly the unnormalized Poisson weight of small count vectors having total count $k$ and rounded score $z$.</p><p>The normalizing constant is<br>$$
+C=\sum_{k,z}c_{k,z}
+=
+\sum_{k=0}^K\frac{\Lambda_s^k}{k!}.
+$$<br>This follows by setting $u=1$ and applying the multinomial identity. Thus<br>$$
+\pi_z=\frac{\sum_{k=0}^Kc_{k,z}}{C}
+$$<br>is the conditional distribution of the rounded score given $T\leq K$.</p><p>The table has at most $(K+1)(2D+1)$ entries. Direct multiplication uses<br>$$
+O\bigl(nK^2(D+1)\bigr)
+$$<br>rational arithmetic operations.</p><p>These operations have polynomial bit complexity. If the reduced denominators of the small means are $Q_i$, every coefficient denominator divides<br>$$
+\left(\prod_{\text{small }i}Q_i\right)^K(K!)^n.
+$$<br>This common denominator has<br>$$
+O\bigl(KS+nK\log(K+1)\bigr)
+$$<br>bits. Moreover, the sum of all retained nonnegative coefficients is at most $e^{\Lambda_s}\leq e^{nH}$, whose logarithm is polynomially bounded in $K$. Hence coefficient numerators and normalized probabilities also have polynomial bit length.</p><p>We have reduced the expectation to<br>$$
+\sum_{z=-D}^D
+\pi_z\,
+\mathbb E_Z f(A+\eta z+\sigma Z),
+\qquad
+A=\alpha+M.
+$$</p><h3>3.6. Evaluate the remaining normal expectations uniformly</h3><p>First approximate $A$ and $\sigma$ by rationals $\widetilde A,\widetilde\sigma$, with $\widetilde\sigma\geq0$, satisfying<br>$$
+|A-\widetilde A|\leq\delta,
+\qquad
+|\sigma-\widetilde\sigma|\leq\delta.
+$$<br>Coupling the two normal expressions using the same $Z$ shows that this changes each expectation by at most<br>$$
+\frac14\bigl(\delta+\delta\mathbb E|Z|\bigr)
+\leq\frac{\delta}{2}.
+$$</p><p>These absolute approximations require only polynomial precision. Indeed, $\lambda_i\leq2^S$ and $|w_i|\leq W$. Approximating the logarithms to absolute error of order<br>$$
+\frac{\delta^2}{n2^S(W+1)}
+$$<br>suffices to compute $A$ to error $O(\delta)$ and $\sigma^2$ to error $O(\delta^2)$. The inequality<br>$$
+|\sqrt v-\sqrt{\widetilde v}|
+\leq\sqrt{|v-\widetilde v|}
+$$<br>for nonnegative $v,\widetilde v$ then controls the square root. The required number of bits is polynomial in $S+\log(n+1)+\log(1/\delta)$.</p><p>For the normal integration, take<br>$$
+R=\lceil1/\delta\rceil
+$$<br>and partition $[-R,R]$ into intervals of length at most $\delta$. There are $J=O(\delta^{-2})$ intervals. Assign each interior interval’s normal probability to its left endpoint, and assign the two tail probabilities to $-R$ and $R$.</p><p>For any monotone $g:\mathbb R\to[0,1]$, the interior approximation error is at most<br>$$
+\max_j\Pr(Z\text{ lies in interval }j)
+\sum_j\bigl(g(u_{j+1})-g(u_j)\bigr)
+\leq\delta,
+$$<br>because the standard normal density is bounded by $1$. The tail error is at most<br>$$
+\Pr(|Z|&gt;R)\leq R^{-2}\leq\delta^2
+$$<br>by Chebyshev’s inequality. Therefore this discrete normal approximation changes each expectation by at most $2\delta$, uniformly in its shift and scale.</p><p>Approximate the discrete probabilities with total absolute error at most $\delta$, and each required logistic value within $\delta$. Clipping the numerical probability and logistic approximations to nonnegative values and $[0,1]$, respectively, gives an additional error at most $3\delta$.</p><p>All these numerical computations have polynomial bit complexity. For completeness:</p><ul><li>Rational logarithms can be computed by reducing their arguments to $[1,2]$ and using</li></ul><p>$$
+  \log v
+  =
+  2\sum_{j=0}^{\infty}
+  \frac{z^{2j+1}}{2j+1},
+  \qquad
+  z=\frac{v-1}{v+1},
+  $$<br>where $|z|\leq1/3$.</p><ul><li>Square roots admit binary bisection.</li><li>Logistic values outside an interval of radius $O(\log(1/\delta))$ can be replaced by $0$ or $1$ within the allocated error; inside it, exponential series suffice.</li><li>Normal interval probabilities can be computed by integrating the normal density over $[-R,R]$. Its derivative is bounded in absolute value by $1$, so rectangular quadrature attains absolute error $\beta$ with a number of evaluations polynomial in $R$ and $\beta^{-1}$. Here both are polynomial in $\delta^{-1}$. Exponentials with sufficiently large negative arguments can be replaced by zero within the allocated tolerance.</li></ul><p>Collecting the errors gives a bound below<br>$$
+\delta+\delta+\delta+\delta+2\delta+3\delta
+=
+9\delta
+&lt;
+\varepsilon.
+$$<br>Every table size, arithmetic bit length and numerical evaluation count is polynomial in $n,S,\varepsilon^{-1}$ and the accuracy encoding length. This proves the lemma. $\square$</p><h3>4. Applying the lemma to the society</h3><h3>4.1. Both mutation rates positive</h3><p>Set<br>$$
+\alpha=\log\frac{\theta}{1-\theta},
+\qquad
+w_{d,i}=\log\frac{q_{d,1}(i)}{q_{d,0}(i)}.
+$$<br>All ratios are positive rationals. The posterior has the representation<br>$$
+b(N)
+=
+f\left(\alpha+\sum_{d,i}w_{d,i}N_{d,i}\right).
+$$<br>The lemma therefore applies directly with at most $2\tau$ Poisson coordinates.</p><p>The transition probabilities and means at $x=0,x^*$ are computable exactly in polynomial time and have $O(mL)$ bits each. For example, the displayed transition formulas involve rational powers of exponent at most $m$ and rational operations on the input parameters. Thus the total rational-data length used in the lemma is polynomial in $m,\tau,L$.</p><h3>4.2. One mutation rate zero</h3><p>These cases also reduce to the lemma.</p><p>Suppose $a=0$. Any state-$1$ observation forces posterior $1$. Let<br>$$
+A_1(x)=\sum_d\lambda_{d,1}(x)
+=
+\rho\sum_d(\mu_d-x_d)(pr)^d.
+$$<br>Independence of the two sets of counts gives<br>$$
+B_\rho(x)
+=
+1-e^{-A_1(x)}
++
+e^{-A_1(x)}
+\mathbb E f\left(
+\alpha+\sum_d\log(1-r^d)N_{d,0}
+\right).
+$$<br>Every logarithm has a positive rational argument.</p><p>If $b=0$, any state-$0$ observation forces posterior $0$. With<br>$$
+A_0(x)=\sum_d\lambda_{d,0}(x)
+=
+\rho\sum_dx_d(pr)^d,
+$$<br>we similarly obtain<br>$$
+B_\rho(x)
+=
+e^{-A_0(x)}
+\mathbb E f\left(
+\alpha-\sum_d\log(1-r^d)N_{d,1}
+\right).
+$$</p><p>The remaining expectation has at most $\tau$ coordinates. The exponential factors can be approximated in polynomial time: when their nonnegative rational argument exceeds an integer of order $\log(1/\varepsilon)$, the factor can already be replaced by zero within the allocated error.</p><h3>4.3. Consequence for threshold comparisons</h3><p>Applying these procedures to $x=0$ and $x=x^*$, with appropriately divided error budgets, produces a rational $\widehat G$ satisfying<br>$$
+|\widehat G-G^*|\leq\varepsilon
+$$<br>in deterministic time<br>$$
+(1+m+\tau+L+\operatorname{bits}(\varepsilon)+\varepsilon^{-1})^{O(1)}.
+$$<br>Here $L$ includes the encoding lengths of $\rho,\kappa,t$.</p><p>Consequently, under the promise<br>$$
+|G^*-t|\geq\gamma,
+$$<br>using accuracy $\gamma/4$ decides the comparison in time<br>$$
+(1+m+\tau+L+\operatorname{bits}(\gamma)+\gamma^{-1})^{O(1)}.
+$$<br>In particular, the threshold problem with a specified inverse-polynomial gap is in $\mathrm P$.</p><p>This is an additive approximation result. It supplies no relative approximation guarantee for an arbitrarily small positive gain.</p><h3>5. Interior thresholds can have extremely small gaps</h3><p>The following family rules out a universal polynomial-bit separation bound, even for one type.</p><p>Take<br>$$
+D=\{1\},\quad
+\mu_1=1,\quad
+p=1,\quad
+a=b=\frac14,\quad
+\theta=\frac12,\quad
+\kappa=\frac12,\quad
+t=\frac12.
+$$<br>The optimal attack is $x_1^*=1/2$.</p><p>Write $S=N_{1,1}-N_{1,0}$. The likelihood ratios are $3$ and $1/3$, so<br>$$
+b(N)=\frac{3^S}{1+3^S}=f(S\log3).
+$$</p><p>Under $x^*$, the two counts are independent $\operatorname{Pois}(\rho/2)$ variables. Their joint distribution is invariant under exchanging them, which sends $S$ to $-S$. Since<br>$$
+f(u)+f(-u)=1,
+$$<br>we obtain the exact identity<br>$$
+B_\rho(x^*)=\frac12.
+$$<br>Thus<br>$$
+G^*=B_\rho(0)-\frac12,
+\qquad
+t-G^*=1-B_\rho(0)&gt;0.
+$$<br>The strict inequality follows because the posterior is strictly below $1$ on every finite count vector.</p><p>Under the honest society,<br>$$
+N_{1,1}\sim\operatorname{Pois}(3\rho/4),
+\qquad
+N_{1,0}\sim\operatorname{Pois}(\rho/4).
+$$<br>For every real $S$, the arithmetic–geometric mean inequality gives<br>$$
+\frac1{1+3^S}\leq\frac12\,3^{-S/2}.
+$$<br>Using independence and the Poisson generating function,<br>$$
+\begin{aligned}
+1-B_\rho(0)
+&amp;\leq
+\frac12\,\mathbb E3^{-S/2}
+\\
+&amp;=
+\frac12
+\exp\left[
+\frac{3\rho}{4}(3^{-1/2}-1)
++
+\frac{\rho}{4}(3^{1/2}-1)
+\right]
+\\
+&amp;=
+\frac12e^{-c\rho},
+\end{aligned}
+$$<br>where<br>$$
+c=1-\frac{\sqrt3}{2}&gt;0.
+$$<br>The empty-count event also supplies the lower bound<br>$$
+1-B_\rho(0)\geq\frac12e^{-\rho}.
+$$<br>Therefore<br>$$
+\frac12e^{-\rho}
+\leq
+t-G^*
+\leq
+\frac12e^{-c\rho}.
+$$</p><p>Now choose the binary-encoded rational $\rho=2^h$. All other parameters are fixed, so the input length is $L=\Theta(h)$, while<br>$$
+0&lt;t-G^*\leq\frac12e^{-c2^h}.
+$$<br>For every fixed polynomial $P$, this is smaller than $2^{-P(L)}$ for all sufficiently large $h$.</p><p>Hence no universal lower bound of the form<br>$$
+G^*\neq t
+\quad\Longrightarrow\quad
+|G^*-t|\geq2^{-\operatorname{poly}(m,\tau,L)}
+$$<br>can hold.</p><p>The family itself has the exact answer no, by the identity above. Its consequence is specifically the failure of the proposed universal separation bound.</p><h3>6. What is settled and what remains open</h3><p>Some unrestricted instances have immediate exact answers:</p><ul><li>If $t=0$, the answer is yes.</li><li>If $p=0$ or $\kappa=0$, the answer is yes exactly when $t=0$.</li><li>If $p&gt;0$ and $\kappa&gt;0$, then $G^*&gt;0$, by strict decrease along the segment from $0$ to $x^*$.</li><li>If $t=1$, the answer is no. The common empty-count event contributes $\theta e^{-\Lambda}$ to both expectations, so</li></ul><p>$$
+  G^*\leq1-e^{-\Lambda}&lt;1.
+  $$</p><p>For general thresholds, the real optimization variables have been eliminated and deterministic approximation is efficient for binary-encoded $\rho$. Increasing precision eventually decides every unequal comparison. These facts do not give a polynomial running-time bound for unrestricted exact comparison, and they do not handle arbitrary equality instances.</p><p>The small-gap family shows that a universal polynomial-bit separation argument is unavailable. A complete resolution still requires an exact comparison method using additional structure, or a valid hardness reduction to this particular channel family.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Opening status statement and Section 6: The requested unrestricted exact complexity classification is unresolved. Neither a polynomial-time exact comparison algorithm nor an $\mathrm{NP}$-hardness reduction is established; equality and arbitrarily small nonzero gaps remain outside the proved decision guarantees.</li><li><b>minor</b> — Section 3.6, displayed interior quadrature error bound: The calculation is stated for any monotone function, but its sum of signed increments is nonpositive for decreasing functions. Restrict the calculation to nondecreasing functions or use absolute increments. The functions used in the application are nondecreasing, so the result survives.</li><li><b>minor</b> — Opening approximation claim versus Section 3 lemma: The opening claim allows every rational $\varepsilon&gt;0$, while the proved construction assumes $0&lt;\varepsilon&lt;1$. State the trivial output convention for $\varepsilon\geq1$ or restrict the claim&#x27;s accuracy range.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: valid partial progress, with minor expositional issues.</b> The output proves the optimal attack’s structure, gives a sound deterministic additive approximation argument, and establishes the claimed failure of a universal polynomial-bit separation bound. It explicitly leaves the exact decision problem unresolved.</p><p>The distinction matters: computing the optimal attack in polynomial time does not establish that its expected gain can be compared exactly with a rational threshold in polynomial time.</p><h3>1. Transition probabilities and posterior</h3><p>The transition formulas are correct. The recurrence<br>$$
+v_{\ell+1}=a+(1-a-b)v_\ell
+$$<br>has the stated solution for both initial states, and multiplication by $p^d$ correctly accounts for survival.</p><p>The assumptions imply<br>$$
+0&lt;a+b&lt;1,\qquad 0&lt;r&lt;1.
+$$<br>Subtracting the displayed transition probabilities gives exactly<br>$$
+q_{d,0}(0)-q_{d,1}(0)=(pr)^d,
+\qquad
+q_{d,0}(1)-q_{d,1}(1)=-(pr)^d.
+$$</p><p>The treatment of $p=0$ is correct: all observed counts vanish, the posterior equals $\theta$, and every attack has zero gain.</p><p>For $p&gt;0$, the posterior denominator is positive on every nonnegative integer count vector:</p><ul><li>When both mutation rates are positive, all four observed-state probabilities are positive.</li><li>When $a=0$, both observed-state probabilities under initial state $1$ are positive.</li><li>When $b=0$, both observed-state probabilities under initial state $0$ are positive.</li></ul><p>The identity<br>$$
+\Lambda=\rho\sum_d\mu_dp^d
+$$<br>is correct and independent of the attack. Consequently, the empty-count event has the stated positive probability.</p><p><b>No substantive issue in this section.</b></p><h3>2. Optimal attack</h3><h3>2.1. Pointwise ordering</h3><p>For positive mutation rates, the likelihood-ratio multipliers $u_d$ and $v_d$ are correct. Both displayed derivatives are correct. Since $r^d$ decreases strictly with distance, the argument establishes<br>$$
+\Delta_d(n)&gt;\Delta_e(n)&gt;0
+$$<br>for $d&lt;e$.</p><p>The zero-rate cases are also handled correctly:</p><ul><li>With $a=0$, a state-$1$ observation makes the posterior equal to $1$, and subsequent differences vanish if such an observation is already present.</li><li>With $b=0$, the corresponding statement holds for state-$0$ observations and posterior $0$.</li></ul><p>On the remaining count vectors, the stated formulas give the required distance ordering. Strictness at the empty vector follows from $\theta\in(0,1)$ and $0&lt;r&lt;1$.</p><h3>2.2. Poisson differentiation</h3><p>The differentiation identity is correct. Boundedness of the function supplies the stated local uniform convergence of the series and its derivatives, including the extension at zero means.</p><p>The attack changes the two coordinate means at rates $\rho c_d$ and $-\rho c_d$. Thus the derivative formula<br>$$
+\frac{\partial B_\rho(x)}{\partial x_d}
+=-\rho c_d\,\mathbb E_x[\Delta_d(N)]
+$$<br>has the correct sign.</p><p>The pointwise nonnegativity and positive empty-count contribution justify strict negativity. Since<br>$$
+c_d&gt;c_e&gt;0
+$$<br>for $d&lt;e$, the strict ordering of derivatives also follows.</p><h3>2.3. Prefix filling and uniqueness</h3><p>The feasible set is compact, and continuity gives existence of a minimizer. The budget-exhaustion argument is valid whenever a minimizer has slack.</p><p>The exchange argument preserves feasibility for sufficiently small positive transfer and strictly decreases $B_\rho$. It therefore excludes every vector containing a farther corrupted type while a closer type retains capacity.</p><p>The remaining feasible, budget-exhausting vector is uniquely the displayed prefix-filling vector. The cases $\kappa=0$ and $\kappa=1$ are consistent with this conclusion.</p><p>The rational bit-length argument and conservative polynomial running-time bound are valid. In particular, the use of a product of input denominators gives a common denominator of $O(L)$ bits.</p><p><b>The unique optimal attack theorem is established.</b> It does not, by itself, resolve exact threshold comparison.</p><h3>3. Deterministic approximation lemma</h3><h3>3.1. Poisson-to-normal comparison</h3><p>The Berry–Esseen statement is sufficiently precise for its application. Constant $1$ is valid; the [cited Korolev–Shevtsova paper](https://arxiv.org/pdf/0912.2795) supplies a stronger bound. The Poisson summands satisfy the required independence, identical distribution, positive variance, and finite third absolute central moment.</p><p>The moment calculation<br>$$
+\mathbb E(P_h+h)^3=h+6h^2+8h^3
+$$<br>is correct. Substitution into the theorem yields exactly the displayed bound involving $\ell$. Letting $\ell$ tend to infinity is legitimate because the distribution being compared remains fixed.</p><p>The resulting estimate<br>$$
+d_K\bigl(\operatorname{Pois}(\lambda),\mathcal N(\lambda,\lambda)\bigr)
+\leq\lambda^{-1/2}
+$$<br>is therefore justified.</p><p>The monotone-function expectation bound correctly uses total variation through the integral of $|g&#x27;|$. It applies to either sign of the weight.</p><h3>3.2. Replacing large means</h3><p>The replacement argument correctly conditions on all other coordinates. Independence permits the telescoping comparison, whose accumulated error is at most $\delta$.</p><p>The expressions for $M$ and $\sigma^2$ are correct. Zero weights and the absence of large coordinates cause no difficulty.</p><h3>3.3. Truncation</h3><p>The total small count is Poisson with the stated mean. The generating-function and Markov bounds give<br>$$
+\Pr(T&gt;K)\leq\delta
+$$<br>with the chosen $K$.</p><p>Replacing an expectation of a function valued in $[0,1]$ by its conditional expectation changes it by at most the discarded probability. The conditioning event has positive probability.</p><p>The stated polynomial bound on $K$ is correct.</p><h3>3.4. Rounding</h3><p>The logarithm magnitude bound is valid under ordinary binary rational encoding. Approximating before rounding avoids the need to decide an exact irrational comparison.</p><p>The accumulated score error on $T\leq K$ is less than $\delta$, and the logistic Lipschitz constant gives the stated expectation error. The bound on the integer score range is correct.</p><h3>3.5. Dynamic programming</h3><p>The Laurent-polynomial coefficients represent exactly the asserted unnormalized weights. Truncating intermediate products is safe because count degrees are nonnegative.</p><p>The normalization identity is correct. It also covers zero means and an empty set of small coordinates.</p><p>The table size and direct multiplication operation count are valid. The proposed common denominator bounds the coefficient denominators, and the nonnegative coefficient-sum bound controls numerator lengths. Consequently, exact rational arithmetic has polynomial bit complexity in the stated parameters.</p><h3>3.6. Numerical normal integration</h3><p>The coupling error for approximating $A$ and $\sigma$ is correct. The precision discussion accounts for exponentially large means through their encoding lengths. Its unspecified constant factors are routine precision choices, rather than a substantive gap.</p><p>The discrete normal approximation has an error bound independent of the shift and scale for the functions actually used here. The tail estimate and numerical probability/value error budgets are valid.</p><p><b>Minor issue:</b> the displayed interior-error formula is stated for “any monotone” function, but contains<br>$$
+\sum_j\bigl(g(u_{j+1})-g(u_j)\bigr).
+$$<br>For a decreasing function this quantity is nonpositive, so the displayed inequality is false as written.</p><p><b>Minimum clarification:</b> restrict that displayed calculation to nondecreasing functions, or use absolute increments. The application already uses nondecreasing functions because $\widetilde\sigma\geq0$, so this does not affect the approximation result.</p><p>The proposed elementary numerical procedures have polynomial cost at the required tolerances. The collected error budget is safely below $\varepsilon$.</p><p><b>Minor issue:</b> the opening claim covers every rational $\varepsilon&gt;0$, whereas the lemma and its parameter choices assume $0&lt;\varepsilon&lt;1$.</p><p><b>Minimum clarification:</b> state the trivial output convention for $\varepsilon\geq1$, or restrict the accuracy claim to $0&lt;\varepsilon&lt;1$. This is an omitted routine edge case.</p><p><b>The approximation lemma is sound in substance.</b></p><h3>4. Application to the society</h3><p>For positive mutation rates, the log-likelihood representation is correct, with positive rational logarithm arguments. Exact transition probabilities and means have polynomial encoding length in $m,\tau,L$, as claimed.</p><p>For $a=0$, the formula for $A_1(x)$ and the decomposition according to whether any state-$1$ observation occurs are correct. Independence justifies the remaining expectation.</p><p>For $b=0$, the analogous formula for $A_0(x)$ and its multiplicative decomposition are also correct.</p><p>Approximating the exponential factors does not introduce dependence polynomial in the numerical value of $\rho$. Applying divided error budgets to the two expectations gives the stated additive approximation for $G^*$.</p><p>Under the promised gap, accuracy $\gamma/4$ is sufficient to determine the comparison. The polynomial-time claim for a specified inverse-polynomial gap is justified.</p><p><b>This establishes approximation and promised-gap comparison, not unrestricted exact comparison.</b></p><h3>5. Extremely small threshold gaps</h3><p>Every parameter in the proposed family satisfies the task’s assumptions.</p><p>The likelihood ratios are indeed $3$ and $1/3$. Under the optimal attack, the two count means equal $\rho/2$, and exchange symmetry establishes<br>$$
+B_\rho(x^*)=\frac12.
+$$</p><p>The identity<br>$$
+t-G^*=1-B_\rho(0)&gt;0
+$$<br>is correct. Strict positivity also follows from the positive empty-count contribution used later in the proof.</p><p>The arithmetic–geometric mean inequality is applied correctly. The Poisson generating-function calculation gives the stated constant<br>$$
+c=1-\frac{\sqrt3}{2}&gt;0.
+$$<br>The empty-count lower bound is also correct. Hence both sides of<br>$$
+\frac12e^{-\rho}\leq t-G^*\leq\frac12e^{-c\rho}
+$$<br>are justified.</p><p>Encoding $\rho=2^h$ gives $L=\Theta(h)$ with the remaining parameters fixed. The upper bound consequently becomes smaller than $2^{-P(L)}$ for every fixed polynomial $P$, for sufficiently large $h$.</p><p><b>The separation-bound obstruction is proved.</b> The output correctly avoids claiming that this obstruction proves hardness.</p><h3>6. Exact decision problem and remaining issue</h3><p>The listed immediate exact answers are correct, including the bound for $t=1$. The common empty-count contribution gives the displayed strict upper bound on the gain.</p><p>The final distinction between unequal comparisons and equality instances is also correct. Increasing accuracy can eventually resolve a nonzero gap, but the supplied running-time bound depends on the reciprocal accuracy. The small-gap family prevents the proposed universal separation shortcut.</p><p><b>Major unresolved requirement:</b> the task asks for polynomial-time exact decision or an $\mathrm{NP}$-hardness result. Neither is established. This is an acknowledged incompleteness, not a false mathematical step.</p><p><b>Minimum additional work needed:</b> provide a verified exact comparison method with polynomial running time for all allowed inputs, including equality, or a valid hardness reduction for this precise model. The present selection and approximation results do not supply either.</p><p>The direction is promising: the partial results substantially simplify the optimization and identify the remaining comparison problem precisely.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

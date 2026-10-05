@@ -1,0 +1,131 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2023-0487 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2023-0487 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2023-0487)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\)-hard under the specified accuracy dependence; an algorithm polynomial in \(m,\tau,H,L,1/\epsilon\) would imply \(\mathrm P=\mathrm{NP}\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.1 — class: hardness</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational type masses \(\mu_t\), contact rates \(a_{st}\), community memberships \(b_{jt}\), a seed-mass budget \(\kappa\), and a finite horizon \(H\), optimize over \(x_t\in[0,1]\) with \(\sum_t\mu_t x_t\le\kappa\). Define \(z_t^{(0)}=x_t\) and \(z_t^{(h+1)}=1-(1-x_t)\exp(-\sum_s\mu_s a_{st}z_s^{(h)})\); maximize \(F_H(x)=\sum_t\mu_t z_t^{(H)}\) subject to equal coverage \(\phi_j(x)=\sum_t b_{jt}\mu_t z_t^{(H)}/\sum_t b_{jt}\mu_t\) across communities. Determine the complexity, in \(|T|\), \(H\), input bit length, and \(1/\epsilon\), of finding a rational solution with objective within \(\epsilon\) of optimum and parity violations at most \(\epsilon\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list \(T\) of \(\tau\ge1\) types with positive masses \(\mu_t\) encoded as binary rationals, with \(\sum_t\mu_t=1\); \(\tau\) is the support size, not the number of possible types.<br>Input also includes nonnegative binary rational contact rates \(a_{st}\), a binary rational budget \(\kappa\in[0,1]\), and a horizon \(H\in\mathbb Z_{\ge0}\) encoded in unary. There are \(m\ge1\) communities, specified by indicators \(b_{jt}\in\{0,1\}\), each with positive mass \(M_j=\sum_t b_{jt}\mu_t\); communities may overlap and need not cover the society.<br>A seed allocation is \(x\in[0,1]^T\) satisfying \(\sum_t\mu_t x_t\le\kappa\). Define \(z_t^{(0)}=x_t\) and \(z_t^{(h+1)}=1-(1-x_t)\exp(-\sum_s\mu_s a_{st}z_s^{(h)})\) for \(0\le h&lt;H\).<br>Set \(F_H(x)=\sum_t\mu_t z_t^{(H)}\) and \(\phi_j(x)=M_j^{-1}\sum_t b_{jt}\mu_t z_t^{(H)}\). Let \(\mathrm{OPT}\) be the maximum of \(F_H\) over budget-feasible real allocations satisfying \(\phi_i(x)=\phi_j(x)\) for every pair of communities.<br>For a binary rational \(\epsilon\in(0,1)\), the computational problem is to find a rational budget-feasible allocation with \(F_H(x)\ge\mathrm{OPT}-\epsilon\) and \(|\phi_i(x)-\phi_j(x)|\le\epsilon\) for all pairs. Guarantees concern the real values of the recurrence; \(L\) denotes the total input bit length, including \(\epsilon\).</p><p>Is this approximation problem solvable in time polynomial in \(m,\tau,H,L,1/\epsilon\), or is it NP-hard under this accuracy dependence?</p><p>For discrete seed sets under Independent Cascade diffusion, no polynomial-time algorithm achieves any fixed positive multiplicative objective factor while ensuring \(\sigma_{C_i}(S)\ge\beta\sigma_{C_j}(S)\) for all pairs, for any fixed \(\beta\in(0,1]\), unless \(\mathrm P=\mathrm{NP}\); here \(\sigma_C\) is expected community coverage. [Discrete hardness result](https://ojs.aaai.org/index.php/AAAI/article/download/26651/26423).<br>No result settling the specified mass recurrence and additive-error problem was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized total society mass to one, so the budget and objective are measured as population fractions.</li><li>Specified contact rates as arbitrary nonnegative binary rationals; rates are not edge probabilities.</li><li>Specified community memberships as binary indicators, with positive community masses; allowed overlapping communities and uncovered types as in the discrete definition.</li><li>Specified the budget domain as [0,1] and allowed zero seeding.</li><li>Specified a nonnegative integer horizon encoded in unary to match the requested polynomial dependence on H.</li><li>Specified epsilon as a binary rational in (0,1) and L as the total input bit length.</li><li>Interpreted objective error as F_H(x) at least OPT minus epsilon, relative to the exact-parity real optimum; interpreted parity violation as the maximum pairwise absolute coverage difference.</li><li>Required the rational output to satisfy the seed budget exactly and evaluated its guarantees using the real exponential recurrence.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><p><b>1. Result</b></p><p>The approximation problem is \(\mathrm{NP}\)-hard under the specified accuracy dependence. A deterministic algorithm running in time polynomial in \(m,\tau,H,L,1/\epsilon\) would imply \(\mathrm P=\mathrm{NP}\).</p><p>This holds already for \(H=1\), with two distinct, disjoint singleton communities. The proof below uses the given mass recurrence directly.</p><p><b>2. A graph quadratic lemma</b></p><p>Let \(G\) be a simple undirected graph on \(\{1,\ldots,n\}\), and let \(\omega\) be its maximum clique size. Define the symmetric matrix \(B\) by setting \(B_{ij}=1\) when \(i=j\) or when distinct vertices \(i,j\) are nonadjacent, and \(B_{ij}=0\) otherwise.</p><p>For every \(v\in\mathbb R_{\ge0}^n\), put \(r=\sum_i v_i\) and \(Q(v)=\sum_{i,j}B_{ij}v_iv_j\). Then</p><p>\[
+Q(v)\ge \frac{r^2}{\omega}.
+\]</p><p>Equality holds when \(v\) assigns mass \(r/\omega\) to each vertex of a maximum clique and zero elsewhere.</p><p>To prove the inequality, the case \(r=0\) is immediate. Otherwise normalize to \(p=v/r\), so \(\sum_i p_i=1\).</p><p>Suppose two nonadjacent vertices \(i,j\) both have positive coordinates. Keep all other coordinates fixed and redistribute their total mass \(s=p_i+p_j\). Their contribution involving only these two coordinates is</p><p>\[
+p_i^2+2p_ip_j+p_j^2=s^2.
+\]</p><p>Their interactions with the remaining coordinates have the form \(2p_i\alpha+2p_j\beta\), where \(\alpha,\beta\) are fixed. Moving all mass \(s\) to the coordinate with the smaller coefficient does not increase \(Q\), and decreases the number of positive coordinates.</p><p>Repeating this operation terminates at a vector \(p&#x27;\) whose support is a clique, of some size \(\ell\le\omega\). Consequently, by Cauchy–Schwarz,</p><p>\[
+Q(p)\ge Q(p&#x27;)=\sum_i(p&#x27;_i)^2\ge\frac1\ell\ge\frac1\omega.
+\]</p><p>Multiplication by \(r^2\) proves the claim. The stated equality case follows directly from the definition of \(B\).</p><p><b>3. Construction of the diffusion instance</b></p><p>We reduce from CLIQUE: given \(G\) and an integer \(k\), decide whether \(\omega\ge k\). This problem is \(\mathrm{NP}\)-complete; see [Karp’s original paper](https://link.springer.com/chapter/10.1007/978-1-4684-2001-2_9). We may restrict to \(n\ge2\) and \(2\le k\le n\), since other cases are directly decidable.</p><p>Define</p><p>\[
+\lambda=\frac1{8n^3},
+\qquad
+\epsilon=\frac{\lambda^2}{2}=\frac1{128n^6},
+\qquad
+c_i=\sum_{j=1}^n B_{ij}.
+\]</p><p>There are \(n+2\) types: the vertex types and two additional types \(d_1,d_2\). Set</p><p>\[
+\mu_i=\frac1{2n}\quad(1\le i\le n),
+\qquad
+\mu_{d_1}=\mu_{d_2}=\frac14,
+\qquad
+\kappa=\frac1{2n}.
+\]</p><p>These masses are positive and sum to one. Choose \(H=1\). The two communities are \(C_1=\{d_1\}\) and \(C_2=\{d_2\}\), each of mass \(1/4\).</p><p>Set the contact rates to</p><p>\[
+a_{ij}=2n\lambda B_{ij}\quad(1\le i,j\le n),
+\qquad
+a_{i,d_\ell}=2\lambda(n-c_i)\quad(\ell\in\{1,2\}),
+\]</p><p>and set every rate whose source is \(d_1\) or \(d_2\) to zero. Since \(1\le c_i\le n\), all rates are nonnegative binary rationals.</p><p>For a budget-feasible allocation \(x\), write</p><p>\[
+r=\sum_{i=1}^n x_i,
+\qquad
+p(x)=\sum_t\mu_tx_t.
+\]</p><p>The budget inequality gives</p><p>\[
+\frac{r}{2n}+\frac{x_{d_1}+x_{d_2}}4\le\frac1{2n},
+\]</p><p>and hence \(0\le r\le1\).</p><p>Let \(u_t=\sum_s\mu_sa_{st}x_s\) be the exponent argument in the one-round recurrence. Our construction gives</p><p>\[
+u_j=\lambda\sum_i B_{ij}x_i,
+\qquad
+u_{d_1}=u_{d_2}=u_d
+=\frac{\lambda}{n}\sum_i(n-c_i)x_i.
+\]</p><p>Therefore \(0\le u_t\le\lambda\) for every type.</p><p><b>4. A rational upper bound and the exponential error</b></p><p>Define the rational expression</p><p>\[
+\mathcal G(x)=p(x)+\sum_t\mu_t(1-x_t)u_t.
+\]</p><p>For every \(u\ge0\),</p><p>\[
+0\le u-(1-e^{-u})
+=\int_0^u(1-e^{-v})\,dv
+\le\int_0^u v\,dv
+=\frac{u^2}{2}.
+\]</p><p>Because \(z_t^{(1)}=x_t+(1-x_t)(1-e^{-u_t})\), the preceding bound implies</p><p>\[
+0\le\mathcal G(x)-F_1(x)
+\le\sum_t\mu_t(1-x_t)\frac{u_t^2}{2}
+\le\frac{\lambda^2}{2}
+=\epsilon.
+\]</p><p>We next calculate \(\mathcal G\). The balancing types make the linear influence term independent of the graph degrees:</p><p>\[
+\sum_t\mu_tu_t
+=\frac{\lambda}{2n}\sum_i c_ix_i
++\frac{\lambda}{2n}\sum_i(n-c_i)x_i
+=\frac{\lambda r}{2}.
+\]</p><p>The corresponding subtraction term is</p><p>\[
+\sum_t\mu_tx_tu_t
+=\frac{\lambda}{2n}Q(x_1,\ldots,x_n)
++\frac{x_{d_1}+x_{d_2}}4\,u_d.
+\]</p><p>The last summand is nonnegative. Using the budget and the graph quadratic lemma, we obtain</p><p>\[
+\mathcal G(x)
+\le\kappa+\frac{\lambda}{2n}(nr-Q(x_1,\ldots,x_n))
+\le\kappa+\frac{\lambda}{2n}\left(nr-\frac{r^2}{\omega}\right).
+\]</p><p>For \(0\le r\le1\),</p><p>\[
+\left(n-\frac1\omega\right)
+-\left(nr-\frac{r^2}{\omega}\right)
+=(1-r)\left(n-\frac{1+r}{\omega}\right)\ge0,
+\]</p><p>because \(n\ge2\) and \(\omega\ge1\).</p><p>For \(1\le\ell\le n\), define</p><p>\[
+A_\ell=\kappa+\frac{\lambda}{2n}\left(n-\frac1\ell\right).
+\]</p><p>Thus every budget-feasible allocation, regardless of its fairness violation, satisfies</p><p>\[
+F_1(x)\le\mathcal G(x)\le A_\omega.
+\]</p><p><b>5. An exactly fair clique witness</b></p><p>Let \(S\) be a maximum clique. Choose</p><p>\[
+x_i=\frac1\omega\quad(i\in S),
+\qquad
+x_i=0\quad(i\notin S),
+\qquad
+x_{d_1}=x_{d_2}=0.
+\]</p><p>This allocation lies in the unit cube and uses budget exactly \(\kappa\). The two balancing types have identical exponent arguments and identical seed coordinates. Hence</p><p>\[
+\phi_1(x)=z_{d_1}^{(1)}=1-e^{-u_d}
+=z_{d_2}^{(1)}=\phi_2(x).
+\]</p><p>The witness therefore satisfies the exact fairness constraint used to define \(\mathrm{OPT}\).</p><p>For this allocation, \(r=1\), \(Q=1/\omega\), and \(\mathcal G(x)=A_\omega\). Combining the witness with the universal upper bound proves</p><p>\[
+A_\omega-\epsilon\le\mathrm{OPT}\le A_\omega.
+\]</p><p>The maximum exists: the exactly fair feasible set is nonempty, closed, and bounded, and \(F_1\) is continuous.</p><p><b>6. Deciding CLIQUE from any valid approximate allocation</b></p><p>Suppose an algorithm supplies the allocation required in the question. Apply it to the constructed instance with accuracy \(\epsilon=\lambda^2/2\), obtaining a rational allocation \(\widehat x\).</p><p>If \(\omega\ge k\), the objective guarantee and the exactly fair witness imply</p><p>\[
+\mathcal G(\widehat x)\ge F_1(\widehat x)
+\ge\mathrm{OPT}-\epsilon
+\ge A_k-2\epsilon
+=A_k-\lambda^2.
+\]</p><p>If \(\omega\le k-1\), the universal upper bound gives</p><p>\[
+\mathcal G(\widehat x)\le A_\omega\le A_{k-1}.
+\]</p><p>The gap between consecutive thresholds satisfies</p><p>\[
+A_k-A_{k-1}
+=\frac{\lambda}{2nk(k-1)}
+\ge\frac{\lambda}{2n^3}
+=4\lambda^2.
+\]</p><p>Consequently:</p><ul><li>A yes-instance gives \(\mathcal G(\widehat x)\ge A_k-\lambda^2\).</li><li>A no-instance gives \(\mathcal G(\widehat x)\le A_k-4\lambda^2\).</li></ul><p>Comparison with the rational threshold \(A_k-2\lambda^2\) therefore decides CLIQUE correctly. Computing \(\mathcal G(\widehat x)\) requires only exact rational arithmetic; no numerical evaluation of an exponential is needed. The argument applies to every output meeting the requested guarantees, including outputs with nonzero permitted fairness error.</p><p>The constructed instance has \(m=2\), \(\tau=n+2\), \(H=1\), total bit length \(L=O(n^2\log n)\), and \(1/\epsilon=128n^6\). Thus an algorithm with the proposed polynomial running time, followed by the rational comparison above, would decide CLIQUE in polynomial time. This proves the claimed hardness.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The proof resolves the task. Its reduction establishes hardness for the specified continuous recurrence and additive approximation guarantees, already with \(H=1\) and two disjoint singleton communities. I found no major or minor issues.</p><ul><li><b>Graph quadratic lemma — correct.</b></li></ul><p>The matrix \(B\) is symmetric, includes every diagonal entry, and includes both ordered entries for each nonedge. Thus the contribution of two nonadjacent positive coordinates is exactly \((p_i+p_j)^2\).</p><p>With their total mass fixed, their remaining interactions are linear in those coordinates. Moving their mass to the coordinate with the smaller coefficient cannot increase \(Q\), preserves nonnegativity and normalization, and strictly decreases support size. The process therefore terminates with nonempty clique support.</p><p>Cauchy–Schwarz applies to the resulting \(\ell\) positive coordinates, whose sum is one, giving \(Q(p&#x27;)\ge 1/\ell\ge 1/\omega\). Normalization and rescaling are valid for \(r&gt;0\); the case \(r=0\) is correctly handled separately. The stated equality witness is also correct.</p><ul><li><b>Source problem and parameter restrictions — valid.</b></li></ul><p>The cited theorem is precisely the NP-completeness of deciding whether an input graph contains \(k\) mutually adjacent vertices, equivalently whether \(\omega\ge k\). This matches [Karp’s original theorem](https://www.scribd.com/document/953735605/Karp-1972).</p><p>Restricting to \(n\ge2\) and \(2\le k\le n\) removes only directly decidable cases. In particular, \(k-1\) is positive wherever \(A_{k-1}\) is used.</p><ul><li><b>Construction — satisfies the task’s input requirements.</b></li></ul><p>There are exactly \(n+2\) positive-mass support types. Their masses sum to one, the budget lies in \([0,1]\), and both communities have positive mass. Disjoint singleton communities are allowed by the task.</p><p>The contact rates are nonnegative because \(1\le c_i\le n\). All numerical parameters are rational with polynomial binary encoding length. Also, \(0&lt;\epsilon=1/(128n^6)&lt;1\), and \(H=1\) satisfies the unary horizon requirement.</p><p>The source and target indices in the contact rates agree with the recurrence. Substituting the masses gives the displayed formulas for \(u_j\) and \(u_d\). The budget implies \(0\le r\le1\), and consequently every exponent argument satisfies \(0\le u_t\le\lambda\).</p><ul><li><b>Exponential approximation — correct, uniformly over feasible allocations.</b></li></ul><p>The integral identity and the bound \(1-e^{-v}\le v\) give \(0\le u-(1-e^{-u})\le u^2/2\) for every \(u\ge0\).</p><p>The weights \(\mu_t(1-x_t)\) are nonnegative and sum to at most one. Therefore the claimed bound \(0\le\mathcal G(x)-F_1(x)\le\lambda^2/2=\epsilon\) is valid. Its direction is used consistently throughout the reduction.</p><ul><li><b>Calculation and universal upper bound — correct.</b></li></ul><p>The two balancing types together contribute \(\lambda(2n)^{-1}\sum_i(n-c_i)x_i\) to the linear influence term. This exactly cancels the degree dependence of the vertex contribution, yielding \(\sum_t\mu_tu_t=\lambda r/2\).</p><p>The subtraction term has the stated vertex contribution \(\lambda Q(x)/(2n)\). Its balancing-type contribution is nonnegative, so discarding it gives an upper bound.</p><p>Applying the budget and quadratic lemma gives \(\mathcal G(x)\le\kappa+\lambda(nr-r^2/\omega)/(2n)\). The displayed factorization comparing this expression with its value at \(r=1\) is correct. Its sign follows from \(1-r\ge0\), \(n\ge2\), and \((1+r)/\omega\le2\).</p><p>Thus \(F_1(x)\le\mathcal G(x)\le A_\omega\) holds for every budget-feasible allocation, including allocations that violate exact fairness.</p><ul><li><b>Exactly fair witness and optimum bounds — correct.</b></li></ul><p>The maximum-clique allocation lies in the unit cube and uses exactly the budget. Equal zero seed coordinates and identical exponent arguments at the singleton community types imply exactly equal normalized community coverage.</p><p>For this witness, \(r=1\), \(Q=1/\omega\), and the balancing subtraction vanishes. Hence \(\mathcal G(x)=A_\omega\), and the exponential error bound gives \(F_1(x)\ge A_\omega-\epsilon\).</p><p>Combined with the universal upper bound, this establishes \(A_\omega-\epsilon\le\mathrm{OPT}\le A_\omega\). The existence claim is justified: the exactly fair feasible set is nonempty and compact, and the objective and fairness functions are continuous.</p><ul><li><b>Decision gap — constants and quantifiers are correct.</b></li></ul><p>In a yes-instance, every valid approximate output satisfies \(\mathcal G(\widehat x)\ge A_k-\lambda^2\). In a no-instance, every budget-feasible output satisfies \(\mathcal G(\widehat x)\le A_{k-1}\).</p><p>The threshold difference is exactly \(\lambda/(2nk(k-1))\). Since \(k(k-1)\le n^2\), it is at least \(\lambda/(2n^3)=4\lambda^2\).</p><p>Therefore the rational threshold \(A_k-2\lambda^2\) strictly separates the two cases. There is no boundary ambiguity. Permitted fairness error cannot invalidate the reduction because its upper bound applies without any fairness assumption.</p><ul><li><b>Polynomial running-time consequence — valid.</b></li></ul><p>The stated encoding bound \(L=O(n^2\log n)\) and accuracy dependence \(1/\epsilon=128n^6\) are polynomial in the graph size.</p><p>Under the hypothesized polynomial-time algorithm, the rational output has polynomial encoding length. Evaluating the displayed rational expression \(\mathcal G(\widehat x)\) and comparing it with the rational threshold therefore also take polynomial time. No exponential evaluation or exact fairness test is required.</p><p>This proves the claimed polynomial-time implication and the corresponding hardness of the approximation search problem. The proof does not claim NP membership or NP-completeness.</p><p>No repair or additional clarification is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

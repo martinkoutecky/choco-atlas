@@ -1,0 +1,270 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ijcai-2016-0541 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ijcai-2016-0541 <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2016-0541)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Let sc be the probability of success for column c as before. Let µc be the expected number of inspections that column c incurs if its entries are inspected in increasing or- der of their probability of success, conditioning on the event that column c is inspected and infeasible.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finitely many types \(T\) with masses \(\mu_t\), options \(c\in C\), and rates \(\lambda_{tc}&gt;0\), place independent Poisson failure processes of rate \(\lambda_{tc}\) on each type-mass interval of length \(\mu_t\), for every option \(c\). Find a fixed measurable scan order over the type-mass intervals for all options that minimizes expected total scanned mass until an option is certified failure-free or every option is rejected. This is the limit of finite instances with \(n_t/N\to\mu_t\), per-agent failure probabilities \(\lambda_{tc}/N\), and inspection cost normalized by \(N\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass \(\mu_t\) a binary rational; \(\tau\) is the support size, not the number of possible types. Assume \(\sum_t\mu_t=1\), \(\tau\geq1\), and \(m=|C|\geq1\). Each rate \(\lambda_{tc}&gt;0\) is a binary rational; \(L\) is the total input bit length.<br>For every \((t,c)\), take a separate interval \(I_{tc}=[0,\mu_t)\) carrying a homogeneous Poisson point process of intensity \(\lambda_{tc}\); all these processes are mutually independent. An option is feasible exactly when its intervals contain no failure points.<br>A fixed measurable scan order is a measure-preserving measurable bijection, modulo null sets, from \([0,m)\) onto the disjoint union of the \(I_{tc}\). It is chosen before observing failures, may interleave options and split type intervals, and scans each point once.<br>Scanning reveals encountered failure points. Reject an option at its first revealed failure and skip all its remaining mass at zero cost. Certify an option as failure-free once all its mass has been scanned without failure, with certification understood almost surely. Stop at the first certification or when every option is rejected.<br>The cost is total mass actually scanned, counted separately for each option; minimize its expectation over fixed measurable scan orders. The only dependence on observations is rejection, skipping, and stopping.</p><p>Is finding an optimal fixed measurable scan order solvable in polynomial time in \(m,\tau,L\), or is this optimization problem NP-hard?</p><p>For finite matrices of mutually independent Bernoulli entries with success probabilities strictly between \(0\) and \(1\), an optimal fixed inspection permutation with unit inspection costs and the same skipping and stopping rules can be found in polynomial time. [Lee and Goel](https://www.ijcai.org/Proceedings/16/Papers/053.pdf)<br>No result settling this exact continuous Poisson scan problem was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized masses to sum to one, interpreting them as population proportions in the stated distributional limit.</li><li>Required positive binary rational rates and nonempty type and option sets; defined L as the total binary input length.</li><li>Interpreted a scan as an order on option-specific copies of the society, matching inspections of individual matrix entries rather than simultaneous inspection of all options for one agent.</li><li>Formalized arbitrary fixed measurable orders as measure-preserving measurable bijections modulo null sets, allowing splitting and interleaving without imposing a common type order across options.</li><li>Restored zero-cost skipping of all remaining mass of a rejected option and immediate stopping upon certification or universal rejection.</li><li>Interpreted exhaustion and failure-free certification modulo null sets, hence almost surely, as required by the Poisson mass model.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and new partial result</h3><p>I do <b>not</b> settle whether the stated optimization problem is polynomial-time solvable or NP-hard.</p><p>The new result is a polynomial-time reduction showing that its priority comparisons can encode <b>arbitrary rational exponential-sum sign comparisons</b>, even with only two options having the same feasibility probability.</p><p>More precisely, define the following auxiliary problem: given binary-encoded rationals $a_i,q_i$, determine the sign of</p><p>$$
+F=\sum_{i=1}^{n}a_i e^{q_i}.
+$$</p><p>I prove:</p><ul><li>An oracle for this sign problem gives a polynomial-time construction of an optimal scan.</li><li>Conversely, an algorithm that outputs an optimal permutation of the input intervals solves this sign problem in polynomial time, using a constructed two-option instance.</li><li>Every optimal measurable scan with two options consists of whole-option blocks, modulo null sets. Thus allowing interleaving does not remove the ordering issue in the reduction.</li></ul><p>This strengthens the characterization in the notes: the restricted priority formulas have the full comparison power of explicit rational exponential sums.</p><p>Throughout, “binary rational” means a rational represented by a binary numerator and denominator, as in the bit model used in the notes.</p><h3>1. Structural characterization of optimal scans</h3><p>I first prove the structural results needed for the reduction.</p><h3>1.1. Every measurable scan is dominated by an option-block scan</h3><p>Fix an admissible scan and pull its intervals back to the parameter interval $[0,m)$. Let $E_c$ be the measurable set of positions assigned to option $c$. These sets partition $[0,m)$ modulo null sets, and each has Lebesgue measure $1$.</p><p>Define</p><p>$$
+X_c(s)=\operatorname{Leb}(E_c\cap[0,s)),
+\qquad
+b_c=\inf\{s:X_c(s)=1\}.
+$$</p><p>The function $X_c$ is continuous and nondecreasing, with $X_c(0)=0$ and $X_c(m)=1$. Consequently, $b_c$ exists and $X_c(b_c)=1$.</p><p>The map $s\mapsto X_c(s)$ compresses option $c$ into its local scan order on $[0,1)$. Here are the measure-theoretic details.</p><p>Under Lebesgue measure restricted to $E_c$, the cumulative distribution function of the scan position is $X_c$. This distribution has no atoms, so the cumulative-distribution transformation sends it to uniform measure on $[0,1)$. Moreover, if two distinct positions have the same cumulative value, $X_c$ is constant between them. Nontrivial plateau interiors form a countable family; their intersections with $E_c$, together with their endpoints, have measure zero. Outside these sets, the map is injective, and a generalized inverse supplies a measurable inverse. Thus compression is a measure-preserving bijection modulo null sets.</p><p>The failure intensity measures are absolutely continuous with respect to Lebesgue measure. There are almost surely finitely many failures, since the sum of all interval intensities is finite. Hence failures almost surely avoid the discarded null sets, and compression preserves their local order.</p><p>For a failure realization outside this null event, let $Z_c$ denote the cost of inspecting option $c$ alone in its compressed order: its first failure’s local position if it is infeasible, and $1$ if it is feasible.</p><p>Order options so that</p><p>$$
+b_1\leq b_2\leq\cdots\leq b_m,
+$$</p><p>breaking ties deterministically, and concatenate their compressed local orders.</p><p>If at least one option is feasible, let $j$ be the first feasible option in this sequence. The concatenated scan costs</p><p>$$
+\sum_{i&lt;j}Z_i+1.
+$$</p><p>The original scan first certifies an option at position $b_j$. By that position, each earlier option has encountered its first failure and incurred cost $Z_i$, and option $j$ has incurred cost $1$. Any other inspected mass contributes a nonnegative additional cost. Therefore, the original scan costs at least the displayed quantity.</p><p>If all options are infeasible, both scans incur exactly $\sum_c Z_c$.</p><p>Thus serialization cannot increase cost, pathwise outside a null event. Taking expectations proves the claim.</p><h3>1.2. Rates should decrease within each option block</h3><p>Consider one option in a local order with rate function $r(x)$ on $[0,1)$. Write</p><p>$$
+H(x)=\int_0^x r(u)\,du.
+$$</p><p>The Poisson void probability gives</p><p>$$
+\Pr(Z&gt;x)=e^{-H(x)}
+$$</p><p>for almost every $x\in[0,1)$. The tail-integral identity therefore gives its expected inspection cost</p><p>$$
+A=\mathbb E[Z]=\int_0^1 e^{-H(x)}\,dx.
+$$</p><p>Its feasibility probability is</p><p>$$
+p=e^{-H(1)}
+=\exp\left(-\sum_t\mu_t\lambda_{tc}\right),
+$$</p><p>independently of the local order.</p><p>For a prefix of mass $x$, let $y_t$ be the amount inspected from type $t$. Then</p><p>$$
+0\leq y_t\leq\mu_t,
+\qquad
+\sum_t y_t=x,
+\qquad
+H(x)=\sum_t\lambda_{tc}y_t.
+$$</p><p>This last expression is maximized by filling types in decreasing rate order. Indeed, if a lower-rate type has positive allocated mass while a higher-rate type has unused mass, transferring mass to the higher-rate type increases the expression. Filling successive types by this rule produces the decreasing-rate prefix.</p><p>Let $H^\downarrow$ be the cumulative hazard in decreasing rate order. We have, for every $x$,</p><p>$$
+H^\downarrow(x)\geq H(x).
+$$</p><p>Consequently,</p><p>$$
+\int_0^1e^{-H^\downarrow(x)}\,dx
+\leq
+\int_0^1e^{-H(x)}\,dx.
+$$</p><p>Decreasing rate order therefore minimizes $A$ while preserving $p$.</p><h3>1.3. Option blocks should have increasing priority</h3><p>Let $A_c$ be the minimum expected inspection cost of option $c$, attained by decreasing rate order, and let $p_c$ be its feasibility probability.</p><p>For a block permutation $\sigma$, independence between options gives expected total cost</p><p>$$
+\mathcal C(\sigma)
+=
+\sum_{j=1}^m
+A_{\sigma(j)}
+\prod_{i&lt;j}(1-p_{\sigma(i)}).
+$$</p><p>Reaching a block means that all previous options are infeasible. This event is independent of that block’s inspection cost, which justifies the formula.</p><p>For adjacent options $c,d$, the conditional expected costs of their two orders are</p><p>$$
+A_c+(1-p_c)A_d
+\quad\text{and}\quad
+A_d+(1-p_d)A_c.
+$$</p><p>Their difference is</p><p>$$
+A_cp_d-A_dp_c.
+$$</p><p>The probabilities of proceeding past both options agree, so subsequent contributions cancel. Since every $p_c&gt;0$, define</p><p>$$
+K_c=\frac{A_c}{p_c}.
+$$</p><p>The adjacent exchange favors $c$ before $d$ precisely when $K_c\leq K_d$. Repeated exchanges remove all inversions without increasing expected cost.</p><p>Combining the preceding arguments proves:</p><p><b>Optimal-scan theorem.</b> An optimal scan exists as a permutation of the original type intervals. Within each option, order types by decreasing rate; order the resulting option blocks by increasing $K_c$.</p><p>To express $K_c$, let the decreasing rates and corresponding masses be $r_{ic}$ and $\ell_{ic}$, and define suffix hazards</p><p>$$
+S_{ic}=\sum_{j=i}^{\tau}r_{jc}\ell_{jc},
+\qquad
+S_{\tau+1,c}=0.
+$$</p><p>Integration within each constant-rate segment gives</p><p>$$
+K_c=
+\sum_{i=1}^{\tau}
+\frac{e^{S_{ic}}-e^{S_{i+1,c}}}{r_{ic}}.
+$$</p><p>Thus each comparison $K_c-K_d$ is a rational linear combination of at most $2\tau+2$ exponentials of rational numbers. All its rational data have polynomial bit length: they are obtained by polynomially many rational products, sums, and reciprocals of the input data.</p><h3>2. Encoding arbitrary exponential sums as priority differences</h3><p>This is the new reduction.</p><p>Start with</p><p>$$
+F=\sum_{i=1}^{n}a_i e^{q_i},
+\qquad
+a_i,q_i\in\mathbb Q.
+$$</p><p>Group equal exponents and remove zero coefficients. If no terms remain, return sign zero directly. Otherwise, define</p><p>$$
+f(z)=\sum_{i=1}^{n}a_i e^{q_i z},
+\qquad
+\alpha=\max\{0,-\min_i q_i\}.
+$$</p><h3>2.1. Enforce two rational moment identities</h3><p>Set</p><p>$$
+g(z)=e^{\alpha z}(e^z-1)^2f(z).
+$$</p><p>Expanding and grouping terms produces</p><p>$$
+g(z)=\sum_{s\in T}b_s e^{sz},
+$$</p><p>where $T$ contains at most $3n$ distinct nonnegative rational exponents, and every $b_s$ is rational.</p><p>Because $(e^z-1)^2$ has a zero of order two at zero,</p><p>$$
+\sum_{s\in T}b_s=g(0)=0,
+\qquad
+\sum_{s\in T}s b_s=g&#x27;(0)=0.
+$$</p><p>On the other hand,</p><p>$$
+g(1)=e^\alpha(e-1)^2F.
+$$</p><p>The multiplying factor is strictly positive, so $g(1)$ has the same sign as $F$.</p><p>Let</p><p>$$
+H=\max T.
+$$</p><p>After zero coefficients have been removed, $H&gt;0$. In fact, the largest exponent arising from the largest exponent of $f$ plus the shift and $2$ has a nonzero coefficient: it cannot be canceled by any lower shifted term.</p><h3>2.2. Construct two positive decreasing densities</h3><p>For $0\leq y&lt;H$, define</p><p>$$
+u(y)
+=
+1+
+\sum_{\substack{s\in T\\s&gt;0,\ b_s&gt;0}}
+b_s\,\mathbf 1_{[0,s)}(y),
+$$</p><p>and</p><p>$$
+v(y)
+=
+1+
+\sum_{\substack{s\in T\\s&gt;0,\ b_s&lt;0}}
+(-b_s)\,\mathbf 1_{[0,s)}(y).
+$$</p><p>Both functions are positive, nonincreasing step functions with rational values and rational breakpoints.</p><p>Their difference is</p><p>$$
+u(y)-v(y)
+=
+\sum_{\substack{s\in T\\s&gt;0}}
+b_s\,\mathbf 1_{[0,s)}(y).
+$$</p><p>Using the first-moment identity,</p><p>$$
+\int_0^H(u(y)-v(y))\,dy
+=
+\sum_{s\in T}s b_s
+=
+0.
+$$</p><p>Hence they have a common positive rational integral</p><p>$$
+D
+=
+\int_0^H u(y)\,dy
+=
+\int_0^H v(y)\,dy.
+$$</p><p>Explicitly,</p><p>$$
+D
+=
+H+\sum_{\substack{s\in T\\b_s&gt;0}}b_s s.
+$$</p><p>Normalize them:</p><p>$$
+\rho_1(y)=\frac{u(y)}D,
+\qquad
+\rho_2(y)=\frac{v(y)}D.
+$$</p><p>Each $\rho_c$ is positive and nonincreasing, with integral $1$.</p><p>Their exponential-integral difference is</p><p>$$
+\begin{aligned}
+\int_0^H e^y(\rho_1(y)-\rho_2(y))\,dy
+&amp;=
+\frac1D
+\sum_{\substack{s\in T\\s&gt;0}}b_s(e^s-1)\\
+&amp;=
+\frac1D\sum_{s\in T}b_s e^s\\
+&amp;=\frac{g(1)}D.
+\end{aligned}
+$$</p><p>The second equality uses $\sum_s b_s=0$, including the coefficient at exponent zero if present.</p><h3>2.3. Convert the densities into decreasing rate profiles</h3><p>For each $c\in\{1,2\}$, define</p><p>$$
+x_c(y)=\int_y^H\rho_c(z)\,dz.
+$$</p><p>Because $\rho_c&gt;0$, this is a continuous, strictly decreasing, piecewise linear bijection from $[0,H]$ to $[0,1]$, with</p><p>$$
+x_c(H)=0,
+\qquad
+x_c(0)=1.
+$$</p><p>Define the option’s rate profile by</p><p>$$
+r_c(x_c(y))=\frac1{\rho_c(y)}
+$$</p><p>away from breakpoints.</p><p>All rates and segment endpoints are rational. As $x$ increases, $y$ decreases; since $\rho_c$ is nonincreasing in $y$, $\rho_c(y)$ increases along this scan. Thus $r_c(x)$ is nonincreasing in $x$, exactly the optimal internal rate order established above.</p><p>On a density segment with value $\rho$ and hazard-coordinate length $\Delta y$, the corresponding mass-coordinate segment has length $\rho\Delta y$ and rate $1/\rho$. Its total hazard is therefore $\Delta y$. Summing segments gives</p><p>$$
+\int_0^1r_c(x)\,dx=H.
+$$</p><p>More generally, the remaining hazard after reaching $x_c(y)$ is $y$:</p><p>$$
+\int_{x_c(y)}^1r_c(x)\,dx=y.
+$$</p><p>Using the formula $K_c=\int_0^1 e^{H-H_c(x)}\,dx$ and changing coordinates yields</p><p>$$
+K_c=\int_0^H e^y\rho_c(y)\,dy.
+$$</p><p>Consequently,</p><p>$$
+K_1-K_2
+=
+\frac{g(1)}D
+=
+\frac{e^\alpha(e-1)^2}{D}F.
+$$</p><p>This is the required sign-preserving identity. Also,</p><p>$$
+p_1=p_2=e^{-H}.
+$$</p><h3>2.4. Enforce a shared type support</h3><p>The two rate profiles initially may have different segment lengths. The society requires the same type masses for both options, so this must be repaired explicitly.</p><p>Take the union of their rational breakpoints in mass coordinate:</p><p>$$
+0=x_0&lt;x_1&lt;\cdots&lt;x_\tau=1.
+$$</p><p>Create type $t$ with mass</p><p>$$
+\mu_t=x_t-x_{t-1},
+$$</p><p>and assign $\lambda_{tc}$ to be the constant value of $r_c$ on $(x_{t-1},x_t)$.</p><p>Every mass and rate is positive rational, and the masses sum to $1$. Refinement preserves each rate profile and hence preserves $K_c$ and $p_c$. Ordering these types by increasing $t$ already gives decreasing rates for both options.</p><p>There are at most $3n$ positive hazard breakpoints, so each profile has at most $3n$ segments. Their common refinement has at most $6n-1$ segments. Thus the constructed support size is linear in the number of input terms.</p><p>Finally, this construction has polynomial bit complexity. Grouping terms, forming $D$, computing density values, integrating constant density segments, taking reciprocals, and refining breakpoints all use polynomially many rational operations. The numerators and denominators arising from these explicit sums and products have polynomial bit length in the original input. No exponential needs to be numerically evaluated to construct the society.</p><p><b>Reduction theorem.</b> In polynomial time, any explicit rational exponential sum can be converted into a two-option society with common support and equal feasibility probabilities such that</p><p>$$
+\operatorname{sgn}(K_1-K_2)=\operatorname{sgn}(F).
+$$</p><h3>3. Every optimal two-option measurable scan uses whole blocks</h3><p>The existence of an optimal block scan alone does not rule out an algorithm using an interleaved optimal output. For two options, a stronger statement holds.</p><p>Fix any measurable scan, and let option $c$ have the earlier deterministic completion position $b_c$. Write $d$ for the other option and set</p><p>$$
+x=X_d(b_c).
+$$</p><p>On the event that both options are feasible, the original scan costs $1+x$: it has inspected all of option $c$ and mass $x$ of option $d$ by its first certification.</p><p>The serialized scan putting $c$ first costs $1$ on this event. By Section 1.1, it costs no more on every other realization outside a null event.</p><p>The probability that both options are feasible is $p_cp_d&gt;0$. Hence, if $x&gt;0$, serialization decreases expected cost by at least</p><p>$$
+p_cp_d x&gt;0.
+$$</p><p>Such a scan cannot be optimal. Every optimal scan therefore has $x=0$.</p><p>Since the two option sets partition the scan parameter interval,</p><p>$$
+b_c=X_c(b_c)+X_d(b_c)=1.
+$$</p><p>Option $c$ consequently occupies $[0,1)$ modulo null sets, and option $d$ occupies $[1,2)$ modulo null sets.</p><p>This also excludes tied completion positions: a tie would give $X_d(b_c)=1$.</p><p>For either block order, replacing its local orders by decreasing rate order cannot increase expected cost. When $K_1\neq K_2$, the minimum expected costs of the two block orders differ by</p><p>$$
+p_1p_2(K_1-K_2),
+$$</p><p>which is nonzero. Therefore, every optimal measurable scan must start with the option having smaller priority.</p><h3>4. Exact computational consequence</h3><p>Use the natural finite output representation: a permutation of the input intervals. Section 1 proves that this representation always contains an optimal scan.</p><p>An oracle that determines signs of explicit rational exponential sums supplies every priority comparison. Rational rate sorting followed by comparison-based option sorting therefore constructs an optimal scan using polynomially many oracle calls of polynomial input size.</p><p>Conversely, suppose an algorithm outputs such an optimal permutation in polynomial time. Given an exponential sum:</p><ul><li>Group equal exponents and detect equality as described below.</li><li>For a nonzero sum, construct the two-option society from Section 2.</li><li>Run the optimal-scan algorithm and inspect which option is first.</li></ul><p>If option $1$ is first, the sum is negative; if option $2$ is first, it is positive. Section 3 proves that an optimal output cannot evade this choice through interleaving.</p><p>Thus:</p><p><b>Computational equivalence.</b> Constructing an optimal scan in the finite interval-permutation representation is polynomial-time Turing equivalent to determining signs of explicit rational exponential sums.</p><p>This equivalence establishes neither polynomial-time solvability nor NP-hardness. It shows that the priority formulas’ positive-coefficient structure and shared type masses do not make their comparisons less general.</p><h3>5. Exact computability and repaired approximation result</h3><h3>5.1. Equality testing and terminating exact computation</h3><p>The Lindemann–Weierstrass theorem states that exponentials of distinct algebraic numbers are linearly independent over the algebraic numbers. See [Theorem 13 of *Identity Testing for Circuits with Exponentiation Gates*](https://drops.dagstuhl.de/storage/00lipics/lipics-vol362-itcs2026/html/LIPIcs.ITCS.2026.95/LIPIcs.ITCS.2026.95.html).</p><p>After grouping equal rational exponents, both exponents and coefficients are algebraic, and the remaining exponents are distinct. The theorem therefore implies</p><p>$$
+\sum_s b_s e^s=0
+\quad\Longleftrightarrow\quad
+b_s=0\text{ for every grouped exponent }s.
+$$</p><p>Equality testing takes polynomial-time rational arithmetic.</p><p>For an unequal comparison, certified numerical intervals converging to its value eventually exclude zero. This yields a terminating exact algorithm. It does not yield a polynomial running-time bound without further control of sign determination.</p><h3>5.2. Polynomial-time special cases</h3><p>If $m=1$, sorting types by decreasing rational rate suffices.</p><p>If $\tau=1$, normalization forces $\mu_1=1$, and</p><p>$$
+K_c
+=
+\frac{e^{\lambda_{1c}}-1}{\lambda_{1c}}
+=
+\int_0^1e^{\lambda_{1c}u}\,du.
+$$</p><p>This is strictly increasing in $\lambda_{1c}$, since the integrand strictly increases for every $u&gt;0$. Sorting options by increasing rational rate therefore solves this case in polynomial time.</p><h3>5.3. Polynomial-time additive approximation</h3><p>To avoid the tolerance-encoding issue identified by the verifier, state the guarantee with a precision parameter: for any integer $b\geq1$, an expected cost within $2^{-b}$ of optimum can be obtained in time polynomial in $m,\tau,L,b$.</p><p>Set</p><p>$$
+\varepsilon=2^{-b},
+\qquad
+\delta=\frac{\varepsilon}{m(m+1)}.
+$$</p><p>Compute rational approximations satisfying</p><p>$$
+0&lt;a_c\leq1,
+\qquad
+0\leq q_c\leq1,
+\qquad
+|a_c-A_c|\leq\delta,
+\qquad
+|q_c-p_c|\leq\delta.
+$$</p><p>Sort by $a_c/q_c$, placing zero $q_c$ values last. The adjacent-exchange argument proves that this minimizes</p><p>$$
+\widetilde{\mathcal C}(\sigma)
+=
+\sum_{j=1}^m
+a_{\sigma(j)}
+\prod_{i&lt;j}(1-q_{\sigma(i)}).
+$$</p><p>For factors in $[0,1]$, telescoping the product difference gives</p><p>$$
+\left|
+\prod_{i&lt;j}(1-p_{\sigma(i)})
+-
+\prod_{i&lt;j}(1-q_{\sigma(i)})
+\right|
+\leq(j-1)\delta.
+$$</p><p>Because $a_c\leq1$, the difference between corresponding objective summands is at most $j\delta$. Uniformly over permutations,</p><p>$$
+|\mathcal C(\sigma)-\widetilde{\mathcal C}(\sigma)|
+\leq\frac{m(m+1)}2\delta.
+$$</p><p>Applying this bound to a surrogate minimizer $\widehat\sigma$ and a true minimizer $\sigma^*$ gives</p><p>$$
+\mathcal C(\widehat\sigma)
+\leq
+\mathcal C(\sigma^*)+m(m+1)\delta
+=
+\operatorname{OPT}+\varepsilon.
+$$</p><p>For completeness, the required numerical approximations have polynomial bit complexity. If</p><p>$$
+H_{ic}=\sum_{j=1}^i r_{jc}\ell_{jc},
+\qquad H_{0c}=0,
+$$</p><p>then</p><p>$$
+A_c=
+\sum_{i=1}^{\tau}
+\frac{e^{-H_{i-1,c}}-e^{-H_{ic}}}{r_{ic}},
+\qquad
+p_c=e^{-H_{\tau c}}.
+$$</p><p>Every reciprocal rate is at most $2^L$. Approximating each exponential to absolute error $\delta/(8\tau2^L)$ makes the error in $A_c$ at most $\delta/4$. Clamping that approximation to $[\delta/2,1]$ preserves error at most $\delta$ and ensures positivity. Clamp the feasibility approximation to $[0,1]$.</p><p>Here is an explicit polynomial-time routine for approximating $e^{-v}$, where $v\geq0$ is rational, to error $2^{-N}$:</p><ul><li>If $v=0$, return $1$.</li><li>If $v\geq N+1$, return $0$, whose error is less than $2^{-N}$.</li><li>Otherwise, let $k=\lceil v\rceil$ and $u=v/k\leq1$. Approximate $e^{-u}$ by its alternating Taylor series, clamp to $[0,1]$, and raise the result to power $k$.</li></ul><p>A Taylor polynomial of degree</p><p>$$
+M=N+\lceil\log_2 k\rceil+2
+$$</p><p>has error at most $1/(M+1)!\leq2^{-M}$. Clamping cannot increase this error. Since</p><p>$$
+|x^k-y^k|\leq k|x-y|
+\qquad(0\leq x,y\leq1),
+$$</p><p>the final error is less than $2^{-N}$. Here $k\leq N+1$, and all rational intermediates have polynomial bit length.</p><p>This supplies the claimed approximation algorithm and explicitly repairs both minor issues in the notes.</p><h3>6. What remains open</h3><p>The unresolved target is still the exact binary-input classification.</p><p>The new reduction shows that proving polynomial-time priority comparisons would also prove polynomial-time sign determination for arbitrary explicit rational exponential sums. Conversely, a polynomial-time algorithm for those signs would complete the optimal-scan algorithm.</p><p>No polynomial-time sign algorithm or NP-hardness reduction for that auxiliary problem is established here. Accordingly, I claim only partial progress.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 2.3, the formula using $H_c(x)$ before the change of coordinates: $H_c(x)$ is not explicitly defined. State that it is the cumulative hazard of option $c$, consistent with the function $H(x)$ defined in Section 1.2.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Assessment: correct partial progress.</b> The output establishes the structural characterization, the reduction to and from rational exponential-sum sign determination in the stated finite output representation, and the additive approximation guarantee. It does <b>not</b> resolve the polynomial-time versus NP-hardness question in <code>USER_TASK</code>, and it explicitly acknowledges this.</p><p>I found no false central step or major gap in the partial results. There is one minor notation omission.</p><h3>1. Scope and input assumptions</h3><p>The construction respects the intended input model:</p><ul><li>The support consists only of positive masses, with total mass $1$.</li><li>All rates are strictly positive rationals.</li><li>The support size is the number of explicitly constructed types.</li><li>Rational numbers are represented by binary numerators and denominators.</li><li>Independence is used only between the mutually independent option processes specified in the task.</li></ul><p>The computational equivalence is expressly restricted to outputting a permutation of the input intervals. This is a sufficient representation for an optimal scan by Section 1. It does not specify computational access to an arbitrary measurable scan encoded in some other representation.</p><p>The output makes no unsupported claim that exponential-sum sign determination is NP-hard or polynomial-time solvable.</p><h3>2. Structural characterization</h3><h3>2.1. Compression and serialization</h3><p>The properties of $X_c$ and $b_c$ are correct. In particular, continuity and monotonicity ensure that the first position at which $X_c$ reaches $1$ exists and satisfies $X_c(b_c)=1$.</p><p>The compression argument is valid:</p><ul><li>Lebesgue measure restricted to $E_c$ has total mass $1$ and has no atoms.</li><li>Its continuous cumulative distribution function maps this measure to uniform measure.</li><li>Failure of injectivity occurs only across constant intervals of $X_c$.</li><li>The nontrivial constant intervals have countably many interiors, and their intersections with $E_c$ have measure zero.</li><li>Their endpoints also form a null set.</li></ul><p>Consequently, the claimed measure-preserving bijection modulo null sets is justified. Absolute continuity of the intensity measures ensures that Poisson failures almost surely avoid the removed sets. Finite total intensity ensures finitely many failures almost surely.</p><p>The pathwise comparison also checks out. If $j$ is the first feasible option in completion-position order, every earlier option has encountered its first failure by $b_j$. Its scanned cost is therefore $Z_i$, while option $j$ contributes $1$. Other inspected mass is nonnegative.</p><p>Tied completion positions do not invalidate the comparison: all options with an earlier or tied completion position have exhausted their mass by that position, unless already rejected.</p><p>When all options are infeasible, both scans incur exactly the sum of their first-failure local positions. Thus serialization genuinely dominates the original scan.</p><p><b>Finding:</b> Section 1.1 is sound.</p><h3>2.2. Decreasing rates within an option</h3><p>The void probability and tail-integral expression are correct:</p><p>$$
+A=\int_0^1 e^{-H(x)}\,dx.
+$$</p><p>The possible atom at $Z=1$ causes no problem for this formula.</p><p>For any prefix, the allocated masses satisfy the stated capacity constraints. The exchange argument correctly shows that decreasing rate order maximizes prefix hazard at every prefix mass. It therefore minimizes $A$ while leaving total hazard, and hence feasibility probability, unchanged.</p><p>Equal rates may be ordered arbitrarily.</p><p><b>Finding:</b> Section 1.2 is sound.</p><h3>2.3. Ordering option blocks</h3><p>Independence correctly gives the expected-cost formula. The adjacent-order difference is</p><p>$$
+A_cp_d-A_dp_c
+=
+p_cp_d(K_c-K_d).
+$$</p><p>All feasibility probabilities are strictly positive, so division by $p_c$ is legitimate. Sorting by increasing $K_c$ eliminates all inversions without increasing expected cost.</p><p>The suffix-hazard formula is also correct. Each segment contributes</p><p>$$
+\frac{e^{S_{ic}}-e^{S_{i+1,c}}}{r_{ic}}.
+$$</p><p>After grouping exponentials, each option contributes at most $\tau+1$ distinct exponents, yielding the claimed bound of $2\tau+2$ for a comparison. The rational coefficients and exponents have polynomial bit length.</p><p><b>Finding:</b> The optimal-scan theorem is established. Its sorting prescription alone does not establish polynomial-time exact computation, because the signs of its comparisons remain to be computed.</p><h3>3. Exponential-sum reduction</h3><h3>3.1. Moment identities</h3><p>Multiplication by $e^{\alpha z}(e^z-1)^2$ gives nonnegative rational exponents and at most $3n$ terms before grouping.</p><p>The double zero at $z=0$ correctly yields</p><p>$$
+\sum_s b_s=0,
+\qquad
+\sum_s sb_s=0.
+$$</p><p>The factor relating $g(1)$ to $F$ is strictly positive.</p><p>The largest generated exponent cannot cancel: it comes uniquely from the largest original exponent and the highest shift. Thus $H&gt;0$ after grouping and deleting zero coefficients.</p><p><b>Finding:</b> Section 2.1 is sound, including the nonempty-support case.</p><h3>3.2. Positive decreasing densities</h3><p>Both $u$ and $v$ are positive, nonincreasing rational step functions. Their common integral follows from the first-moment identity, and $D$ is strictly positive.</p><p>The exponential-integral identity correctly handles exponent zero. Specifically, the zeroth-moment identity justifies replacing the sum over positive exponents of $b_s(e^s-1)$ by the full sum of $b_se^s$.</p><p><b>Finding:</b> Section 2.2 is sound.</p><h3>3.3. Conversion to rate profiles</h3><p>Strict positivity of the densities makes each $x_c$ a continuous, strictly decreasing bijection with the stated endpoints.</p><p>The direction of monotonicity is correct: increasing scan mass corresponds to decreasing hazard coordinate, so the resulting rates are nonincreasing in scan mass.</p><p>The segment calculations verify both total hazard $H$ and remaining hazard $y$. The change of coordinates consequently gives</p><p>$$
+K_c=\int_0^H e^y\rho_c(y)\,dy.
+$$</p><p>This establishes the claimed sign-preserving identity and equal feasibility probabilities.</p><p><b>Minor issue:</b> The notation $H_c(x)$ in the displayed formula immediately preceding this change of coordinates is not explicitly defined. Its intended meaning is clear from Section 1.2, but it should be stated.</p><p><b>Minimum clarification:</b> Define $H_c(x)$ as the cumulative hazard of the constructed option $c$.</p><h3>3.4. Shared type support and bit complexity</h3><p>Taking the union of the mass-coordinate breakpoints produces positive rational type masses summing to $1$. Both rates are constant on every resulting type interval, and refinement preserves both priority values.</p><p>The support-size bound is valid: the common refinement of two partitions with at most $3n$ segments each has at most $6n-1$ segments.</p><p>The construction uses explicit rational sums, products, reciprocals, and comparisons with polynomially bounded expression sizes. Its bit-complexity claim is justified; it does not rely on evaluating any exponential.</p><p><b>Finding:</b> The reduction theorem is established.</p><h3>4. Every optimal two-option scan uses blocks</h3><p>The strict-improvement argument is valid.</p><p>On the event that both options are feasible, the original scan incurs $1+x$, while serialization incurs $1$. This event has probability $p_cp_d&gt;0$. Serialization is no worse on the other realizations, so any $x&gt;0$ excludes optimality.</p><p>When $x=0$, the partition identity gives $b_c=1$. Thus the first option occupies the first unit interval modulo null sets, and the second occupies the second unit interval. Tied completion positions would force $x=1$ and are therefore excluded.</p><p>Finally, an internally suboptimal order cannot rescue the wrong option-block order: its cost is at least the minimum for that block order. The stated difference between those minima is correct.</p><p><b>Finding:</b> Section 3 establishes the claimed necessity of whole-option blocks for two options.</p><h3>5. Computational equivalence and exact computability</h3><p>The forward oracle reduction is valid: rate sorting uses rational comparisons, and option sorting uses polynomially many exponential-sum sign queries of polynomial input size.</p><p>The reverse reduction correctly reads the sign from the first option after separately handling equality. The negative and positive directions agree with the sign-preserving priority identity.</p><p>The Lindemann–Weierstrass theorem is stated correctly, and its hypotheses are satisfied: grouped exponents are distinct rationals, hence algebraic, and coefficients are algebraic. The cited [Theorem 13](https://drops.dagstuhl.de/storage/00lipics/lipics-vol362-itcs2026/html/LIPIcs.ITCS.2026.95/LIPIcs.ITCS.2026.95.html) confirms the stated linear-independence result.</p><p>Equality detection by grouping is therefore valid. Certified intervals eventually determine any nonzero comparison, establishing termination without a polynomial running-time guarantee.</p><p><b>Finding:</b> The stated computational equivalence is established. It leaves the requested exact complexity classification unresolved.</p><h3>6. Special cases and additive approximation</h3><p>The special cases are correct:</p><ul><li>For $m=1$, only internal rate sorting is needed.</li><li>For $\tau=1$, the displayed integral proves strict monotonicity of priority in the rational rate.</li></ul><p>The approximation analysis also checks out:</p><ul><li>Sorting by $a_c/q_c$ minimizes the surrogate objective.</li><li>Placing zero $q_c$ values last is valid because every $a_c$ is positive.</li><li>The product error bound is valid for factors in $[0,1]$.</li><li>The summand bound $j\delta$ and total bound $m(m+1)\delta/2$ have the correct constants.</li><li>Applying the uniform error bound twice gives the claimed additive error.</li></ul><p>The numerical implementation is sufficient. The exponential precision gives total error at most $\delta/4$ in $A_c$. Clamping to $[\delta/2,1]$ preserves the required error bound even when $A_c$ is smaller than $\delta/2$.</p><p>The cutoff and Taylor routine are correct. In the non-cutoff branch, $k\leq N+1$, the alternating-series remainder satisfies the stated bound, and powering amplifies error by at most $k$. Rational intermediate bit lengths remain polynomial in input length and $N$.</p><p><b>Finding:</b> The additive approximation guarantee is established. It does not resolve exact optimal-order construction.</p><h3>7. Actionable feedback</h3><p>The write-up needs only the explicit definition of $H_c(x)$ to make its partial results fully self-contained.</p><p>Resolving <code>USER_TASK</code> requires additional mathematics: either a polynomial-time exact sign algorithm sufficient for the priority comparisons, or a valid hardness result transferred through the reduction. Equality testing, terminating numerical computation, and additive approximation do not supply that classification.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

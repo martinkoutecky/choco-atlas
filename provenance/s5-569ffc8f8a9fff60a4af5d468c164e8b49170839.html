@@ -1,0 +1,162 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Measuring voting power in convex policy spaces — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Measuring voting power in convex policy spaces <span style="font-weight:normal;color:#8a7350">(s5-569ffc8f8a9fff60a4af5d468c164e8b49170839)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> The limit exists along all denominator-compatible integers and equals \(\mu_{t^\star}a_{t^\star}/\sum_{t=1}^{\tau}\mu_ta_t\). For \(m=1\), the threshold problem is in \(\mathrm P\), with exact running time \(O(\tau L^2)\) bit operations.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Lemma 6.10 — class: other</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>The Shapley-Shubik index of the weighted median aggregation rule, according to Definition~\ref{def_continuous_SSI} is given by the Shapley-Shubik index of the weighted game $\left[\Vert w\Vert_1/2;w_1,\dots,w_n\right]$.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(\mu\in\mathbb Q_{\ge0}^{\tau}\) with \(\sum_t\mu_t=1\), per-capita weights \(a_t&gt;0\), a target type \(t^\star\), and threshold \(\theta\), form \(n_t=N\mu_t\) interchangeable voters of each type for denominator-compatible \(N\), apply the paper&#x27;s weighted-median rule and Definition 6.2, aggregate \(P_{t^\star}^{(N)}=\sum_{i\in t^\star}\operatorname{SSI}_i\), and decide whether \(\lim_{N\to\infty}P_{t^\star}^{(N)}\ge\theta\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list of \(\tau\ge1\) types with positive binary rational masses \(\mu_t\), where \(\sum_t\mu_t=1\); \(\tau\) is the support size, not the number of possible types. Each type has a binary rational weight \(a_t&gt;0\); the input also specifies a supported target type \(t^\star\) and a binary rational threshold \(\theta\in[0,1]\). Let \(L\) be the total input bit length; the policy space is one-dimensional, so \(m=1\).<br>For every positive integer \(N\) with \(N\mu_t\in\mathbb Z\) for all types, create \(N\mu_t\) voters of type \(t\), each of weight \(a_t\). Types specify weights, not fixed policy votes.<br>For votes \(x\in[0,1]^N\), order voters by nondecreasing votes using any fixed ordering of equal votes. Write \(W=\sum_i a_{t(i)}\), let \(\ell\) be the first position whose prefix weight is at least \(W/2\), and let \(r\) be the last position whose suffix weight is at least \(W/2\). Define the aggregation rule \(v_N(x)=(x_{(\ell)}+x_{(r)})/2\), including exact half-weight ties.<br>Choose independently a uniform random voter permutation \(\pi\) and independent uniform votes \(X_i\in[0,1]\). For a voter set \(A\), let \(X^{A,b}\) retain the votes in \(A\) and set every other vote to \(b\in\{0,1\}\); let \(A_i\) be the voters preceding \(i\) in \(\pi\).<br>Define \(\operatorname{SSI}_i(v_N)=\mathbb E[v_N(X^{A_i,1})-v_N(X^{A_i\cup\{i\},1})+v_N(X^{A_i\cup\{i\},0})-v_N(X^{A_i,0})]\) and \(P_{t^\star}^{(N)}=\sum_{i:t(i)=t^\star}\operatorname{SSI}_i(v_N)\).</p><p>Does \(\lim_{N\to\infty}P_{t^\star}^{(N)}\) exist along all denominator-compatible integers for every input, and is deciding whether this limit is at least \(\theta\) in \(\mathrm P\) or \(\mathrm{NP}\)-hard? State running times in \(m,\tau,L\).</p><p>For finitely many voters with no coalition of weight exactly \(W/2\), the weighted-median index above equals the binary Shapley–Shubik index of the game in which a coalition wins precisely when its weight is at least \(W/2\); this identity asserts no complexity bound. [Source](https://arxiv.org/pdf/1312.5936).<br>Weighted majority games on a continuum of players have asymptotic Shapley values; this concerns binary coalition outcomes rather than the midpoint median rule above. [Source](https://pubsonline.informs.org/doi/10.1287/moor.13.4.556). No verified result located treats this exact threshold problem.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Weights and the threshold lacked finite encoding domains; weights are positive binary rationals and the threshold is a binary rational in the power range [0,1].</li><li>Types describe per-voter weights; policy votes remain independent uniform draws, as required by the specified index.</li><li>Denominator-compatible integers are all positive integers making every replicated type count integral; the limit uses all such integers.</li><li>The anchor&#x27;s exclusion of half-weight coalitions cannot hold at every compatible size: sizes making every type count even always permit such a coalition. To preserve the stated replication question, use the explicitly defined midpoint median rule at these ties and retain the exclusion as a qualification on the known finite identity.</li><li>The displayed index formula ambiguously handles permutation coordinates; use its intended interpretation as the expected reduction in attainable outcome range when a voter is revealed.</li><li>Limit existence was unstated; include it in the target so the threshold decision is well-defined.</li><li>There is no candidate-count parameter; set m=1 for the one-dimensional policy space and measure input size by tau and total bit length L.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The limit exists for every input, along all denominator-compatible integers, and equals<br>\[
+\lim_{N\to\infty}P_{t^\star}^{(N)}
+=
+\frac{\mu_{t^\star}a_{t^\star}}{\sum_{t=1}^{\tau}\mu_ta_t}.
+\]</p><p>Consequently, the threshold problem is in \(\mathrm P\). For the stipulated dimension \(m=1\), an exact algorithm uses \(O(\tau L^2)\) bit operations and \(O(L)\) space.</p><p>The proof below handles exact half-weight ties explicitly.</p><h3>1. Representing the midpoint median by coalition values</h3><p>Fix a compatible population size \(N\). Let \(V\) be its voter set, write \(w_i=a_{t(i)}&gt;0\), and define \(w(C)=\sum_{i\in C}w_i\) and \(W=w(V)\).</p><p>Define the coalition function<br>\[
+g(C)=\mathbf 1_{\{w(C)&gt;W/2\}}
++\frac12\mathbf 1_{\{w(C)=W/2\}}.
+\]</p><p>Thus a coalition has value zero below half the weight, one half at an exact tie, and one above half.</p><p>For \(x\in[0,1]^N\), define<br>\[
+F_g(x)=\int_0^1 g(\{i:x_i\ge z\})\,dz.
+\]</p><p><b>Claim.</b> \(F_g(x)=v_N(x)\) for every vote vector \(x\).</p><p>To prove this, use the ordering specified in the question and write \(c_k=\sum_{j=1}^k w_{(j)}\), with \(c_0=0\). Positivity of the weights makes these prefix sums strictly increasing. There are two cases.</p><ul><li>If \(c_\ell&gt;W/2\), then \(c_{\ell-1}&lt;W/2\). The suffix beginning at \(\ell\) has weight above half, while the suffix beginning at \(\ell+1\) has weight below half. Hence \(r=\ell\). For \(z&lt;x_{(\ell)}\), the coalition \(\{i:x_i\ge z\}\) has weight above half; for \(z&gt;x_{(\ell)}\), it has weight below half. Therefore \(F_g(x)=x_{(\ell)}=v_N(x)\).</li></ul><ul><li>If \(c_\ell=W/2\), then \(r=\ell+1\). For \(z&lt;x_{(\ell)}\), the coalition has weight above half; for \(x_{(\ell)}&lt;z&lt;x_{(\ell+1)}\), it has weight exactly half; and for \(z&gt;x_{(\ell+1)}\), it has weight below half. Consequently,</li></ul><p>\[
+  F_g(x)
+  =
+  x_{(\ell)}+\frac{x_{(\ell+1)}-x_{(\ell)}}2
+  =
+  v_N(x).
+  \]</p><p>These statements remain valid when some votes coincide: the interval between equal adjacent votes has length zero. Values at the finitely many vote thresholds do not affect the integral. This proves the claim.</p><h3>2. An exact identity with the Shapley value</h3><p>For a coalition function \(h:2^V\to[0,1]\), define its Shapley value by<br>\[
+\phi_i(h)
+=
+\mathbb E_\pi[h(A_i\cup\{i\})-h(A_i)],
+\]<br>where \(\pi\) is a uniform random permutation.</p><p>We prove the following identity for any monotone \(h\) with \(h(\varnothing)=0\) and \(h(V)=1\):<br>\[
+\operatorname{SSI}_i(F_h)=\phi_i(h),
+\qquad
+F_h(x)=\int_0^1h(\{j:x_j\ge z\})\,dz.
+\]</p><p>For \(p\in[0,1]\), let \(B_p\subseteq V\setminus\{i\}\) include each voter independently with probability \(p\), and set<br>\[
+M_i(p)=
+\mathbb E[h(B_p\cup\{i\})-h(B_p)].
+\]</p><p>Generate the random permutation by independent uniform priorities \(U_j\), independently of all votes. Conditional on \(U_i=s\), every other voter precedes \(i\) independently with probability \(s\).</p><p>Fix a vote threshold \(z\in(0,1)\).</p><p>For the term with unrevealed votes set to zero, revealing \(i\) changes the threshold coalition only if \(X_i\ge z\), an event of probability \(1-z\). Each other voter belongs to that coalition precisely when it precedes \(i\) and its vote is at least \(z\), independently with probability \(s(1-z)\). Its conditional expected contribution is therefore<br>\[
+(1-z)M_i(s(1-z)).
+\]</p><p>For the term with unrevealed votes set to one, revealing \(i\) changes the threshold coalition only if \(X_i&lt;z\), an event of probability \(z\). Each other voter belongs to that coalition unless it both precedes \(i\) and has vote below \(z\), independently with probability \(1-sz\). Its conditional expected contribution is<br>\[
+zM_i(1-sz).
+\]</p><p>All integrands are bounded, so exchanging expectation and integration is justified. We obtain<br>\[
+\operatorname{SSI}_i(F_h)
+=
+\int_0^1\int_0^1
+\bigl((1-z)M_i(s(1-z))+zM_i(1-sz)\bigr)\,ds\,dz.
+\]</p><p>For the first integral, substituting \(q=1-z\) and then \(p=sq\) gives<br>\[
+\int_0^1\int_0^1(1-z)M_i(s(1-z))\,ds\,dz
+=
+\int_0^1\int_0^qM_i(p)\,dp\,dq
+=
+\int_0^1(1-p)M_i(p)\,dp.
+\]</p><p>For the second integral, substituting \(p=1-sz\) gives<br>\[
+\int_0^1\int_0^1zM_i(1-sz)\,ds\,dz
+=
+\int_0^1\int_{1-z}^1M_i(p)\,dp\,dz
+=
+\int_0^1pM_i(p)\,dp.
+\]</p><p>Their sum is \(\int_0^1M_i(p)\,dp\). Conditional on \(U_i=p\), the predecessor coalition has exactly the distribution of \(B_p\). Hence this integral is \(\phi_i(h)\), proving the identity.</p><p>Applying it to Section 1 gives the exact finite-population equality<br>\[
+\operatorname{SSI}_i(v_N)=\phi_i(g).
+\]</p><h3>3. Exact ties give the same Shapley value as strict majority</h3><p>Define the two binary games<br>\[
+h_&gt;(C)=\mathbf 1_{\{w(C)&gt;W/2\}},
+\qquad
+h_{\ge}(C)=\mathbf 1_{\{w(C)\ge W/2\}}.
+\]</p><p>Then \(g=(h_&gt;+h_{\ge})/2\).</p><p>For any normalized coalition function \(h\), its dual is \(h^d(C)=1-h(V\setminus C)\). Shapley values are invariant under duality. Here is a direct justification.</p><p>If \(A\) precedes \(i\) in a permutation, put \(D=V\setminus(A\cup\{i\})\). Then<br>\[
+h^d(A\cup\{i\})-h^d(A)
+=
+h(D\cup\{i\})-h(D).
+\]<br>The set \(D\) precedes \(i\) in the reversed permutation. Reversal preserves the uniform permutation distribution, so \(\phi_i(h^d)=\phi_i(h)\).</p><p>Since \(w(V\setminus C)=W-w(C)\), we have<br>\[
+h_{\ge}(C)=1-h_&gt;(V\setminus C).
+\]<br>Thus \(h_{\ge}=h_&gt;^d\). Linearity of the Shapley value now yields<br>\[
+\phi_i(g)
+=
+\frac{\phi_i(h_&gt;)+\phi_i(h_{\ge})}{2}
+=
+\phi_i(h_&gt;).
+\]</p><p>Therefore, even when exact half-weight coalitions exist,<br>\[
+\boxed{\operatorname{SSI}_i(v_N)=\phi_i(h_&gt;)=\phi_i(h_{\ge}).}
+\]</p><p>This equality concerns the indices; the three coalition functions themselves need not coincide.</p><h3>4. Convergence along every compatible population size</h3><p>We use the following precise form of Neyman’s renewal theorem. For a finite nonnegative weight vector \(\lambda\) summing to one, let \(Q_i(\lambda,q)\) be the probability that voter \(i\) first makes the accumulated weight <b>strictly exceed</b> \(q\) in a uniform random ordering. Given \(\varepsilon&gt;0\), constants \(\delta&gt;0\) and \(K&gt;0\) exist such that, writing \(\rho=\max_i\lambda_i\),<br>\[
+\rho&lt;\delta
+\quad\text{and}\quad
+K\rho&lt;q&lt;1-K\rho
+\quad\Longrightarrow\quad
+\sum_i|Q_i(\lambda,q)-\lambda_i|&lt;\varepsilon.
+\]<br>This is the main theorem of [Neyman, *Renewal Theory for Sampling Without Replacement* (1982), author-uploaded paper](https://www.researchgate.net/publication/38361781_Renewal_Theory_for_Sampling_Without_Replacement).</p><p>Set<br>\[
+\bar a=\sum_{t=1}^{\tau}\mu_ta_t&gt;0.
+\]<br>For every compatible \(N\), the total voter weight is exactly \(W_N=N\bar a\). Normalize each individual weight as<br>\[
+\lambda_i^{(N)}=\frac{a_{t(i)}}{N\bar a}.
+\]</p><p>These weights are positive and sum to one. Furthermore,<br>\[
+\rho_N=\max_i\lambda_i^{(N)}
+=
+\frac{\max_t a_t}{N\bar a}
+\longrightarrow0.
+\]</p><p>Take \(q=1/2\). For every fixed \(\varepsilon&gt;0\), all sufficiently large compatible \(N\) satisfy both hypotheses of Neyman’s theorem. In the strict-majority game, the marginal contribution equals one exactly for the voter first making the prefix weight exceed half. Section 3 therefore identifies<br>\[
+Q_i(\lambda^{(N)},1/2)=\operatorname{SSI}_i(v_N).
+\]</p><p>Consequently,<br>\[
+\sum_{i\in V_N}
+\left|\operatorname{SSI}_i(v_N)-\lambda_i^{(N)}\right|
+\longrightarrow0.
+\]</p><p>There are \(N\mu_{t^\star}\) target-type voters, whose total normalized weight is<br>\[
+\sum_{i:t(i)=t^\star}\lambda_i^{(N)}
+=
+\frac{\mu_{t^\star}a_{t^\star}}{\bar a}.
+\]<br>Hence<br>\[
+\left|
+P_{t^\star}^{(N)}
+-
+\frac{\mu_{t^\star}a_{t^\star}}{\bar a}
+\right|
+\le
+\sum_{i\in V_N}
+\left|\operatorname{SSI}_i(v_N)-\lambda_i^{(N)}\right|
+\longrightarrow0.
+\]</p><p>The theorem’s hypotheses hold for every sufficiently large compatible integer, so this proves convergence along all such integers, without choosing a particular subsequence. Compatible integers are unbounded because every multiple of a common denominator of the masses is compatible.</p><h3>5. Exact threshold decision and running time</h3><p>The requested decision is equivalent to<br>\[
+\mu_{t^\star}a_{t^\star}
+\ge
+\theta\sum_{t=1}^{\tau}\mu_ta_t.
+\]</p><p>This comparison can be performed exactly, including equality.</p><p>For an explicit bit bound, write the input rationals as<br>\[
+\mu_t=\frac{p_t}{q_t},
+\qquad
+a_t=\frac{r_t}{s_t},
+\qquad
+\theta=\frac{h}{k},
+\]<br>with positive denominators. Define<br>\[
+D=\prod_{t=1}^{\tau}q_ts_t,
+\qquad
+b_t=p_tr_t\,\frac{D}{q_ts_t},
+\qquad
+B=\sum_{t=1}^{\tau}b_t.
+\]<br>These are integers, and the answer is yes precisely when<br>\[
+k b_{t^\star}\ge h B.
+\]</p><p>The total encoding length bounds the sum of the bit lengths of all input numerators and denominators by \(O(L)\). Thus \(D\), every \(b_t\), \(B\), and both comparison products have \(O(L)\) bits. Using ordinary schoolbook integer arithmetic, the construction and comparison require \(O(\tau)\) operations costing at most \(O(L^2)\) each.</p><p>Accordingly, for \(m=1\), the running time is \(O(\tau L^2)\), with \(O(L)\) space when the terms are processed sequentially. Since \(\tau=O(L)\), this is also an \(O(L^3)\) bound. The algorithm never constructs a finite voter population.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><p><b>Verdict: proved.</b> The output resolves the assigned problem. The finite-population identities correctly handle exact half-weight ties, the cited convergence theorem applies as stated, and the exact threshold algorithm has the claimed polynomial complexity. No major or minor mathematical gaps were found.</p><h3>1. Representation of the midpoint median</h3><p>The coalition function \(g\) correctly assigns values zero, one half, and one according to whether coalition weight is below, equal to, or above \(W/2\).</p><p>The two cases in Section 1 are exhaustive because individual weights are positive, so prefix weights strictly increase.</p><ul><li>If \(c_\ell&gt;W/2\), minimality of \(\ell\) gives \(c_{\ell-1}&lt;W/2\). The suffix beginning at \(\ell\) exceeds half the total weight, whereas the suffix beginning at \(\ell+1\) falls below half. Thus \(r=\ell\), as asserted.</li><li>If \(c_\ell=W/2\), then \(\ell&lt;N\), since \(W&gt;0\). The suffix beginning at \(\ell+1\) has weight exactly \(W/2\), and every subsequent suffix has smaller weight. Thus \(r=\ell+1\).</li></ul><p>The threshold-coalition descriptions are correct in both cases. Repeated votes cause no difficulty: thresholds strictly below or above the relevant vote include or exclude the entire tied block, and any interval between equal votes has length zero. Endpoints at zero or one also cause no difficulty because individual threshold points do not affect the integral.</p><p>Therefore the claimed equality \(F_g(x)=v_N(x)\) holds for every vote vector, including exact weight ties and repeated votes.</p><h3>2. Identity between the continuous index and the Shapley value</h3><p>The independent-priority construction generates a uniform permutation. Conditional on \(U_i=s\), the predecessor indicators for all other voters are independent Bernoulli variables with parameter \(s\), independently of the votes.</p><p>Both conditional contribution formulas are correct:</p><ul><li>With unrevealed votes set to zero, voter \(i\) contributes only when \(X_i\ge z\), with probability \(1-z\). Each other voter enters the threshold coalition independently with probability \(s(1-z)\).</li><li>With unrevealed votes set to one, voter \(i\) contributes only when \(X_i&lt;z\), with probability \(z\). Each other voter enters independently with probability \(1-sz\).</li></ul><p>The signs agree with the two differences in the task’s definition. In each contributing event, the difference is exactly the marginal contribution used to define \(M_i\).</p><p>All relevant functions are bounded and measurable, so exchanging expectation and integration is justified. The substitutions and integration-region reversals correctly produce the factors \(1-p\) and \(p\), respectively. Their sum gives \(\int_0^1M_i(p)\,dp\), which equals the permutation-defined Shapley value by the same priority construction.</p><p>The general identity is therefore established, and its application to \(g\) is valid: \(g\) is monotone, \(g(\varnothing)=0\), and \(g(V)=1\).</p><h3>3. Exact half-weight ties</h3><p>The pointwise identity \(g=(h_&gt;+h_{\ge})/2\) is correct.</p><p>The duality argument correctly identifies the successor set of \(i\) in a permutation with its predecessor set in the reversed permutation. The displayed marginal-contribution equality has the correct signs, and reversal preserves the uniform distribution.</p><p>The complement-weight identity gives \(h_{\ge}=h_&gt;^d\), including coalitions of weight exactly \(W/2\). Linearity then establishes equality of the three Shapley values.</p><p>Thus the finite-population equality with both strict and weak majority is proved even when exact half-weight coalitions exist. The output appropriately distinguishes equality of indices from equality of coalition functions.</p><h3>4. Verification and application of Neyman’s theorem</h3><p>The cited theorem was checked against the [author-uploaded paper’s abstract](https://www.researchgate.net/publication/38361781_Renewal_Theory_for_Sampling_Without_Replacement). It states the asserted uniform bound for a probability measure on a finite set, with pivotality defined by the first accumulated sum that <b>exceeds</b> the quota. Its quantifiers and quota restrictions match the prover’s statement.</p><p>All hypotheses are satisfied:</p><ul><li>The normalized individual weights are positive and sum to one.</li><li>For the fixed input, \(\bar a&gt;0\) is independent of \(N\).</li><li>Because every supported type has at least one voter at a compatible population size, the asserted expression for \(\rho_N\) is exact.</li><li>Consequently, \(\rho_N\to0\).</li><li>With \(q=1/2\), both quota restrictions hold for every sufficiently large compatible \(N\), for each fixed choice of the theorem’s constants.</li></ul><p>Strict-majority marginal contribution is exactly the event of first exceeding half the total weight. Section 3 therefore supplies the required identification with the continuous index.</p><p>The target-type error is correctly bounded by the total absolute error. Its normalized weight sum is exactly \(\mu_{t^\star}a_{t^\star}/\bar a\).</p><p>The argument establishes convergence along <b>all</b> compatible integers. Such integers are unbounded because multiples of a common denominator of the masses are compatible. No subsequence restriction or unproved convergence rate is used.</p><h3>5. Exact threshold decision and complexity</h3><p>Multiplication by the positive quantity \(\bar a\) preserves the threshold inequality. The integer \(D\) is divisible by every \(q_ts_t\), so every \(b_t\) is an integer. The comparison \(k b_{t^\star}\ge hB\) is exactly equivalent to the requested decision and includes equality.</p><p>The bit-length bounds are valid. The product defining \(D\) has bit length bounded by the total denominator encoding length. Each \(b_t\) also uses only \(O(L)\) bits. Summing \(\tau\) such integers adds at most \(O(\log\tau)\) bits, which remains \(O(L)\). The final comparison products likewise have \(O(L)\) bits.</p><p>There are \(O(\tau)\) arithmetic operations. Schoolbook multiplication and integer division on these operands take \(O(L^2)\) bit operations each, giving \(O(\tau L^2)\) time. Sequential processing requires only a constant number of \(O(L)\)-bit integers, so the stated \(O(L)\) space bound is valid.</p><p>The running-time claim is expressly restricted to the assigned dimension \(m=1\); no claim for other dimensions is needed.</p><h3>6. Scope and repair feedback</h3><p>The output proves the limit formula for every stipulated input and establishes a polynomial-time exact decision algorithm. The cases \(\tau=1\), \(\theta=0\), and \(\theta=1\) are covered by the same argument and comparison.</p><p>No repair or additional clarification is required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

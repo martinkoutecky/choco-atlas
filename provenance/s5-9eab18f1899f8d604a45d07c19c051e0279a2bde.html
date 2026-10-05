@@ -1,0 +1,262 @@
+<!doctype html><html><head><meta charset="utf-8"><title>How should we score athletes and candidates: geometric scoring rules — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>How should we score athletes and candidates: geometric scoring rules <span style="font-weight:normal;color:#8a7350">(s5-9eab18f1899f8d604a45d07c19c051e0279a2bde)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 6 — class: other</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Denote by $u_i^a$ the cardinal quality of athlete~$a$ in race~$i$. Denote by $u_i=(u_i^1,\ldots,u_i^m)$ the vector of cardinal qualities in race $i$ and $(u_i^{(1)},\ldots,u_i^{(m)})$ its reordering in non-increasing order. Suppose $u_1,\ldots,u_n$ are drawn independently and identically from a distribution with a symmetric joint cumulative distribution function (i.e., permutation of arguments does not change the value of this c.d.f.).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C=\{c_1,\ldots,c_m\}\), ranking types \(T\) with rankings \(R_t\) and masses \(\mu_t\ge 0\), \(\sum_{t\in T}\mu_t=1\), a finite-support permutation-symmetric per-race cardinal-quality law \(\nu\), and \(\lambda&gt;0\), compute \(v_j=\mathbb{E}_{x\sim\nu}[u_\lambda(x^{(j)})]\) for \(j\in\{1,\ldots,m\}\), then output \(W(\mu,\nu,\lambda)=\arg\max_{c\in C}\sum_{t\in T}\mu_t v_{\operatorname{pos}_{R_t}(c)}\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C=\{c_1,\ldots,c_m\}\), with \(m\geq1\). A society is given by its support: the list of \(\tau\) strict ranking types \(R_t\) with positive binary-rational masses \(\mu_t\), summing to \(1\); \(\tau\) is the support size, not the number of possible rankings.<br>The per-race law \(\nu\) is given explicitly by \(k\) distinct vectors \(x^\ell\in\mathbb Q^m\) and positive binary-rational probabilities \(q_\ell\), summing to \(1\). It is promised invariant under every permutation of coordinates. Qualities may have either sign; higher is better. The parameter \(\lambda\in\mathbb Q_{&gt;0}\) is also encoded in binary.<br>Define \(u_\lambda(z)=\lambda^z\) for \(\lambda&gt;1\), \(u_1(z)=z\), and \(u_\lambda(z)=-\lambda^z\) for \(0&lt;\lambda&lt;1\). Write \(x^{\ell,(j)}\) for the \(j\)-th largest coordinate, counting repetitions, and set \(v_j=\sum_{\ell=1}^k q_\ell u_\lambda(x^{\ell,(j)})\).<br>Compute these scores as exact expressions consisting of rational constants, rational powers, sums, and products, and output the entire winner set \(W=\arg\max_{c\in C}\sum_{t=1}^{\tau}\mu_t v_{\operatorname{pos}_{R_t}(c)}\). Position \(1\) is best; all tied maximizers are retained. Let \(L\) be the total input bit length; use the Turing model with exact comparisons.</p><p>Is this exact score-and-winner computation polynomial-time in \(m,\tau,k,L\), or is deciding whether a designated candidate belongs to \(W\) NP-hard?</p><p>For finite profiles of independent, identically distributed races with a permutation-symmetric quality law, expected order-statistic scores select candidates maximizing conditional expected total quality ([Kondratev–Ianovski–Nesterov](https://arxiv.org/pdf/1907.05082)).<br>The corresponding optimality of positional scoring under a neutral utility distribution is also established by [Boutilier et al.](https://www.cs.toronto.edu/~tl/papers/BoutilierEtAl_EC12_Full.pdf). These are optimality results; no classification of the exact rational-input mass problem above was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The law&#x27;s encoding was unspecified; use an explicit list of rational quality vectors and binary-rational probabilities, with permutation symmetry promised.</li><li>The numerical input domains were unspecified; allow signed rational qualities and a positive binary-rational parameter, retaining all three utility branches.</li><li>Ranking types are strict complete rankings, as in the discrete profile definition; only positive-mass types are listed.</li><li>Repeated cardinal qualities are allowed and counted in order statistics; aggregate ties retain every maximizing candidate.</li><li>Exact score representation was unspecified; use expressions in rational constants and rational powers rather than requiring expanded algebraic representations.</li><li>Use exact Turing-model computation, with total input bit length included; formulate hardness through designated-candidate winner membership.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial classification, with a polynomial-time algorithm for exact ties</h3><p>I do not resolve the general polynomial-time-versus-NP-hardness question. I prove two additional results beyond the supplied notes:</p><ul><li>Equality of any two candidate scores is decidable in polynomial time, for every promised input.</li><li>The entire winner set is computable in polynomial time when all qualities are integers and $\lambda$ is an integer or the reciprocal of an integer.</li></ul><p>The general problem remains polynomial-time equivalent to determining the sign of a rational linear combination of rational powers of one rational base. The unresolved part is ordering unequal scores, rather than detecting equality.</p><h3>1. Exact expressions and elementary cases</h3><p>Define the positional mass of candidate $c$ at position $j$ by<br>$$
+\alpha_{c,j}
+=
+\sum_{t:\operatorname{pos}_{R_t}(c)=j}\mu_t.
+$$<br>Then its score is exactly<br>$$
+S_c
+=
+\sum_{j=1}^{m}\alpha_{c,j}v_j
+=
+\sum_{j=1}^{m}\sum_{\ell=1}^{k}
+\alpha_{c,j}q_\ell u_\lambda(x^{\ell,(j)}).
+$$</p><p>Sort each explicitly listed vector using rational comparisons, compute the rational coefficients $\alpha_{c,j}$, and write these expressions. For $\lambda\neq1$, every utility term is a rational power, possibly multiplied by $-1$; for $\lambda=1$, every term is rational. Thus the expressions have the required form.</p><p>There are polynomially many terms, even without sharing subexpressions. Rational coefficient lengths remain polynomial: multiplying the relevant input denominators gives a common denominator whose bit length is bounded by the sum of their bit lengths. Therefore exact score-expression construction takes polynomial time.</p><p>When $\lambda=1$, all scores are rational, so exact winner computation also takes polynomial time.</p><p>For $m=1$, the sole candidate wins. For $m=2$, let $p$ be the mass placing candidate $a$ first. Then<br>$$
+S_a-S_b=(2p-1)(v_1-v_2).
+$$<br>The utility function is strictly increasing in every permitted case: its derivative is $\log(\lambda)\lambda^z$ for $\lambda&gt;1$, is $-\log(\lambda)\lambda^z$ for $\lambda&lt;1$, and is $1$ for $\lambda=1$. Consequently, $v_1-v_2\geq0$. Because all probabilities are positive, equality holds exactly when the two coordinates of every listed vector coincide. Check this condition directly; otherwise, compare the rational number $p$ with $1/2$. This determines all winners in polynomial time.</p><h3>2. A gap lemma for exact equality at a rational point</h3><p>The following lemma accommodates binary-encoded exponents whose numerical values may be exponentially large.</p><p><b>Lemma.</b> Let<br>$$
+P(X)=\sum_{i=1}^{n}c_iX^{e_i},
+\qquad
+0\leq e_1&lt;\cdots&lt;e_n,
+$$<br>where the $c_i$ are nonzero integers and the $e_i$ are binary-encoded integers. Let $t=A/B&gt;1$ be reduced, with positive integers $A&gt;B$. Deciding whether $P(t)=0$ takes polynomial time in the encoded input length.</p><p><b>Proof.</b> Put<br>$$
+H=\sum_{i=1}^{n}|c_i|,
+$$<br>and choose the integer $T$ such that<br>$$
+2^{T-1}\leq H&lt;2^T.
+$$<br>Partition the terms into consecutive blocks, starting a new block whenever two consecutive exponents differ by more than $T$.</p><p>First, I prove that<br>$$
+P(t)=0
+\quad\Longleftrightarrow\quad
+\text{every block vanishes at }t.
+$$</p><p>The reverse implication follows by addition. For the forward implication, suppose $P(A/B)=0$. The primitive polynomial $BX-A$ divides $P$ over the rationals. Gauss’s lemma therefore gives<br>$$
+P(X)=(BX-A)Q(X),
+\qquad Q\in\mathbb Z[X].
+$$<br>Here Gauss’s lemma applies because $\gcd(A,B)=1$: a primitive integer polynomial dividing an integer polynomial over $\mathbb Q$ has an integer quotient.</p><p>Write $c_j$ for the coefficient of $X^j$ in $P$, including zero coefficients, and $q_j$ for the coefficient of $X^j$ in $Q$. Set $q_{-1}=0$. Comparing coefficients gives<br>$$
+c_j=Bq_{j-1}-Aq_j.
+$$<br>Iteration yields<br>$$
+q_j
+=
+-\frac1A\sum_{h=0}^{j}c_h
+\left(\frac BA\right)^{j-h}.
+$$<br>Since $0&lt;B/A&lt;1$,<br>$$
+|q_j|
+\leq
+\frac1A\sum_{h=0}^{j}|c_h|
+\leq H.
+$$</p><p>Consider a block boundary between exponents $e&lt;f$, so $f-e&gt;T$ and all coefficients strictly between them vanish. The recurrence gives<br>$$
+q_{f-1}
+=
+\left(\frac BA\right)^{f-e-1}q_e.
+$$<br>Both quotient coefficients are integers. Because $A$ and $B$ are coprime,<br>$$
+A^{f-e-1}\mid q_e.
+$$<br>But<br>$$
+A^{f-e-1}\geq2^T&gt;H\geq|q_e|.
+$$<br>Thus $q_e=0$, and hence $q_{f-1}=0$.</p><p>Consequently, the portion of $P$ consisting of terms of exponent at most $e$ is itself divisible by $BX-A$: it equals that factor times the truncation of $Q$ to exponents below $e$. This holds at every block boundary. Differences of consecutive such portions show that every block vanishes at $A/B$, as claimed.</p><p>It remains to implement the test. If a block starts at exponent $s$, factor it symbolically as $X^sR(X)$. Its vanishing at $t&gt;0$ is equivalent to $R(t)=0$. Within a block, consecutive exponent gaps are at most $T$, so<br>$$
+\deg R\leq(n-1)T.
+$$<br>This degree is polynomial in the input length. Evaluate $R(A/B)$ by exact rational arithmetic. For example, if $w=\deg R$, multiply by $B^w$ and compute the integer<br>$$
+B^wR(A/B)
+=
+\sum_{e_i\text{ in the block}}
+c_iA^{e_i-s}B^{w-(e_i-s)}.
+$$<br>All powers here have polynomially bounded numerical exponents, and all resulting integers have polynomial bit length.</p><p>The possibly enormous block starts $s$ are never exponentiated. Sorting exponents, finding boundaries, and testing every block therefore take polynomial time. $\square$</p><h3>3. Exact equality for arbitrary rational powers of one base</h3><p><b>Theorem.</b> Given binary-encoded rationals<br>$$
+b&gt;1,\qquad a_i,\qquad r_i,
+$$<br>one can decide in polynomial time whether<br>$$
+F=\sum_{i=1}^{n}a_i b^{r_i}=0.
+$$<br>The exponents and coefficients may have either sign.</p><h3>3.1 Computing the maximal rational-power exponent</h3><p>Write $b=A/B$ in lowest terms, with $A&gt;B\geq1$. Define<br>$$
+g=\gcd\bigl\{|\operatorname{ord}_p(b)|:
+\operatorname{ord}_p(b)\neq0\bigr\},
+$$<br>where $\operatorname{ord}_p$ is the usual prime valuation.</p><p>Prime factorization is used only to justify this definition, not as an algorithmic operation. A positive integer $j$ satisfies $b=\gamma^j$ for a positive rational $\gamma$ exactly when both $A$ and $B$ are perfect $j$-th powers. Equivalently, $j$ divides every nonzero prime valuation of $b$. Thus the largest successful $j$ is $g$.</p><p>Because $A\geq2$, any such $j$ satisfies<br>$$
+j\leq\lfloor\log_2 A\rfloor.
+$$<br>Test every integer in this range by exact integer-root computation. Binary search and integer exponentiation suffice, with polynomially many operations on polynomial-length integers. This computes $g$ and<br>$$
+\beta=b^{1/g}\in\mathbb Q_{&gt;1}
+$$<br>in polynomial time.</p><h3>3.2 Proving the required linear independence</h3><p>Let $D$ be the least common multiple of the reduced denominators of the $r_i$, and put<br>$$
+h=\gcd(D,g),\qquad d=D/h,\qquad a=g/h.
+$$<br>Define positive real numbers<br>$$
+\theta=b^{1/D},
+\qquad
+t=\beta^a.
+$$<br>Then $t$ is rational and<br>$$
+\theta^d=t.
+$$<br>Its rational encoding has polynomial length: the exponent $a$ is at most $g$, and $\beta$ was obtained by taking exact roots of the input numerator and denominator.</p><p>I claim that<br>$$
+[\mathbb Q(\theta):\mathbb Q]=d.
+$$<br>Let this degree be $s$. Since $\theta$ satisfies $X^d-t$, one has $s\leq d$.</p><p>For the reverse inequality, take the field norm from $\mathbb Q(\theta)$ to $\mathbb Q$. Multiplicativity of the norm and $\theta^D=b$ imply<br>$$
+\operatorname{Norm}(\theta)^D=b^s.
+$$<br>The norm is a nonzero rational number. Taking prime valuations gives, for every prime $p$,<br>$$
+D\,\operatorname{ord}_p\bigl(\operatorname{Norm}(\theta)\bigr)
+=
+s\,\operatorname{ord}_p(b).
+$$<br>Thus $D$ divides every $s\operatorname{ord}_p(b)$. By the defining greatest-common-divisor property of $g$, it follows that $D\mid sg$. Since<br>$$
+D=hd,\qquad g=ha,\qquad \gcd(d,a)=1,
+$$<br>we obtain $d\mid s$. Together with $1\leq s\leq d$, this proves $s=d$.</p><p>Therefore<br>$$
+1,\theta,\ldots,\theta^{d-1}
+$$<br>are linearly independent over $\mathbb Q$. This argument does not require explicitly constructing a field of dimension $d$.</p><h3>3.3 Reduction to sparse rational equality tests</h3><p>Each<br>$$
+s_i=Dr_i
+$$<br>is an integer. Perform Euclidean division, including when $s_i$ is negative:<br>$$
+s_i=dz_i+e_i,
+\qquad z_i\in\mathbb Z,\qquad 0\leq e_i&lt;d.
+$$<br>Then<br>$$
+b^{r_i}
+=
+\theta^{s_i}
+=
+t^{z_i}\theta^{e_i}.
+$$<br>Grouping by the observed residues gives<br>$$
+F
+=
+\sum_e\theta^e
+\left(\sum_{i:e_i=e}a_i t^{z_i}\right).
+$$<br>The coefficients in parentheses are rational, although their expanded representations might be very large. Linear independence proves<br>$$
+F=0
+\quad\Longleftrightarrow\quad
+\sum_{i:e_i=e}a_i t^{z_i}=0
+\quad\text{for every observed residue }e.
+$$</p><p>There are at most $n$ observed residues, regardless of the numerical size of $d$.</p><p>For each group, clear the coefficient denominators and subtract the least integer exponent from every exponent. These operations multiply its value by nonzero rational factors and preserve whether it is zero. The result is an integer-coefficient sparse polynomial evaluated at the rational point $t&gt;1$. Apply the lemma from Section 2.</p><p>All intermediate encodings have polynomial length: the bit length of $D$ is at most the sum of the denominator bit lengths; all exponent arithmetic is performed on binary integers; coefficient denominators can be cleared by their product. Hence all groups are tested in polynomial time. This proves the theorem.</p><h3>4. Consequences for candidate scores and integer qualities</h3><h3>4.1 All exact score ties are decidable in polynomial time</h3><p>For $\lambda&gt;1$, a score difference has the form<br>$$
+S_c-S_d
+=
+\sum_{j=1}^{m}\sum_{\ell=1}^{k}
+(\alpha_{c,j}-\alpha_{d,j})q_\ell
+\lambda^{x^{\ell,(j)}}.
+$$<br>This is a polynomial-size instance of the equality theorem.</p><p>For $0&lt;\lambda&lt;1$, set $b=1/\lambda&gt;1$. Since<br>$$
+u_\lambda(x)=-b^{-x},
+$$<br>negating the exponents and coefficients gives the same form. For $\lambda=1$, use rational arithmetic.</p><p>Thus one can determine whether $S_c=S_d$ in polynomial time for every pair of candidates. In particular, all equivalence classes of candidates with equal scores are computable in polynomial time. This does not order those classes.</p><h3>4.2 Sign determination for an integer base and integer exponents</h3><p><b>Proposition.</b> Given an integer $B\geq2$, rational coefficients $a_i$, and binary-encoded integer exponents $z_i$, the sign of<br>$$
+G=\sum_i a_i B^{z_i}
+$$<br>is computable in polynomial time.</p><p><b>Proof.</b> Clear coefficient denominators by a positive common denominator. Subtract the least exponent from every exponent; this multiplies the sum by a positive power of $B$ and therefore preserves its sign. Combine equal exponents and remove zero coefficients. If nothing remains, the sum is zero.</p><p>Write the resulting expression as<br>$$
+P(B)=\sum_i c_iB^{e_i},
+\qquad e_i\geq0,
+$$<br>with integer coefficients. Define $H$, $T$, and the consecutive blocks exactly as in Section 2.</p><p>For a block starting at exponent $s$, compute<br>$$
+Z=\sum_{e_i\text{ in the block}}c_iB^{e_i-s}.
+$$<br>This is an integer of polynomial bit length because the exponent span of a block is at most $(n-1)T$.</p><p>If all block values are zero, then $P(B)=0$. Otherwise, select the block with largest starting exponent $s$ whose value $Z$ is nonzero. Every higher block contributes zero, and this block contributes $B^sZ$, whose absolute value is at least $B^s$.</p><p>If there are earlier blocks, let $e$ be the largest exponent preceding the selected block. The total absolute contribution from all earlier terms is at most<br>$$
+HB^e.
+$$<br>The block boundary satisfies $s-e&gt;T$, so<br>$$
+B^{s-e}&gt;H,
+\qquad
+HB^e&lt;B^s\leq|B^sZ|.
+$$<br>Therefore earlier terms cannot change the sign of the selected block. The sign of $P(B)$ is exactly the sign of $Z$. All computations take polynomial time. $\square$</p><p>Applying this proposition to candidate-score differences proves polynomial-time winner computation when every quality is an integer and $\lambda$ is an integer at least $2$.</p><p>It also applies when $\lambda=1/B$ for an integer $B\geq2$, because<br>$$
+u_\lambda(x)=-B^{-x}.
+$$<br>Together with the rational case $\lambda=1$, this proves the announced additional tractable cases. Integer qualities alone do not justify this argument when the base is an arbitrary nonintegral rational.</p><h3>5. The general sign problem still embeds in three candidates</h3><p>For completeness, I reprove the arithmetic equivalence used to identify the remaining obstacle.</p><p>Define $\mathsf{PowerSign}$ to ask whether<br>$$
+F=\sum_{i=1}^{n}a_i b^{r_i}\geq0,
+$$<br>for binary-encoded rationals $b&gt;1$, $a_i$, and $r_i$.</p><h3>5.1 Winner computation reduces to $\mathsf{PowerSign}$</h3><p>The score-difference formula in Section 4 gives a polynomial-size $\mathsf{PowerSign}$ instance for every comparison when $\lambda&gt;1$. The reciprocal transformation handles $\lambda&lt;1$, and rational arithmetic handles $\lambda=1$.</p><p>A candidate belongs to $W$ exactly when its score difference against every other candidate is nonnegative. Polynomially many oracle queries therefore compute the entire winner set, retaining all ties.</p><h3>5.2 $\mathsf{PowerSign}$ reduces to designated winner membership</h3><p>Given $F$, put $A_0=\sum_i a_i$. The identity<br>$$
+F
+=
+\sum_i a_i(b^{r_i}-1)
++
+\frac{A_0}{b-1}(b-1)
+$$<br>writes $F$ as<br>$$
+F=\sum_h d_h(b^{s_h}-1)
+$$<br>using at most $n+1$ terms. Remove terms whose coefficient or exponent is zero. Choose a positive integer $E$ clearing all remaining coefficient denominators and put $N_h=Ed_h$. Then<br>$$
+EF=\sum_h N_h(b^{s_h}-1).
+$$<br>All these encodings have polynomial length.</p><p>For three-coordinate vectors, define<br>$$
+K(x)=b^{x^{(1)}}+b^{x^{(3)}}-2b^{x^{(2)}}.
+$$<br>For $H&gt;L$,<br>$$
+K(H,L,L)=b^H-b^L,
+\qquad
+K(H,H,L)=-(b^H-b^L).
+$$</p><p>For each remaining term, let<br>$$
+H_h=\max\{s_h,0\},
+\qquad
+L_h=\min\{s_h,0\}.
+$$<br>Choose the representative vector<br>$$
+x_h=
+\begin{cases}
+(H_h,L_h,L_h),&amp;N_hs_h&gt;0,\\
+(H_h,H_h,L_h),&amp;N_hs_h&lt;0.
+\end{cases}
+$$<br>The displayed curvature identities give<br>$$
+|N_h|K(x_h)=N_h(b^{s_h}-1).
+$$</p><p>Each representative has exactly three distinct coordinate permutations because $H_h&gt;L_h$. Include all three. Set<br>$$
+T_0=\sum_h|N_h|,
+$$<br>choose a power of two $M&gt;3T_0$, and assign probability $|N_h|/M$ to each permutation associated with term $h$. Add the constant vector $(0,0,0)$ with probability<br>$$
+1-\frac{3T_0}{M}&gt;0.
+$$<br>Merge duplicate vectors by adding their probabilities.</p><p>This produces distinct support vectors with positive dyadic probabilities summing to one. Every orbit was included with equal probabilities on its elements, so the law is invariant under all coordinate permutations; merging preserves this property. Its support size is at most $3(n+1)+1$, and its encoded length is polynomial. The weights are assigned directly, without enumerating copies.</p><p>Set $\lambda=b$. The resulting expected curvature is<br>$$
+\Delta=v_1+v_3-2v_2
+=
+\frac{3}{M}\sum_hN_h(b^{s_h}-1)
+=
+\frac{3E}{M}F.
+$$</p><p>Use candidates $a,z,c$ and two ranking types<br>$$
+a\succ z\succ c,
+\qquad
+c\succ z\succ a,
+$$<br>each of mass $1/2$. Their scores satisfy<br>$$
+S_a=S_c=\frac{v_1+v_3}{2},
+\qquad
+S_z=v_2.
+$$<br>Hence<br>$$
+S_a-S_z=\frac{3E}{2M}F.
+$$<br>The multiplier is positive, and $S_a=S_c$. Therefore<br>$$
+a\in W\quad\Longleftrightarrow\quad F\geq0.
+$$<br>At $F=0$, all three candidates tie, as required.</p><p>If no terms remain after removing zero contributions, then $F=0$; use only the constant vector, which produces the same all-tied conclusion.</p><p>This is a polynomial-time many-one reduction satisfying every input promise. Consequently, the general task admits a polynomial-time algorithm if and only if $\mathsf{PowerSign}$ does.</p><h3>6. Polynomial-space upper bound</h3><p>The existential theory of the reals with integer polynomial constraints is decidable in polynomial space, by [Canny’s theorem](https://www2.eecs.berkeley.edu/Pubs/TechRpts/1988/6041.html).</p><p>Here is a polynomial-size encoding. For each required power $\lambda^{p/d}$, with $d&gt;0$, introduce $Y&gt;0$. Impose<br>$$
+Y^d=\lambda^p
+$$<br>when $p\geq0$, and<br>$$
+Y^d\lambda^{-p}=1
+$$<br>when $p&lt;0$. Each constraint has exactly one positive solution, namely the required power.</p><p>Implement integer powers through repeated squaring. Introduce a variable for each multiplication output and enforce each gate by a quadratic equation $w-uv=0$. The number of gates is polynomial in the binary exponent lengths; exponentially large constants need not be expanded.</p><p>Express score differences as rational linear combinations of the power variables, and impose<br>$$
+S_c-S_d\geq0
+$$<br>for every other candidate $d$. Clear rational denominators separately in each constraint. The resulting integer coefficients have polynomial bit length.</p><p>Positivity fixes every power variable uniquely, and the gate equations enforce its intended arithmetic. Thus the existential system is satisfiable exactly when $c\in W$. Canny’s theorem gives designated membership in $\mathrm{PSPACE}$. Testing candidates sequentially computes the entire winner set in polynomial space.</p><h3>7. What remains unresolved</h3><p>The new equality theorem handles arbitrary signs and arbitrary binary-encoded rational exponents. In particular, exact ties can be recognized without constructing exponentially large algebraic representations.</p><p>Nevertheless, equality testing does not determine the sign of a nonzero expression. The integer-base proposition supplies such a sign algorithm only under its stated hypotheses. Neither result establishes polynomial-time sign determination for arbitrary rational bases and rational exponents, nor establishes NP-hardness.</p><p>The remaining task is therefore to prove either a polynomial-time algorithm for $\mathsf{PowerSign}$ or an NP-hardness reduction to it or directly to designated winner membership.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 5 and 7; resolution of USER_TASK: The general polynomial-time-versus-NP-hardness classification remains unresolved. The equivalence with $\mathsf{PowerSign}$ supplies neither a polynomial-time sign algorithm nor an NP-hardness proof. A further substantive result is required to settle the assigned task.</li><li><b>minor</b> — Section 3.3, invocation of the Section 2 lemma: The equality theorem permits zero coefficients and repeated exponents, whereas the invoked lemma requires nonzero coefficients at distinct exponents and defines its threshold using $H&gt;0$. Specify normalization and handling of identically zero groups before applying the lemma.</li></ul>
+<div class="pre"><p>The appropriate verdict is <b>partial</b>. The output establishes substantial results, including polynomial-time exact equality testing and a valid reduction from the general arithmetic sign problem. It explicitly leaves the classification requested by <code>USER_TASK</code> unresolved. I found no false central step.</p><p>There is one minor algorithmic omission: the equality theorem must specify normalization and handling of zero expressions before applying its sparse-polynomial lemma.</p><h3>1. Exact expressions and elementary cases</h3><p><b>Verified.</b> The positional masses $\alpha_{c,j}$ correctly collect the society’s support masses. Substitution into the definition of $v_j$ gives the displayed candidate-score expression.</p><p>Sorting rational coordinates, summing rational masses, and forming the expressions require polynomial time. There are polynomially many terms, and the common-denominator argument correctly bounds coefficient bit lengths. Binary-encoded exponents remain symbolic, so their potentially enormous numerical values do not enlarge the output exponentially.</p><p>For $\lambda=1$, all scores are rational and exact comparisons take polynomial time.</p><p>For $m=1$, the winner claim is immediate. For $m=2$, the identity<br>$$
+S_a-S_b=(2p-1)(v_1-v_2)
+$$<br>is correct. The utility derivatives have the stated signs on their respective domains. Thus every contribution to $v_1-v_2$ is nonnegative. Positivity of every $q_\ell$ makes equality equivalent to equality of the two coordinates in every support vector. The proposed winner test correctly retains ties.</p><h3>2. Sparse-polynomial equality lemma</h3><p><b>Verified under its stated hypotheses.</b></p><p>The factorization<br>$$
+P(X)=(BX-A)Q(X),\qquad Q\in\mathbb Z[X],
+$$<br>follows from the rational root and the stated primitive-divisor form of Gauss’s lemma. Its hypotheses hold because $\gcd(A,B)=1$.</p><p>Coefficient comparison correctly gives<br>$$
+c_j=Bq_{j-1}-Aq_j.
+$$<br>The resulting formula for $q_j$ and the bound $|q_j|\leq H$ are valid.</p><p>At a block boundary, the zero intervening coefficients imply<br>$$
+A^{f-e-1}q_{f-1}=B^{f-e-1}q_e.
+$$<br>Coprimality therefore gives the claimed divisibility. Since $f-e&gt;T$ and $A\geq2$,<br>$$
+A^{f-e-1}\geq2^T&gt;H\geq|q_e|.
+$$<br>Consequently $q_e=0$, as asserted.</p><p>The truncation argument is also correct: this vanishing eliminates the coefficient that would otherwise obstruct divisibility of the lower portion. Applying it at successive boundaries establishes that every block vanishes whenever $P(A/B)=0$.</p><p>Within each block, the shifted degree is at most $(n-1)T$. Since $T$ has polynomial magnitude in the coefficient encoding length, the displayed integer evaluation has polynomial bit length. No enormous block-start power is evaluated.</p><p>Thus the lemma genuinely supplies polynomial-time equality testing despite binary-encoded, potentially enormous exponents.</p><h3>3. Equality for arbitrary rational powers</h3><h3>3.1 Computing $g$ and $\beta$</h3><p><b>Verified.</b> For a reduced positive rational $b=A/B$, being a rational $j$-th power is equivalent to both $A$ and $B$ being integer $j$-th powers. The prime-valuation characterization therefore identifies the largest successful $j$ with $g$.</p><p>The bound<br>$$
+g\leq\lfloor\log_2 A\rfloor
+$$<br>makes exhaustive testing polynomial in the input bit length. Exact integer-root testing can be performed within the stated bit-complexity bounds. The proof does not assume a polynomial-time factoring algorithm.</p><h3>3.2 Degree and linear independence</h3><p><b>Verified.</b> The definitions give<br>$$
+\theta^d=\beta^a=t,
+$$<br>with $t$ rational and polynomially encoded. Hence the field degree $s$ satisfies $s\leq d$.</p><p>The norm identity<br>$$
+\operatorname{Norm}(\theta)^D=b^s
+$$<br>is correct: it uses multiplicativity and the fact that the norm of a rational scalar in a degree-$s$ extension is its $s$-th power. Prime valuations are integers on the nonzero rational norm, even if the norm is negative.</p><p>The deductions<br>$$
+D\mid sg,\qquad d\mid s
+$$<br>are valid. Together with $s\leq d$, they establish $s=d$. The asserted linear independence follows directly from this degree.</p><p>Importantly, none of these steps requires an explicitly represented field of dimension $d$.</p><h3>3.3 Grouping and sparse equality tests</h3><p><b>Verified in substance, with a minor omission.</b> Euclidean division handles negative exponents correctly, and<br>$$
+b^{r_i}=t^{z_i}\theta^{e_i}
+$$<br>is valid. Linear independence gives exactly the claimed equivalence between $F=0$ and vanishing of every observed-residue coefficient.</p><p>The encoding bounds also hold: $D$ may have enormous numerical value, but its bit length is polynomial; only observed residues are stored; and shifts and denominator clearing use polynomial-length binary integers.</p><p><b>Minor issue:</b> the theorem permits zero coefficients and repeated exponents. After grouping and shifting, a group may contain repeated powers, zero coefficients, or cancel completely. Section 2’s lemma assumes nonzero coefficients at distinct exponents and uses $H&gt;0$ to define $T$.</p><p>For example, the permitted input<br>$$
+b=2,\qquad a_1=1,\qquad a_2=-1,\qquad r_1=r_2=0
+$$<br>produces an identically zero group.</p><p><b>Minimum clarification needed:</b> state the normalization and zero-expression handling performed before each invocation of the lemma. This is a routine algorithmic clarification, not a missing mathematical result.</p><p>Subject to that clarification, the polynomial-time equality theorem stands.</p><h3>4. Candidate ties and integer-quality cases</h3><p><b>Verified.</b> Candidate-score differences have the displayed rational-linear-combination form. For $0&lt;\lambda&lt;1$, the identity<br>$$
+u_\lambda(x)=-b^{-x},\qquad b=1/\lambda&gt;1,
+$$<br>correctly transfers equality testing to the theorem.</p><p>Testing polynomially many candidate pairs therefore computes the equality classes. The output correctly distinguishes equality classes from ordered score classes.</p><p>The integer-base sign proposition is also sound. Denominator clearing and exponent shifting preserve sign. Each normalized block evaluates to an integer, so a nonzero selected block contributes magnitude at least $B^s$.</p><p>The lower contribution satisfies<br>$$
+\left|\text{lower contribution}\right|\leq HB^e&lt;B^s.
+$$<br>The strict inequality follows from the block-boundary condition and $B\geq2$. Higher blocks with zero block value contribute exactly zero. Thus the selected block determines the sign.</p><p>This proves the stated polynomial-time winner computation for integer qualities when $\lambda$ is an integer or reciprocal of an integer, together with the separately handled case $\lambda=1$. It does not establish the same result for arbitrary rational bases.</p><h3>5. Equivalence with the general sign problem</h3><h3>5.1 Reduction to $\mathsf{PowerSign}$</h3><p><b>Verified.</b> Each pairwise comparison is a polynomial-size sign instance after the reciprocal transformation where necessary. A candidate wins precisely when all its score differences are nonnegative.</p><p>This direction is a polynomial-time oracle reduction. The output does not improperly assert that it is a many-one reduction.</p><h3>5.2 Reduction from $\mathsf{PowerSign}$</h3><p><b>Verified, including the promises and tie behavior.</b></p><p>The identity introducing the terms $d_h(b^{s_h}-1)$ is correct, including the correction term with exponent $1$. Denominator clearing uses a positive multiplier and preserves sign.</p><p>The curvature identities are correct. The choice based on the sign of $N_hs_h$ gives<br>$$
+|N_h|K(x_h)=N_h(b^{s_h}-1)
+$$<br>for both positive and negative $s_h$.</p><p>Each nonconstant representative has exactly three distinct coordinate permutations. Their assigned probabilities and the constant-vector probability are positive and sum to one. Equal probabilities within each orbit establish permutation invariance. Merging duplicates preserves invariance and positivity.</p><p>Although $|N_h|$ may be numerically large, the weights are encoded directly. The binary length of $M$ is polynomial, and the support size remains polynomial.</p><p>The factor $3$ in<br>$$
+\Delta=\frac{3E}{M}F
+$$<br>is correct because each representative contributes through its three permutations.</p><p>The two ranking types produce<br>$$
+S_a=S_c=\frac{v_1+v_3}{2},\qquad S_z=v_2,
+$$<br>and hence designated membership is equivalent to $F\geq0$. The construction correctly includes $a$ at equality. The no-remaining-terms case is also explicitly handled.</p><p>The reduction therefore establishes the claimed polynomial-time solvability equivalence. <b>It does not establish NP-hardness</b>, because no hardness classification of $\mathsf{PowerSign}$ is supplied.</p><h3>6. Polynomial-space upper bound</h3><p><b>Verified.</b> The cited result does establish that the existential theory of the reals is decidable in polynomial space. [Canny’s original report](https://www2.eecs.berkeley.edu/Pubs/TechRpts/1988/Archive/CSD-88-439.pdf) supports this application.</p><p>For $\lambda\neq1$, each positive power variable has a unique intended value under the displayed equation. Repeated squaring produces polynomially many multiplication gates even for binary-encoded exponents. Their quadratic equations avoid expanding enormous constants or degrees.</p><p>After gate expansion and rational-denominator clearing, the system has polynomial encoding length and integer polynomial constraints. Positivity and the score inequalities are permitted existential real constraints. The utility sign for $\lambda&lt;1$ is incorporated in the score coefficients.</p><p>The case $\lambda=1$ is already covered by the rational algorithm in Section 1.</p><p>Sequential designated-membership tests use polynomial space, and the exact score expressions themselves have polynomial output length. Thus the polynomial-space upper bound is established. It is an upper bound, not a hardness result.</p><h3>7. Resolution of the assigned task</h3><p><b>Major unresolved requirement:</b> <code>USER_TASK</code> asks for a general polynomial-time algorithm or an NP-hardness result. Neither is established.</p><p>The output acknowledges this accurately. Its proved equality algorithm does not compare unequal scores, its sign algorithm has restricted hypotheses, and its arithmetic equivalence transfers the unresolved question rather than settling it.</p><p>The minimum further work required is precisely a general sign algorithm with polynomial Turing bit complexity, or an applicable NP-hardness reduction. No clarification of the existing exposition alone can supply that missing classification.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,106 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ecai-2024-0193 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ecai-2024-0193 <span style="font-weight:normal;color:#8a7350">(d4-conf-ecai-2024-0193)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> The problem is in \(\mathrm{P}\): every valid instance is a yes-instance, including when \(\epsilon=0\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 14 — class: other</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Let an LV-game be given such that for all parties Pi, l ≤⌊k·ni |N| ⌋≤|Pi|. A strategy profile where each party Pi plays a strategy in LQi is an ϵ-Nash equilibrium where ϵ = k − P i≤g⌊k·ni |N| ⌋. So, the closer the sum of the lower quotas is to the size of the committee, the more stable the lower quota strategies become in an LV-game.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), committee size \(k\), ballot size \(l\), and disjoint approval parties \(P_i\) with rational masses \(\mu_i\) summing to \(1\), let \(q_i=\lfloor k\mu_i\rfloor\) and assume \(l\le q_i\le |P_i|\). Each party allocates its mass among ballots \(B\in\binom{C}{l}\), with \(x_{i,B}\ge0\) and \(\sum_B x_{i,B}=\mu_i\); candidate \(c\) receives vote mass \(\sum_i\sum_{B\ni c}x_{i,B}\). The winning committees are the size-\(k\) sets with maximum total vote mass, and party \(i\)&#x27;s utility is its minimum number of candidates in any winning committee. Does the profile that chooses \(X_i\subseteq P_i\) with \(|X_i|=q_i\) and distributes type \(i\)&#x27;s mass uniformly over the \(l\)-subsets of \(X_i\) form an ε-Nash equilibrium against arbitrary unilateral mass reallocations, where \(\epsilon=k-\sum_i q_i\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) be an explicitly listed candidate set with \(m=|C|\), and let \(1\le l\le k\le m\) be integers.<br>A society is given by its support: \(\tau\) pairwise disjoint approval types \(P_i\subseteq C\), each with positive mass \(\mu_i\) encoded as a binary rational, with \(\sum_i\mu_i=1\). Here \(\tau\) is the support size, not the number of possible approval types; let \(L\) be the total input bit length.<br>Set \(q_i=\lfloor k\mu_i\rfloor\), require \(l\le q_i\le |P_i|\), and include explicitly chosen sets \(X_i\subseteq P_i\) with \(|X_i|=q_i\) in the input. Candidates outside all approval types are allowed.<br>Party \(i\)&#x27;s strategy is any allocation \(x_{i,B}\in\mathbb R_{\ge0}\) over \(B\in\binom{C}{l}\), with \(\sum_Bx_{i,B}=\mu_i\); ballots may include candidates outside \(P_i\).<br>For a profile \(x\), define \(s_x(c)=\sum_i\sum_{B\ni c}x_{i,B}\), let \(\mathcal W(x)\) contain all size-\(k\) committees maximizing \(\sum_{c\in W}s_x(c)\), and define \(U_i(x)=\min_{W\in\mathcal W(x)}|W\cap P_i|\).<br>The designated profile \(x^*\) assigns \(x^*_{i,B}=\mu_i/\binom{q_i}{l}\) when \(B\subseteq X_i\), and zero otherwise; this formula specifies the profile without enumerating its ballots.<br>Put \(\epsilon=k-\sum_iq_i\). The decision problem asks whether \(U_i(x^*)\ge U_i(x^*_{-i},x&#x27;_i)-\epsilon\) for every party and every feasible unilateral allocation \(x&#x27;_i\), including when \(\epsilon=0\).</p><p>Is deciding whether the designated profile is an \(\epsilon\)-Nash equilibrium in \(\mathrm P\), or is it \(\mathrm{NP}\)-hard? State running times in \(m,\tau,L,k,l\).</p><p>For finite electorates, evenly spread lower-quota strategies are claimed to be \(\epsilon\)-Nash equilibria, with \(\epsilon=k-\sum_i\lfloor kn_i/n\rfloor\), under the corresponding quota and party-size conditions. [Source](https://arxiv.org/html/2407.17973v1).<br>No result settling this exact continuous decision problem was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Made the integer domains explicit: 1 ≤ l ≤ k ≤ m; positive support masses and the quota condition ensure every approval party is nonempty.</li><li>Treated the chosen sets X_i as explicit input, while representing their uniform ballot allocations by a formula.</li><li>Allowed arbitrary nonnegative real allocation masses for deviations; only the society&#x27;s input masses must be binary rationals.</li><li>Retained ballots over all candidates, following the explicit LV-game strategy definition and the graded question despite the earlier approval-consistency convention.</li><li>Allowed candidates approved by no support type, since the party-list definition does not require the approval parties to cover C.</li><li>Used the weak additive equilibrium inequality, including epsilon equal to zero, following the extended version and the intended no-gain-greater-than-epsilon convention.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The problem is in \(\mathrm{P}\). <b>Every instance satisfying the stated hypotheses is a yes-instance</b>, including when \(\epsilon=0\).</p><p>In fact, writing \(p_i=|P_i|\), we prove the exact formulas<br>\[
+U_i(x^*)=\max\{q_i,k-m+p_i\},
+\qquad
+\max_{x&#x27;_i}U_i(x^*_{-i},x&#x27;_i)=\min\{p_i,q_i+\epsilon\}.
+\]</p><h3>1. Scores at the designated profile</h3><p>Set \(Q=\sum_jq_j=k-\epsilon\). Because \(q_j\le k\mu_j\) and \(\sum_j\mu_j=1\), we have \(Q\le k\), hence \(\epsilon\ge0\).</p><p>For each \(c\in X_j\), counting the size-\(l\) subsets containing \(c\) gives<br>\[
+s_{x^*}(c)
+=\mu_j\frac{\binom{q_j-1}{l-1}}{\binom{q_j}{l}}
+=\frac{l\mu_j}{q_j}
+\ge\frac{l}{k}&gt;0.
+\]<br>Disjointness of the approval types ensures that other parties contribute nothing to this score. Every candidate outside \(\bigcup_jX_j\) has score zero.</p><p>We will repeatedly use the following exchange property: if \(W\) maximizes committee score, \(c\in W\), and \(d\notin W\), then \(s(c)\ge s(d)\). Otherwise, replacing \(c\) by \(d\) strictly increases the committee score.</p><p>Since exactly \(Q\le k\) candidates have positive scores, every winning committee contains all of them. Its remaining \(\epsilon\) members can be any zero-score candidates. Consequently,<br>\[
+U_i(x^*)\ge q_i.
+\]</p><p>For completeness, the exact utility follows by counting available zero-score candidates outside \(P_i\). Their number is<br>\[
+Z_i=m-p_i-(Q-q_i).
+\]<br>Among the \(\epsilon\) additional committee members, the minimum possible number from \(P_i\) is \(\max\{0,\epsilon-Z_i\}\). All such extensions are winning committees, so<br>\[
+U_i(x^*)
+=q_i+\max\{0,\epsilon-Z_i\}
+=\max\{q_i,k-m+p_i\}.
+\]</p><h3>2. A bound for every unilateral deviation</h3><p>Fix a party \(i\) and an arbitrary feasible allocation \(x&#x27;_i\), allowing ballots outside \(P_i\). Write \(x&#x27;=(x^*_{-i},x&#x27;_i)\), and define<br>\[
+D_i=\bigcup_{j\ne i}X_j,
+\qquad
+R_i=|D_i|=Q-q_i=k-\epsilon-q_i.
+\]<br>The sets are disjoint, and \(D_i\cap P_i=\varnothing\).</p><p>Every \(d\in D_i\) retains its original opponent contribution. The deviator adds only nonnegative scores, so<br>\[
+s_{x&#x27;}(d)\ge\frac{l}{k}.
+\]</p><p>Meanwhile, opponents contribute nothing to candidates in \(P_i\). Therefore their total score satisfies<br>\[
+\sum_{c\in P_i}s_{x&#x27;}(c)
+=\sum_{B\in\binom{C}{l}}|B\cap P_i|x&#x27;_{i,B}
+\le l\sum_Bx&#x27;_{i,B}
+=l\mu_i
+&lt;\frac{l(q_i+1)}{k}.
+\]<br>The strict inequality follows from \(k\mu_i&lt;q_i+1\).</p><p>Suppose a winning committee \(W\) contained<br>\[
+t=|W\cap P_i|\ge q_i+\epsilon+1.
+\]<br>Then<br>\[
+|W\setminus P_i|=k-t\le R_i-1.
+\]<br>Thus some \(d\in D_i\) is omitted from \(W\). By the exchange property, every \(c\in W\cap P_i\) satisfies<br>\[
+s_{x&#x27;}(c)\ge s_{x&#x27;}(d)\ge\frac{l}{k}.
+\]<br>It follows that<br>\[
+\sum_{c\in P_i}s_{x&#x27;}(c)
+\ge\frac{tl}{k}
+\ge\frac{l(q_i+1)}{k},
+\]<br>contradicting the score-budget inequality.</p><p>Hence <b>every</b> winning committee after <b>every</b> unilateral deviation satisfies<br>\[
+|W\cap P_i|\le q_i+\epsilon.
+\]<br>In particular,<br>\[
+U_i(x^*_{-i},x&#x27;_i)\le q_i+\epsilon.
+\]</p><p>Combining this with \(U_i(x^*)\ge q_i\) proves<br>\[
+U_i(x^*)\ge U_i(x^*_{-i},x&#x27;_i)-\epsilon
+\]<br>for every party and every feasible deviation. This argument also applies when \(\epsilon=0\).</p><h3>3. The deviation bound is attainable</h3><p>Let<br>\[
+r_i=\min\{p_i,q_i+\epsilon\}.
+\]<br>Since \(p_i\ge q_i\ge l\), we have \(r_i\ge l\). Choose \(Y_i\subseteq P_i\) with \(|Y_i|=r_i\), and distribute mass \(\mu_i\) uniformly over its size-\(l\) subsets.</p><p>The positive-score candidates are exactly \(Y_i\cup D_i\), whose number satisfies<br>\[
+r_i+R_i\le(q_i+\epsilon)+(k-\epsilon-q_i)=k.
+\]<br>Every winning committee therefore contains \(Y_i\), giving utility at least \(r_i\). The preceding bound and the elementary bound \(U_i\le p_i\) give utility at most \(r_i\). Thus<br>\[
+\max_{x&#x27;_i}U_i(x^*_{-i},x&#x27;_i)=r_i.
+\]<br>This construction specifies the allocation without enumerating its ballots.</p><h3>4. Decision algorithm and running time</h3><p>On the promised input domain, the algorithm simply returns <b>yes</b>. Its decision time is \(O(1)\); reading the entire input takes \(O(L)\).</p><p>If malformed inputs must also be rejected, a straightforward validator checks the candidate lists, disjointness, rational masses, normalization, quotas, and designated sets. Using schoolbook exact integer arithmetic gives a conservative \(O(L^3+m+\tau)\) bit-operation bound. Here \(k,l\le m\), their binary encodings are included in \(L\), and no enumeration of \(\binom{m}{l}\) ballots or \(\binom{m}{k}\) committees is required.</p><p>The finite-electorate analogue is stated in [Theorem 14 of the cited paper](https://arxiv.org/html/2407.17973v1#S7). The proof above independently establishes the exact continuous statement, including unrestricted unilateral ballots and \(\epsilon=0\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verdict</h3><p><b>The prover resolves the assigned continuous decision problem correctly.</b> Every valid instance is a yes-instance, including when \(\epsilon=0\). Both claimed exact utility formulas are established. I found no major or minor mathematical issues.</p><h3>Step-by-step verification</h3><h3>1. Designated profile and its scores</h3><p>The designated allocation is feasible: \(q_j\ge l\ge1\), so \(\binom{q_j}{l}\) is positive, and assigning mass \(\mu_j/\binom{q_j}{l}\) to each of these ballots gives total mass \(\mu_j\).</p><p>The deduction<br>\(Q=\sum_jq_j\le k\sum_j\mu_j=k\)<br>is valid, so \(\epsilon=k-Q\ge0\).</p><p>For \(c\in X_j\), the ballot count and binomial ratio are correct:<br>\[
+\frac{\binom{q_j-1}{l-1}}{\binom{q_j}{l}}=\frac{l}{q_j}.
+\]<br>Consequently, \(s_{x^*}(c)=l\mu_j/q_j\ge l/k&gt;0\). Disjointness ensures no other party contributes to this candidate. All candidates outside the designated sets receive zero.</p><p>The exchange property is correctly stated and justified. Since there are exactly \(Q\le k\) positive-score candidates, every maximizing committee must contain them all. Any extension by \(\epsilon\) zero-score candidates is maximizing. Such extensions exist because \(m-Q\ge k-Q=\epsilon\).</p><p>The count<br>\(Z_i=m-p_i-(Q-q_i)\)<br>correctly removes the opponents’ positive-score candidates from the candidates outside \(P_i\). Therefore the minimum number of additional members from \(P_i\) is \(\max\{0,\epsilon-Z_i\}\). The resulting simplification to<br>\[
+U_i(x^*)=\max\{q_i,k-m+p_i\}
+\]<br>is correct.</p><h3>2. Universal bound on deviations</h3><p>The argument fixes an arbitrary party and an arbitrary feasible deviation, so its quantifiers match the task.</p><p>The opponent set \(D_i\) has size<br>\(R_i=Q-q_i=k-\epsilon-q_i\)<br>and is disjoint from \(P_i\). Every candidate in \(D_i\) retains score at least \(l/k\), regardless of the deviator’s ballots, because all added contributions are nonnegative.</p><p>Opponents contribute nothing to \(P_i\). The score-budget identity and bound are valid:<br>\[
+\sum_{c\in P_i}s_{x&#x27;}(c)
+=\sum_B|B\cap P_i|x&#x27;_{i,B}
+\le l\mu_i
+&lt;\frac{l(q_i+1)}{k}.
+\]<br>The strict inequality follows exactly from \(q_i=\lfloor k\mu_i\rfloor\). It remains strict when \(k\mu_i\) is integral.</p><p>If a maximizing committee contains \(t\ge q_i+\epsilon+1\) members of \(P_i\), then<br>\(k-t\le R_i-1\).<br>Thus it cannot contain all \(R_i\) opponent candidates. The exchange property implies that every selected member of \(P_i\) has score at least \(l/k\). Their combined score then contradicts the strict budget bound.</p><p>The degenerate case \(R_i=0\) creates no gap: the hypothesized committee would require \(k-t\le-1\), which is impossible.</p><p>The conclusion applies to <b>every</b> maximizing committee, so it establishes the claimed bound on the minimum utility despite adversarial tie handling:<br>\[
+U_i(x^*_{-i},x&#x27;_i)\le q_i+\epsilon.
+\]</p><p>Combining this with \(U_i(x^*)\ge q_i\) proves the required equilibrium inequality for every party and every deviation. No step assumes \(\epsilon&gt;0\).</p><h3>3. Attainment of the deviation bound</h3><p>The chosen size \(r_i=\min\{p_i,q_i+\epsilon\}\) satisfies \(l\le r_i\le p_i\), so the proposed set and uniform allocation are feasible.</p><p>Every candidate in \(Y_i\) receives positive score, and the positive-score candidates are exactly \(Y_i\cup D_i\). These sets are disjoint, and their total size is at most \(k\). Hence every maximizing committee contains \(Y_i\), giving minimum utility at least \(r_i\).</p><p>The previously established universal bound, together with \(U_i\le p_i\), gives the matching upper bound. Thus<br>\[
+\max_{x&#x27;_i}U_i(x^*_{-i},x&#x27;_i)=\min\{p_i,q_i+\epsilon\}
+\]<br>is proved. The explicit construction also justifies writing a maximum rather than merely a supremum.</p><h3>4. Algorithm and complexity</h3><p>On the promised domain, returning yes without inspecting the input is a valid constant-time decision algorithm. The distinction between \(O(1)\) decision time and \(O(L)\) time to read the input is appropriate.</p><p>The optional validation bound \(O(L^3+m+\tau)\) is conservative and consistent with schoolbook exact arithmetic. Rational normalization and quota calculations involve integers of bit length bounded by the total encoding length; explicit candidate and set checks also fit within this bound.</p><p>The running-time statement addresses all requested parameters: \(k,l\le m\), their encodings contribute to \(L\), and neither ballots nor committees need enumeration.</p><h3>5. External citation</h3><p>The cited [Theorem 14](https://arxiv.org/html/2407.17973v1#S7) does state the finite-electorate equilibrium claim with the indicated quota conditions and value of \(\epsilon\). The prover uses this as context, not as an unverified theorem application establishing the continuous result.</p><h3>Repair feedback</h3><p>No mathematical repair or additional clarification is required. The proof establishes the claimed result for unrestricted unilateral ballots, candidates outside all approval types, and adversarial selection among maximizing committees.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

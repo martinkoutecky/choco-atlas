@@ -1,0 +1,416 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Limitations of VCG-based mechanisms — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Limitations of VCG-based mechanisms <span style="font-weight:normal;color:#8a7350">(s5-fb7ab6ede89c8173bc5bf3b2cbda5a34c74c67b3)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2.1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Every MIR mechanism for approximating the welfare in combinatorial auctions with submodular bidders that uses O(em 1 15 ) bits of communication achieves an approximation factor of Ω(min(n, m1/6)). This result also holds for the randomized and non-deterministic settings. We deﬁne two complexity measures for the range R of an MIR algorithm A: the cover number, and the intersection number. The cover number roughly corresponds to the size of the range R. We will show, using the probabilistic method, that if the cover number is “small” then there exists an instance such that A fails to provide a good approximation.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\) item categories, a finite set \(T\) of normalized monotone submodular valuation types with \(|T|=\tau\), rational masses \(\mu_t\), rational per-capita supplies \(q_j\), and type-level valuation-query access, determine the best worst-case welfare approximation achievable by a fixed valuation-independent continuous MIR range \(\mathcal R\) under a communication budget \(B=O(e^{m^{1/15}})\). The decision variables are masses \(x_{t,S}\ge 0\) of type \(t\) receiving integral bundle \(S\subseteq M\), with \(\sum_S x_{t,S}=\mu_t\) and \(\sum_{t,S\ni j}x_{t,S}\le q_j\), maximizing \(W_\mu(x)=\sum_{t,S}x_{t,S}v_t(S)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(M\) contain \(m\ge2\) item categories. A society is given by its support: \(\tau\ge1\) type labels with positive binary-rational masses \(\mu_t\), where \(\sum_t\mu_t=1\); \(\tau\) is the support size, not the number of possible types.<br>Each type has a normalized monotone submodular valuation \(v_t:2^M\to\mathbb Q_{\ge0}\), with \(v_t(\varnothing)=0\). Public binary-rational supplies satisfy \(0\le q_j\le1\). Public labels identify oracle endpoints and reveal no valuation information.<br>Let \(L\) bound both the total encoding length of masses and supplies and the encoding length of each valuation answer. A value query specifies \((t,S)\) and returns \(v_t(S)\) exactly; count all request and response bits toward communication.<br>The feasible set \(F(\mu,q)\) consists of real masses \(x_{t,S}\ge0\) satisfying \(\sum_{S\subseteq M}x_{t,S}=\mu_t\) and \(\sum_{t,S\ni j}x_{t,S}\le q_j\). Each recipient receives an integral bundle; only recipient masses split.<br>Define \(W_\mu(x)=\sum_{t,S}x_{t,S}v_t(S)\) and \(\operatorname{OPT}=\max_{x\in F(\mu,q)}W_\mu(x)\).<br>A deterministic continuous MIR algorithm fixes a nonempty compact range \(\mathcal R\subseteq F(\mu,q)\) using only public data, independently of valuations and query answers, and returns an exact rational maximizer of \(W_\mu\) over \(\mathcal R\). Any maximizing tie may be selected; output uses a finite list of nonzero coordinates.<br>Only oracle communication is restricted; local computation is unrestricted. State any running-time bounds in \(m,\tau,L,B\).</p><p>What is the smallest worst-case approximation factor \(\rho(m,\tau,L,B)\) achievable by such continuous MIR algorithms using at most \(B\le C e^{m^{1/15}}\) communication bits, for a fixed constant \(C&gt;0\), where the guarantee is \(W_\mu(x)\ge\operatorname{OPT}/\rho\) on every admissible input?</p><p>Discrete MIR allocation has an approximation lower bound \(\Omega(\min\{n,m^{1/6}\})\) under \(O(e^{m^{1/15}})\) communication, including randomized and nondeterministic protocols ([Dobzinski–Nisan](https://doi.org/10.1007/s00493-011-2528-4)).<br>Later discrete bounds with \(2^k\) communication are \(\Omega(\sqrt{m/(k\log(m/k))})\) for \(n=\Omega(\sqrt{m/k})\) and \(k=\Omega(\log m)\), and an MIR upper bound is \(O(\sqrt{m/k})\) ([Qiu–Weinberg](https://arxiv.org/html/2404.00831v1)).<br>No result settling this exact mass-allocation, value-query, continuous MIR approximation question was identified in the search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized total population mass to one because the question specifies a distribution and per-capita supplies; restricted supplies to [0,1], since each recipient can receive each category at most once.</li><li>Interpreted normalized valuations as having zero empty-bundle value, without imposing unit grand-bundle value.</li><li>Made type labels and masses public while keeping valuations accessible only through exact type-level value queries; the range may depend on public feasibility data but not valuation information.</li><li>Restricted valuation answers to nonnegative binary rationals and added a public answer-length bound L so that the communication budget counts actual bits, including queries and responses.</li><li>Required a nonempty compact range and an exactly encoded rational maximizing output to make continuous MIR maximization and communication operationally defined.</li><li>Chose deterministic algorithms and unrestricted local computation, retaining the anchor&#x27;s communication model rather than adding a polynomial-time restriction.</li><li>Defined approximation against the unrestricted feasible mass optimum and uniformly over all admissible masses, supplies, and valuation profiles; retained B as a parameter with a fixed constant in its stated asymptotic bound.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and main results</h3><p>The general optimum approximation factor remains unresolved. The following bounds are proved below. They improve the previous positive-budget upper bound on an important class of public supplies and establish a constant lower bound for positive budgets, already with one supported type.</p><p>Let $\rho^*(m,\tau,L,B)$ denote the infimum of the worst-case approximation factors achievable in the stated model. Let<br>$$
+N=\{j\in M:q_j&gt;0\},\qquad d=|N|.
+$$<br>If $d=0$, then every feasible allocation has zero welfare, and the problem is trivial. Henceforth assume $d\ge1$, and define<br>$$
+a=\min_{j\in N}q_j,\qquad b=\max_{j\in N}q_j,\qquad \kappa=\frac ba.
+$$</p><p>The proved upper bounds are:</p><ul><li>With zero oracle communication,</li></ul><p>$$
+   \rho^*(m,\tau,L,B)\le \frac{1}{1-e^{-1/\tau}}.
+   $$</p><ul><li>For $1\le k\le d$, querying all nonempty subsets of $N$ of size at most $k$, together with $N$ itself, gives a continuous MIR algorithm with factor</li></ul><p>$$
+   \min\left\{\frac dk,\ \Phi\left(\frac{\kappa d}{k}\right)\right\},
+   $$<br>where<br>$$
+   \Phi(D)=
+   \begin{cases}
+   1+D/4,&amp;1\le D\le4,\\
+   \sqrt D,&amp;D\ge4.
+   \end{cases}
+   $$<br>In particular, <b>equal positive supplies give factor $\sqrt{d/k}$ when $d/k\ge4$</b>.</p><p>The new lower bound is:</p><ul><li>Along an explicit sequence with $\tau=1$ and $q_j=1/2$ for every item, every deterministic algorithm using</li></ul><p>$$
+   B\le Ce^{m^{1/15}}
+   $$<br>has worst-case factor at least<br>$$
+   \frac43-o(1).
+   $$<br>This lower bound applies even without the MIR restriction. The constructed valuation answers have encoding length $O(\log m)$.</p><p>These bounds do not match in general. In particular, they do not establish the smallest factor as a function of all four parameters.</p><h3>1. A sampling lemma and the zero-query upper bound</h3><p>We first prove the zero-query bound, including the zero-supply case.</p><h3>Sampling lemma</h3><p>Let $f:2^M\to\mathbb R_{\ge0}$ be normalized, monotone, and submodular. For $p\in[0,1]^M$, let<br>$$
+F(p)=\mathbb E[f(R_p)],
+$$<br>where $R_p$ includes the items independently with probabilities $p_j$.</p><p>Suppose $A$ is any random subset with marginals<br>$$
+a_j=\Pr(j\in A),
+$$<br>and suppose $a_j\le cp_j$ for every item, where $c\ge1$. Then<br>$$
+F(p)\ge (1-e^{-1/c})\mathbb E[f(A)].
+$$</p><p><b>Proof.</b> Put $V=\mathbb E[f(A)]$ and $H(s)=F(sp)$ for $0\le s\le1$.</p><p>For deterministic sets $A,R$, monotonicity and diminishing returns give<br>$$
+f(A)\le f(R\cup A)
+\le f(R)+\sum_{j\in A}\bigl(f(R\cup\{j\})-f(R)\bigr).
+$$<br>The second inequality follows by adding the elements of $A\setminus R$ one at a time.</p><p>Take $A$ and $R_{sp}$ independently. Since all marginal increments are nonnegative,<br>$$
+V\le H(s)+c\sum_jp_j\,
+\mathbb E\bigl[f(R_{sp}\cup\{j\})-f(R_{sp})\bigr].
+$$<br>Differentiating the independent-sampling polynomial gives<br>$$
+H&#x27;(s)=\sum_jp_j\,
+\mathbb E\bigl[
+f((R_{sp}\setminus\{j\})\cup\{j\})
+-f(R_{sp}\setminus\{j\})
+\bigr].
+$$<br>For each realization, the increment in this derivative is at least the corresponding increment in the preceding display. They are equal when $j\notin R_{sp}$, while the latter increment is zero when $j\in R_{sp}$. Consequently,<br>$$
+V\le H(s)+cH&#x27;(s).
+$$<br>Thus<br>$$
+\frac{d}{ds}\bigl(e^{s/c}H(s)\bigr)
+\ge \frac Vc e^{s/c}.
+$$<br>Integration from zero to one, using $H(0)=0$, proves the claim. $\square$</p><h3>Public product allocation</h3><p>For each item define<br>$$
+d_{tj}=\min\{\mu_t,q_j\},
+\qquad
+D_j=\sum_t d_{tj}.
+$$<br>If $q_j=0$, set $p_{tj}=0$. Otherwise set<br>$$
+p_{tj}=\frac{q_jd_{tj}}{\mu_tD_j}.
+$$</p><p>For $q_j&gt;0$,<br>$$
+q_j\le D_j\le\tau q_j.
+$$<br>Indeed, if some $\mu_t\ge q_j$, that type alone contributes $q_j$ to $D_j$. Otherwise $D_j=\sum_t\mu_t=1\ge q_j$. The upper bound follows from $d_{tj}\le q_j$.</p><p>These inequalities and $d_{tj}\le\mu_t$ imply $0\le p_{tj}\le1$. Define<br>$$
+x^0_{t,S}
+=
+\mu_t\prod_{j\in S}p_{tj}
+\prod_{j\notin S}(1-p_{tj}).
+$$<br>Its type totals are $\mu_t$, and its item consumption is<br>$$
+\sum_{t,S\ni j}x^0_{t,S}
+=
+\sum_t\mu_tp_{tj}
+=
+q_j.
+$$<br>For zero-supply items, both sides are zero. Thus $x^0$ is feasible.</p><p>The singleton range $\{x^0\}$ is compact, rational, and determined entirely by public data. Returning its sole point is therefore a continuous MIR algorithm using zero oracle communication.</p><p>Let $x^*$ be an optimal allocation. Such an allocation exists because the feasible set is a nonempty compact polytope. Write<br>$$
+y^*_{tj}=\sum_{S\ni j}x^*_{t,S}.
+$$<br>For positive-supply items,<br>$$
+y^*_{tj}\le d_{tj}
+\le\tau\mu_tp_{tj}.
+$$<br>For zero-supply items, feasibility gives $y^*_{tj}=0$, so the same final comparison holds.</p><p>For each type, apply the sampling lemma with $c=\tau$ to the distribution assigning probability $x^*_{t,S}/\mu_t$ to bundle $S$. Multiplying the resulting inequalities by $\mu_t$ and summing yields<br>$$
+W_\mu(x^0)\ge(1-e^{-1/\tau})\operatorname{OPT}.
+$$</p><p>Explicitly constructing the output takes<br>$$
+2^m\operatorname{poly}(m,\tau,L)
+$$<br>local time and produces at most $\tau2^m$ nonzero coordinates. All coordinates are rational with polynomial encoding length. This output size is permitted by the model.</p><h3>2. The query range and the truncation guarantee</h3><p>Every positive coordinate of a feasible allocation uses a subset of $N$: a bundle containing a zero-supply item cannot have positive mass.</p><p>Fix $1\le k\le d$. Define the public family<br>$$
+\mathcal A_k=\{S\subseteq N:|S|\le k\}\cup\{N\},
+$$<br>and the range<br>$$
+\mathcal R_k^+
+=
+\{x\in F(\mu,q):x_{t,S}=0\text{ for }S\notin\mathcal A_k\}.
+$$<br>This is a nonempty compact rational polytope. Query the value of every nonempty bundle in $\mathcal A_k$ for every type, and solve the resulting linear program exactly.</p><p>The number of queries is<br>$$
+Q_k^+
+=
+\tau\left(
+\sum_{i=1}^k\binom di+\mathbf1_{\{k&lt;d\}}
+\right).
+$$</p><p>We will use the following truncation property.</p><p><b>Lemma.</b> For a normalized monotone submodular function $f$, a set $S$ of size $s&gt;k$, and a uniformly random $k$-element subset $T$ of $S$,<br>$$
+\mathbb E[f(T)]\ge\frac ks f(S).
+$$</p><p><b>Proof.</b> Order $S$ as $j_1,\ldots,j_s$ and define<br>$$
+w_{j_\ell}
+=
+f(\{j_1,\ldots,j_\ell\})
+-f(\{j_1,\ldots,j_{\ell-1}\}).
+$$<br>Monotonicity gives $w_j\ge0$, and telescoping gives $\sum_{j\in S}w_j=f(S)$.</p><p>For any $T\subseteq S$, add its elements in the inherited order. The preceding elements at each addition form a subset of the corresponding full prefix of $S$. Diminishing returns therefore gives<br>$$
+f(T)\ge\sum_{j\in T}w_j.
+$$<br>Every element belongs to a uniformly random $k$-element subset with probability $k/s$, proving the lemma. $\square$</p><p>Replace every bundle of size greater than $k$ in an optimal allocation by the uniform distribution over its $k$-element subsets. This preserves type masses and cannot increase item consumption. Retain all smaller bundles. The resulting allocation belongs to $\mathcal R_k^+$ and has welfare at least<br>$$
+\frac kd\operatorname{OPT}.
+$$<br>Hence the query algorithm has factor at most $d/k$.</p><h3>3. An improved bound using full bundles</h3><p>The addition of $N$ to the queried range gives a stronger guarantee when the positive supplies are comparable.</p><p>Let $H$ be the optimal welfare over $\mathcal R_k^+$. Let $H_k$ denote the optimum over the subrange containing only bundles of size at most $k$, and let $H_N$ denote the optimum over the subrange containing only $\varnothing$ and $N$. Both are subranges of $\mathcal R_k^+$, so<br>$$
+H\ge H_k,\qquad H\ge H_N.
+$$</p><p>Fix an optimal allocation $x^*$. Define<br>$$
+W_0=\sum_{t,S:\,|S|\le k}x^*_{t,S}v_t(S),
+$$<br>$$
+W_1=\sum_{t,S:\,|S|&gt;k}x^*_{t,S}v_t(S),
+$$<br>and<br>$$
+A=\sum_{t,S:\,|S|&gt;k}
+x^*_{t,S}\frac{k}{|S|}v_t(S).
+$$<br>The truncation lemma proves<br>$$
+H_k\ge W_0+A.
+$$</p><p>Next define, for every type,<br>$$
+z_t=\frac{a}{db}\sum_Sx^*_{t,S}|S|.
+$$<br>These masses can receive $N$, with the remaining mass of each type receiving $\varnothing$. Indeed,<br>$$
+z_t\le\frac ab\mu_t\le\mu_t,
+$$<br>and<br>$$
+\sum_tz_t
+=
+\frac{a}{db}\sum_{t,S}x^*_{t,S}|S|
+\le
+\frac{a}{db}\sum_{j\in N}q_j
+\le a.
+$$<br>Thus every item consumes at most $a\le q_j$.</p><p>By monotonicity,<br>$$
+H_N
+\ge\sum_tz_tv_t(N)
+\ge
+\frac{1}{\kappa d}
+\sum_{t,S}x^*_{t,S}|S|v_t(S).
+$$</p><p>Apply Cauchy–Schwarz to the nonnegative weights<br>$$
+w_{t,S}=x^*_{t,S}v_t(S)
+$$<br>on bundles of size greater than $k$. It gives<br>$$
+W_1^2
+\le
+\left(\sum_{|S|&gt;k}w_{t,S}\frac{k}{|S|}\right)
+\left(\sum_{|S|&gt;k}w_{t,S}\frac{|S|}{k}\right).
+$$<br>The first factor is $A$. The second is at most $(\kappa d/k)H_N$. Consequently,<br>$$
+W_1^2
+\le
+\frac{\kappa d}{k}\,H(H-W_0).
+$$</p><p>If $H=0$, this inequality and $W_0\le H$ imply $\operatorname{OPT}=0$. Otherwise put<br>$$
+D=\frac{\kappa d}{k},
+\qquad
+u=\frac{W_0}{H}\in[0,1].
+$$<br>Then<br>$$
+\frac{\operatorname{OPT}}H
+=
+\frac{W_0+W_1}{H}
+\le u+\sqrt{D(1-u)}.
+$$<br>For $D\ge4$, this expression is decreasing on $[0,1]$ and its maximum is $\sqrt D$. For $1\le D\le4$, its maximum occurs at $u=1-D/4$ and equals $1+D/4$. This proves<br>$$
+H\ge
+\frac{\operatorname{OPT}}{\Phi(\kappa d/k)}.
+$$</p><p>Combining this result with the truncation bound gives the claimed factor<br>$$
+\min\left\{\frac dk,\Phi\left(\frac{\kappa d}{k}\right)\right\}.
+$$</p><h3>Communication and local running time</h3><p>One concrete encoding uses a type index, an $m$-bit incidence vector, and a length-prefixed rational response. Its per-query cost is at most<br>$$
+\beta
+=
+m+\lceil\log_2\tau\rceil+L
++\lceil\log_2(L+1)\rceil+c_0
+$$<br>for a fixed protocol constant $c_0$.</p><p>Whenever<br>$$
+\beta Q_k^+\le B,
+$$<br>the algorithm fits the communication budget. Exact rational linear programming takes<br>$$
+\operatorname{poly}(m,\tau,L,Q_k^+)
+$$<br>local time, hence polynomial time in $m,\tau,L,B$ when the displayed budget condition holds. An optimal basic feasible solution has at most $\tau+d$ nonzero allocation coordinates, because adding supply slacks gives $\tau+d$ equality constraints.</p><p>Combining with the zero-query algorithm yields<br>$$
+\rho^*(m,\tau,L,B)
+\le
+\min\left\{
+\frac{1}{1-e^{-1/\tau}},
+\frac dk,
+\Phi\left(\frac{\kappa d}{k}\right)
+\right\}
+$$<br>whenever that query budget is available. The algorithm attaining this bound can be chosen using public data before any oracle answers are received.</p><h3>4. A constant lower bound for positive budgets</h3><p>We now prove a lower bound that explicitly permits arbitrary finite output support and unrestricted local computation.</p><p>Take one type with mass one. Let<br>$$
+m=2r,\qquad q_j=\frac12\quad(j\in M).
+$$<br>Let $0&lt;\varepsilon&lt;1$ be rational.</p><p>For a hidden set $A\subseteq M$ of size $r$, define<br>$$
+x_A(S)=\frac{|S\cap A|}{r},
+\qquad
+y_A(S)=\frac{|S\setminus A|}{r}.
+$$<br>For $x,y\in[0,1]$, write<br>$$
+a(x,y)=\frac{x+y}{2}
+$$<br>and define<br>$$
+F_\varepsilon(x,y)
+=
+2a(x,y)-a(x,y)^2
++
+\frac{\bigl(\max\{|x-y|-\varepsilon,0\}\bigr)^2}{4}.
+$$<br>Our hidden valuation is<br>$$
+f_A(S)=F_\varepsilon(x_A(S),y_A(S)).
+$$<br>The common comparison valuation is<br>$$
+g(S)
+=
+\frac{|S|}{r}-\frac{|S|^2}{4r^2}.
+$$<br>These valuations agree whenever<br>$$
+\left|2|S\cap A|-|S|\right|\le\varepsilon r.
+$$</p><h3>4.1 Verification of the valuation hypotheses</h3><p>We verify monotonicity and submodularity directly.</p><p>Put $d=x-y$. In the region $|d|&lt;\varepsilon$,<br>$$
+\frac{\partial F_\varepsilon}{\partial x}
+=
+\frac{\partial F_\varepsilon}{\partial y}
+=
+1-\frac{x+y}{2}.
+$$<br>All three second derivatives in the two coordinate directions are $-1/2$.</p><p>In the region $d&gt;\varepsilon$,<br>$$
+\frac{\partial F_\varepsilon}{\partial x}
+=
+1-y-\frac{\varepsilon}{2},
+\qquad
+\frac{\partial F_\varepsilon}{\partial y}
+=
+1-x+\frac{\varepsilon}{2}.
+$$<br>The same-coordinate second derivatives are zero, and the mixed derivative is $-1$.</p><p>In the region $d&lt;-\varepsilon$,<br>$$
+\frac{\partial F_\varepsilon}{\partial x}
+=
+1-y+\frac{\varepsilon}{2},
+\qquad
+\frac{\partial F_\varepsilon}{\partial y}
+=
+1-x-\frac{\varepsilon}{2}.
+$$<br>Again the same-coordinate second derivatives are zero and the mixed derivative is $-1$.</p><p>The first derivatives match continuously at both boundaries. They are nonnegative throughout the square: for example, $x-y&gt;\varepsilon$ implies $y&lt;1-\varepsilon$, so $1-y-\varepsilon/2&gt;0$; the other cases follow from the displayed formulas.</p><p>Moreover, each first derivative is nonincreasing as either coordinate increases. On each region this follows from the nonpositive second derivatives; continuity preserves the comparison when a boundary is crossed.</p><p>Therefore $F_\varepsilon$ is coordinatewise monotone and has diminishing coordinate increments. Adding an item of $A$ increases $x$ by $1/r$, and adding an item of its complement increases $y$ by $1/r$. Integrating the derivative comparison over this increment proves the diminishing-returns inequality for $f_A$. Thus $f_A$ is submodular.</p><p>Finally,<br>$$
+F_\varepsilon(0,0)=0,
+\qquad
+F_\varepsilon(1,1)=1.
+$$<br>Monotonicity implies that $f_A$ takes values in $[0,1]$. It is therefore normalized, monotone, nonnegative, and submodular.</p><p>The comparison valuation $g$ has the same properties: its cardinality increments are<br>$$
+g(S\cup\{j\})-g(S)
+=
+\frac1r-\frac{2|S|+1}{4r^2},
+$$<br>which are nonnegative and decrease with $|S|$.</p><h3>4.2 Welfare bounds</h3><p>For any feasible allocation $z$,<br>$$
+\sum_Sz_S|S|\le r,
+\qquad
+\sum_Sz_S=1.
+$$<br>Let $U=|S|/(2r)$ under this distribution. Then $\mathbb E[U]\le1/2$. Since $2u-u^2$ is increasing and concave on $[0,1]$,<br>$$
+\sum_Sz_Sg(S)
+=
+\mathbb E[2U-U^2]
+\le
+2\mathbb E[U]-(\mathbb E[U])^2
+\le\frac34.
+$$</p><p>For $f_A$, allocate mass $1/2$ to $A$ and mass $1/2$ to $M\setminus A$. This consumes exactly $1/2$ of every item and gives welfare<br>$$
+F_\varepsilon(1,0)
+=
+F_\varepsilon(0,1)
+=
+1-\frac{\varepsilon}{2}+\frac{\varepsilon^2}{4}.
+$$<br>Hence<br>$$
+\operatorname{OPT}(f_A)
+\ge
+1-\frac{\varepsilon}{2}+\frac{\varepsilon^2}{4}.
+$$</p><h3>4.3 Indistinguishability of queried bundles</h3><p>Choose $A$ uniformly from the $r$-element subsets of $M$. For every fixed $S\subseteq M$, we claim<br>$$
+\Pr\left(
+\left|2|S\cap A|-|S|\right|&gt;\varepsilon r
+\right)
+\le
+\delta,
+$$<br>where<br>$$
+\delta=2(m+1)e^{-\varepsilon^2r/4}.
+$$</p><p>To prove this, first assign independent uniform signs $\sigma_j\in\{-1,1\}$. Condition on exactly $r$ positive signs. Their positive positions then form a uniform $r$-element set, and<br>$$
+2|S\cap A|-|S|=\sum_{j\in S}\sigma_j.
+$$<br>The conditioning event has probability<br>$$
+\frac{\binom{2r}{r}}{2^{2r}}\ge\frac1{2r+1}=\frac1{m+1},
+$$<br>because the central binomial coefficient is the largest of the $m+1$ coefficients whose sum is $2^m$.</p><p>For $s=|S|&gt;0$, independent signs satisfy<br>$$
+\Pr\left(\left|\sum_{j\in S}\sigma_j\right|&gt;u\right)
+\le2e^{-u^2/(2s)}.
+$$<br>Indeed, their moment-generating function is $(\cosh\lambda)^s\le e^{s\lambda^2/2}$; applying Markov&#x27;s inequality with $\lambda=u/s$ gives each one-sided bound. Taking $u=\varepsilon r$, using $s\le2r$, and dividing by the probability of the conditioning event proves the claim. For $s=0$, the probability is zero.</p><h3>4.4 Controlling the entire output</h3><p>Run any deterministic algorithm on the comparison valuation $g$. Suppose this run makes $Q$ queries and returns the feasible allocation $z$.</p><p>Let $E$ be the event that every queried set satisfies<br>$$
+\left|2|S\cap A|-|S|\right|\le\varepsilon r.
+$$<br>A union bound gives<br>$$
+\Pr(E)\ge1-Q\delta.
+$$<br>On $E$, running the algorithm on $f_A$ produces the same transcript and the same output $z$. This follows inductively: every query on the comparison transcript receives the same answer, so determinism gives the same next query or termination decision.</p><p>Define the correction to the output welfare by<br>$$
+Z_A=\sum_Sz_S\bigl(f_A(S)-g(S)\bigr).
+$$<br>For every fixed $S$, this difference is nonnegative, at most $1/4$, and zero unless the event in Section 4.3 occurs. Therefore<br>$$
+\mathbb E_A[Z_A]
+\le
+\frac{\delta}{4}\sum_Sz_S
+=
+\frac{\delta}{4}.
+$$<br>This calculation uses the allocation masses as weights. It does not require a union bound over the output support.</p><p>If $Q\delta&lt;1$, there exists an $A$ for which $E$ holds and<br>$$
+Z_A\le\frac{\delta}{4(1-Q\delta)}.
+$$<br>For that valuation, the algorithm&#x27;s welfare is at most<br>$$
+\frac34+\frac{\delta}{4(1-Q\delta)}.
+$$<br>Combining with the feasible allocation from Section 4.2 proves a worst-case factor of at least<br>$$
+\frac{
+1-\varepsilon/2+\varepsilon^2/4
+}{
+3/4+\delta/[4(1-Q\delta)]
+}.
+$$</p><p>Every completed query communicates at least one bit, so $Q\le\lfloor B\rfloor$. In particular, whenever $B\delta&lt;1$, the following weaker bound holds uniformly for algorithms with budget $B$:<br>$$
+\rho^*(m,1,L,B)
+\ge
+\frac{
+1-\varepsilon/2+\varepsilon^2/4
+}{
+3/4+\delta/[4(1-B\delta)]
+},
+$$<br>provided the displayed valuations and public data are admissible under $L$.</p><h3>4.5 Specialization to the requested communication regime</h3><p>Let $r$ range over powers of two tending to infinity, put $m=2r$, and choose<br>$$
+h=\left\lfloor\frac{\log_2r}{4}\right\rfloor,
+\qquad
+\varepsilon=2^{-h}.
+$$<br>Then<br>$$
+r^{-1/4}\le\varepsilon&lt;2r^{-1/4},
+\qquad
+\varepsilon^2r\ge\sqrt r.
+$$<br>Consequently,<br>$$
+\delta\le2(m+1)e^{-\sqrt r/4}.
+$$<br>For every budget satisfying $B\le Ce^{m^{1/15}}$,<br>$$
+B\delta\longrightarrow0,
+\qquad
+\varepsilon\longrightarrow0.
+$$<br>The preceding lower bound therefore tends to $4/3$.</p><p>All constructed valuation answers are dyadic rationals. Their denominators divide<br>$$
+4r^2\,2^{2h},
+$$<br>and their values lie in $[0,1]$, so their encoding lengths are $O(\log m)$. The public supplies are all $1/2$, and the sole mass is one. Thus the construction is admissible for suitable $L_m$ accommodating the public data; under conventional binary rational encodings one may take $L_m=O(m\log m)$.</p><p>We have proved<br>$$
+\liminf_{m\to\infty}
+\rho^*(m,1,L_m,B_m)\ge\frac43
+$$<br>along this sequence, for every choice $B_m\le Ce^{m^{1/15}}$.</p><h3>5. A lower bound when few types can be queried</h3><p>For completeness, there is also a simple lower bound relevant when the support size exceeds the budget.</p><p>Let $h=\lceil\log_2\tau\rceil$. Choose dyadic masses consisting of $2^h-\tau$ masses of size $2^{1-h}$ and $2\tau-2^h$ masses of size $2^{-h}$. They are positive, sum to one, and are all at least $2^{-h}$. Set<br>$$
+q_1=2^{-h},\qquad q_j=0\quad(j\ne1).
+$$<br>Assume $L$ accommodates these public numbers and valuation answers zero and one.</p><p>Run a deterministic algorithm on the all-zero valuation profile. Let $T$ be the types queried on a bundle containing item $1$. Since each completed query communicates at least one bit,<br>$$
+|T|\le\lfloor B\rfloor.
+$$<br>If $u=\tau-|T|&gt;0$, the returned allocation consumes item $1$ on some unqueried type $t^*$ in mass at most $q_1/u$.</p><p>Change only that type&#x27;s valuation to<br>$$
+v_{t^*}(S)=\mathbf1_{\{1\in S\}}.
+$$<br>This is an additive, hence submodular, valuation. The entire transcript remains unchanged, so the output remains unchanged. Its welfare is at most $q_1/u$, while the optimum is $q_1$, because $\mu_{t^*}\ge q_1$.</p><p>Thus, on these public data,<br>$$
+\rho^*(m,\tau,L,B)\ge\tau-\lfloor B\rfloor
+$$<br>whenever $\lfloor B\rfloor&lt;\tau$. This argument also does not use MIR.</p><h3>6. What remains unresolved</h3><p>The improved query range gives a square-root upper bound for equal positive supplies, and the hidden-partition construction gives a constant positive-budget lower bound even for one type. Neither result establishes a matching characterization.</p><p>For example, for one type the proved bounds in the stated communication regime still leave, asymptotically,<br>$$
+\frac43-o(1)
+\le
+\rho^*(m,1,L_m,B_m)
+\le
+\frac{e}{e-1}.
+$$<br>For larger support sizes, the optimal dependence on $B$, $\tau$, and heterogeneous supplies remains undetermined. No discrete MIR lower bound is transferred to arbitrary continuous ranges in this proof.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Definition of $\rho^*(m,\tau,L,B)$ and the combined upper-bound display in Section 3: The quantity $\rho^*(m,\tau,L,B)$ is defined using a worst case over public inputs, but the displayed upper bound uses $d$ and $\kappa$ from one particular supply vector. The proof establishes a per-input guarantee. Define a quantity conditional on $(\mu,q)$ or state the welfare guarantee directly; a global bound requires taking the worst case over public inputs.</li><li><b>major</b> — Sections 1–6, relative to USER_TASK: The smallest worst-case approximation factor is not determined. The valid upper and lower bounds do not match, including for $\tau=1$. This is acknowledged incompleteness rather than a false proof step, but resolving the assigned target requires additional mathematics.</li></ul>
+<div class="pre"><p>The output establishes valid upper and lower bounds, but it does <b>not</b> determine the smallest worst-case approximation factor requested in <code>USER_TASK</code>. Its declaration that the general problem remains unresolved is accurate.</p><p>The mathematical arguments are sound in substance. The main presentation issue is that some supply-dependent upper bounds are written as bounds on a quantity defined by taking the worst case over all public inputs.</p><h3>1. Scope and quantifiers</h3><p>The prover defines $\rho^*(m,\tau,L,B)$ as the infimum of worst-case approximation factors for the stated model. Thus public supplies and masses vary within that worst case.</p><p>By contrast, the quantities<br>$$
+d=|\{j:q_j&gt;0\}|,\qquad
+\kappa=\frac{\max_{j:q_j&gt;0}q_j}{\min_{j:q_j&gt;0}q_j}
+$$<br>belong to a particular public input.</p><p>The proofs correctly establish guarantees conditional on those public data. However, the display<br>$$
+\rho^*(m,\tau,L,B)
+\le
+\min\left\{
+\frac{1}{1-e^{-1/\tau}},
+\frac dk,
+\Phi\left(\frac{\kappa d}{k}\right)
+\right\}
+$$<br>cannot literally bound the globally defined $\rho^*$ using the supplies of an arbitrary individual input.</p><p>For example, an input with $d=k=1$ makes the displayed right-hand side equal to $1$. Exact optimization on that input does not imply exact optimization on every other admissible input with the same parameters.</p><p><b>Severity: minor.</b> The algorithms and their supply-dependent guarantees remain valid; the notation needs correction.</p><p><b>Minimum clarification:</b> Either define a separate approximation quantity conditional on $(\mu,q)$, or state these inequalities as per-input welfare guarantees for the constructed algorithm. Any global bound on $\rho^*(m,\tau,L,B)$ must then take the appropriate worst case over public inputs.</p><h3>2. Sampling lemma and zero-query algorithm</h3><h3>Sampling lemma</h3><p>The deterministic inequality<br>$$
+f(A)\le f(R)+\sum_{j\in A}\bigl(f(R\cup\{j\})-f(R)\bigr)
+$$<br>follows from monotonicity and submodularity as stated.</p><p>Taking independent samples correctly separates the inclusion probability of each item in $A$ from its expected marginal increment against $R_{sp}$. The assumption $a_j\le cp_j$ therefore gives the claimed bound.</p><p>The derivative formula for $H(s)=F(sp)$ is correct. Removing item $j$ before evaluating its marginal produces the derivative of the multilinear extension. This marginal dominates the marginal evaluated against $R_{sp}$ itself, including when $j\in R_{sp}$.</p><p>Consequently,<br>$$
+V\le H(s)+cH&#x27;(s)
+$$<br>is justified. The integrating-factor calculation, together with $H(0)=0$, yields precisely<br>$$
+H(1)\ge(1-e^{-1/c})V.
+$$</p><h3>Public product allocation</h3><p>For positive supplies, both inequalities<br>$$
+q_j\le D_j\le\tau q_j
+$$<br>are correctly proved. They imply that the specified probabilities belong to $[0,1]$.</p><p>The product allocation has the required type totals and consumes exactly $q_j$ of each item. The separate definition for zero supplies avoids division by zero.</p><p>For an optimal allocation,<br>$$
+y^*_{tj}\le\min\{\mu_t,q_j\}=d_{tj}
+$$<br>is valid. Moreover,<br>$$
+\tau\mu_tp_{tj}
+=
+\frac{\tau q_jd_{tj}}{D_j}
+\ge d_{tj}.
+$$<br>Thus the sampling lemma applies to each type&#x27;s normalized bundle distribution.</p><p>The resulting bound<br>$$
+W_\mu(x^0)\ge(1-e^{-1/\tau})\operatorname{OPT}
+$$<br>is established.</p><p>The singleton range satisfies all continuous MIR requirements: it is nonempty, compact, public, valuation-independent, and rational. Its potentially exponential output support is permitted because output size and local computation are unrestricted.</p><p>The stated construction time and polynomial coordinate encoding lengths are consistent with rational arithmetic on the public inputs.</p><p><b>Assessment:</b> Correct.</p><h3>3. Queried range and truncation guarantee</h3><p>Zero-supply items cannot occur in positive allocation coordinates, so restricting bundles to subsets of $N$ is justified.</p><p>The range $\mathcal R_k^+$ is a nonempty compact rational polytope determined before any answers are received. Querying all its nonempty bundles determines its objective exactly. Rational linear programming therefore supplies an admissible exact rational maximizer.</p><p>The query count handles the possible duplicate bundle $N$ correctly.</p><p>In the truncation lemma, inherited-order marginal increments dominate the corresponding full-prefix increments by submodularity. Averaging the resulting inequality over uniform $k$-element subsets gives<br>$$
+\mathbb E[f(T)]\ge\frac{k}{|S|}f(S).
+$$</p><p>Replacing larger bundles by these distributions preserves type masses and decreases item consumption. Since $|S|\le d$, the welfare guarantee<br>$$
+H_k\ge\frac{k}{d}\operatorname{OPT}
+$$<br>follows, including the boundary case $k=d$.</p><p><b>Assessment:</b> Correct as a guarantee for the specified public input.</p><h3>4. Improved full-bundle guarantee</h3><p>The proposed full-bundle masses satisfy both necessary feasibility conditions:<br>$$
+z_t\le\mu_t,\qquad \sum_tz_t\le a.
+$$<br>Therefore the construction using only $N$ and $\varnothing$ is feasible.</p><p>Monotonicity correctly yields<br>$$
+H_N\ge
+\frac{1}{\kappa d}
+\sum_{t,S}x^*_{t,S}|S|v_t(S).
+$$</p><p>The weighted Cauchy–Schwarz application is valid because all weights are nonnegative and the relevant bundle sizes are positive. Combining it with<br>$$
+A\le H-W_0,\qquad H_N\le H
+$$<br>gives<br>$$
+W_1^2\le\frac{\kappa d}{k}H(H-W_0).
+$$</p><p>The case $H=0$ is handled correctly. Otherwise $u=W_0/H$ lies in $[0,1]$, and the remaining one-variable maximization is correct:<br>$$
+\max_{0\le u\le1}\bigl(u+\sqrt{D(1-u)}\bigr)
+=
+\begin{cases}
+1+D/4,&amp;1\le D\le4,\\
+\sqrt D,&amp;D\ge4.
+\end{cases}
+$$<br>The formulas agree at $D=4$.</p><p>Thus the claimed improvement for equal positive supplies is proved for the specified public input.</p><p><b>Assessment:</b> Correct, subject to the notation clarification in Section 1 of this report.</p><h3>5. Communication, computation, and MIR compliance</h3><p>The proposed encoding accounts for request and response bits. Its bound is achievable using a fixed-width response-length field based on the public answer-length bound $L$.</p><p>Under<br>$$
+\beta Q_k^+\le B,
+$$<br>the query algorithm respects the communication restriction.</p><p>The linear program has polynomially many variables and constraints in the stated parameters and rational coefficients of polynomial encoding length. The standard polynomial-time theorem for rational linear programming applies. An optimal basic feasible solution has at most $\tau+d$ nonzero allocation coordinates after supply slacks are introduced.</p><p>Choosing between the product allocation and queried range using public parameters preserves valuation independence of the chosen MIR range.</p><p><b>Assessment:</b> Correct.</p><h3>6. Hidden-partition lower bound</h3><h3>Valuation hypotheses</h3><p>All displayed first and second derivatives are correct. The first derivatives agree continuously across $x-y=\pm\varepsilon$.</p><p>Their nonnegativity proves monotonicity. Their decrease as either coordinate increases proves diminishing coordinate increments, including across region boundaries. Integrating those comparisons over an item increment establishes discrete submodularity.</p><p>Normalization and the range $[0,1]$ follow from the endpoint values and monotonicity.</p><p>The comparison valuation $g$ also has nonnegative, decreasing cardinality increments.</p><h3>Welfare separation</h3><p>Feasibility implies $\mathbb E[U]\le1/2$. Concavity and monotonicity of $2u-u^2$ give the claimed upper bound $3/4$ for comparison welfare.</p><p>The allocation placing mass $1/2$ on each hidden partition class is feasible and has welfare<br>$$
+1-\frac{\varepsilon}{2}+\frac{\varepsilon^2}{4}.
+$$<br>Only a lower bound on the hidden optimum is needed, so no claim of optimality is missing here.</p><h3>Query indistinguishability</h3><p>The conditioning argument correctly produces a uniform balanced partition. The lower bound on the conditioning probability is valid.</p><p>The independent-sign tail calculation gives the stated, possibly loose, bound<br>$$
+\delta=2(m+1)e^{-\varepsilon^2r/4}.
+$$</p><p>The union bound applies to the fixed comparison transcript. Determinism then justifies transcript equality inductively on the event $E$.</p><h3>Arbitrary output support</h3><p>For each fixed bundle, the correction is nonnegative, at most $1/4$, and supported on the imbalance event. Therefore<br>$$
+\mathbb E_A[Z_A]\le\frac{\delta}{4}
+$$<br>holds regardless of the number of output coordinates.</p><p>Conditioning on $E$ justifies the existence of a partition with both transcript equality and the claimed small correction. This is sufficient to establish the displayed approximation lower bound.</p><h3>Asymptotic and encoding claims</h3><p>For sufficiently large powers of two $r$, the chosen $\varepsilon$ satisfies the stipulated range and tends to zero. The estimates imply<br>$$
+B\delta\longrightarrow0
+$$<br>uniformly under the specified communication ceiling.</p><p>The denominator and answer-length claims are correct. The prover also correctly distinguishes individual answer encoding length from the total public-data length required by $L_m$.</p><p><b>Assessment:</b> The lower bound $4/3-o(1)$ is established along the stated admissible sequence, even without MIR.</p><h3>7. Few-query, many-type lower bound</h3><p>The specified mass counts are nonnegative integers, their masses are positive, and their total is one. Every type has mass at least $q_1$.</p><p>The number of types queried on bundles containing item $1$ is at most $\lfloor B\rfloor$. Averaging item consumption over unqueried types gives the stated choice of $t^*$.</p><p>Changing only that type&#x27;s valuation preserves every answer on the original transcript. Determinism therefore preserves the output.</p><p>The changed valuation is additive, and its optimum is exactly $q_1$. Hence<br>$$
+\rho^*(m,\tau,L,B)\ge\tau-\lfloor B\rfloor
+$$<br>is valid under the stated admissibility and budget conditions.</p><p><b>Assessment:</b> Correct.</p><h3>8. Resolution of <code>USER_TASK</code></h3><p>The prover supplies substantial genuine progress: a universal zero-query upper bound, stronger supply-dependent queried upper bounds, and two oracle lower bounds.</p><p>However, these results do not determine the smallest worst-case factor. The single-type bounds already leave a nonvanishing gap, and the general dependence on all requested parameters remains undetermined.</p><p><b>Severity: major incompleteness relative to the assigned task.</b> This is acknowledged by the prover; it is not an invalid inference or a concealed claim of completion.</p><p><b>Minimum additional requirement:</b> A matching characterization, or another result determining the optimal factor over the requested admissible parameter regimes, is needed to resolve <code>USER_TASK</code>. The current bounds alone cannot certify that characterization.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

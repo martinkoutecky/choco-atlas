@@ -1,0 +1,217 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-fe9d6a42b4e7837c9b142f2910863b13c33ef33e — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-fe9d6a42b4e7837c9b142f2910863b13c33ef33e <span style="font-weight:normal;color:#8a7350">(s5-fe9d6a42b4e7837c9b142f2910863b13c33ef33e)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(K(m)=\Theta((\log_2 m)^2)\); more precisely, \(K(m)=\frac{\ln 2}{2}(\log_2 m)^2+O(\log m)\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: other</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>The communication complexity of IRV is Θ n(log m)2 .</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>For a unit-mass population with finitely many ranking types and rational masses, whose rankings are privately held by its members, what is the minimum worst-case value of \(\int_0^1 b_\Pi(r,x)\,d\lambda(x)\) among deterministic protocols that determine the exact IRV winner with the paper’s tie-breaking rule? In particular, is this per-unit-mass communication cost \(\Theta((\log m)^2)\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(m\geq2\) and \(C=\{0,\ldots,m-1\}\). Members \(x\in[0,1]\), with Lebesgue measure \(\lambda\), privately hold strict rankings \(r(x)\); \(r\) is measurable.<br>A society is encoded by its support: the list of its \(\tau\) distinct positive-mass ranking types and their binary rational masses, summing to \(1\). Here \(\tau\) is the support size, not the number of possible rankings; \(L\) is the encoding length. This encoding describes the private input, not information supplied to the elicitor. Executions range over all measurable realizations of such distributions.<br>For weighted IRV, each active candidate&#x27;s score is the mass ranking it highest among active candidates; eliminate the largest-index candidate among those with minimum score, continuing until one remains.<br>A deterministic protocol initially knows only \(m\). In each round, using previous replies, the elicitor selects a measurable set of members and sends queries; every selected member returns exactly one bit determined by its identity, ranking and received queries. The elicitor observes the exact identity-indexed reply field. All reply fields must be measurable, and the protocol must terminate after finitely many rounds on every input. Members communicate only through the elicitor; elicitor messages and computation are free.<br>Let \(b_\Pi(r,x)\) count the bits member \(x\) sends, and define \(K(m)=\inf_\Pi\sup_r\int_0^1 b_\Pi(r,x)\,d\lambda(x)\), where protocols must always return the exact weighted IRV winner and the supremum includes every finite support and rational mass encoding. State any computational running times in \(m,\tau,L\) and any additional parameters.</p><p>What is the asymptotic order of \(K(m)\)? Is \(K(m)=\Theta((\log_2 m)^2)\), or does it have a different asymptotic order?</p><p>For finite electorates, deterministic voter-to-elicitor communication complexity is \(\Theta(n(\log m)^2)\); the matching lower bound is established on families with arbitrarily large electorates ([de Panafieu, Durand and Lang](https://www.ijcai.org/proceedings/2026/0375.pdf)).<br>No result settling this exact continuous protocol model was identified in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The support encoding&#x27;s information status was unspecified: it describes the private input and is not initially available to the elicitor; members initially know only their own rankings.</li><li>The population realization was unspecified: allow every measurable assignment of rankings to the unit interval having finite support and positive rational type masses summing to one, without publicly known homogeneous groups or representatives.</li><li>The continuous communication mechanism was undefined: use finite-round deterministic elicitation of measurable member sets, with one bit per selected member per round and exact identity-indexed reception; elicitor messages and computation are free.</li><li>The meaning of b_Π was undefined: count each member&#x27;s transmitted bits, with selection decided before that round&#x27;s replies so that private-information-dependent silence is not an additional free symbol.</li><li>The worst-case parameters were unspecified: define one protocol class for each m and take the worst case over all finite support sizes, rational encoding lengths and measurable realizations; use an infimum because attainment is not assumed.</li><li>The rule&#x27;s continuous scores and tie direction were unspecified: replace vote counts by masses, eliminate the largest index among minimum-score candidates, and require at least two candidates.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>For the stated continuous protocol model,<br>\[
+K(m)=\Theta((\log_2 m)^2).
+\]<br>More precisely,<br>\[
+K(m)=\frac{\ln 2}{2}(\log_2 m)^2+O(\log m).
+\]</p><p>The lower bound requires an argument for the continuous model. The finite-electorate theorem alone does not suffice: querying one point from each of finitely many constant-ranking intervals has zero integrated cost. The proof below uses measurable purification to construct an adversarial execution while preserving a fixed rational ranking distribution.</p><p>Throughout, logarithms in entropy expressions have base two, and \(0\log_2 0=0\).</p><h3>1. Quantitative bounds</h3><p>Define<br>\[
+H_m=\log_2 m+\sum_{j=1}^{m-1}\frac{\log_2 j}{j+1},
+\qquad
+U_m=\lceil\log_2 m\rceil+
+\sum_{j=2}^{m-1}\frac{\lceil\log_2 j\rceil}{j+1}.
+\]</p><p>We will prove<br>\[
+H_m\leq K(m)\leq U_m.
+\]</p><p>Since<br>\[
+0\leq U_m-H_m
+&lt;1+\sum_{j=2}^{m-1}\frac1{j+1}
+=O(\log m),
+\]<br>these bounds determine the leading asymptotic term.</p><p>The ranking construction used below is the representative-signature construction appearing in the [finite-electorate IRV communication paper](https://www.ijcai.org/proceedings/2026/0375.pdf). Its required properties are proved here. The additional argument concerns arbitrary measurable realizations and identity-dependent protocols.</p><h3>2. Upper bound: progressive elicitation</h3><p>Initially, elicit every member’s highest-ranked candidate using \(\lceil\log_2 m\rceil\) bits per member. A fixed binary code for the candidates implements this using one bit per selected member per round.</p><p>Maintain the measurable field \(t(x)\) giving each member’s highest-ranked active candidate. If the active set has size \(k\), its scores are<br>\[
+s(c)=\lambda(\{x:t(x)=c\}).
+\]</p><p>Eliminate the largest-index candidate \(e\) among those with minimum score. Its supporting set<br>\[
+Q=\{x:t(x)=e\}
+\]<br>has measure at most \(1/k\), because the scores sum to one.</p><p>When \(k\geq3\), ask precisely these members to identify their highest-ranked candidate among the remaining \(k-1\) candidates. This costs<br>\[
+\lambda(Q)\lceil\log_2(k-1)\rceil
+\leq\frac{\lceil\log_2(k-1)\rceil}{k}.
+\]</p><p>When \(k=2\), the elimination already determines the winner, so no further communication is needed. Therefore every execution costs at most<br>\[
+\lceil\log_2 m\rceil+
+\sum_{k=3}^{m}\frac{\lceil\log_2(k-1)\rceil}{k}
+=U_m.
+\]</p><p>All selected sets and reply fields are measurable: they are obtained from the measurable ranking field by finite partitions and finite combinations of previously observed fields. The protocol follows exactly the specified weighted IRV rule and terminates after finitely many rounds.</p><p>Thus \(K(m)\leq U_m\).</p><h3>3. A rational distribution sensitive to small ranking changes</h3><h3>3.1 Signatures and representative rankings</h3><p>For a strict ranking, read its candidates from best to worst. Its <b>signature</b> is the sequence of candidates whose indices are smaller than every preceding index. Thus a signature is a strictly decreasing sequence ending in \(0\).</p><p>Let \(\mathcal S\) be the set of signatures. Equivalently, its elements are subsets of \(C\) containing \(0\), written in decreasing order. Consequently,<br>\[
+|\mathcal S|=2^{m-1}.
+\]</p><p>For \(s\in\mathcal S\), define its representative ranking \(\rho(s)\) as follows. Read the entries of \(s\) in order. After appending an entry \(c\), append all as-yet unused candidates larger than \(c\), in decreasing order.</p><p>For example, when \(m=5\),<br>\[
+\rho((2,0))=(2,4,3,0,1).
+\]</p><p>Two properties follow directly from this definition.</p><p>First, \(\rho(s)\) has signature \(s\). Second, for the active prefix<br>\[
+A_a=\{0,\ldots,a-1\},
+\]<br>the highest-ranked active candidate is the first entry of \(s\) belonging to \(A_a\).</p><p>We will also use the following transfer property:</p><blockquote>If a representative ranking has highest-ranked candidate \(c&lt;a-1\) in \(A_a\), then, after removing \(c\), its highest-ranked remaining candidate is \(a-1\).</blockquote><p>Indeed, \(c\) is a signature entry. Candidate \(a-1\) cannot precede \(c\), because it is active and \(c\) is currently highest-ranked. The construction therefore places \(a-1\) in the decreasing block immediately following \(c\); every candidate preceding it in that block has index at least \(a\) and is inactive.</p><h3>3.2 The baseline distribution</h3><p>Take a uniformly random permutation of \(C\), and replace it by the representative of its signature. Let \(p_s\) be the resulting probability of \(\rho(s)\).</p><p>To compute these probabilities, construct a uniform permutation by successively inserting candidate \(j\) into one of the \(j+1\) positions among candidates \(0,\ldots,j-1\), independently and uniformly.</p><p>Candidate \(j\) is a signature entry exactly when it is inserted first: subsequent insertions of larger candidates cannot change whether a smaller candidate precedes it. Hence signature membership, for \(j=1,\ldots,m-1\), consists of independent Bernoulli variables with probabilities \(1/(j+1)\). Therefore<br>\[
+p_s=
+\prod_{\substack{1\leq j&lt;m\\j\in s}}\frac1{j+1}
+\prod_{\substack{1\leq j&lt;m\\j\notin s}}\frac j{j+1}
+=\frac{\prod_{j\notin s}j}{m!}.
+\]</p><p>Every \(p_s\) is positive and rational, and they sum to one.</p><p>In a uniform permutation, every candidate in \(A_a\) is equally likely to be highest-ranked in \(A_a\). Replacing a permutation by its representative preserves that highest-ranked candidate. Thus, under the distribution \(p\),<br>\[
+s(c)=\frac1a
+\quad\text{for every }c\in A_a.
+\]</p><p>It follows that the baseline elimination order is<br>\[
+m-1,m-2,\ldots,1,
+\]<br>and the winner is \(0\), for every measurable realization of \(p\).</p><p>The entropy of \(p\) is<br>\[
+H(p)=\sum_{j=1}^{m-1}h_2\!\left(\frac1{j+1}\right),
+\]<br>where<br>\[
+h_2(u)=-u\log_2u-(1-u)\log_2(1-u).
+\]</p><p>Using<br>\[
+h_2\!\left(\frac1{j+1}\right)
+=\log_2(j+1)-\frac j{j+1}\log_2j,
+\]<br>we obtain<br>\[
+H(p)=\log_2m+
+\sum_{j=1}^{m-1}\frac{\log_2j}{j+1}
+=H_m.
+\]</p><h3>3.3 Perturbation lemma</h3><p>Order signatures lexicographically as sequences of integers.</p><p><b>Lemma.</b> Suppose \(s&lt;t\) are distinct signatures. Starting from the baseline distribution, move mass \(\delta\) from \(\rho(s)\) to \(\rho(t)\), where<br>\[
+0&lt;\delta&lt;\min\{p_s,1/(4m)\}.
+\]<br>The new IRV winner is different from \(0\).</p><p><b>Proof.</b> At their first differing entries, write the two signatures as<br>\[
+s=(\text{common prefix},c,\ldots),
+\qquad
+t=(\text{common prefix},d,\ldots),
+\qquad c&lt;d.
+\]</p><p>If the common prefix is empty, put \(a=m\). Otherwise, let \(a\) be its last entry. The signatures cannot differ after a common entry \(1\), so \(a\geq2\).</p><p>Until the active set becomes \(A_a\), the two rankings have identical highest-ranked active candidates. The perturbation therefore leaves every preceding score unchanged, and the baseline elimination order reaches \(A_a\).</p><p>At this point the scores are<br>\[
+s(c)=\frac1a-\delta,\qquad
+s(d)=\frac1a+\delta,
+\]<br>with every other score equal to \(1/a\). Candidate \(c\) is the unique minimum and is eliminated.</p><p>Because \(c&lt;d\leq a-1\), the transfer property sends all its supporting mass to \(a-1\). Candidate \(a-1\) consequently has score at least<br>\[
+\frac2a-\delta&gt;\frac1a+\delta,
+\]<br>where the strict inequality follows from \(\delta&lt;1/(4m)\leq1/(4a)\).</p><p>Every other remaining candidate has score at most \(1/a+\delta\). Whenever one of them is subsequently eliminated, its supporters transfer to \(a-1\): those ballots had that candidate highest-ranked in \(A_a\), and \(a-1\) remains active. Inductively, only the score of \(a-1\) increases, and it is never eliminated.</p><p>The winner is therefore \(a-1\), which is positive. \(\square\)</p><h3>4. The measurable selection tool</h3><p>We need to replace fractional assignments by measurable, deterministic assignments while preserving finitely many integrals.</p><p><b>Purification lemma.</b> Let \(A\) be a finite action set. Suppose \(\alpha_a(x)\) are measurable nonnegative functions satisfying<br>\[
+\sum_{a\in A}\alpha_a(x)=1,
+\]<br>and \(v_a:[0,1]\to\mathbb R^d\) are bounded measurable functions. There exists a measurable choice \(a(x)\) such that<br>\[
+\alpha_{a(x)}(x)&gt;0
+\]<br>at every point, and<br>\[
+\int v_{a(x)}(x)\,d\lambda(x)
+=
+\int\sum_{a\in A}\alpha_a(x)v_a(x)\,d\lambda(x).
+\]</p><p>This is a finite-action purification statement; see [Khan, Rath and Sun](https://link.springer.com/article/10.1007/s00182-005-0004-3). The following proof also establishes the support condition needed here.</p><p><b>Proof.</b> Consider all fractional assignments \(z=(z_a)_{a\in A}\) satisfying, almost everywhere,<br>\[
+z_a\geq0,\qquad \sum_a z_a=1,\qquad
+z_a=0\text{ wherever }\alpha_a=0,
+\]<br>and having the prescribed vector integral.</p><p>This is a nonempty convex weak-star compact subset of the finite product of unit balls of \(L^\infty([0,1])\). Nonemptiness follows by taking \(z=\alpha\). Compactness follows from Banach–Alaoglu: the positivity, normalization, support and integral constraints are weak-star closed. The integral constraints are continuous because the functions \(v_a\) are integrable.</p><p>By the extreme-point consequence of Krein–Milman, this set has an extreme point \(z\).</p><p>Suppose \(z\) is fractional on a set of positive measure. Since there are finitely many actions, there exist distinct actions \(a,b\), a number \(\varepsilon&gt;0\), and a positive-measure measurable set \(E\) on which<br>\[
+z_a,z_b\geq\varepsilon.
+\]</p><p>Partition \(E\) into \(d+1\) positive-measure sets \(E_1,\ldots,E_{d+1}\); Lebesgue measure is atomless. The \(d+1\) vectors<br>\[
+\int_{E_i}(v_a-v_b)\,d\lambda\in\mathbb R^d
+\]<br>are linearly dependent. Thus there is a nonzero bounded function \(h\), constant on each \(E_i\) and zero outside \(E\), with<br>\[
+\int h(v_a-v_b)\,d\lambda=0.
+\]<br>Scale it so that \(|h|\leq\varepsilon\).</p><p>Adding \(h\) to coordinate \(a\) and subtracting it from coordinate \(b\), or doing the reverse, gives two distinct feasible assignments whose midpoint is \(z\). Nonnegativity, normalization and the vector integral are preserved. The support constraint is preserved because both coordinates were positive on \(E\). This contradicts extremality.</p><p>Consequently \(z\) is a pure assignment almost everywhere. Choose its unique action there. On the exceptional null set choose any action having positive \(\alpha_a(x)\). Such an action exists everywhere. This correction is measurable because Lebesgue measure is complete, and it does not alter any integral. \(\square\)</p><p>In particular, taking<br>\[
+v_a(x)=(\mathbf1_{\{a=s\}})_{s\in A}
+\]<br>preserves every action’s total mass. Additional bounded coordinates can preserve other integrals simultaneously.</p><h3>5. Lower bound against arbitrary continuous protocols</h3><p>Fix any deterministic correct protocol \(\Pi\).</p><p>We construct a transcript together with a measurable probability vector<br>\[
+g(x)=(g_s(x))_{s\in\mathcal S}.
+\]</p><p>These probabilities are an adversarial construction, not information available to the elicitor. At every stage they satisfy:</p><ul><li>\(\int g_s\,d\lambda=p_s\) for every \(s\).</li><li>Every ranking \(\rho(s)\) with \(g_s(x)&gt;0\) would produce exactly the recorded replies at identity \(x\), under the recorded queries.</li><li>The sets \(\{x:g_s(x)&gt;0\}\) decrease as the construction proceeds.</li></ul><p>Initially set \(g_s(x)=p_s\).</p><p>Write<br>\[
+\mathcal H(g)=
+\int -\sum_s g_s(x)\log_2g_s(x)\,d\lambda(x).
+\]<br>Initially, \(\mathcal H(g)=H_m\).</p><h3>5.1 Compatibility is pointwise</h3><p>Purification applied to the type-indicator coordinates produces a measurable ranking realization with masses \(p_s\), choosing at each identity a ranking with positive \(g_s(x)\).</p><p>By property 2, this realization reproduces the recorded reply fields <b>at every identity</b>. Thus the transcript constructed so far is an actual possible execution on an admissible input.</p><p>Corrections on null sets always choose locally compatible rankings. They therefore preserve the exact reply fields, rather than merely their equivalence classes modulo null sets.</p><h3>5.2 Measurability of hypothetical replies</h3><p>We justify measurability even if the protocol’s assumption is interpreted as requiring measurable reply fields only on actual executions.</p><p>Fix the current transcript and a signature \(s\), and put<br>\[
+G_s=\{x:g_s(x)&gt;0\}.
+\]</p><p>Let \(\mathcal R\) consist of measurable realizations with masses \(p\) that choose only locally compatible rankings. For \(r\in\mathcal R\), let<br>\[
+E_r=\{x:r(x)=\rho(s)\}.
+\]</p><p>There is a countable subfamily whose union \(U\) contains every \(E_r\) up to a null set. To see this, take the supremum of the measures of countable unions of such sets, and unite a sequence of countable unions approaching that supremum. Adding any further \(E_r\) cannot increase the measure.</p><p>We claim that \(G_s\setminus U\) is null. Otherwise, with \(D=G_s\setminus U\),<br>\[
+\int_D g_s\,d\lambda&gt;0.
+\]<br>Purification, preserving the type masses and the additional coordinate<br>\[
+\mathbf1_D(x)\mathbf1_{\{\text{chosen type}=s\}},
+\]<br>would produce an \(r\in\mathcal R\) for which<br>\[
+\lambda(E_r\cap D)=\int_Dg_s\,d\lambda&gt;0.
+\]<br>That contradicts the defining property of \(U\).</p><p>On each set \(E_r\) in the countable covering, the hypothetical next reply for type \(s\) is the actual next reply in execution \(r\), hence is measurable. These replies agree wherever the sets overlap: identity, ranking and received queries are the same. Consequently the hypothetical reply is measurable on \(G_s\), apart from a null set. Its actual values on that null set are also measurable by completeness of Lebesgue measure.</p><p>Thus all hypothetical predicates used below are measurable on their relevant supports.</p><h3>5.3 Constructing one more reply field</h3><p>Suppose the protocol has not terminated, and its next selected set is \(Q\).</p><p>For \(x\in Q\), let \(f_s(x)\in\{0,1\}\) be the reply prescribed for ranking \(\rho(s)\) under the current queries. Values for \(g_s(x)=0\) can be set arbitrarily. Outside \(Q\), set every \(f_s(x)=0\); there this is a dummy symbol, not a transmitted bit.</p><p>Define<br>\[
+q_b(x)=\sum_{s:f_s(x)=b}g_s(x),
+\qquad b\in\{0,1\}.
+\]</p><p>For \(q_b(x)&gt;0\), define<br>\[
+g_s^b(x)=
+\frac{g_s(x)\mathbf1_{\{f_s(x)=b\}}}{q_b(x)}.
+\]<br>When \(q_b=0\), choose any probability vector as \(g^b\); its value will not be used.</p><p>Apply purification with actions \(b\in\{0,1\}\), fractional weights \(q_b(x)\), and vector outcomes<br>\[
+v_b(x)=
+\left(
+(g_s^b(x))_{s\in\mathcal S},
+-\sum_sg_s^b(x)\log_2g_s^b(x)
+\right).
+\]</p><p>All coordinates are bounded and measurable: probability coordinates lie in \([0,1]\), and entropy is at most \(\log_2|\mathcal S|\).</p><p>Purification gives a measurable choice \(b(x)\) with \(q_{b(x)}(x)&gt;0\). Use \(b(x)\) as the observed reply on \(Q\), and set<br>\[
+g&#x27;(x)=g^{b(x)}(x).
+\]</p><p>The probability-coordinate integrals remain \(p_s\), because pointwise<br>\[
+q_0g_s^0+q_1g_s^1=g_s.
+\]<br>The support of \(g&#x27;\) is contained in that of \(g\), and every surviving ranking produces the selected reply. Thus all three invariants are preserved.</p><p>For entropy, the binary partition identity gives<br>\[
+-\sum_sg_s\log_2g_s
+=
+h_2(q_1)+
+\sum_{b=0}^1q_b
+\left(-\sum_sg_s^b\log_2g_s^b\right).
+\]<br>Outside \(Q\), \(q_1=0\). Since purification preserves the entropy coordinate,<br>\[
+\mathcal H(g&#x27;)=
+\mathcal H(g)-\int_Qh_2(q_1(x))\,d\lambda(x)
+\geq\mathcal H(g)-\lambda(Q).
+\]</p><p>If \(B\) is accumulated communication cost, the next round increases it by exactly \(\lambda(Q)\). Hence, inductively,<br>\[
+B+\mathcal H(g)\geq H_m.
+\]</p><h3>5.4 The constructed execution must terminate</h3><p>Finite termination on every input does not, by itself, imply a uniform round bound. We therefore must exclude an infinite constructed path.</p><p>Suppose one existed. Let<br>\[
+S_t(x)=\{s:g_s^{(t)}(x)&gt;0\}.
+\]<br>These are nonempty finite sets, decreasing pointwise in \(t\). Consequently<br>\[
+S_\infty(x)=\bigcap_tS_t(x)
+\]<br>is nonempty at every identity.</p><p>For each \(t\), consider the set \(\mathcal F_t\) of fractional assignments \(z\) satisfying, almost everywhere,<br>\[
+z_s\geq0,\qquad \sum_sz_s=1,\qquad
+z_s=0\text{ if }s\notin S_t(x),
+\]<br>and<br>\[
+\int z_s\,d\lambda=p_s.
+\]</p><p>Each \(\mathcal F_t\) is nonempty, since it contains \(g^{(t)}\). The sets are nested and weak-star compact, by the same compactness argument as in the purification lemma. Their intersection is therefore nonempty.</p><p>An assignment in that intersection is supported on \(S_\infty\) almost everywhere. Here countability of the rounds ensures that the union of the exceptional null sets is still null.</p><p>Purify this assignment while preserving all type masses. On any exceptional null set, choose a ranking from the nonempty set \(S_\infty(x)\). This yields an admissible measurable realization with masses \(p\) that reproduces every recorded reply, pointwise, along the entire infinite path.</p><p>The protocol would therefore fail to terminate on that input, contrary to its hypothesis. Thus the adversarial construction terminates after finitely many rounds.</p><h3>5.5 At termination the residual entropy is zero</h3><p>Let \(g\) be the final fractional assignment. Suppose<br>\[
+\mathcal H(g)&gt;0.
+\]<br>Because \(\mathcal S\) is finite, some pair \(s&lt;t\) has<br>\[
+D=\{x:g_s(x)&gt;0,\ g_t(x)&gt;0\}
+\]<br>of positive measure.</p><p>Purify \(g\), preserving all type masses and the additional coordinate<br>\[
+\mathbf1_D(x)\mathbf1_{\{\text{chosen type}=s\}}.
+\]<br>This gives a compatible baseline realization \(r\) with<br>\[
+\eta=
+\lambda(\{x\in D:r(x)=\rho(s)\})
+=\int_Dg_s\,d\lambda&gt;0.
+\]</p><p>Choose a rational number<br>\[
+0&lt;\delta&lt;\min\{\eta,1/(4m)\}.
+\]<br>Atomlessness supplies a measurable subset<br>\[
+E\subseteq\{x\in D:r(x)=\rho(s)\}
+\]<br>of measure exactly \(\delta\).</p><p>Change the ranking on \(E\) from \(\rho(s)\) to \(\rho(t)\). Both rankings are locally compatible with the final transcript at every identity in \(E\). By induction over the protocol’s rounds, the changed realization therefore produces exactly the same identity-indexed reply fields and the same output.</p><p>The original realization has distribution \(p\), so its winner is \(0\). The changed realization has rational masses<br>\[
+p_s-\delta,\quad p_t+\delta,
+\]<br>with the other masses unchanged. All remain positive, since \(\delta&lt;\eta\leq p_s\). It is therefore also admissible.</p><p>The perturbation lemma says its winner is different from \(0\). This contradicts correctness on the shared transcript.</p><p>Hence \(\mathcal H(g)=0\) at termination. The entropy-cost invariant now gives<br>\[
+B\geq H_m.
+\]</p><p>Choosing any compatible baseline realization at this terminal transcript makes \(B\) its actual cost. Indeed, if the selected sets were \(Q_1,\ldots,Q_T\), then<br>\[
+\int b_\Pi(r,x)\,d\lambda(x)
+=\sum_{t=1}^T\lambda(Q_t)=B.
+\]</p><p>Since \(\Pi\) was arbitrary,<br>\[
+K(m)\geq H_m.
+\]</p><h3>6. Asymptotics and computational parameters</h3><p>Combining the bounds,<br>\[
+H_m\leq K(m)\leq U_m=H_m+O(\log m).
+\]</p><p>An integral comparison gives<br>\[
+\sum_{j=1}^{m-1}\frac{\ln j}{j+1}
+=\frac12(\ln m)^2+O(\log m).
+\]<br>For completeness, replacing \(1/(j+1)\) by \(1/j\) changes this sum by a bounded amount, since<br>\[
+\sum_{j=1}^{\infty}\frac{\ln j}{j(j+1)}&lt;\infty.
+\]<br>Comparing \(\sum (\ln j)/j\) with the integral of \((\ln x)/x\) then gives the asserted estimate.</p><p>Consequently,<br>\[
+K(m)=\frac{(\ln m)^2}{2\ln2}+O(\ln m)
+=\frac{\ln2}{2}(\log_2m)^2+O(\log m).
+\]</p><p>The upper protocol uses at most<br>\[
+\lceil\log_2m\rceil+
+\sum_{k=3}^{m}\lceil\log_2(k-1)\rceil
+=O(m\log m)
+\]<br>communication rounds and \(O(m^2)\) exact measure evaluations.</p><p>For arbitrary measurable realizations, the model supplies no finite representation of the observed fields, so these measure evaluations have no ordinary bit-running-time bound in \(m,\tau,L\). They are operations in the stipulated model with free elicitor computation.</p><p>If the upper protocol is instead simulated from the support encoding, it takes polynomial time in \(m,\tau,L\). A conservative implementation uses \(O((\tau+1)m^2)\) elementary updates and exact rational operations, giving \(O((\tau+1)m^2L^2)\) bit time with schoolbook arithmetic.</p><p>The lower-bound baseline itself has support size<br>\[
+\tau=2^{m-1}
+\]<br>and an encoding of length \(O(2^m m\log m)\). Its measurable realization is unrestricted. The proof therefore uses a fixed admissible rational distribution, rather than taking any limit of finite electorates.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The claimed bounds are correct:<br>\(H_m\leq K(m)\leq U_m\), and consequently<br>\(K(m)=\frac{\ln 2}{2}(\log_2 m)^2+O(\log m)\).</p><p>The continuous lower bound is established independently of the finite-electorate theorem. I found no false step, blocking gap, or necessary expositional repair.</p><ul><li><b>Progressive elicitation establishes the upper bound.</b></li></ul><p>The maintained field records each member’s highest-ranked active candidate. Eliminating a candidate affects this field only on that candidate’s supporting set, so querying precisely that set maintains the invariant.</p><p>With \(k\) active candidates, the minimum score is at most \(1/k\), including when some scores are zero. Identifying a candidate among the remaining \(k-1\) candidates costs at most \(\lceil\log_2(k-1)\rceil\) bits per affected member. At \(k=2\), elimination determines the winner without another query.</p><p>Thus the communication sum is exactly bounded by the stated \(U_m\). The selected sets and reply fields are measurable, and the number of rounds is finite. This argument covers arbitrary measurable realizations and does not assume that the elicitor receives the support encoding.</p><ul><li><b>The signature construction has the claimed properties.</b></li></ul><p>Every signature is strictly decreasing and ends in \(0\), so signatures correspond bijectively to subsets containing \(0\). Their number is \(2^{m-1}\).</p><p>In the representative construction, the next signature entry has not already been appended: earlier blocks contain only candidates larger than their corresponding signature entries. Every candidate is eventually appended exactly once. The resulting ranking has precisely the prescribed signature.</p><p>For an active prefix \(A_a\), the first signature entry in that prefix is its highest-ranked candidate. If that candidate is \(c&lt;a-1\), candidate \(a-1\) occurs in the block immediately following \(c\); earlier entries in that block are inactive. The transfer property therefore holds as stated.</p><ul><li><b>The baseline masses, elimination order, and entropy are correct.</b></li></ul><p>The independent insertion construction generates a uniform permutation. Candidate \(j\) is a record minimum precisely when its insertion position among smaller candidates is first. Later insertions cannot change its order relative to those smaller candidates.</p><p>This verifies the independent Bernoulli membership probabilities and the formula<br>\(p_s=\prod_{j\notin s}j/m!\). All masses are positive rationals and sum to \(1\).</p><p>Representatives preserve the highest-ranked candidate in every active prefix. Consequently all candidates in \(A_a\) have baseline score \(1/a\), and the specified tie-breaking eliminates candidates in descending index order. The winner is \(0\).</p><p>The entropy calculation is also correct. Substituting the binary-entropy formula and collecting terms yields the stated \(H_m\).</p><ul><li><b>The perturbation lemma is valid.</b></li></ul><p>Distinct signatures cannot be proper prefixes of one another, because both terminate in \(0\). Their first differing entries therefore exist.</p><p>If the last common entry is \(a\), both rankings have identical highest-ranked candidates throughout the baseline eliminations preceding \(A_a\). Thus the perturbation leaves those earlier scores unchanged.</p><p>At \(A_a\), only the scores of \(c\) and \(d\) change, making \(c\) the unique minimum. Since \(c&lt;d\leq a-1\), eliminating \(c\) transfers its entire supporting mass to \(a-1\).</p><p>The critical inequality is correct:<br>\(2/a-\delta&gt;1/a+\delta\), since \(\delta&lt;1/(4m)\leq1/(4a)\). This also covers the case \(d=a-1\), where the actual score of \(a-1\) is larger than the stated lower bound.</p><p>Subsequently, supporters of every other remaining candidate transfer to \(a-1\) when their candidate is eliminated. Their rankings had that candidate highest in \(A_a\), so the transfer property applies while \(a-1\) remains active. Its score increases, whereas the other scores do not. Hence it survives and wins.</p><p>The boundary case \(a=2\) is included. As an additional computational check, exact rational tests found no counterexample for any signature pair for \(2\leq m\leq7\); the written argument, rather than this finite check, establishes the general statement.</p><ul><li><b>The purification lemma is rigorously established.</b></li></ul><p>The feasible assignments form a nonempty convex weak-star compact set. The constraints are weak-star closed: positivity and support restrictions are measurable-set constraints, normalization is a linear constraint, and the prescribed integrals pair bounded assignments with integrable functions.</p><p>Banach–Alaoglu applies to the finite product of bounded subsets of \(L^\infty\). The weak-star topology is Hausdorff and locally convex, so the stated extreme-point consequence of Krein–Milman applies.</p><p>If an extreme point is fractional on a positive-measure set, finiteness of the action set supplies two coordinates simultaneously bounded below on a positive-measure subset. Atomlessness permits its partition into \(d+1\) positive-measure pieces. Linear dependence supplies a nonzero perturbation preserving the \(d\) integral constraints.</p><p>Scaling that perturbation preserves nonnegativity and support restrictions. The two perturbed assignments are distinct as \(L^\infty\) elements, contradicting extremality.</p><p>The final correction on the exceptional null set is legitimate because Lebesgue measure is complete and some supported action exists at every point. Thus the lemma supplies pointwise support compatibility, not merely almost-everywhere compatibility.</p><p>The cited [purification paper](https://link.springer.com/article/10.1007/s00182-005-0004-3) is supplementary; the output provides its own proof of the statement it uses.</p><ul><li><b>The transcript invariants and hypothetical-reply measurability argument hold.</b></li></ul><p>Purification preserves the rational masses \(p_s\) while choosing only rankings compatible with the recorded replies. Determinism then makes the constructed prefix an actual execution prefix, including at individual identities in null sets.</p><p>The countable-cover argument in Section 5.2 is valid. Taking the supremum over measures of countable unions produces a countable union covering every realizable type-\(s\) set up to a null set.</p><p>If a positive-measure part of \(G_s\) remained uncovered, preserving the additional type-\(s\) mass on that part would produce a compatible realization contradicting the cover’s defining property.</p><p>On each covered set, the hypothetical reply agrees with an actual measurable reply field. Agreement on overlaps and completeness on the remaining null set establish the required measurability. This addresses protocols whose measurability guarantee is imposed only on actual executions.</p><ul><li><b>The entropy-cost invariant is correct.</b></li></ul><p>The conditional vectors \(g^b\) are probability vectors wherever \(q_b&gt;0\). Their arbitrary definitions where \(q_b=0\) do not affect the weighted integrals.</p><p>Purification preserves every type-mass coordinate and the entropy coordinate. Its pointwise support condition ensures that every surviving ranking produces the selected reply.</p><p>The binary partition identity is correctly applied. Outside the selected set, the dummy reply has zero entropy; inside it, \(h_2(q_1)\leq1\). Hence each round reduces integrated residual entropy by at most that round’s communication cost.</p><p>This proves \(B+\mathcal H(g)\geq H_m\) without assuming identity-independent queries or replies.</p><ul><li><b>The constructed path must terminate.</b></li></ul><p>The proof correctly avoids assuming a uniform round bound.</p><p>Along a hypothetical infinite path, each identity has a decreasing sequence of nonempty finite compatible-type sets. Its intersection is nonempty.</p><p>The fractional-assignment sets are nonempty, nested, and weak-star compact. Their intersection therefore contains an assignment with the prescribed masses. Countability of the rounds ensures that it is supported on the pointwise intersection almost everywhere.</p><p>Purification and the stated null-set correction produce one admissible realization compatible with every round at every identity. Determinism forces that realization to follow the infinite path, contradicting termination on every input.</p><ul><li><b>Positive residual entropy contradicts correctness.</b></li></ul><p>Positive integrated entropy implies that two distinct signatures coexist on a positive-measure set. The additional purification coordinate guarantees a positive-measure subset assigned the smaller signature.</p><p>A positive rational \(\delta\) satisfying the stated strict bounds exists. Atomlessness supplies a measurable subset of exactly that measure.</p><p>Changing its rankings preserves the complete transcript pointwise because both types are locally compatible. The perturbed masses remain positive rationals: \(\delta&lt;\eta\leq p_s\).</p><p>The baseline winner is \(0\), while the perturbation lemma gives a different winner. Correctness therefore forces terminal entropy to vanish.</p><p>The terminal transcript is realized by an admissible input, and its integrated communication is the finite sum of the selected-set measures. Thus every correct protocol has worst-case cost at least \(H_m\). Taking the infimum over protocols is justified.</p><ul><li><b>The asymptotics, edge cases, and computational qualifications are consistent.</b></li></ul><p>The ceiling error is bounded by a harmonic sum, giving \(U_m-H_m=O(\log m)\). Replacing \(1/(j+1)\) by \(1/j\) changes the logarithmic sum by a bounded amount; the subsequent integral comparison gives the claimed leading coefficient.</p><p>For \(m=2\), both bounds equal \(1\), so the formulas include the smallest permitted case.</p><p>The round bound and the \(O(m^2)\) count of exact measure evaluations follow from the upper protocol. The output correctly distinguishes these abstract operations from ordinary bit computation on arbitrary measurable fields.</p><p>The support-encoding simulation has a valid conservative polynomial bound. The number of rational operations is bounded as claimed, and their operand lengths are controlled by the total encoding length \(L\). The stated baseline support size and encoding-length bound are also consistent.</p><p>In the final classification below, “polynomial” refers to the explicitly stated support-encoding computation. It does not assert a bit-running-time bound for processing unrestricted measurable reply fields.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

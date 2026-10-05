@@ -1,0 +1,205 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-26626b034724bae27360b08abb5af768e7468916 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-26626b034724bae27360b08abb5af768e7468916 <span style="font-weight:normal;color:#8a7350">(s5-26626b034724bae27360b08abb5af768e7468916)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: hard · adversarial review: proved · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> NP-hard for every fixed $k\geq 2$, even with positive dyadic masses and unconstrained movable issues.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 16 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For elections instances where C is k-restrictive (where k is a fixed constant), LS-PAVC terminates in polynomial time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\) binary issues, a feasible set \(C\) represented by implications and promised \(k\)-restrictive for fixed \(k\), and ballot types \(b^1,\ldots,b^\tau\in\{0,1\}^m\) with positive rational masses \(\mu_t\) summing to \(1\), compute \(w\in C\) such that no nonempty issue set \(S\) has both \(w^S\in C\) and positive mass of types agreeing with \(1-w\) on every issue in \(S\), with \(F_\mu(w^S)-F_\mu(w)\ge 1/m^2\). Here \(w^S\) flips \(w\) on \(S\), and \(F_\mu(w)=\sum_t\mu_t H_{u_t(w)}\), where \(u_t(w)\) counts the issues on which type \(t\) agrees with \(w\) and \(H_r=\sum_{q=1}^r1/q\), with \(H_0=0\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>There are \(m\geq 1\) binary issues. A society is given by its support: \(\tau\) distinct types \(b^t\in\{0,1\}^m\), each with positive binary rational mass \(\mu_t\), where \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types.<br>The input includes a list \(\mathrm{Imp}\) of implications \((x,d)\to(y,e)\), with \(x,y\in\{1,\ldots,m\}\) and \(d,e\in\{0,1\}\); the literal \((x,d)\) means that issue \(x\) has value \(d\). Let \(C\neq\varnothing\) be the assignments satisfying every implication. Ballots need not belong to \(C\).<br>For each \(w\in C\), construct a directed graph \(G_w\) on the vertices \((x,d)\). Each implication \((x,d)\to(y,e)\) contributes the edge \((x,d)\to(y,e)\) if \(w_y\neq e\), and the edge \((y,1-e)\to(x,1-d)\) if \(w_x=d\).<br>Let \(R_w(x,d)\) be the vertices reachable from \((x,d)\), excluding the source itself. For a fixed integer \(k\geq2\), the input is promised to be \(k\)-restrictive: \(\max_{x,d}|R_w(x,d)|=k-1\) for every \(w\in C\), relative to the supplied implication list.<br>Write \(w^S\) for the assignment obtained by flipping exactly the issues in \(S\). Define \(u_t(w)=|\{j:b^t_j=w_j\}|\), \(H_0=0\), \(H_r=\sum_{q=1}^r1/q\), and \(F_\mu(w)=\sum_t\mu_tH_{u_t(w)}\).<br>The search problem is to output any \(w\in C\) for which there is no nonempty \(S\subseteq\{1,\ldots,m\}\) satisfying simultaneously \(w^S\in C\), \(\sum_{t:\,b^t_j=1-w_j\ \forall j\in S}\mu_t&gt;0\), and \(F_\mu(w^S)-F_\mu(w)\geq1/m^2\). Let \(L\) be the total input bit length; state running times in \(m,\tau,L\), with dependence on \(k\) explicit.</p><p>For fixed \(k\geq2\), is this search problem solvable in polynomial time in \(m,\tau,L\), or is it NP-hard?</p><p>For explicitly listed discrete voters and fixed \(k\), constrained local-search PAV is claimed to compute such a terminal outcome in polynomial time, with unnormalized improvement threshold \(n/m^2\). [Chingoma, Grandi, and Novaro](https://arxiv.org/html/2409.02609v2).<br>No result settling exactly the rational-mass search problem above was identified in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified the missing definition of k-restrictiveness using the supplied implication representation and its outcome-dependent graph; retained the source&#x27;s equality to k−1 for every feasible outcome.</li><li>Required a nonempty feasible set and a fixed integer k at least 2, as in the discrete definitions.</li><li>Allowed ballots outside the feasible set: the algorithmic anchor does not impose ballot consistency.</li><li>Defined L as the total binary input length, including the implication list and rational masses; any qualifying terminal outcome is acceptable.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Classification</h3><p><b>The search problem is NP-hard for every fixed $k\geq 2$.</b> This holds even when all movable issues are unconstrained and every other issue is fixed to $0$.</p><p>The reduction below has the following property: if an exact-cover instance has no solution, the constructed society has a unique terminal outcome, namely the all-zero outcome; if it has a solution, <b>every terminal outcome encodes an exact cover</b>. Thus the reduction establishes hardness of finding any terminal outcome.</p><h3>1. Encoding exact cover by balance equations</h3><p>We reduce from the NP-complete <b>Exact Cover</b> problem: given a finite universe $U=\{1,\ldots,h\}$ and subsets $A_1,\ldots,A_p\subseteq U$, decide whether some subcollection covers every element exactly once. Its NP-completeness is a classical result of [Karp](https://doi.org/10.1007/978-1-4684-2001-2_9).</p><p>We may assume $h,p\geq 1$ and that every $A_i$ is nonempty. Empty sets can be removed, and the excluded trivial cases can be mapped to fixed nontrivial yes or no instances.</p><p>Introduce binary variables $c_0,c_1,\ldots,c_p$ and the homogeneous equations</p><p>$$
+\sum_{i:\,e\in A_i}c_i-c_0=0
+\qquad(e\in U).
+$$</p><p>If $c_0=1$, these equations say precisely that the sets with $c_i=1$ form an exact cover. If $c_0=0$, nonnegativity and the nonemptiness of every $A_i$ force every $c_i=0$.</p><p>We next encode these equations using rows whose entries are exclusively $1$ and $-1$.</p><p>Put</p><p>$$
+N=2(p+1),
+$$</p><p>and index a binary vector $z\in\{0,1\}^N$ by coordinates $z_{i,+},z_{i,-}$ for $0\leq i\leq p$. Construct the following signed rows:</p><ul><li>A baseline row with pair $(1,-1)$ at every index $i$.</li><li>For every index $i$, a row obtained from the baseline by replacing its pair at $i$ with $(-1,1)$.</li><li>For every element $e\in U$, a row with pair $(-1,-1)$ at index $0$, pair $(1,1)$ at every index $i$ with $e\in A_i$, and pair $(1,-1)$ at every other index.</li></ul><p>There are</p><p>$$
+r_0=p+h+2
+$$</p><p>rows. Let $r$ be the smallest power of two satisfying $r\geq r_0$, and repeat the baseline row until there are exactly $r$ rows. Denote them by $a^1,\ldots,a^r$, and define</p><p>$$
+\delta_j(z)=a^j\cdot z.
+$$</p><p>Call $z$ <b>balanced</b> if $\delta_j(z)=0$ for every $j$.</p><p><b>Balance lemma.</b> The nonzero balanced binary vectors encode exactly the exact covers of the original instance.</p><p><b>Proof.</b> Subtracting the baseline equation from the equation with pair $i$ reversed gives</p><p>$$
+-2z_{i,+}+2z_{i,-}=0.
+$$</p><p>Thus every balanced vector satisfies</p><p>$$
+z_{i,+}=z_{i,-}=c_i
+$$</p><p>for some binary $c_i$. Each element row then has dot product</p><p>$$
+2\left(\sum_{i:\,e\in A_i}c_i-c_0\right).
+$$</p><p>Consequently, balance implies the homogeneous equations above. If $c_0=0$, all $c_i$ vanish, so $z=0$. Otherwise $c_0=1$, and the selected sets form an exact cover.</p><p>Conversely, an exact cover gives a balanced vector by setting both coordinates of pair $0$ to $1$, setting both coordinates of every selected set to $1$, and setting all other coordinates to $0$. $\square$</p><h3>2. Issues, parameters, and the exact reachability promise</h3><p>Fix the requested integer $k\geq 2$. Let $m$ be the smallest power of two satisfying</p><p>$$
+m\geq \max\{2N+k,\;4rN(N+1)\}.
+$$</p><p>The first $N$ issues are free. Every remaining issue $x$ is forced to $0$ by supplying the implication</p><p>$$
+(x,1)\to(x,0).
+$$</p><p>Choose $k$ issues $z_1,\ldots,z_k$ among issues $2N+1,\ldots,m$. In addition, supply the cycle implications</p><p>$$
+(z_i,1)\to(z_{i+1},1)
+\qquad(1\leq i\leq k),
+$$</p><p>where $z_{k+1}=z_1$.</p><p>The feasible assignments are exactly</p><p>$$
+C=\{0,1\}^N\times\{0\}^{m-N}.
+$$</p><p>In particular, $C$ is nonempty.</p><p>We verify the graph promise relative to this supplied implication list. At every feasible outcome, a forcing implication $(x,1)\to(x,0)$ contributes neither edge: its consequent agrees with the outcome, and its antecedent does not. Each cycle implication contributes precisely its forward edge between value-$1$ literals. Thus $G_w$ consists of a directed cycle on the $k$ vertices $(z_i,1)$ and isolated vertices elsewhere.</p><p>Every cycle vertex reaches exactly the other $k-1$ cycle vertices, excluding itself. Therefore</p><p>$$
+\max_{x,d}|R_w(x,d)|=k-1
+\qquad\text{for every }w\in C.
+$$</p><p>The instance satisfies the <b>exact</b> $k$-restrictiveness promise.</p><p>Write</p><p>$$
+w(z)=(z,0^{m-N}),
+\qquad
+w^0=w(0).
+$$</p><h3>3. Ballots and positive dyadic masses</h3><p>Use issues $N+1,\ldots,2N$ as auxiliary fixed issues.</p><p>For a signed vector $v\in\{-1,1\}^N$, construct a ballot $b(v)$ as follows:</p><ul><li>On free issue $i$, its value is $(1+v_i)/2$.</li><li>Among the $N$ auxiliary issues, set exactly $|\{i:v_i=1\}|$ ballot values to $0$, using the first such number of auxiliary issues.</li><li>Set every other fixed issue’s ballot value to $1$.</li></ul><p>At $w^0$, this ballot has exactly $N$ agreements: the free agreements count the negative entries of $v$, while the auxiliary agreements count its positive entries. Consequently,</p><p>$$
+u_{b(v)}(w(z))=N+v\cdot z.
+$$</p><p>For each row $a^j$, include the two ballots $b(a^j)$ and $b(-a^j)$.</p><p>Include two additional ballots:</p><ul><li>$b^\uparrow$ has value $1$ on every issue.</li><li>$b^\downarrow$ has value $0$ on every free issue and value $1$ on every fixed issue.</li></ul><p>For $s=\sum_i z_i$, their utilities are</p><p>$$
+u_\uparrow(w(z))=s,
+\qquad
+u_\downarrow(w(z))=N-s.
+$$</p><p>Assign masses</p><p>$$
+\alpha=\frac{2}{m^2},
+\qquad
+\beta=\frac{1}{4m^3},
+\qquad
+\gamma=\frac{1-\alpha-\beta}{2r}.
+$$</p><p>Give $b^\uparrow$ mass $\alpha$, give $b^\downarrow$ mass $\beta$, and give each of the $2r$ row ballots mass $\gamma$.</p><p>Because $m\geq 4$,</p><p>$$
+\alpha+\beta\leq\frac12,
+\qquad
+\gamma\geq\frac{1}{4r}&gt;0.
+$$</p><p>All masses are positive and sum to $1$. Since $m$ and $r$ are powers of two, they are dyadic rationals.</p><p>If some constructed ballots coincide, merge them and add their masses. This produces the required distinct support, with</p><p>$$
+\tau\leq 2r+2.
+$$</p><p>Merging preserves the objective and all positive-support conditions. In particular, the support still contains the upward and downward ballots with positive mass.</p><h3>4. Potential estimates</h3><p>Put</p><p>$$
+\varepsilon=\frac{1}{m^2},
+\qquad
+D(z)=F_\mu(w(z))-F_\mu(w^0).
+$$</p><p>The utilities calculated above give the exact identity</p><p>$$
+D(z)=
+\alpha H_s
++\beta(H_{N-s}-H_N)
++\gamma\sum_{j=1}^{r}
+\left(H_{N+\delta_j(z)}+H_{N-\delta_j(z)}-2H_N\right).
+$$</p><p>Here $|\delta_j(z)|\leq N$, so every harmonic index is valid.</p><h3>Harmonic penalty for an imbalance</h3><p>For an integer $d$ with $1\leq d\leq N$,</p><p>$$
+2H_N-H_{N+d}-H_{N-d}
+=
+\sum_{q=0}^{d-1}
+\left(\frac{1}{N-q}-\frac{1}{N+q+1}\right).
+$$</p><p>Every summand is positive, and the first equals $1/(N(N+1))$. Hence</p><p>$$
+H_{N+d}+H_{N-d}-2H_N
+\leq-\frac{1}{N(N+1)}.
+$$</p><p>The expression is symmetric in $d$ and equals zero when $d=0$.</p><h3>Every nonzero balanced vector improves on zero</h3><p>If $z$ is balanced and nonzero, then $s\geq 1$ and the row-ballot terms vanish. Since $H_s\geq 1$, $H_N\leq N$, and $N\leq m$,</p><p>$$
+D(z)
+\geq
+\frac{2}{m^2}-\frac{H_N}{4m^3}
+\geq
+\frac{2}{m^2}-\frac{N}{4m^3}
+\geq
+\frac{7}{4m^2}
+&gt;
+\varepsilon.
+$$</p><h3>Every unbalanced vector is worse than zero by more than the threshold</h3><p>If $z$ is unbalanced, at least one row contributes the harmonic penalty above, and all other row contributions are nonpositive. Also $H_{N-s}-H_N\leq 0$. Therefore</p><p>$$
+D(z)
+\leq
+\frac{2H_s}{m^2}
+-\frac{\gamma}{N(N+1)}
+\leq
+\frac{2N}{m^2}
+-\frac{1}{4rN(N+1)}.
+$$</p><p>To check the threshold margin explicitly, put</p><p>$$
+K=4rN(N+1).
+$$</p><p>Our choice ensures $m\geq K$, and $K&gt;2N+1$. Thus</p><p>$$
+m^2\geq K^2&gt;K(2N+1),
+$$</p><p>which implies</p><p>$$
+\frac{2N}{m^2}-\frac1K&lt;-\frac1{m^2}.
+$$</p><p>Consequently,</p><p>$$
+D(z)&lt;-\varepsilon
+\qquad\text{for every unbalanced }z.
+$$</p><h3>5. Every terminal output decides exact cover</h3><p>First suppose $z$ is unbalanced. Let $S$ consist of the free issues on which $z_i=1$. This set is nonempty, and flipping it sends $w(z)$ to $w^0$.</p><p>The move is feasible and supported by $b^\downarrow$, which has value $0$ on every issue in $S$. Its improvement is</p><p>$$
+F_\mu(w^0)-F_\mu(w(z))
+=-D(z)&gt;\varepsilon.
+$$</p><p>Therefore <b>every terminal outcome must be balanced</b>.</p><p>Now suppose the exact-cover instance is satisfiable. By the balance lemma there is a nonzero balanced vector $z$. From $w^0$, flip precisely the free issues with $z_i=1$. This feasible move is supported by $b^\uparrow$, and its improvement satisfies</p><p>$$
+F_\mu(w(z))-F_\mu(w^0)=D(z)&gt;\varepsilon.
+$$</p><p>Thus $w^0$ is not terminal. Every terminal outcome is consequently nonzero and balanced, and the balance lemma extracts an exact cover from it.</p><p>If the exact-cover instance is unsatisfiable, the balance lemma says that zero is the only balanced vector. Every other feasible outcome is nonterminal by the downward move established above. Moreover, every nonempty feasible move from $w^0$ leads to an unbalanced vector and decreases the potential. Hence $w^0$ is terminal and is the <b>unique</b> terminal outcome.</p><p>Terminal outcomes always exist: a global maximizer of $F_\mu$ over the finite nonempty set $C$ has no positive-gain feasible move.</p><p>We can therefore decide Exact Cover by constructing this instance, calling the search solver once, and accepting exactly when its returned free vector is nonzero. In the accepting case, the returned vector also yields an exact-cover witness.</p><p>This proves the claimed NP-hardness.</p><h3>6. Size and running-time consequences</h3><p>The reduction satisfies</p><p>$$
+N=2(p+1),
+\qquad
+r&lt;2(p+h+2),
+$$</p><p>and</p><p>$$
+m=O\bigl((p+h)p^2+k\bigr),
+\qquad
+\tau\leq 2r+2.
+$$</p><p>Each mass has a common denominator $8rm^3$, so its encoding uses $O(\log(rm))$ bits. The implication list has $m-N+k$ entries. After merging duplicate ballots, the total input length satisfies</p><p>$$
+L=O(rm+m\log(m+1)).
+$$</p><p>The construction and decoding take polynomial time in the original input length and $k$. If a search solver runs in time $T_k(m,\tau,L)$, the reduction decides Exact Cover in time</p><p>$$
+\operatorname{poly}(\ell+k)+T_k(m,\tau,L),
+$$</p><p>where $\ell$ is the exact-cover input length. For every fixed $k$, all constructed parameters are polynomial in $\ell$. Thus a polynomial-time solver in $m,\tau,L$ would imply $\mathrm{P}=\mathrm{NP}$. In particular, no bound of the form $f(k)\operatorname{poly}(m,\tau,L)$ is possible unless $\mathrm{P}=\mathrm{NP}$.</p><p>For completeness, an unconditional exact algorithm is to enumerate all feasible assignments and return a global maximizer. Define</p><p>$$
+B=L+m\lceil\log_2(m+1)\rceil
++\lceil\log_2(\tau+1)\rceil+10.
+$$</p><p>Using schoolbook integer arithmetic, this gives the conservative bound</p><p>$$
+O\left(
+(m+\tau)B^2
++
+2^m\left(
+L+\tau m\log(m+1)+\tau B^2
+\right)
+\right),
+$$</p><p>with no additional dependence on $k$.</p><p>Indeed, write $\mu_t=p_t/q_t$, put $Q=\prod_t q_t$ and $D=m!$, and precompute the integers</p><p>$$
+A_t=Q\mu_t,
+\qquad
+E_s=DH_s.
+$$</p><p>Then</p><p>$$
+F_\mu(w)=\frac{\sum_t A_tE_{u_t(w)}}{QD}.
+$$</p><p>The integers have $O(B)$ bits. Precomputation costs $O((m+\tau)B^2)$; each assignment can be checked for feasibility and evaluated within the per-assignment bound displayed above.</p><h3>7. Consequence for explicitly listed voters</h3><p>The hardness construction also converts directly to polynomially many discrete voters. Take</p><p>$$
+n=8rm^3.
+$$</p><p>Before merging duplicate ballots, the corresponding voter multiplicities are</p><p>$$
+n_\uparrow=16rm,
+\qquad
+n_\downarrow=2r,
+$$</p><p>and, for each of the $2r$ row ballots,</p><p>$$
+n_{\mathrm{row}}=4m^3-8m-1.
+$$</p><p>These are positive integers and sum to $n$. Explicitly listing them requires $O(rm^4)$ ballot bits, still polynomial in the exact-cover input size for fixed $k$.</p><p>Their unnormalized PAV objective is exactly $nF_\mu$, so the improvement threshold becomes $n/m^2$. Hence the same hardness applies to the <b>exact discrete stopping condition with the compact implication-list representation</b>.</p><p>The move-search inference in the cited [Proposition 16](https://arxiv.org/html/2409.02609v2#S5) fails on this construction. At $w^0$, changing a single free issue gives a nonzero imbalance and decreases the potential; fixed issues cannot be changed feasibly. Nevertheless, whenever an exact cover exists, a larger supported move improves by more than the threshold. The construction uses ballots inconsistent with $C$, as expressly permitted in the task.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s NP-hardness claim is correct for the search problem in <code>USER_TASK</code>. The reduction satisfies the exact reachability promise, and its decoding works for every terminal outcome. I found no major or minor mathematical issues.</p><p>The hardness established is a polynomial-time reduction from Exact Cover using one call to a solver for the promised search problem. The output does not claim NP-completeness of a decision problem or polynomial-time verifiability of terminality.</p><ul><li><b>Source problem and balance encoding.</b></li></ul><p>The cited source theorem is that Exact Cover, with an explicitly represented finite universe and family of subsets, is NP-complete. This is the standard problem established in [Karp’s paper](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/Karp.pdf). Removing empty sets preserves the answer. The excluded cases with an empty universe or no sets are directly decidable, so their exclusion does not affect hardness.</p><p>The homogeneous equations have the stated behavior. When $c_0=1$, each element belongs to exactly one selected set. When $c_0=0$, each equation is a sum of nonnegative binary variables equal to zero. Since every set is nonempty, every $c_i$ occurs in at least one such equation and must vanish.</p><p>The signed-row construction is correct. Subtracting the baseline equation from the reversed-pair equation gives<br>$$
+   -2z_{i,+}+2z_{i,-}=0.
+   $$<br>Thus the paired coordinates agree. Substituting their common value $c_i$ into an element row gives precisely<br>$$
+   2\left(\sum_{i:\,e\in A_i}c_i-c_0\right).
+   $$<br>Both directions of the balance lemma follow as written. Repeating the baseline row changes neither the balanced vectors nor this equivalence.</p><ul><li><b>Feasibility and the exact promise.</b></li></ul><p>The implication $(x,1)\to(x,0)$ forces issue $x$ to zero. The cycle implications are satisfied when all their issues are zero, so the feasible set is exactly<br>$$
+   C=\{0,1\}^N\times\{0\}^{m-N}.
+   $$<br>There are enough distinct issues for the cycle because $m\geq 2N+k$.</p><p>Applying the graph definition from <code>USER_TASK</code>, a forcing implication contributes neither edge at a feasible assignment. Each cycle implication contributes its forward edge and contributes no contrapositive edge. Hence the only nontrivial component is the directed cycle on the $k$ specified value-$1$ literals.</p><p>Excluding the source from its reachable set, every cycle vertex reaches exactly $k-1$ vertices. All other vertices reach none. This verifies the required equality for every feasible assignment, including $k=2$.</p><p>The fact that the cycle issues cannot actually change feasibly is permitted: the task defines the promise relative to the supplied implication list.</p><ul><li><b>Ballots, utilities, and masses.</b></li></ul><p>For each signed vector $v$, the free agreements at zero count its negative entries, and the auxiliary agreements count its positive entries. Their total is $N$. Flipping free coordinate $i$ changes utility by $v_i$, which verifies<br>$$
+   u_{b(v)}(w(z))=N+v\cdot z.
+   $$<br>The upward and downward utilities are also correctly computed as $s$ and $N-s$.</p><p>All masses are positive, sum to one, and are dyadic. The bound $\alpha+\beta\leq 1/2$ implies<br>$$
+   \gamma=\frac{1-\alpha-\beta}{2r}\geq\frac1{4r}.
+   $$<br>The construction has $m\geq4$, as required for these estimates.</p><p>Merging coincident ballots preserves both the objective and the mass supporting every move. The upward and downward ballot types retain positive mass. The resulting support consists of distinct types and satisfies $\tau\leq2r+2$.</p><p>Ballots inconsistent with $C$ are expressly allowed by <code>USER_TASK</code>.</p><ul><li><b>Potential identity and harmonic penalties.</b></li></ul><p>The displayed identity for $D(z)$ accounts correctly for every ballot contribution. Since $|\delta_j(z)|\leq N$, its harmonic indices lie between zero and $2N$.</p><p>The critical harmonic calculation is correct:<br>$$
+   2H_N-H_{N+d}-H_{N-d}
+   =
+   \sum_{q=0}^{d-1}
+   \left(\frac1{N-q}-\frac1{N+q+1}\right).
+   $$<br>Every summand is positive for $1\leq d\leq N$, and the first is $1/(N(N+1))$. The calculation remains valid at $d=N$, where $H_{N-d}=H_0$.</p><p>Consequently, every row contribution is nonpositive, and any nonzero imbalance contributes at most<br>$$
+   -\frac1{N(N+1)}.
+   $$</p><ul><li><b>Threshold separation.</b></li></ul><p>For a nonzero balanced vector, the row terms vanish. The estimates $H_s\geq1$, $H_N\leq N$, and $N\leq m$ give exactly the claimed bound<br>$$
+   D(z)\geq\frac7{4m^2}&gt;\frac1{m^2}.
+   $$</p><p>For an unbalanced vector, the bound<br>$$
+   D(z)\leq\frac{2N}{m^2}-\frac1{4rN(N+1)}
+   $$<br>follows from the row penalty, the lower bound on $\gamma$, and the nonpositive downward contribution.</p><p>With $K=4rN(N+1)$, the construction ensures $m\geq K$ and $K&gt;2N+1$. Therefore<br>$$
+   m^2&gt;K(2N+1),
+   $$<br>which is exactly the inequality needed to conclude<br>$$
+   D(z)&lt;-\frac1{m^2}.
+   $$<br>The strict margins are sufficient for the task’s non-strict improvement threshold.</p><ul><li><b>Terminal outcomes and decoding.</b></li></ul><p>An unbalanced vector is nonzero because zero is balanced. Thus its set of coordinates equal to one is nonempty. Flipping those coordinates returns to zero, is feasible, and is supported by the positive-mass downward ballot. Its gain exceeds the threshold. Every terminal outcome must therefore be balanced.</p><p>In a satisfiable Exact Cover instance, the balance lemma supplies a nonzero balanced vector. The corresponding move from zero is feasible, supported by the upward ballot, and improves by more than the threshold. Consequently, zero is nonterminal, and every terminal outcome encodes an exact cover.</p><p>In an unsatisfiable instance, zero is the only balanced vector. Every other feasible outcome has the improving downward move. Every nonempty feasible move from zero leads to an unbalanced vector and decreases the objective. Thus zero is uniquely terminal.</p><p>Existence of a terminal outcome follows from maximization over the finite nonempty feasible set. Decoding is therefore valid for every permissible solver output; no favorable choice of terminal outcome is assumed.</p><ul><li><b>Reduction size and dependence on the parameter.</b></li></ul><p>The row count, power-of-two padding, issue count, and support bound are polynomial in the explicitly represented Exact Cover input for every fixed $k$.</p><p>The common denominator $8rm^3$ is correct. Each merged mass has encoding length $O(\log(rm))$. The implication count is $m-N+k$, and $k\leq m$, so the asserted bound<br>$$
+   L=O(rm+m\log(m+1))
+   $$<br>accommodates the ballots, masses, and implications.</p><p>The solver-time consequence follows: a polynomial-time solver in $m,\tau,L$ for any fixed $k\geq2$ would decide Exact Cover in polynomial time. Likewise, a bound $f(k)\operatorname{poly}(m,\tau,L)$ would imply $\mathrm P=\mathrm{NP}$ by fixing $k$.</p><ul><li><b>Unconditional enumeration bound.</b></li></ul><p>Enumerating feasible assignments and returning a global maximizer satisfies the stopping requirement.</p><p>The arithmetic representation is valid. Each denominator divides $Q$, and every harmonic denominator divides $D=m!$, so $A_t$ and $E_s$ are integers. Their products and the accumulated objective numerator have $O(B)$ bits. Schoolbook arithmetic supports the stated precomputation and per-assignment bounds.</p><p>This algorithm applies also at $m=1$ and with a single support type. It requires no additional dependence on $k$.</p><ul><li><b>Discrete voters and the cited proposition.</b></li></ul><p>Multiplying by $n=8rm^3$ gives exactly the stated positive integer multiplicities. They sum to $n$, and explicit ballot listing costs $O(rm^4)$ bits. Scaling the objective also scales the improvement threshold to $n/m^2$. The discrete hardness consequence therefore follows for the compact implication-list representation.</p><p>The criticism of the move-search inference is supported. At zero, every feasible singleton flip is unbalanced and decreases the objective, whereas a satisfiable source instance supplies a larger supported improving move. This directly contradicts the inference that checking the moves generated from individual issues must find an improvement whenever one exists. That inference appears in the proof of [Proposition 16](https://arxiv.org/html/2409.02609v2#S5).</p><p>The prover appropriately restricts its discrete consequence to the compact representation. The paper formally represents the feasible set by enumeration, so the reduction does not establish hardness measured against the length of an explicitly enumerated feasible set.</p><p>No repair or additional clarification is necessary to verify the claimed classification.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

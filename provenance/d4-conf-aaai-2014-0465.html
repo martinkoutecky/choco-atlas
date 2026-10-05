@@ -1,0 +1,184 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2014-0465 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2014-0465 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2014-0465)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 10 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(K\) options, an unknown society \(\mu\) over complete weak rankings, and an oracle that answers a queried pair by sampling a fresh member of the society, design an adaptive algorithm that returns a ranking \(\tau\) with \(d_M(\tau,\prec^{CO_\epsilon}_\mu)&lt;\rho\) with probability at least \(1-\delta\), while bounding or minimizing its expected number of pair queries.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(m=K\ge 2\). A society is specified by the list of its \(\tau\) complete weak ranking types with positive binary rational masses summing to \(1\); \(\tau\) is the support size, not the number of possible types, and \(L\) is the encoding bit length.<br>To preserve unknown-society elicitation, this list describes the oracle&#x27;s instance and is hidden from the algorithm. Each query chooses distinct options and independently draws a fresh type, revealing only their comparison; its numerical outcome is \(1\) for preference for the first option, \(0\) for the second, and \(1/2\) for indifference.<br>Write \(y_{ij}\) for the expected outcome. Given binary rational \(\epsilon&gt;0\), define \(d_i^*=|\{j\ne i:y_{ij}&gt;1/2+\epsilon\}|\) and \(s_i^*=|\{j\ne i:|y_{ij}-1/2|\le\epsilon\}|\).<br>The target strict partial order is \(o_i\prec^{CO_\epsilon}_\mu o_j\) exactly when \(d_i^*+s_i^*&lt;d_j^*\); equal or overlapping score intervals impose no comparison.<br>For a permutation \(r\), with rank \(1\) best, define \(d_M(r,\prec)=\min_{r&#x27;\in\mathcal L(\prec)}\max_i|r_i-r&#x27;_i|\), where linear extensions satisfy \(o_i\prec o_j\Rightarrow r&#x27;_j&lt;r&#x27;_i\).<br>Given \(\rho\in\mathbb Z_{&gt;0}\) and binary rational \(0&lt;\delta&lt;1\), require \(\Pr[d_M(r,\prec^{CO_\epsilon}_\mu)&lt;\rho]\ge1-\delta\). Count oracle queries separately from computation, expressing bounds in \(m,\tau,L,\rho,\epsilon^{-1},\log(1/\delta)\).</p><p>Is this PAC rank elicitation problem solvable in polynomial expected time and polynomial expected queries in these parameters, or is it NP-hard?</p><p>Known: finite societies are covered by an adaptive PAC algorithm with an instance-dependent expected-query bound. Its guarantee is formulated for stochastic pairwise observations and also covers exactly the distribution-sampling oracle above, rather than only finite-agent inputs. [Verified source](https://ojs.aaai.org/index.php/AAAI/article/download/8978/8837).</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Used m=K and r for the output permutation to reserve tau for support size.</li><li>Normalized positive rational masses to sum to one.</li><li>Preserved the unknown-society condition by hiding the support list from the elicitation algorithm; the list specifies the oracle instance.</li><li>Made oracle draws independent and revealed only the queried comparison, scoring indifference as one half.</li><li>Restored the insensitive Copeland interval order, unnormalized maximum rank distance, positive integer rho, positive rational epsilon, and confidence domain.</li><li>Interpreted polynomial sample complexity using epsilon inverse and logarithmic confidence dependence, rather than polynomial dependence solely on their binary encoding lengths.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Proven results and the remaining modeling issue</h3><p>A uniform polynomial query bound is available: with probability at least $1-\delta$, the algorithm below returns an <b>exact linear extension</b> of the target partial order.</p><p>The computation issue identified in the verifier report cannot simply be absorbed into the society’s encoding length $L$. In fact, under the usual sequential encoding of a rational as a binary numerator followed by a binary denominator, a polynomial expected computation bound in exactly the listed parameters is impossible. This is an input-access obstruction, not an NP-hardness proof.</p><p>I prove both statements below. Throughout, $L$ retains its stated meaning: the hidden society’s encoding length.</p><h3>1. A deterministic interval lemma</h3><p>Write<br>$$
+a_i=d_i^*,\qquad b_i=d_i^*+s_i^*.
+$$<br>Thus $a_i\le b_i$, and the target comparison is<br>$$
+o_i\prec^{CO_\epsilon}_\mu o_j
+\quad\Longleftrightarrow\quad
+b_i&lt;a_j.
+$$</p><p>This relation is irreflexive because $b_i\ge a_i$. It is transitive: if $b_i&lt;a_j$ and $b_j&lt;a_k$, then<br>$$
+b_i&lt;a_j\le b_j&lt;a_k.
+$$<br>It is therefore a strict partial order.</p><p><b>Lemma.</b> Suppose that numbers $c_i$ satisfy<br>$$
+a_i\le c_i\le b_i
+$$<br>for every $i$. Sorting the options by decreasing $c_i$, with arbitrary tie breaking, produces a linear extension of the target order.</p><p><b>Proof.</b> Every required comparison satisfies<br>$$
+c_i\le b_i&lt;a_j\le c_j.
+$$<br>Consequently, $j$ appears before $i$, as the definition of a linear extension requires. Thus the resulting permutation $r$ belongs to $\mathcal L(\prec^{CO_\epsilon}_\mu)$, and<br>$$
+d_M(r,\prec^{CO_\epsilon}_\mu)=0.
+$$<br>This proves the lemma.</p><p>The algorithm therefore needs to find one score inside each interval; it need not identify the interval endpoints.</p><h3>2. A uniform polynomial query algorithm</h3><p>If $\epsilon\ge 1/2$, all pairwise means belong to the insensitive region. Every interval is $[0,m-1]$, so any permutation succeeds without queries.</p><p>Assume henceforth that $0&lt;\epsilon&lt;1/2$. Define<br>$$
+B=\binom m2,\qquad
+k=\left\lceil\log_2\frac{2B}{\delta}\right\rceil,\qquad
+n=\left\lceil k\epsilon^{-2}\right\rceil.
+$$</p><p>For each pair $i&lt;j$, query $(i,j)$ exactly $n$ times and let $\widehat y_{ij}$ be the sample mean. Define<br>$$
+\widehat y_{ji}=1-\widehat y_{ij}.
+$$<br>This is justified because, for every complete weak ranking type, reversing a comparison replaces its outcome $Y_{ij}$ by $1-Y_{ij}$, including indifference. Hence<br>$$
+y_{ji}=1-y_{ij},
+\qquad
+|\widehat y_{ji}-y_{ji}|=|\widehat y_{ij}-y_{ij}|.
+$$</p><p>Compute<br>$$
+\widehat d_i
+=
+\left|\left\{j\ne i:\widehat y_{ij}&gt;\frac12\right\}\right|,
+$$<br>and output the permutation obtained by sorting these integers in decreasing order.</p><h3>Probability guarantee</h3><p>For each sampled pair, the observations are independent, have the same distribution, and belong to $[0,1]$: each query draws a fresh type from the fixed society. Hoeffding’s inequality therefore gives<br>$$
+\Pr\!\left[|\widehat y_{ij}-y_{ij}|\ge\epsilon\right]
+\le 2\exp(-2n\epsilon^2).
+$$<br>A union bound yields<br>$$
+\Pr\!\left[\exists i&lt;j:
+|\widehat y_{ij}-y_{ij}|\ge\epsilon\right]
+\le
+2B\exp(-2k)
+\le
+2B\,2^{-k}
+\le\delta.
+$$</p><p>Let $E$ denote the complementary event, including the inferred reverse estimates. On $E$, fix an option $i$.</p><p>If $y_{ij}&gt;1/2+\epsilon$, then<br>$$
+\widehat y_{ij}&gt;y_{ij}-\epsilon&gt;\frac12,
+$$<br>so this strong win contributes to $\widehat d_i$.</p><p>If $y_{ij}&lt;1/2-\epsilon$, then<br>$$
+\widehat y_{ij}&lt;y_{ij}+\epsilon&lt;\frac12,
+$$<br>so this strong loss does not contribute.</p><p>Every remaining comparison satisfies $|y_{ij}-1/2|\le\epsilon$ and can contribute at most one. Consequently,<br>$$
+d_i^*\le\widehat d_i\le d_i^*+s_i^*.
+$$<br>The interval lemma applies. Thus, on $E$, the output is an exact linear extension. Since $\rho$ is a positive integer,<br>$$
+\Pr\!\left[d_M(r,\prec^{CO_\epsilon}_\mu)&lt;\rho\right]
+\ge\Pr(E)\ge1-\delta.
+$$</p><p>Means exactly at $1/2\pm\epsilon$ belong to the insensitive set, so the proof requires no separation from either boundary.</p><h3>Query and computation bounds</h3><p>The deterministic query count is<br>$$
+Q=Bn
+=
+O\!\left(
+m^2\epsilon^{-2}
+\left(\log m+\log(1/\delta)\right)
+\right).
+$$<br>It also bounds the expected query count. Neither $\tau$ nor the hidden society encoding is used.</p><p>The observations can be processed exactly. For each pair, maintain<br>$$
+T_{ij}=\sum_{\ell=1}^{n}2Y_{ij}^{(\ell)}.
+$$<br>Each summand belongs to $\{0,1,2\}$, and<br>$$
+\widehat y_{ij}&gt;\frac12
+\quad\Longleftrightarrow\quad
+T_{ij}&gt;n.
+$$<br>The counters require $O(\log(n+1))$ bits. Once $k$ and $n$ have been computed, response processing, score computation, and sorting require<br>$$
+O\!\left((Q+m^2)\log(m(n+1))\right)
+$$<br>bit operations.</p><p>If $D$ denotes the total encoding length of the visible numerical parameters, computing $k$ and $n$ adds polynomial time in $D$. Thus the complete algorithm is polynomial in the requested parameters <b>together with $D$</b>. This statement does not redefine $L$.</p><p>The supplied paper uses the same stochastic comparison outcomes $0,1/2,1$ and unknown-distribution sampling model. The proof above is independent of its adaptive algorithm. [PAC Rank Elicitation through Adaptive Sampling of Stochastic Pairwise Preferences](https://ojs.aaai.org/index.php/AAAI/article/download/8978/8837)</p><h3>3. Why the visible encoding issue is substantive</h3><p>The following result strengthens the verifier’s observation that numerical values do not bound their rational encoding lengths.</p><p><b>Proposition.</b> Suppose visible inputs are supplied on a sequential input tape, with each rational encoded as its binary numerator, a delimiter, and its binary denominator, without leading zeros. Reading or traversing an input symbol costs a computation step. Then no uniform algorithm can satisfy the PAC requirement on all instances while having both expected computation and expected queries bounded by polynomials in exactly<br>$$
+m,\tau,L,\rho,\epsilon^{-1},\log(1/\delta).
+$$</p><p>This proposition concerns a specified, conventional input model. It does not assert the same obstruction for every possible input-access convention.</p><h3>Proof</h3><p>Fix<br>$$
+m=2,\qquad \rho=1,\qquad \epsilon=\frac18.
+$$</p><p>Consider two societies, each supported on the two strict rankings:</p><ul><li>In society $\mu_+$, $o_1$ is preferred to $o_2$ with probability $3/4$, and the reverse ranking has probability $1/4$.</li><li>In society $\mu_-$, these probabilities are reversed.</li></ul><p>Both have fixed support size $\tau=2$ and fixed society encoding length $L$. Their pairwise means are<br>$$
+y_{12}^{(+)}=\frac34,
+\qquad
+y_{12}^{(-)}=\frac14.
+$$<br>Because $\epsilon=1/8$, each target is a total order. The successful permutation places $o_1$ first under $\mu_+$ and $o_2$ first under $\mu_-$. Since $\rho=1$, the required distance must be zero.</p><p>Suppose an algorithm with the asserted polynomial bounds exists. Let $W$ be its computation cost plus its number of oracle queries.</p><p>For every integer $N\ge1$, consider<br>$$
+\delta_N^{\mathrm e}
+=
+\frac{2^N}{2^{N+2}+1}.
+$$<br>These fractions are reduced, and<br>$$
+\frac15&lt;\delta_N^{\mathrm e}&lt;\frac14.
+$$<br>All listed parameters therefore remain bounded independently of $N$. The assumed polynomial bounds imply the existence of a constant $C\ge1$ such that<br>$$
+\mathbb E_{\mu_+,\delta_N^{\mathrm e}}[W]\le C
+$$<br>for every $N$.</p><p>Set $H=\lceil4C\rceil$ and choose $N&gt;H$. Markov’s inequality gives<br>$$
+\Pr_{\mu_+,\delta_N^{\mathrm e}}[W&gt;H]\le\frac14.
+$$<br>The PAC guarantee gives probability greater than $3/4$ of outputting the permutation with $o_1$ first. Hence the event<br>$$
+A=
+\{\text{halt by cost }H\text{ and output }o_1\text{ first}\}
+$$<br>has probability at least $1/2$.</p><p>Now replace the visible failure parameter by<br>$$
+\delta_N^{\mathrm h}
+=
+\frac{2^N}{2^{N+M}+1},
+$$<br>where $M$ will be chosen below. This fraction is also reduced. Its encoded numerator is identical to that of $\delta_N^{\mathrm e}$ and contains $N+1$ bits.</p><p>Because $N&gt;H$, a computation of cost at most $H$ cannot reach the delimiter following that numerator. The two visible inputs are therefore indistinguishable throughout every execution counted by $A$. Under the same society $\mu_+$, their early-execution distributions coincide. Thus<br>$$
+\Pr_{\mu_+,\delta_N^{\mathrm h}}(A)\ge\frac12.
+$$</p><p>Next compare the two societies on the common hard input. For either orientation of the queried pair, every possible observation has positive probability under both societies, and the ratio<br>$$
+\frac{\Pr_{\mu_-}(\text{observation})}
+     {\Pr_{\mu_+}(\text{observation})}
+$$<br>is either $3$ or $1/3$.</p><p>Fix the algorithm’s internal randomness. Along any transcript containing $q$ queries, its likelihood under $\mu_-$ is therefore at least $3^{-q}$ times its likelihood under $\mu_+$. Adaptive query choices cause no additional factor: identical previous observations and internal randomness determine identical next queries.</p><p>Every transcript in $A$ has $q\le H$. Summing over such transcripts and averaging over internal randomness gives<br>$$
+\Pr_{\mu_-,\delta_N^{\mathrm h}}(A)
+\ge
+3^{-H}\Pr_{\mu_+,\delta_N^{\mathrm h}}(A)
+\ge
+\frac{1}{2\cdot3^H}.
+$$</p><p>On $\mu_-$, every output in $A$ is incorrect. Choose an integer $M$ such that<br>$$
+2^{-M}&lt;\frac{1}{2\cdot3^H}.
+$$<br>Then<br>$$
+\delta_N^{\mathrm h}
+&lt;
+2^{-M}
+&lt;
+\frac{1}{2\cdot3^H}.
+$$<br>The algorithm’s error probability on this valid hard input exceeds its requested failure probability, contradicting the PAC guarantee. This proves the proposition.</p><h3>4. Scope of the conclusion</h3><p>The substantive elicitation result is proved: polynomially many oracle queries suffice, and the computation after numerical preprocessing is polynomial. Including visible numerical encoding lengths gives a complete polynomial-time algorithm.</p><p>For the society-only interpretation of $L$, the full requested computation bound is impossible in the sequential input model just specified. This obstruction already occurs for two options and two ranking types; it does not arise from combinatorial optimization.</p><p>An unqualified choice between “polynomial-time solvable in exactly the listed parameters” and “NP-hard” still requires an input-access convention. No NP-hardness claim is established here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 4, Scope of the conclusion: The requested unconditional complexity classification remains unsettled: the complete polynomial computation bound includes the additional visible encoding length $D$, while the impossibility proposition assumes sequential input access not expressly specified in USER_TASK. Specify the visible-input access convention and adjudicate the requested bound under that convention.</li></ul>
+<div class="pre"><h3>Overall assessment</h3><p><b>The output establishes substantial, correct results, but does not give an unconditional classification of the problem as stated. Its own assessment as partial is justified.</b></p><p>The uniform query algorithm is rigorous and returns an exact linear extension with the required probability. The computation bounds are also valid when the visible numerical input length is included. The sequential input-access obstruction is sound under its stated model.</p><p>The remaining issue is scope: the negative computation result depends on an input-access convention that <code>USER_TASK</code> does not expressly specify. No NP-hardness result is established.</p><h3>Step-by-step verification</h3><h3>1. The interval lemma</h3><p>The definitions<br>$$
+a_i=d_i^*,\qquad b_i=d_i^*+s_i^*
+$$<br>give $a_i\le b_i$. Consequently, the target relation is irreflexive.</p><p>The transitivity calculation is correct:<br>$$
+b_i&lt;a_j,\quad b_j&lt;a_k
+\quad\Longrightarrow\quad
+b_i&lt;a_j\le b_j&lt;a_k.
+$$<br>Thus the target is indeed a strict partial order.</p><p>If $c_i\in[a_i,b_i]$, every required comparison satisfies<br>$$
+c_i\le b_i&lt;a_j\le c_j.
+$$<br>Sorting by decreasing $c_i$ therefore places $j$ before $i$. Arbitrary tie breaking is harmless because a required comparison forces a strict inequality between the corresponding scores.</p><p>The resulting permutation is a linear extension, so its distance $d_M$ is zero. <b>This lemma is fully proved.</b></p><h3>2. The sampling algorithm</h3><p>For $\epsilon\ge 1/2$, every mean in $[0,1]$ satisfies<br>$$
+|y_{ij}-1/2|\le\epsilon.
+$$<br>Hence $d_i^*=0$, $s_i^*=m-1$, and there are no required comparisons. The stated zero-query treatment is correct, including $\epsilon=1/2$.</p><p>For $0&lt;\epsilon&lt;1/2$, the sampling parameters are well defined: $m\ge2$ implies $B\ge1$, and $0&lt;\delta&lt;1$ implies $k&gt;0$.</p><p>The identity<br>$$
+y_{ji}=1-y_{ij}
+$$<br>holds for every complete weak ranking type, including indifference. Inferring reverse estimates therefore preserves their absolute estimation errors.</p><p>Each sampled observation is independent, has the pair’s fixed distribution, and belongs to $[0,1]$. These are the hypotheses needed for the stated Hoeffding bound. No independence between different pairs is needed for the subsequent union bound.</p><p>The constants check correctly:<br>$$
+n\epsilon^2\ge k,\qquad
+e^{-2k}\le2^{-k},\qquad
+2B\,2^{-k}\le\delta.
+$$<br>Thus the event $E$ of simultaneous strict estimation errors below $\epsilon$ has probability at least $1-\delta$.</p><p>On $E$:</p><ul><li>Every strong win is counted in $\widehat d_i$.</li><li>Every strong loss is excluded from $\widehat d_i$.</li><li>Each insensitive comparison contributes either zero or one.</li></ul><p>These three categories exhaust all comparisons, giving<br>$$
+d_i^*\le\widehat d_i\le d_i^*+s_i^*.
+$$<br>The interval lemma applies directly.</p><p>Means exactly at either boundary belong to the insensitive category, as required by the task. The proof does not assume a positive separation from those boundaries.</p><p>Finally, $\rho&gt;0$ gives<br>$$
+d_M=0&lt;\rho
+$$<br>whenever $E$ occurs. <b>The PAC guarantee is fully proved, with the stronger conclusion of an exact linear extension on the success event.</b></p><h3>3. Query and computation bounds</h3><p>The deterministic query count<br>$$
+Q=O\!\left(m^2\epsilon^{-2}\bigl(\log m+\log(1/\delta)\bigr)\right)
+$$<br>follows from the definitions of $B$, $k$, and $n$. It also bounds the expected query count. The algorithm does not require the hidden society list, its support size, or its masses.</p><p>The exact counter implementation is correct:<br>$$
+\widehat y_{ij}&gt;\frac12
+\quad\Longleftrightarrow\quad
+T_{ij}&gt;n.
+$$<br>Since $0\le T_{ij}\le2n$, the counter bit-length bound is valid. The stated processing and sorting bound is a valid upper bound.</p><p>Computing $k$ and $n$ from binary rationals can be performed using exact integer arithmetic in time polynomial in the visible encoding length $D$. This is a routine computational detail, rather than an unproved mathematical ingredient.</p><p><b>The complete computation bound is established with $D$ included.</b> It does not, by itself, establish the requested bound using only the listed parameters, because those parameters need not bound $D$.</p><h3>4. The sequential input-access obstruction</h3><p>The two societies satisfy all relevant task assumptions: fixed $m=2$, fixed support size, positive rational masses, and fixed hidden encoding length.</p><p>Their target orders are opposite total orders. With $\rho=1$, success requires the corresponding exact permutation.</p><p>For the easy failure parameters,<br>$$
+\delta_N^{\mathrm e}=\frac{2^N}{2^{N+2}+1},
+$$<br>the fractions are reduced because their denominators are odd, and<br>$$
+\frac15&lt;\delta_N^{\mathrm e}&lt;\frac14
+$$<br>holds for every $N\ge1$. Thus all listed complexity parameters remain bounded independently of $N$, justifying a uniform constant $C$ for the expected combined cost.</p><p>With $H=\lceil4C\rceil$, Markov’s inequality gives the claimed probability bound. Combining it with success probability greater than $3/4$ gives<br>$$
+\Pr(A)\ge\frac12.
+$$</p><p>The easy and hard visible inputs have identical numerator prefixes of length $N+1$. Under the specified sequential tape model, $N&gt;H$ prevents executions of cost at most $H$ from reaching the differing denominator. The transfer of the event probability between these inputs, under the same society, is therefore valid.</p><p>Under the two societies, every observation that can actually occur has likelihood ratio either $3$ or $1/3$. Indifference has probability zero under both and creates no relevant transcript. Adaptivity does not invalidate the likelihood comparison: conditioned on identical internal randomness and previous observations, the next query is identical.</p><p>Consequently, every transcript in $A$ has likelihood ratio at least $3^{-H}$, yielding<br>$$
+\Pr_{\mu_-,\delta_N^{\mathrm h}}(A)
+\ge\frac{1}{2\cdot3^H}.
+$$<br>Every such output is incorrect under $\mu_-$. The choice of $M$ makes this lower bound exceed $\delta_N^{\mathrm h}$, contradicting the PAC requirement.</p><p><b>The proposition is correct under its expressly stated sequential input model.</b> It establishes an input-access obstruction, not NP-hardness.</p><h3>5. Use of the supplied paper</h3><p>The paper’s problem-setting section specifies stochastic pairwise observations with numerical values $0$, $1/2$, and $1$, and sampling from an unknown underlying distribution. The prover’s description of that model is supported by the [supplied paper](https://ojs.aaai.org/index.php/AAAI/article/download/8978/8837).</p><p>The new sampling proof does not rely on importing the paper’s adaptive algorithm or its query theorem, so no missing application of that theorem affects the argument.</p><h3>Issue and minimum clarification</h3><p><b>Major issue — incomplete classification relative to <code>USER_TASK</code>.</b> The output proves a polynomial algorithm with an additional visible encoding-length parameter and a negative result under a particular sequential access convention. These are rigorous conditional results, but they do not select an unconditional answer to the task’s stated complexity question.</p><p>The minimum clarification is to specify whether visible rational inputs must be accessed sequentially, whether their encoding lengths count toward computation bounds, or whether another access model is intended. The conclusion must then be stated for that convention. No repair to the mathematical arguments in Sections 1–3 is needed.</p><p>There is no identified central false step, and no NP-hardness claim to accept or refute.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

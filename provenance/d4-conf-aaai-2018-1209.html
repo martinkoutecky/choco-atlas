@@ -1,0 +1,83 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2018-1209 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2018-1209 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2018-1209)</span></h1>
+<p class="banner">claim: resolved · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> Every admissible PCL run satisfies the stated inequality for every integer \(H\ge1\); the coefficient \(S\) can additionally be replaced by \(\sqrt S\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a feasible configuration space \(X\), bounded features \(\phi\), basic parts \(\mathcal P\), an initial configuration, and a finite support \(T\) with binary-rational masses \(\mu_t\) summing to one, let each type have an unknown linear utility \(u_t(x)=\langle w_t,\phi(x)\rangle\), and let the population objective be \(\bar u_\mu(x)=\sum_{t\in T}\mu_tu_t(x)=\langle\bar w,\phi(x)\rangle\). At each round \(r\), a learner selects a part \(p_r\), holds the rest fixed, and receives a feasible replacement that is conditionally \(\alpha\)-informative for \(\bar u_\mu\). Does PCL achieve \(T^{-1}\sum_{r=1}^{T}\mathrm{CREG}^{\bar u_\mu}_{p_r}(x^r)\le 2DS\lVert\bar w\rVert/(\alpha\sqrt T)+(\alpha T)^{-1}\sum_{r=1}^{T}\bar\zeta_r\), where \(D\) bounds feature magnitudes, \(S\) is the largest part feature-set size, and \(\bar\zeta_r\) is the omitted-feature residual under the aggregate utility?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(X\) be a nonempty feasible configuration space with \(m\ge1\) features \(\phi:X\to\mathbb R^m\), bounded by \(\|\phi(x)\|_\infty\le D\). There are \(n\ge1\) basic parts whose partial configurations reconstruct each object; \(F_p(x)\) denotes the feasible configurations agreeing with \(x\) outside part \(p\). Assume all maxima below are attained.<br>Each part has a feature set \(I_p\subseteq[m]\): changing only \(p\) leaves features outside \(I_p\) unchanged. Require \(\bigcup_p I_p=[m]\) and \(I_p\setminus\bigcup_{q\ne p}I_q\ne\varnothing\). Fix an ordering \(p_1,\ldots,p_n\), define \(J_{p_k}=I_{p_k}\setminus\bigcup_{j&gt;k}I_{p_j}\), and set \(S=\max_p|I_p|\).<br>A society is given by its support: a list \(\mathcal T\) of \(\tau\) types with positive binary-rational masses \(\mu_t\) summing to one. Here \(\tau\) is the support size, not the number of possible types; \(L\) is the bit length of the encoded input. State any running times in \(m,\tau,L,n\), the round horizon, and any oracle costs.<br>Each type has unknown weights \(w_t\in\mathbb R^m\), with unrestricted signs, and utility \(u_t(x)=\langle w_t,\phi(x)\rangle\). Write \(\bar w=\sum_t\mu_tw_t\) and \(\bar u_\mu(x)=\langle\bar w,\phi(x)\rangle\).<br>PCL starts with \(v^1=0\) and a feasible configuration \(z^0\). In round \(r\), select any basic part \(p_r\), put \(I_r=I_{p_r}\), \(J_r=J_{p_r}\), and choose \(x^r\in\arg\max_{y\in F_{p_r}(z^{r-1})}\langle v^r_{J_r},\phi_{J_r}(y)\rangle\); ties may be resolved arbitrarily.<br>Define \(\mathrm{CREG}^{\bar u_\mu}_p(x)=\max_{y\in F_p(x)}\bar u_\mu(y)-\bar u_\mu(x)\). Feedback is a configuration \(\hat x^r\in F_{p_r}(x^r)\) satisfying \(\bar u_\mu(\hat x^r)-\bar u_\mu(x^r)\ge\alpha\,\mathrm{CREG}^{\bar u_\mu}_{p_r}(x^r)\), for fixed \(\alpha\in(0,1]\).<br>Let \(\Delta^r=\phi(\hat x^r)-\phi(x^r)\). Set \(Q_r=I_r\) if \(\langle v^r_{I_r},\Delta^r_{I_r}\rangle\le0\), and \(Q_r=J_r\) otherwise; update \(v^{r+1}_{Q_r}=v^r_{Q_r}+\Delta^r_{Q_r}\), leaving other coordinates unchanged, and set \(z^r=x^r\).<br>Define the signed residual \(\bar\zeta_r=0\) when \(Q_r=I_r\), and \(\bar\zeta_r=\langle\bar w_{I_r\setminus J_r},\Delta^r_{I_r\setminus J_r}\rangle\) otherwise.<br>Does every admissible PCL run, for every integer \(H\ge1\), satisfy \(\frac1H\sum_{r=1}^H\mathrm{CREG}^{\bar u_\mu}_{p_r}(x^r)\le\frac{2DS\|\bar w\|_2}{\alpha\sqrt H}+\frac1{\alpha H}\sum_{r=1}^H\bar\zeta_r\), or is there an admissible counterexample?<br>Known: PCL has the displayed regret guarantee for an arbitrary real utility vector under these feature, inference, and feedback assumptions; this is a regret theorem, not a polynomial-time algorithm theorem. [Verified source](https://arxiv.org/pdf/1711.08247).<br>The stated population formulation is already covered by that guarantee, so this faithful question is not an open target.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Separated the type support from the round horizon, using \(\mathcal T\) and \(H\).</li><li>Made conditional optimization range only over feasible replacements and required attainment of the maxima.</li><li>Restored feature dependence, coverage, exclusive-feature conditions, the fixed ordering, and the definition of \(J_p\).</li><li>Specified zero initialization, exact local inference, arbitrary tie resolution and part selection, the conditional update rule, and retention of the inferred configuration between rounds.</li><li>Specified strict conditional informativeness with \(\alpha\in(0,1]\), unrestricted real utility weights, and the signed branch-dependent residual.</li><li>Treated inference and feedback as supplied operations because no computational encoding or polynomial-time inference assumption is given.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p><b>Every admissible run satisfies the stated inequality for every integer \(H\ge1\).</b> In fact, the assumptions imply the stronger bound</p><p>\[
+\frac1H\sum_{r=1}^H\mathrm{CREG}^{\bar u_\mu}_{p_r}(x^r)
+\le
+\frac{2D\sqrt S\,\|\bar w\|_2}{\alpha\sqrt H}
++\frac1{\alpha H}\sum_{r=1}^H\bar\zeta_r.
+\]</p><p>This agrees with the supplied [PCL regret theorem](https://arxiv.org/pdf/1711.08247), applied to the aggregate utility vector. Below is a direct proof, including the signed residual.</p><h3>1. Aggregate utility and feasible comparisons</h3><p>The support is finite, so \(\bar w=\sum_{t\in\mathcal T}\mu_t w_t\) is a well-defined vector in \(\mathbb R^m\). By linearity, for every feasible configuration \(x\),</p><p>\[
+\sum_{t\in\mathcal T}\mu_tu_t(x)
+=\left\langle\sum_{t\in\mathcal T}\mu_tw_t,\phi(x)\right\rangle
+=\langle\bar w,\phi(x)\rangle.
+\]</p><p>Fix any round \(r\). Since \(x^r\) agrees with \(z^{r-1}\) outside \(p_r\), and \(\hat x^r\) agrees with \(x^r\) outside \(p_r\), the feedback configuration also belongs to \(F_{p_r}(z^{r-1})\). Consequently, the maximizing property of \(x^r\) gives</p><p>\[
+\langle v^r_{J_r},\phi_{J_r}(x^r)\rangle
+\ge
+\langle v^r_{J_r},\phi_{J_r}(\hat x^r)\rangle,
+\qquad
+\langle v^r_{J_r},\Delta^r_{J_r}\rangle\le0.
+\]</p><p>This holds for every allowed tie resolution.</p><p>Changing only \(p_r\) leaves features outside \(I_r\) unchanged. Thus \(\Delta_i^r=0\) for \(i\notin I_r\). Moreover, feature boundedness implies \(|\Delta_i^r|\le2D\) for every coordinate.</p><h3>2. Norm growth of the update vector</h3><p>Define \(g^r=v^{r+1}-v^r\). By the update rule, \(g_i^r=\Delta_i^r\) for \(i\in Q_r\) and \(g_i^r=0\) otherwise.</p><p>Both update branches satisfy \(\langle v^r,g^r\rangle\le0\):</p><ul><li>If \(Q_r=I_r\), this is the condition selecting that branch.</li><li>Otherwise \(Q_r=J_r\), and the inequality follows from the maximizing property proved above.</li></ul><p>Since \(Q_r\subseteq I_r\), we also have</p><p>\[
+\|g^r\|_2^2
+=\sum_{i\in Q_r}(\Delta_i^r)^2
+\le4D^2|Q_r|
+\le4D^2S.
+\]</p><p>Expanding the squared norm therefore yields</p><p>\[
+\|v^{r+1}\|_2^2
+=\|v^r\|_2^2+2\langle v^r,g^r\rangle+\|g^r\|_2^2
+\le\|v^r\|_2^2+4D^2S.
+\]</p><p>Starting from \(v^1=0\) and summing over the first \(H\) rounds gives</p><p>\[
+\|v^{H+1}\|_2^2\le4D^2SH,
+\qquad
+\|v^{H+1}\|_2\le2D\sqrt{SH}.
+\]</p><p>Here \(D\ge0\), because \(X\) is nonempty and a norm is nonnegative.</p><h3>3. Feedback gain and the signed residual</h3><p>Write \(R_r=\mathrm{CREG}^{\bar u_\mu}_{p_r}(x^r)\). The feedback assumption and the vanishing of \(\Delta^r\) outside \(I_r\) give</p><p>\[
+\alpha R_r
+\le\bar u_\mu(\hat x^r)-\bar u_\mu(x^r)
+=\langle\bar w_{I_r},\Delta^r_{I_r}\rangle.
+\]</p><p>In either update branch, the residual definition gives the exact identity</p><p>\[
+\langle\bar w_{I_r},\Delta^r_{I_r}\rangle
+=\langle\bar w,g^r\rangle+\bar\zeta_r.
+\]</p><p>Indeed, for \(Q_r=I_r\), the update includes every potentially changing coordinate and the residual is zero. Otherwise, splitting \(I_r\) into the disjoint sets \(J_r\) and \(I_r\setminus J_r\) gives precisely the update contribution and the stated residual.</p><p>Summing the feedback inequalities, using \(\sum_{r=1}^Hg^r=v^{H+1}-v^1=v^{H+1}\), and applying Cauchy–Schwarz yields</p><p>\[
+\alpha\sum_{r=1}^HR_r
+\le
+\langle\bar w,v^{H+1}\rangle+\sum_{r=1}^H\bar\zeta_r
+\le
+2D\|\bar w\|_2\sqrt{SH}+\sum_{r=1}^H\bar\zeta_r.
+\]</p><p>Division by \(\alpha H&gt;0\) proves the stronger bound.</p><p>Finally, coverage of the nonempty feature set implies \(S\ge1\), hence \(\sqrt S\le S\). Replacing \(\sqrt S\) by \(S\) proves exactly the requested inequality. No assumption on the signs of the weights or residuals was used.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verdict</h3><p><b>The proof is correct and resolves the assigned question.</b> Every admissible run satisfies the requested inequality for every integer \(H\ge1\). The stronger coefficient \(2D\sqrt S\) is also justified. No major or minor mathematical issues were found.</p><h3>Step-by-step verification</h3><ul><li><b>Aggregation of utilities.</b></li></ul><p>The finite support ensures that \(\bar w=\sum_{t\in\mathcal T}\mu_tw_t\) is a well-defined real vector. The displayed linearity identity holds for every \(x\in X\), without restrictions on weight signs. Neither rationality of the masses nor knowledge of the individual weights is needed for this identity.</p><ul><li><b>Feasibility of the inference comparison.</b></li></ul><p>Membership in \(F_{p_r}(z^{r-1})\) means agreement with \(z^{r-1}\) outside \(p_r\). Since \(\hat x^r\) agrees with \(x^r\) outside that same part, agreement is transitive, giving \(\hat x^r\in F_{p_r}(z^{r-1})\). Thus the maximizing property applies to the feedback configuration and establishes<br>\(\langle v^r_{J_r},\Delta^r_{J_r}\rangle\le0\).<br>This argument permits arbitrary maximizing tie resolutions.</p><ul><li><b>Support and magnitude of feature changes.</b></li></ul><p>The feature invariance assumption applies because \(\hat x^r\in F_{p_r}(x^r)\). Therefore \(\Delta_i^r=0\) outside \(I_r\). Boundedness of both configurations gives \(|\Delta_i^r|\le2D\). Both statements are justified.</p><ul><li><b>Both update branches.</b></li></ul><p>The definition of \(g^r\) matches the update exactly. In the full update branch, \(\langle v^r,g^r\rangle\le0\) is the branch condition. In the restricted branch, it is the inference inequality from step 2. The equality case is correctly included in the full update branch.</p><ul><li><b>Norm estimate and stronger constant.</b></li></ul><p>Since \(Q_r\subseteq I_r\), the calculation<br>\(\|g^r\|_2^2\le4D^2|Q_r|\le4D^2S\)<br>is correct. The squared-norm expansion consequently gives the stated increment bound. Summation from \(v^1=0\) yields<br>\(\|v^{H+1}\|_2^2\le4D^2SH\).<br>Taking square roots is valid because \(D\ge0\), as the prover explicitly establishes. This calculation supports the stronger dependence on \(\sqrt S\).</p><ul><li><b>Feedback and signed residual identity.</b></li></ul><p>The feedback inequality uses exactly the conditional regret specified in the task. The identity<br>\(\langle\bar w_{I_r},\Delta^r_{I_r}\rangle=\langle\bar w,g^r\rangle+\bar\zeta_r\)<br>holds in both branches: the full branch retains every changing coordinate, while the restricted branch omits precisely \(I_r\setminus J_r\). No nonnegativity assumption on \(\bar\zeta_r\) is introduced.</p><ul><li><b>Summation and Cauchy–Schwarz.</b></li></ul><p>The update vectors telescope to \(v^{H+1}\). Cauchy–Schwarz supplies the required upper bound on \(\langle\bar w,v^{H+1}\rangle\), regardless of its sign. The residual sum is retained unchanged throughout. Division by \(\alpha H\) is legitimate because \(\alpha&gt;0\) and \(H\ge1\).</p><ul><li><b>Recovery of the requested coefficient.</b></li></ul><p>Coverage of \([m]\), with \(m\ge1\), implies \(S\ge1\). Hence \(\sqrt S\le S\). Because the remaining coefficient is nonnegative, this substitution weakens the stronger bound in the correct direction.</p><h3>Scope, edge cases, and feedback</h3><p>The argument covers \(H=1\), \(D=0\), \(\bar w=0\), arbitrary part selections, unrestricted weight signs, and signed residuals. It requires no scheduling or probabilistic assumptions.</p><p>The reference to the supplied theorem is corroborative: the proof establishes the result directly rather than depending on an unstated theorem application. Its requested bound agrees with [Theorem 1 of the cited source](https://arxiv.org/pdf/1711.08247).</p><p><b>No repair or additional clarification is needed.</b> The output proves a regret guarantee and makes no running-time claim. Consequently, it does not classify the continuous problem’s computational complexity; the JSON below records that distinction without weakening the mathematical verdict.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

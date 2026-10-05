@@ -1,0 +1,262 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Locally Fair Partitioning — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Locally Fair Partitioning <span style="font-weight:normal;color:#8a7350">(aaai22-20401)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 10 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(\tau\) ordered run-types on \([0,1]\), each with rational party label \(p_j\in\{R,B\}\), support interval \(I_j\), and mass \(\mu_j\) with \(\sum_j\mu_j=1\), together with \(k,\varepsilon,\beta\), decide whether there is a consecutive partition \(\Pi\) into intervals of mass in \([(1-\varepsilon)/k,(1+\varepsilon)/k]\) such that no allowable interval \(D\) has unhappy mass \(u_p(D,\Pi)&gt;\max\{|D|/2,\beta/k\}\) for either party \(p\), and construct \(\Pi\) when one exists.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list of \(\tau\) types with positive binary rational masses; \(\tau\) is the support size, not the number of possible types. Here \(m=2\) parties, \(R\) and \(B\).<br>Type \(j\) has label \(p_j\in\{R,B\}\), mass \(\mu_j&gt;0\), and interval \(I_j=[a_{j-1},a_j]\), where \(0=a_0&lt;\cdots&lt;a_\tau=1\) are rational, consecutive labels differ, and \(\sum_j\mu_j=1\). Its mass is uniformly distributed on \(I_j\); endpoints have zero mass.<br>For measurable \(A\), define \(M_p(A)=\sum_{j:p_j=p}\mu_j\lambda(A\cap I_j)/(a_j-a_{j-1})\), where \(\lambda\) is Lebesgue measure, and \(M(A)=M_R(A)+M_B(A)\).<br>Inputs also include a positive integer \(k\), encoded in unary, and binary rational parameters \(\varepsilon\in[0,1/2]\), \(\beta\in[1/2,1]\). Let \(L\) be the total input bit length; state running times in \(m,\tau,L,k\).<br>An interval \(D\subseteq[0,1]\) is allowable when \((1-\varepsilon)/k\le M(D)\le(1+\varepsilon)/k\). A balanced partition \(\Pi\) covers \([0,1]\) by consecutive allowable intervals with arbitrary real cut positions; its number of parts is unrestricted.<br>Each part elects its majority party by mass, with ties electing \(B\). Mass of party \(p\) in parts electing the other party is unhappy; let \(u_p(D,\Pi)\) be that unhappy mass within \(D\).<br>The partition is locally fair if \(u_p(D,\Pi)\le\max\{M(D)/2,\beta/k\}\) for every allowable interval \(D\) and both parties. Such \(D\) need not extend to a balanced partition.</p><p>Is deciding whether a locally fair balanced partition exists in \(\mathrm{P}\), or is it \(\mathrm{NP}\)-hard? In the polynomial-time case, can such a partition also be constructed in polynomial time?</p><p>For an explicit sequence of \(n\) voters and ideal population \(\sigma\in\{1,\ldots,n\}\), the discrete problem admits decision and construction in \(O(n\sigma^3)\) for \(\varepsilon\in[0,1/3)\), and \(O(n\sigma^4)\) for \(\varepsilon\in[1/3,1/2]\). [Verified discrete result](https://arxiv.org/pdf/2112.06899).<br>No result settling this exact continuous problem was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The within-run distribution was unspecified; each positive mass is distributed uniformly over its nondegenerate support interval.</li><li>Ordered run-types are interpreted as maximal monochromatic runs: their rational support intervals tile [0,1], with alternating party labels and zero endpoint mass.</li><li>Party labels are categorical R or B, rather than rational numbers.</li><li>Parameter domains are k a positive integer, epsilon in [0,1/2], and beta in [1/2,1], with epsilon and beta binary rational.</li><li>The encoding of k was unspecified; unary encoding accommodates explicit construction of a partition whose number of parts grows with k.</li><li>The number of parts is unrestricted, following the discrete balanced-partition definition rather than requiring exactly k parts.</li><li>Majorities are determined by mass, ties elect B, and unhappy mass consists of voters whose party differs from their part&#x27;s elected party.</li><li>The undefined size |D| means population mass M(D), and allowable intervals obey the same mass bounds as partition parts.</li><li>Deviation uses the strict inequality in the formal definition and does not require the deviating interval to extend to a balanced partition.</li><li>Cuts may split runs at arbitrary real positions; m denotes the fixed number of parties, and L is the total input bit length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial result: fixed-parameter tractability in the support size</h3><p>The unrestricted question remains unresolved here: I do not establish either polynomial-time solvability or $\mathrm{NP}$-hardness.</p><p>The additional result proved below is that <b>decision and construction are fixed-parameter tractable in the support size $\tau$</b>. Specifically, for the stated model with $m=2$, both admit an exact algorithm with running time<br>$$
+2^{O(\tau\log(\tau+1))}\operatorname{poly}(m,L,k).
+$$<br>Thus, for every fixed support size, the problem is polynomial-time solvable even when unary $k$ is unrestricted.</p><p>The key reduction uses at most $\tau-1$ districts containing multiple types. All remaining districts can be represented by one integer count per type, without retaining their individual cut positions.</p><p>I also give a self-contained proof of polynomial-size rational witnesses and membership in $\mathrm{NP}$.</p><h3>1. Population coordinates</h3><p>Let<br>$$
+z_0=0,\qquad z_j=\sum_{r=1}^{j}\mu_r,
+$$<br>and define the cumulative population map<br>$$
+F(y)=M([0,y]).
+$$<br>On the original type interval $[a_{j-1},a_j]$,<br>$$
+F(y)=z_{j-1}
++\frac{\mu_j}{a_j-a_{j-1}}(y-a_{j-1}).
+$$<br>Every slope is positive. Hence $F$ is a continuous, strictly increasing bijection from $[0,1]$ to itself.</p><p>An affine change of variables on each type interval shows that, in the coordinate $t=F(y)$:</p><ul><li>total population measure is Lebesgue measure;</li><li>type $j$ occupies $[z_{j-1},z_j]$;</li><li>its party occupies that interval with density one.</li></ul><p>Consequently, interval population, party population, district winners, unhappy mass, and local fairness are preserved.</p><p>Write<br>$$
+A=\frac{1-\varepsilon}{k},\qquad
+C=\frac{1+\varepsilon}{k},\qquad
+b=\frac{\beta}{k}.
+$$<br>An allowable interval now has length in $[A,C]$. In particular,<br>$$
+A\ge\frac{1}{2k}&gt;0.
+$$<br>If a balanced partition has $q$ districts, then<br>$$
+qA\le1\le qC,
+$$<br>so<br>$$
+q\le\left\lfloor\frac1A\right\rfloor\le2k.
+$$</p><p>Once rational population-coordinate cuts have been obtained, their original coordinates are rational:<br>$$
+F^{-1}(t)
+=a_{j-1}
++\frac{a_j-a_{j-1}}{\mu_j}(t-z_{j-1}),
+\qquad
+t\in[z_{j-1},z_j].
+$$<br>This conversion uses polynomial-time rational arithmetic.</p><h3>2. Compressing all districts contained in single types</h3><p>Call a district <b>mixed</b> if it contains positive population from more than one type. Call it <b>pure</b> otherwise.</p><p>Because consecutive type labels differ and every type has positive mass, a district is mixed exactly when its interior contains at least one internal type boundary $z_j$. A pure district elects its sole party and creates no unhappy mass.</p><h3>Lemma 1: there are at most $\tau-1$ mixed districts</h3><p>The interiors of distinct districts are disjoint. Choose an internal type boundary lying in the interior of each mixed district. Different mixed districts must receive different boundaries. There are only $\tau-1$ internal boundaries.</p><p>Therefore, if the mixed districts are<br>$$
+[v_1,w_1],\ldots,[v_s,w_s],
+$$<br>listed in increasing order, then<br>$$
+s\le\tau-1,
+\qquad
+0\le v_1&lt;w_1\le v_2&lt;w_2\le\cdots\le v_s&lt;w_s\le1.
+$$<br>Also $s\le2k$, by the bound on the total number of districts. $\square$</p><h3>Lemma 2: each type has at most one residual pure interval</h3><p>Remove the mixed districts from a type interval<br>$$
+T_j=[z_{j-1},z_j].
+$$<br>Ignoring endpoints of zero population, the remaining set is a single interval, possibly empty.</p><p><b>Proof.</b> Suppose instead that two positive residual portions within $T_j$ were separated by a removed portion. Choose residual points $u&lt;v$ on opposite sides of that portion. Some mixed district meets $(u,v)$.</p><p>Since neither $u$ nor $v$ belongs to that district’s interior, the district must lie between them. It is therefore contained in $T_j$, and cannot be mixed. This is a contradiction. $\square$</p><p>Denote the residual interval in type $j$ by $J_j$, and its length by<br>$$
+W_j
+=\mu_j-\sum_{i=1}^{s}\lambda(T_j\cap[v_i,w_i]).
+$$</p><h3>Lemma 3: an exact completion criterion</h3><p>Fix ordered, disjoint mixed intervals, each of length in $[A,C]$. They can be completed to a balanced partition by pure districts if and only if there exist integers<br>$$
+n_j\in\{0,\ldots,2k\},\qquad j=1,\ldots,\tau,
+$$<br>such that<br>$$
+n_jA\le W_j\le n_jC.
+$$</p><p><b>Proof.</b></p><p>For necessity, let $n_j$ be the number of pure districts remaining within type $j$. By Lemma 2, their lengths sum to $W_j$. Summing their individual balance inequalities gives<br>$$
+n_jA\le W_j\le n_jC.
+$$<br>The bound $n_j\le2k$ follows from the total district bound.</p><p>For sufficiency, if $n_j=0$, the inequalities force $W_j=0$. If $n_j&gt;0$, divide $J_j$ into $n_j$ equal intervals. Their common length satisfies<br>$$
+A\le\frac{W_j}{n_j}\le C.
+$$<br>Together with the prescribed mixed districts, these intervals form a balanced partition. Each new interval is contained in one type, so it is pure. $\square$</p><p>The same proof establishes a useful invariance: <b>the unhappy population depends only on the mixed intervals and their winners</b>. Replacing the pure districts by any other balanced subdivision of the residual intervals leaves local fairness unchanged.</p><h3>3. Finite verification using only mixed endpoints</h3><p>Fix mixed intervals, their actual winners, and a balanced pure completion. For party $p$, let<br>$$
+H_p(t)=u_p([0,t],\Pi).
+$$<br>Form the sorted union of the type boundaries and mixed endpoints:<br>$$
+0=e_0&lt;e_1&lt;\cdots&lt;e_r=1.
+$$<br>Repeated coordinates are removed. The number of listed coordinates is at most<br>$$
+\tau+1+2s\le3\tau-1.
+$$</p><p>On every open interval between consecutive listed coordinates, either:</p><ul><li>the interval belongs to a mixed district with fixed winner and fixed type label; or</li><li>it belongs to a pure residual interval.</li></ul><p>Thus $H_p$ is continuous and piecewise affine, with slope in $\{0,1\}$. In a pure residual interval its slope is zero. Individual pure-district cuts are unnecessary.</p><p>For any interval $[u,v]$,<br>$$
+u_p([u,v],\Pi)=H_p(v)-H_p(u).
+$$</p><h3>Lemma 4: finite local-fairness test</h3><p>Consider the pairs<br>$$
+\mathcal V
+=
+\{(e_i,e_j):0\le i,j\le r\}
+\cup
+\{(e_i,e_i+c),(e_i-c,e_i):
+0\le i\le r,\ c\in\{A,C,2b\}\}.
+$$<br>Retain precisely those satisfying<br>$$
+0\le u&lt;v\le1,\qquad A\le v-u\le C.
+$$<br>The partition is locally fair if and only if, for both parties and every retained pair,<br>$$
+H_p(v)-H_p(u)
+\le\max\left\{\frac{v-u}{2},b\right\}.
+$$</p><p><b>Proof.</b> Necessity follows because every retained pair defines an allowable interval.</p><p>For sufficiency, restrict the endpoint pair $(u,v)$ to a rectangle<br>$$
+[e_i,e_{i+1}]\times[e_j,e_{j+1}].
+$$<br>On this rectangle, $H_p(v)-H_p(u)$ is affine. Split its allowable portion into the two closed sets<br>$$
+P^-_{ij}
+=
+\left\{
+(u,v):
+u\in[e_i,e_{i+1}],\
+v\in[e_j,e_{j+1}],\
+A\le v-u\le C,\
+v-u\le2b
+\right\}
+$$<br>and<br>$$
+P^+_{ij}
+=
+\left\{
+(u,v):
+u\in[e_i,e_{i+1}],\
+v\in[e_j,e_{j+1}],\
+A\le v-u\le C,\
+v-u\ge2b
+\right\}.
+$$<br>On the first set, the fairness deficit is the affine function<br>$$
+H_p(v)-H_p(u)-b.
+$$<br>On the second, it is<br>$$
+H_p(v)-H_p(u)-\frac{v-u}{2}.
+$$</p><p>Each nonempty set is a compact polygon, segment, or point. An affine function attains its maximum at a vertex. Its boundary lines have the forms<br>$$
+u=e_i,\qquad v=e_j,\qquad v-u=c,
+\qquad c\in\{A,C,2b\}.
+$$<br>The intersection of two nonparallel such lines is either a pair of breakpoints or a breakpoint paired with one of the listed shifts. Hence every vertex belongs to $\mathcal V$.</p><p>The assumed inequalities make each deficit nonpositive at every vertex, and therefore throughout both sets. These sets cover all allowable endpoint pairs. $\square$</p><p>This proof checks every allowable interval. It imposes no requirement that the interval extend to a balanced partition.</p><p>There are $O(\tau^2)$ candidates. Once the prefix functions have been computed, their values at all breakpoints and shifted breakpoints can be precomputed by merging a constant number of sorted lists. Each candidate then takes constant time per party.</p><p>For a supplied rational partition with total cut encoding length $S$, district winners and mixed intervals can first be identified by merging its cuts with the type boundaries. Consequently, verification takes<br>$$
+O\!\left(m(\tau+k+\tau^2)\right)
+$$<br>rational arithmetic operations, and polynomial bit time in $L+S$.</p><h3>4. A support-sized family of linear systems</h3><p>Fix<br>$$
+s\in\{0,\ldots,\min(\tau-1,2k)\}.
+$$<br>Use $2s$ real variables<br>$$
+v_1,w_1,\ldots,v_s,w_s
+$$<br>for the prospective mixed districts, and $\tau$ integer variables $n_j$ for their pure completions.</p><p>Let $E_1,\ldots,E_N$ be the symbolic list of the constant type boundaries and these endpoint variables. Consider all affine comparisons<br>$$
+E_i-E_j-c,
+\qquad
+c\in\{0,\pm A,\pm C,\pm2b\}.
+$$<br>There are $O(\tau^2)$ comparisons. Their zero sets form a rational hyperplane arrangement in dimension $2s$.</p><p>An arrangement cell records whether each comparison is negative, zero, or positive. Cells of every dimension are retained. Within one cell, the following information is fixed:</p><ul><li>The weak order of all type boundaries and mixed endpoints.</li><li>Which type boundaries lie strictly inside each prospective mixed district.</li><li>The position of each shifted verification endpoint relative to every breakpoint.</li><li>Which verification candidates are allowable.</li><li>Which branch of the fairness threshold applies to each candidate.</li></ul><p>Each assertion is determined by signs of the listed comparisons.</p><p>Discard a cell unless every prospective mixed interval has at least one type boundary strictly in its interior. Impose the ordering and balance inequalities<br>$$
+0\le v_1,\qquad
+w_i\le v_{i+1},\qquad
+w_s\le1,
+$$<br>and<br>$$
+A\le w_i-v_i\le C.
+$$<br>For $s=0$, these conditions are absent.</p><h3>Pure-completion constraints are linear</h3><p>Let $\ell_i$ and $r_i$ be the first and last types with positive intersection with mixed district $i$. They are fixed by the cell and satisfy $\ell_i&lt;r_i$.</p><p>Its overlap with type $j$ is<br>$$
+\lambda(T_j\cap[v_i,w_i])
+=
+\begin{cases}
+0,&amp;j&lt;\ell_i\text{ or }j&gt;r_i,\\
+z_j-v_i,&amp;j=\ell_i,\\
+\mu_j,&amp;\ell_i&lt;j&lt;r_i,\\
+w_i-z_{j-1},&amp;j=r_i.
+\end{cases}
+$$<br>Therefore every residual length $W_j$ is affine in the endpoint variables.</p><p>The completion constraints are the rational linear inequalities<br>$$
+n_jA\le W_j\le n_jC,
+\qquad
+0\le n_j\le2k,
+\qquad
+n_j\in\mathbb Z.
+$$<br>We may additionally impose<br>$$
+s+\sum_{j=1}^{\tau}n_j\le2k.
+$$<br>This holds for every balanced completion.</p><h3>Majority constraints preserve the tie rule</h3><p>Let $P_R(t)$ be cumulative red population in population coordinates. It is continuous and affine on each type interval. The arrangement cell fixes the affine expression for $P_R$ at every endpoint variable.</p><p>For each prospective mixed district define<br>$$
+G_i
+=
+2\bigl(P_R(w_i)-P_R(v_i)\bigr)-(w_i-v_i).
+$$<br>Enumerate its winner as either $R$ or $B$. Impose<br>$$
+G_i&gt;0
+\quad\text{for winner }R,
+$$<br>and<br>$$
+G_i\le0
+\quad\text{for winner }B.
+$$<br>These are exactly the prescribed majority conditions, including blue-winning ties.</p><h3>Fairness constraints are linear</h3><p>The cell fixes the ordered breakpoints. The winner assignment fixes the unhappy-density slope $h_{p,\ell}\in\{0,1\}$ between each consecutive pair.</p><p>For $y\in[E_j,E_{j+1}]$,<br>$$
+H_p(y)
+=
+\sum_{\ell&lt;j}
+h_{p,\ell}(E_{\ell+1}-E_\ell)
++h_{p,j}(y-E_j).
+$$<br>A verification endpoint is a breakpoint or a breakpoint shifted by a fixed constant. Its containing segment is fixed by the cell. Thus its prefix value is affine in the endpoint variables.</p><p>The cell also fixes the applicable threshold branch. Every inequality from Lemma 4 is consequently linear.</p><p>We have obtained, for each cell and winner assignment, a mixed integer linear system with:</p><ul><li>$2s$ real endpoint variables;</li><li>$\tau$ integer count variables;</li><li>$O(m\tau^2)$ constraints;</li><li>rational coefficients;</li><li>some strict inequalities, from cell membership and red winners.</li></ul><p>Its solutions are exactly the corresponding locally fair balanced completions, by Lemmas 3 and 4.</p><h3>5. Strict inequalities and rational witnesses</h3><p>The strict inequalities must be handled exactly. Replacing them by weak inequalities without requiring positive slack would change the problem.</p><p>Write every strict inequality as<br>$$
+f_h(x,n)&gt;0,
+$$<br>where $x$ denotes the real endpoints and $n$ the integer counts. Introduce a real variable $\delta$, replace these inequalities by<br>$$
+f_h(x,n)\ge\delta,
+$$<br>and add<br>$$
+0\le\delta\le1.
+$$<br>Also explicitly bound every endpoint between zero and one.</p><h3>A uniform positive-slack threshold</h3><p>The augmented system can be cleared to integer coefficients using a common positive denominator. Let $U\ge1$ bound the absolute values of all resulting coefficients and right-hand sides, before fixing the counts.</p><p>Such a denominator and bound have bit length<br>$$
+O\!\left(L+\log(\tau+k)\right).
+$$<br>Indeed, the constants are sums of input masses and the parameters $A,C,b$, while the variable coefficients are bounded integer sums of the displayed affine expressions.</p><p>Fix any integer count vector with $0\le n_j\le2k$. After substitution, all coefficients and right-hand sides of the continuous system have absolute value at most<br>$$
+T=U(1+2k\tau)+1.
+$$<br>Let<br>$$
+D=2s+1,\qquad
+\eta=\frac{1}{D!\,T^D}.
+$$</p><p><b>Claim.</b> The original strict mixed integer system is feasible if and only if its augmented weak system is feasible with<br>$$
+\delta\ge\eta.
+$$</p><p><b>Proof.</b> The reverse implication is immediate because $\eta&gt;0$.</p><p>For the forward implication, fix the counts from a strict feasible solution. At that solution, the finitely many strict inequalities have a positive common slack. Thus the continuous augmented system admits a point with $\delta&gt;0$.</p><p>Its feasible region is closed and bounded. Maximize $\delta$ and choose an optimal vertex. The optimum is positive.</p><p>At a vertex in $D$ variables, $D$ linearly independent active constraints determine the coordinates. Their integer coefficient matrix has entries bounded in absolute value by $T$. The determinant expansion gives<br>$$
+|\det B|\le D!\,T^D.
+$$<br>By Cramer’s rule, the positive coordinate $\delta$ has denominator at most $D!\,T^D$ after reduction. Its numerator is a positive integer. Therefore<br>$$
+\delta\ge\frac{1}{D!\,T^D}=\eta.
+$$<br>This proves the claim. $\square$</p><p>The bit length of $\eta$ is<br>$$
+O\!\left(\tau\bigl(L+\log(\tau+k)\bigr)\right).
+$$<br>Thus adding $\delta\ge\eta$ preserves polynomial encoding size.</p><h3>Polynomial-size rational partitions</h3><p>Start with any feasible real partition. Choose its mixed intervals, counts, arrangement cell, and winners. Fix those counts and maximize $\delta$ in the augmented continuous system.</p><p>The preceding argument gives an optimal vertex with positive slack. Cramer’s rule, including the numerator determinant bound, gives endpoint encoding length<br>$$
+O\!\left(\tau\bigl(L+\log(\tau+k)\bigr)\right)
+$$<br>per endpoint.</p><p>Complete each residual type interval by equal subdivision into its fixed number of pure districts. Each additional cut is formed from rational endpoints and division by an integer at most $2k$. It has the same asymptotic encoding bound.</p><p>There are at most $2k$ districts. Hence a feasible instance has a rational partition whose total cut encoding length is<br>$$
+O\!\left(
+k\tau\bigl(L+\log(\tau+k)\bigr)
+\right).
+$$<br>The inverse population map preserves polynomial encoding length.</p><p>Since $k$ is unary and the input explicitly lists $\tau$ types, this is a polynomial-size certificate. Section 3 gives a polynomial-time exact verifier. Therefore the unrestricted decision problem belongs to $\mathrm{NP}$.</p><h3>6. Exact decision and construction for fixed support</h3><p>The algorithm uses two standard algorithmic theorems.</p><p><b>Rational linear programming.</b> A rational linear system can be tested for feasibility in time polynomial in its binary encoding size. A rational linear objective can be optimized exactly in polynomial time. For a nonempty bounded feasible region, an optimal vertex can be obtained with polynomial encoding length, using further linear-programming calls if necessary.</p><p><b>Mixed integer linear feasibility.</b> For a rational system of weak linear inequalities with $r$ designated integer variables, feasibility is decidable in<br>$$
+(r+1)^{O(r)}\operatorname{poly}(S)
+$$<br>time, where $S$ is its binary encoding size. The polynomial exponent is independent of $r$. This is the fixed-dimensional mixed integer programming theorem and its improved running-time bound; see [Lenstra, Section 5](https://people.csail.mit.edu/rrw/presentations/Lenstra81.pdf) and [Bredereck et al., Theorem 1](https://arxiv.org/pdf/1709.02850).</p><p>Our systems meet its hypotheses after Section 5 replaces every strict condition by the weak condition with $\delta\ge\eta$.</p><h3>Enumerating the arrangement cells</h3><p>An arrangement of $H$ hyperplanes in dimension $d$ has at most<br>$$
+\sum_{i=0}^{d}2^i\binom{H}{i}
+$$<br>cells of all dimensions.</p><p>For completeness, adding a hyperplane splits some old cells. Each split replaces one cell by three and increases the count by two. The split cells give cells of the induced arrangement on the new hyperplane. Induction on $H$ and $d$ yields the displayed bound.</p><p>Cells intersecting the endpoint box can be enumerated incrementally. For every existing sign pattern, intersect it with the negative side, equality set, and positive side of the next hyperplane. Retain an intersection exactly when it meets the box.</p><p>These tests are rational linear feasibility tests with strict inequalities. They are performed by maximizing the common slack and accepting <b>only when the optimum is strictly positive</b>. The box and slack bounds make the programs bounded.</p><p>Here<br>$$
+H=O(\tau^2),\qquad d=2s\le2(\tau-1).
+$$<br>The number of cells, and the enumeration time apart from polynomial arithmetic costs, are therefore<br>$$
+2^{O(\tau\log(\tau+1))}.
+$$</p><h3>Decision algorithm</h3><p>For every<br>$$
+s\in\{0,\ldots,\min(\tau-1,2k)\},
+$$<br>perform the following steps:</p><ul><li>Enumerate all relevant arrangement cells, including lower-dimensional cells.</li><li>Discard cells in which a prospective mixed district contains no internal type boundary.</li><li>Enumerate the $2^s$ mixed-district winner assignments.</li><li>Build the balance, pure-completion, majority, and finite fairness constraints.</li><li>Compute $\eta$ as in Section 5 and test the resulting weak mixed integer system with $\delta\ge\eta$.</li></ul><p>Accept if any test succeeds.</p><p><b>Correctness.</b> A genuine fair partition determines one enumerated value of $s$, one cell, one winner assignment, and one integer count vector. Section 5 shows that its corresponding weak system is feasible.</p><p>Conversely, a feasible tested system preserves its cell’s strict signs and all strict red-majority conditions because $\delta\ge\eta&gt;0$. Lemma 3 constructs a balanced pure completion. The winner conditions give the actual mixed-district winners, and Lemma 4 proves local fairness of the completion.</p><h3>Construction</h3><p>A feasibility oracle suffices to recover the integer counts.</p><p>For each $n_j$, binary-search its bounded range $\{0,\ldots,2k\}$. At each step, query whether a feasible completion exists with an additional upper bound on $n_j$. Once the least feasible upper bound is found, fix $n_j$ to that value. This preserves feasibility and uses<br>$$
+O(\tau\log(k+1))
+$$<br>oracle calls.</p><p>With all counts fixed, maximize $\delta$ in the original continuous augmented system. Its optimum is positive because the recovered counts admit a solution with $\delta\ge\eta$. Extract an optimal vertex, subdivide each residual interval equally into its prescribed number of pure districts, and apply $F^{-1}$ to every cut.</p><p>This produces a rational locally fair balanced partition.</p><h3>Running time</h3><p>Each tested mixed integer system has:</p><ul><li>$\tau$ integer variables;</li><li>$O(\tau)$ real variables;</li><li>$O(m\tau^2)$ constraints;</li><li>binary encoding size polynomial in $m,L,k$.</li></ul><p>The arrangement enumeration, winner enumeration, mixed integer calls, and construction therefore take<br>$$
+\boxed{
+2^{O(\tau\log(\tau+1))}
+\operatorname{poly}(m,L,k),
+\qquad m=2.
+}
+$$</p><p>This is fixed-parameter tractability in $\tau$, rather than merely a polynomial-time algorithm for fixed $k$.</p><h3>7. A polynomial case and the remaining gap</h3><p>When $\varepsilon=0$, every district has length $1/k$ in population coordinates. Hence there are exactly $k$ districts and their cuts are uniquely forced:<br>$$
+x_i=\frac{i}{k},
+\qquad i=0,\ldots,k.
+$$<br>Verify this partition using Section 3. If it passes, convert its cuts to original coordinates; otherwise no fair balanced partition exists. Decision and construction take<br>$$
+O\!\left(
+m(\tau+k+\tau^2)\operatorname{poly}(L)
+\right)
+$$<br>bit time.</p><p>For unrestricted $\varepsilon$ and unrestricted support, the new algorithm still has an exponential dependence on $\tau$. Compression removes the individual pure-district cut variables, but leaves potentially $\tau-1$ mixed districts whose positions and winners must be coordinated.</p><p>Accordingly, the proved results do not settle the requested unrestricted classification. What remains is either an algorithm with polynomial dependence on $\tau,L,k$, including construction, or a valid hardness reduction.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Overall scope; Sections 6 and 7: The unrestricted classification requested by USER_TASK remains unresolved. The established running time is exponential in unrestricted $\tau$, and membership in $\mathrm{NP}$ supplies neither a polynomial-time algorithm nor a hardness result.</li><li><b>minor</b> — Section 4, definition of the hyperplane arrangement; Section 6, cell enumeration: Some listed affine comparisons are constant or identically zero, so their zero sets are not proper hyperplanes. Explicitly retain their fixed signs and enumerate the arrangement of the remaining proper hyperplanes.</li><li><b>minor</b> — Section 3, supplied-partition verification; Section 5, membership in $\mathrm{NP}$: The verifier implicitly assumes a balanced partition when using the bound of $2k$ districts. Explicitly check coverage, increasing cuts, and balance, and reject an excessive district count before applying the finite fairness test.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial, with sound substantive progress.</b> The output does not resolve the unrestricted decision problem posed in <code>USER_TASK</code>, and explicitly acknowledges this. Its support-parameter algorithm, rational-witness argument, membership in $\mathrm{NP}$, and polynomial-time case for $\varepsilon=0$ withstand the audit, subject to minor implementation clarifications.</p><p>I found no false central mathematical step.</p><h3>1. Population-coordinate reduction</h3><p>This reduction is correct.</p><p>The assumptions $\mu_j&gt;0$ and $a_j&gt;a_{j-1}$ give strictly positive slopes for $F$. Its formulas agree at adjacent type boundaries, and its endpoint values are $0$ and $1$. Thus the claimed continuous, strictly increasing bijection exists.</p><p>The affine transformation on each type interval preserves total and party population measures. Consequently, it preserves majority outcomes, including ties, and all unhappy-mass inequalities.</p><p>The district-count bound is valid:<br>$$
+qA\le 1,\qquad A\ge\frac{1}{2k}
+\quad\Longrightarrow\quad
+q\le 2k.
+$$<br>The rational inverse formula is correct and has polynomial encoding cost.</p><h3>2. Compression into mixed districts and pure counts</h3><p>All three lemmas are sound under the stated convention of ignoring endpoints of zero mass.</p><p><b>Lemma 1.</b> A district contains positive mass from multiple types exactly when its interior contains an internal type boundary. Distinct district interiors cannot contain the same chosen boundary. Hence the bound of $\tau-1$ mixed districts follows.</p><p><b>Lemma 2.</b> The contradiction argument is valid. A removed mixed district separating two residual points inside one type would have to lie between those points, and therefore inside that type. Such a district could not be mixed.</p><p>This reasoning applies to genuine mixed intervals, as required by Lemma 3. It would not apply to arbitrary removed intervals, but the output does not need that stronger assertion.</p><p><b>Lemma 3.</b> The inequalities<br>$$
+n_jA\le W_j\le n_jC
+$$<br>are necessary by summing pure-district lengths. They are sufficient because each positive residual interval can be subdivided equally. The case $n_j=0$ is handled correctly: it forces $W_j=0$.</p><p>The unhappy-mass invariance is also correct. Pure districts always elect their sole party, so their subdivision cannot change either party’s unhappy population.</p><h3>3. Finite local-fairness test</h3><p>Lemma 4 is correct.</p><p>On each endpoint rectangle, the unhappy-mass difference is affine. Splitting at $v-u=2b$ makes the fairness threshold affine on each resulting region.</p><p>Every vertex of a nonempty region is determined by two nonparallel boundary lines drawn from:<br>$$
+u=e_i,\qquad v=e_j,\qquad v-u=c,
+\qquad c\in\{A,C,2b\}.
+$$<br>Their intersections have exactly the forms included in $\mathcal V$. Parallel diagonal boundaries introduce no additional vertex form.</p><p>The argument also handles segments and points. Since $A&gt;0$, retained candidates automatically have distinct, correctly ordered endpoints. Values such as $C&gt;1$ cause no difficulty because the endpoint-domain restrictions remain in force.</p><p>The test covers every allowable interval, without imposing extendability to a balanced partition. This matches <code>USER_TASK</code>.</p><p>The claimed candidate count and rational-arithmetic verification cost are consistent with the construction.</p><p><b>Minor clarification needed:</b> the certificate verifier should explicitly check coverage, increasing cuts, and district balance before invoking this fairness test. The bound of $2k$ districts applies to balanced partitions, not arbitrary supplied rational partitions. Early rejection of an excessive district count makes the stated verification bound applicable.</p><h3>4. Linear systems indexed by arrangement cells</h3><p>The encoding is substantively correct.</p><p>The listed comparisons determine:</p><ul><li>endpoint order and equalities;</li><li>internal boundaries of each mixed district;</li><li>containing segments for shifted verification endpoints;</li><li>candidate allowability;</li><li>the threshold branch for breakpoint-pair candidates.</li></ul><p>For shifted candidates, the interval length is a fixed constant, so its threshold branch is determined directly from the input parameters.</p><p>The overlap formulas correctly handle positive intersections and endpoints coinciding with type boundaries. Consequently, each $W_j$ is affine.</p><p>The majority constraints correctly implement the asymmetric tie rule:<br>$$
+G_i&gt;0
+$$<br>for an $R$ winner, and<br>$$
+G_i\le 0
+$$<br>for a $B$ winner.</p><p>Once the cell and winners are fixed, the unhappy-density slopes are fixed. Prefix evaluations and fairness constraints are therefore affine.</p><p><b>Minor clarification needed:</b> not every listed comparison has a proper hyperplane as its zero set. For example, $E_i-E_i$ is identically zero; comparisons involving only constant boundaries may also be constant. The arrangement description should explicitly retain their fixed signs and enumerate only proper hyperplanes. This does not change the algorithm or its asymptotic bound.</p><p>Coincident breakpoints require removal or consistent relabeling before using the prefix formula. Section 3 already specifies removal, so this is an implementation convention rather than a substantive gap.</p><h3>5. Strict inequalities and rational witnesses</h3><p>The positive-slack argument is valid.</p><p>For fixed integer counts, any strict feasible solution has a positive minimum slack over its finitely many strict constraints. The augmented continuous region is closed and bounded because the endpoints and $\delta$ are explicitly bounded.</p><p>A positive maximum of $\delta$ is attained at a vertex. Boundedness suffices here even when the feasible region is lower-dimensional.</p><p>After denominator clearing and count substitution, the stated bound $T$ covers the coefficients and right-hand sides. At a vertex, Cramer’s rule gives:<br>$$
+|\det B|\le D!\,T^D.
+$$<br>Since a positive rational $\delta$ has a positive integer numerator in reduced form, the lower bound<br>$$
+\delta\ge\frac{1}{D!\,T^D}
+$$<br>follows.</p><p>The denominator-size claim is compatible with the displayed constraints: their rational constants use sums of input masses and fixed rational shifts, and their variable coefficients are bounded integer sums. No multiplication of endpoint variables occurs.</p><p>The rational-witness size bounds also follow. Equal subdivisions introduce division only by bounded integer counts, and the inverse population map preserves polynomial encoding length. Unary encoding of $k$ makes the total certificate length polynomial.</p><p>Thus membership in $\mathrm{NP}$ is established, subject to making the routine certificate checks in Section 3 explicit.</p><h3>6. Algorithmic theorem, enumeration, and construction</h3><p>The cited mixed integer programming theorem supports the claimed parameter dependence. Theorem 1 of [Bredereck et al.](https://arxiv.org/pdf/1709.02850) states a bound of $O(r^{2.5r+o(r)}|I|)$ parameterized by the number of integer variables. Its formulation permits rational continuous variables and denominator clearing. The prover’s weaker bound<br>$$
+(r+1)^{O(r)}\operatorname{poly}(S)
+$$<br>is therefore supported.</p><p>The systems satisfy the relevant hypotheses after strict inequalities are replaced by the positive-slack constraints. There are $\tau$ designated integer variables, and the remaining constraints are rational weak linear inequalities.</p><p>The arrangement-cell bound, including lower-dimensional cells, is valid. With<br>$$
+H=O(\tau^2),\qquad d=O(\tau),
+$$<br>it yields<br>$$
+2^{O(\tau\log(\tau+1))}
+$$<br>cells. Incremental enumeration using exact slack optimization preserves this bound up to polynomial factors.</p><p>The construction procedure is also correct. Feasibility under an additional upper bound on one count is monotone in that bound. Finding the least feasible integer upper bound allows that count to be fixed without losing feasibility. After all counts are fixed, the continuous optimization and pure subdivisions recover a valid partition.</p><p>Accordingly, the claimed decision and construction time<br>$$
+2^{O(\tau\log(\tau+1))}\operatorname{poly}(m,L,k),
+\qquad m=2,
+$$<br>is supported.</p><h3>7. Polynomial special case and unresolved target</h3><p>For $\varepsilon=0$, the argument is correct. Every district has population length $1/k$, so exactly $k$ districts occur and all population-coordinate cuts are forced. Testing that unique partition settles decision and construction in the stated polynomial time.</p><p>However, neither this special case nor fixed-parameter tractability in $\tau$ settles the unrestricted classification. The input support size is unrestricted, so the exponential dependence on $\tau$ remains material. Membership in $\mathrm{NP}$ also does not establish either polynomial-time solvability or hardness.</p><p>This is the major outstanding issue relative to <code>USER_TASK</code>, not a contradiction in the prover’s acknowledged partial claim.</p><h3>Actionable feedback</h3><ul><li>To resolve <code>USER_TASK</code>, supply either an algorithm polynomial in unrestricted $\tau,L,k$, with the requested construction result, or a valid hardness reduction.</li><li>Explicitly handle constant and identically zero comparisons before arrangement enumeration.</li><li>Specify the certificate verifier’s coverage, cut-order, district-count, and balance checks before its local-fairness test.</li></ul><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

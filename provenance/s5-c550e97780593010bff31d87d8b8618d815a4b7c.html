@@ -1,0 +1,119 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-c550e97780593010bff31d87d8b8618d815a4b7c — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-c550e97780593010bff31d87d8b8618d815a4b7c <span style="font-weight:normal;color:#8a7350">(s5-c550e97780593010bff31d87d8b8618d815a4b7c)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> Computing \(\widehat{\sigma}\) is polynomial-time solvable; the stated sampling threshold does not guarantee recovery of \(\sigma_0\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Corollary 8 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Borda returns the correct central ranking $\sigma_0$ when the number of samples in the non-expert component satisfies Equation~\eqref{eq:sample_complexity} with $i=n$ and $\theta=\theta_b$.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(n\) alternatives, \(k\), a panel of \(M\) top-\(k\) ballots encoded by its empirical distribution \(\mu\) over supported ballot types \(t\), and the promise that the ballots were independently drawn from a two-component concentric Mallows mixture with shared center \(\sigma_0\), ask whether sorting \(B_\mu(c)=\sum_t\mu_t b_t(c)\) recovers \(\sigma_0\) with the probability guaranteed by Corollary 8 when the non-expert draw count meets its stated sample-size condition.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(m=n&gt;3\) alternatives and \(1\leq k&lt;m\) be given. A ballot type is a strict ordered list of \(k\) distinct alternatives; define \(b_t(c)=k+1-j\) if \(c\) occupies position \(j\), and \(b_t(c)=0\) if it is absent.<br>A society is given by its support: the list of the \(\tau\) types with positive mass, each with its mass as a binary rational. Here \(\tau\) is the support size, not the number of possible types; masses sum to \(1\), and \(L\) is the total input bit length.<br>The input also contains a binary integer \(M\geq1\), with \(M\mu_t\) integral for every supported type. It represents the empirical distribution of \(M\) independent ballots.<br>Each ballot is the top-\(k\) prefix of a complete Kendall Mallows ranking from \(rM(\sigma_0,\theta_g)+(1-r)M(\sigma_0,\theta_b)\), where \(0&lt;r&lt;1\), \(0&lt;\theta_b&lt;\theta_g&lt;\infty\), and the common strict center \(\sigma_0\) is unknown.<br>For the non-expert component, let \(\Delta=\Pr[\operatorname{rank}(a_1)\leq k]-\Pr[\operatorname{rank}(a_2)\leq k]\), where \(a_1,a_2\) are the first two alternatives in \(\sigma_0\), and put \(D=k^2(1-e^{-\theta_b})^2/(1-e^{-m\theta_b})-m\Delta\).<br>For \(0&lt;\epsilon&lt;1\) and \(D\neq0\), the stated sampling condition is that each component contributes at least \(2m^2\log(\epsilon^{-1})D^{-2}\) ballots. Recovery probability concerns repeated sampling conditional on the component labels, not a property certified by one realized society.<br>Define \(\widehat\sigma\) by sorting \(B_\mu(c)=\sum_t\mu_t b_t(c)\) in decreasing order, breaking ties by increasing alternative label.</p><p>Is computing \(\widehat\sigma\) with the stated recovery guarantee polynomial-time solvable in \(m,\tau,L,k,\log M\), or is it NP-hard?</p><p>The discrete result claims high-probability recovery by Borda under the stated sampling threshold; the published version requires sufficiently many ballots in both components. [Published result and supplement](https://proceedings.mlr.press/v139/collas21a.html)<br>The empirical-distribution formulation retains exactly the sampled panel and its scores, so this existing recovery claim already concerns the same statistical experiment; it does not supply a genuinely open continuous problem.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Used m=n for the number of alternatives and carried over the published theoretical assumption n&gt;3.</li><li>Defined the missing ballot scores using the supplementary implementation: scores k through 1 for listed alternatives and 0 for absent alternatives.</li><li>Normalized empirical masses to 1 and required M times each mass to be integral, as dictated by an empirical distribution of M ballots.</li><li>Used top-k prefixes of complete Kendall Mallows draws, with each mixture component normalized separately.</li><li>Excluded uniform non-expert dispersion and a zero denominator in the sampling bound.</li><li>Used the published condition on both component counts rather than the earlier non-expert-only wording.</li><li>Interpreted probability over repeated ballot draws conditional on component labels and fixed deterministic label-based tie-breaking.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Conclusion</h3><p>Computing \(\widehat{\sigma}\) is <b>polynomial-time solvable</b> in the specified input parameters. However, the literal sampling threshold in the question does <b>not</b> guarantee recovery of the complete center under all the stated hypotheses.</p><p>These are separate conclusions: the empirical representation preserves Borda scores exactly, but it also preserves any failure of the proposed statistical guarantee.</p><h3>1. Exact polynomial-time computation</h3><p>Write each supported mass as \(\mu_t=u_t/v_t\), with integers encoded in binary. Define its multiplicity by</p><p>\[
+w_t=\frac{Mu_t}{v_t}.
+\]</p><p>By hypothesis, each \(w_t\) is an integer. Positivity and normalization imply \(0&lt;w_t\leq M\) and \(\sum_t w_t=M\).</p><p>For each alternative, initialize an integer score \(S(c)=0\). For every supported ballot \(t=(c_{t,1},\ldots,c_{t,k})\), perform the updates</p><p>\[
+S(c_{t,j})\leftarrow S(c_{t,j})+w_t(k+1-j),
+\qquad 1\leq j\leq k.
+\]</p><p>Then</p><p>\[
+S(c)=\sum_t w_t b_t(c)=M B_\mu(c).
+\]</p><p>Because \(M&gt;0\), sorting by decreasing \(S(c)\), with increasing labels breaking ties, produces exactly \(\widehat{\sigma}\).</p><p>To verify the bit complexity, put \(h=\lfloor\log_2 M\rfloor+1\). Computing each \(w_t\) requires multiplication and exact division on integers of at most \(O(L+h)\) bits. Moreover,</p><p>\[
+0\leq S(c)\leq kM,
+\]</p><p>so every accumulated score has \(O(h+\log(k+1))\) bits. There are \(\tau k\) updates and \(O(m\log m)\) sorting comparisons. Ordinary binary integer arithmetic therefore gives a polynomial running time in \(m,\tau,L,k,\log M\).</p><p>In particular, the algorithm never expands the support into \(M\) individual ballots.</p><h3>2. What the empirical representation preserves</h3><p>Let \(T_1,\ldots,T_M\) denote the sampled ballot types. Their empirical masses satisfy, for every realized panel,</p><p>\[
+M B_\mu(c)=\sum_{\ell=1}^{M}b_{T_\ell}(c).
+\]</p><p>Thus the ranking computed from the empirical society equals the ranking computed from the sampled panel, including the prescribed tie-breaking. Consequently, their recovery events have identical probabilities, also conditional on the component labels.</p><p>This proves that <b>any valid discrete recovery theorem transfers unchanged</b> to this empirical representation. It does not independently establish the sampling bound. The published paper states a pairwise Borda bound in Theorem 7 and a full-center recovery claim requiring sufficiently many samples in both components in Corollary 8. [Published paper, Section 4.2](https://proceedings.mlr.press/v139/collas21a/collas21a.pdf)</p><p>The exact threshold posed here can nevertheless be refuted directly.</p><h3>3. Counterexample to the stated recovery guarantee</h3><p>Choose</p><p>\[
+m=n=4,\qquad k=2,\qquad \sigma_0=(1,2,4,3),
+\]</p><p>and parameters</p><p>\[
+r=\frac12,\qquad
+\theta_b=\log 1000,\qquad
+\theta_g=\log 2000,\qquad
+\epsilon=\frac1{10}.
+\]</p><p>Let \(M=12\), and condition on any component-label sequence containing six ballots from each component. This conditioning event has positive probability, and the ballots remain independent conditional on their labels.</p><h3>Bounding the threshold</h3><p>Write \(q=e^{-\theta}\). For a Kendall Mallows model on four alternatives, the normalizing constant is</p><p>\[
+Z_4(q)=(1+q)(1+q+q^2)(1+q+q^2+q^3).
+\]</p><p>Indeed, inserting the alternative last in the center order into a ranking of the preceding alternatives contributes each possible number of new inversions once; iterating this insertion proves the product formula.</p><p>Each factor is at most \((1-q)^{-1}\). Hence the probability of the complete center satisfies</p><p>\[
+\Pr[\text{complete ranking}=\sigma_0]
+=\frac1{Z_4(q)}
+\geq(1-q)^3
+\geq1-3q.
+\]</p><p>For the non-expert component, \(q_b=1/1000\). Since its second center alternative is present in the center’s prefix,</p><p>\[
+\begin{aligned}
+\Delta
+&amp;=\Pr[\operatorname{rank}(a_1)\leq2]
+  -\Pr[\operatorname{rank}(a_2)\leq2]\\
+&amp;\leq\Pr[\operatorname{rank}(a_2)&gt;2]\\
+&amp;\leq\Pr[\text{complete ranking}\neq\sigma_0]\\
+&amp;\leq3q_b.
+\end{aligned}
+\]</p><p>Therefore,</p><p>\[
+\begin{aligned}
+D
+&amp;=\frac{4(1-q_b)^2}{1-q_b^4}-4\Delta\\
+&amp;\geq4(1-q_b)^2-12q_b\\
+&amp;=3.980004
+&gt;3.9.
+\end{aligned}
+\]</p><p>In particular, \(D\neq0\). Using \(\log 10&lt;5/2\), the stated component threshold satisfies</p><p>\[
+2m^2\log(\epsilon^{-1})D^{-2}
+=\frac{32\log 10}{D^2}
+&lt;\frac{80}{(3.9)^2}
+&lt;6.
+\]</p><p>Thus six ballots from each component satisfy the stated condition.</p><h3>Bounding the recovery probability</h3><p>In both components, \(q\leq1/1000\), so each complete ranking equals \(\sigma_0\) with probability at least \(1-3/1000\).</p><p>Let \(F\) be the event that all twelve complete rankings equal \(\sigma_0\). A union bound, conditional on the fixed component labels, gives</p><p>\[
+\Pr[F\mid\text{component labels}]
+\geq1-\frac{36}{1000}
+=0.964.
+\]</p><p>On \(F\), every observed ballot is \((1,2)\). The empirical society therefore has support size one, mass one, and scores</p><p>\[
+B_\mu(1)=2,\qquad B_\mu(2)=1,\qquad
+B_\mu(3)=B_\mu(4)=0.
+\]</p><p>The stipulated tie-break yields</p><p>\[
+\widehat{\sigma}=(1,2,3,4)\neq(1,2,4,3)=\sigma_0.
+\]</p><p>Consequently,</p><p>\[
+\Pr[\widehat{\sigma}=\sigma_0\mid\text{component labels}]
+\leq0.036,
+\]</p><p>although the proposed guarantee would require probability at least \(1-\epsilon=0.9\).</p><p>This is a failure in the repeated-sampling experiment with both component counts above the threshold.</p><h3>4. Interpretation of the question</h3><p>The computational problem is settled: exact computation of \(\widehat{\sigma}\) is polynomial-time solvable.</p><p>If the discrete recovery guarantee is supplied as an additional assumption, Section 2 proves its transfer to the empirical representation. Under the literal model and threshold, however, Section 3 disproves that guarantee. Failure of the statistical bound does not imply computational hardness.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verdict</h3><p><b>The prover’s conclusions are correct and rigorous.</b> It establishes polynomial-time computation of \(\widehat{\sigma}\), proves that the empirical representation preserves the sampled-panel recovery event, and gives a valid counterexample to the literal sampling guarantee.</p><p>The counterexample challenges the stated statistical threshold, not the computational conclusion. No major or minor mathematical issues were found.</p><h3>1. Exact computation and bit complexity</h3><p>The multiplicities \(w_t=Mu_t/v_t\) are integers by the input promise. Positive masses and normalization imply \(0&lt;w_t\leq M\) and \(\sum_t w_t=M\).</p><p>The score updates correctly implement<br>\[
+S(c)=\sum_t w_t b_t(c)=MB_\mu(c).
+\]<br>Since \(M&gt;0\), multiplying all scores by \(M\) preserves their ordering and equality. Using the specified label tie-break therefore returns exactly \(\widehat{\sigma}\).</p><p>The bit-complexity analysis is valid:</p><ul><li>Each input numerator and denominator has at most \(L\) bits, so multiplication by \(M\) and exact division involve integers of \(O(L+h)\) bits.</li><li>Since \(0\leq b_t(c)\leq k\), normalization gives \(0\leq S(c)\leq kM\).</li><li>Consequently, accumulated scores have \(O(h+\log(k+1))\) bits.</li><li>There are \(\tau k\) updates and \(O(m\log m)\) comparisons. Comparing labels also takes polynomial time in their input length.</li></ul><p>Initialization and output require only polynomial additional work. The algorithm does not enumerate the possible ballot types or expand the empirical society into \(M\) ballots.</p><p>The edge cases \(M=1\), \(k=1\), \(k=m-1\), absent alternatives, and tied scores are covered by the same construction.</p><p><b>Finding:</b> The polynomial-time claim is established.</p><h3>2. Preservation of the statistical experiment</h3><p>For every realized panel, its empirical mass satisfies<br>\[
+MB_\mu(c)=\sum_{\ell=1}^{M}b_{T_\ell}(c).
+\]<br>This is a deterministic identity, so it remains true after conditioning on any component-label sequence with positive probability.</p><p>The empirical society and the sampled panel therefore produce the same ranking, including tie-breaking. Their recovery events coincide pointwise, and hence their conditional recovery probabilities coincide.</p><p>The statement that any valid discrete recovery theorem transfers is consequently justified. It does not require certifying the sampling assumptions from a realized society.</p><p>The bibliographic description is accurate: Theorem 7 gives a pairwise Borda statement, while Corollary 8 states full-center recovery under a sample requirement in both components. The published bound uses asymptotic notation; the prover does not claim that this establishes the question’s explicit constant. [Published paper, Section 4.2](https://proceedings.mlr.press/v139/collas21a/collas21a.pdf)</p><p><b>Finding:</b> The transfer argument is complete. The cited results serve as background, rather than an unverified premise of the counterexample.</p><h3>3. Counterexample: hypotheses and threshold</h3><p>All chosen parameters satisfy the task:</p><ul><li>\(m=n=4&gt;3\) and \(1\leq k=2&lt;4\).</li><li>\(\sigma_0=(1,2,4,3)\) is a strict complete center.</li><li>\(0&lt;r=1/2&lt;1\).</li><li>\(0&lt;\theta_b=\log 1000&lt;\theta_g=\log 2000&lt;\infty\).</li><li>\(0&lt;\epsilon=1/10&lt;1\).</li></ul><p>A fixed label sequence with six ballots from each component has positive probability. Conditional on that sequence, the ballots remain independent with their respective component distributions.</p><p>For the Kendall Mallows model, the stated insertion argument correctly gives<br>\[
+Z_4(q)=(1+q)(1+q+q^2)(1+q+q^2+q^3).
+\]<br>Each factor is bounded above by \((1-q)^{-1}\) for \(0&lt;q&lt;1\). Taking reciprocals yields<br>\[
+\Pr[\text{complete ranking}=\sigma_0]\geq(1-q)^3\geq1-3q.
+\]</p><p>The bound on \(\Delta\) is valid. The first inclusion probability is at most one, and exclusion of the second center alternative from the first two positions implies that the complete ranking differs from the center. Thus \(\Delta\leq3q_b\).</p><p>Because \(0&lt;1-q_b^4&lt;1\),<br>\[
+D\geq4(1-q_b)^2-12q_b=3.980004&gt;3.9.
+\]<br>The decimal calculation is exact, and it proves both positivity and \(D\neq0\). No assumption that \(\Delta\) is nonnegative is needed.</p><p>The threshold calculation also checks:<br>\[
+\frac{32\log 10}{D^2}
+&lt;\frac{80}{3.9^2}
+\approx5.2597&lt;6.
+\]<br>Hence both component counts satisfy the literal sampling condition.</p><p><b>Finding:</b> The counterexample meets every relevant hypothesis, including the threshold.</p><h3>4. Counterexample: recovery failure</h3><p>Both components have \(q\leq1/1000\), so each complete ballot equals the center with probability at least \(0.997\).</p><p>Conditional on the fixed labels, the union bound correctly gives<br>\[
+\Pr[F\mid\text{component labels}]\geq1-12(0.003)=0.964.
+\]<br>Independence is not needed for this bound.</p><p>On \(F\), all observed prefixes are \((1,2)\). The resulting society has mass one on that ballot and satisfies the integrality promise for \(M=12\). Its scores are exactly \(2,1,0,0\) for labels \(1,2,3,4\).</p><p>The prescribed tie-break therefore returns \((1,2,3,4)\), which differs from \(\sigma_0\). Recovery is consequently contained in the complement of \(F\), giving<br>\[
+\Pr[\widehat{\sigma}=\sigma_0\mid\text{component labels}]\leq0.036&lt;0.9.
+\]</p><p>This is a repeated-sampling probability calculation, not an inference from one observed society. It directly refutes the universal recovery guarantee under the stated threshold.</p><p><b>Finding:</b> The statistical counterexample is valid and complete.</p><h3>5. Actionable feedback</h3><p>No repair or additional mathematical clarification is required. The write-up correctly distinguishes efficient computation, preservation of recovery events, and failure of the literal statistical bound. It resolves the task by establishing polynomial-time computation while demonstrating that the attached guarantee cannot hold as stated.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

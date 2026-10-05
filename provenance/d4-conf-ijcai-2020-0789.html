@@ -1,0 +1,499 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ijcai-2020-0789 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ijcai-2020-0789 <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2020-0789)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite assignment and resource sets, rational rewards and resource uses, per-capita budgets, a finite horizon \(T\), and an explicit finite rational distribution for each stage’s arrival-mass vector \(\Xi_t\), choose offline assignment masses \(x_e\) before arrivals and online assignment masses \(z_{e,t}\) after observing the current arrivals and past history. Each person receives an integral assignment, while aggregate masses may be fractional; all assignments must obey shared resource budgets at every stage. What is the best competitive ratio achievable in polynomial time against a clairvoyant fluid allocator that sees the full arrival path?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(E^1\) be repeatable offline assignments and \(E^2=\bigsqcup_{j\in J}E^2_j\) online assignments available to type \(j\); put \(m=|E^1|+|E^2|\). Rewards \(w_e&gt;0\), resource uses \(a_{e,k}\in[0,1]\), and per-capita budgets \(b_k&gt;0\) are binary rationals. Every offline assignment consumes some resource; there are no offline supply constraints beyond budgets.<br>Partition the \(K\) resources into nonempty sets \(\mathcal K_1,\mathcal K_2\), with \(a_{e,k}\in\{0,1\}\) on \(\mathcal K_1\). Each assignment uses at most \(\ell_i\) resources in \(\mathcal K_i\); assume \(\ell=\ell_1+\ell_2\ge1\) and \(B=\min_{k\in\mathcal K_2}b_k&gt;2\). Budgets and aggregate allocations may be fractional for either resource class.<br>A society is given by its support: the list of the \(\tau\) types with positive mass, each with its mass as a binary rational; \(\tau\) is the support size, not the number of possible types. Use one mass unit as the population reference for all budgets and allocations.<br>For each \(t\in\{1,\ldots,T\}\), an explicit finite distribution with positive rational probabilities specifies \(\Xi_t\in\mathbb Q_{\ge0}^{J}\), with \(\sum_j\Xi_{j,t}=1\). These vectors are sampled independently across stages; \(\tau\) counts types having positive mass in some listed outcome. Let \(S\) be the total number of listed outcomes and \(L\) the total input bit length.<br>Before any arrivals, choose \(x_e\ge0\) for \(e\in E^1\). After observing \(\Xi_t\) and the past, irrevocably choose \(z_{e,t}\ge0\), satisfying \(\sum_{e\in E^2_j}z_{e,t}\le\Xi_{j,t}\). Unassigned mass is rejected immediately. These masses partition atomless populations into people receiving one whole assignment or rejection.<br>For every realized history and every \(t\), require \(\sum_{e\in E^1}a_{e,k}x_e+\sum_{s=1}^{t}\sum_{e\in E^2}a_{e,k}z_{e,s}\le b_k\) for every resource \(k\). Reward is \(\sum_{e\in E^1}w_ex_e+\sum_{t=1}^{T}\sum_{e\in E^2}w_ez_{e,t}\).<br>Let \(\mathrm{OPT}(\Xi_1,\ldots,\Xi_T)\) maximize this reward under the same constraints, allowing even \(x\) to depend on the entire arrival path. A policy&#x27;s competitive ratio is \(\inf_{\mathcal I}\mathbb E[\mathrm{ALG}(\mathcal I)]/\mathbb E[\mathrm{OPT}(\mathcal I)]\), over instances with positive denominator and the specified parameter values; expectation includes policy randomness. Polynomial time means total running time polynomial in \(m,\tau,K,T,S,L\).</p><p>What is the best worst-case competitive ratio achievable by polynomial-time policies for this fluid allocation problem, as a function of \(\ell_1,\ell_2,B,T\)?</p><p>For discrete assignments and independent single-person arrivals, a polynomial-time policy guarantees \((1-\varepsilon)/(4\ell)\), where \(\varepsilon=2\max\{1/(B-2),\ell_2\exp(-B/12+1/6)\}\), against an LP upper bound on expected clairvoyant reward. [Xu et al.](https://www.ijcai.org/proceedings/2020/0581.pdf)<br>For fractional vertex-weighted stochastic matching with independent, nonidentically distributed arrivals, a \(0.718\) guarantee and a \(0.75\) upper bound are known; this is a restricted allocation model. [Tang et al.](https://arxiv.org/abs/2204.06851)<br>No result settling the full fluid model above was identified in the search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified positive rewards, nonnegative resource uses bounded by one, and positive budgets, following the discrete domains.</li><li>Retained the two resource classes and their sparsities; their names constrain consumption coefficients, while fluid per-capita budgets need not be integers.</li><li>Normalized every arrival society to mass one, matching the discrete model&#x27;s one arrival per round, and made the stage vectors independent.</li><li>Interpreted offline assignments as freely repeatable activities constrained only by resources, rather than adding an offline population cap absent from the discrete definition.</li><li>Excluded positive-reward offline assignments consuming no resources, which would make the intended optimization unbounded.</li><li>Required B greater than two so the anchor&#x27;s budget-dependent expression is defined in its intended large-budget regime.</li><li>Made rejection immediate, decisions irrevocable, and resource feasibility pathwise at every stage; fractional aggregate allocations partition atomless people into whole assignments.</li><li>Defined the clairvoyant benchmark to choose offline masses after seeing the full path and excluded zero expected benchmark reward from ratio calculations.</li><li>Defined support size across the listed arrival outcomes and included distribution support size and total bit length in the polynomial-time requirement.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial results: improved guarantees and stronger obstructions</h3><h3>1. Status and notation</h3><p>The best competitive ratio for the full model remains unresolved. I prove an improved lower bound, two stronger upper-bound constructions, and the exact special cases stated below.</p><p>Let<br>$$
+R_{\mathrm{poly}}(\ell_1,\ell_2,B,T)
+$$<br>denote the supremum of competitive ratios of policies whose total running time is polynomial in the parameters specified in the question. The sparsity parameters are interpreted as nonnegative integers, and $T$ is a positive integer.</p><p>Define<br>$$
+Q_B(\beta)
+=
+\exp\left(
+-\frac{B}{\beta}
+\bigl(\log(1/\beta)-1+\beta\bigr)
+\right),
+\qquad 0&lt;\beta&lt;1,
+$$<br>and<br>$$
+\Psi(\ell_1,\ell_2,B)
+=
+\sup_{0&lt;\beta&lt;1}
+\left[
+\frac{\beta-\ell_2Q_B(\beta)}
+{1+\ell_1\beta}
+\right]_+.
+$$<br>Here $[u]_+=\max\{u,0\}$.</p><p>The general lower bound proved here is<br>$$
+R_{\mathrm{poly}}(\ell_1,\ell_2,B,T)
+\ge
+\max\left\{
+\frac1{\ell_1+\ell_2+1},
+H(\ell_1,B,T),
+\Psi(\ell_1,\ell_2,B)
+\right\},
+$$<br>where<br>$$
+H(\ell_1,B,T)
+=
+\begin{cases}
+1/(T+1),&amp;\ell_1\ge1,\\
+B/(B+T),&amp;\ell_1=0.
+\end{cases}
+$$</p><p>The new lower bound $\Psi$ yields, for every fixed $\ell_2$,<br>$$
+\lim_{B\to\infty}
+R_{\mathrm{poly}}(1,\ell_2,B,T)=\frac12
+$$<br>uniformly over positive integer horizons $T$.</p><p>The upper-bound constructions establish two additional facts:</p><ul><li>The full fluid model does <b>not</b> admit a universal competitive ratio of $1/2$. Explicit instances below give an upper bound of $4/9$ for sufficiently large first-class sparsity and horizon.</li><li>Even when $\ell_1=0$ and $\ell_2=1$, for integer $B\ge3$ and $T\ge2B$,</li></ul><p>$$
+  R_{\mathrm{poly}}(0,1,B,T)
+  \le
+  1-\frac1{8\sqrt B}.
+  $$<br>Thus a guarantee with loss of order $1/B$, uniformly over $T$, is impossible in this restricted case.</p><p>All upper bounds hold without computational restrictions.</p><h3>2. A polynomial-size upper-bounding LP</h3><p>Merge identical listed outcomes within each stage. Let $O_t$ be the resulting outcome set, with probabilities $p_{t,o}$ and arrival vectors $\xi^{t,o}$. An observed vector then identifies its outcome.</p><p>For an allocation vector $v$, write<br>$$
+A_k(v)=\sum_e a_{e,k}v_e.
+$$</p><p>Consider the LP<br>$$
+\max\quad
+\sum_{e\in E^1}w_ex_e
++
+\sum_{t,o}p_{t,o}
+\sum_{e\in E^2}w_ey_e^{t,o},
+$$<br>subject to nonnegativity and<br>$$
+\sum_{e\in E_j^2}y_e^{t,o}\le\xi_j^{t,o}
+\qquad\text{for every }j,t,o,
+$$<br>$$
+A_k(y^{t,o})\le b_k
+\qquad\text{for every }k,t,o,
+$$<br>$$
+A_k(x)+
+\sum_{t,o}p_{t,o}A_k(y^{t,o})
+\le b_k
+\qquad\text{for every }k.
+$$<br>Let its optimum be $V$, and fix an optimal solution $(x^*,y^*)$.</p><p><b>Claim.</b><br>$$
+V\ge\mathbb E[\mathrm{OPT}].
+$$</p><p><b>Proof.</b> The arrival-path space is finite. On every path choose a clairvoyant optimum. Set $x$ equal to its expected offline allocation and set<br>$$
+y_e^{t,o}
+=
+\mathbb E[z_{e,t}^{\mathrm{OPT}}\mid O_t=o].
+$$<br>Conditional expectation preserves type-supply constraints. Every individual stage consumes at most $b_k$ on every path, because consumption is nonnegative and total consumption is feasible. This establishes the outcome-specific resource constraints. Taking expectations of final consumption establishes the aggregate constraints.</p><p>The objective of this projected solution is exactly $\mathbb E[\mathrm{OPT}]$. Consequently, $V$ is an upper bound. $\square$</p><p>The LP has at most $|E^1|+S|E^2|$ variables and polynomially many constraints. Every offline variable is bounded because its assignment has a positive resource coefficient: if $a_{e,k}&gt;0$, then $x_e\le b_k/a_{e,k}$. Every online variable is at most one. All coefficients have polynomial encoding length. Thus the standard polynomial-time theorem for rational linear programming applies.</p><h3>3. Attenuation after clipping</h3><h3>3.1 A feasibility and availability argument</h3><p>Fix rational constants $0&lt;c\le\beta&lt;1$. Choose the offline allocation $cx^*$.</p><p>Before stage $t$, let $r_{k,t}$ be the remaining budget, and put<br>$$
+F_{e,t}
+=
+\min\left\{
+1,\ 
+\min_{\substack{k\in\mathcal K_1\\a_{e,k}&gt;0}}
+\frac{r_{k,t}}{\beta b_k}
+\right\}.
+$$<br>An empty inner minimum imposes no restriction.</p><p>Let $G_{e,t}$ equal one when<br>$$
+r_{k,t}\ge\beta
+$$<br>for every second-class resource used by $e$, and zero otherwise. Define<br>$$
+H_{e,t}=F_{e,t}G_{e,t},
+\qquad
+q_{e,t}=\mathbb E[H_{e,t}].
+$$<br>The expectation is over past arrivals under the policy already specified at earlier stages.</p><p>Suppose constants $d_{e,t}\ge c/\beta$ have been fixed. On observing outcome $o$, allocate<br>$$
+z_{e,t}
+=
+\frac{c}{d_{e,t}}\,y_e^{t,o,*}H_{e,t}.
+$$</p><p>This policy is feasible on every history, irrespective of the accuracy of the constants $d_{e,t}$.</p><p>Indeed, $c/d_{e,t}\le\beta$, so type supply is respected. For a first-class resource $k$, every assignment using it satisfies<br>$$
+z_{e,t}\le
+\frac{r_{k,t}}{b_k}y_e^{t,o,*}.
+$$<br>Therefore<br>$$
+\sum_e a_{e,k}z_{e,t}
+\le
+\frac{r_{k,t}}{b_k}A_k(y^{t,o,*})
+\le r_{k,t}.
+$$</p><p>For a second-class resource $k$, if $r_{k,t}&lt;\beta$, all allocations using it are zero. Otherwise the entire stage consumes at most $\beta$, since<br>$$
+\sum_e y_e^{t,o,*}\le1,
+\qquad
+a_{e,k}\le1,
+\qquad
+z_{e,t}\le\beta y_e^{t,o,*}.
+$$<br>Thus its consumption is also at most $r_{k,t}$.</p><p>We next lower-bound $q_{e,t}$. Assume inductively that preceding stages satisfy<br>$$
+\mathbb E[z_{e,s}\mid O_s=o]\le c\,y_e^{s,o,*}.
+$$<br>Write $U_{k,t}=b_k-r_{k,t}$. The LP gives<br>$$
+\mathbb E[U_{k,t}]
+\le
+c\left(
+A_k(x^*)+
+\sum_{s&lt;t,o}p_{s,o}A_k(y^{s,o,*})
+\right)
+\le cb_k.
+$$</p><p>For $u\in[0,1]$ and $\beta\le1$,<br>$$
+1-\min\{1,(1-u)/\beta\}\le u.
+$$<br>When $u\le1-\beta$, the left side is zero. Otherwise the desired inequality is equivalent to<br>$$
+u-(1-\beta)\le\beta u,
+$$<br>which follows from $u\le1$.</p><p>Applying this inequality to each first-class resource used by $e$ yields<br>$$
+\mathbb E[1-F_{e,t}]\le\ell_1c.
+$$</p><p>For a second-class resource $k$, put<br>$$
+D=A_k(x^*),
+\qquad
+V_s=A_k(y^{s,O_s,*}).
+$$<br>The variables $V_s$ are independent, lie in $[0,1]$, and satisfy<br>$$
+\sum_{s&lt;t}\mathbb E[V_s]\le b_k-D.
+$$<br>The interval bound follows from total arriving mass one and coefficients at most one.</p><p>Because $c\le\beta$ and all online allocations are pointwise at most $\beta y^*$,<br>$$
+U_{k,t}\le
+\beta\left(D+\sum_{s&lt;t}V_s\right).
+$$<br>Consequently,<br>$$
+r_{k,t}&lt;\beta
+\quad\Longrightarrow\quad
+D+\sum_{s&lt;t}V_s&gt;b_k/\beta-1.
+$$</p><p>For $\theta&gt;0$, convexity gives<br>$$
+e^{\theta v}\le1+v(e^\theta-1)
+\qquad(0\le v\le1).
+$$<br>Independence and exponential Markov inequality imply<br>$$
+\begin{aligned}
+\Pr(r_{k,t}&lt;\beta)
+&amp;\le
+\exp\left(
+\theta+\theta D-\theta b_k/\beta
++(e^\theta-1)(b_k-D)
+\right)\\
+&amp;\le
+\exp\left(
+\theta+b_k(e^\theta-1-\theta/\beta)
+\right).
+\end{aligned}
+$$<br>The last step uses $\theta-(e^\theta-1)\le0$ and $D\ge0$.</p><p>Taking $\theta=\log(1/\beta)$ gives<br>$$
+\Pr(r_{k,t}&lt;\beta)
+\le
+\frac1\beta
+\exp\left(
+-\frac{b_k}{\beta}
+\bigl(\log(1/\beta)-1+\beta\bigr)
+\right)
+\le
+\frac{Q_B(\beta)}{\beta}.
+$$<br>The final inequality uses $b_k\ge B$ and<br>$$
+\log(1/\beta)-1+\beta&gt;0.
+$$</p><p>Using<br>$$
+FG\ge1-(1-F)-(1-G)
+$$<br>and a union bound over the second-class resources used by $e$, we conclude<br>$$
+q_{e,t}
+\ge
+1-\ell_1c-\frac{\ell_2Q_B(\beta)}{\beta}.
+$$<br>In particular, if<br>$$
+0&lt;c\le
+\frac{\beta-\ell_2Q_B(\beta)}
+{1+\ell_1\beta},
+$$<br>then<br>$$
+q_{e,t}\ge c/\beta.
+$$</p><p>Since $H_{e,t}$ depends only on the past, stage independence gives<br>$$
+\mathbb E[z_{e,t}\mid O_t=o]
+=
+c\,y_e^{t,o,*}\frac{q_{e,t}}{d_{e,t}}.
+$$<br>Thus the ideal choice $d_{e,t}=q_{e,t}$ would give expected allocation exactly $cy_e^{t,o,*}$, closing the induction.</p><h3>3.2 Polynomial-time approximation of the attenuation constants</h3><p>Exact computation of $q_{e,t}$ by enumerating histories is unnecessary.</p><p>Fix rational $\delta\in(0,1)$ and let<br>$$
+\eta=\delta c/6.
+$$<br>Construct the constants before actual arrivals, proceeding through stages in order. Once the earlier constants have been fixed, simulate independent arrival prefixes under that policy and estimate every $q_{e,t}$ by a sample mean $\widehat q_{e,t}$.</p><p>Round upward on a dyadic mesh of size at most $\eta$ and set<br>$$
+d_{e,t}
+=
+\max\left\{
+c/\beta,\ 
+\text{upward rounding of }\widehat q_{e,t}+\eta
+\right\}.
+$$</p><p>If preceding estimates were accurate and<br>$$
+|\widehat q_{e,t}-q_{e,t}|\le\eta,
+$$<br>then the availability argument gives<br>$$
+q_{e,t}\le d_{e,t}\le q_{e,t}+3\eta.
+$$<br>Since $q_{e,t}\ge c/\beta\ge c$,<br>$$
+1-\delta/2
+\le
+\frac{q_{e,t}}{d_{e,t}}
+\le1.
+$$<br>Therefore<br>$$
+c(1-\delta/2)y_e^{t,o,*}
+\le
+\mathbb E[z_{e,t}\mid O_t=o]
+\le
+cy_e^{t,o,*}.
+$$</p><p>Here are the computational details.</p><p>A simulated prefix can be sampled with a fixed number of random bits. Inverse-CDF sampling on a sufficiently fine dyadic grid gives total variation error at most $\eta/2$ for the prefix distribution. Since $H_{e,t}\in[0,1]$, this changes its expectation by at most $\eta/2$. Polynomially many bits suffice: a grid with stagewise errors summing to at most $\eta/2$ can be chosen using $S$ and $\eta$.</p><p>For $N_{\mathrm{sim}}$ independent simulated prefixes, Hoeffding’s inequality gives<br>$$
+\Pr\left(
+|\widehat q_{e,t}-\mathbb E[\widehat q_{e,t}]|&gt;\eta/2
+\right)
+\le
+2e^{-N_{\mathrm{sim}}\eta^2/2}.
+$$<br>Taking<br>$$
+N_{\mathrm{sim}}
+=
+O\left(
+\eta^{-2}\log\frac{mT+1}{\delta}
+\right)
+$$<br>makes the probability of any inaccurate estimate at any stage at most $\delta/2$. Fresh samples justify this bound conditional on previously fixed preprocessing constants.</p><p>All stored constants have polynomial encoding length because of dyadic rounding. With those constants fixed, each resource update is piecewise affine with rational coefficients: a clipping minimum selects either a constant or one normalized remaining budget, and a blocking indicator selects zero or one. There are polynomially many possible coefficients, indexed by stages, listed outcomes, assignments, and resources. A common denominator for these coefficients has polynomial bit length; after at most $T$ updates, denominators divide its $T$th power times the initial denominator. Thus simulations and actual allocations use polynomial-bit rational arithmetic.</p><p>Conditional on any accurate preprocessing result, expected reward is at least<br>$$
+c(1-\delta/2)V.
+$$<br>Actual arrivals are independent of preprocessing randomness. On inaccurate preprocessing results the policy remains feasible and has nonnegative reward. Hence<br>$$
+\mathbb E[\mathrm{ALG}]
+\ge
+(1-\delta/2)^2cV
+\ge
+(1-\delta)c\,\mathbb E[\mathrm{OPT}].
+$$</p><p>The running time is polynomial in the input parameters, $1/\delta$, and $1/c$. The reciprocal dependence on $c$ is handled by the sparsity guarantee proved next: candidate guarantees below $1/(K+1)$ can be discarded, while every retained candidate has $1/c\le K+1$.</p><h3>3.3 The sparsity guarantee and the resulting supremum</h3><p>For completeness, the same simulation argument proves the baseline guarantee.</p><p>Put<br>$$
+h=\min\{\ell_1+\ell_2,K\},
+\qquad
+c_0=\frac1{h+1}.
+$$<br>Choose offline allocation $c_0x^*$ and use<br>$$
+g_{e,t}
+=
+\min_{k:a_{e,k}&gt;0}\frac{r_{k,t}}{b_k},
+$$<br>with $g_{e,t}=1$ for resource-free assignments. Allocate<br>$$
+z_{e,t}
+=
+\frac{c_0}{d_{e,t}}y_e^{t,o,*}g_{e,t},
+\qquad d_{e,t}\ge c_0.
+$$<br>The outcome-specific resource constraints imply feasibility.</p><p>Under the inductive expected-allocation upper bound,<br>$$
+\begin{aligned}
+\mathbb E[g_{e,t}]
+&amp;\ge
+1-\sum_{k:a_{e,k}&gt;0}
+\frac{\mathbb E[U_{k,t}]}{b_k}\\
+&amp;\ge1-hc_0=c_0.
+\end{aligned}
+$$<br>The simulation construction above, now with minimum constant $c_0$, gives competitive ratio $(1-\delta)c_0$ in polynomial time. In particular,<br>$$
+R_{\mathrm{poly}}\ge
+\frac1{\ell_1+\ell_2+1}.
+$$</p><p>For the mixed-resource bound, rational $\beta$ and rational $c$ strictly below the positive expression in Section 3.1 suffice. Their attainable ratios approach $\Psi$.</p><p>This can also be implemented uniformly. For any fixed rational $\beta$, compute a downward rational approximation to the expression with error at most a prescribed constant times $c_0$. The required precision is polynomial in the input length and $\log(1/\delta)$; standard polynomial-time approximation of $\log$ and $\exp$ supplies it, with sufficiently small exponential terms replaced by certified upper bounds. If the candidate is below $c_0$, use the baseline policy. Otherwise $1/c\le K+1$, so the simulation bound is polynomial in the specified input parameters. Continuity in $\beta$ and density of rational choices then establish the stated supremal bound $\Psi$.</p><h3>4. Consequences of the improved lower bound</h3><p>Fix $\ell_1,\ell_2$ and $\beta&lt;1$. Because<br>$$
+\log(1/\beta)-1+\beta&gt;0,
+$$<br>we have $Q_B(\beta)\to0$ as $B\to\infty$. Consequently,<br>$$
+\liminf_{B\to\infty}
+R_{\mathrm{poly}}(\ell_1,\ell_2,B,T)
+\ge
+\frac{\beta}{1+\ell_1\beta}.
+$$<br>The bound is independent of $T$. Letting $\beta$ increase to one gives the uniform lower bound<br>$$
+\liminf_{B\to\infty}
+R_{\mathrm{poly}}(\ell_1,\ell_2,B,T)
+\ge
+\frac1{\ell_1+1}.
+$$</p><p>Section 5 proves $R_{\mathrm{poly}}\le1/2$ whenever $\ell_1\ge1$. Thus, for $\ell_1=1$ and fixed $\ell_2$,<br>$$
+R_{\mathrm{poly}}(1,\ell_2,B,T)\longrightarrow\frac12
+$$<br>uniformly over $T$.</p><p>For $\ell_1=0$ and fixed $\ell_2$, the same argument gives convergence to one, also uniformly over $T$, since no policy can outperform the clairvoyant optimum on a realized path.</p><h3>5. Horizon bounds, universal upper bounds, and exact cases</h3><h3>5.1 Horizon-dependent policies</h3><p>Let $D$ be the optimal reward using offline assignments alone. For each stage and outcome, let $H_t(o)$ be the optimal reward using that stage alone with the full budgets.</p><p>Every clairvoyant solution satisfies<br>$$
+\mathrm{OPT}\le D+\sum_tH_t(O_t),
+$$<br>because each component is separately feasible with the full budgets.</p><p>Choose $1/(T+1)$ times an optimal offline allocation. At each stage choose $1/(T+1)$ times an optimal standalone allocation for its observed outcome. Each of these $T+1$ components consumes at most $b_k/(T+1)$, so the policy is feasible and guarantees $1/(T+1)$. All standalone problems are polynomial-size rational LPs.</p><p>If $\ell_1=0$, define $U_t(o)$ by assigning each arriving type to its highest-reward available assignment while ignoring budgets. Types with no available assignment are rejected and contribute zero. Such a stage allocation consumes at most one unit of every resource.</p><p>Use the scaling factor<br>$$
+c_B=\frac{B}{B+T}.
+$$<br>Choose $c_B$ times an optimal offline allocation and, at each stage, $c_B$ times the allocation defining $U_t(o)$. Each second-class resource has total consumption at most<br>$$
+c_Bb_k+c_BT
+\le
+c_Bb_k(1+T/B)=b_k.
+$$<br>First-class consumption is zero. Since<br>$$
+\mathrm{OPT}\le D+\sum_tU_t(O_t),
+$$<br>this policy guarantees $B/(B+T)$.</p><h3>5.2 Universal upper bounds</h3><p>Use one active resource with capacity $C\ge1$. There is one offline assignment with unit cost and unit reward.</p><p>At one online stage, with probability $p$, a unit mass arrives with a unit-cost assignment of reward $1/p$. Otherwise only an unassignable type arrives. Other stages contain only the unassignable type.</p><p>For every offline choice $x\in[0,C]$, expected policy reward is at most<br>$$
+x+\min\{1,C-x\}\le C.
+$$<br>Conditioning on $x$ proves the same upper bound for randomized policies.</p><p>Clairvoyance earns $C$ in the low outcome and $C-1+1/p$ in the high outcome. Therefore<br>$$
+\mathbb E[\mathrm{OPT}]=C+1-p.
+$$<br>Taking dyadic rational probabilities $p\to0$ gives the upper bound $C/(C+1)$.</p><p>If $\ell_1\ge1$, put the active resource in $\mathcal K_1$ with $C=1$ and add an unused second-class resource of budget $B$. If $\ell_1=0$, put it in $\mathcal K_2$ with $C=B$ and add an unused first-class resource. Hence<br>$$
+R_{\mathrm{poly}}(\ell_1,\ell_2,B,T)
+\le
+\begin{cases}
+1/2,&amp;\ell_1\ge1,\\
+B/(B+1),&amp;\ell_1=0.
+\end{cases}
+$$</p><h3>5.3 Exact cases</h3><p>For $T=1$, the lower and upper bounds coincide:<br>$$
+R_{\mathrm{poly}}(\ell_1,\ell_2,B,1)
+=
+\begin{cases}
+1/2,&amp;\ell_1\ge1,\\
+B/(B+1),&amp;\ell_1=0.
+\end{cases}
+$$<br>The explicit scaling policies attain these ratios.</p><p>For $(\ell_1,\ell_2)=(1,0)$, the sparsity attenuation policy can be implemented exactly. Take $c=1/2$. An assignment using resource $k$ has<br>$$
+g_{e,t}=r_{k,t}/b_k.
+$$<br>Inductively, its exact expectation is<br>$$
+q_{e,t}
+=
+1-\frac{c}{b_k}
+\left(
+A_k(x^*)+
+\sum_{s&lt;t,o}p_{s,o}A_k(y^{s,o,*})
+\right).
+$$<br>The LP implies $q_{e,t}\ge1-c=c$. Setting $d_{e,t}=q_{e,t}$ gives<br>$$
+\mathbb E[z_{e,t}\mid O_t=o]=cy_e^{t,o,*},
+$$<br>which closes the induction. Resource-free assignments use $q_{e,t}=1$. These constants and updates have polynomial rational encoding length.</p><p>Thus a deterministic polynomial-time policy attains $1/2$, and<br>$$
+R_{\mathrm{poly}}(1,0,B,T)=\frac12
+$$<br>for every positive integer $T$.</p><h3>6. A fractional packing obstruction below one half</h3><p>The following construction uses a row-selection idea familiar from prophet-inequality lower bounds. The packing representation and the analysis of fractional allocations are proved here; an integral row-selection argument alone would not suffice. [Kleinberg and Weinberg, Section 5](https://arxiv.org/html/1201.4764#S5)</p><p>Fix integers $d\ge2$, $N\ge1$, and a rational probability $p\in(0,1)$. Let the active resource capacity be $C\ge1$.</p><p>There are $N$ rows, each containing $d$ assignments. Assignment $(r,c)$ has reward one and its own online type. There are no offline assignments.</p><p>For every tuple<br>$$
+u=(u_1,\ldots,u_N)\in\{1,\ldots,d\}^N,
+$$<br>create a resource of budget $C$. Assignment $(r,c)$ uses this resource with coefficient one exactly when $u_r=c$.</p><p>Thus each assignment uses precisely<br>$$
+d^{N-1}
+$$<br>resources.</p><p>Process the $Nd$ assignments in row order. At the stage for $(r,c)$, its type arrives with unit mass with probability $p$; otherwise an unassignable type arrives. All stages are independent. Let $H_{r,c}$ be the corresponding Bernoulli indicator and $Z_{r,c}$ the allocated mass. Then<br>$$
+0\le Z_{r,c}\le H_{r,c}.
+$$</p><h3>6.1 Exact characterization of fractional feasibility</h3><p>Define<br>$$
+M_r=\max_{1\le c\le d}Z_{r,c}.
+$$<br>The resource constraints are equivalent to<br>$$
+\sum_{r=1}^N M_r\le C.
+$$</p><p>Indeed, every resource constraint has the form<br>$$
+\sum_r Z_{r,u_r}\le C.
+$$<br>If $\sum_rM_r\le C$, all these constraints hold. Conversely, choose $u_r$ attaining the maximum in each row. The corresponding resource constraint gives $\sum_rM_r\le C$.</p><p>This equivalence holds for arbitrary fractional allocations.</p><h3>6.2 Upper bound on every online policy</h3><p>Let<br>$$
+M_{r,c}=\max_{1\le i\le c}Z_{r,i},
+\qquad
+M_{r,0}=0,
+$$<br>and<br>$$
+\Delta_{r,c}=M_{r,c}-M_{r,c-1}\ge0.
+$$<br>Pointwise,<br>$$
+Z_{r,c}\le H_{r,c}M_{r,c-1}+\Delta_{r,c}.
+$$<br>When $H_{r,c}=0$, both $Z_{r,c}$ and $\Delta_{r,c}$ are zero. When $H_{r,c}=1$, the right side equals $M_{r,c}$.</p><p>The variable $M_{r,c-1}$ depends only on the past and policy randomness, so it is independent of $H_{r,c}$. Hence<br>$$
+\mathbb E[Z_{r,c}]
+\le
+p\,\mathbb E[M_{r,c-1}]
++
+\mathbb E[\Delta_{r,c}].
+$$<br>Summing within a row, using $M_{r,c-1}\le M_r$ and $M_{r,0}=0$, gives<br>$$
+\sum_{c=1}^d\mathbb E[Z_{r,c}]
+\le
+\bigl(1+(d-1)p\bigr)\mathbb E[M_r].
+$$<br>Finally, fractional feasibility implies<br>$$
+\mathbb E[\mathrm{ALG}]
+\le
+C\bigl(1+(d-1)p\bigr).
+$$</p><h3>6.3 A parameter-dependent upper-bound family</h3><p>Choose integers $q\ge2$, $r\ge1$, and put<br>$$
+p=1/q,
+\qquad
+h=\lceil C\rceil,
+\qquad
+N=hrq^d.
+$$<br>Assume $h2^{-r}&lt;1$.</p><p>Partition the rows into $h$ groups of $rq^d$ rows. A row has all $d$ assignments available with probability $q^{-d}$. The probability that one group contains no such row is<br>$$
+(1-q^{-d})^{rq^d}&lt;2^{-r}.
+$$<br>To justify the inequality, for an integer $a\ge2$,<br>$$
+(1-1/a)^{-a}
+=
+(1+1/(a-1))^a
+&gt;
+1+\frac{a}{a-1}&gt;2.
+$$<br>Take $a=q^d$ and raise the resulting bound to the $r$th power.</p><p>A union bound shows that, with probability at least $1-h2^{-r}$, there are at least $h$ completely available rows. On this event clairvoyance assigns unit mass in $\lfloor C\rfloor$ such rows and mass $C-\lfloor C\rfloor$ in one additional row if needed. This is feasible and earns $Cd$.</p><p>Therefore<br>$$
+\mathbb E[\mathrm{OPT}]
+\ge
+Cd(1-h2^{-r}),
+$$<br>and every policy has ratio at most<br>$$
+\boxed{
+\frac{1+(d-1)/q}
+{d(1-h2^{-r})}.
+}
+$$</p><p>There are two valid embeddings into the task’s model:</p><ul><li>Put all active resources in $\mathcal K_1$ with $C=1$. This applies when</li></ul><p>$$
+  \ell_1\ge d^{rq^d-1},
+  \qquad
+  T\ge drq^d.
+  $$<br>Add an unused second-class resource of budget $B$.</p><ul><li>Put all active resources in $\mathcal K_2$ with $C=B$. This applies when</li></ul><p>$$
+  \ell_2\ge d^{\lceil B\rceil rq^d-1},
+  \qquad
+  T\ge d\lceil B\rceil rq^d.
+  $$<br>Add an unused first-class resource.</p><p>Extra stages contain only unassignable mass. The resource list is explicit, although extremely large. Thus this is a valid family of finite inputs, rather than a succinctly represented resource system.</p><p>For example, take $C=1$, $d=3$, $q=8$, and $r=4$. Then<br>$$
+N=2048,
+\qquad
+Nd=6144,
+$$<br>and the upper bound is<br>$$
+\frac{1+2/8}{3(1-1/16)}=\frac49.
+$$<br>Consequently,<br>$$
+R_{\mathrm{poly}}(\ell_1,\ell_2,B,T)\le\frac49
+$$<br>whenever $\ell_1\ge3^{2047}$ and $T\ge6144$.</p><p>More generally, for fixed $C,d$, letting $q,r$ grow makes the displayed upper bound approach $1/d$. Taking $d$ arbitrarily large proves that no positive absolute competitive ratio is valid independently of sparsity and horizon. The construction does not give sharp dependence on sparsity: its required sparsity is very large.</p><h3>7. A square-root budget obstruction with one active resource</h3><p>Now suppose $\ell_1=0$, $\ell_2\ge1$, and $B=n$ is an integer at least three. Assume $T\ge2n$.</p><p>Use one active second-class resource of budget $n$, and an unused first-class resource. There is one offline assignment with unit cost and unit reward.</p><p>At each of the first $2n$ stages, independently, a unit mass of an online type arrives with probability $1/2$. Its only assignment has unit cost and reward two. Otherwise an unassignable type arrives. Remaining stages are unassignable.</p><p>Let<br>$$
+N\sim\operatorname{Bin}(2n,1/2)
+$$<br>be the number of assignable stages.</p><h3>7.1 Optimal online reward</h3><p>For an offline choice $x\in[0,n]$, set $s=n-x$. The online reward is at most $2\min\{N,s\}$. Thus expected total reward is at most<br>$$
+f(s)=n-s+2\mathbb E[\min\{N,s\}],
+\qquad 0\le s\le n.
+$$</p><p>For $s\in(j-1,j)$, where $1\le j\le n$,<br>$$
+f&#x27;(s)=-1+2\Pr(N\ge j).
+$$<br>Symmetry of the binomial distribution gives<br>$$
+\Pr(N\ge j)\ge\Pr(N\ge n)\ge\frac12.
+$$<br>Therefore $f$ is nondecreasing on $[0,n]$ and is maximized at $s=n$. This bounds randomized offline choices as well. Hence<br>$$
+\mathbb E[\mathrm{ALG}]
+\le
+2\mathbb E[\min\{N,n\}].
+$$<br>The bound is attained by choosing no offline allocation and accepting online mass until capacity is exhausted.</p><h3>7.2 Clairvoyant reward and the exact ratio bound</h3><p>Clairvoyance accepts $\min\{N,n\}$ online units and fills the remaining capacity offline. Its reward is<br>$$
+n+\min\{N,n\}.
+$$</p><p>Put<br>$$
+a_n=\frac{\binom{2n}{n}}{4^n}.
+$$<br>I claim<br>$$
+\mathbb E[|N-n|]=na_n.
+$$<br>By symmetry,<br>$$
+\mathbb E[|N-n|]
+=
+\frac2{4^n}
+\sum_{j=0}^{n-1}(n-j)\binom{2n}{j}.
+$$<br>Using the convention $\binom{2n-1}{-1}=0$, the identity<br>$$
+(n-j)\binom{2n}{j}
+=
+n\left(
+\binom{2n-1}{j}
+-
+\binom{2n-1}{j-1}
+\right)
+$$<br>makes the sum telescope. Since<br>$$
+\binom{2n-1}{n-1}
+=
+\frac12\binom{2n}{n},
+$$<br>the claim follows.</p><p>Again by symmetry,<br>$$
+\mathbb E[\min\{N,n\}]
+=
+n-\frac12na_n.
+$$<br>Thus every policy’s ratio on this instance is at most<br>$$
+\boxed{
+\frac{4-2a_n}{4-a_n}
+=
+1-\frac{a_n}{4-a_n}.
+}
+$$</p><p>Finally,<br>$$
+a_n\ge\frac1{2\sqrt n}.
+$$<br>For $n=1$ equality holds. The recurrence<br>$$
+\frac{a_{n+1}}{a_n}
+=
+\frac{2n+1}{2n+2}
+\ge
+\sqrt{\frac n{n+1}}
+$$<br>follows by squaring, because $(2n+1)^2\ge4n(n+1)$. Induction proves the bound.</p><p>Consequently,<br>$$
+\frac{a_n}{4-a_n}\ge\frac{a_n}{4}
+\ge\frac1{8\sqrt n},
+$$<br>and<br>$$
+\boxed{
+R_{\mathrm{poly}}(0,\ell_2,n,T)
+\le
+1-\frac1{8\sqrt n}
+\qquad
+(\ell_2\ge1,\ T\ge2n).
+}
+$$</p><p>For $n\ge64$, this is strictly stronger than $n/(n+1)$, because $n+1&gt;8\sqrt n$. This obstruction uses only one active resource and two supported online types.</p><h3>8. What remains open</h3><p>The proofs establish improved general lower bounds, stronger upper bounds in several parameter regimes, and exact finite-parameter answers for $T=1$ and $(\ell_1,\ell_2)=(1,0)$.</p><p>They do not determine the optimal general function. In particular, the multi-resource upper construction does not match the sparsity dependence of the lower bounds, and the one-resource budget construction leaves the optimal finite-$B$, horizon-dependent ratio undetermined.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 8 and the overall response to USER_TASK: The best general competitive-ratio function $R_{\mathrm{poly}}(\ell_1,\ell_2,B,T)$ is not determined. The output proves bounds and exact special cases, but supplies no matching characterization outside those cases. This is acknowledged scope incompleteness, not an error in the partial proofs.</li></ul>
+<div class="pre"><p>The output establishes substantial, sound partial results. I found no false central step or substantive gap in the proofs of its stated bounds and exact cases. It does <b>not</b> determine the best competitive ratio for the full parameter range requested in <code>USER_TASK</code>, and it explicitly acknowledges this limitation.</p><ul><li><b>Scope and parameter conventions</b></li></ul><p>Interpreting $\ell_1,\ell_2$ as nonnegative integers and $T$ as a positive integer is consistent with the intended task. In particular, $\ell_1=0$ implies $\ell_2\ge1$, so the constructions using a second-class resource are available whenever invoked.</p><p>The definition of $R_{\mathrm{poly}}$ uses a supremum over polynomial-time policies. This distinction matters: the simulation arguments establish arbitrarily close attainable guarantees, hence bounds on that supremum. They do not establish exact attainment of $\Psi$ or the general sparsity bound. The write-up respects this distinction; its exact-attainment claims concern separately specified policies.</p><p><b>Major scope limitation:</b> the general optimal function remains undetermined. This is an acknowledged incompleteness relative to <code>USER_TASK</code>, rather than a flaw in the partial results.</p><ul><li><b>Section 2: the upper-bounding LP</b></li></ul><p>The projection of a clairvoyant solution into the LP is valid.</p><ul><li>Averaging offline allocations preserves nonnegativity.</li><li>Conditioning online allocations on the current outcome preserves the corresponding type-supply constraints.</li><li>Nonnegative resource consumption ensures that an individual stage consumes at most the full budget on every feasible path. Therefore the outcome-specific resource constraints survive conditional expectation.</li><li>Taking expectations of final resource consumption yields the aggregate budget constraints.</li><li>The projected objective is exactly the expected clairvoyant reward.</li></ul><p>Thus<br>$$
+   V\ge\mathbb E[\mathrm{OPT}]
+   $$<br>is justified, including when the clairvoyant offline allocation depends on the entire path.</p><p>The polynomial-time LP claim also checks out. Offline variables are bounded because every offline assignment has a positive resource coefficient; online variables are bounded by their type supply, hence by one. The LP is feasible, has polynomial size, and has rational coefficients of polynomial encoding length. These are the relevant hypotheses for polynomial-time rational linear programming.</p><ul><li><b>Section 3.1: feasibility of the attenuated policy</b></li></ul><p>Feasibility holds independently of estimation accuracy.</p><p>From $d_{e,t}\ge c/\beta$,<br>$$
+   \frac{c}{d_{e,t}}\le\beta&lt;1.
+   $$<br>Since $H_{e,t}\in[0,1]$, scaling the LP allocation respects every type-supply constraint.</p><p>For a first-class resource, the definition of $F_{e,t}$ gives the stated assignmentwise bound. Summing it and applying the outcome-specific LP constraint bounds stage consumption by the remaining budget.</p><p>For a second-class resource, allocations using it vanish when its remaining budget is below $\beta$. Otherwise total stage consumption is at most $\beta$, because the LP allocation contains at most one unit of total mass and all resource coefficients are at most one.</p><p>Resource-free online assignments are covered by the empty-minimum conventions. Offline feasibility follows from scaling a feasible LP offline allocation by $c\le1$.</p><ul><li><b>Section 3.1: the availability bound</b></li></ul><p>The inductive expected-allocation upper bound implies<br>$$
+   \mathbb E[U_{k,t}]\le cb_k.
+   $$<br>This correctly includes deterministic offline consumption and the expected consumption of preceding stages.</p><p>The scalar clipping inequality is correct on its stated domain. Applying it to the normalized consumed budget of each relevant first-class resource, followed by the bound on the number of such resources, justifies<br>$$
+   \mathbb E[1-F_{e,t}]\le\ell_1c.
+   $$</p><p>For second-class resources, the variables $V_s$ are independent because each is a fixed function of the independently sampled stage outcome. Their range is $[0,1]$, and the LP supplies the required bound on their summed expectations.</p><p>The pointwise domination of consumed budget, the exponential Markov bound, and the elimination of the term involving $D$ are all valid. Substituting $\theta=\log(1/\beta)$ gives the stated factor $Q_B(\beta)/\beta$. The replacement of $b_k$ by $B$ has the correct direction because<br>$$
+   \log(1/\beta)-1+\beta&gt;0.
+   $$</p><p>The union bound and the inequality involving $F_{e,t}G_{e,t}$ therefore establish<br>$$
+   q_{e,t}\ge
+   1-\ell_1c-\frac{\ell_2Q_B(\beta)}{\beta}.
+   $$<br>Rearranging the stated condition on $c$ indeed makes this lower bound at least $c/\beta$.</p><p>Finally, $H_{e,t}$ depends only on the past once preprocessing constants are fixed. Stage independence therefore justifies the conditional expected-allocation formula and the proposed induction.</p><ul><li><b>Section 3.2: randomized preprocessing</b></li></ul><p>The estimation argument is sound.</p><p>On an accurate estimate, upward rounding gives<br>$$
+   q_{e,t}\le d_{e,t}\le q_{e,t}+3\eta.
+   $$<br>The maximum with $c/\beta$ does not invalidate the upper bound, because the availability induction already gives $q_{e,t}\ge c/\beta$.</p><p>With $\eta=\delta c/6$, the claimed multiplicative bounds on $q_{e,t}/d_{e,t}$ follow. The upper bound closes the availability induction; the lower bound supplies the reward guarantee.</p><p>Approximate prefix sampling introduces at most the stated expectation error because $H_{e,t}$ is bounded in $[0,1]$. Hoeffding’s inequality is applied to independent bounded samples, with the stated exponent. Fresh samples at successive preprocessing stages permit conditional failure bounds, and the union bound covers all estimates.</p><p>The conditioning in the final reward argument is legitimate: actual arrivals are independent of preprocessing randomness. For every fixed accurate preprocessing result, the induction holds under the actual arrival law. Inaccurate preprocessing results still produce feasible, nonnegative-reward policies. Consequently,<br>$$
+   \mathbb E[\mathrm{ALG}]
+   \ge(1-\delta/2)^2cV
+   \ge(1-\delta)c\,\mathbb E[\mathrm{OPT}]
+   $$<br>is justified.</p><ul><li><b>Sections 3.2–3.3: running time and the resulting bounds</b></li></ul><p>The rational-arithmetic argument addresses a genuine implementation concern. With preprocessing constants fixed, updates are piecewise affine with rational coefficients drawn from a polynomial-size collection. The common-denominator argument bounds encoding growth through the horizon. Discontinuous blocking decisions do not undermine this argument: their comparisons involve exactly represented rationals.</p><p>The simulation count is polynomial once $1/c$ is polynomially bounded. The baseline uses<br>$$
+   c_0=\frac1{\min\{\ell_1+\ell_2,K\}+1},
+   $$<br>whose reciprocal is at most $K+1$. Retaining mixed-resource candidates only when they are at least this baseline similarly controls their reciprocal.</p><p>The baseline feasibility argument and its expected-availability bound are valid, including for resource-free assignments. Taking arbitrarily small fixed losses establishes the stated supremal sparsity guarantee.</p><p>The numerical approximation discussion is sufficient for the claimed supremal bound: it specifies downward approximation, controlled precision, and certified treatment of sufficiently small exponential terms. Continuity and rational density support approaching $\Psi$ with rational choices. This does not claim that one policy exactly attains the supremum.</p><ul><li><b>Section 4: large-budget consequences</b></li></ul><p>For fixed $\beta&lt;1$, the exponent defining $Q_B(\beta)$ is strictly negative and grows in magnitude with $B$. The asserted decay and resulting lower limits follow.</p><p>Uniformity over $T$ is justified because the lower bound has no horizon dependence and the applicable upper bounds also hold for every positive horizon.</p><p>Combining the lower limit with the upper bound from Section 5 correctly yields convergence to $1/2$ when $\ell_1=1$ and $\ell_2$ is fixed. When $\ell_1=0$, the lower limit is one, and pathwise clairvoyant optimality supplies the upper bound of one.</p><ul><li><b>Section 5.1: horizon-dependent policies</b></li></ul><p>Every component of a feasible clairvoyant allocation is separately feasible under the full budgets. Therefore the decomposition into standalone offline and stage rewards is a valid upper bound.</p><p>Scaling the $T+1$ standalone solutions by $1/(T+1)$ ensures feasibility and gives the claimed guarantee.</p><p>When $\ell_1=0$, the budget-free stage allocation consumes at most one unit of each resource. The calculation using $b_k\ge B$ correctly establishes feasibility of the scaling factor $B/(B+T)$. The corresponding objective comparison is also valid.</p><ul><li><b>Sections 5.2–5.3: upper bounds and exact cases</b></li></ul><p>The one-resource construction is valid for every stated embedding. For any offline choice, the expected online contribution is bounded by the remaining capacity capped at one. Hence the expected policy reward is at most $C$, including for randomized offline choices.</p><p>The clairvoyant rewards in the two outcomes are correctly computed, giving expected reward $C+1-p$. Taking positive rational probabilities tending to zero establishes the stated supremal upper bounds.</p><p>For $T=1$, the explicit lower-bound policies match these upper bounds and attain the claimed ratios.</p><p>For $(\ell_1,\ell_2)=(1,0)$, an assignment either uses one first-class resource or is resource-free. Thus its availability expectation is determined by expected consumption of that single resource. The displayed formula for $q_{e,t}$ follows from the allocation induction, and the LP implies $q_{e,t}\ge1/2$. Exact rational attenuation therefore closes the induction and provides the claimed deterministic polynomial-time policy.</p><ul><li><b>Section 6: the fractional packing obstruction</b></li></ul><p>The feasibility characterization is correct for fractional allocations. Maximizing separately within each row corresponds to one of the explicitly listed tuple resources, so the resource system is equivalent to<br>$$
+    \sum_rM_r\le C.
+    $$<br>Because allocations are nonnegative, final feasibility also controls every prefix.</p><p>The pointwise inequality involving $Z_{r,c}$, $M_{r,c-1}$, and $\Delta_{r,c}$ is valid in both Bernoulli outcomes. The preceding maximum is independent of the current arrival indicator. Summing the inequalities correctly yields the policy-reward bound.</p><p>The probability of a completely available row, the group failure bound, and the union bound all check out. The assumption $h2^{-r}&lt;1$ ensures that the resulting denominator is positive. The clairvoyant allocation described on the success event is feasible for both integer and noninteger $C$.</p><p>The sparsity count, horizon requirements, and embeddings satisfy the task’s restrictions. The extremely large resource list is explicit; no unsupported succinct-representation assumption is used.</p><p>The numerical example gives $N=2048$, horizon $6144$, and ratio $4/9$ as stated. The limiting conclusion excluding a positive absolute guarantee independent of sparsity and horizon is justified.</p><p>The cited [Kleinberg–Weinberg section](https://arxiv.org/html/1201.4764#S5) provides context for the row-selection idea. The prover supplies its own fractional feasibility and policy analysis, so no integral lower-bound theorem is improperly transferred to the fluid model.</p><ul><li><b>Section 7: the square-root budget obstruction</b></li></ul><p>The expected-reward upper bound for a fixed offline allocation is valid. The derivative on each open unit interval is correctly computed, and binomial symmetry gives the required monotonicity. Conditioning on a randomized offline choice preserves this upper bound.</p><p>The clairvoyant reward is correctly characterized. The binomial identity used in the telescoping sum is correct, including its boundary convention, and yields the stated absolute-deviation expectation.</p><p>The resulting ratio<br>$$
+    \frac{4-2a_n}{4-a_n}
+    $$<br>is correct. The recurrence and induction proving $a_n\ge1/(2\sqrt n)$ also check out, as does the consequent loss bound. For $n\ge64$, the comparison with $n/(n+1)$ has the correct strict direction.</p><p>The construction uses admissible rational data, independent stages, one active second-class resource, and two supported online types.</p><p>The minimum additional work needed to settle <code>USER_TASK</code> is a matching characterization of the optimal ratio outside the proved exact cases. No clarification of the existing partial proofs alone resolves that outstanding question. Another round is promising because the verified lower bounds and obstructions provide substantive progress.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

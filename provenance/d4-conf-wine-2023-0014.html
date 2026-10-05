@@ -1,0 +1,314 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-wine-2023-0014 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-wine-2023-0014 <span style="font-weight:normal;color:#8a7350">(d4-conf-wine-2023-0014)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: hard · adversarial review: proved · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> For explicit terminal-table output, computation is NP-hard under polynomial-time metric reductions and cannot run in polynomial time because the table can be exponentially large. Even deciding whether terminal revenue is below a rational threshold is NP-hard under polynomial-time many-one reductions.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.3 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Our mechanism can be implemented in polynomial time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite type set \(T\), rational masses \(\mu_t\), and type-specific values \(v_t\), budgets \(B_t\), and integral caps \(K_t\), together with a rational monotone submodular rank oracle \(F_\mu:2^T\to\mathbb{Q}_+\) whose capacities scale with population mass, compute the terminal mass table \(\pi_{t,k,p}\) produced by an ascending-price clinching auction. Here \(\pi_{t,k,p}\) is the mass of type-\(t\) people receiving \(k\in\{0,\ldots,K_t\}\) indivisible goods and paying \(p\); cohort splits preserve the aggregate polymatroid constraints. Is this outcome computable in time polynomial in \(|T|\), \(\sum_t K_t\), the rational input bit length, and the number of value-oracle calls?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: an ordered list \(T\) of \(\tau\ge2\) types with positive binary rational masses \(\mu_t\), summing to \(1\); \(\tau\) is the support size. Each type has positive rational per-unit value \(v_t\), positive rational per-person budget \(B_t\), and integral per-person cap \(K_t\ge1\). Put \(m=\sum_tK_t\).<br>A value oracle supplies a normalized monotone submodular rank \(F_\mu:2^T\to\mathbb Q_+\), with \(F_\mu(T)&gt;0\), \(F_\mu(\{t\})\le\mu_tK_t\), and \(F_\mu(T)=F_\mu(T\setminus\{t\})\) for every type. Capacities measure goods mass and scale linearly under common rescaling of population mass. Let \(L\) include the rational input encoding and a bound on oracle-answer bit lengths.<br>Use the following cohort interpretation of the ascending-price auction. A cohort \(C=(t,a,k,p,d)\) consists of mass \(a&gt;0\) whose people each have \(k\) goods, have paid \(p\), and have integral demand \(d\ge0\). Initially each type forms one cohort \((t,\mu_t,0,0,K_t+1)\), and the price is \(c=0\); a cohort is active when \(d&gt;0\).<br>For the current cohorts, write \(x_t=\sum_{C:t(C)=t}a_Ck_C\). Feasible additional aggregate transactions form \(R=\{y\ge0:\sum_{C:t(C)\in S}y_C\le F_\mu(S)-\sum_{t\in S}x_t\ (S\subseteq T),\ y_C\le a_C\min(d_C,K_{t(C)}-k_C)\}\).<br>A clinching sweep visits the cohorts present at its start in lexicographic order of \((t,k,p,d)\). At each visit recompute \(R\) and choose the largest \(r\ge0\) for which \(\{y_{-C}:y\in R,\ y_C=r\}=\{y_{-C}:y\in R,\ y_C=0\}\).<br>With \(q=\lfloor r/a_C\rfloor\) and \(\theta=r/a_C-q\), replace the visited cohort by masses \(a_C(1-\theta)\) and \(a_C\theta\) receiving respectively \(q\) and \(q+1\) additional goods; receiving \(j\) goods changes its state to \((k+j,p+cj,d-j)\). Discard zero masses, visit no newly created cohort in that sweep, and merge identical states after the sweep.<br>While active cohorts remain, advance the price to \(\min_{C:d_C&gt;0}\min\{v_{t(C)},(B_{t(C)}-p_C)/d_C\}\). At that price, first process active valuation-equality cohorts by setting their demand to zero, then process active budget-equality cohorts by decreasing their demand by one; select ties lexicographically and execute a clinching sweep after every individual update, reevaluating pending equalities.<br>The terminal table \(\pi_{t,k,p}\) records the mass of people of type \(t\) receiving \(k\in\{0,\ldots,K_t\}\) goods and paying total amount \(p\), summing over terminal demands.</p><p>Is exact computation of this terminal mass table polynomial in \(m,\tau,L\), with polynomially many value-oracle calls, or is it NP-hard? For hardness, restrict to ranks supplied by polynomial-size descriptions with polynomial-time evaluation.</p><p>The finite-buyer integer-polymatroid clinching auction is computable in time polynomial in the numbers of buyers and goods; with the goods count encoded in binary, that bound is pseudo-polynomial. [Hirai–Sato](https://arxiv.org/html/2303.00231v4)<br>No complexity classification for the exact cohort model specified here was identified in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized population mass to one and interpreted capacities as goods mass, scaling linearly under common population rescaling.</li><li>Required positive rational values and budgets, positive integral caps, normalized rank, positive total capacity, and at least two supported types.</li><li>Interpreted the initial-competition condition at the type level as deletion of any whole type leaving total rank unchanged; this is stronger than deletion of an individual in an atomless society.</li><li>Made the supplied caps explicit per-person feasibility constraints, required singleton capacities not to exceed aggregate caps, and initialized demand at cap plus one to retain the extra initial demand unit.</li><li>Defined the otherwise unspecified mass clinching operation at cohort level through equality of residual-polytope projections, protecting the other cohorts.</li><li>Specified a fractional cohort clinch by splitting into adjacent integral allotments, charging each recipient for its actual goods and decreasing its demand accordingly.</li><li>Fixed deterministic event and sweep orders, retained valuation updates before budget updates, and required a clinching sweep after every individual cohort demand update.</li><li>Interpreted payment indices as total per-person payments and the terminal table as the explicit list of its nonzero rational entries.</li><li>Defined the size parameter as the sum of per-person caps, bounded oracle-answer bit lengths, and restricted hardness claims to efficiently evaluable, finitely described ranks.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Result and computational convention</h3><p><b>For explicitly listed terminal tables, the problem is NP-hard under polynomial-time metric reductions.</b> More substantively, even the following scalar problem is NP-hard under ordinary polynomial-time many-one reductions:</p><blockquote>Given an auction instance and a rational threshold $\rho$, decide whether its terminal revenue is less than $\rho$.</blockquote><p>This holds for ranks with polynomial-size descriptions and polynomial-time evaluation. On the constructed instances, terminal revenue is a rational number of polynomial bit length.</p><p>I use the explicit-output interpretation of the table: all nonzero entries are listed. Because such tables can be exponentially long, the reduction convention matters. A polynomial-time metric reduction from a function $f$ to a function $g$ consists of polynomial-time functions $A,D$ satisfying<br>$$
+f(z)=D(z,g(A(z))).
+$$<br>The decoding function is polynomial-time in the combined length of its arguments, including the returned table. This is the function-reduction convention used below; it does not assert that an exponentially long table can be scanned in time polynomial in the original instance. See, for example, the [definition of metric reductions](https://drops.dagstuhl.de/storage/00lipics/lipics-vol365-icdt2026/html/LIPIcs.ICDT.2026.12/LIPIcs.ICDT.2026.12.html).</p><p>The scalar revenue hardness is independent of this output-length distinction. I prove it first, then derive the table consequence and reprove the exponential output-size obstruction.</p><h3>2. An admissible auction family</h3><p>Fix an integer $n\ge 2$. Let the ordered types be $0,1,\ldots,n$, all with cap $n$. Thus<br>$$
+\tau=n+1,\qquad m=n(n+1).
+$$</p><p>Define<br>$$
+\alpha=\frac{n2^n}{2n2^n-1},
+\qquad
+D_0=\alpha n,
+\qquad
+D_i=\frac{\alpha(2n-2i+1)}{2^i}
+\quad(1\le i\le n),
+$$<br>and set<br>$$
+\mu_0=\alpha,\qquad
+\mu_i=\frac{D_{i-1}-D_i}{n}
+\quad(1\le i\le n).
+$$</p><p>These masses are positive, since<br>$$
+D_0-D_1=\frac{\alpha}{2}
+$$<br>and, for $i\ge 2$,<br>$$
+D_{i-1}-D_i
+=\frac{\alpha(2n-2i+5)}{2^i}&gt;0.
+$$<br>Also $D_n=\alpha/2^n$, so<br>$$
+\sum_{t=0}^n\mu_t
+=\alpha+\frac{D_0-D_n}{n}
+=\alpha\left(2-\frac{1}{n2^n}\right)
+=1.
+$$</p><p>Put<br>$$
+G=n(1-\alpha),\qquad
+F_\mu(S)=\min\left\{G,\ n\sum_{t\in S}\mu_t\right\}.
+$$</p><p>Choose strictly increasing positive integer prices<br>$$
+c_1&lt;c_2&lt;\cdots&lt;c_n&lt;V.
+$$<br>Assign<br>$$
+v_0=V,\qquad v_i=c_i\quad(1\le i\le n),
+$$<br>and give every type budget<br>$$
+B=(2n+2)V.
+$$</p><p>Type $0$ will generate histories; the other types will exit at the specified prices.</p><h3>Verification of the rank hypotheses</h3><p>Normalization and monotonicity are immediate. For $e\notin S$, the marginal increment is<br>$$
+F_\mu(S\cup\{e\})-F_\mu(S)
+=
+\min\left\{
+n\mu_e,\ \max\{0,G-n\mu(S)\}
+\right\},
+$$<br>where $\mu(S)=\sum_{t\in S}\mu_t$. This expression decreases as $S$ increases, proving submodularity.</p><p>The singleton bounds follow from the definition:<br>$$
+F_\mu(\{t\})\le n\mu_t=\mu_tK_t.
+$$</p><p>Every type satisfies $n\mu_t\le D_0$: this is equality for type $0$, and for $i\ge 1$ follows from<br>$$
+n\mu_i=D_{i-1}-D_i\le D_{i-1}\le D_0.
+$$<br>Consequently,<br>$$
+n\sum_{s\ne t}\mu_s
+=n-n\mu_t
+\ge n-D_0
+=G.
+$$<br>Thus<br>$$
+F_\mu(T\setminus\{t\})=F_\mu(T)=G&gt;0.
+$$</p><p>Finally,<br>$$
+F_\mu(S)
+=
+n\min\left\{
+\sum_{i=1}^n\mu_i,\ \sum_{t\in S}\mu_t
+\right\}.
+$$<br>This formula scales linearly under common rescaling of all population masses.</p><h3>3. Exact clinching dynamics</h3><p>For a current cohort $C$, write<br>$$
+b_C=a_C\min(d_C,n-k_C).
+$$<br>Let<br>$$
+X=\sum_Ca_Ck_C,\qquad
+U=\sum_Cb_C,\qquad
+s=G-X,\qquad
+D=U-s.
+$$</p><h3>Lemma 1: the feasible region and clinching amount</h3><p>For this rank, the transaction region is<br>$$
+R=\left\{
+y\ge 0:
+y_C\le b_C\text{ for all }C,\quad
+\sum_Cy_C\le s
+\right\}.
+$$<br>The specified clinching amount is<br>$$
+r_C=\min\{b_C,\max\{0,b_C-D\}\}.
+$$<br>In particular, when $D\ge 0$,<br>$$
+r_C=\max\{0,b_C-D\}.
+$$</p><p><b>Proof.</b> The rank constraints require both the total-supply bound and the bounds<br>$$
+x(S)+\sum_{C:t(C)\in S}y_C\le n\mu(S).
+$$<br>The latter follow from the cohort bounds, because for each type $t$,<br>$$
+x_t+\sum_{C:t(C)=t}b_C
+\le
+\sum_{C:t(C)=t}a_Cn
+=n\mu_t.
+$$<br>Conversely, the original constraint for $T$ gives the total-supply bound. This proves the displayed description of $R$.</p><p>When $y_C=0$, the other coordinates can attain every total between zero and<br>$$
+\min\{s,U-b_C\}.
+$$<br>Fixing $y_C=r$ preserves their entire feasible projection precisely when<br>$$
+0\le r\le b_C,\qquad
+s-r\ge\min\{s,U-b_C\}.
+$$<br>Solving these inequalities gives the claimed formula. $\square$</p><h3>Lemma 2: a clinch preserves the deficit</h3><p>Every clinch preserves $D=U-s$. When $D\ge 0$, the children of a visited cohort have combined transaction bound<br>$$
+\min\{b_C,D\}.
+$$</p><p><b>Proof.</b> A child receiving $j$ goods satisfies<br>$$
+\min(d_C-j,n-k_C-j)
+=\min(d_C,n-k_C)-j.
+$$<br>The permitted increments stay within both demand and remaining cap. Weighting this identity by the child masses shows that their combined bound is $b_C-r_C$. Both $U$ and $s$ therefore decrease by $r_C$, preserving $D$.</p><p>For $D\ge 0$, Lemma 1 gives<br>$$
+b_C-r_C=\min\{b_C,D\}.
+$$<br>$\square$</p><h3>No budget updates occur</h3><p>Every event price is at most $V$, because every valuation is at most $V$. Hence every person pays at most $nV$, and every demand is at most $n+1$. For every active cohort,<br>$$
+\frac{B-p_C}{d_C}
+\ge
+\frac{(2n+2)V-nV}{n+1}
+=
+\frac{n+2}{n+1}V
+&gt;V.
+$$<br>Thus budget equality never occurs. The trigger exits occur at $c_1,\ldots,c_n$, followed by type-zero valuation updates at $V$.</p><p>Until those final updates, every type-zero cohort satisfies<br>$$
+d_C=n+1-k_C,
+$$<br>so it remains active, even when at cap, and<br>$$
+b_C=a_C(n-k_C).
+$$</p><h3>The deficit after trigger exit $i$ is exactly $D_i$</h3><p>Initially $U=n$ and $s=G$, so the deficit is $D_0$.</p><p>An unallocated trigger type $j$ has bound<br>$$
+A_j=n\mu_j=D_{j-1}-D_j.
+$$<br>At the sweep following trigger exit $i$, every future trigger $j&gt;i$ satisfies<br>$$
+A_j\le D_{j-1}\le D_i.
+$$<br>It therefore clinches zero by Lemma 1. Inductively, all triggers remain unallocated until their valuation exits.</p><p>Exit $i$ removes exactly $D_{i-1}-D_i$ from $U$, leaving $s$ unchanged. Subsequent clinches preserve the deficit. Therefore the sweep at $c_i$ has deficit exactly $D_i$, regardless of any merging among type-zero cohorts.</p><h3>4. Histories, merging, and extra early allocation</h3><p>Suppose no type-zero cohorts have merged before stage $i$.</p><p>After stage $i-1$, each type-zero cohort has mass<br>$$
+a_{i-1}=\frac{\alpha}{2^{i-1}}
+$$<br>and goods count either $i-2$ or $i-1$.</p><p>At the first stage,<br>$$
+\frac{r}{\alpha}
+=n-\frac{D_1}{\alpha}
+=\frac12.
+$$<br>At stage $i\ge 2$,<br>$$
+\frac{D_i}{a_{i-1}}=n-i+\frac12.
+$$<br>Consequently, the per-person clinch is $3/2$ for a parent with $k=i-2$, and $1/2$ for a parent with $k=i-1$.</p><p>Every parent therefore splits into equal halves with goods counts $i-1$ and $i$. The rule prohibiting visits to new children during the same sweep is essential here.</p><p>Label a history by bits $z_1,\ldots,z_i$, where<br>$$
+k_i=i-1+z_i.
+$$<br>Its purchase increments are $z_1$ at the first stage and<br>$$
+1+z_h-z_{h-1}
+$$<br>at stage $h\ge 2$. Its payment is therefore<br>$$
+p_i
+=
+\sum_{h=2}^i c_h
++c_i z_i
+-\sum_{h=1}^{i-1}(c_{h+1}-c_h)z_h.
+$$</p><p>For a fixed $z_i$, two histories have identical payment precisely when their earlier bits give equal subset sums of the price gaps<br>$$
+c_2-c_1,\ldots,c_i-c_{i-1}.
+$$<br>They then also have identical goods count and demand, so they merge. Histories with different $z_i$ have different goods counts.</p><p>The following bound handles the auction after merging, without assuming that the original history formula continues to describe it.</p><h3>Lemma 3: an earlier merge increases allocation before the final price</h3><p>Let $P$ be the number of type-zero cohorts present at the start of the sweep at $c_n$, and put<br>$$
+a=\frac{\alpha}{2^n}=D_n.
+$$<br>Immediately after that sweep,<br>$$
+U_0\le Pa,
+$$<br>where $U_0$ is the combined type-zero transaction bound.</p><p>If any merge occurred by the end of stage $n-1$, then<br>$$
+P\le 2^{n-1}-1,
+$$<br>and the type-zero allocation $X_{\mathrm{pre}}$ before price $V$ satisfies<br>$$
+X_{\mathrm{pre}}
+\ge
+\alpha\left(n-\frac12\right)+a.
+$$</p><p><b>Proof.</b> By Lemma 2, the children of each parent visited at stage $n$ have combined bound at most $D_n=a$. Summing over the $P$ parents gives $U_0\le Pa$. Merging after the sweep preserves this sum.</p><p>Every parent produces at most two children. A merge by stage $n-1$ makes the cohort count strictly smaller than the maximum obtainable by repeated doubling; subsequent stages cannot recover that maximum. Thus $P\le 2^{n-1}-1$.</p><p>All triggers have exited without receiving goods. For type zero, demand still exceeds remaining cap by one, so<br>$$
+U_0=\alpha n-X_{\mathrm{pre}}.
+$$<br>It follows that<br>$$
+X_{\mathrm{pre}}
+\ge
+\alpha n-(2^{n-1}-1)a
+=
+\alpha\left(n-\frac12\right)+a.
+$$<br>$\square$</p><h3>5. NP-hardness of terminal revenue</h3><p>The source problem is <b>Equal-Subset-Sum</b>: given positive integers $w_1,\ldots,w_N$, decide whether two disjoint nonempty subsets have equal sums. This problem is NP-complete; see [Woeginger–Yu](https://www.sciencedirect.com/science/article/abs/pii/002001909290226L) and the positive-integer formulation in [Mucha–Nederlof–Pawlewicz–Węgrzycki](https://arxiv.org/html/1905.02424v2).</p><p>For positive integers, this is equivalent to asking whether two distinct subsets have equal sums. Indeed, canceling their intersection gives disjoint equal-sum subsets; neither remaining subset can be empty, because all weights are positive.</p><p>Let<br>$$
+W=\sum_{h=1}^Nw_h,\qquad n=N+2.
+$$<br>Use the auction family above, with prices determined by<br>$$
+c_1=1,
+$$<br>$$
+c_{i+1}-c_i=w_i
+\quad(1\le i\le N),
+$$<br>and<br>$$
+c_{N+2}-c_{N+1}=W+1.
+$$<br>Thus $c_n=2W+2$. Choose<br>$$
+V=(n2^n+2)c_n.
+$$</p><p>Define the rational threshold<br>$$
+\rho
+=
+\alpha\left(\frac{c_1}{2}+\sum_{i=2}^n c_i\right)
++
+V\left(\frac{\alpha}{2}-a\right),
+\qquad
+a=\frac{\alpha}{2^n}.
+$$</p><p>Let terminal revenue be<br>$$
+\operatorname{Rev}(\pi)=\sum_{t,k,p}p\,\pi_{t,k,p}.
+$$<br>All triggers pay zero, so this is also type zero’s terminal revenue.</p><p>I prove the exact equivalence<br>$$
+\text{Equal-Subset-Sum is a yes-instance}
+\quad\Longleftrightarrow\quad
+\operatorname{Rev}(\pi)&lt;\rho.
+$$</p><h3>No-instance: terminal revenue equals the threshold</h3><p>If the original weights have distinct subset sums, adding the gap $W+1$ preserves that property. A sum containing $W+1$ is greater than every sum of the original weights; sums on the same side reduce to original subset sums.</p><p>Every prefix of the price-gap list therefore has distinct subset sums. Section 4 proves inductively that no merge occurs and that stage $i$ produces $2^i$ equal-mass cohorts.</p><p>The mean goods count after stage $i$ is $i-1/2$. Hence allocation and revenue before $V$ are<br>$$
+X_{\mathrm{pre}}=\alpha\left(n-\frac12\right)
+$$<br>and<br>$$
+R_{\mathrm{pre}}
+=
+\alpha\left(\frac{c_1}{2}+\sum_{i=2}^n c_i\right).
+$$</p><p>At that time, half the type-zero population has $n-1$ goods and half has $n$ goods. Each cohort has mass $a$.</p><p>At price $V$, lexicographic valuation processing first selects a cohort with $n-1$ goods. Its exit removes bound $a=D_n$, making the deficit zero. The ensuing sweep gives every other uncapped cohort its last good. Later updates remove only zero transaction bounds.</p><p>The terminal allocation is consequently<br>$$
+X_{\mathrm{term}}=\alpha n-a.
+$$<br>The definition of $\alpha$ gives<br>$$
+n=\alpha(2n-2^{-n}),
+$$<br>so<br>$$
+G=n(1-\alpha)=\alpha n-a.
+$$<br>Thus purchases at $V$ total<br>$$
+X_{\mathrm{term}}-X_{\mathrm{pre}}
+=\frac{\alpha}{2}-a.
+$$<br>Therefore<br>$$
+\operatorname{Rev}(\pi)
+=
+R_{\mathrm{pre}}
++
+V\left(\frac{\alpha}{2}-a\right)
+=\rho.
+$$</p><h3>Yes-instance: terminal revenue is strictly below the threshold</h3><p>Suppose the original weights have a subset-sum collision. A type-zero merge must occur by stage $N+1=n-1$.</p><p>To see this, if a merge has already occurred there is nothing to prove. Otherwise all $2^{N+1}$ histories exist at stage $N+1$. Choose equal-sum subsets of $w_1,\ldots,w_N$ and give the corresponding histories the same last bit. The payment formula in Section 4 makes their states identical, so they merge.</p><p>Lemma 3 therefore gives<br>$$
+X_{\mathrm{pre}}
+\ge
+\alpha\left(n-\frac12\right)+a.
+$$</p><p>Before $V$, each type-zero person buys at most $n$ goods, each at price at most $c_n$. Thus<br>$$
+R_{\mathrm{pre}}\le \alpha n c_n.
+$$<br>Feasibility always gives $X_{\mathrm{term}}\le G$. All subsequent purchases occur at $V$, so<br>$$
+\operatorname{Rev}(\pi)
+=
+R_{\mathrm{pre}}+V(X_{\mathrm{term}}-X_{\mathrm{pre}})
+\le
+\alpha n c_n
++
+V\left(\frac{\alpha}{2}-2a\right).
+$$</p><p>Our choice of $V$ ensures<br>$$
+Va
+=
+(n2^n+2)c_n\frac{\alpha}{2^n}
+=
+\alpha n c_n+2ac_n
+&gt;
+\alpha n c_n.
+$$<br>Consequently,<br>$$
+\operatorname{Rev}(\pi)
+&lt;
+V\left(\frac{\alpha}{2}-a\right)
+\le \rho.
+$$</p><p>This completes the many-one reduction to the terminal-revenue decision problem.</p><h3>6. Encoding bounds and the full-table reduction</h3><p>Put<br>$$
+H=2n2^n-1.
+$$<br>The masses have the explicit representations<br>$$
+\mu_0=\frac{n2^n}{H},\qquad
+\mu_1=\frac{2^{n-1}}{H},
+$$<br>and, for $i\ge 2$,<br>$$
+\mu_i=\frac{2^{n-i}(2n-2i+5)}{H}.
+$$<br>Their numerators and denominators have $O(n+\log n)$ bits.</p><p>The prices, valuations and budgets have $O(n+\log n+\log W)$ bits. The threshold $\rho$ has polynomial bit length. Therefore the reduction constructs an instance with<br>$$
+m=n(n+1),\qquad \tau=n+1,
+$$<br>and $L$ polynomial in the source encoding length.</p><p>The rank description is simply<br>$$
+F_\mu(S)=\min\{G,n\mu(S)\}.
+$$<br>It is evaluated by rational summation and comparison in polynomial time. Every answer has denominator dividing $H$ and numerator at most $nH$, so its bit length is polynomial as required.</p><h3>Terminal revenue itself has polynomial bit length</h3><p>Initially every cohort mass is an integer multiple of $1/H$. This property persists.</p><p>Indeed, when it holds, $b_C$, $U$, $s$, $D$ and $r_C$ are integer multiples of $1/H$. The two child masses are<br>$$
+r_C-q a_C
+\quad\text{and}\quad
+a_C-(r_C-q a_C),
+$$<br>so they have the same property. Merging also preserves it.</p><p>All event prices are integers, so all per-person payments are integers, bounded by $nV$. Hence terminal revenue has denominator dividing $H$ and numerator at most $nVH$, a polynomial-bit quantity.</p><p>The execution also terminates: each valuation update removes at least $1/H$ of active population mass, and sweeps never reactivate inactive people.</p><p>Thus exact terminal-revenue computation is NP-hard even when its output is polynomially short.</p><h3>Reduction to the explicit terminal-table function</h3><p>Let $A$ be the auction-instance map above. Given the original weights and the explicitly returned table $Y$, let the decoder:</p><ul><li>compute $\operatorname{Rev}(Y)$ by summing $p\,\pi_{t,k,p}$;</li><li>compute $\rho$;</li><li>return whether $\operatorname{Rev}(Y)&lt;\rho$.</li></ul><p>The decoder is polynomial-time in the combined encoding length of the weights and table. Exact rational summation has polynomial bit complexity in that length. Section 5 proves its correctness.</p><p>This is a polynomial-time metric reduction from the characteristic function of Equal-Subset-Sum to the explicit terminal-table function. Since Equal-Subset-Sum is NP-complete, the latter function is NP-hard under the stated convention.</p><h3>7. Explicit output can also be exponentially large</h3><p>For completeness, the output-size obstruction from the notes follows from the same family and can be proved independently of the hardness reduction.</p><p>Take<br>$$
+c_i=2^i-1,\qquad V=2^n.
+$$<br>The price gaps are $2,4,\ldots,2^{n-1}$, whose subset sums are distinct. Thus stage $n$ produces exactly $2^n$ type-zero cohorts of mass<br>$$
+a=\frac{\alpha}{2^n}.
+$$</p><p>Write<br>$$
+A=\sum_{h=2}^n c_h,\qquad
+S(z)=\sum_{h=1}^{n-1}2^h z_h.
+$$<br>The pre-final payment formula is<br>$$
+p_n=A+c_nz_n-S(z).
+$$</p><p>As proved in the no-instance analysis, one cohort with $z_n=0$ exits first at $V$ and keeps $n-1$ goods. Every other such cohort buys one last good; cohorts with $z_n=1$ are already capped.</p><p>The terminal payments of capped cohorts are therefore<br>$$
+A+V-S(z)
+$$<br>for the former family, and<br>$$
+A+V-1-S(z)
+$$<br>for the latter.</p><p>Within each family, payments are distinct by uniqueness of binary expansion. Between the families, payments have opposite parity because every $S(z)$ is even. The first exiting cohort has a different goods count from every capped cohort.</p><p>Hence type zero contributes exactly $2^n$ nonzero terminal-table entries. In this family,<br>$$
+m=n(n+1),\qquad \tau=n+1,\qquad L=O(n^2).
+$$<br>Explicitly writing the table therefore cannot take time polynomial in $m,\tau,L$, regardless of the efficiency of oracle access.</p><h3>8. Scope of the classification</h3><p>The explicit terminal-table function is NP-hard under the stated polynomial-time metric reductions, and its output can be exponentially large. The terminal-revenue decision problem has conventional many-one NP-hardness even though the relevant revenue is a single polynomial-bit rational.</p><p>The proof does not classify access models that return only one specified table entry, or arbitrary succinct representations of the table. It also does not establish a separate lower bound on the number of value-oracle calls.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><p><b>The claimed hardness result is correct under the explicitly stated output convention.</b> The reduction establishes conventional many-one NP-hardness for the terminal-revenue decision problem and metric-reduction NP-hardness for the explicitly listed terminal table. The separate exponential-output construction also checks out.</p><p>I found no major or minor mathematical issues requiring repair.</p><h3>1. Scope and reduction convention</h3><p>The prover explicitly interprets the terminal table as a list of all nonzero entries. This is a natural interpretation of the requested exact table, and the limitation is stated clearly.</p><p>The metric reduction permits decoding time polynomial in the combined length of the source instance and returned table. This agrees with the [cited definition of metric reductions](https://drops.dagstuhl.de/storage/00lipics/lipics-vol365-icdt2026/html/LIPIcs.ICDT.2026.12/LIPIcs.ICDT.2026.12.html). Consequently, the table-hardness claim does not imply that its decoder runs in polynomial time in the original instance when the table is exponentially long. The prover correctly acknowledges this distinction.</p><p>The scalar revenue decision problem avoids that output-length qualification.</p><h3>2. Admissibility of the constructed instances</h3><p>All required auction hypotheses are satisfied.</p><ul><li>The displayed differences $D_{i-1}-D_i$ are correct and positive. Thus every $\mu_i$ is positive.</li><li>The telescoping mass calculation correctly gives $\sum_{t=0}^n\mu_t=1$.</li><li>Every cap is the positive integer $n$, giving $\tau=n+1$ and $m=n(n+1)$.</li><li>Prices and valuations are strictly positive, and the common budget is positive.</li><li>Since $0&lt;\alpha&lt;1$, the supply $G=n(1-\alpha)$ is positive.</li></ul><p>For the rank<br>$$
+F_\mu(S)=\min\{G,n\mu(S)\},
+$$<br>the stated marginal formula is exact. Its decrease as $S$ increases establishes diminishing returns and hence submodularity. Normalization, monotonicity, and the singleton cap bounds also follow directly.</p><p>The redundancy condition is correctly checked: $n\mu_t\le D_0$ implies<br>$$
+n\sum_{s\ne t}\mu_s\ge n-D_0=G.
+$$<br>Therefore removing any one type leaves the full rank unchanged.</p><p>The final expression for the rank in terms of population masses also verifies linear scaling under common population rescaling.</p><p><b>Finding:</b> The construction is admissible for the precise model in <code>USER_TASK</code>.</p><h3>3. Lemma 1: transaction region and clinching amount</h3><p>The simplification of the transaction region is valid.</p><p>The cohort bounds imply every type-set capacity bound involving $n\mu(S)$, because allocated goods plus available additional transactions for each person never exceed cap $n$. The total constraint provides the remaining supply bound $s=G-X$. Conversely, these bounds imply every original truncated-rank constraint.</p><p>Thus the region is exactly the stated box intersected with a total-supply constraint.</p><p>The projection argument is also correct. At $y_C=0$, the other coordinates have their original coordinate bounds and total bound $\min\{s,U-b_C\}$. At $y_C=r$, only the total bound changes, to $s-r$. Equality of the entire projections is therefore characterized by the inequalities written in the proof.</p><p>Solving them gives<br>$$
+r_C=\min\{b_C,\max\{0,b_C-D\}\}.
+$$<br>For $D\ge0$, this reduces correctly to $\max\{0,b_C-D\}$.</p><p><b>Finding:</b> Both the region description and maximal clinching formula are proved.</p><h3>4. Lemma 2 and exclusion of budget events</h3><p>The identity<br>$$
+\min(d_C-j,n-k_C-j)=\min(d_C,n-k_C)-j
+$$<br>is valid for every permitted child increment. The floor-and-ceiling split respects demand and cap because their minimum is integral and bounds the average increment.</p><p>Weighting over the children gives a reduction of exactly $r_C$ in $U$. Allocation increases by $r_C$, so $s$ also decreases by $r_C$. Hence $D$ is preserved.</p><p>For $D\ge0$, the combined child bound is indeed $\min\{b_C,D\}$.</p><p>The budget argument is sound. Every event price is at most $V$, each person receives at most $n$ goods, and demand never exceeds $n+1$. The displayed lower bound on the budget breakpoint is strictly greater than $V$. Consequently, no budget-equality update occurs.</p><p>Until valuation exit, type-zero demand remains $n+1-k_C$, including for capped people, whose demand remains positive but whose transaction bound is zero.</p><p><b>Finding:</b> The invariant and event simplification are valid.</p><h3>5. Trigger exits and unmerged histories</h3><p>The induction that trigger types remain unallocated is correct. At each earlier sweep, a future trigger has bound<br>$$
+A_j=D_{j-1}-D_j\le D_i,
+$$<br>so its clinch is zero. Its eventual valuation exit therefore removes exactly $A_j$ from $U$, with no allocation change.</p><p>The deficit after trigger exit $i$ is consequently $D_i$, including when type-zero cohorts have merged.</p><p>Under the no-prior-merge hypothesis, the stage calculations check out:</p><ul><li>Stage one gives a per-person clinch of $1/2$.</li><li>At later stages, the two possible goods counts give per-person clinches $3/2$ and $1/2$.</li><li>Each parent splits into equal halves ending with $i-1$ and $i$ goods.</li></ul><p>These calculations respect the rule that newly created children are not visited during the same sweep.</p><p>The payment formula correctly follows from the stated purchase increments. With the last bit fixed, payment equality is exactly equality of subset sums of the price gaps. Such histories also have identical goods counts and demands, so the prescribed merge occurs. Different last bits have different goods counts and cannot merge.</p><p><b>Finding:</b> The history analysis correctly identifies the source of merging.</p><h3>6. Lemma 3: behavior after merging</h3><p>This lemma correctly avoids assuming that the unmerged history formula survives a merge.</p><p>At stage $n$, each visited type-zero parent leaves children with combined bound at most $D_n=a$. Summing over the $P$ original parents and subsequently merging gives $U_0\le Pa$.</p><p>Every parent produces at most two children. Once a merge reduces the cohort count below the doubling maximum, later stages cannot restore that maximum. Thus a merge by stage $n-1$ implies<br>$$
+P\le2^{n-1}-1.
+$$</p><p>Because all triggers are unallocated and type-zero demand exceeds remaining cap by one,<br>$$
+U_0=\alpha n-X_{\mathrm{pre}}.
+$$<br>The resulting allocation lower bound, including its additive term $a$, is arithmetically correct.</p><p><b>Finding:</b> The required quantitative consequence of an earlier merge is established.</p><h3>7. Equal-Subset-Sum reduction and revenue separation</h3><p>The source problem is appropriate. The [cited Equal-Subset-Sum paper](https://arxiv.org/html/1905.02424v2) states NP-completeness and provides the positive-integer formulation. Positivity also justifies the prover’s equivalence between distinct equal-sum subsets and disjoint nonempty equal-sum subsets.</p><p>The price construction gives exactly $c_n=2W+2$. Appending gap $W+1$ preserves uniqueness of subset sums in a no-instance.</p><h3>No-instance</h3><p>Every prefix has distinct subset sums, so no merge occurs. The cohort counts, equal masses, mean goods counts, and pre-final revenue follow correctly from the history calculation.</p><p>At price $V$, lexicographic valuation processing first removes a type-zero cohort with $n-1$ goods. Its transaction bound is $a=D_n$, so the deficit becomes zero. The ensuing sweep gives every other uncapped cohort its remaining good. Later valuation updates remove only zero transaction bounds.</p><p>The resulting terminal allocation is $\alpha n-a$. The identity<br>$$
+G=\alpha n-a
+$$<br>is correct, as is the final purchase quantity $\alpha/2-a$. Hence terminal revenue equals $\rho$.</p><h3>Yes-instance</h3><p>A collision among the original weights forces a merge by stage $N+1=n-1$, unless a merge has already occurred. This uses the payment formula only up to the first merge, where it remains valid.</p><p>Lemma 3 then supplies the required larger pre-final allocation. The bounds<br>$$
+R_{\mathrm{pre}}\le\alpha n c_n,
+\qquad
+X_{\mathrm{term}}\le G
+$$<br>are valid independently of the subsequent merging pattern or final valuation order.</p><p>The decisive constant check is correct:<br>$$
+Va=\alpha n c_n+2ac_n&gt;\alpha n c_n.
+$$<br>It yields terminal revenue strictly below $\rho$.</p><p><b>Finding:</b> The stated equivalence is proved, establishing many-one NP-hardness of the terminal-revenue decision problem.</p><h3>8. Encoding, termination, and table decoding</h3><p>The explicit mass representations are correct. Their bit lengths, and those of prices, valuations, budgets, and $\rho$, are polynomial in the source encoding length.</p><p>The rank has a polynomial-size description and polynomial-time evaluation. Its answers have denominator dividing $H$ and the claimed polynomial bit-length bound.</p><p>The mass-lattice argument is valid. The displayed child-mass formulas preserve integer multiples of $1/H$, as do merging and all transaction calculations. Integer event prices imply integer per-person payments bounded by $nV$. Terminal revenue therefore has polynomial bit length.</p><p>Termination follows as stated: each valuation update removes at least $1/H$ of active mass, and sweeps never reactivate inactive people.</p><p>Computing revenue from an explicit terminal table requires polynomial time in that table’s encoding length. The decoder consequently satisfies the stated metric-reduction convention.</p><p><b>Finding:</b> The encoding requirements and function reduction are established.</p><h3>9. Exponential output size and final scope</h3><p>For $c_i=2^i-1$, the price gaps have unique subset sums, so the unmerged construction produces $2^n$ histories.</p><p>The final payment expressions are correct. Payments are distinct within each capped family, and the two families have opposite parity. The single cohort retaining $n-1$ goods is distinguished by its goods count. Hence there are exactly $2^n$ nonzero type-zero terminal entries.</p><p>The bounds $m=n(n+1)$, $\tau=n+1$, and $L=O(n^2)$ establish a superpolynomial explicit-output requirement.</p><p>The prover correctly limits its conclusions: it does not classify individual-entry queries, arbitrary succinct representations, or oracle-call complexity separately.</p><p><b>Repair feedback:</b> None required. The argument resolves the exact explicit-table problem under its stated reduction convention.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

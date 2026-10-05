@@ -1,0 +1,340 @@
+<!doctype html><html><head><meta charset="utf-8"><title>EFX Allocations: Simplifications and Improvements — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>EFX Allocations: Simplifications and Improvements <span style="font-weight:normal;color:#8a7350">(s5-bfd397ec24ff98d95d6709a2aa9267498f4342ec)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: hard · adversarial review: proved_with_minor_gaps · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> Zero-minimum-residual decision is $\mathrm{NP}$-hard, even for $m=3$, $\varepsilon=1/4$, and guaranteed-feasible instances. Computing an exact minimizing assignment, or reporting infeasibility, cannot always be done in time polynomial in $m,\tau,|\mathcal B|,L,1/\varepsilon$ unless $\mathrm P=\mathrm{NP}$.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>There exists a polynomial time algorithm that determines a partial $(1-\varepsilon)$-EFX allocation $X$ such that no agent envies the set of unallocated goods and the total number of unallocated goods is $\mathcal{\tilde{O}}((n/\varepsilon)^{1/2})$. Furthermore, $\mathit{NW}(X) \geq 1/2e^{\sfrac{1}{e}} \cdot \mathit{NW}(X^*)$ where $X^*$ is the allocation with maximum Nash welfare.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational \(\mu\in\Delta(\Theta)\), per-capita supplies \(\rho_g\) of finitely many good types, integral bundle configurations \(B\in\mathcal{B}\), monotone valuations \(v_\theta\), and \(\varepsilon\in(0,1)\), compute \(x_{\theta,B}\ge0\) and residual masses \(z_g\ge0\) satisfying \(\sum_B x_{\theta,B}=\mu_\theta\) and \(\sum_{\theta,B}a_g(B)x_{\theta,B}+z_g=\rho_g\), minimizing \(\sum_g z_g\), subject to supported bundles satisfying \(v_\theta(B)\ge(1-\varepsilon)v_\theta(B&#x27;\setminus\{g\})\) for every supported pair and copy \(g\in B&#x27;\), no envy of the residual multiset, and \(\mathrm{NW}_\infty(x)\ge\frac{1}{2e^{1/e}}\mathrm{NW}_\infty^\star\); determine whether the optimum residual mass is zero and compute such an assignment.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational; \(\sum_\theta\mu_\theta=1\). Here \(\tau\) is the support size, not the number of possible types.<br>There are \(m\geq1\) good types, integer configuration bounds \(K_g\geq1\), rational supplies \(0\leq\rho_g\leq K_g\), and rational \(\varepsilon\in(0,1)\). Configurations are \(\mathcal B=\prod_g\{0,\ldots,K_g\}\); \(B_g\) counts copies of good type \(g\).<br>Each type has an explicitly tabulated monotone valuation \(v_\theta:\mathcal B\to\mathbb Q_{\geq0}\), with \(v_\theta(0)=0\) and distinct values on distinct configurations. Extend it to the box \(\prod_g[0,K_g]\) by multilinear interpolation on each unit cell, denoted \(\bar v_\theta\).<br>An assignment consists of real masses \(x_{\theta,B}\geq0\) and residuals \(z_g\geq0\), satisfying \(\sum_Bx_{\theta,B}=\mu_\theta\) and \(\sum_{\theta,B}B_gx_{\theta,B}+z_g=\rho_g\).<br>For every \(x_{\theta,B}&gt;0\), \(x_{\theta&#x27;,B&#x27;}&gt;0\), and \(g\) with \(B&#x27;_g&gt;0\), require \(v_\theta(B)\geq(1-\varepsilon)v_\theta(B&#x27;-e_g)\), where \(e_g\) removes one copy; also require \(v_\theta(B)\geq\bar v_\theta(z)\).<br>Define \(\mathrm{NW}_\infty(x)=\exp(\sum_{\theta,B:x_{\theta,B}&gt;0}x_{\theta,B}\log v_\theta(B))\), taking it as zero if a supported bundle has zero value. Let \(\mathrm{NW}_\infty^\star\) be its maximum over assignments satisfying the mass and supply equations with \(z=0\), without fairness constraints.<br>Require \(\mathrm{NW}_\infty(x)\geq\mathrm{NW}_\infty^\star/(2e^{1/e})\), and minimize \(\sum_gz_g\); an infeasible instance has optimum \(+\infty\).<br>Is deciding whether the minimum residual mass is zero in \(\mathrm P\) or \(\mathrm{NP}\)-hard, and can a minimizing assignment, or infeasibility, be computed in polynomial time? State running times in \(m\), \(\tau\), \(|\mathcal B|\), the total input bit length \(L\), and \(1/\varepsilon\).<br>For finitely many agents, a polynomial-time algorithm produces partial \((1-\varepsilon)\)-EFX allocations with no envy of charity, \(\widetilde O(\sqrt{n/\varepsilon})\) unallocated goods, and the same Nash welfare factor; it does not assert minimum charity ([source](https://arxiv.org/pdf/2205.07638)). No result settling exactly the continuous formulation above was identified.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified the configuration domain as the full bounded integer box, including the empty bundle and every single-copy deletion, rather than an unspecified family.</li><li>Used explicit binary-rational valuation tables and included their entire encoding in L.</li><li>Normalized empty-bundle values to zero and carried over nondegeneracy as distinct values on distinct configurations.</li><li>Defined valuation of the rational residual vector by multilinear interpolation, which agrees with the discrete valuation at integral residuals; the discrete definition supplies no fractional extension.</li><li>Defined continuum Nash welfare as the mass-weighted geometric mean of realized bundle values, with zero welfare whenever positive mass receives zero value.</li><li>Defined the Nash welfare benchmark over complete assignments without fairness constraints, matching the unrestricted discrete benchmark.</li><li>Applied fairness and residual non-envy to every positively supported bundle, including comparisons between bundles assigned to the same type.</li><li>Allowed real assignment masses and treated infeasibility as infinite optimum.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Zero residual and exact minimization are NP-hard</h3><h3>1. Result</h3><p><b>Theorem.</b> Deciding whether the minimum residual mass is zero is $\mathrm{NP}$-hard, even when</p><p>$$
+m=3,\qquad \varepsilon=\frac14,
+$$</p><p>all masses and valuation entries are dyadic rationals, and the instance is guaranteed to have a qualifying assignment.</p><p>Consequently, unless $\mathrm P=\mathrm{NP}$, no algorithm running in</p><p>$$
+\operatorname{poly}\!\left(m,\tau,|\mathcal B|,L,1/\varepsilon\right)
+$$</p><p>can always compute an exact minimizing assignment, or report infeasibility.</p><p>The proof below is a polynomial-time reduction from Set Cover. It uses a strict welfare margin, so it does not require exact comparisons between logarithmic objectives.</p><h3>2. Starting problem and numerical parameters</h3><p>We use the classical $\mathrm{NP}$-complete Set Cover decision problem: given a universe $U=\{1,\ldots,r\}$, sets $S_1,\ldots,S_n\subseteq U$, and an integer $k$, decide whether at most $k$ sets cover $U$. Its hardness is established in [Karp’s original paper](https://link.springer.com/chapter/10.1007/978-1-4684-2001-2_9).</p><p>We restrict to</p><p>$$
+n,r\geq1,\qquad 1\leq k\leq n,\qquad \bigcup_{j=1}^nS_j=U.
+$$</p><p>These restrictions preserve hardness: excluded cases can be decided directly and mapped to fixed yes or no instances satisfying the restrictions. We may also delete duplicate element incidence patterns, since two elements contained in exactly the same sets impose the same covering requirement.</p><p>There are three good types. Write a configuration as $B=(a,b,c)$ and set</p><p>$$
+K_0=2,\qquad K_1=K_2=H.
+$$</p><p>Define</p><p>$$
+q=100(n+1)^2,\qquad
+s_j=q+3j,\qquad
+p=q+3(n+1),\qquad
+H=p+3.
+$$</p><p>The distinguished configurations are</p><p>$$
+A=(2,0,0),\qquad E=(1,0,0),
+$$</p><p>and</p><p>$$
+L=(0,0,H),\qquad
+B_j=(0,s_j,H-s_j),\qquad
+F=(0,p,H-p).
+$$</p><p>Their external coordinates, meaning their last two coordinates, form the set</p><p>$$
+\mathcal C=
+\{(0,H)\}
+\cup\{(s_j,H-s_j):1\leq j\leq n\}
+\cup\{(p,H-p)\}.
+$$</p><p>Every member of $\mathcal C$ has coordinate sum $H$. Their first coordinates are separated by at least $3$. Let their downward closure be</p><p>$$
+D=\{(b,c): (b,c)\leq C\text{ coordinatewise for some }C\in\mathcal C\}.
+$$</p><p>Choose powers of two</p><p>$$
+\beta=2^{-\lceil\log_2(100nH)\rceil},
+\qquad
+\sigma=2^{-\lceil\log_2(100rH)\rceil},
+\qquad
+\alpha=\beta\sigma.
+$$</p><p>Set</p><p>$$
+\eta=2n\beta+r\alpha,\qquad \mu_G=1-\eta.
+$$</p><p>The supported types are:</p><ul><li>a guardian type $G$, of mass $\mu_G$;</li><li>a cost type $C_j$, of mass $\beta$, for each set $S_j$;</li><li>an element type $T_i$, of mass $\alpha$, for each element $i$;</li><li>a filler type $Q$, of mass $n\beta$.</li></ul><p>Thus</p><p>$$
+\tau=n+r+2,
+\qquad
+\mu_G+\sum_j\beta+\sum_i\alpha+n\beta=1.
+$$</p><p>The following bounds will be used repeatedly:</p><p>$$
+r\alpha H\leq\frac{\beta}{100},
+$$</p><p>and</p><p>$$
+H\eta
+\leq \frac{2}{100}+\frac{1}{10000nH}
+&lt;\frac3{100},
+\qquad
+\eta&lt;\frac1{100}.
+$$</p><p>In particular, $\mu_G&gt;H\eta$ and $\mu_G-\eta&gt;0$.</p><p>Define the supplies by</p><p>$$
+T=k\beta(q+3n)+r\alpha H,
+$$</p><p>$$
+\rho_0=2\mu_G,\qquad
+\rho_1=T,\qquad
+\rho_2=H\eta-T.
+$$</p><p>They satisfy the required bounds. Indeed,</p><p>$$
+\frac{T}{\beta}
+\leq k(q+3n)+\frac1{100}
+&lt;(k+1)q,
+$$</p><p>because $k\leq n$ and $3n^2+1/100&lt;q$. Also,</p><p>$$
+\frac{T}{\beta}
+\leq n(q+3n)+\frac1{100}
+&lt;np.
+$$</p><p>Consequently,</p><p>$$
+0&lt;T&lt;n\beta p&lt;H\eta,
+$$</p><p>and therefore $0&lt;\rho_1,\rho_2&lt;H$, while $0&lt;\rho_0&lt;2$.</p><h3>3. Explicit monotone valuations with distinct values</h3><p>We first define integer-valued monotone functions $f_\theta$, then add a small perturbation that makes every table injective.</p><p>Let</p><p>$$
+N=|\mathcal B|=3(H+1)^2,
+$$</p><p>and let $M$ be the smallest power of two with $M\geq N$. Define</p><p>$$
+d(a,b,c)=
+\frac{a(H+1)^2+b(H+1)+c}{128M}.
+$$</p><p>Then</p><p>$$
+d(0)=0,\qquad 0\leq d(B)&lt;\frac1{128}&lt;\frac1{100}.
+$$</p><p>The function $d$ is injective and strictly increases when any coordinate increases.</p><p>For every type, put</p><p>$$
+v_\theta(B)=f_\theta(B)+d(B).
+$$</p><p>Here are the base functions.</p><h3>Guardian valuation</h3><p>For $C=(b,c)$, define</p><p>$$
+f_G(a,b,c)=
+\begin{cases}
+0,&amp;(a,b,c)=(0,0,0),\\
+1,&amp;a=0,\ C\in D,\ C\ne(0,0),\\
+4,&amp;(a,b,c)=E,\\
+5,&amp;(a,b,c)=A,\\
+8,&amp;\text{otherwise}.
+\end{cases}
+$$</p><p>This is monotone. The set $D$ is downward closed, so an external configuration outside $D$ stays outside $D$ when increased. Increasing a pure anchor configuration to a mixed configuration raises its base value to $8$. All remaining comparisons respect the displayed order of values.</p><h3>Element valuations</h3><p>For each $i\in U$, define</p><p>$$
+f_{T_i}(a,b,c)=
+\max\left\{
+\mathbf1_{\{B\ne0\}},
+\ 2\mathbf1_{\{a\geq1\}},
+\ 4\mathbf1_{\{\exists j:\ i\in S_j,\ (b,c)\geq(s_j,H-s_j)\}}
+\right\}.
+$$</p><p>Each condition in this maximum describes an upward closed set, so $f_{T_i}$ is monotone.</p><h3>Cost valuations</h3><p>Let</p><p>$$
+P_j=(s_j-1,H-s_j).
+$$</p><p>Define</p><p>$$
+f_{C_j}(a,b,c)=
+\max\left\{
+\mathbf1_{\{B\ne0\}},
+\ 2\mathbf1_{\{(b,c)\geq P_j\}},
+\ 4\mathbf1_{\{(b,c)\geq(s_j,H-s_j)\}}
+\right\}.
+$$</p><p>Again, all defining conditions are upward closed.</p><h3>Filler valuation</h3><p>Define</p><p>$$
+f_Q(a,b,c)=
+\max\left\{
+\mathbf1_{\{B\ne0\}},
+\ 2\mathbf1_{\{a\geq1\}},
+\ 4\mathbf1_{\{b+c\geq H\}}
+\right\}.
+$$</p><p>This is monotone as well.</p><h3>Verification of the valuation assumptions</h3><p>All $f_\theta$ are integer valued, monotone, and zero at $0$. Adding $d$ preserves monotonicity and leaves $v_\theta(0)=0$.</p><p>For different configurations with the same base value, injectivity follows from injectivity of $d$. For different base values, the integer difference has magnitude at least $1$, whereas the perturbation difference has magnitude less than $1/100$. Thus every valuation has distinct values on distinct configurations.</p><p>Every nonzero configuration has positive value, and uniformly,</p><p>$$
+v_\theta(B)&lt;9&lt;16.
+$$</p><p>All table entries are dyadic rationals. After deletion of duplicate element incidence patterns, the supported valuation types are also pairwise distinct.</p><h3>4. The benchmark is positive</h3><p>There is always an unconstrained positive-welfare assignment with zero residual.</p><p>Give the guardian $A$. Give every other type the same distribution on $L$ and $F$, with probability</p><p>$$
+\lambda=\frac{T}{\eta p}
+$$</p><p>on $F$. Since $0&lt;T&lt;n\beta p&lt;\eta p$, we have $0&lt;\lambda&lt;1$.</p><p>The total mass of non-guardian types is $\eta$, so their external supplies are</p><p>$$
+\eta\lambda p=T
+$$</p><p>and</p><p>$$
+H\eta-T.
+$$</p><p>The guardian consumes $2\mu_G$ anchor goods. Thus all supply equations hold.</p><p>Every allocated configuration is nonzero and has positive value. Hence</p><p>$$
+\mathrm{NW}_\infty^\star&gt;0.
+$$</p><p>In particular, every qualifying assignment must exclude configuration $0$ from its support.</p><h3>5. Every qualifying zero-residual assignment has a restricted form</h3><p>Assume that $x$ is a qualifying assignment with $z=0$.</p><h3>5.1. A guardian receiving bundle bounds all removals</h3><p>The total external supply is $H\eta&lt;\mu_G$. If every supported guardian configuration had at least one external good, guardian consumption of external goods would be at least $\mu_G$, a contradiction.</p><p>Therefore some supported guardian configuration has no external goods. Because zero configurations are excluded, it is $E$ or $A$. Its guardian value is at most</p><p>$$
+5+\frac1{100}&lt;6.
+$$</p><p>A configuration whose base guardian value is $8$ has guardian value at least $8$. Thus fairness against this supported guardian receiving bundle forbids any supported donor configuration having a one-good removal with base guardian value $8$: that comparison would require a receiving value at least</p><p>$$
+\frac34\cdot8=6.
+$$</p><p>Consequently, every one-good removal from every supported donor has guardian base value less than $8$.</p><h3>5.2. Consequences for supported configurations</h3><p>Consider first a pure external configuration $B=(0,b,c)$.</p><p>If $b+c\geq H+2$, each one-good removal has external coordinate sum greater than $H$, and hence lies outside $D$. Such a configuration is forbidden.</p><p>If $b+c=H+1$, both $b,c$ are positive because each is at most $H$. Its two removals have coordinate sum $H$, so membership in $D$ would require both removals to belong to $\mathcal C$. Their first coordinates differ by $1$, contradicting the separation of $\mathcal C$.</p><p>It follows that every supported pure external configuration has</p><p>$$
+b+c\leq H.
+$$</p><p>Moreover, if $b+c=H$ and $b,c&gt;0$, membership of both removals in $D$ requires a distinguished first coordinate in each of</p><p>$$
+\{b-1,b\},\qquad \{b,b+1\}.
+$$</p><p>If $b$ itself is not distinguished, this would require both $b-1$ and $b+1$ to be distinguished, contradicting separation by at least $3$. At the endpoints, $(0,H)$ is distinguished, whereas $(H,0)$ is forbidden because the largest distinguished first coordinate is $p=H-3$.</p><p>Therefore the only supported pure external configurations of coordinate sum $H$ are</p><p>$$
+L,\ B_1,\ldots,B_n,\ F.
+$$</p><p>Next consider a mixed configuration with $a&gt;0$ and $b+c&gt;0$.</p><ul><li>If $a=2$, removing one anchor good leaves a mixed configuration with guardian base value $8$.</li><li>If $a=1$ and $b+c\geq2$, removing an external good can leave a mixed configuration with guardian base value $8$.</li></ul><p>Hence a supported mixed configuration can only have</p><p>$$
+a=1,\qquad b+c=1.
+$$</p><h3>5.3. The supply equations force equality in a linear bound</h3><p>Define</p><p>$$
+w(a,b,c)=\frac a2+\frac{b+c}{H}.
+$$</p><p>The preceding restrictions imply $w(B)\leq1$ for every supported configuration. For mixed configurations the inequality is strict, since</p><p>$$
+\frac12+\frac1H&lt;1.
+$$</p><p>On the other hand, the zero-residual supply equations give</p><p>$$
+\sum_{\theta,B}x_{\theta,B}w(B)
+=
+\frac{\rho_0}{2}+\frac{\rho_1+\rho_2}{H}
+=
+\mu_G+\eta
+=
+1.
+$$</p><p>The total assignment mass is also $1$. Therefore every supported configuration must have $w(B)=1$. The support is consequently contained in</p><p>$$
+\{A,L,B_1,\ldots,B_n,F\}.
+$$</p><p>The positive anchor supply implies that $A$ is supported. Removing an anchor good from $A$ produces $E$, whose guardian value is at least $4$. Thus every supported guardian receiving bundle must have value at least $3$.</p><p>Every distinguished external configuration has guardian value less than $1+1/100$. The guardian therefore receives only $A$, with its full mass $\mu_G$. This consumes the entire anchor supply. All other types receive only</p><p>$$
+L,B_1,\ldots,B_n,F.
+$$</p><h3>6. Zero residual implies a cover of size at most $k$</h3><p>Let</p><p>$$
+J=\{j:B_j\text{ is supported by some type}\}.
+$$</p><h3>Element types force coverage</h3><p>Fairness against donor $A$ requires every element type’s receiving value to be at least</p><p>$$
+\frac34v_{T_i}(E)\geq\frac32.
+$$</p><p>Among the distinguished external configurations, type $T_i$ has base value $4$ exactly at those $B_j$ with $i\in S_j$. It has base value $1$ at all the others, and their values are less than $1+1/100$.</p><p>Thus every element type receives only configurations $B_j$ corresponding to sets containing that element. Since every element type has positive mass, $J$ covers $U$.</p><h3>Supporting a set configuration incurs its entire cost mass</h3><p>Fix $j\in J$. The supported donor $B_j$ has the removal</p><p>$$
+B_j-e_1=(0,P_j),
+$$</p><p>whose value to cost type $C_j$ is at least $2$. Consequently, every receiving configuration supported by $C_j$ must have value at least $3/2$.</p><p>A distinguished external configuration $(0,t,H-t)$ dominates $P_j$ precisely when</p><p>$$
+s_j-1\leq t\leq s_j.
+$$</p><p>By separation of distinguished first coordinates, only $B_j$ satisfies this condition. Hence all distinguished receiving configurations other than $B_j$ have cost-type value less than $1+1/100$.</p><p>It follows that the entire mass $\beta$ of type $C_j$ receives $B_j$.</p><p>Therefore,</p><p>$$
+T=\rho_1
+\geq \beta\sum_{j\in J}s_j
+\geq |J|\beta q.
+$$</p><p>But $T&lt;(k+1)\beta q$. Since $|J|$ is an integer,</p><p>$$
+|J|\leq k.
+$$</p><p>We have proved that a qualifying zero-residual assignment yields a Set Cover solution of size at most $k$. Fractional splitting does not avoid this implication: any positive support on $B_j$ forces the whole cost type $C_j$ onto $B_j$.</p><h3>7. A cover yields a qualifying zero-residual assignment</h3><p>Suppose $J$ covers $U$ and $|J|\leq k$. For each element $i$, choose $j(i)\in J$ such that $i\in S_{j(i)}$.</p><p>Assign:</p><ul><li>the guardian its full mass on $A$;</li><li>cost type $C_j$ its full mass on $B_j$ if $j\in J$, and on $L$ otherwise;</li><li>element type $T_i$ its full mass on $B_{j(i)}$.</li></ul><p>The first external-good consumption of these types is</p><p>$$
+T_0
+=
+\beta\sum_{j\in J}s_j
++
+\alpha\sum_{i=1}^r s_{j(i)}.
+$$</p><p>It satisfies</p><p>$$
+T_0
+\leq k\beta(q+3n)+r\alpha H
+=T.
+$$</p><p>Give the filler mass</p><p>$$
+u=\frac{T-T_0}{p}
+$$</p><p>on $F$, and its remaining mass $n\beta-u$ on $L$. Since $0\leq T-T_0\leq T&lt;n\beta p$, this is valid.</p><p>The first external supply is now exactly $T$. Every non-guardian configuration has external cardinality $H$, so the second external supply is automatically $H\eta-T$. The anchor supply is also exact. Set $z=0$.</p><h3>Fairness verification</h3><p>For the guardian, receiving $A$ has value at least $5$. Removals from external donors have guardian base value $1$, and the removal from $A$ is $E$, with value less than $4+1/100$. All guardian comparisons hold.</p><p>For element types and the filler, receiving configurations have base value $4$. External removals have base value $1$ to these types, and $E$ has base value $2$. Their comparisons hold.</p><p>For an active cost type $C_j$ with $j\in J$, its receiving value has base $4$. Every relevant removal has base at most $2$, so its comparisons hold.</p><p>For an inactive cost type $C_\ell$, its receiving configuration is $L$, of value at least $1$. Every supported external donor is $L$, $F$, or some $B_j$ with $j\ne\ell$. None of their removals dominates $P_\ell$: such a removal has external cardinality $H-1$, so domination would require equality with $P_\ell$, which separation excludes. Their removal values, and the value of $E$, are less than $1+1/100$. Multiplication by $3/4$ gives a value less than $1$.</p><p>Thus all fairness inequalities hold. Charity inequalities hold because $z=0$.</p><h3>Welfare verification</h3><p>Write</p><p>$$
+V_A=v_G(A),\qquad U^\star=\log\mathrm{NW}_\infty^\star.
+$$</p><p>We first bound the benchmark uniformly.</p><p>In any positive-welfare benchmark assignment, let $t$ be the guardian mass receiving at least one external good. The external supply gives $t\leq H\eta$. Guardian configurations without external goods have value at most $V_A$, and every valuation is less than $16$. Therefore</p><p>$$
+U^\star
+\leq
+\mu_G\log V_A
++
+H\eta\log(16/V_A)
++
+\eta\log16.
+$$</p><p>The constructed assignment has log welfare at least $\mu_G\log V_A$, because all other receiving values are at least $1$. Since $V_A\geq5$,</p><p>$$
+U^\star-\log\mathrm{NW}_\infty(x)
+&lt;
+H\eta\log4+\eta\log16
+&lt;
+\frac1{10}.
+$$</p><p>Here we used $H\eta&lt;3/100$, $\eta&lt;1/100$, $\log4&lt;2$, and $\log16&lt;4$.</p><p>Also, $\log2&gt;1/2$, as follows from integrating $1/t$ on $[1,2]$. Hence</p><p>$$
+\mathrm{NW}_\infty(x)&gt;
+\frac{\mathrm{NW}_\infty^\star}{2}
+&gt;
+\frac{\mathrm{NW}_\infty^\star}{2e^{1/e}}.
+$$</p><p>The constructed zero-residual assignment qualifies.</p><h3>8. Every constructed instance is feasible</h3><p>This strengthens the reduction: the hard question concerns exact minimization even under a feasibility promise.</p><p>Give the guardian mass $\mu_G-\eta$ on $A$ and mass $\eta$ on $E$. Give every other type its full mass on $E$. Set</p><p>$$
+z=(0,T,H\eta-T).
+$$</p><p>The anchor consumption is</p><p>$$
+2(\mu_G-\eta)+\eta+\eta=2\mu_G,
+$$</p><p>and no external goods are allocated. Thus all mass and supply equations hold.</p><p>All supported configurations are $E$ and $A$. Removing one good from them produces $0$ or $E$. Monotonicity therefore proves all fairness comparisons.</p><p>For charity, both external residual coordinates are less than $H\eta&lt;3/100$, so $z$ lies in the external unit cell at anchor coordinate zero. For every type, the three nonzero corners of that cell have base value $1$. For the guardian this follows because $(1,1)\leq(p,3)\in\mathcal C$; for the other types their higher-value external thresholds have cardinality at least $H-1&gt;2$.</p><p>Consequently, multilinear interpolation gives</p><p>$$
+\bar v_\theta(z)
+\leq
+\left(1+\frac1{100}\right)
+\left(z_1+z_2-z_1z_2\right)
+\leq
+\left(1+\frac1{100}\right)H\eta
+&lt;1.
+$$</p><p>Every receiving value is at least $1$, so charity inequalities hold.</p><p>Finally, put $V_E=v_G(E)$. Since $V_A&lt;6$ and $V_E\geq4$, we have $V_A/V_E&lt;2$. This assignment’s log welfare is at least</p><p>$$
+(\mu_G-\eta)\log V_A+\eta\log V_E
+\geq
+\mu_G\log V_A-\eta\log2.
+$$</p><p>Using the benchmark bound from Section 7,</p><p>$$
+U^\star-\log\mathrm{NW}_\infty(x)
+&lt;
+H\eta\log4+\eta\log16+\eta\log2
+&lt;
+\frac{11}{100}
+&lt;
+\log2.
+$$</p><p>It therefore satisfies even the stronger welfare factor $2$.</p><h3>9. The minimum is attained</h3><p>For completeness, we verify that zero residual cannot arise merely as an unattained infimum.</p><p>The mass and supply equations bound every variable:</p><p>$$
+0\leq x_{\theta,B}\leq\mu_\theta,\qquad
+0\leq z_g\leq\rho_g.
+$$</p><p>Each numerically violated fairness comparison imposes the closed restriction</p><p>$$
+x_{\theta,B}x_{\theta&#x27;,B&#x27;}=0.
+$$</p><p>The charity condition is equivalently</p><p>$$
+x_{\theta,B}
+\max\{\bar v_\theta(z)-v_\theta(B),0\}=0.
+$$</p><p>This is closed because multilinear interpolation is continuous; adjacent cell interpolants agree on their common face.</p><p>The benchmark is positive. Hence the welfare condition is equivalently the closed restrictions</p><p>$$
+x_{\theta,0}=0
+$$</p><p>for every type, and</p><p>$$
+\sum_{\theta,B\ne0}x_{\theta,B}\log v_\theta(B)
+\geq
+U^\star-\log(2e^{1/e}).
+$$</p><p>Thus the qualifying set is closed and bounded. Section 8 proves it is nonempty. The continuous objective $\sum_gz_g$ therefore attains its minimum.</p><p>Since residuals are nonnegative, that minimum is zero exactly when a qualifying zero-residual assignment exists.</p><p>Combining Sections 6 and 7 proves</p><p>$$
+\text{minimum residual is zero}
+\quad\Longleftrightarrow\quad
+\text{the Set Cover instance has a cover of size at most }k.
+$$</p><h3>10. Bit complexity and optimization consequence</h3><p>The construction uses</p><p>$$
+m=3,\qquad
+\tau=n+r+2,\qquad
+1/\varepsilon=4,
+$$</p><p>and</p><p>$$
+H=O(n^2),\qquad
+|\mathcal B|=3(H+1)^2=O(n^4).
+$$</p><p>Every rational entry has bit length $O(\log(n+r+2))$. Thus the total output bit length satisfies</p><p>$$
+L=O\!\left((n+r)|\mathcal B|\log(n+r+2)\right).
+$$</p><p>A direct tabulation checks at most $n$ distinguished configurations or incidence conditions per entry. It constructs the instance in</p><p>$$
+O\!\left(
+\tau n|\mathcal B|\,
+\operatorname{poly}(\log(n+r+2))
+\right)
+$$</p><p>bit operations. This is polynomial in the Set Cover input size.</p><p>Therefore zero-residual decision is $\mathrm{NP}$-hard with fixed $m$ and fixed $1/\varepsilon$. The hardness does not arise from an exponentially represented configuration space or from exact welfare comparisons.</p><p>Under the usual exact-output convention, an algorithm returning an exact minimizing assignment would reveal whether its residual sum is zero. Such an algorithm would decide Set Cover in polynomial time. Hence, unless $\mathrm P=\mathrm{NP}$, no algorithm with running time polynomial in $m,\tau,|\mathcal B|,L,1/\varepsilon$ can always return an exact minimizer or report infeasibility. This obstruction already holds on the constructed instances, all of which are feasible.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 10: “Under the usual exact-output convention.”: Specify that the exact representation returned for the residual coordinates permits polynomial-time testing of whether every $z_g=0$. Exact real representation alone does not imply efficient zero testing. This is an output-convention clarification; the decision hardness proof is unaffected.</li></ul>
+<div class="pre"><h3>Verification report</h3><p>The reduction establishes $\mathrm{NP}$-hardness of deciding whether the minimum residual mass is zero, including on guaranteed-feasible instances with $m=3$ and $\varepsilon=1/4$. I found no mathematical error in the construction, either direction of the reduction, the welfare bounds, or the attainment argument.</p><p>There is one minor clarification needed: the optimization consequence should specify what its “usual exact-output convention” requires. In particular, the returned representation must permit polynomial-time testing of whether the residuals are zero.</p><h3>1. Starting problem and restrictions</h3><p>The cited starting theorem is the standard $\mathrm{NP}$-completeness of Set Cover with an explicitly represented universe and family of sets, and an integer cardinality bound. This is the appropriate decision problem for the reduction. [Karp’s cited paper](https://link.springer.com/chapter/10.1007/978-1-4684-2001-2_9)</p><p>The restrictions $n,r\geq1$, $1\leq k\leq n$, and $\bigcup_jS_j=U$ preserve hardness: inputs outside these restrictions have directly decidable answers and can be replaced by fixed restricted instances with the same answer.</p><p>Deleting duplicate element incidence patterns also preserves the answer. Such elements impose identical covering requirements. The deletion leaves a nonempty universe and does not change which subfamilies cover it.</p><p><b>Assessment:</b> Correct. The hypotheses of the starting hardness result match the construction.</p><h3>2. Parameters, masses, supplies, and configuration domain</h3><p>All distinguished configurations lie in the stated box. In particular,</p><p>$$
+0&lt;s_j&lt;p&lt;H,\qquad H-p=3,\qquad H-s_n=6.
+$$</p><p>The distinguished external coordinates have total cardinality $H$, and their first coordinates are separated by at least $3$.</p><p>The definitions of $\beta$ and $\sigma$ give</p><p>$$
+\beta\leq\frac1{100nH},
+\qquad
+\sigma\leq\frac1{100rH}.
+$$</p><p>Consequently, the stated bounds follow:</p><p>$$
+r\alpha H=r\beta\sigma H\leq\frac{\beta}{100},
+$$</p><p>and</p><p>$$
+H\eta
+=2n\beta H+r\alpha H
+\leq\frac2{100}+\frac1{10000nH}
+&lt;\frac3{100}.
+$$</p><p>The additional bound $\eta&lt;1/100$ is consistent with the explicit value of $H$. Thus every listed mass is positive, the masses sum to one, and both $\mu_G&gt;H\eta$ and $\mu_G-\eta&gt;0$ hold.</p><p>The two supply estimates are also correct:</p><p>$$
+\frac{T}{\beta}
+\leq k(q+3n)+\frac1{100}
+&lt;(k+1)q,
+$$</p><p>and</p><p>$$
+\frac{T}{\beta}
+\leq n(q+3n)+\frac1{100}
+&lt;np.
+$$</p><p>They imply</p><p>$$
+0&lt;T&lt;n\beta p&lt;H\eta.
+$$</p><p>Therefore all three supplies satisfy the required configuration bounds. The masses, supplies, and valuation perturbations have finite rational encodings of polynomial bit length.</p><p><b>Assessment:</b> Correct, including positivity, normalization, and supply-domain restrictions.</p><h3>3. Valuation assumptions</h3><p>The perturbation is injective because its numerator is a positional encoding of $(a,b,c)$. It increases strictly in each coordinate and satisfies</p><p>$$
+0\leq d(B)&lt;\frac1{128}&lt;\frac1{100}.
+$$</p><p>The guardian base function is monotone. Its potentially delicate transitions are handled correctly: leaving the downward-closed set $D$ raises the external base value to $8$, and increasing a pure anchor configuration to a mixed configuration also raises the base value to $8$.</p><p>The element, cost, and filler functions are maxima of indicators of upward-closed conditions, so they are monotone.</p><p>Adding $d$ preserves monotonicity and the value at zero. For two configurations with different base values, the integer separation cannot be canceled by the perturbation. For configurations with equal base values, injectivity follows from $d$.</p><p>The supported valuation tables are pairwise distinct as claimed. Distinct element incidence patterns differ at a corresponding $B_j$; distinct cost types differ at their threshold configurations $P_j$. The guardian, filler, element, and cost constructions also have distinct thresholds or values.</p><p>Every nonzero configuration has positive value, and the uniform bound $v_\theta(B)&lt;9&lt;16$ holds.</p><p><b>Assessment:</b> Correct. The construction satisfies the task’s explicitly tabulated, monotone, injective valuation requirements.</p><h3>4. Positive benchmark</h3><p>The proposed benchmark assignment uses</p><p>$$
+\lambda=\frac{T}{\eta p}\in(0,1).
+$$</p><p>Giving the guardian $A$ and distributing every other type between $L$ and $F$ consumes exactly the three specified supplies. Every receiving configuration is nonzero and has positive value.</p><p>Thus $\mathrm{NW}_\infty^\star&gt;0$. The conclusion that every qualifying assignment excludes configuration $0$ follows from the task’s zero-welfare convention and its positive welfare requirement.</p><p><b>Assessment:</b> Correct. Later uses of logarithms are justified.</p><h3>5. Restricted support of a zero-residual assignment</h3><h3>Guardian receiving bundle</h3><p>Since the total external supply is less than $\mu_G$, not all guardian mass can receive configurations containing an external good. Some supported guardian configuration must therefore be $E$ or $A$.</p><p>Its value is strictly below $6$. A donor removal with guardian base value $8$ would require a receiving value of at least</p><p>$$
+\frac34\cdot8=6,
+$$</p><p>which is impossible. This excludes every such removal, regardless of which type receives the donor configuration.</p><h3>External and mixed configurations</h3><p>The exclusions by external cardinality are valid:</p><ul><li>If $b+c\geq H+2$, every available removal lies outside $D$.</li><li>If $b+c=H+1$, both external coordinates are positive, and the two removals would have to be distinguished configurations whose first coordinates differ by $1$.</li><li>If $b+c=H$ with both coordinates positive, the two removals require distinguished first coordinates in $\{b-1,b\}$ and $\{b,b+1\}$. Unless $b$ is distinguished, their separation contradicts the prescribed spacing.</li><li>The endpoint $(H,0)$ is correctly excluded because even its removal cannot be dominated by a distinguished external configuration.</li></ul><p>The mixed-configuration analysis is also correct. A mixed configuration with $a=2$ has a mixed anchor removal. A mixed configuration with $a=1$ and at least two external goods has a mixed external removal. Both have guardian base value $8$. Hence only $a=1$, $b+c=1$ remains possible among mixed configurations.</p><h3>Saturation of the linear bound</h3><p>All surviving configurations satisfy $w(B)\leq1$. The mixed survivors satisfy a strict inequality because $H&gt;2$.</p><p>The supply equations give average weight exactly one, and total assignment mass is one. Since every supported configuration has weight at most one, every supported configuration must have weight exactly one. This correctly restricts support to</p><p>$$
+\{A,L,B_1,\ldots,B_n,F\}.
+$$</p><p>Positive anchor supply forces $A$ into support. Its removal $E$ then makes every guardian receiving value at least $3$, excluding all distinguished external configurations for the guardian. The guardian’s full mass on $A$ exhausts the anchor supply, excluding $A$ for every other type.</p><p><b>Assessment:</b> Correct. The support argument applies to real masses and arbitrary fractional splitting.</p><h3>6. Zero residual implies a small cover</h3><p>Fairness against $A$ requires every element receiving value to be at least $3/2$. Among the remaining external configurations, precisely the covering configurations $B_j$ have element base value $4$; all other values are below $1+1/100$.</p><p>Therefore every element receives a covering configuration, and the defined set $J$ covers $U$.</p><p>For each $j\in J$, the removal $P_j$ forces every receiving configuration of cost type $C_j$ to have value at least $3/2$. A distinguished external configuration dominates $P_j$ exactly when its first coordinate lies in</p><p>$$
+[s_j-1,s_j].
+$$</p><p>The spacing ensures that only $B_j$ satisfies this condition. Hence the entire cost mass $\beta$ receives $B_j$.</p><p>The resulting supply lower bound is valid:</p><p>$$
+T\geq\beta\sum_{j\in J}s_j\geq |J|\beta q.
+$$</p><p>Combined with $T&lt;(k+1)\beta q$, it yields $|J|\leq k$.</p><p><b>Assessment:</b> Correct. The crucial implication from positive support to the full cost mass is established; fractional allocations do not bypass it.</p><h3>7. A cover yields a qualifying zero-residual assignment</h3><p>The proposed assignment satisfies the mass equations. Its initial first-external consumption obeys $T_0\leq T$, and the filler amount satisfies</p><p>$$
+0\leq u=\frac{T-T_0}{p}&lt;n\beta.
+$$</p><p>Thus filler splitting is valid. The first external supply is exact, and the second is exact because every non-guardian receiving configuration has external cardinality $H$. Anchor supply is exact as well.</p><h3>Fairness</h3><p>All receiving types are checked:</p><ul><li>The guardian’s value at $A$ exceeds the required fractions of external-removal values and the value at $E$.</li><li>Elements and the filler receive base value $4$, while relevant removals have base value $1$ or $2$.</li><li>Active cost types receive base value $4$, while relevant removals have base value at most $2$.</li><li>For inactive cost types, a supported external removal could dominate $P_\ell$ only by equaling it, since both have cardinality $H-1$. The spacing excludes this equality. Their receiving value at $L$ therefore satisfies every comparison.</li></ul><p>The perturbations remain within all stated strict margins. Charity inequalities hold because $z=0$ and $\bar v_\theta(0)=0$.</p><h3>Welfare</h3><p>The benchmark bound correctly distinguishes guardian mass receiving external goods from guardian mass receiving pure anchor configurations. The former has mass at most $H\eta$. The uniform valuation bound then gives the stated upper bound on $U^\star$.</p><p>Every non-guardian receiving value in the constructed assignment is at least one. Hence its log welfare is at least $\mu_G\log V_A$. The numerical estimate</p><p>$$
+U^\star-\log\mathrm{NW}_\infty(x)&lt;\frac1{10}
+$$</p><p>is correct. Together with $\log2&gt;1/2$, it proves the stronger welfare factor $2$, and therefore the required factor $2e^{1/e}$.</p><p><b>Assessment:</b> Correct. No exact logarithmic comparison is needed to execute the reduction.</p><h3>8. Guaranteed feasibility</h3><p>The feasibility assignment has nonnegative masses and exactly consumes the anchor supply. Allocating no external goods leaves precisely the stated residual vector.</p><p>Its supported configurations are $E$ and $A$, whose removals are $0$ or $E$. Monotonicity therefore proves all fairness comparisons.</p><p>The residual lies in the specified external unit cell. All three nonzero corners have base value one for every type. The guardian’s membership claim follows from $(1,1)\leq(p,3)$; the other external thresholds have cardinality greater than two.</p><p>The multilinear interpolation bound is correct:</p><p>$$
+\bar v_\theta(z)
+\leq
+\left(1+\frac1{100}\right)(z_1+z_2-z_1z_2)
+\leq
+\left(1+\frac1{100}\right)H\eta
+&lt;1.
+$$</p><p>Every receiving value is at least one, so charity constraints hold.</p><p>The guardian’s welfare loss is at most $\eta\log2$. Combining it with the established benchmark bound gives</p><p>$$
+U^\star-\log\mathrm{NW}_\infty(x)
+&lt;\frac{11}{100}&lt;\log2.
+$$</p><p><b>Assessment:</b> Correct. Both yes and no instances of the reduction are qualifying-feasible.</p><h3>9. Attainment and equivalence with minimum zero</h3><p>The mass and supply equations bound all variables.</p><p>Each violated fixed fairness comparison is correctly represented by a closed zero-product restriction. The charity restriction is also closed, because the interpolated valuation is continuous across unit-cell boundaries.</p><p>Since the benchmark is positive and configuration $0$ is the only zero-valued configuration, the welfare requirement is equivalent to excluding its mass and imposing the stated closed linear inequality in log values.</p><p>The qualifying set is therefore nonempty and compact. The residual objective is continuous, so it attains its minimum. Nonnegativity of residuals makes minimum zero equivalent to existence of a qualifying assignment with $z=0$.</p><p><b>Assessment:</b> Correct. An unattained zero infimum cannot invalidate the decision reduction.</p><h3>10. Bit complexity and optimization consequence</h3><p>The configuration count and output-length bounds are consistent:</p><p>$$
+H=O(n^2),\qquad
+|\mathcal B|=O(n^4),
+$$</p><p>and</p><p>$$
+L=O\!\left((n+r)|\mathcal B|\log(n+r+2)\right).
+$$</p><p>The rational entries have the claimed bit lengths. Checking at most $n$ threshold or incidence conditions per table entry gives the stated polynomial construction time. Explicit tabulation introduces no exponential representation issue.</p><p>Together with the two reduction directions and attainment, this establishes $\mathrm{NP}$-hardness at fixed $m$ and fixed $1/\varepsilon$.</p><p>The optimization consequence is valid under an exact-output convention permitting efficient zero testing. Its wording does not assert hardness of detecting infeasibility alone, nor hardness of approximation, nor membership of the decision problem in $\mathrm{NP}$.</p><h3>Minor issue and minimum clarification</h3><p><b>Where:</b> Section 10, “Under the usual exact-output convention.”</p><p><b>Issue:</b> An exact representation of a real number does not automatically permit polynomial-time testing of equality to zero. The computational property required of the output encoding is left implicit.</p><p><b>Minimum clarification:</b> State that the returned residual coordinates have a finite exact representation in which testing whether all residuals are zero takes polynomial time in the output length. No change to the reduction or welfare argument is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,164 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-7d68befb1de02456eeb76a943f7ce574a2dcd26f — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-7d68befb1de02456eeb76a943f7ce574a2dcd26f <span style="font-weight:normal;color:#8a7350">(s5-7d68befb1de02456eeb76a943f7ce574a2dcd26f)</span></h1>
+<p class="banner">claim: resolved · adversarial review: proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> The proposed bound fails. Over the allowed societies, worst-case average regret is \(\Theta(R\|\Theta^*\|_2)\), even with zero slacks and for every fixed \(\alpha\in(0,1]\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a feasible configuration set \(\mathcal Y\), bounded features \(\phi\), and a finite support \(\mathcal T\) of user types with rational masses \(\mu_r\), let type \(r\) have utility \(u_r(y)=\langle w_r^*,\phi(y)\rangle\). In each round \(q\), choose one shared configuration \(y_q\) maximizing the current estimate of \(U_\mu(y)=\sum_{r\in\mathcal T}\mu_r u_r(y)\), and receive an \(\alpha\)-informative improvement \(\bar y_{rq}\) from a representative of every type, relative to that type’s own best feasible configuration. For type-block estimates updated from each \((y_q,\bar y_{rq})\), does average regret against the best shared configuration admit a bound such as \(\frac{2R\|\Theta^*\|}{\alpha\sqrt Q}+\frac{1}{\alpha Q}\sum_{q=1}^{Q}\sum_{r\in\mathcal T}\mu_r\xi_{rq}\), where \(\Theta^*=(\sqrt{\mu_r}w_r^*)_{r\in\mathcal T}\), or what bound is attainable under these feedback assumptions?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list \(\mathcal T\) of \(\tau\geq1\) types with positive binary rational masses \(\mu_r\), normalized by \(\sum_r\mu_r=1\); \(\tau\) is the support size, not the number of possible types.<br>Let \(\mathcal Y\neq\varnothing\), let \(\phi:\mathcal Y\to\mathbb R^m\) satisfy \(\|\phi(y)\|_2\leq R\), and let each type have a fixed unknown vector \(w_r^*\in\mathbb R^m\), with unrestricted signs, defining \(u_r(y)=\langle w_r^*,\phi(y)\rangle\) and \(U_\mu(y)=\sum_r\mu_r u_r(y)\). Assume all maximizers used below exist and exact maximization is available; ties may be resolved arbitrarily.<br>Initialize \(w_{r1}=0\). For \(q=1,\ldots,Q\), choose the shared recommendation \(y_q\in\arg\max_{y\in\mathcal Y}\sum_r\mu_r\langle w_{rq},\phi(y)\rangle\), receive one feasible response \(\bar y_{rq}\in\mathcal Y\) from every type, and update \(w_{r,q+1}=w_{rq}+\phi(\bar y_{rq})-\phi(y_q)\).<br>Feedback satisfies \(u_r(\bar y_{rq})-u_r(y_q)=\alpha(\max_{y\in\mathcal Y}u_r(y)-u_r(y_q))-\xi_{rq}\), where \(\alpha\in(0,1]\) is common to all types and \(\xi_{rq}\in\mathbb R\) may have either sign; responses may depend on the entire history. The learner observes configurations, not utilities or slacks.<br>Define \(\Theta^*=(\sqrt{\mu_r}w_r^*)_{r\in\mathcal T}\) and \(\operatorname{REG}_Q=Q^{-1}\sum_{q=1}^Q[\max_{y\in\mathcal Y}U_\mu(y)-U_\mu(y_q)]\). Computational costs are measured in \(m,\tau,L,Q\), with \(L\) the binary encoding length of supplied rational data and feature-evaluation and exact-maximization oracle costs charged separately.</p><p>Does \(\operatorname{REG}_Q\leq\frac{2R\|\Theta^*\|_2}{\alpha\sqrt Q}+\frac{1}{\alpha Q}\sum_{q=1}^Q\sum_r\mu_r\xi_{rq}\) hold uniformly under these assumptions, or, if it fails, what worst-case regret bound is attainable for this algorithm?</p><p>For a single user, the zero-initialized Preference Perceptron has the corresponding regret bound with \(\|w^*\|_2\) and that user&#x27;s slacks ([Shivaswamy–Joachims](https://www.cs.cornell.edu/~tj/publications/shivaswamy_joachims_15a.pdf)).<br>Multitask coactive learning provides bounds on average improvement effort when each round serves one identified user; it does not analyze simultaneous feedback on a shared social recommendation ([Goetschalckx–Fern–Tadepalli](https://www.ijcai.org/Proceedings/15/Papers/495.pdf)). No result settling the distributional problem specified here was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalize the positive masses to sum to one, interpreting the society as a probability distribution.</li><li>Specify zero initialization and the unit-step, per-type Preference Perceptron update; the graded question did not define the updates.</li><li>Use the source&#x27;s equality definition of alpha-informativeness with signed real slacks, rather than assuming nonnegative slacks or strict improvement.</li><li>Allow real preference weights of either sign and interpret bounded features using the Euclidean norm.</li><li>Require a nonempty feasible set and attained exact maximizers; allow arbitrary tie resolution.</li><li>Run for a fixed positive integer horizon Q without early termination, since individual satisfaction does not define a shared stopping condition.</li><li>Interpret m as feature dimension and account separately for feature-evaluation and exact-maximization oracles, since no encoding of the configuration domain was supplied.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Conclusion</h3><p>The proposed bound <b>fails</b>, even with zero slacks and exact optimal responses. For every fixed \(\alpha\in(0,1]\), a two-type society can have constant positive average regret for arbitrarily many rounds.</p><p>A valid uniform replacement is<br>\[
+\operatorname{REG}_Q
+\leq
+\min\left\{
+2R\|\Theta^*\|_2,\;
+\frac{R\|\Theta^*\|_2}{\alpha}\sqrt{1+\frac4Q}
++\frac{1}{\alpha Q}\sum_{q,r}\mu_r\xi_{rq}
+\right\}.
+\]<br>Thus, with zero slacks, the worst-case average regret over the allowed societies is \(\Theta(R\|\Theta^*\|_2)\), rather than a quantity tending to zero. Below, a sharper bound identifies the contribution of heterogeneity.</p><h3>1. A zero-slack counterexample</h3><p>Let \(m=1\), \(R=1\), \(\mathcal Y=[-1,1]\), and \(\phi(y)=y\). There are two types:<br>\[
+\mu_1=\frac34,\qquad \mu_2=\frac14,\qquad
+w_1^*=1,\qquad w_2^*=-1.
+\]<br>Consequently,<br>\[
+U_\mu(y)=\frac12y,\qquad
+\max_y U_\mu(y)=\frac12,\qquad
+\|\Theta^*\|_2=1.
+\]</p><p>For any prescribed \(\alpha\in(0,1]\), give the responses<br>\[
+\bar y_{1q}=(1-\alpha)y_q+\alpha,
+\qquad
+\bar y_{2q}=(1-\alpha)y_q-\alpha.
+\]<br>Both are feasible: each is a convex combination of \(y_q\) and that type’s optimal configuration. Their improvements satisfy<br>\[
+u_1(\bar y_{1q})-u_1(y_q)=\alpha(1-y_q),
+\]<br>and<br>\[
+u_2(\bar y_{2q})-u_2(y_q)=\alpha(1+y_q).
+\]<br>These are exactly the required feedback equalities with \(\xi_{rq}=0\).</p><p>Define the aggregate learned weight<br>\[
+v_q=\frac34w_{1q}+\frac14w_{2q}.
+\]<br>The weighted response is<br>\[
+\frac34\bar y_{1q}+\frac14\bar y_{2q}
+=(1-\alpha)y_q+\frac{\alpha}{2},
+\]<br>so the aggregate update is<br>\[
+v_{q+1}=v_q+\alpha\left(\frac12-y_q\right).
+\]</p><p>Resolve ties at \(v_q=0\) by choosing \(y_q=1\). Exact maximization then gives the repeating cycle<br>\[
+\begin{array}{c|rrrr}
+\text{round within cycle}&amp;1&amp;2&amp;3&amp;4\\ \hline
+v_q/\alpha&amp;0&amp;-\frac12&amp;1&amp;\frac12\\
+y_q&amp;1&amp;-1&amp;1&amp;1
+\end{array}
+\]<br>because the fourth update returns \(v_q\) to zero.</p><p>The social regret is zero at \(y_q=1\) and one at \(y_q=-1\). Hence, for every positive integer \(k\),<br>\[
+\operatorname{REG}_{4k}=\frac14.
+\]<br>The proposed bound would instead give \(2/(\alpha\sqrt Q)\). It fails whenever \(Q\) is a multiple of four and \(Q&gt;64/\alpha^2\). In particular, at \(\alpha=1\) and \(Q=100\), it asserts \(1/4\leq1/5\).</p><p>All masses are positive binary rational numbers, all relevant maxima exist, and both true weights are nonzero.</p><h3>2. A uniform bound incorporating heterogeneity</h3><p>Define<br>\[
+\bar w^*=\sum_r\mu_rw_r^*,
+\qquad
+\sigma^2=\sum_r\mu_r\|w_r^*-\bar w^*\|_2^2.
+\]<br>Expanding the squares and using \(\sum_r\mu_r=1\) yields<br>\[
+\|\Theta^*\|_2^2=\|\bar w^*\|_2^2+\sigma^2.
+\]</p><p>Also define the disagreement between individual and social optimum values:<br>\[
+H=\sum_r\mu_r\max_yu_r(y)-\max_yU_\mu(y).
+\]<br>This satisfies \(H\geq0\): evaluate every individual utility at a social maximizer, then bound it by its individual maximum.</p><p>Write \(S_Q=\sum_{q=1}^Q\sum_r\mu_r\xi_{rq}\). We will prove<br>\[
+\boxed{
+\operatorname{REG}_Q
+\leq
+\frac{2R\|\bar w^*\|_2}{\alpha\sqrt Q}
++\frac{R\sigma}{\alpha}
++\frac{S_Q}{\alpha Q}
+-H.
+}
+\]<br>No sign restriction on the slacks is needed.</p><h3>Aggregate-weight control</h3><p>Let<br>\[
+v_q=\sum_r\mu_rw_{rq},
+\qquad
+x_q=\phi(y_q),
+\qquad
+b_q=\sum_r\mu_r\phi(\bar y_{rq}).
+\]<br>The algorithm implies \(v_1=0\) and<br>\[
+v_{q+1}=v_q+b_q-x_q.
+\]</p><p>Because \(y_q\) maximizes \(\langle v_q,\phi(y)\rangle\), every feasible response satisfies<br>\[
+\langle v_q,\phi(\bar y_{rq})-x_q\rangle\leq0.
+\]<br>Taking the weighted average gives \(\langle v_q,b_q-x_q\rangle\leq0\). Moreover, \(\|b_q\|_2\leq R\), so \(\|b_q-x_q\|_2\leq2R\). Therefore,<br>\[
+\begin{aligned}
+\|v_{q+1}\|_2^2
+&amp;=\|v_q\|_2^2+2\langle v_q,b_q-x_q\rangle
++\|b_q-x_q\|_2^2\\
+&amp;\leq\|v_q\|_2^2+4R^2.
+\end{aligned}
+\]<br>Induction establishes<br>\[
+\|v_{Q+1}\|_2\leq2R\sqrt Q.
+\]</p><h3>Bounding total utility improvement</h3><p>Put \(\delta_r=w_r^*-\bar w^*\). Since \(\sum_r\mu_r\delta_r=0\), each round’s weighted utility improvement equals<br>\[
+\sum_r\mu_r\bigl[u_r(\bar y_{rq})-u_r(y_q)\bigr]
+=
+\langle\bar w^*,b_q-x_q\rangle
++\sum_r\mu_r\langle\delta_r,\phi(\bar y_{rq})\rangle.
+\]<br>The second term is at most<br>\[
+R\sum_r\mu_r\|\delta_r\|_2
+\leq R\sqrt{\sum_r\mu_r\|\delta_r\|_2^2}
+=R\sigma,
+\]<br>where the inequality is weighted Cauchy–Schwarz.</p><p>Summing over rounds, telescoping the aggregate updates, and applying Cauchy–Schwarz again gives<br>\[
+\begin{aligned}
+\sum_{q,r}\mu_r\bigl[u_r(\bar y_{rq})-u_r(y_q)\bigr]
+&amp;\leq\langle\bar w^*,v_{Q+1}\rangle+QR\sigma\\
+&amp;\leq2R\|\bar w^*\|_2\sqrt Q+QR\sigma.
+\end{aligned}
+\]</p><p>On the other hand, the feedback equalities imply exactly<br>\[
+\begin{aligned}
+\sum_{q,r}\mu_r\bigl[u_r(\bar y_{rq})-u_r(y_q)\bigr]
+&amp;=\alpha\sum_q
+\left[\sum_r\mu_r\max_yu_r(y)-U_\mu(y_q)\right]-S_Q\\
+&amp;=\alpha Q\bigl(\operatorname{REG}_Q+H\bigr)-S_Q.
+\end{aligned}
+\]<br>Combining these expressions and dividing by \(\alpha Q\) proves the boxed bound.</p><h3>3. Norm-only bound and worst-case rate</h3><p>Cauchy–Schwarz and the variance identity give<br>\[
+\frac{2\|\bar w^*\|_2}{\sqrt Q}+\sigma
+\leq
+\sqrt{1+\frac4Q}\,
+\sqrt{\|\bar w^*\|_2^2+\sigma^2}
+=
+\sqrt{1+\frac4Q}\,\|\Theta^*\|_2.
+\]<br>Dropping the nonpositive term \(-H\) therefore gives<br>\[
+\operatorname{REG}_Q
+\leq
+\frac{R\|\Theta^*\|_2}{\alpha}\sqrt{1+\frac4Q}
++\frac{S_Q}{\alpha Q}.
+\]</p><p>There is also a utility-range bound independent of feedback. If \(y_\mu^*\) is a social maximizer, then<br>\[
+U_\mu(y_\mu^*)-U_\mu(y_q)
+=
+\langle\bar w^*,\phi(y_\mu^*)-\phi(y_q)\rangle
+\leq2R\|\bar w^*\|_2
+\leq2R\|\Theta^*\|_2.
+\]<br>Taking the minimum proves the uniform replacement stated at the beginning.</p><p>To verify the matching worst-case order, scale the counterexample by setting \(\phi(y)=Ry\) and \(w_1^*=B,\ w_2^*=-B\), for arbitrary \(R,B&gt;0\). Its recommendations follow the same cycle, while<br>\[
+\|\Theta^*\|_2=B,
+\qquad
+\operatorname{REG}_{4k}=\frac{RB}{4}.
+\]<br>Together with the upper bound \(2RB\), this establishes constant-order worst-case average regret, even with zero slacks, for every permitted \(\alpha\).</p><p>When all true vectors coincide, \(\sigma=H=0\), and the sharper bound recovers the proposed decaying bound.</p><h3>4. Why the single-user proof does not transfer</h3><p>The [single-user Preference Perceptron proof, Theorem 1](https://www.cs.cornell.edu/~tj/publications/shivaswamy_joachims_15a.pdf), uses the fact that the learned weight has nonpositive inner product with its update.</p><p>Here, shared maximization controls the aggregate inner product \(\langle v_q,b_q-x_q\rangle\). It does <b>not</b> imply<br>\[
+\sum_r\mu_r
+\langle w_{rq},\phi(\bar y_{rq})-\phi(y_q)\rangle
+\leq0.
+\]<br>Thus the individual weights’ stacked norm need not grow only as \(\sqrt Q\). The heterogeneity term in the proved bound accounts for precisely this missing control.</p><h3>5. Computational accounting</h3><p>The recommendations can be implemented by maintaining only \(v_q\), since its update exactly reproduces the aggregate of the stated individual updates. Each round uses one exact-maximization call, feature evaluations for the recommendation and the \(\tau\) responses, and \(O(m\tau)\) arithmetic operations. Total arithmetic work is \(O(Qm\tau)\), with no dependence on the number of possible types or on inverse masses.</p><p>For rational feature outputs, bit costs are polynomial in their encoding lengths, the supplied rational-data length, and \(Q\), with oracle costs charged separately. For arbitrary real feature outputs, the stated accounting is an arithmetic-operation count; the premises do not specify a finite encoding for those outputs.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 3, matching worst-case order: The explicit lower-bound calculation covers only horizons Q divisible by four, while the claimed Theta rate ordinarily covers every sufficiently large horizon. State the regret count for truncated cycles, or explicitly restrict the lower-bound formulation to the displayed subsequence.</li></ul>
+<div class="pre"><p>The prover resolves the main question correctly: the proposed bound fails, and the stated uniform replacement is valid. The counterexample and upper-bound arguments are rigorous. There is one minor omission in the formulation of the matching worst-case rate: the explicit lower-bound calculation covers horizons divisible by four, while the asymptotic claim ordinarily covers all sufficiently large horizons.</p><h3>1. Counterexample</h3><p><b>The instance satisfies the task’s assumptions.</b> The support has two types with positive binary rational masses summing to one. The feature map satisfies \(\lvert\phi(y)\rvert\leq1\), and all relevant maximizers exist. Unrestricted signs permit the negative second weight.</p><p>The stated identities<br>\(U_\mu(y)=y/2\) and \(\|\Theta^*\|_2=1\) are correct.</p><p><b>The responses are feasible and satisfy the feedback equalities.</b> For every \(\alpha\in(0,1]\), each response is a convex combination of the recommendation and its type’s maximizer. Direct substitution confirms both improvement equations and therefore \(\xi_{rq}=0\).</p><p>The responses are individually optimal when \(\alpha=1\). For smaller \(\alpha\), they need not be optimal, but they satisfy exactly the required feedback model. Thus the opening claim about failure even with optimal responses is supported by the \(\alpha=1\) instance.</p><p><b>The aggregate dynamics and cycle are correct.</b> Weighted averaging gives<br>\(v_{q+1}=v_q+\alpha(1/2-y_q)\).<br>The displayed states and recommendations follow from this recurrence, and the fourth update returns the aggregate weight to zero. Choosing \(y_q=1\) at ties is permitted. One permissible tie rule suffices to disprove a bound asserted uniformly under arbitrary tie resolution.</p><p><b>The regret and failure threshold are correct.</b> Each four-round cycle incurs total social regret one. Hence<br>\(\operatorname{REG}_{4k}=1/4\).<br>The proposed right-hand side is \(2/(\alpha\sqrt Q)\), which is strictly smaller than \(1/4\) precisely when \(Q&gt;64/\alpha^2\). The numerical example with \(\alpha=1\) and \(Q=100\) is correct.</p><p>This establishes genuine failure of the proposed bound.</p><h3>2. Heterogeneity quantities</h3><p>The weighted variance identity<br>\(\|\Theta^*\|_2^2=\|\bar w^*\|_2^2+\sigma^2\)<br>is correct: the cross term vanishes because<br>\(\sum_r\mu_r(w_r^*-\bar w^*)=0\).</p><p>The definition of \(H\) is well posed because the required maxima exist and bounded features give finite utility values. The proof of \(H\geq0\) correctly compares each individual maximum with that individual’s utility at a social maximizer.</p><p>No sign restriction on the true vectors is used.</p><h3>3. Aggregate-weight control</h3><p>The aggregate recurrence follows exactly from the algorithm.</p><p>Exact shared maximization implies<br>\(\langle v_q,\phi(\bar y_{rq})-x_q\rangle\leq0\)<br>for every feasible response. Positive normalized masses preserve this inequality upon averaging.</p><p>The bounds \(\|b_q\|_2\leq R\) and \(\|b_q-x_q\|_2\leq2R\) follow from the triangle inequality. Expanding the squared norm therefore gives the stated increment bound.</p><p>Starting from \(v_1=0\), induction yields<br>\(\|v_{Q+1}\|_2^2\leq4R^2Q\).<br>The indexing and constant are correct.</p><h3>4. Total utility improvement and signed slacks</h3><p>The improvement decomposition is exact. The recommendation’s deviation term cancels because \(\sum_r\mu_r\delta_r=0\).</p><p>Both inequalities bounding the remaining deviation contribution are justified:</p><ul><li>The feature bound controls each inner product by \(R\|\delta_r\|_2\).</li><li>Weighted Cauchy–Schwarz applies because the masses are positive and sum to one.</li></ul><p>Telescoping the aggregate updates is valid because \(v_1=0\). The subsequent Cauchy–Schwarz bound gives exactly the displayed upper bound on total improvement.</p><p>The feedback identity also has the correct sign:<br>\(\alpha Q(\operatorname{REG}_Q+H)-S_Q\).<br>Combining the two expressions and dividing by the positive quantity \(\alpha Q\) establishes the boxed heterogeneity bound.</p><p>This reasoning is pathwise and does not require independent or history-independent responses. It also does not require nonnegative slacks.</p><h3>5. Norm-only replacement and worst-case order</h3><p>The two-dimensional Cauchy–Schwarz application has the correct coefficients and yields the factor \(\sqrt{1+4/Q}\). Dropping \(-H\) is valid because \(H\geq0\).</p><p>The independent utility-range bound follows from the feature diameter bound and<br>\(\|\bar w^*\|_2\leq\|\Theta^*\|_2\).<br>Since both bounds hold simultaneously, taking their minimum is valid.</p><p>The scaling argument preserves feasibility, zero slacks, and the recommendation cycle. Its stated norm and regret at horizons \(4k\) are correct.</p><p><b>Minor issue — scope of the asymptotic lower bound.</b> The explicit lower-bound calculation is stated only for \(Q=4k\), whereas the claimed worst-case \(\Theta\) rate conventionally applies to every sufficiently large horizon. The periodic construction makes this a routine expositional omission.</p><p><b>Minimum clarification needed:</b> state the regret count for a truncated cycle, or explicitly restrict the lower-bound claim to the displayed subsequence. No new construction or lemma is needed.</p><p>The coincident-vector specialization is correct: both \(\sigma\) and \(H\) vanish.</p><h3>6. Single-user comparison</h3><p>The cited proof does use exact maximization to make the learned weight’s inner product with its update nonpositive. This is explicitly present in the proof of [Theorem 1](https://www.cs.cornell.edu/~tj/publications/shivaswamy_joachims_15a.pdf).</p><p>The prover correctly distinguishes aggregate control from control of the stacked individual weights. Its assertion that the latter inner product need not be nonpositive is consistent with its own counterexample. This section is explanatory; the new upper bound does not depend on applying the cited theorem to the multitask setting.</p><h3>7. Computational accounting and scope</h3><p>Maintaining the aggregate weight suffices to compute the recommendation objective and aggregate update. The feature-evaluation count and \(O(Qm\tau)\) arithmetic-operation count are correct.</p><p>The rational bit-cost statement is appropriately conditional on feature-output encoding lengths. The caveat for arbitrary real outputs correctly prevents interpreting arithmetic-operation counts as an unconditional finite-encoding complexity result.</p><p>Because exact maximization remains an oracle, the output does not classify the computational complexity of the underlying continuous maximization problem.</p><h3>Verdict</h3><p>The counterexample, heterogeneity bound, and uniform replacement stand. The only identified gap is a routine clarification of the horizon quantifier in the matching-rate statement. No major issue blocks the result.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

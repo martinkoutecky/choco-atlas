@@ -1,0 +1,106 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2015-0485 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2015-0485 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2015-0485)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable, including exact rational witnessing societies and all tied minimizers.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Algorithm 1 returns exactly the set POΩ(X).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite set \(X\) of feasible plans with rational cost vectors, resident types \(T\) with positive normalized weight vectors \(w^t\), and a nonempty rational polytope \(\mathcal M\subseteq\Delta(T)\) of admissible population shares, compute the plans \(x\in X\) that minimize \(\sum_{t\in T}\mu_t w^t\cdot x\) for at least one \(\mu\in\mathcal M\), returning a witnessing distribution for each.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Input consists of a nonempty explicitly listed set \(X\subseteq\mathbb Q_{\geq0}^{q}\) of \(m\) plan cost vectors, and a list \(T\) of resident types with weights \(w^t\in\mathbb Q_{&gt;0}^{q}\), normalized by \(\sum_{i=1}^{q}w_i^t=1\).<br>A nonempty rational polytope \(\mathcal M\subseteq\Delta(T)\) is given by explicit rational linear inequalities; its elements are admissible population shares. Every listed type has positive share in at least one admissible distribution.<br>A society is represented by its support: the list of types with positive mass, each mass encoded as a binary rational. The support size is not the number of possible types. Here \(\tau=|T|\) is the maximum admissible support size; individual distributions may omit zero-mass types.<br>For \(\mu\in\mathcal M\), define \(C_\mu(x)=\sum_{t\in T}\mu_t(w^t\cdot x)\). Return every \(x\in X\) that minimizes \(C_\mu\) over \(X\) for at least one admissible \(\mu\), together with a rational witnessing distribution for each; include all tied minimizers.<br>Is this computation solvable in polynomial time, or is it NP-hard? State running times in \(m\), \(\tau\), \(q\), the number \(h\) of supplied inequalities, and the total binary input length \(L\).<br>For an explicit finite set of nonnegative cost vectors and polyhedral uncertainty over normalized positive criterion weights, an exact polynomial-time filtering algorithm computes all possibly optimal vectors (Benabbou and Perny, 2015).<br>That result does not explicitly formulate population-share uncertainty or require witnessing societies; no separate continuous-side result is established here.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Required the explicitly listed plan set to be nonempty and its rational costs to be nonnegative, following the discrete domain.</li><li>Made the positive normalized type weights binary rational input data so that bit complexity is defined.</li><li>Specified an explicit rational inequality representation of the admissible-share polytope.</li><li>Allowed zero shares in individual admissible distributions, as the stated simplex domain permits; required each listed type to have positive share somewhere and used the maximum admissible support size as tau.</li><li>Required rational witnessing distributions and retained all tied minimizers.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The computation is <b>polynomial-time solvable in the binary input model</b>, including the production of rational witnessing societies and all tied minimizers. It requires one rational linear feasibility problem for each listed plan.</p><h3>1. A feasibility problem for each plan</h3><p>Index the types by \(T=\{1,\ldots,\tau\}\) and the plans by \(X=\{x^1,\ldots,x^m\}\). Write the supplied description as</p><p>\[
+\mathcal M=\{\mu\in\mathbb R^\tau:A\mu\le b,\ \mu\ge0,\ \mathbf1^\top\mu=1\},
+\]</p><p>where \(A\mu\le b\) consists of the \(h\) supplied inequalities. Adding the simplex constraints is harmless if they already appear in that description.</p><p>Precompute the rational numbers</p><p>\[
+a_{jt}=w^t\cdot x^j=\sum_{i=1}^{q}w_i^t x_i^j.
+\]</p><p>For each \(j\), consider the following system in the \(\tau\) population-share variables:</p><p>\[
+\begin{aligned}
+A\mu&amp;\le b,\\
+\mu_t&amp;\ge0 &amp;&amp;(t=1,\ldots,\tau),\\
+\sum_{t=1}^{\tau}\mu_t&amp;=1,\\
+\sum_{t=1}^{\tau}(a_{jt}-a_{kt})\mu_t&amp;\le0
+&amp;&amp;\bigl(k\in\{1,\ldots,m\}\setminus\{j\}\bigr).
+\end{aligned}
+\]</p><p>Call its feasible set \(P_j\).</p><p><b>Claim.</b> The plan \(x^j\) is possibly optimal if and only if \(P_j\) is nonempty.</p><p><b>Proof.</b> The first three groups of constraints are exactly membership in \(\mathcal M\). For any such \(\mu\),</p><p>\[
+C_\mu(x^j)-C_\mu(x^k)
+=\sum_{t=1}^{\tau}\mu_t(a_{jt}-a_{kt}).
+\]</p><p>Consequently, the last group holds exactly when \(C_\mu(x^j)\le C_\mu(x^k)\) for every competing plan. This is precisely the condition that \(x^j\) minimizes \(C_\mu\) over \(X\). Both directions follow. \(\square\)</p><p>The algorithm solves these systems exactly. Whenever \(P_j\) is feasible, it returns \(x^j\) together with a rational feasible point \(\mu^j\), encoded as the list</p><p>\[
+\{(t,\mu_t^j):\mu_t^j&gt;0\}.
+\]</p><p>Omitted types have zero mass. The comparison inequalities are non-strict, so every possibly optimal tied plan passes its own feasibility test.</p><h3>2. Rational witnesses and their encoding length</h3><p>We use the standard rational linear-programming theorem: an explicitly given rational linear system can be tested for feasibility, and a rational feasible point produced when one exists, in time polynomial in its binary encoding length. This theorem permits equalities and feasible sets of smaller affine dimension; it does not require an interior feasible point. See [Trevisan’s linear-programming notes](https://lucatrevisan.wordpress.com/2011/01/24/cs261-lecture-5-linear-programming/).</p><p>Here every \(P_j\) is a rational polytope contained in the simplex. Thus it is bounded and closed. The theorem therefore applies directly, including when a plan is optimal only at a boundary distribution.</p><p>For completeness, polynomial-size witnesses also follow from a determinant bound.</p><p>Each \(a_{jt}\), and hence each difference \(a_{jt}-a_{kt}\), has numerator and denominator of \(O(L)\) bits. Indeed, for one dot product, take as a common denominator the product of the denominators of its input coordinates. The sum of their bit lengths is at most \(L\). The numerator is a sum of \(q\) integer products, adding only \(O(\log q)\) bits. Subtracting two such rationals preserves the \(O(L)\) bound.</p><p>Clear denominators separately in every constraint row. Each resulting integer coefficient, including its right-hand side, then has at most</p><p>\[
+K=O((\tau+1)L)
+\]</p><p>bits.</p><p>If \(P_j\) is nonempty, it has a vertex: successively minimize each coordinate over the compact feasible set and restrict to the minimizing face; after all coordinates have been fixed, the resulting face is a singleton.</p><p>At a vertex, the active constraint normals span \(\mathbb R^\tau\). Otherwise, a nonzero direction orthogonal to all active normals would preserve their equalities, and sufficiently small perturbations in both directions would preserve all inactive inequalities, contradicting extremality.</p><p>Choose \(\tau\) independent active rows. Their equations form an invertible integer system \(D\mu=e\). Cramer’s rule expresses every coordinate as a ratio of integer determinants. Each determinant has absolute value at most</p><p>\[
+\tau!\,2^{\tau K},
+\]</p><p>because its expansion contains \(\tau!\) products, each bounded by \(2^{\tau K}\). Thus a vertex witness has, per coordinate, encoding length</p><p>\[
+O\!\left(\tau(\tau+1)L+\tau\log(\tau+1)\right).
+\]</p><p>In particular, irrational feasibility cannot create an additional possibly optimal plan lacking a rational witnessing society, and the required output has polynomial length.</p><h3>3. Running time</h3><p>Replace the normalization equality by two inequalities. Each feasibility problem has \(\tau\) variables and at most</p><p>\[
+r=h+(m-1)+\tau+2=h+m+\tau+1
+\]</p><p>inequalities.</p><p>A conservative bound on its dense binary encoding length is</p><p>\[
+B=O\!\left(r(\tau+1)L\right).
+\]</p><p>Let \(\operatorname{LP}(n,s,B)\) denote the bit running time of an exact rational LP algorithm that decides feasibility and returns a rational feasible point, for a system with \(n\) variables, \(s\) inequalities, and encoding length at most \(B\). The rational LP theorem gives</p><p>\[
+\operatorname{LP}(n,s,B)=\operatorname{poly}(n,s,B).
+\]</p><p>Precomputing all dot products requires \(O(m\tau q)\) rational arithmetic operations. Constructing all comparison coefficients requires \(O(m^2\tau)\) further operations. Using the \(O(L)\) intermediate bit bounds above, a conservative elementary arithmetic bound is \(O(L^3)\) bit operations per operation.</p><p>Including reading the input and writing the LP systems, a valid total bound is</p><p>\[
+O\!\left(
+L+m\tau(q+m)L^3+mB
+\right)
++
+m\,\operatorname{LP}(\tau,r,B),
+\]</p><p>where</p><p>\[
+r=h+m+\tau+1,
+\qquad
+B=O\!\left((h+m+\tau+1)(\tau+1)L\right).
+\]</p><p>This is polynomial in all requested parameters \(m,\tau,q,h,L\), and polynomial in the total input length because the plans, types, and inequalities are explicitly listed.</p><p>The algorithm uses \(\tau\) share variables without enumerating supports. Each returned society contains exactly its positive-mass types and therefore has support size at most \(\tau\).</p><h3>4. Relation to criterion-weight uncertainty</h3><p>Define the aggregate criterion weight by</p><p>\[
+\bar w(\mu)=\sum_{t=1}^{\tau}\mu_t w^t.
+\]</p><p>Then</p><p>\[
+C_\mu(x)=\bar w(\mu)\cdot x,
+\qquad
+\sum_{i=1}^{q}\bar w_i(\mu)=1.
+\]</p><p>Furthermore, for every criterion \(i\),</p><p>\[
+\bar w_i(\mu)\ge\min_{t\in T}w_i^t&gt;0,
+\]</p><p>using finiteness of \(T\), positivity of the listed weights, and the simplex conditions. Hence the image</p><p>\[
+\Omega=\{\bar w(\mu):\mu\in\mathcal M\}
+\]</p><p>is a rational polytope of normalized positive criterion weights.</p><p>This connects the problem to the finite-set filtering framework of [Benabbou and Perny (2015)](https://ojs.aaai.org/index.php/AAAI/article/download/9362/9221). The proof above establishes the population-share and witnessing-society requirements directly: it retains the share variables throughout, so no explicit inequality description of the projected polytope \(\Omega\) is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verification report</h3><p><b>Verdict: proved.</b> The output resolves the assigned problem: it gives a polynomial-time algorithm that returns exactly the possibly optimal plans, includes every tied minimizer, and produces rational witnessing societies in the required support representation. No major or minor mathematical issues were identified.</p><h3>1. Feasibility formulation and correctness</h3><p>The description<br>\[
+\mathcal M=\{\mu\in\mathbb R^\tau:A\mu\le b,\ \mu\ge0,\ \mathbf1^\top\mu=1\}
+\]<br>correctly combines the supplied inequalities with the simplex restrictions. Repeating restrictions already supplied does not change the feasible set.</p><p>The precomputed coefficient \(a_{jt}=w^t\cdot x^j\) is rational. The displayed identity<br>\[
+C_\mu(x^j)-C_\mu(x^k)
+=\sum_{t=1}^{\tau}\mu_t(a_{jt}-a_{kt})
+\]<br>is correct.</p><p>Consequently, the comparison constraints in \(P_j\) are equivalent to requiring \(x^j\) to have cost no greater than every other listed plan under the same distribution. The proof establishes both directions:</p><ul><li>Every feasible point of \(P_j\) witnesses possible optimality of \(x^j\).</li><li>Every admissible distribution witnessing possible optimality of \(x^j\) belongs to \(P_j\).</li></ul><p>There is no quantifier mismatch: one distribution must satisfy all comparisons simultaneously.</p><p>The non-strict inequalities correctly retain ties. Testing each plan separately therefore returns every plan that belongs to an admissible distribution’s minimizing set.</p><h3>2. Exact LP theorem and its hypotheses</h3><p>The prover states the required theorem precisely enough: rational linear feasibility admits polynomial-time decision and production of a rational feasible point, with complexity measured in binary encoding length.</p><p>Its hypotheses are satisfied as written. Each system has finitely many explicitly constructed rational constraints. Equalities can be represented by two inequalities, as the output subsequently does. Lower-dimensional feasible sets and boundary-only witnesses are permitted; no strict feasibility assumption is introduced.</p><p>The cited [Trevisan notes](https://lucatrevisan.wordpress.com/2011/01/24/cs261-lecture-5-linear-programming/) support polynomial-time rational LP solution, rational output of polynomial encoding length, and conversion of equalities to inequalities. The proof uses the stated LP theorem, rather than relying on a numerical approximation or an interior-point heuristic.</p><h3>3. Rational witnesses and determinant bounds</h3><p>The coefficient-length estimate is valid. For each dot product, the total bit length of the participating input numerators and denominators is bounded by \(L\). A product common denominator and the corresponding numerator sum therefore have \(O(L)\) bits; the additional \(O(\log q)\) contribution is absorbed by \(O(L)\) because the coordinates are explicitly listed. Subtracting two such coefficients retains this bound.</p><p>Clearing denominators separately in a row with at most \(\tau+1\) rational entries gives the conservative integer coefficient bound<br>\[
+K=O((\tau+1)L).
+\]</p><p>The vertex-existence argument is sound. Nonempty \(P_j\) is compact, and each successive coordinate minimization produces a nonempty minimizing face. After all coordinates are fixed, that face is a singleton.</p><p>The active-normal argument is also correct, including for lower-dimensional polytopes. Equality constraints are included among the active rows. If their normals together with the active inequality normals failed to span the ambient space, the stated two-sided perturbation would contradict extremality.</p><p>Selecting \(\tau\) independent active rows yields an invertible integer system. Cramer’s rule applies, and the determinant estimate<br>\[
+|\det D|\le\tau!\,2^{\tau K}
+\]<br>also applies to the matrices with a column replaced by the right-hand side. The resulting per-coordinate encoding bound<br>\[
+O\!\left(\tau(\tau+1)L+\tau\log(\tau+1)\right)
+\]<br>is valid.</p><p>Thus real feasibility cannot introduce a plan without a rational witness. The determinant argument establishes witness-size existence; the LP theorem supplies the algorithmic production guarantee.</p><h3>4. Running-time audit</h3><p>The constraint count is correct:<br>\[
+h+(m-1)+\tau+2=h+m+\tau+1.
+\]</p><p>The dense encoding bound<br>\[
+B=O\!\left((h+m+\tau+1)(\tau+1)L\right)
+\]<br>correctly counts rational entries of \(O(L)\) bits. It concerns the rational LP systems, so it need not use the larger row-cleared integer coefficient bound.</p><p>The arithmetic counts are valid upper bounds:</p><ul><li>\(O(m\tau q)\) operations for all dot products.</li><li>\(O(m^2\tau)\) operations for all comparison coefficients.</li></ul><p>The conservative \(O(L^3)\) bit cost per rational arithmetic operation is sufficient with ordinary exact rational arithmetic and reduction. The displayed total bound correctly accommodates construction and the \(m\) exact LP calls. Witness extraction and writing are covered by the LP production guarantee and polynomial output length.</p><p>The use of an unspecified polynomial LP running-time function is acceptable: the task requests polynomial-time classification and parameter-dependent running times, not a particular polynomial exponent or a strongly polynomial algorithm.</p><p>Because the plans, types, coordinates, and inequalities are explicitly listed, the resulting bound is polynomial in total input length.</p><h3>5. Supports, edge cases, and aggregate weights</h3><p>The witness encoding retains precisely the positive coordinates and omits zero coordinates, as required. The algorithm uses \(\tau\) variables without enumerating supports or requiring every witness to have full support.</p><p>The formulation covers the relevant edge cases directly:</p><ul><li>When \(m=1\), the comparison block is empty and feasibility reduces to membership in nonempty \(\mathcal M\).</li><li>Singleton and lower-dimensional admissible polytopes remain valid LP inputs.</li><li>Plans optimal only on the boundary remain eligible.</li><li>Identical type weights and pervasive ties cause no difficulty.</li></ul><p>The aggregate-weight identities and positivity bound are correct. The rational linear image \(\Omega\) is a rational polytope of normalized strictly positive weights. The connection to [Benabbou and Perny’s finite-set filtering framework](https://ojs.aaai.org/index.php/AAAI/article/download/9362/9221) is accurate. Crucially, the algorithm does not require an explicit inequality description of that image.</p><p><b>Repair feedback:</b> None required. The population-share formulation and rational witness requirements are established directly.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,232 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-journals-geb-2024-0137 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-journals-geb-2024-0137 <span style="font-weight:normal;color:#8a7350">(d4-journals-geb-2024-0137)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition A.2 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite value set \(V\), unknown rational masses \(\mu_v\) summing to one, and a known aggregate externality term \(a\), choose thresholds \(\tau_1,\ldots,\tau_K\). In each round, observe the exact accepting mass, equivalently \(F(\tau_k)=\sum_{v&lt;\tau_k}\mu_v\). Minimize regret against the best threshold in \(V\) for per-capita revenue \(H(\tau)=\tau-F(\tau)(\tau-a)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is represented by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational; \(\tau\) is the support size, not the number of possible types.<br>Let \(V=\{v_1&lt;\cdots&lt;v_m\}\subseteq[0,1]\cap\mathbb Q\) be nonempty and known, with \(\tau=m\), and let the known aggregate negative externality be \(a\in\mathbb Q_{\geq0}\). The fixed masses \(\mu_v&gt;0\), satisfying \(\sum_{v\in V}\mu_v=1\), are hidden from the learner. A known bound \(L\) limits the total binary encoding length of the public rational data and the hidden society.<br>Define \(F_\mu(t)=\sum_{v&lt;t}\mu_v\) and per-capita revenue \(H_\mu(t)=t-F_\mu(t)(t-a)\). Assume the piecewise linear interpolation of \((v_j,H_\mu(v_j))\) is concave; the admissible mass class \(\mathcal M(V,a,L)\) satisfying these conditions is promised nonempty.<br>In each of \(K\geq1\) rounds, a possibly randomized policy selects \(t_k\in V\) using only public data and earlier observations, earns \(H_\mu(t_k)\), and observes exactly \(F_\mu(t_k)\). Types equal to the threshold accept. The same society persists throughout.<br>For a policy \(\pi\), define \(R_K(\pi,\mu)=\mathbb E_\pi[\sum_{k=1}^K(\max_{t\in V}H_\mu(t)-H_\mu(t_k))]\), and \(R_K^*=\inf_\pi\sup_{\mu\in\mathcal M(V,a,L)}R_K(\pi,\mu)\). The public decision input is \((V,a,L,K,B)\), with \(B\in\mathbb Q_{\geq0}\).</p><p>Is deciding whether \(R_K^*\leq B\) solvable in polynomial time in \(m,\tau,L,K\), and the bit length of \(B\), or is it NP-hard, even when \(K\) is encoded in unary?</p><p>For finite buyers with independently redrawn types, known expected externalities, and concave threshold revenue, stochastic threshold learning has regret \(O(K^{3/4})\). [Source](https://arxiv.org/html/2003.08345v6).<br>No result settling the exact-mass minimax decision problem specified here was identified in the search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Reconciled support encoding with unknown masses by treating the encoded society as hidden from the learner; the learner knows its support and an encoding-length bound.</li><li>Took V to be the entire positive-mass support, so m=τ, and restricted posted thresholds to V, matching the stated finite benchmark.</li><li>Normalized nonnegative bounded values to [0,1] and retained a nonnegative rational aggregate externality.</li><li>Retained acceptance at equality, hence the strict inequality in F, and a fixed distribution across rounds.</li><li>Translated the anchor&#x27;s concavity condition to concavity of the piecewise linear interpolation of revenue on the finite threshold set.</li><li>Made unspecified regret minimization precise as randomized minimax expected cumulative regret over admissible hidden societies.</li><li>Introduced a known encoding bound L and rational regret bound B to obtain a finite decision problem; promised that the admissible society class is nonempty.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status</h3><p>The general polynomial-time versus $\mathrm{NP}$-hardness question remains unresolved. The following results advance the analysis:</p><ul><li>A deterministic policy has regret at most $6$, independently of $m$, $L$, and $K$.</li><li>Failure of zero regret is witnessed by two admissible societies having opposite revenue slopes at one adjacent pair of thresholds.</li><li>Under conventional explicit binary rational encodings, the zero-budget restriction belongs to $\mathrm{coNP}$, even if $L$ is encoded in binary.</li><li>Nonzero minimax regret is separated from zero by an explicit encoding-dependent bound.</li></ul><p>All arguments below are self-contained. For statements concerning encoding lengths, I use explicit binary numerator–denominator encodings, or explicit dyadic encodings. Compact encodings of exponentially large denominators are not included.</p><h3>1. Coordinates and some resolved instances</h3><p>Write<br>$$
+\mu_j=\mu_{v_j},\qquad
+s_j=\sum_{i&lt;j}\mu_i,\qquad
+h_j=H_\mu(v_j).
+$$<br>The acceptance convention gives<br>$$
+s_1=0,\qquad
+h_j=v_j+(a-v_j)s_j=(1-s_j)v_j+s_ja.
+$$<br>In particular, $h_1=v_1$ is known without making a query. An observation of $s_j$ determines $h_j$ exactly.</p><p>For $m\geq 2$, positivity and normalization imply<br>$$
+0=s_1&lt;s_2&lt;\cdots&lt;s_m&lt;1.
+$$<br>The consecutive segment slopes of the interpolated revenue function are<br>$$
+d_j=\frac{h_{j+1}-h_j}{v_{j+1}-v_j}.
+$$<br>The concavity promise implies<br>$$
+d_1\geq d_2\geq\cdots\geq d_{m-1}.
+$$<br>Conversely, these inequalities imply concavity: slopes of secants are weighted averages of the segment slopes, so successive secants have the inequalities required for concavity.</p><p>If $m=1$, the minimax regret is zero.</p><p>There is also a slightly larger zero-regret parameter range than the one established in the notes.</p><p><b>Proposition.</b> If $m\geq2$ and $a\geq v_{m-1}$, then $v_m$ is the unique maximizer for every admissible society.</p><p><b>Proof.</b> First suppose $v_{m-1}\leq a&lt;v_m$. For $j&lt;m$, the convex-combination formula gives $h_j\leq a$. Meanwhile,<br>$$
+h_m-a=(1-s_m)(v_m-a)=\mu_m(v_m-a)&gt;0.
+$$<br>Thus $h_m&gt;h_j$ for every $j&lt;m$.</p><p>If $a\geq v_m$, direct subtraction gives<br>$$
+h_{j+1}-h_j
+=(v_{j+1}-v_j)(1-s_j)+(a-v_{j+1})\mu_j&gt;0.
+$$<br>The first term is strictly positive and the second is nonnegative. Hence revenues strictly increase. $\square$</p><p>Consequently, every promised instance in this parameter range has $R_K^*=0$.</p><h3>2. A midpoint comparison lemma</h3><p>Fix a society, and put<br>$$
+M=\max_{1\leq j\leq m}h_j,\qquad g_j=M-h_j.
+$$<br>Let $h(x)$ denote the piecewise linear interpolation of the revenues, and define<br>$$
+g(x)=M-h(x).
+$$<br>Then $g$ is convex and nonnegative on $[v_1,v_m]$.</p><p>Suppose an index interval $[l,r]$ contains a global maximizer and $l&lt;r$. Let<br>$$
+x=\frac{v_l+v_r}{2},
+$$<br>and choose the consecutive indices $c,d$ satisfying<br>$$
+d=c+1,\qquad v_c\leq x&lt;v_d.
+$$<br>These indices exist because $v_l&lt;x&lt;v_r$.</p><p>Compare $h_c$ and $h_d$:</p><ul><li>If $h_c&lt;h_d$, retain $[d,r]$.</li><li>If $h_c\geq h_d$, retain $[l,c]$.</li></ul><p>Each retained interval contains a global maximizer. Indeed, in the first case $d_c&gt;0$, so all earlier slopes are positive and no index at most $c$ maximizes revenue. In the second case $d_c\leq0$, so all subsequent slopes are nonpositive and every index to the right of $c$ has revenue at most $h_c$.</p><p>Define the endpoint potential<br>$$
+P(l,r)=g_l+g_r.
+$$</p><p><b>Lemma.</b> If $[l&#x27;,r&#x27;]$ is the interval retained by this comparison, then<br>$$
+g_c+g_d
+\leq
+3\bigl(P(l,r)-P(l&#x27;,r&#x27;)\bigr).
+$$</p><p><b>Proof.</b> Suppose first that $h_c&lt;h_d$. Choose a global maximizing index $q\in[d,r]$, so $g_q=0$.</p><p>Convexity on $[v_l,v_q]$ gives<br>$$
+g_c\leq
+\frac{v_q-v_c}{v_q-v_l}g_l
+\leq g_l
+$$<br>and<br>$$
+g_d\leq
+\frac{v_q-v_d}{v_q-v_l}g_l.
+$$<br>Since $v_d&gt;x$ and $v_q\leq v_r$,<br>$$
+v_d-v_l\geq\frac{v_r-v_l}{2}
+\geq\frac{v_q-v_l}{2}.
+$$<br>Therefore $g_d\leq g_l/2$. It follows that<br>$$
+g_c+g_d\leq\frac32g_l.
+$$<br>The retained interval is $[d,r]$, and hence<br>$$
+P(l,r)-P(d,r)=g_l-g_d\geq\frac12g_l.
+$$<br>Combining the two inequalities proves the claim in this case.</p><p>Now suppose $h_c\geq h_d$. Choose a global maximizing index $q\in[l,c]$. Convexity on $[v_q,v_r]$ gives<br>$$
+g_d\leq g_r,\qquad
+g_c\leq
+\frac{v_c-v_q}{v_r-v_q}g_r.
+$$<br>Because $v_c\leq x$ and $v_q\geq v_l$,<br>$$
+v_r-v_c\geq\frac{v_r-v_l}{2}
+\geq\frac{v_r-v_q}{2}.
+$$<br>Thus $g_c\leq g_r/2$, and<br>$$
+g_c+g_d\leq\frac32g_r
+\leq3(g_r-g_c)
+=3\bigl(P(l,r)-P(l,c)\bigr).
+$$<br>This proves the lemma. $\square$</p><p>The lemma uses coordinate midpoints, rather than index midpoints. Its estimates therefore hold for arbitrarily unequal threshold spacings.</p><h3>3. A constant-regret policy</h3><p>Consider the following deterministic policy.</p><p>Start with $[l,r]=[1,m]$ and cache the known value $h_1=v_1$. While $l&lt;r$, form the consecutive midpoint pair $c,d$ from Section 2. Query whichever of their revenues are not cached, then retain the prescribed interval. Once the interval is a singleton, play its threshold in every remaining round.</p><p>If the horizon ends during the search, simply stop at the end of round $K$.</p><p><b>Theorem.</b> There is a deterministic policy, implementable in time polynomial in $m,L,K$, such that for every admissible society,<br>$$
+R_K(\pi,\mu)\leq\min\{K,m-1,6\}.
+$$<br>Consequently,<br>$$
+R_K^*\leq\min\{K,m-1,6\}.
+$$</p><p><b>Proof.</b> If $m=1$, or if $a\geq v_m$, use the known optimal threshold and incur zero regret. It remains to consider $m\geq2$ and $a&lt;v_m$.</p><p>First imagine allowing the midpoint search to finish, regardless of the horizon. During one iteration, its actual query regret is at most $g_c+g_d$: cached revenues require no new action. The lemma therefore bounds that iteration’s query regret by three times the decrease in endpoint potential.</p><p>Every iteration strictly reduces the number of indices in the interval. The search ends at a maximizing index $q$, where<br>$$
+P(q,q)=2g_q=0.
+$$<br>Summing the lemma over all iterations yields<br>$$
+\text{total search regret}
+\leq3P(1,m)
+=3\bigl(2M-v_1-h_m\bigr).
+$$</p><p>If the horizon interrupts the search, its query regret is a prefix of this completed search’s regret. Since every regret term is nonnegative, the same bound applies to that prefix. After a completed search, subsequent regret is zero.</p><p>Under $a&lt;v_m$, every revenue is a convex combination of two numbers in $[0,v_m]$. Thus<br>$$
+0\leq h_j\leq v_m\leq1.
+$$<br>Both initial endpoint losses are at most $1$, giving total regret at most $6$.</p><p>Caching ensures that at most $m-1$ thresholds are queried, since $h_1$ is initially known. Each query costs at most $1$, giving the additional bound $m-1$. The same per-round bound gives total regret at most $K$.</p><p>For implementation, there are at most $m-1$ interval updates. Midpoint locations and revenue comparisons use exact rational arithmetic. Observations have polynomial bit length in $L$: a common denominator for a cumulative mass is the product of its constituent mass denominators, whose logarithm is bounded by the encoding budget. Hence the policy has the stated polynomial running time. $\square$</p><p>A more informative bound, valid whenever $a&lt;v_m$, is<br>$$
+R_K(\pi,\mu)
+\leq3\bigl(2M-v_1-h_m\bigr)
+\leq3\bigl((v_m-v_1)+(v_m-a)\bigr),
+$$<br>because $M\leq v_m$ and $h_m&gt;a$.</p><p>This settles every promised instance with<br>$$
+B\geq\min\{K,m-1,6\}
+$$<br>as a yes-instance. It does not establish optimality of the policy.</p><h3>4. Two societies certify failure of zero regret</h3><p>For an admissible society, define<br>$$
+A_\mu=\operatorname{argmax}_{1\leq j\leq m}h_j.
+$$</p><p><b>Lemma.</b> The set $A_\mu$ is an index interval.</p><p><b>Proof.</b> If $p&lt;q$ are maximizing indices, concavity gives, for every $p&lt;j&lt;q$,<br>$$
+h_j\geq
+\frac{v_q-v_j}{v_q-v_p}h_p+
+\frac{v_j-v_p}{v_q-v_p}h_q
+=M.
+$$<br>Since $M$ is the maximum, equality holds. $\square$</p><p>Write<br>$$
+A_\mu=[p_\mu,q_\mu]\cap\mathbb Z.
+$$<br>The encoding-bounded class is finite, so these endpoints have attained extrema over the class.</p><p><b>Theorem.</b> The following statements are equivalent:</p><ul><li>$R_K^*&gt;0$.</li><li>There is no threshold maximizing revenue for every admissible society.</li><li>Two admissible societies have disjoint maximizing intervals.</li><li>For some $j&lt;m$, two admissible societies $\mu^-,\mu^+$ satisfy</li></ul><p>$$
+   h_{j+1}^{-}&lt;h_j^{-},
+   \qquad
+   h_{j+1}^{+}&gt;h_j^{+}.
+   $$</p><p><b>Proof.</b> A common maximizing threshold gives zero regret, so statement 1 implies statement 2.</p><p>If there is no common maximizer, then<br>$$
+\max_\mu p_\mu&gt;\min_\mu q_\mu.
+$$<br>Choose societies attaining these two extrema. Their maximizing intervals are disjoint, proving statement 3.</p><p>Order such a pair so that $q_{\mu^-}&lt;p_{\mu^+}$, and put $j=q_{\mu^-}$. Since $j$ is the rightmost maximizer of $\mu^-$,<br>$$
+h_j^-&gt;h_{j+1}^-.
+$$<br>For $\mu^+$, if $h_j^+\geq h_{j+1}^+$, concavity would make every later revenue at most $h_j^+$, forcing a maximizer at or before $j$. That contradicts $p_{\mu^+}&gt;j$. Thus statement 4 holds.</p><p>Opposite strict slopes at edge $j$ force all maximizers of $\mu^-$ to lie at or before $j$, and all maximizers of $\mu^+$ to lie after $j$. Thus statement 4 also implies statement 3.</p><p>Finally, suppose two societies have disjoint maximizing sets. Define their losses by<br>$$
+\ell_{\mu i}=M_\mu-h_{\mu i}
+$$<br>and put<br>$$
+\delta=\frac12\min_i
+\bigl(\ell_{\mu^- i}+\ell_{\mu^+ i}\bigr).
+$$<br>Every summand inside this minimum is strictly positive, since the two societies have no common maximizer. Therefore $\delta&gt;0$.</p><p>For any policy, let $p_i$ be its first-round action probabilities. These probabilities depend only on public data. Nonnegativity of later regret gives<br>$$
+\begin{aligned}
+\sup_\mu R_K(\pi,\mu)
+&amp;\geq\frac{R_K(\pi,\mu^-)+R_K(\pi,\mu^+)}2\\
+&amp;\geq\frac12\sum_i p_i
+\bigl(\ell_{\mu^- i}+\ell_{\mu^+ i}\bigr)\\
+&amp;\geq\delta.
+\end{aligned}
+$$<br>Taking the infimum over policies proves statement 1. $\square$</p><p>Thus a certificate for nonzero regret consists of one adjacent edge and two admissible mass lists. Its direct length is at most $2L$.</p><h3>5. Polynomial certificates even when the bound is binary</h3><p>The preceding certificate bound alone would not prove ordinary $\mathrm{coNP}$ membership if $L$ were exponentially large relative to its binary representation. The following small-witness argument addresses this issue.</p><h3>A strictly concave reference society</h3><p>For $m\geq2$, define<br>$$
+\mu_j^0=\frac{v_{j+1}-v_j}{2}\quad(j&lt;m),
+\qquad
+\mu_m^0=1-\frac{v_m-v_1}{2}.
+$$<br>These masses are positive and sum to one. Their cumulative masses and revenues are<br>$$
+s_j^0=\frac{v_j-v_1}{2},
+\qquad
+h_j^0=v_j+\frac{(a-v_j)(v_j-v_1)}2.
+$$<br>The latter values come from the quadratic<br>$$
+h^0(x)=-\frac{x^2}{2}
++\left(1+\frac{a+v_1}{2}\right)x-\frac{av_1}{2}.
+$$<br>Its consecutive secant slopes satisfy<br>$$
+d_j^0-d_{j+1}^0=\frac{v_{j+2}-v_j}{2}&gt;0.
+$$<br>Hence every concavity inequality is strict.</p><h3>Small witnesses for a prescribed strict slope</h3><p>Let $n$ be the explicit encoding length of $V,a$, including the support description. Fix an edge $j$ and a sign $\sigma\in\{-1,1\}$. Suppose a positive normalized rational society satisfies concavity and<br>$$
+G(\mu):=\sigma(h_{j+1}-h_j)&gt;0.
+$$</p><p>A sufficiently small positive mixture with $\mu^0$ preserves $G&gt;0$ and makes every concavity inequality strict. To justify preservation explicitly, for mixture weight $\eta$,<br>$$
+G((1-\eta)\mu+\eta\mu^0)
+\geq G(\mu)-\eta\bigl(G(\mu)+|G(\mu^0)|\bigr)&gt;0
+$$<br>whenever $\eta$ is positive and sufficiently small.</p><p>Express concavity without division through the affine forms<br>$$
+C_i(\mu)=
+(h_{i+1}-h_i)(v_{i+2}-v_{i+1})
+-(h_{i+2}-h_{i+1})(v_{i+1}-v_i).
+$$<br>Consider the rational polytope in variables $\mu_1,\ldots,\mu_m,\delta$ defined by<br>$$
+\sum_i\mu_i=1,\qquad 0\leq\delta\leq1,
+$$<br>$$
+\mu_i\geq\delta,\qquad G(\mu)\geq\delta,\qquad C_i(\mu)\geq\delta.
+$$<br>The mixture just constructed makes this polytope feasible with $\delta&gt;0$. It is compact, because its masses lie in the simplex and $\delta$ lies in $[0,1]$.</p><p>Maximizing $\delta$ therefore has an optimal vertex with positive $\delta$. At a vertex, independent active constraints determine all coordinates. After clearing row denominators, their integer coefficients have bit length polynomial in $n$. Cramer’s rule and the determinant bound<br>$$
+|\det A|\leq r!\,2^{rb}
+$$<br>for an $r$ by $r$ integer matrix with entries of absolute value at most $2^b$ show that every coordinate has polynomial bit length in $n$. The vertex thus supplies a rational society of polynomial encoding length with the prescribed strict slope.</p><p>This also supplies a polynomial-length dyadic witness when masses are required to be dyadic. Indeed, the vertex has a positive margin $\delta$ in all displayed inequalities. Approximate its first $m-1$ masses on a dyadic grid and define the last mass by normalization. If each initial approximation has error at most $\varepsilon$, every mass error is at most $m\varepsilon$.</p><p>Let $T$ bound the sums of absolute coefficients of the relevant affine forms, including positivity. Choosing<br>$$
+mT\varepsilon&lt;\frac{\delta}{2}
+$$<br>preserves all strict inequalities. Both $\log_2 T$ and $\log_2(1/\delta)$ are polynomially bounded in $n$, so a dyadic grid of polynomial bit length suffices.</p><p>Consequently, there is a polynomial $P$, depending only on the explicit encoding convention, such that every feasible strict edge sign has a witness whose total public-and-society encoding length is at most $P(n)$.</p><h3>Consequence for the zero-budget problem</h3><p>Suppose $R_K^*&gt;0$, and take the edge and two societies from Section 4.</p><ul><li>If $L&lt;P(n)$, the original admissible societies already have polynomial length.</li><li>If $L\geq P(n)$, replace each society by a small witness for its strict edge sign. Both replacements satisfy the encoding bound and still have disjoint maximizing sets.</li></ul><p>Thus every nonzero-regret instance has two witnessing societies of length polynomial in the actual public input length, regardless of how $L$ is encoded.</p><p>A verifier checks their lengths against $L$, positivity, normalization, concavity, and opposite strict slopes using exact rational arithmetic in polynomial time. Therefore the complement of the zero-budget problem has polynomial certificates.</p><p><b>Proved complexity consequence.</b> On the promised inputs, deciding $R_K^*\leq0$ belongs to $\mathrm{coNP}$ under either conventional explicit encoding described above. This establishes neither polynomial-time solvability nor hardness of that restriction.</p><h3>6. An explicit separation from zero</h3><p>There is also a quantitative consequence of the two-society witness.</p><p>For a rational number $x$, let $q_x$ denote its explicitly encoded denominator. For witnessing societies $\mu^-,\mu^+$, define<br>$$
+Q=q_a\prod_{j=1}^m q_{v_j}
+\prod_{i=1}^m q_{\mu_i^-}
+\prod_{i=1}^m q_{\mu_i^+}.
+$$<br>Every revenue and loss in these two societies is an integer multiple of $1/Q$.</p><p>At each action, their summed loss is positive, so<br>$$
+\ell_{\mu^- i}+\ell_{\mu^+ i}\geq\frac1Q.
+$$<br>The lower bound from Section 4 therefore gives<br>$$
+R_K^*\geq\frac1{2Q}.
+$$</p><p>In the explicit encodings under consideration, the logarithm of a denominator is bounded by its encoding length. Counting public data once and the two hidden societies once each gives<br>$$
+\log_2 Q\leq2L.
+$$<br>Hence<br>$$
+R_K^*&gt;0
+\quad\Longrightarrow\quad
+R_K^*\geq2^{-2L-1}.
+$$<br>In particular, for<br>$$
+0\leq B&lt;2^{-2L-1},
+$$<br>the decision $R_K^*\leq B$ is equivalent to the zero-budget decision.</p><h3>7. Constant regret is unavoidable in general</h3><p>The constant upper bound cannot be replaced by a guarantee tending to zero with the horizon.</p><p>Take<br>$$
+V=\left\{\frac12,1\right\},\qquad a=0,
+$$<br>and choose $L$ large enough to admit both societies<br>$$
+\mu^+=\left(\frac14,\frac34\right),
+\qquad
+\mu^-=\left(\frac34,\frac14\right).
+$$<br>Concavity is automatic with two vertices. Their revenues are respectively<br>$$
+(h_1^+,h_2^+)=\left(\frac12,\frac34\right),
+\qquad
+(h_1^-,h_2^-)=\left(\frac12,\frac14\right).
+$$</p><p>For an arbitrary policy, let $q$ be the probability of ever querying threshold $1$. Until that first query, all observations are the known zero feedback at threshold $1/2$, so $q$ is the same in both societies.</p><p>In $\mu^+$, never querying threshold $1$ incurs regret $K/4$. In $\mu^-$, querying it at least once incurs regret at least $1/4$. Therefore<br>$$
+\sup_{\mu\in\mathcal M}R_K(\pi,\mu)
+\geq
+\max\left\{\frac{K(1-q)}4,\frac q4\right\}
+\geq\frac{K}{4(K+1)}.
+$$<br>Taking the infimum gives<br>$$
+R_K^*\geq\frac{K}{4(K+1)}.
+$$<br>Thus these promised instances retain a positive constant lower bound as $K$ grows.</p><h3>8. Remaining question</h3><p>The constant-regret policy does not compute the exact minimax value. The certificates and separation bound address zero regret and sufficiently small budgets, but do not yield a polynomial algorithm for general $B$.</p><p>A complete resolution still requires either an exact algorithm with the requested polynomial dependence on $m,\tau,L,K$, or a hardness reduction preserving positivity, concavity, the encoding-bounded mass class, and unary $K$.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 5 and 8; resolution of USER_TASK: The output does not establish a polynomial-time algorithm for deciding $R_K^*\leq B$ or an $\mathrm{NP}$-hardness reduction with unary $K$. Its valid auxiliary results leave the requested exact minimax decision complexity unresolved.</li></ul>
+<div class="pre"><p>The output establishes several valid auxiliary results, but it does <b>not</b> resolve the polynomial-time versus hardness question in <code>USER_TASK</code>. Its own claim of partial progress is accurate. I found no mathematical error in the auxiliary arguments under the explicitly stated encoding conventions.</p><p><b>1. Coordinates, concavity, and resolved parameter ranges</b></p><p>The acceptance convention is handled correctly:<br>$$
+s_j=\sum_{i&lt;j}\mu_i,\qquad
+h_j=v_j+(a-v_j)s_j.
+$$<br>In particular, $s_1=0$ and $h_1=v_1$ are known before any observation. Strict positivity and normalization give the stated strict inequalities between cumulative masses.</p><p>Because the thresholds are distinct and increasing, every segment-slope denominator is positive. Concavity of the interpolation is therefore equivalent to nonincreasing consecutive segment slopes, as claimed.</p><p>The case $m=1$ has zero regret because there is only one action.</p><p>The proposition for $a\geq v_{m-1}$ is correct:</p><ul><li>When $v_{m-1}\leq a&lt;v_m$, every earlier revenue is a convex combination of numbers at most $a$, whereas</li></ul><p>$$
+  h_m-a=\mu_m(v_m-a)&gt;0.
+  $$</p><ul><li>When $a\geq v_m$, the displayed difference formula is correct, and its first term is strictly positive because $s_j&lt;1$. Its second term is nonnegative.</li></ul><p>Thus $v_m$ is indeed the unique maximizer throughout this parameter range.</p><p><b>2. Midpoint comparison lemma</b></p><p>The midpoint pair exists and lies within the current index interval. The strict inequality $x&lt;v_r$ ensures that the successor index exists, including when $x$ is itself a threshold.</p><p>Both interval-retention rules preserve a global maximizer:</p><ul><li>A positive segment slope implies that all preceding slopes are positive.</li><li>A nonpositive segment slope implies that all subsequent slopes are nonpositive. If a discarded index were globally maximizing, the retained index $c$ would have at least its revenue and would also be globally maximizing.</li></ul><p>The potential estimate is valid. In the first branch, the maximizing index satisfies $q\geq d&gt;l$, so the convexity denominator $v_q-v_l$ is positive. The midpoint inequalities imply $g_d\leq g_l/2$, while convexity gives $g_c\leq g_l$. These establish the claimed factor $3$.</p><p>In the second branch, $q\leq c&lt;r$, so $v_r-v_q$ is positive. The corresponding estimates $g_c\leq g_r/2$ and $g_d\leq g_r$ give the same factor.</p><p>These arguments also cover adjacent endpoints, equality in the revenue comparison, and maximizing plateaus. No spacing regularity is assumed or needed.</p><p><b>3. Constant-regret policy</b></p><p>The search policy uses only public data and observed cumulative masses. Cached revenues require no additional rounds.</p><p>Each update strictly shrinks the index interval. Its final singleton is a global maximizer by the preceding retention argument. Charging each iteration’s actual queries to $g_c+g_d$ and summing the potential decreases correctly gives<br>$$
+\text{total search regret}\leq 3(g_1+g_m).
+$$</p><p>The treatment of a horizon ending during an iteration is sound: the executed queries form a prefix of the completed deterministic search for the fixed society, and all regret terms are nonnegative.</p><p>When $a&lt;v_m$, both entries in each revenue’s convex combination lie in $[0,v_m]$. Consequently, every individual loss is at most $1$, and the stated bounds<br>$$
+R_K(\pi,\mu)\leq \min\{K,m-1,6\}
+$$<br>follow. The count $m-1$ correctly excludes the initially known revenue $h_1$.</p><p>The running-time claim is also justified for explicit encodings. Products of mass denominators have bit length bounded by the sum of their bit lengths; cumulative observations and subsequent rational computations therefore have polynomial bit length. There are at most $m-1$ interval updates and at most $K$ executed rounds.</p><p>The more informative bound is correct because<br>$$
+M\leq v_m,\qquad h_m&gt;a.
+$$</p><p>This proves a polynomial-time implementable policy and a sufficient condition for a yes-instance. It does not compute the minimax value or establish that the policy is minimax optimal.</p><p><b>4. Two-society characterization of positive regret</b></p><p>The maximizing set is an index interval: concavity places every intermediate revenue at least at the common maximum of two maximizing endpoints, and maximality forces equality.</p><p>The equivalence theorem is correct:</p><ul><li>A common maximizing threshold permits zero regret.</li><li>Failure of a common intersection is detected by the largest left endpoint and smallest right endpoint. Their extrema are attained because the encoding-bounded class is finite.</li><li>Disjoint maximizing intervals yield an adjacent edge with opposite strict revenue differences. The argument correctly uses the rightmost maximizer of the left interval.</li><li>Opposite strict differences, together with nonincreasing slopes, force disjoint maximizing sets.</li></ul><p>The final implication to strictly positive minimax regret is especially important and is supplied correctly. For the two societies, every action has positive summed loss, so<br>$$
+\delta=\frac12\min_i(\ell_{\mu^-i}+\ell_{\mu^+i})&gt;0.
+$$<br>The first-round action distribution is identical across societies because no observations have yet occurred. Averaging their first-round losses gives a policy-independent lower bound $\delta$. Thus taking an infimum over policies cannot reduce the bound to zero.</p><p>The direct certificate-length bound of $2L$ is valid.</p><p><b>5. Small witnesses and the zero-budget complexity statement</b></p><p>The reference society has positive normalized masses. The cumulative masses, quadratic revenue formula, and secant-slope differences are all computed correctly. For $m=2$, the strict concavity inequalities are absent, so this part of the construction is vacuous and causes no problem.</p><p>The mixture argument correctly preserves the specified strict edge sign for sufficiently small positive mixture weight and makes every existing concavity inequality strict. This intermediate society need not satisfy the original encoding budget; the argument uses it only to establish feasibility of a separate small-witness construction.</p><p>The forms $C_i$ correctly express concavity after multiplication by positive threshold spacings.</p><p>The auxiliary polytope is compact: its masses lie in the simplex, and $\delta$ is bounded. It has a feasible point with positive $\delta$, so maximizing $\delta$ yields a positive optimum attained at a vertex. The use of independent active constraints, denominator clearing, Cramer’s rule, and the stated determinant bound gives polynomial coordinate bit length. The number of variables and constraints is polynomial in the explicit public encoding length.</p><p>The dyadic approximation argument is sound. Normalizing the final mass bounds its error by the sum of the preceding errors. The coefficient-sum bound then preserves positivity, concavity, and the prescribed strict sign using a grid of polynomial bit length.</p><p>The comparison with $L$ correctly handles both possibilities:</p><ul><li>If $L&lt;P(n)$, the original witnesses already have polynomial length.</li><li>If $L\geq P(n)$, the small witnesses fit the encoding budget.</li></ul><p>Checking the two witnesses requires only polynomial-time exact rational arithmetic. Therefore the claimed promised zero-budget membership in $\mathrm{coNP}$ follows under the stated conventional explicit encodings.</p><p>This is a membership result only. It establishes neither polynomial-time solvability nor hardness, even for the zero-budget restriction.</p><p><b>6. Separation from zero</b></p><p>The denominator product $Q$ is sufficient. Each product occurring in a revenue has a denominator dividing $Q$, so revenues, maxima, and losses are integer multiples of $1/Q$.</p><p>Disjoint maximizing sets make the summed loss at every action strictly positive. Hence each summed loss is at least $1/Q$, and the two-society lower bound gives<br>$$
+R_K^*\geq\frac1{2Q}.
+$$</p><p>Under the stated explicit encoding conventions, the denominator bit lengths for the public data and two hidden societies give<br>$$
+\log_2 Q\leq 2L.
+$$<br>The resulting bound<br>$$
+R_K^*&gt;0\implies R_K^*\geq 2^{-2L-1}
+$$<br>and the equivalence for budgets strictly below this bound are correct. The strict upper endpoint on the budget range is necessary and is stated correctly.</p><p><b>7. Constant lower-bound example</b></p><p>Both mass lists are positive and normalized, and concavity is automatic for two thresholds. The displayed revenues are correct.</p><p>The probability $q$ of ever selecting threshold $1$ is the same in both societies: every history before its first selection consists of identical actions and identical zero observations.</p><p>On the event of never selecting threshold $1$, the first society incurs regret $K/4$. Selecting it at least once incurs regret at least $1/4$ in the second society. The bound<br>$$
+\max\left\{\frac{K(1-q)}4,\frac q4\right\}
+\geq \frac{K}{4(K+1)}
+$$<br>is correct. Thus the example establishes regret bounded away from zero as the horizon grows.</p><p><b>8. Blocking issue and minimum required continuation</b></p><p>The sole major issue is incompleteness relative to <code>USER_TASK</code>. The prover expressly leaves the requested exact decision problem unresolved.</p><p>To settle the assignment, a further write-up must supply either an exact decision algorithm with the requested polynomial dependence, together with a correctness and complexity proof, or a valid hardness reduction for the specified admissible mass class with unary $K$. The established regret bounds and zero-budget certificates do not substitute for either result.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

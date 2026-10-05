@@ -1,0 +1,361 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-df3df4f54cc92f075830f7c10f09f1adf973474a — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-df3df4f54cc92f075830f7c10f09f1adf973474a <span style="font-weight:normal;color:#8a7350">(s5-df3df4f54cc92f075830f7c10f09f1adf973474a)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 2 — class: other</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a rational society μ over complete rankings of \(m ≥ 2S-1\) candidates, with \(S&gt;1\), and fixed tie-breaking, decide whether there are a ranking \(b\) and rational λ&gt;0 such that the original winner set \(W(μ,S)\) has size \(S\), its members occupy the top \(S\) positions of \(b\), and after adding mass λ of type \(b\), the new winner set intersects the original in exactly one candidate, excludes the candidates in the top \(S-1\) positions of \(b\), and includes every candidate in the bottom \(S-1\) positions of \(b\). Run weighted STV with quota equal to total mass divided by \(S+1\) and proportional surplus transfers.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>An input consists of integers \(S&gt;1\), \(m\ge 2S-1\), and a society \(\mu\) over strict complete rankings of the candidate set \(C\). A society is given by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational; \(\tau\) is the support size, not the number of possible rankings. Require total mass \(\mu(C)=1\), where here \(\mu(C)\) denotes total society mass; let \(L\) be the input bit length.<br>For any profile of total mass \(M\), define weighted STV with fixed quota \(q=M/(S+1)\) throughout the count and exact rational arithmetic. Initially each type&#x27;s mass belongs to its first-ranked candidate. Continuing candidates are those neither elected nor eliminated.<br>After initialization and every transfer, declare all continuing candidates with tally at least \(q\) elected; if they exceed the remaining vacancies, take the highest tallies first. Transfer pending elected candidates&#x27; surpluses one at a time, largest first: from tally \(v\), multiply every held parcel&#x27;s current mass by \((v-q)/v\) and transfer it to its highest-ranked continuing candidate. Elected candidates receive no further transfers.<br>When no surplus remains pending, eliminate the continuing candidate with least tally and transfer all its current mass to the highest-ranked continuing candidate on each ranking. Whenever the continuing candidates equal the remaining vacancies, elect them all; stop once \(S\) seats are filled. A fixed candidate priority order resolves every tie, including surplus order and excess quota achievers. Write \(W(\nu,S)\) for the resulting winner set.<br>Define \(T_k(b)\) and \(B_k(b)\) as the sets in the top and bottom \(k\) positions of ranking \(b\). The decision problem asks whether a complete ranking \(b\) and \(\lambda\in\mathbb{Q}_{&gt;0}\) exist such that, with \(A=W(\mu,S)\) and \(D=W(\mu+\lambda\delta_b,S)\),<br>\( |A|=S,\quad T_S(b)=A,\quad |A\cap D|=1,\quad T_{S-1}(b)\cap D=\varnothing,\quad B_{S-1}(b)\subseteq D. \)<br>Here \(\delta_b\) is unit mass on ranking \(b\); the augmented society is not renormalized and uses quota \((1+\lambda)/(S+1)\).</p><p>Is this decision problem in \(\mathrm{P}\), with running time polynomial in \(m,\tau,L,S\), or is it NP-hard?</p><p>For finite electorates with the integer Droop quota, such reversals exist for every \(S&gt;1\): constructions use four candidates for \(S=2\) and \(2S-1\) for \(S&gt;2\). [McCune](https://arxiv.org/html/2406.20045v2)<br>Recognizing a group no-show paradox under single-winner STV is NP-complete with lexicographic tie-breaking; that problem removes existing voters who all prefer the resulting winner. [IJCAI 2024](https://www.ijcai.org/proceedings/2024/0328.pdf) No result settling the exact continuous problem above was found.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalize the original society to total mass one; addition increases total mass without renormalization.</li><li>Treat S as part of the input and L as the total binary input length; rankings are strict and complete.</li><li>Specify simultaneous election of quota achievers and descending pending-surplus transfers, following the Scottish conventions; replace historical and random tie resolution with a fixed candidate priority order.</li><li>Use exact arithmetic without Scottish five-decimal truncation, as appropriate for the stipulated proportional mass transfers.</li><li>The continuous quota can permit more quota achievers than vacancies at equality; select the highest tallies, resolving ties by the fixed priority order.</li><li>Include election of all remaining candidates when their number equals the unfilled vacancies, and transfer current parcel weights rather than original masses.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status: partial progress</h3><p>I do not settle whether the general decision problem is polynomial-time solvable or $\mathrm{NP}$-hard.</p><p>I prove the following results under the exact rule in the question:</p><ul><li>A deterministic decision algorithm with running time</li></ul><p>$$
+   2^{O(m\log m)}\operatorname{poly}(\tau,L).
+   $$<br>This sharpens the history-enumeration bound in the notes.</p><ul><li>Membership in $\mathrm{NP}$ for every fixed $S$, including a repaired treatment of isolated rational witnesses.</li><li>A structural restriction: the added ballot cannot transfer mass to its bottom $S-1$ candidates before the remaining winners are already forced.</li><li>Explicit yes-instances for every $S\geq 3$ with exactly $2S-1$ candidates, using dyadic masses if required.</li><li>A complete classification of the parameters for which any yes-instance exists: among the permitted parameters, only $S=2,m=3$ admits no yes-instance.</li></ul><p>These are partial results about the assigned complexity question; the existence constructions do not constitute a hardness reduction.</p><h3>1. Basic constraints on successful witnesses</h3><p>Write $b(j)$ for the candidate in position $j$ of $b$. Let<br>$$
+q_0=\frac1{S+1},
+\qquad
+q_\lambda=\frac{1+\lambda}{S+1},
+$$<br>and let $t_c$ be candidate $c$’s initial tally in $\mu$.</p><h3>1.1. Every count fills exactly $S$ seats</h3><p>Let $r$ be the number of vacancies and $k$ the number of continuing candidates.</p><p>Initially $k=m\geq S=r$. Election decreases $k$ and $r$ equally. Elimination is permitted only when $k&gt;r$, so it preserves $k\geq r$. Equality causes election of all remaining continuing candidates.</p><p>Each candidate is elected or eliminated at most once, and each elected candidate has its surplus processed at most once. Thus the count terminates, and termination fills all $S$ seats. Complete rankings ensure that every transfer made before termination has a continuing recipient.</p><h3>1.2. A necessary upper bound on $\lambda$</h3><p>Suppose $(b,\lambda)$ is successful, and put $a=b(1)$. Because $S&gt;1$ and<br>$$
+T_{S-1}(b)\cap D=\varnothing,
+$$<br>we have $a\notin D$.</p><p>I claim that<br>$$
+t_a+\lambda&lt;q_\lambda.
+$$</p><p>If at most $S$ candidates initially reach augmented quota, every such candidate is elected. Hence $a$ cannot reach quota.</p><p>If more than $S$ candidates initially reach quota, their tallies sum to at most<br>$$
+1+\lambda=(S+1)q_\lambda.
+$$<br>Consequently, exactly $S+1$ candidates reach quota, each has tally exactly $q_\lambda$, and every other candidate has tally zero.</p><p>Suppose $a$ is among those achievers but is excluded by priority. The other $S$ achievers have unchanged baseline tallies $q_\lambda&gt;q_0$. They are all initially elected in the baseline count: there cannot be $S+1$ baseline quota achievers when even one tally exceeds $q_0$. Thus they fill all baseline seats, contradicting $a\in A$.</p><p>Therefore<br>$$
+t_a+\lambda&lt;\frac{1+\lambda}{S+1}.
+$$<br>Rearranging gives<br>$$
+0&lt;\lambda&lt;
+\frac{1-(S+1)t_a}{S}
+\leq\frac1S.
+$$</p><p>In particular, a successful ballot must begin with a baseline winner whose initial tally is strictly below $q_0$.</p><h3>1.3. The augmented winner set is prescribed by the ballot</h3><p>The outcome conditions imply<br>$$
+D=\{b(S)\}\cup B_{S-1}(b).
+$$</p><p>Indeed, $T_S(b)=A$, and none of the first $S-1$ candidates belongs to $D$. Since $|A\cap D|=1$, the shared winner is $b(S)$. The bottom $S-1$ candidates supply all remaining augmented winners.</p><h3>2. The bottom block receives no added support before the outcome is forced</h3><p>Let<br>$$
+z=b(S),
+\qquad
+H=B_{S-1}(b).
+$$<br>For a successful witness, $D=\{z\}\cup H$.</p><p><b>Proposition.</b> Every transfer of positive added-ballot mass to a candidate in $H$ occurs only when the continuing-candidates rule already forces all remaining winners.</p><p><b>Proof.</b> Every candidate outside $H$ is ranked above every candidate in $H$. Thus, if the added parcel is transferred to a continuing candidate in $H$, there is no continuing candidate outside $H$.</p><p>Let $E$ be the candidates already elected at that point. Since the final winner set is $\{z\}\cup H$, no member of $H$ has been eliminated. Moreover, $z$ is no longer continuing and must already have been elected. Therefore<br>$$
+E=\{z\}\cup(E\cap H),
+$$<br>and the continuing candidates are exactly $H\setminus E$. Their number is<br>$$
+|H\setminus E|
+=(S-1)-(|E|-1)
+=S-|E|,
+$$<br>which equals the number of vacancies. The rule therefore elects them all. $\square$</p><p>This proposition gives a useful reduction of the ballot search.</p><p><b>Corollary.</b> If a ballot is successful, arbitrarily permuting its bottom $S-1$ positions preserves success.</p><p><b>Proof.</b> Until added mass first reaches the bottom block, the two ballots have identical transfer recipients. Hence their counts are identical. At the first possible difference, the proposition shows that the remaining winners are already forced. $\square$</p><p>We may consequently require the bottom block to be ordered canonically by candidate priority.</p><p>With $A$ fixed, the number of rankings satisfying $T_S(b)=A$ and this canonical-bottom restriction is<br>$$
+S!\binom{m-S}{S-1}(m-2S+1)!
+=S(m-S)!.
+$$<br>Here the three factors choose the top order, the bottom set, and the middle order, respectively. This reduction is substantial, although still exponential in general.</p><h3>3. A sharper exact decision algorithm</h3><h3>3.1. Enumerating actions instead of comparison outcomes</h3><p>A counting history records:</p><ul><li>each election batch;</li><li>each elimination;</li><li>each surplus transfer;</li><li>whether an elected candidate has zero or positive surplus.</li></ul><p>It need not record every intermediate comparison outcome.</p><p>There are at most $m$ election-or-elimination events and at most $S-1$ surplus transfers before the count stops. Election batches and checkpoints can be represented by delimiters in a word of length $O(m)$ over an alphabet of size $O(m)$. Therefore the number of possible histories is bounded by<br>$$
+2^{O(m\log m)}.
+$$</p><p>For a prescribed history, its validity can be expressed using a conjunction of tally comparisons.</p><p>For example, suppose a checkpoint has $r$ vacancies and the history specifies an election batch $E$.</p><ul><li>If $|E|&lt;r$, every member of $E$ must reach quota, and every continuing candidate outside $E$ must be below quota.</li><li>If $|E|=r$, every member of $E$ must reach quota, and each selected candidate must precede every unselected continuing candidate when tallies are ordered from highest to lowest with the prescribed tie-breaking.</li><li>If the number of continuing candidates equals $r$, automatic election applies instead; this condition depends only on the discrete history.</li></ul><p>A specified elimination is enforced by requiring its candidate to have minimum continuing tally, with strict or weak inequalities according to priority. A specified surplus transfer is enforced similarly among pending candidates. Since quota is fixed, ordering surpluses is equivalent to ordering the elected candidates’ tallies.</p><p>Zero or positive surplus is enforced by equality or strict inequality against quota. The discrete history also checks that a surplus is transferred only after all mandatory elections and that elimination occurs only when no surplus remains pending.</p><p>There are $O(m)$ checkpoints. Quota tests, minimum and maximum tests, and the final election-batch comparisons together require $O(m^2)$ comparisons.</p><h3>3.2. Polynomial expressions along one history</h3><p>Fix a ballot $b$ and a history. Introduce a variable $x$ for the added mass.</p><p>Choose a positive integer $K$ divisible by $S+1$ and every input mass denominator. We may use their product, so<br>$$
+\operatorname{bits}(K)=O(L+\log(S+1)).
+$$<br>Scaling masses and quota by $K$ preserves every count decision. The scaled augmented quota is<br>$$
+Q(x)=\frac{K}{S+1}(1+x).
+$$</p><p>For each original ranking type, and for the added ballot, retain its active parcel. The quota portion retained by an elected candidate is discarded from this representation.</p><p>There is at most one active parcel per type. An elimination moves that parcel intact. A surplus transfer retains part of it and sends the remaining part to one recipient; it does not create two active descendants.</p><p>Represent all active masses with a common denominator:<br>$$
+p_i(x)=\frac{P_i(x)}{D(x)}.
+$$<br>Initially $D=1$, the original $P_i$ are integer constants, and the added numerator is $Kx$.</p><p>Elimination changes only parcel holders. If an elected candidate has tally $V/D$, where $V$ is the sum of its parcel numerators, its transfer factor is<br>$$
+\frac{V-QD}{V}.
+$$<br>The following common-denominator update is exact:<br>$$
+D_{\mathrm{new}}=DV,
+$$<br>$$
+P_{i,\mathrm{new}}=
+\begin{cases}
+P_i(V-QD),&amp;\text{if parcel }i\text{ is transferred},\\
+P_iV,&amp;\text{otherwise}.
+\end{cases}
+$$<br>The transferred parcels change holders; their retained portions are removed.</p><p>Include $D&gt;0$ and $V&gt;0$ among the history conditions whenever needed. Clearing denominators then preserves signs.</p><p>After $r$ surplus transfers,<br>$$
+\deg P_i\leq 2^r,
+\qquad
+\deg D\leq 2^r-1.
+$$<br>This follows by induction. If the bounds hold at $r$, then both $V$ and $QD$ have degree at most $2^r$. Each new numerator consequently has degree at most $2^{r+1}$, while $DV$ has degree at most $2^{r+1}-1$.</p><p>At most $S-1$ surplus transfers are processed: the count stops when the last seat is filled. Every comparison polynomial therefore has degree at most<br>$$
+d=2^{S-1}.
+$$</p><p>For coefficient bounds, use the polynomial norm<br>$$
+\|F\|_1=\sum_j |F_j|.
+$$<br>It satisfies<br>$$
+\|FG\|_1\leq\|F\|_1\|G\|_1,
+\qquad
+\|F+G\|_1\leq\|F\|_1+\|G\|_1.
+$$<br>Let $N=\tau+1$, and let $h_r$ bound the logarithmic norms of the active numerators and denominator after $r$ transfers. Let $h_0$ additionally bound that of $Q$. A tally sums at most $N$ numerators. The update above gives<br>$$
+h_{r+1}\leq 2h_r+h_0+\log_2 N+2.
+$$<br>Solving this recurrence bounds comparison-polynomial coefficient bit lengths by<br>$$
+H=2^{O(S)}
+\bigl(L+\log(\tau+1)+\log(S+1)+1\bigr).
+$$</p><p>Thus a prescribed history gives $k=O(m^2)$ integer-polynomial sign conditions, with degree and coefficient bounds $d,H$ as above.</p><h3>3.3. Rational feasibility, with endpoint details</h3><p>Impose<br>$$
+x&gt;0,
+\qquad
+1-Sx&gt;0,
+$$<br>using Section 1.</p><p>First remove identically zero comparison polynomials. Their conditions are either automatic or contradictory. Form the product $F$ of the remaining polynomials, together with $x$ and $1-Sx$.</p><p>Its degree and coefficient bit length are polynomial in $k,d,H$.</p><p>I use the standard effective univariate root-isolation theorem: an integer polynomial of degree $D$ and coefficient bit length $H_F$ has its distinct real roots isolated with rational endpoints in time polynomial in $D,H_F$; multiplicities are permitted. Isolation and refinement to a prescribed additional polynomial number of bits also have polynomial bit complexity. These are the hypotheses needed here, and they hold for the explicitly constructed integer polynomial $F$. See [Emiris, Mourrain, and Tsigaridas, *Real Algebraic Numbers: Complexity Analysis and Experimentation*](https://who.paris.inria.fr/Elias.Tsigaridas/files/emt-lncs-2006.pdf).</p><p>The roots divide $(0,1/S)$ into open intervals and individual root points.</p><p><b>Open intervals.</b> Refine the isolating intervals for the sorted distinct roots, including the known boundary roots $0$ and $1/S$, until adjacent isolating intervals are strictly separated. For an exactly represented rational root, either use its singleton representation or surround it by a sufficiently small rational isolating interval.</p><p>If consecutive root enclosures have right and left endpoints $u_i&lt;\ell_{i+1}$, respectively, use<br>$$
+\frac{u_i+\ell_{i+1}}2
+$$<br>as the sample. It lies strictly between the roots, including for cells adjacent to the boundary roots.</p><p>Standard root-separation bounds guarantee that polynomially many bits of refinement suffice. Every comparison polynomial has constant sign on each open cell, so testing this rational sample decides the whole cell.</p><p><b>Individual roots.</b> Let<br>$$
+B=|\operatorname{lc}(F)|.
+$$<br>If an isolated root is a reduced rational $p/q$, the rational-root theorem gives<br>$$
+q\mid B,
+\qquad q\leq B.
+$$</p><p>Refine its isolating interval to width less than $1/(4B^2)$, and let $r$ be its rational midpoint. If the root is $p/q$, then<br>$$
+\left|r-\frac pq\right|
+&lt;\frac1{8B^2}
+&lt;\frac1{2q^2}.
+$$<br>By Legendre’s continued-fraction theorem, $p/q$ is a convergent of $r$. Enumerate the finitely many convergents of $r$, retain those in the isolating interval with denominator at most $B$, and test $F(p/q)=0$ exactly.</p><p>There can be at most one eligible rational in the interval, because distinct rationals with denominators at most $B$ differ by at least $1/B^2$. Thus this procedure determines whether the isolated root is rational. For a rational root, evaluate all history conditions exactly; discard irrational roots.</p><p>The required extra precision is $O(\log B)$. Continued fractions and rational polynomial evaluation have polynomial bit complexity in these bounds.</p><p>This also repairs the numerator issue identified by the verifier. For a root in the permitted range,<br>$$
+0&lt;\frac pq&lt;\frac1S&lt;1,
+$$<br>so<br>$$
+0&lt;p&lt;q\leq B.
+$$<br>No numerator-divisibility argument using the zero constant coefficient of $F$ is needed.</p><h3>3.4. Running time and fixed-seat certificates</h3><p>Compute the baseline winner set exactly. The same arithmetic bounds give time<br>$$
+2^{O(S)}\operatorname{poly}(m,\tau,L).
+$$</p><p>Enumerate the canonically ordered ballots from Section 2 and all action histories. Reject histories whose prescribed winner sets violate the required outcome conditions. Test the remaining histories by Section 3.3.</p><p>Each history costs<br>$$
+\operatorname{poly}(k,d,H)
+=2^{O(S)}\operatorname{poly}(m,\tau,L).
+$$<br>The ballot and history enumerations each have size at most $2^{O(m\log m)}$. Since $m\geq 2S-1$, the total bound is<br>$$
+2^{O(m\log m)}\operatorname{poly}(\tau,L).
+$$</p><p>The procedure is complete: every successful witness can be put into canonical bottom order and supplies one enumerated history. It is sound because an accepted rational parameter satisfies every condition enforcing that history.</p><p>Moreover, every yes-instance has a rational witness of bit length<br>$$
+2^{O(S)}\operatorname{poly}(m,\tau,L).
+$$<br>For an open cell this follows from the rational sample bounds. For an isolated rational root it follows from $0&lt;p&lt;q\leq B$.</p><p>For fixed $S$, this certificate length is polynomial. Given $(b,\lambda)$, exact simulation uses polynomially many operations on integers of polynomial bit length, by the same norm recurrence after incorporating $\lambda$’s denominator into $K$. Therefore the problem belongs to $\mathrm{NP}$ for every fixed $S$.</p><p>For variable $S$, these arguments establish neither polynomial certificate length nor polynomial-time verification.</p><h3>4. The two-seat cases</h3><h3>4.1. Three candidates: every instance is negative</h3><p>Suppose a successful witness exists with $S=2,m=3$. Relabel so that<br>$$
+A=\{a,z\},
+\qquad
+b=a\succ z\succ d,
+\qquad
+D=\{z,d\}.
+$$<br>Let baseline initial tallies be $u,v,w$, respectively. Thus<br>$$
+u+v+w=1.
+$$<br>Put $q_0=1/3$ and $q&#x27;=(1+\lambda)/3$.</p><p>Section 1 gives<br>$$
+u+\lambda&lt;q&#x27;,
+\qquad u&lt;q_0.
+$$<br>At least one augmented initial tally reaches quota, because the three tallies sum to $3q&#x27;$.</p><p>Candidate $d$ cannot initially reach augmented quota. Otherwise $w\geq q&#x27;&gt;q_0$, forcing its initial baseline election, contrary to $d\notin A$. Hence $z$ initially reaches quota in both counts.</p><p>Also $w&lt;q_0$: otherwise $z$ and $d$ would fill both baseline seats initially. Thus $z$ is the only initial quota achiever in either count.</p><p>Let $p\in[0,1]$ be the fraction of $z$’s initial mass whose highest-ranked continuing candidate after $z$’s election is $a$. The remaining fraction goes to $d$. The added ballot initially belongs to $a$, so it does not alter this fraction.</p><p>After the baseline surplus transfer,<br>$$
+U_a=u+p(v-q_0),
+\qquad
+U_d=w+(1-p)(v-q_0).
+$$<br>Their sum is $2q_0$. For $a$ to win, necessarily $U_a\geq U_d$.</p><p>The augmented tallies are<br>$$
+U&#x27;_a=u+\lambda+p(v-q&#x27;),
+\qquad
+U&#x27;_d=w+(1-p)(v-q&#x27;).
+$$<br>Therefore<br>$$
+U&#x27;_a-U&#x27;_d
+=(U_a-U_d)+\frac{4-2p}{3}\lambda&gt;0.
+$$<br>Their sum is $2q&#x27;$, so $U&#x27;_a&gt;q&#x27;$. Candidate $a$ wins, a contradiction.</p><p>This proof includes tally ties.</p><h3>4.2. Four candidates: an interval of successful masses</h3><p>Take the following dyadic society:</p><p>| Mass | Ranking |<br>|---|---|<br>| $205/512$ | $z\succ d\succ c\succ a$ |<br>| $118/512$ | $a\succ z\succ d\succ c$ |<br>| $109/512$ | $c\succ a\succ z\succ d$ |<br>| $80/512$ | $d\succ c\succ a\succ z$ |</p><p>Use<br>$$
+b=a\succ z\succ d\succ c.
+$$<br>Scale masses by $512$, and write $x=512\lambda$.</p><p>In the baseline count, quota is $512/3$. Candidate $z$ is elected and transfers surplus $103/3$ to $d$. The remaining tallies are<br>$$
+a:118,\qquad c:109,\qquad d:\frac{343}{3}.
+$$<br>Candidate $c$ is uniquely lowest, and its mass transfers to $a$. Thus<br>$$
+A=\{z,a\}.
+$$</p><p>Now take any rational<br>$$
+16&lt;x&lt;79.
+$$<br>The augmented quota is $(512+x)/3$. Only $z$ initially reaches quota: in particular,<br>$$
+118+x&lt;\frac{512+x}{3}
+$$<br>is equivalent to $x&lt;79$.</p><p>After $z$’s surplus transfer, the remaining tallies are<br>$$
+a:118+x,\qquad c:109,\qquad d:\frac{343-x}{3}.
+$$<br>Since $x&gt;16$, candidate $d$ is uniquely lowest. Its mass transfers to $c$, giving<br>$$
+v_c=\frac{670-x}{3}&gt;
+\frac{512+x}{3},
+$$<br>where the strict inequality is equivalent to $x&lt;79$. Hence<br>$$
+D=\{z,c\}.
+$$</p><p>All required ranking conditions hold. For example, $x=18$ gives the dyadic witness<br>$$
+\lambda=\frac9{256}.
+$$</p><p>Here the shared winner is initially elected in both counts. The reversal results from the smaller surplus changing the first elimination.</p><h3>5. Minimal-candidate constructions for every larger seat count</h3><p>I now construct yes-instances for every $S\geq 3$ with $m=2S-1$.</p><h3>5.1. Definition of the society</h3><p>Put<br>$$
+n=S-1\geq 2,
+\qquad
+t=\frac{n+1}{2n},
+\qquad
+\varepsilon=\frac1{100n^3}.
+$$<br>Use candidates<br>$$
+\{z\}\cup X\cup Y,
+\qquad
+X=\{x_1,\ldots,x_n\},
+\qquad
+Y=\{y_1,\ldots,y_n\}.
+$$</p><p>First specify an unnormalized society of mass $n+2=S+1$. Its baseline quota is therefore $1$.</p><p>Give $z$ mass $1+\varepsilon$ on a ranking beginning<br>$$
+z\succ x_1\succ y_1.
+$$</p><p>Define<br>$$
+u_1=t-\varepsilon,\qquad
+u_2=t+\frac{\varepsilon}{2},\qquad
+u_i=t\quad(3\leq i\leq n),
+$$<br>and<br>$$
+v_1=t-\frac{\varepsilon}{2},\qquad
+v_j=t\quad(2\leq j\leq n).
+$$</p><p>For each $i,j$, place mass $u_i/n$ on a ranking beginning<br>$$
+x_i\succ y_j,
+$$<br>and mass $v_j/n$ on a ranking beginning<br>$$
+y_j\succ x_i.
+$$<br>Complete every specified prefix to a strict complete ranking arbitrarily.</p><p>The total mass is<br>$$
+1+\varepsilon+\sum_i u_i+\sum_j v_j
+=1+\varepsilon+2nt-\varepsilon
+=n+2.
+$$<br>There are $2n^2+1$ positive types.</p><p>Add mass<br>$$
+\ell=\frac34(n+2)\varepsilon
+$$<br>on the ballot<br>$$
+b=x_2\succ x_3\succ\cdots\succ x_n
+\succ x_1\succ z
+\succ y_1\succ\cdots\succ y_n.
+$$<br>The augmented quota is<br>$$
+q&#x27;=1+\frac34\varepsilon.
+$$</p><p>After dividing the original society by $n+2$, the input has total mass $1$ and the witness mass is<br>$$
+\lambda=\frac{\ell}{n+2}=\frac34\varepsilon.
+$$<br>Scaling invariance makes it sufficient to prove the outcomes in the unnormalized society.</p><h3>5.2. Baseline outcome</h3><p>Candidate $z$ is the only initial quota achiever. It transfers surplus $\varepsilon$ to $x_1$.</p><p>The resulting tallies are<br>$$
+x_1:t,\qquad
+x_2:t+\frac{\varepsilon}{2},\qquad
+x_i:t\quad(i\geq3),
+$$<br>and<br>$$
+y_1:t-\frac{\varepsilon}{2},\qquad
+y_j:t\quad(j\geq2).
+$$<br>Thus $y_1$ is uniquely lowest.</p><p>Suppose $k$ candidates from $Y$ have been eliminated, with $y_1$ among them, and no candidate from $X$ has yet been elected. Every eliminated $Y$ candidate transfers its mass equally among all $n$ candidates in $X$. Their tallies lie between<br>$$
+t\left(1+\frac{k}{n}\right)-\frac{\varepsilon}{2n}
+$$<br>and<br>$$
+t\left(1+\frac{k}{n}\right)+\frac{\varepsilon}{2}.
+$$</p><p>For $k\leq n-2$, the upper bound is at most<br>$$
+t\left(1+\frac{n-2}{n}\right)+\frac{\varepsilon}{2}
+=1-\frac1{n^2}+\frac{\varepsilon}{2}&lt;1.
+$$<br>So no member of $X$ has reached quota.</p><p>For $k\geq1$, the lower bound exceeds $t$, since<br>$$
+\frac{t}{n}-\frac{\varepsilon}{2n}&gt;0.
+$$<br>Every remaining $Y$ candidate has tally at most $t$. Consequently, another member of $Y$ is eliminated.</p><p>This inductively justifies the stated transfer calculation up to $k=n-1$. At that point, every member of $X$ has tally at least<br>$$
+t\left(1+\frac{n-1}{n}\right)-\frac{\varepsilon}{2n}
+=
+1+\frac{n-1}{2n^2}-\frac{\varepsilon}{2n}
+&gt;1.
+$$<br>All $n$ members of $X$ are declared elected together, filling the remaining seats. Hence<br>$$
+A=\{z\}\cup X.
+$$</p><p>Before this final declaration, the continuing-candidate count is $2n-k&gt;n$, so automatic election does not intervene.</p><h3>5.3. Augmented outcome</h3><p>Initially, only $z$ reaches augmented quota. Indeed, the largest other possible initial tally is<br>$$
+t+\frac{\varepsilon}{2}+\ell
+=t+\left(\frac{3n}{4}+2\right)\varepsilon
+\leq t+2n\varepsilon&lt;1.
+$$<br>Here $n\geq2$, $t\leq3/4$, and $2n\varepsilon\leq1/200$.</p><p>Candidate $z$ transfers surplus $\varepsilon/4$ to $x_1$. Thus $x_1$ has tally<br>$$
+t-\frac34\varepsilon,
+$$<br>strictly less than $y_1$’s tally $t-\varepsilon/2$. It is uniquely lowest and is eliminated first.</p><p>Its own mass $u_1$ is divided equally among $Y$. The inherited $z$ surplus goes to $y_1$, because the $z$ ranking begins $z\succ x_1\succ y_1$.</p><p>As long as an $X$ candidate remains continuing, the added ballot stays within $X$: all members of $X$ are ranked above $z$ and $Y$, and $z$ has already been elected.</p><p>Let $E_k\subseteq X$ be the $k$ eliminated candidates, including $x_1$. Until the final election batch, each $y_j$ has tally<br>$$
+v_j+\frac1n\sum_{x_i\in E_k}u_i
++\frac{\varepsilon}{4}\mathbf1_{\{j=1\}}.
+$$<br>The initial $X$ masses satisfy<br>$$
+kt-\varepsilon
+\leq\sum_{x_i\in E_k}u_i
+\leq kt+\frac{\varepsilon}{2}.
+$$<br>Therefore every $Y$ tally lies between<br>$$
+t\left(1+\frac{k}{n}\right)
+-\left(\frac12+\frac1n\right)\varepsilon
+$$<br>and<br>$$
+t\left(1+\frac{k}{n}\right)
++\frac{\varepsilon}{2n}+\frac{\varepsilon}{4}
+\leq
+t\left(1+\frac{k}{n}\right)+\frac{\varepsilon}{2}.
+$$</p><p>For $k\leq n-2$, the upper bound is less than $1$, and hence below $q&#x27;$. No member of $Y$ is elected prematurely.</p><p>Each remaining $X$ candidate has tally at most<br>$$
+t+\frac{\varepsilon}{2}+\ell
+\leq t+2n\varepsilon.
+$$<br>For $k\geq1$, every $Y$ tally is at least<br>$$
+t+\frac tn-\varepsilon.
+$$<br>The difference between this lower bound and the $X$ upper bound is<br>$$
+\frac tn-(2n+1)\varepsilon&gt;0.
+$$<br>Indeed,<br>$$
+\frac{t/n}{\varepsilon}=50n(n+1)&gt;2n+1.
+$$<br>Thus another member of $X$ is eliminated at every nonfinal stage.</p><p>At $k=n-1$, every member of $Y$ has tally at least<br>$$
+1+\frac{n-1}{2n^2}
+-\left(\frac12+\frac1n\right)\varepsilon.
+$$<br>This exceeds $q&#x27;=1+3\varepsilon/4$, because<br>$$
+\frac{(n-1)/(2n^2)}{\varepsilon}
+=50n(n-1)
+&gt;
+\frac54+\frac1n.
+$$</p><p>All $n$ members of $Y$ are therefore declared elected together. The last continuing $X$ candidate loses. Consequently,<br>$$
+D=\{z\}\cup Y.
+$$</p><p>The top $S$ positions of $b$ are precisely $\{z\}\cup X$, its first $S-1$ positions are $X$, and its bottom $S-1$ positions are $Y$. All required conditions hold.</p><h3>5.4. Dyadic masses and polynomial-size descriptions</h3><p>The construction above uses general rational masses. It can be converted to dyadic masses while retaining the outcome.</p><p>The proof uses strict comparisons between the two blocks and against quota; ties within an eliminated block do not matter. Every required strict margin in the scaled construction is at least $\varepsilon/4$:</p><ul><li>the augmented $z$ surplus and the first augmented elimination gap equal $\varepsilon/4$;</li><li>the first baseline elimination gap equals $\varepsilon/2$;</li><li>the later margins follow from the displayed bounds, using</li></ul><p>$$
+  \frac{1/n^2}{\varepsilon}=100n,
+  \qquad
+  \frac{t/n}{\varepsilon}=50n(n+1),
+  \qquad
+  \frac{(n-1)/(2n^2)}{\varepsilon}=50n(n-1).
+  $$</p><p>After normalization, the required margins are at least<br>$$
+\frac{\varepsilon}{4(n+2)}.
+$$</p><p>Let $N=2n^2+1$, and choose a dyadic grid spacing $h=2^{-r}$ satisfying<br>$$
+h&lt;\frac{\varepsilon}{1000(n+2)(N+1)}.
+$$<br>Round every normalized non-$z$ type mass down to this grid, and assign the remaining mass to the $z$ type. Round $\lambda=3\varepsilon/4$ down to the same grid.</p><p>All masses remain positive. The total change in original type masses is less than $2Nh$, and the change in $\lambda$ is less than $h$. In particular, both are less than<br>$$
+\delta=\frac{\varepsilon}{100(n+2)}.
+$$</p><p>Until the final election batch, the only processed surplus is $z$’s, and $z$ has a single ranking type. Its transferred mass is exactly its tally minus quota. Every relevant tally is consequently a sum of original type masses, possibly this surplus, and possibly the added mass. Its perturbation is at most $4\delta$.</p><p>Thus a tally difference changes by at most $8\delta$, and a tally-minus-quota expression by at most $5\delta$. Both are smaller than the minimum required margin<br>$$
+\frac{\varepsilon}{4(n+2)}=25\delta.
+$$<br>Induction through the stages preserves the block eliminations and final simultaneous elections. The rounded society and witness are successful.</p><p>Because $\varepsilon^{-1}$ and $N$ are polynomial in $n$, one can choose $r=O(\log n)$. Hence this construction uses $O(S^2)$ types and polynomial input length, even with dyadic masses.</p><h3>6. Padding and existence across all permitted parameters</h3><p>Additional candidates can be added with zero initial tally. Append them after all original candidates in every original ranking, and place them in the added ballot’s middle block.</p><p>They receive no mass before being eliminated. All original continuing candidates have positive tallies, so the zero-tally candidates are eliminated before any original elimination. Their removal has no effect on the core count. Thus the preceding yes-instances extend to every larger $m$.</p><p>It follows that, among the parameters allowed in the question:</p><ul><li>if $S=2,m=3$, every instance is negative;</li><li>if $S=2,m\geq4$, yes-instances exist;</li><li>if $S\geq3,m\geq2S-1$, yes-instances exist.</li></ul><p>No-instances also exist for every permitted parameter pair. To see this with dyadic masses, choose a power of two $N&gt;S(S+1)$. Give exactly $S$ candidates initial masses equal to either<br>$$
+\frac{\lfloor N/S\rfloor}{N}
+\quad\text{or}\quad
+\frac{\lceil N/S\rceil}{N},
+$$<br>distributed so that they sum to $1$. Every such mass exceeds $1/(S+1)$, because<br>$$
+\frac{\lfloor N/S\rfloor}{N}
+&gt;
+\frac1S-\frac1N
+&gt;
+\frac1{S+1}.
+$$<br>Use one ranking type per supported candidate, beginning with that candidate. Those $S$ candidates are the baseline winners, all initially above quota. Section 1 then rules out every successful ballot.</p><h3>7. What remains open</h3><p>The action-history algorithm remains exponential in $m$. Fixed-$S$ membership in $\mathrm{NP}$ does not establish polynomial-time solvability, and the constructions do not encode an NP-hard problem.</p><p>A complete classification still requires either a uniform polynomial-time algorithm or a reduction that enforces all of the following simultaneously: the exact continuous quota, the specified surplus rule, unrestricted positive rational added mass, and the top and bottom ranking constraints.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 3.3, open-interval refinement: The invocation of standard root-separation bounds does not state the quantitative separation consequence in terms of the degree and coefficient bit length of $F$ or identify the precise result used. State that consequence and its source, including applicability to distinct roots when $F$ has repeated factors; this is an expositional clarification requiring no new mathematics.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: correct partial progress, with one minor expositional gap.</b> The output does not resolve the assigned question of polynomial-time solvability versus $\mathrm{NP}$-hardness, and explicitly acknowledges this. Its structural results, exponential-time algorithm, fixed-$S$ membership in $\mathrm{NP}$, and existence constructions withstand the audit.</p><p>No central false statement or invalid calculation was found.</p><h3>1. Basic constraints</h3><h3>1.1. Termination and number of winners</h3><p>The invariant $k\geq r$ is correct:</p><ul><li>Electing a batch decreases the number of continuing candidates and vacancies equally.</li><li>Elimination occurs only when $k&gt;r$, so it preserves the invariant.</li><li>Equality triggers election of every continuing candidate.</li></ul><p>There are finitely many candidate removals and surplus-processing events. Before termination, a transfer has a continuing recipient because $k\geq r&gt;0$ and rankings are complete.</p><p>Thus every count fills exactly $S$ seats. This also justifies using $|D|=S$ subsequently.</p><h3>1.2. Upper bound on the added mass</h3><p>The exceptional case of excess initial quota achievers is handled correctly. Since total augmented mass is $(S+1)q_\lambda$, more than $S$ initial achievers means exactly $S+1$, all with tally exactly $q_\lambda$.</p><p>If the added ballot’s first candidate is excluded from this batch, the other $S$ candidates each have baseline tally $q_\lambda&gt;q_0$. They must all be elected initially in the baseline count: an additional baseline quota achiever would exceed the available total mass. This contradicts the requirement that the first candidate is a baseline winner.</p><p>Consequently,<br>$$
+t_a+\lambda&lt;q_\lambda,
+$$<br>and the rearrangement<br>$$
+0&lt;\lambda&lt;
+\frac{1-(S+1)t_a}{S}
+\leq\frac1S
+$$<br>is correct. In particular, $t_a&lt;q_0$ is necessary.</p><h3>1.3. Prescribed augmented winner set</h3><p>Because $T_S(b)=A$, the exclusion of $T_{S-1}(b)$ from $D$ leaves $b(S)$ as the only possible shared winner. The bottom $S-1$ candidates are disjoint from the top $S$ candidates because $m\geq2S-1$.</p><p>Together with $|D|=S$, this establishes<br>$$
+D=\{b(S)\}\cup B_{S-1}(b).
+$$</p><h3>2. Bottom-block restriction</h3><p>The proposition is valid.</p><p>When positive added mass first reaches $H=B_{S-1}(b)$, no candidate outside $H$ remains continuing. In a successful count, no member of $H$ can have been eliminated, and $z=b(S)$ must already have been elected. The elected candidates therefore consist of $z$ and some members of $H$.</p><p>The displayed calculation correctly gives<br>$$
+|H\setminus E|=S-|E|,
+$$<br>so the continuing candidates exactly fill the vacancies. Their election is forced independently of the transferred mass.</p><p>The permutation corollary follows: before the first possible difference in recipients, the two counts agree; at that difference, their remaining winners are already determined.</p><p>The ballot enumeration is also correct:<br>$$
+S!\binom{m-S}{S-1}(m-2S+1)!
+=S(m-S)!.
+$$<br>It includes the boundary case $m=2S-1$, using $0!=1$.</p><h3>3. Exact decision algorithm</h3><h3>3.1. Action histories and their constraints</h3><p>The action-history bound is sound. Each candidate is elected or eliminated once, and at most $S-1$ elected candidates have a surplus processed before termination. Recording candidate identities, election-batch delimiters, and surplus flags therefore takes a word of length $O(m)$ over an alphabet of size $O(m)$.</p><p>The resulting number of histories is<br>$$
+2^{O(m\log m)}.
+$$</p><p>The proposed validity conditions match the specified count:</p><ul><li>A nonfinal election batch must contain exactly the continuing quota achievers.</li><li>A batch filling all vacancies must consist of quota achievers preceding every unselected candidate in tally order with the fixed priority.</li><li>Elimination requires minimum tally with the appropriate priority-sensitive inequalities.</li><li>Surplus processing requires maximum pending surplus. Since quota is fixed, this is equivalent to maximum pending tally.</li><li>The discrete checks enforce elections before surplus processing and forbid elimination while a surplus remains pending.</li></ul><p>The total of $O(m^2)$ comparisons is sufficient. Automatic election depends on the discrete continuing-candidate count and requires no additional algebraic test.</p><h3>3.2. Parcel representation and arithmetic bounds</h3><p>Keeping one active parcel per ranking type is valid for this transfer rule. Processing a surplus removes the retained quota portion and sends the remaining portion to one recipient; it does not produce two active descendants.</p><p>The common-denominator update is exact:<br>$$
+D_{\mathrm{new}}=DV,
+$$<br>with transferred numerators multiplied by $V-QD$ and other active numerators multiplied by $V$.</p><p>The conditions $D&gt;0$ and $V&gt;0$ justify clearing denominators without reversing signs.</p><p>The degree induction checks out:<br>$$
+\deg P_i\leq2^r,\qquad
+\deg D\leq2^r-1.
+$$<br>Multiplication by the linear quota polynomial gives<br>$$
+\deg(QD)\leq2^r,
+$$<br>so the stated bounds survive the next update. Comparison polynomials consequently have degree at most $2^{S-1}$.</p><p>The polynomial norm inequalities and recurrence provide the claimed coefficient-size bound<br>$$
+H=2^{O(S)}
+\bigl(L+\log(\tau+1)+\log(S+1)+1\bigr).
+$$<br>Using a product of input denominators for $K$ is compatible with the input-length bound.</p><h3>3.3. Rational feasibility</h3><p>Removing identically zero polynomials before forming $F$ correctly distinguishes automatic conditions from contradictions. Including $x$ and $1-Sx$ ensures the domain boundaries are roots of the same nonzero integer polynomial.</p><p>The cited root-isolation result applies to explicitly represented integer polynomials and permits repeated roots. Those hypotheses hold here. The source supports polynomial bit complexity for isolation, including nonsquare-free inputs. [Emiris, Mourrain, and Tsigaridas](https://who.paris.inria.fr/Elias.Tsigaridas/files/emt-lncs-2006.pdf)</p><p><b>Open cells.</b> The midpoint between strictly separated root enclosures lies in the intended root-free interval. Every comparison polynomial has constant sign there, so one rational sample suffices.</p><p><b>Isolated roots.</b> The rational-witness test is correct:</p><ul><li>For a reduced rational root $p/q$, the rational-root theorem gives $q\mid B$, hence $q\leq B$.</li><li>The refinement width implies</li></ul><p>$$
+  \left|r-\frac pq\right|
+  &lt;\frac1{8B^2}
+  &lt;\frac1{2q^2}.
+  $$</p><ul><li>The application of Legendre’s continued-fraction criterion is valid.</li><li>Distinct reduced rationals with denominators at most $B$ are separated by at least $1/B^2$, establishing uniqueness in the refined interval.</li><li>Exact testing against $F$ prevents acceptance of a rational approximation to an irrational root.</li><li>All original sign conditions are evaluated at any recovered rational root.</li></ul><p>The restriction<br>$$
+0&lt;\frac pq&lt;\frac1S&lt;1
+$$<br>correctly supplies $0&lt;p&lt;q\leq B$. The zero constant coefficient of $F$ causes no problem.</p><p><b>Minor issue — separation bound is invoked imprecisely.</b> The sentence “Standard root-separation bounds guarantee that polynomially many bits of refinement suffice” does not state the quantitative consequence or identify the particular separation result. Under the requested strict theorem-statement standard, this is an expositional omission.</p><p><b>Minimum clarification:</b> state the separation consequence being used in terms of the degree and coefficient bit length of $F$, and identify its source, explicitly allowing repeated roots by considering distinct roots. The cited paper contains an applicable separation theorem. No new mathematical argument is needed.</p><h3>3.4. Running time and certificates</h3><p>The running-time combination is correct. Both enumerations have size at most $2^{O(m\log m)}$, and per-history work is<br>$$
+2^{O(S)}\operatorname{poly}(m,\tau,L).
+$$<br>Since $S\leq(m+1)/2$, the stated overall bound follows:<br>$$
+2^{O(m\log m)}\operatorname{poly}(\tau,L).
+$$</p><p>Completeness follows from the bottom-order corollary and enumeration of every valid action history. Soundness follows from checking all conditions at an accepted rational parameter.</p><p>The witness-size bound covers both open cells and isolated rational roots. For fixed $S$, it is polynomial in the input parameters. Exact simulation with the witness denominator incorporated into $K$ also has polynomial bit complexity for fixed $S$.</p><p>Thus the claimed fixed-$S$ membership in $\mathrm{NP}$ is supported. The output correctly refrains from extending this conclusion to variable $S$.</p><h3>4. Two-seat cases</h3><h3>4.1. Three candidates</h3><p>The impossibility argument is correct.</p><p>The added ballot’s first candidate cannot initially reach augmented quota. At least one candidate must reach quota because the three initial tallies sum to $3q&#x27;$. Candidate $d$ cannot do so without being elected initially in the baseline count. Therefore $z$ reaches quota in both counts.</p><p>The proof then correctly establishes that $z$ is the sole initial quota achiever. The transfer fraction $p$ is unchanged because the added mass starts with $a$.</p><p>The critical calculation checks:<br>$$
+U&#x27;_a-U&#x27;_d
+=(U_a-U_d)+\frac{4-2p}{3}\lambda.
+$$<br>For $p\in[0,1]$, the added term is strictly positive. Baseline election of $a$ requires $U_a\geq U_d$, including priority-resolved ties. Since the augmented residual tallies sum to $2q&#x27;$, $U&#x27;_a&gt;U&#x27;_d$ forces $U&#x27;_a&gt;q&#x27;$.</p><p>This contradicts the required augmented exclusion of $a$.</p><h3>4.2. Four candidates</h3><p>All masses sum to one, and the baseline arithmetic is correct:</p><ul><li>Quota is $512/3$ after scaling.</li><li>The surplus from $z$ is $103/3$.</li><li>Candidate $d$ then has tally $343/3$.</li><li>Candidate $c$ is uniquely lowest and transfers to $a$.</li></ul><p>For $16&lt;x&lt;79$, only $z$ initially reaches augmented quota. After its surplus transfer,<br>$$
+d:\frac{343-x}{3}&lt;109=c,
+$$<br>and $d$ is also below $a$. Its transfer gives<br>$$
+v_c=\frac{670-x}{3}.
+$$<br>The quota inequality is exactly equivalent to $x&lt;79$.</p><p>The resulting winner sets satisfy every ranking condition. The example $x=18$ correctly gives $\lambda=9/256$.</p><h3>5. Construction for every larger seat count</h3><h3>5.1. Society and normalization</h3><p>The specified masses are positive for $n\geq2$, and their total is correctly calculated as $n+2$. The prefixes define $2n^2+1$ distinct ranking types regardless of their completions.</p><p>The added mass and quota satisfy<br>$$
+\ell=\frac34(n+2)\varepsilon,
+\qquad
+q&#x27;=1+\frac34\varepsilon.
+$$<br>After normalization, $\lambda=3\varepsilon/4$ is correct. Scaling all masses scales quota and every tally equally, so the use of the unnormalized count is justified.</p><h3>5.2. Baseline outcome</h3><p>Candidate $z$ is the sole initial quota achiever. Its surplus leaves $y_1$ uniquely lowest.</p><p>The stated bounds on $X$ tallies after eliminating $k$ members of $Y$ are correct. For $k\leq n-2$, the upper bound is below quota; for $k\geq1$, the lower bound exceeds every remaining $Y$ tally.</p><p>At $k=n-1$, all members of $X$ exceed quota and fill the remaining seats simultaneously. The continuing-candidate count remains above the vacancy count before that declaration.</p><p>The argument includes $n=2$: the intermediate induction range is empty, and the first elimination immediately leads to the final election batch.</p><h3>5.3. Augmented outcome</h3><p>The initial-tally bound correctly prevents any candidate other than $z$ from reaching quota. The reduced surplus makes $x_1$ uniquely lowest by $\varepsilon/4$.</p><p>Its original mass transfers among $Y$, and its inherited $z$ parcel transfers specifically to $y_1$, as prescribed by the ranking prefix.</p><p>The added ballot remains within $X$ throughout the relevant eliminations. The bounds on $Y$ tallies are uniform over the possible eliminated subsets, so priority choices within $X$ do not invalidate them.</p><p>Both critical inequalities check:<br>$$
+50n(n+1)&gt;2n+1
+$$<br>and<br>$$
+50n(n-1)&gt;\frac54+\frac1n
+$$<br>for every $n\geq2$.</p><p>Thus no premature election interferes, all final $Y$ candidates exceed quota together, and the claimed augmented winner set follows. The ballot has precisely the required top and bottom sets.</p><h3>5.4. Dyadic conversion</h3><p>The rounding argument is sound.</p><p>The chosen grid is sufficiently fine to preserve positivity. Assigning the rounding remainder to the single $z$ type preserves total mass exactly. The stated total perturbation bounds follow from rounding fewer than $N$ original masses and one witness mass.</p><p>Before the final election batch, only $z$’s surplus is processed, and $z$ holds one type. Consequently, the relevant tallies have the linear dependence on masses and quota asserted in the output. The perturbation bounds $8\delta$ and $5\delta$ are below the stated minimum margin $25\delta$.</p><p>Uniform bounds over eliminated subsets handle any changed tie order within a block. The dyadic construction therefore retains the outcomes.</p><p>The claim $r=O(\log n)$ and polynomial description size is also correct.</p><h3>6. Padding and negative instances</h3><p>Padding preserves the construction. The appended candidates have zero tally and receive no transfers while an original continuing candidate remains available. Their zero-mass eliminations do not affect the original count, and inserting them in the added ballot’s middle preserves its required top and bottom sets.</p><p>For the negative instances, the masses can be distributed to sum exactly to one, and<br>$$
+\frac{\lfloor N/S\rfloor}{N}
+&gt;
+\frac1S-\frac1N
+&gt;
+\frac1{S+1}
+$$<br>holds under $N&gt;S(S+1)$.</p><p>All baseline winners are initially above quota. Section 1.2 then excludes every possible successful first-ranked candidate.</p><p>The parameter-level existence classification is therefore established.</p><h3>7. What is established and what remains unresolved</h3><p>The output establishes genuine results about the exact rule: an exponential-time decision algorithm, fixed-$S$ membership in $\mathrm{NP}$, a ballot-search restriction, and the claimed existence classification.</p><p>It supplies neither a uniform polynomial-time algorithm nor an $\mathrm{NP}$-hardness reduction. This is an acknowledged limitation, not a contradiction in the partial results. The constructions demonstrate existence and do not classify recognition complexity.</p><p>The minimum write-up clarification concerns the root-separation theorem. Completing the assigned task requires the substantive complexity result explicitly left open in Section 7.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

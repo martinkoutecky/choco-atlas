@@ -1,0 +1,265 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ecai-2014-0336 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ecai-2014-0336 <span style="font-weight:normal;color:#8a7350">(d4-conf-ecai-2014-0336)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 19 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given an attack graph \(G=(A,R)\), a finite support \(T\) of ballot types \(t\in\{0,1\}^{2|A|}\), rational masses \(\mu_t\) summing to \(1\), a positive rational smoothing mass \(\delta\), and tolerance \(\eta&gt;0\), compute a rational vector \(\hat{x}\in[0,1]^A\) with maximum residual at most \(\eta\) for \(x_a=r_a\prod_{b\in\operatorname{Att}(a)}(1-x_b)\), where \(r_a=p_a/(p_a+q_a+\delta)\), \(p_a=\sum_t\mu_t b_t^+(a)\), and \(q_a=\sum_t\mu_t b_t^-(a)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(G=(A,R)\) be a finite directed attack graph with \(m=|A|\geq1\), \(R\subseteq A\times A\), and \(\operatorname{Att}(a)=\{b:(b,a)\in R\}\); self-attacks are allowed.<br>A society is given by its support: a list \(T\subseteq\{0,1\}^{2m}\) of \(\tau\) distinct types with positive binary-rational masses \(\mu_t\), summing to \(1\). Here \(\tau\) is the support size, not the number of possible types.<br>The coordinates \(b_t^+(a),b_t^-(a)\) record positive and negative votes independently; both may equal \(1\), and both may equal \(0\).<br>Given binary rationals \(\delta&gt;0\) and \(\eta&gt;0\), define \(p_a=\sum_{t\in T}\mu_t b_t^+(a)\), \(q_a=\sum_{t\in T}\mu_t b_t^-(a)\), and \(r_a=p_a/(p_a+q_a+\delta)\). Zero positive-vote mass is allowed; an empty product equals \(1\).<br>Compute a rational vector \(\hat{x}\in[0,1]^A\) satisfying \(\max_{a\in A}|\hat{x}_a-r_a\prod_{b\in\operatorname{Att}(a)}(1-\hat{x}_b)|\leq\eta\). Let \(L\) be the total binary input length, including the graph, ballots, masses, smoothing mass, and tolerance.</p><p>Is this search problem solvable in time polynomial in \(m,\tau,L\), or is it NP-hard under polynomial-time reductions?</p><p>For integer vote counts, Correia, Cruz and Leite state global convergence of iterative successive substitution from every interior initial vector; this is not a polynomial bound in binary input length ([2014](https://userweb.fct.unl.pt/~jleite/papers/ecai14a.pdf)).<br>Multiple simple-product models can exist even with four arguments ([Amgoud et al., 2017](https://arxiv.org/pdf/1705.03381)); the task permits any vector meeting the residual requirement.<br>No verified result located settles the complexity of this distribution-input residual search problem.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The tolerance had no representation specified; it is a positive binary rational included in the total input length, so precision is measured through its encoding.</li><li>The attack notation and empty-product convention were unspecified; attackers are incoming neighbors, self-attacks are allowed, and an empty product equals one.</li><li>No constraint between the two vote bits was specified; they remain independent, consistent with the unrestricted positive and negative vote counts in the discrete framework.</li><li>Arguments with zero positive-vote mass remain permitted, consistent with the discrete framework before its optional removal of such arguments.</li><li>The smoothing mass is an arbitrary positive binary-rational input measured in the same normalized units as the vote masses.</li><li>The graph is nonempty so that the maximum residual is defined; no uniqueness assumption or preferred model selection is imposed.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Status and proved results</h3><p>The general problem is <b>$\mathrm{PPAD}$-complete</b> under polynomial-time, solution-preserving search reductions. Hardness holds even with one ballot type, at most two attackers per argument, and fixed constants<br>$$
+\delta=\eta=2^{-64}.
+$$</p><p>This does <b>not</b> establish either requested unconditional alternative. A polynomial-time algorithm would give polynomial-time algorithms for every $\mathrm{PPAD}$ problem. Under the reduction convention specified below, $\mathrm{NP}$-hardness would imply $\mathrm{NP}=\mathrm{coNP}$.</p><p>I give a self-contained proof of this classification and two further results:</p><ul><li>A polynomial-time algorithm when every strongly connected component is a singleton or a directed cycle, with no additional internal edges.</li><li>An exponential lower bound on the number of successive-substitution iterations, already for one self-attacking argument.</li></ul><p>Thus the status remains <b>partial</b>.</p><p>If $\eta\geq1$, the zero vector immediately satisfies the requirement. The substantive question concerns arbitrary positive, binary-encoded tolerances.</p><h3>2. Totality, short witnesses, and membership in $\mathrm{PPAD}$</h3><p>Define<br>$$
+F_a(x)=r_a\prod_{b\in\operatorname{Att}(a)}(1-x_b),
+\qquad
+F:[0,1]^A\longrightarrow[0,1]^A.
+$$</p><h3>2.1. Exact coefficient computation</h3><p>The explicitly listed masses allow exact polynomial-time computation of $p_a$ and $q_a$. To see the bit-length bound, use the product of the listed denominators as a common denominator. Its binary length is at most the sum of their binary lengths. Adding the corresponding numerators increases length by at most a polynomial amount.</p><p>Computing<br>$$
+r_a=\frac{p_a}{p_a+q_a+\delta}
+$$<br>therefore also takes polynomial time and produces coefficients of polynomial binary length.</p><p>Because $p_a,q_a\geq0$ and $\delta&gt;0$,<br>$$
+0\leq r_a&lt;1.
+$$<br>In particular, $p_a=0$ gives $r_a=0$.</p><h3>2.2. Existence and polynomial-length residual witnesses</h3><p>Each coordinate of $F$ is continuous. Every complementary factor lies in $[0,1]$, and an empty product is $1$. Hence $F$ maps the nonempty compact convex cube into itself. Brouwer’s fixed-point theorem supplies $x^*\in[0,1]^A$ with<br>$$
+F(x^*)=x^*.
+$$</p><p>For $u_i,v_i\in[0,1]$, the telescoping identity<br>$$
+\prod_{i=1}^d u_i-\prod_{i=1}^d v_i
+=
+\sum_{i=1}^d
+(u_i-v_i)
+\left(\prod_{j&lt;i}u_j\right)
+\left(\prod_{j&gt;i}v_j\right)
+$$<br>implies<br>$$
+\left|\prod_{i=1}^d u_i-\prod_{i=1}^d v_i\right|
+\leq\sum_{i=1}^d|u_i-v_i|.
+$$</p><p>Since every argument has at most $m$ distinct attackers,<br>$$
+\|F(x)-F(y)\|_\infty\leq m\|x-y\|_\infty.
+$$<br>Consequently,<br>$$
+\|(x-F(x))-(y-F(y))\|_\infty
+\leq(m+1)\|x-y\|_\infty.
+$$</p><p>Choose a nonnegative integer $k$ such that<br>$$
+2^{-k}\leq\frac{\min\{\eta,1\}}{m+1}.
+$$<br>Round each coordinate of $x^*$ down to a multiple of $2^{-k}$. The resulting vector $\hat{x}$ remains in the cube and satisfies<br>$$
+\|\hat{x}-F(\hat{x})\|_\infty
+\leq(m+1)2^{-k}
+\leq\eta.
+$$</p><p>The binary encoding of $\eta$ ensures that $k=O(L+\log m)$ suffices. Thus every instance has a polynomial-length rational witness. Given such a witness, exact rational evaluation of all products and comparison with $\eta$ take polynomial time.</p><p>These facts establish totality and short, efficiently verifiable witnesses; they do not provide an algorithm for finding a witness.</p><h3>2.3. Membership theorem and hypothesis checks</h3><p>We use the following established result: weak fixed-point approximation belongs to $\mathrm{PPAD}$ for a family of continuous self-maps that is polynomially computable on rational inputs and polynomially continuous. Here polynomial continuity means that each requested accuracy has a sufficient continuity radius of polynomial binary length. This is [Etessami and Yannakakis, Proposition 1(2)](https://www.inf.ed.ac.uk/publications/online/1164.pdf).</p><p>Both hypotheses hold:</p><ul><li>Rational evaluation of $F$ uses polynomially many additions, multiplications, and divisions. Each coordinate is a product of at most $m$ rational factors and one precomputed coefficient, so intermediate binary lengths are polynomial in the instance and evaluation-point lengths.</li><li>For any rational accuracy $c&gt;0$, the radius</li></ul><p>$$
+   \frac{c}{m+1}
+   $$<br>has polynomial binary length and satisfies<br>$$
+   \|x-y\|_\infty&lt;\frac{c}{m+1}
+   \quad\Longrightarrow\quad
+   \|F(x)-F(y)\|_\infty&lt;c.
+   $$</p><p>The theorem returns a rational vector with residual strictly less than $\eta$, which satisfies the required non-strict inequality. Therefore the problem belongs to $\mathrm{PPAD}$.</p><h3>3. The source problem for hardness</h3><p>We reduce from <b>Pure-Circuit</b>, which is $\mathrm{PPAD}$-complete by [Deligkas, Fearnley, Hollender, and Melissourgos, Theorem 2.1](https://arxiv.org/pdf/2209.15149).</p><p>Its variables receive labels in $\{0,1,\bot\}$. Every variable is the output of exactly one gate; the variables appearing within each gate are distinct. There are two gate types:</p><ul><li><b>NOR:</b> inputs $u,v$, output $w$. If both inputs are $0$, the output must be $1$. If either input is $1$, the output must be $0$. Otherwise the output is unrestricted.</li><li><b>PURIFY:</b> input $u$, outputs $v,w$. If the input is $0$ or $1$, both outputs must equal it. For every input label, at least one output must be in $\{0,1\}$.</li></ul><p>Decode target coordinates as follows:</p><ul><li>Values in $[0,1/10]$ receive label $0$.</li><li>Values in $[9/10,1]$ receive label $1$.</li><li>All other values receive label $\bot$.</li></ul><p>The reduction must work for <b>every</b> vector satisfying the target residual inequalities.</p><h3>4. Product-and-complement gadgets</h3><p>Initially consider ideal primitive operations with coefficient $1$:<br>$$
+U(z)=1-z,
+\qquad
+N(s,t)=(1-s)(1-t).
+$$</p><p>They correspond to arguments having one and two attackers, respectively.</p><h3>4.1. Multiplication, probabilistic OR, and amplification</h3><p>Multiplication is implemented by<br>$$
+M(s,t)=N(U(s),U(t))=st.
+$$<br>The two complement arguments are always distinct fresh vertices, including when $s=t$. This gadget has three primitive arguments and depth two.</p><p>Probabilistic OR is<br>$$
+O(s,t)=1-(1-s)(1-t).
+$$<br>Implement it by creating separate double-complement copies of $s$ and $t$, applying $N$ to these copies, and complementing the result. It has six primitive arguments and depth four. The copies ensure that the binary operation has two distinct attackers even when $s=t$.</p><p>Define<br>$$
+\phi(z)=M(O(z,z),O(z,z))=(2z-z^2)^2.
+$$<br>One application uses nine primitive arguments and has depth six. Moreover,<br>$$
+\phi&#x27;(z)=4z(2-z)(1-z)\geq0
+\qquad(z\in[0,1]),
+$$<br>so $\phi$ is nondecreasing.</p><h3>4.2. Explicit amplification bounds</h3><p>We prove<br>$$
+\phi^{\circ8}(1/3)&lt;1/100,
+\qquad
+\phi^{\circ8}(1/2)&gt;99/100.
+$$</p><p>The following exact calculations give successive strict upper bounds:</p><p>| Input $z$ | Exact $\phi(z)$ | Strict upper bound |<br>|---|---|---|<br>| $1/3$ | $25/81$ | $5/16$ |<br>| $5/16$ | $18225/65536$ | $9/32$ |<br>| $9/32$ | $245025/1048576$ | $1/4$ |<br>| $1/4$ | $49/256$ | $1/5$ |<br>| $1/5$ | $81/625$ | $1/7$ |<br>| $1/7$ | $169/2401$ | $1/14$ |<br>| $1/14$ | $729/38416$ | $1/50$ |<br>| $1/50$ | $9801/6250000$ | $1/100$ |</p><p>Each comparison follows by cross-multiplication of positive denominators. Monotonicity permits induction through the rows, proving the first bound.</p><p>For the second bound:</p><p>| Input $z$ | Exact $\phi(z)$ | Lower bound |<br>|---|---|---|<br>| $1/2$ | $9/16$ | $9/16$, equality |<br>| $9/16$ | $42849/65536$ | $13/20$, strict |<br>| $13/20$ | $123201/160000$ | $3/4$, strict |<br>| $3/4$ | $225/256$ | $7/8$, strict |<br>| $7/8$ | $3969/4096$ | $15/16$, strict |<br>| $15/16$ | $65025/65536$ | $99/100$, strict |</p><p>Thus $\phi^{\circ6}(1/2)&gt;99/100$. Also,<br>$$
+\phi(99/100)\geq\phi(15/16)&gt;99/100,
+$$<br>so two further iterations preserve the strict bound.</p><p>Set<br>$$
+H(z)=\phi^{\circ8}(z),
+\qquad
+J(z)=1-H(1-z).
+$$<br>Their primitive depths are at most $48$ and $50$, respectively.</p><p>The preceding bounds and monotonicity imply<br>$$
+\begin{aligned}
+z\leq1/3&amp;\ \Longrightarrow\ H(z)&lt;1/100,\\
+z\geq1/2&amp;\ \Longrightarrow\ H(z)&gt;99/100,\\
+z\leq1/2&amp;\ \Longrightarrow\ J(z)&lt;1/100,\\
+z\geq2/3&amp;\ \Longrightarrow\ J(z)&gt;99/100.
+\end{aligned}
+$$</p><p>In particular, every $z\in[0,1]$ satisfies at least one of<br>$$
+H(z)&gt;99/100,
+\qquad
+J(z)&lt;1/100.
+$$<br>The first holds when $z\geq1/2$; the second holds when $z\leq1/2$.</p><h3>5. Realizing the gadgets and controlling residual errors</h3><p>Use one ballot type of mass $1$, voting positively and not negatively at every argument. Set<br>$$
+\delta=\eta=2^{-64}.
+$$<br>This gives the common coefficient<br>$$
+r=\frac{1}{1+2^{-64}}.
+$$</p><p>Every primitive argument has an equation<br>$$
+x_v=rP_v(x),
+$$<br>where $P_v$ is either $U$ or $N$.</p><p>Let $\hat{x}$ satisfy the target residual inequalities. Since $P_v(\hat{x})\in[0,1]$,<br>$$
+\begin{aligned}
+|\hat{x}_v-P_v(\hat{x})|
+&amp;\leq|\hat{x}_v-rP_v(\hat{x})|
+ +(1-r)P_v(\hat{x})\\
+&amp;\leq\eta+(1-r)
+&lt;2^{-63}.
+\end{aligned}
+$$</p><p>Fix the actual external input coordinates of an individual gadget, and evaluate its ideal circuit on those inputs. Compare the ideal values with the coordinates of $\hat{x}$.</p><p>The primitive sensitivity bounds are<br>$$
+|U(s)-U(s&#x27;)|=|s-s&#x27;|
+$$<br>and<br>$$
+|N(s,t)-N(s&#x27;,t&#x27;)|
+\leq|s-s&#x27;|+|t-t&#x27;|.
+$$</p><p>Writing $\varepsilon=2^{-63}$, induction on primitive depth gives the error bound<br>$$
+E_d\leq(2^d-1)\varepsilon.
+$$<br>Indeed, external inputs have comparison error zero. A primitive at depth $d$ contributes less than $\varepsilon$ local error and has at most two parents, each with error at most $E_{d-1}$.</p><p>For depth at most $50$, the output error is therefore less than<br>$$
+2^{50}2^{-63}=2^{-13}&lt;1/100.
+$$</p><p>Consequently:</p><ul><li>An ideal output below $1/100$ gives an actual output below $1/50$.</li><li>An ideal output above $99/100$ gives an actual output above $49/50$.</li></ul><p>These ranges lie strictly inside the decoding intervals.</p><p>The comparison remains valid if the complete graph contains cycles. Each gadget is internally acyclic, and its actual external inputs are held fixed; no assumption is made about how those inputs satisfy their own equations.</p><h3>6. Simulating Pure-Circuit and proving completeness</h3><h3>6.1. NOR gates</h3><p>For a source NOR gate, use the ideal output<br>$$
+H(N(x_u,x_v))=H((1-x_u)(1-x_v)).
+$$<br>Its primitive depth is at most $49$.</p><p>If both inputs decode to $0$, then<br>$$
+(1-\hat{x}_u)(1-\hat{x}_v)\geq(9/10)^2=81/100\geq1/2.
+$$<br>The ideal output exceeds $99/100$. By the error bound, the actual output exceeds $49/50$ and decodes to $1$.</p><p>If either input decodes to $1$, then<br>$$
+(1-\hat{x}_u)(1-\hat{x}_v)\leq1/10\leq1/3.
+$$<br>The ideal output is below $1/100$. The actual output is below $1/50$ and decodes to $0$, regardless of the other input’s label.</p><p>These are exactly the NOR requirements.</p><h3>6.2. PURIFY gates</h3><p>For a source PURIFY gate, use two separate circuits with ideal outputs<br>$$
+H(x_u),
+\qquad
+J(x_u).
+$$</p><p>If the input decodes to $0$, then $\hat{x}_u\leq1/10$. Both ideal outputs are below $1/100$, so both actual outputs decode to $0$.</p><p>If the input decodes to $1$, then $\hat{x}_u\geq9/10$. Both ideal outputs exceed $99/100$, so both actual outputs decode to $1$.</p><p>For an arbitrary input value:</p><ul><li>If $\hat{x}_u\geq1/2$, the $H$ output decodes to $1$.</li><li>If $\hat{x}_u\leq1/2$, the $J$ output decodes to $0$.</li></ul><p>Thus at least one output always has a pure label. The threshold value itself is covered by both statements.</p><h3>6.3. Construction and reduction size</h3><p>Replace each source gate with its corresponding gadget. Identify final gadget outputs with the source output variables, and make all intermediate vertices fresh.</p><p>Every source variable is produced by exactly one gate, so no argument receives competing defining equations. Distinct primitive parents ensure that no operation depends on duplicate edges. Every argument has at most two attackers.</p><p>Each gadget has constant size. The constructed graph, its single ballot, and the fixed smoothing mass and tolerance therefore have polynomial total encoding length. Construction and threshold decoding take polynomial time.</p><p>Sections 6.1 and 6.2 show that <b>every</b> valid target residual vector decodes to a valid Pure-Circuit solution. Hence the problem is $\mathrm{PPAD}$-hard. Together with Section 2, this proves $\mathrm{PPAD}$-completeness.</p><h3>7. Further result: a polynomial-time algorithm for cycle components</h3><p>A strongly connected component is a maximal vertex set in which every vertex can reach every other by a directed path.</p><p><b>Proposition.</b> Suppose every strongly connected component is either:</p><ul><li>a singleton, possibly with a self-attack; or</li><li>a directed simple cycle whose internal edges are exactly its cycle edges.</li></ul><p>Then the residual search problem is solvable in time polynomial in $m,\tau,L$. Arbitrarily many attacks between different components are allowed.</p><h3>7.1. Processing components in dependency order</h3><p>Contract each strongly connected component to one vertex. The resulting graph is acyclic: a directed cycle of distinct components would make their union strongly connected, contradicting maximality.</p><p>Process this acyclic graph in topological order. Thus, when processing a component $C$, all coordinates of its external attackers have already been selected.</p><p>For $a\in C$, compute exactly<br>$$
+c_a=r_a
+\prod_{b\in\operatorname{Att}(a)\setminus C}(1-\hat{x}_b).
+$$<br>These coefficients satisfy<br>$$
+0\leq c_a\leq r_a&lt;1.
+$$</p><p>If $C=\{a\}$ has no self-attack, set the temporary exact value to<br>$$
+y_a=c_a.
+$$</p><p>Otherwise, order the component cyclically as $a_1,\ldots,a_s$, including $s=1$ for a self-attacking singleton. Its equations are<br>$$
+y_i=c_i(1-y_{i-1}),
+\qquad
+y_0=y_s.
+$$</p><h3>7.2. Solving the cycle exactly</h3><p>Define the affine maps<br>$$
+f_i(z)=c_i(1-z).
+$$<br>Each maps $[0,1]$ into itself. Substitution gives<br>$$
+y_1=g(y_1),
+\qquad
+g=f_1\circ f_s\circ\cdots\circ f_2.
+$$<br>For $s=1$, take $g=f_1$.</p><p>The composition has the form<br>$$
+g(z)=\alpha+\beta z,
+\qquad
+\beta=(-1)^s\prod_{i=1}^s c_i.
+$$<br>Since $|\beta|&lt;1$, its unique possible fixed point is<br>$$
+y_1=\frac{\alpha}{1-\beta}.
+$$</p><p>It lies in $[0,1]$: the continuous function $g(z)-z$ is nonnegative at $0$ and nonpositive at $1$, because $g$ maps the interval into itself. The intermediate value theorem supplies a fixed point in the interval, and $1-\beta\neq0$ ensures uniqueness.</p><p>Compute the remaining coordinates by<br>$$
+y_i=f_i(y_{i-1})
+\qquad(2\leq i\leq s).
+$$<br>The fixed-point equation for $g$ verifies the closing equation for $y_1$.</p><p>All these values are rational and computed using exact rational arithmetic.</p><h3>7.3. Rounding preserves the required residual</h3><p>Choose $k$ such that<br>$$
+h=2^{-k}\leq\frac{\min\{\eta,1\}}2.
+$$<br>After solving a component, round every temporary coordinate down to the dyadic grid of spacing $h$. Thus<br>$$
+|\hat{x}_a-y_a|\leq h.
+$$</p><p>For a component without an internal attack,<br>$$
+|\hat{x}_a-F_a(\hat{x})|\leq h.
+$$</p><p>For a cycle vertex with internal predecessor $b$, the previously selected external coordinates remain fixed, so<br>$$
+F_a(\hat{x})=c_a(1-\hat{x}_b).
+$$<br>Therefore<br>$$
+\begin{aligned}
+|\hat{x}_a-F_a(\hat{x})|
+&amp;=|\hat{x}_a-c_a(1-\hat{x}_b)|\\
+&amp;\leq|\hat{x}_a-y_a|
+ +c_a|\hat{x}_b-y_b|\\
+&amp;\leq(1+c_a)h
+\leq2h
+\leq\eta.
+\end{aligned}
+$$<br>This calculation also applies to a self-attacking singleton.</p><p>Later components cannot alter the residual of an earlier component: every attacker outside that earlier component precedes it in the component order. Hence all final residual inequalities hold.</p><h3>7.4. Polynomial bit complexity</h3><p>Let $B$ bound the binary lengths of the precomputed $r_a$; Section 2 gives $B$ polynomial in $L$.</p><p>Every external coordinate is a dyadic with denominator $2^k$. Thus a coefficient $c_a$, containing at most $m$ such factors, has binary length<br>$$
+O(B+mk).
+$$</p><p>Composing $s$ affine maps increases rational length by at most the sum of the input coefficient lengths, up to polynomial overhead. More explicitly, if $c_i=u_i/v_i$, the affine constant and slope can both be represented with a denominator dividing $\prod_i v_i$. The denominator of the cycle fixed point is obtained by subtracting the corresponding slope numerator from that common denominator. Its binary length is therefore<br>$$
+O\bigl(s(B+mk)\bigr).
+$$</p><p>Computing the remaining cycle values and rounding them uses polynomial-time integer arithmetic. Rounding after each component prevents unbounded growth across components. Since<br>$$
+k=O(L+1),
+$$<br>the complete algorithm has polynomial running time.</p><p>This proves the proposition.</p><p><b>Corollary.</b> Graphs with at most one attacker per argument admit polynomial-time computation of an <b>exact rational fixed point</b>.</p><p>Indeed, their components have the required form. Cycle coefficients are simply the original $r_a$. Outside cycles, each equation is either constant or unary affine. Along any outward path, at most $m$ original coefficients are introduced, so exact rational binary lengths remain polynomial. No rounding is needed in this special case.</p><h3>8. Further result: exponentially slow successive substitution</h3><p>The convergence statement in the question cannot by itself provide a polynomial bound in binary input length.</p><p><b>Proposition.</b> There are valid instances with $m=\tau=1$ and input length $O(n)$ for which successive substitution from a fixed interior starting value requires more than $2^{n-2}$ iterations to satisfy the residual tolerance.</p><p><b>Proof.</b> Take one self-attacking argument and one ballot of mass $1$ with positive vote $1$ and negative vote $0$. For an integer $n\geq3$, set<br>$$
+\delta=\eta=2^{-n},
+\qquad
+r=\frac1{1+2^{-n}}.
+$$<br>The equation is<br>$$
+x=r(1-x).
+$$</p><p>With one argument, both simultaneous and successive substitution use<br>$$
+x^{(k+1)}=r(1-x^{(k)}).
+$$<br>Choose the interior starting value<br>$$
+x^{(0)}=1/4.
+$$</p><p>Define its signed residual by<br>$$
+d_k=(1+r)x^{(k)}-r.
+$$<br>Direct substitution gives<br>$$
+d_{k+1}=-rd_k.
+$$<br>Since $r\geq2/3$,<br>$$
+|d_0|=\frac{3r-1}{4}\geq1/4.
+$$<br>Consequently,<br>$$
+|d_k|=r^k|d_0|\geq\frac14r^k.
+$$</p><p>Put $s=1-r$. Then<br>$$
+0&lt;s&lt;2^{-n}.
+$$<br>Bernoulli’s inequality, obtained by induction for integer $k\geq0$, gives<br>$$
+r^k=(1-s)^k\geq1-ks.
+$$<br>For $k\leq2^{n-2}$,<br>$$
+r^k\geq3/4.
+$$<br>Hence<br>$$
+|x^{(k)}-r(1-x^{(k)})|
+=|d_k|
+\geq3/16
+&gt;2^{-n}
+=\eta.
+$$</p><p>The instance has binary length $O(n)$, but none of these iterations meets the tolerance. This proves the proposition.</p><p>The exact fixed point is nevertheless<br>$$
+x^*=\frac{r}{1+r}=\frac1{2+2^{-n}},
+$$<br>which is computable in polynomial time. Thus this is a lower bound for the substitution procedure, not for the search problem itself.</p><h3>9. What remains unresolved</h3><p>The classification establishes the equivalence<br>$$
+\begin{gathered}
+\text{This residual search problem has a polynomial-time algorithm}\\
+\Longleftrightarrow\\
+\text{Every $\mathrm{PPAD}$ search problem has a polynomial-time algorithm}.
+\end{gathered}
+$$<br>It does not prove either side.</p><p>For the $\mathrm{NP}$-hardness alternative, specify the reduction convention. Suppose there were polynomial-time procedures mapping each Boolean formula $\psi$ to a valid target instance and decoding <b>every</b> valid target solution into a correct satisfiability decision.</p><p>Then unsatisfiability would have polynomially verifiable certificates:</p><ul><li>Guess a polynomial-length residual solution for the target instance.</li><li>Verify its residual exactly.</li><li>Verify that decoding reports unsatisfiability.</li></ul><p>For an unsatisfiable formula, such a certificate exists by totality and the short-witness bound. For a satisfiable formula, none exists by correctness of decoding. Thus unsatisfiability would belong to $\mathrm{NP}$, implying<br>$$
+\mathrm{NP}=\mathrm{coNP}.
+$$</p><p>The same implication holds if decoding must return a satisfying assignment whenever one exists: accept the certificate precisely when the decoded output fails the direct satisfying-assignment check.</p><p>This is a conditional consequence, not a proof that $\mathrm{NP}$-hardness is impossible. Neither an unconditional polynomial-time algorithm for general graphs nor the requested $\mathrm{NP}$-hardness result is derived here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 1 and 9: relationship to USER_TASK: The established $\mathrm{PPAD}$-completeness result proves neither a general polynomial-time algorithm nor $\mathrm{NP}$-hardness under the stated reduction convention. The prover correctly acknowledges this, but the requested conclusion remains unresolved.</li></ul>
+<div class="pre"><p>The output establishes its claimed $\mathrm{PPAD}$-completeness result and both supplementary propositions. I found no false mathematical step or substantive gap in those arguments. It nevertheless remains <b>partial relative to USER_TASK</b>: it proves neither a general polynomial-time algorithm nor $\mathrm{NP}$-hardness under its stated reduction convention. The prover explicitly acknowledges this limitation.</p><h3>Step-by-step verification</h3><h3>1. Coefficient computation and domain restrictions</h3><p>Section 2.1 is correct.</p><p>The product of the explicitly encoded mass denominators has binary length bounded by their total encoding length. Converting the masses to this common denominator and summing polynomially many numerators requires only polynomial-length integer arithmetic. Incorporating the rational $\delta$ and computing each $r_a$ preserves polynomial bit complexity.</p><p>The bound<br>$$
+0\leq r_a&lt;1
+$$<br>follows from $p_a,q_a\geq0$ and $\delta&gt;0$. There is no division by zero. Zero positive-vote mass is handled correctly: $p_a=0$ implies $r_a=0$.</p><p>Independent positive and negative votes introduce no additional assumption into this computation.</p><h3>2. Totality and short witnesses</h3><p>Section 2.2 is correct.</p><p>The map $F$ is continuous and maps the nonempty compact convex cube $[0,1]^A$ into itself. These are the required hypotheses for Brouwer’s fixed-point theorem.</p><p>The displayed telescoping identity is correct, including the empty-product case. It gives<br>$$
+\|F(x)-F(y)\|_\infty\leq m\|x-y\|_\infty.
+$$<br>Self-attacks do not invalidate this bound: each attacker is still one distinct coordinate appearing once in the product.</p><p>Consequently, the residual map has Lipschitz constant at most $m+1$. Rounding an exact fixed point down to the stated dyadic grid therefore gives the required residual bound.</p><p>The choice<br>$$
+k=O(L+\log m)
+$$<br>is valid for a positive binary-encoded rational $\eta$. Thus the proof establishes polynomial-length witnesses, rather than merely rational witnesses of unspecified size. Exact verification of a supplied polynomial-length witness also takes polynomial time.</p><p>The separate observation for $\eta\geq1$ is correct.</p><h3>3. Membership in $\mathrm{PPAD}$</h3><p>The cited theorem is applicable.</p><p>[Etessami and Yannakakis, Proposition 1(2)](https://www.inf.ed.ac.uk/publications/online/1164.pdf) places weak fixed-point approximation in $\mathrm{PPAD}$ for polynomially computable, polynomially continuous families. Weak approximation there asks for a rational point in the domain with residual strictly below the supplied positive rational tolerance.</p><p>Both hypotheses are verified:</p><ul><li>Exact rational evaluation of $F$ takes polynomial time in the instance length and evaluation-point length.</li><li>The proposed continuity radius $c/(m+1)$ has polynomial encoding length and gives the required uniform implication.</li></ul><p>The domain is the unit cube, so no domain transformation is needed. A residual strictly below $\eta$ satisfies USER_TASK’s non-strict requirement.</p><p><b>Finding:</b> membership is established.</p><h3>4. Source problem and its quantifiers</h3><p>The source problem is stated correctly.</p><p>[Deligkas, Fearnley, Hollender, and Melissourgos, Definition 1 and Theorem 2.1](https://arxiv.org/pdf/2209.15149) give precisely the NOR and PURIFY requirements used here. They also require distinct variables within each gate and exactly one producing gate for each variable.</p><p>The reduction correctly targets <b>every</b> valid target solution. It does not rely on selecting a preferred fixed point or residual solution.</p><h3>5. Primitive gadgets</h3><p>Section 4.1 is correct.</p><p>The complement and binary product-of-complements primitives implement the displayed ideal functions. Fresh complement vertices make multiplication valid even when its two logical inputs coincide; the attack graph therefore never needs duplicate edges.</p><p>The probabilistic OR implementation has six primitive vertices and depth four. For the claimed nine-vertex implementation of $\phi$, its single OR output is reused as both logical inputs of the three-vertex multiplication gadget. The multiplication gadget’s two fresh complement vertices remain distinct. This agrees with the stated function and depth six.</p><p>The derivative<br>$$
+\phi&#x27;(z)=4z(2-z)(1-z)
+$$<br>is correct and nonnegative on $[0,1]$.</p><h3>6. Amplification calculations</h3><p>I rechecked every exact value and comparison in both tables. All are correct.</p><p>Monotonicity justifies propagating the successive upper and lower bounds through the iterations. The upper table establishes<br>$$
+\phi^{\circ8}(1/3)&lt;1/100.
+$$<br>The lower table establishes<br>$$
+\phi^{\circ6}(1/2)&gt;99/100,
+$$<br>and the stated comparison at $99/100$ correctly preserves this inequality through two further iterations.</p><p>The definitions of $H$ and $J$ give the stated depth bounds and threshold implications. In particular, the coverage argument includes $z=1/2$: both applicable inequalities hold there.</p><p><b>Finding:</b> all amplification constants and ranges are verified.</p><h3>7. Realization with legal ballots and residual errors</h3><p>Section 5 is correct.</p><p>The single mass-one ballot is a valid society and realizes the same coefficient at every vertex:<br>$$
+r=\frac1{1+2^{-64}}.
+$$<br>Both fixed parameters are positive binary rationals.</p><p>For every primitive,<br>$$
+|\hat{x}_v-P_v(\hat{x})|
+\leq\eta+(1-r)&lt;2^{-63}.
+$$<br>The strict inequality is valid because $1-r&lt;2^{-64}$.</p><p>The two sensitivity inequalities hold throughout the cube. The depth induction therefore gives the claimed bound<br>$$
+E_d\leq(2^d-1)2^{-63}.
+$$<br>At depth at most $50$, the resulting error is below $2^{-13}$, which is below $1/100$. The conclusions placing actual outputs below $1/50$ or above $49/50$ follow.</p><p>The treatment of cycles in the assembled graph is also valid. Each individual gadget is acyclic once its actual external input coordinates are held fixed. The argument compares gadget values locally and does not assume global acyclicity or independence of those inputs.</p><h3>8. NOR and PURIFY simulation</h3><p>Sections 6.1 and 6.2 verify all required cases.</p><p>For NOR, two decoded zero inputs put the ideal primitive output at least $81/100$, within the high amplification range. Any decoded one input puts it at most $1/10$, within the low range. The other input may be undecided in the latter case.</p><p>For PURIFY, decoded zero and one inputs force both outputs to the corresponding pure labels. For every remaining input value, the split at $1/2$ guarantees at least one pure output. Equality at the split is explicitly covered.</p><p>The error margins place the outputs strictly inside their decoding intervals, so there is no boundary ambiguity.</p><h3>9. Construction size and completeness</h3><p>Section 6.3 is correct.</p><p>Exactly one producing source gate per variable prevents conflicting defining equations. Fresh intermediate vertices prevent unintended identifications. Distinct primitive attackers respect the graph’s set-valued edge representation.</p><p>The gadget sizes are constant, and the single ballot has length linear in the constructed number of vertices. The graph and fixed rational parameters have polynomial encoding length.</p><p>Threshold decoding is polynomial time and maps every valid residual vector to a source solution.</p><p><b>Finding:</b> the claimed $\mathrm{PPAD}$-hardness, including the restricted family with one ballot and at most two attackers per argument, is established. Together with membership, this proves the stated $\mathrm{PPAD}$-completeness classification.</p><h3>10. Polynomial algorithm for cycle components</h3><p>Section 7 is correct.</p><p>The component order follows the attack direction, so every external attacker is already assigned when its target component is processed.</p><p>The coefficients $c_a$ satisfy $0\leq c_a&lt;1$. For a cycle, the displayed composition order correctly gives the closing equation for $y_1$. Its slope is<br>$$
+\beta=(-1)^s\prod_{i=1}^s c_i,
+$$<br>with $|\beta|&lt;1$, including when some coefficient is zero. Hence $1-\beta$ is nonzero.</p><p>The interval-mapping property verifies the intermediate value theorem’s hypotheses and establishes that the unique affine fixed point lies in $[0,1]$. The remaining coordinates satisfy all cycle equations.</p><p>Rounding is also justified. External coordinates remain fixed, and each cycle equation has only one internal predecessor. The residual is therefore at most $2h\leq\eta$, including for a self-attacking singleton. Later components cannot change an earlier component’s attacker coordinates.</p><p>The bit-length analysis is polynomial. Rounding between components prevents successive products from carrying unrestricted exact denominators across the component graph.</p><p>The exact-solution corollary for graphs with at most one attacker is valid: their components have the required form, and outside cycles the dependency paths introduce only polynomially many original rational coefficients.</p><h3>11. Iteration lower bound</h3><p>Section 8 is correct.</p><p>For the stated one-vertex instance,<br>$$
+d_{k+1}=-rd_k
+$$<br>follows directly from substitution. The initial residual bound is valid, and<br>$$
+0&lt;1-r&lt;2^{-n}.
+$$<br>Bernoulli’s inequality applies for every nonnegative integer iteration index. For all $k\leq2^{n-2}$, it yields the claimed residual lower bound.</p><p>For $n\geq3$,<br>$$
+3/16&gt;2^{-n},
+$$<br>so none of those iterates meets the tolerance. The instance length is $O(n)$.</p><p>The prover correctly limits the conclusion to the substitution procedure. The displayed exact fixed point is correct and does not imply a lower bound for the search problem.</p><h3>12. Conditional implications and remaining scope</h3><p>Section 9’s equivalence follows from the established completeness result under the stated polynomial-time search reductions.</p><p>The conditional implication concerning $\mathrm{NP}=\mathrm{coNP}$ is also correct under the explicitly specified decoder requirements. Totality supplies a short target witness for an unsatisfiable formula; universal decoder correctness excludes an accepting certificate for a satisfiable formula.</p><p>The satisfying-assignment variant likewise works under its stated requirement that every valid target solution decode to a satisfying assignment whenever one exists.</p><p>These implications do not establish either unconditional alternative in USER_TASK. They also do not cover unspecified broader reduction conventions.</p><h3>Issue and actionable feedback</h3><p><b>Major — unresolved requested conclusion, Sections 1 and 9.</b> The general polynomial-time versus $\mathrm{NP}$-hardness question remains unanswered. This is a limitation of what is established, not an error in the completeness proof.</p><p>The minimum clarification is already present: retain the explicit partial-status statement and keep the reduction convention attached to the conditional $\mathrm{NP}$-hardness discussion. Resolving USER_TASK itself requires an additional result establishing one requested alternative; no expositional repair of the existing argument supplies it.</p><p>No additional mathematical repair is needed for the results actually proved.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

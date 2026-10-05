@@ -1,0 +1,199 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-b406eb85407a149b8124693c6444483307426d1f — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-b406eb85407a149b8124693c6444483307426d1f <span style="font-weight:normal;color:#8a7350">(s5-b406eb85407a149b8124693c6444483307426d1f)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Corollary 29 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>\TSS is \NPc under the majority threshold setting even if the underlying graph is a grid graph.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite induced square-grid graph \(H=(P,E)\) of \(\tau\) population types, with positive rational masses \(\mu_p\) summing to \(1\), suppose every individual of type \(p\) is connected to every individual in each adjacent type \(q\). Let \(D_p=\sum_{q\in N(p)}\mu_q\). Choose seed masses \(x_p\in[0,\mu_p]\), initially active masses \(A_p^0=x_p\), and update synchronously: an inactive type \(p\) becomes fully active when \(\sum_{q\in N(p)}A_q^r\ge D_p/2\). What is the minimum \(\sum_{p\in P}x_p\) that eventually activates every type (equivalently, given a rational budget \(b\), is there a seed vector of total mass at most \(b\))?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a nonempty list of \(\tau\) types with positive binary rational masses \(\mu_p\), summing to \(1\). Here \(\tau\) is the support size, not the number of possible types.<br>The types are distinct points \(P\subset\mathbb Z^2\), supplied with binary integer coordinates; \(H=(P,E)\) has an edge exactly between points at Manhattan distance \(1\). Put \(m=|E|\), and let \(L\) be the total binary input length, including coordinates, masses, and budget.<br>Individuals are adjacent exactly when their types are adjacent in \(H\); there are no connections within a type. Define \(N(p)=\{q:\{p,q\}\in E\}\) and \(D_p=\sum_{q\in N(p)}\mu_q\).<br>Choose real seed masses \(0\le x_p\le\mu_p\), with \(A_p^0=x_p\). In synchronous rounds, set \(A_p^{r+1}=\mu_p\) if \(\sum_{q\in N(p)}A_q^r\ge D_p/2\), and otherwise set \(A_p^{r+1}=A_p^r\). Thus seeded mass persists and the remaining mass activates together when the threshold is met; isolated types activate in the first round.<br>Given a binary rational budget \(b\in[0,1]\), decide whether some seed vector with \(\sum_{p\in P}x_p\le b\) yields \(A_p^r=\mu_p\) for every type after finitely many rounds.</p><p>Is this continuous majority target-set decision problem solvable in time polynomial in \(m,\tau,L\), or is it \(\mathsf{NP}\)-hard?</p><p>Discrete target set selection on induced square-grid graphs, with thresholds \(\lceil\deg(v)/2\rceil\) and seed cost equal to cardinality, is \(\mathsf{NP}\)-complete ([Dvořák, Knop, and Schierreich, 2024](https://doi.org/10.46298/dmtcs.11591)).<br>No published complexity result for exactly the continuous problem defined here was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Made the partial-type update explicit: seeded mass persists, and all remaining mass activates simultaneously when the neighboring active mass reaches the threshold.</li><li>Allowed real seed masses; only input masses and the budget must be binary rationals.</li><li>Specified a nonempty support and supplied binary integer grid coordinates, with induced adjacency determined by Manhattan distance one.</li><li>Restricted the normalized budget to [0,1], since total population mass is one.</li><li>Retained isolated types and zero thresholds, consistent with the discrete majority definition; they activate without seeds in the first round.</li><li>Defined m as the number of support-graph edges and L as the total binary input length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial result: polynomial time when only constantly many types branch</h3><p>The unrestricted classification is <b>not resolved by this proof</b>. The new result is an exact algorithm whose dependence on branching is explicit.</p><p>Let<br>$$
+B=\{p\in P:\deg_H(p)\ge 3\},
+\qquad k=|B|.
+$$</p><p><b>Proven result.</b> The continuous problem can be solved in<br>$$
+\tau^{O(k+1)}\operatorname{poly}(L)
+$$<br>time. Consequently, it is polynomial-time solvable when $k$ is bounded by a constant. In particular, arbitrary binary rational masses on supports of maximum degree $2$—disjoint unions of paths, cycles, and isolated vertices—admit a polynomial-time algorithm.</p><p>The proof gives a finite description of optimal seed values that does not enumerate a common denominator numerically. I also prove membership in $\mathsf{NP}$ and give a counterexample showing that the direct transfer from discrete hardness fails even on supports without leaves.</p><h3>1. An exact description using acyclic orientations</h3><p>An orientation $\mathcal O$ assigns a direction to each edge. Write<br>$$
+I_{\mathcal O}(p)=\{q:q\to p\},
+\qquad
+O_{\mathcal O}(p)=\{q:p\to q\}.
+$$</p><p>For $S\subseteq P$ and an acyclic orientation $\mathcal O$, let $F(S,\mathcal O)$ be the polytope defined by<br>$$
+0\le x_p\le\mu_p
+\quad(p\in P),
+$$<br>$$
+x_p=\mu_p
+\quad(p\in S),
+$$<br>and<br>$$
+\sum_{q\in I_{\mathcal O}(p)}\mu_q+
+\sum_{q\in O_{\mathcal O}(p)}x_q
+\ge \frac{D_p}{2}
+\quad(p\notin S).
+$$</p><p><b>Lemma 1.</b> A seed vector succeeds if and only if it belongs to $F(S,\mathcal O)$ for some $S$ and some acyclic orientation $\mathcal O$.</p><p><b>Proof.</b> Suppose $x$ succeeds. Let $S$ contain exactly the initially fully active types. Order the vertices by their first round of full activation, breaking ties arbitrarily, and orient each edge from its earlier endpoint to its later endpoint.</p><p>For $p\notin S$, let $r\ge 1$ be its first round of full activation. An outgoing neighbor becomes fully active in round $r$ or later, so its mass in round $r-1$ is exactly its seed mass. An incoming neighbor has active mass at most its full mass. Hence<br>$$
+\sum_{q\in I_{\mathcal O}(p)}\mu_q+
+\sum_{q\in O_{\mathcal O}(p)}x_q
+\ge
+\sum_{q\in N(p)}A_q^{r-1}
+\ge \frac{D_p}{2}.
+$$<br>The orientation is acyclic because it follows a linear order.</p><p>Conversely, suppose $x\in F(S,\mathcal O)$, and take a topological ordering $p_1,\ldots,p_\tau$. Inductively, $p_i$ is fully active by round $i$: if $p_i\in S$, it is already fully active; otherwise, by round $i-1$, every incoming neighbor is fully active, while every outgoing neighbor retains at least its seed mass. The defining inequality therefore activates $p_i$ by round $i$. This also handles isolated vertices, whose inequality is $0\ge 0$. $\square$</p><p>There are finitely many choices of $S$ and $\mathcal O$. Each $F(S,\mathcal O)$ is closed and bounded. Their union is nonempty, since seeding all types fully succeeds. Therefore the minimum successful seed cost<br>$$
+\operatorname{OPT}=\min\left\{\sum_{p\in P}x_p:x\text{ succeeds}\right\}
+$$<br>exists.</p><p>The graph itself can be constructed by testing pairwise Manhattan distances using binary arithmetic. This takes polynomial time in $\tau$ and $L$, without enumerating the coordinate bounding box.</p><p><b>Corollary 2.</b> The decision problem belongs to $\mathsf{NP}$.</p><p><b>Proof.</b> A certificate specifies $S$ and an orientation. The verifier checks acyclicity and tests feasibility of $F(S,\mathcal O)$ with the additional inequality<br>$$
+\sum_{p\in P}x_p\le b.
+$$<br>This rational linear program has $\tau$ variables, polynomially many constraints, and coefficients of polynomial binary encoding length. Polynomial-time rational linear-programming feasibility applies. Lemma 1 proves that the verifier accepts exactly the successful instances. $\square$</p><h3>2. A finite description of optimal seed values</h3><p>Introduce centered variables<br>$$
+u_p=2x_p-\mu_p.
+$$<br>Thus<br>$$
+-\mu_p\le u_p\le\mu_p,
+\qquad
+x_p=\frac{\mu_p+u_p}{2}.
+$$</p><p>For $p\notin S$, the orientation inequality becomes<br>$$
+\sum_{q\in O_{\mathcal O}(p)}u_q
+\ge
+-\sum_{q\in I_{\mathcal O}(p)}\mu_q.
+$$<br>Indeed, multiplying the original inequality by $2$ and substituting $2x_q=\mu_q+u_q$ cancels the outgoing full masses.</p><p>At vertices of degree at most $2$, the only nontrivial possibilities are:</p><ul><li>Degree $1$, with its neighbor outgoing:</li></ul><p>$$
+  u_q\ge 0.
+  $$</p><ul><li>Degree $2$, with one incoming neighbor $r$ and one outgoing neighbor $q$:</li></ul><p>$$
+  u_q\ge-\mu_r.
+  $$</p><ul><li>Degree $2$, with both neighbors outgoing:</li></ul><p>$$
+  u_q+u_r\ge 0.
+  $$</p><p>All remaining cases at these degrees give automatic inequalities.</p><p>Define<br>$$
+\mathcal A_0=\{0\}\cup\{\mu_p,-\mu_p:p\in P\}.
+$$</p><p><b>Lemma 3.</b> There is an optimal seed vector for which, for some $r\le k$ and some rational numbers $t_1,\ldots,t_r$,<br>$$
+u_p\in
+\mathcal A_0\cup\{t_1,-t_1,\ldots,t_r,-t_r\}
+\quad(p\in P).
+$$<br>Moreover, a family of tuples containing such a tuple can be enumerated in $\tau^{O(k+1)}\operatorname{poly}(L)$ time.</p><h3>Proof of the structural assertion</h3><p>Choose a globally optimal successful seed vector, and choose $S,\mathcal O$ supplied by Lemma 1. Minimize seed cost over $F(S,\mathcal O)$ and take an optimal vertex of this polytope. Its cost remains $\operatorname{OPT}$.</p><p>Call the following constraints <b>ordinary</b>:</p><ul><li>All variable bounds and the equalities fixing vertices in $S$.</li><li>All constraints associated with vertices of degree at most $2$.</li></ul><p>The remaining constraints are associated with vertices in $B$; there are at most $k$ of them.</p><p>Every nonautomatic ordinary constraint is either a one-variable constraint with constant in $\mathcal A_0$, or<br>$$
+u_q+u_r\ge 0.
+$$</p><p>At the chosen vertex, form a graph on the variable indices: put an edge $qr$ whenever the corresponding ordinary pair constraint is tight. Its equation is<br>$$
+u_q+u_r=0.
+$$<br>Duplicate equations may be discarded.</p><p>Consider a connected component of this graph.</p><p>If it contains an odd cycle, following the equations around that cycle gives $u_q=-u_q$, hence $u_q=0$. Connectivity then forces every variable in that component to be $0$.</p><p>Otherwise, the component is bipartite. Choose signs $\varepsilon_q\in\{-1,1\}$ that change sign across every edge. The pair equations imply<br>$$
+u_q=\varepsilon_q t
+$$<br>for one parameter $t$.</p><p>If this component also has a tight ordinary one-variable constraint $u_q=a$, with $a\in\mathcal A_0$, then $t=\varepsilon_q a$. Since $\mathcal A_0$ is closed under negation, every variable in the component belongs to $\mathcal A_0$.</p><p>Thus the tight ordinary constraints leave precisely one free parameter for each bipartite component having no tight one-variable constraint. Let their number be $r$, and denote their parameters by $t_1,\ldots,t_r$.</p><p>At a vertex, the full collection of tight constraint normals spans the whole variable space. Otherwise, a nonzero direction orthogonal to all tight normals would allow sufficiently small perturbations in both directions, preserving all constraints and contradicting extremality. Therefore the at most $k$ remaining tight constraints must determine these $r$ parameters. In particular,<br>$$
+r\le k.
+$$<br>Choose $r$ of those constraints whose restrictions to the free parameters are linearly independent. They determine $t_1,\ldots,t_r$ uniquely. This proves the asserted form of the variables.</p><h3>Enumeration of the parameters</h3><p>For each $r\in\{0,\ldots,k\}$, proceed as follows. For $r=0$, include the empty tuple.</p><p>For $r&gt;0$:</p><ul><li>Choose $r$ distinct vertices of $B$.</li><li>For each chosen vertex $p$, choose which of its neighbors are outgoing.</li><li>For each outgoing neighbor, choose a formal expression from</li></ul><p>$$
+   \mathcal A_0\cup\{T_1,-T_1,\ldots,T_r,-T_r\}.
+   $$</p><ul><li>Form the $r$ equations</li></ul><p>$$
+   \sum_{q\in O(p)}\ell_{pq}
+   =
+   -\sum_{q\in N(p)\setminus O(p)}\mu_q,
+   $$<br>where $\ell_{pq}$ is the chosen expression.</p><ul><li>If the coefficient matrix in $T_1,\ldots,T_r$ is nonsingular, solve the system and include its solution tuple.</li></ul><p>The independent tight constraints used above appear in this enumeration, with the expressions that describe their actual variable values. Hence the enumerated family contains a suitable tuple. Other enumerated tuples need not describe feasible seeds; feasibility will be checked later.</p><p>A grid vertex has at most $4$ neighbors. Thus, for each selected vertex, there are at most $16$ outgoing-neighbor choices and at most<br>$$
+(2\tau+1+2r)^4
+$$<br>expression assignments. The total number of systems is $\tau^{O(k+1)}$.</p><p>For bit complexity, let $Q$ be the product of the input denominators. Then $\log Q=O(L)$. Each system has an integer coefficient matrix whose entries have absolute value at most $4$, and a right-hand side consisting of signed sums of input masses. Cramer’s rule and Hadamard’s inequality show that its solution coordinates have binary encoding length<br>$$
+O\bigl(L+r\log(r+1)\bigr).
+$$<br>Exact solution of each system therefore takes polynomial time in $\tau$ and $L$. $\square$</p><p>A useful special case follows immediately.</p><p><b>Corollary 4.</b> If $H$ has maximum degree $2$, an optimal seed vector exists with<br>$$
+x_p\in
+\left(
+\left\{\frac{\mu_p}{2}\right\}
+\cup
+\left\{
+\frac{\mu_p+\mu_q}{2},
+\frac{\mu_p-\mu_q}{2}:q\in P
+\right\}
+\right)
+\cap[0,\mu_p].
+$$</p><p>There are at most $2\tau+1$ candidate values for each type. Their number is independent of the numerical values of the input denominators.</p><h3>3. Optimizing over a fixed finite set of values</h3><p>Fix one tuple enumerated in Lemma 3, and put<br>$$
+\mathcal A=
+\mathcal A_0\cup\{t_1,-t_1,\ldots,t_r,-t_r\}.
+$$<br>For each type define its allowed seed values by<br>$$
+\mathcal X_p=
+\left\{
+\frac{\mu_p+a}{2}:
+a\in\mathcal A,\ -\mu_p\le a\le\mu_p
+\right\}.
+$$<br>Write<br>$$
+K=\max_{p\in P}|\mathcal X_p|.
+$$<br>We have $K=O(\tau)$.</p><p>For a fixed allowed labeling and orientation, the local condition is<br>$$
+x_p=\mu_p
+\quad\text{or}\quad
+\sum_{q\in I_{\mathcal O}(p)}\mu_q+
+\sum_{q\in O_{\mathcal O}(p)}x_q
+\ge\frac{D_p}{2}.
+$$<br>By Lemma 1, these local conditions together with acyclicity are exactly what is needed.</p><h3>Paths</h3><p>First consider a path $v_1,\ldots,v_n$. For its edge $v_iv_{i+1}$, let $d_i=1$ mean $v_i\to v_{i+1}$, and let $d_i=0$ mean the reverse.</p><p>For an internal vertex $v_i$, its threshold condition is<br>$$
+\begin{aligned}
+&amp;d_{i-1}\mu_{v_{i-1}}+(1-d_{i-1})x_{v_{i-1}}\\
+&amp;\qquad +(1-d_i)\mu_{v_{i+1}}+d_i x_{v_{i+1}}
+\ge
+\frac{\mu_{v_{i-1}}+\mu_{v_{i+1}}}{2},
+\end{aligned}
+$$<br>unless $x_{v_i}=\mu_{v_i}$. At endpoints, omit the missing neighbor.</p><p>For $i\ge 2$, a dynamic-programming state records<br>$$
+(x_{v_{i-1}},x_{v_i},d_{i-1}).
+$$<br>Its value is the minimum cost on $v_1,\ldots,v_i$, subject to these recorded choices and the local conditions at $v_1,\ldots,v_{i-1}$.</p><p>Initialize by choosing $x_{v_1},x_{v_2},d_1$, checking the condition at $v_1$, and assigning cost $x_{v_1}+x_{v_2}$. A transition chooses $x_{v_{i+1}}$ and $d_i$, checks the condition at $v_i$, adds $x_{v_{i+1}}$, and shifts the state. At termination, check the condition at $v_n$.</p><p>Induction on $i$ proves correctness: a transition checks exactly the newly determined local condition, and every feasible labeling and orientation appears in the recurrence. Every path orientation is acyclic.</p><p>There are $O(K^2)$ states and $O(K)$ choices per transition, giving<br>$$
+O(nK^3)
+$$<br>arithmetic operations. A single isolated vertex has optimum $0$.</p><h3>Cycles</h3><p>Let $v_1,\ldots,v_n$ be a cycle in cyclic order. Fix the first two labels and the direction $d_1$. Use the same recurrence, but defer the condition at $v_1$ until the closing edge is chosen.</p><p>Also record whether the directions seen so far contain $0$, contain $1$, or contain both. At termination, choose the closing-edge direction and check the conditions at $v_n$ and $v_1$.</p><p>Require both direction values to occur. This is precisely the acyclicity condition: a directed cycle in an orientation of a simple undirected cycle must traverse the entire cycle, so all edge directions must agree in cyclic order.</p><p>For each initial choice, the recurrence costs $O(nK^3)$. There are $O(K^2)$ initial label choices and constantly many direction choices, giving<br>$$
+O(nK^5)
+$$<br>operations.</p><p>Therefore maximum-degree-$2$ supports can be optimized in $O(\tau^6)$ arithmetic operations after constructing the graph.</p><h3>4. Incorporating the branching types</h3><p>The preceding dynamic programs extend to graphs with $k$ branching types.</p><p>Remove $B$ from $H$. Every remaining vertex has degree at most $2$, so every component of $H-B$ is a path, a cycle, or an isolated vertex.</p><p>A cycle component has no neighbors in $B$, because each of its vertices already has two neighbors within the component. A path component has at most two edges to $B$:</p><ul><li>An internal path vertex already has two neighbors within the path.</li><li>Each endpoint has at most one additional neighbor.</li><li>An isolated vertex has at most two neighbors in $B$.</li></ul><p>Let<br>$$
+F=\{q\in P\setminus B:N(q)\cap B\ne\varnothing\}.
+$$<br>Since every branching vertex has degree at most $4$,<br>$$
+|F|\le 4k.
+$$</p><p>For the fixed sets of allowed seed values, enumerate:</p><ul><li>The labels on $B\cup F$.</li><li>The directions of all edges incident with $B$.</li><li>A linear order of the vertices in $B$.</li></ul><p>There are at most<br>$$
+K^{5k}2^{4k}k!
+$$<br>such choices.</p><p>For each choice, check the local conditions at every vertex in $B$. Reject any edge between branching vertices that points backwards in the chosen order.</p><p>Now optimize each component of $H-B$ independently, subject to its fixed endpoint labels and boundary-edge directions.</p><p>For a path, include the known contribution of an adjacent branching vertex in the endpoint condition: its contribution is its full mass if its boundary edge points into the path, and its seed mass otherwise. A one-vertex component is checked directly.</p><p>One additional condition is needed for a path having two boundary edges:</p><ul><li>If its two boundary branching vertices are distinct, forbid a directed path from the later branching vertex to the earlier one.</li><li>If both boundary edges lead to the same branching vertex, forbid a directed cycle through that vertex.</li></ul><p>These conditions are checked by recording which direction values occur along the entire path, including its boundary edges. A traversal from one boundary vertex to the other is directed exactly when all directions along that traversal agree. Thus only a constant number of additional states is needed.</p><p>Unattached cycles use the cycle algorithm from Section 3.</p><h3>Why the resulting orientation is acyclic</h3><p>Suppose an accepted orientation had a directed cycle.</p><p>If it avoided $B$, it would lie in a cycle component of $H-B$, which the cycle algorithm forbids.</p><p>Otherwise, consider consecutive visits to branching vertices along the directed cycle. Between those visits, the cycle either follows an edge within $B$, or traverses a path component of $H-B$.</p><p>A return to the same branching vertex is forbidden. Every traversal between distinct branching vertices goes forward in the chosen order. A directed cycle would therefore give a closed sequence of strict increases in a linear order, which is impossible.</p><p>Hence the assembled orientation is acyclic. All its local conditions have been checked, so Lemma 1 proves that its seed vector succeeds.</p><h3>Why an optimum is retained</h3><p>Conversely, take any successful labeling using the allowed values. Lemma 1 supplies an acyclic orientation. Restrict a topological order to $B$.</p><p>The labels, boundary directions, and restricted order occur in the enumeration. Its directed paths between branching vertices necessarily go forward in that order. Each component labeling is therefore admitted by its dynamic program. Thus the algorithm returns the minimum successful cost among the allowed labelings.</p><p>Count the labels in $B$ explicitly, and count every other label in its component cost. In particular, labels in $F$ are fixed by the enumeration but counted only in their component, avoiding double counting.</p><h3>Running time and exact arithmetic</h3><p>For a fixed tuple, the interface enumeration and component processing take<br>$$
+\tau^{O(k+1)}
+$$<br>arithmetic operations. Lemma 3 supplies $\tau^{O(k+1)}$ tuples; multiplying these bounds preserves the same form.</p><p>For each tuple, all candidate values have polynomial binary encoding length. They can be represented over a common denominator obtained from $Q$ and the determinant of the tuple’s coefficient matrix. Dynamic-programming costs are sums of these values, so exact arithmetic and budget comparisons have polynomial bit complexity.</p><p>Lemma 3 guarantees that one enumerated tuple contains a globally optimal labeling. Every accepted labeling is genuinely successful. Taking the minimum across tuples therefore computes $\operatorname{OPT}$ exactly.</p><p>This proves the stated<br>$$
+\tau^{O(k+1)}\operatorname{poly}(L)
+$$<br>decision algorithm.</p><h3>5. Fractional seeding matters even without leaves</h3><p>The discrete majority hardness theorem concerns fully seeded vertices and cardinality cost. [Dvořák, Knop, and Schierreich, Corollary 29](https://dmtcs.episciences.org/13889/pdf).</p><p>The direct replacement of discrete budget $s$ by continuous budget $s/\tau$ fails even when every type has degree at least $2$.</p><p>Take two disjoint copies of the full $3$-by-$3$ grid:<br>$$
+P=\{0,1,2\}^2
+\cup
+\bigl((5,0)+\{0,1,2\}^2\bigr).
+$$<br>There are $\tau=18$ types, each of mass<br>$$
+w=\frac1{18}.
+$$<br>The coordinate separation ensures that there are no edges between the copies.</p><p>In each copy, using coordinates relative to that copy, seed<br>$$
+x_{(1,2)}=w,
+\qquad
+x_{(2,0)}=\frac w2,
+$$<br>and seed all other types with zero. The total cost over both copies is<br>$$
+2\left(w+\frac w2\right)=3w=\frac16.
+$$</p><p>Within either copy, the following additional types become fully active:</p><p>| Round | Newly fully active types |<br>|---|---|<br>| $1$ | $(0,2),(2,2)$ |<br>| $2$ | $(2,1)$ |<br>| $3$ | $(2,0),(1,1)$ |<br>| $4$ | $(1,0),(0,1)$ |<br>| $5$ | $(0,0)$ |</p><p>For the nonintegral step in round $2$, type $(2,1)$ has degree $3$ and receives<br>$$
+w+\frac w2=\frac{3w}{2},
+$$<br>exactly its threshold. In round $3$, the center receives $2w$, exactly its degree-$4$ threshold. Every other listed activation receives either one full neighbor at degree $2$ or two full neighbors at degree $3$, which suffices.</p><p>In the discrete process, one seed cannot activate a $3$-by-$3$ grid:</p><ul><li>A corner seed or center seed activates no other vertex, because all its neighbors require two active neighbors.</li><li>A side-middle seed activates its two neighboring corners. Afterwards, the center has only one active neighbor, and each other side-middle vertex has at most one active neighbor. The process stops.</li></ul><p>Therefore each copy requires at least two discrete seeds. A total discrete budget of $3$ fails, whereas the corresponding continuous budget<br>$$
+b=\frac3{18}
+$$<br>succeeds.</p><p>Thus the failure of the direct hardness transfer is not confined to degree-$1$ vertices.</p><h3>6. What remains open in this argument</h3><p>The algorithm is polynomial for a constant number of branching types, but an unrestricted induced grid support can have $k$ proportional to $\tau$. Its running time therefore does not establish polynomial-time solvability in $m,\tau,L$.</p><p>Nor does the counterexample exclude a different hardness reduction. The missing step remains either a general polynomial-time algorithm or a reduction that accounts for fractional seeding.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Opening claim and Section 6: unrestricted complexity classification: The established running time $\tau^{O(k+1)}\operatorname{poly}(L)$ is polynomial only for bounded $k$. USER_TASK permits unbounded $k$, and neither membership in $\mathsf{NP}$ nor the counterexample to direct discrete hardness transfer resolves the requested unrestricted classification. This limitation is explicitly acknowledged by the prover.</li></ul>
+<div class="pre"><p>The output establishes genuine partial results: membership in $\mathsf{NP}$, an exact algorithm with running time $\tau^{O(k+1)}\operatorname{poly}(L)$, and a valid counterexample to the direct discrete hardness transfer. I found no substantive error in those arguments. However, it does <b>not</b> resolve the unrestricted polynomial-time versus $\mathsf{NP}$-hardness question in <code>USER_TASK</code>.</p><ul><li><b>Lemma 1: the orientation characterization is correct.</b></li></ul><p>In the forward direction, an outgoing neighbor of a vertex first fully activated in round $r$ cannot have been fully active before round $r$. Its active mass in round $r-1$ is therefore exactly its seed mass. An incoming neighbor’s active mass is bounded above by its full mass, including when the two vertices activate in the same round. Thus breaking activation-time ties arbitrarily does not invalidate the inequality.</p><p>Orienting edges according to the resulting linear order guarantees acyclicity.</p><p>In the converse direction, every incoming neighbor of $p_i$ precedes it in the topological order and is fully active by round $i-1$. Every outgoing neighbor contributes at least its seed mass. The stated inequality therefore ensures full activation by round $i$. Initially fully seeded vertices and isolated vertices are handled correctly.</p><p>The existential quantifiers over $S$ and $\mathcal O$ are appropriate: the converse does not require $S$ to contain every initially fully seeded vertex.</p><ul><li><b>Existence of an optimum and membership in $\mathsf{NP}$ are established.</b></li></ul><p>There are finitely many choices of $S$ and acyclic orientation. Each associated feasible set is a closed, bounded polytope. The union is nonempty because fully seeding every type succeeds. Consequently, the minimum seed cost is attained.</p><p>The certificate consisting of $S$ and an orientation has polynomial encoding length. Acyclicity can be checked in polynomial time.</p><p>The invoked linear-programming theorem is the polynomial-time feasibility theorem for explicitly encoded linear systems with rational coefficients, measured in total binary encoding length. Its hypotheses hold here: there are $\tau$ variables, polynomially many constraints, and rational coefficients of polynomial encoding length. Neighbor-mass sums contain at most four input masses. Adding the budget constraint preserves these properties.</p><p>A certificate need not explicitly supply real seed values: the deterministic verifier can decide rational linear-programming feasibility itself.</p><p>Pairwise adjacency testing also respects the coordinate encoding. The construction never enumerates the coordinate bounding box.</p><ul><li><b>The centered-variable transformation and low-degree constraint list are correct.</b></li></ul><p>Substitution gives precisely<br>$$
+   \sum_{q\in O_{\mathcal O}(p)}u_q
+   \ge
+   -\sum_{q\in I_{\mathcal O}(p)}\mu_q.
+   $$</p><p>The listed nonautomatic constraints for degrees one and two exhaust the possibilities. Constraints with no outgoing neighbors are automatically satisfied because masses are positive. Constraints associated with vertices in $S$ are correctly replaced by their full-seeding equalities.</p><p>All ordinary one-variable constraints have their equality constants in $\mathcal A_0$.</p><ul><li><b>Lemma 3’s structural assertion is sound.</b></li></ul><p>Taking an optimal vertex of the selected nonempty bounded polytope is legitimate. Its objective value remains the global optimum.</p><p>The tight pair equations are homogeneous equations of the form<br>$$
+   u_q+u_r=0.
+   $$<br>Their connected-component analysis is correct:</p><ul><li>An odd cycle forces every variable in its component to zero.</li><li>A bipartite component has one scalar parameter with alternating signs.</li><li>A tight one-variable constraint fixes that parameter and places all component values in $\mathcal A_0$.</li><li>A component without such a constraint retains exactly one free parameter.</li></ul><p>This analysis also covers singleton components of the auxiliary graph.</p><p>The extremality argument correctly shows that all tight constraint normals span the variable space. Otherwise, sufficiently small perturbations in both directions along a common null vector would preserve feasibility.</p><p>Since at most $k$ nonordinary constraints remain, their restrictions can determine at most $k$ independent free parameters. Thus $r\le k$, and selecting $r$ independent restrictions is justified.</p><ul><li><b>The parameter enumeration contains the required tuple and has the claimed complexity.</b></li></ul><p>Each selected tight branching constraint is represented by its branching vertex, outgoing-neighbor set, and the actual formal expressions for its outgoing variables. Consistency between expressions appearing in different equations need not be enforced during enumeration: the claim requires a containing family, and later stages check actual feasibility.</p><p>The number of choices is controlled by the grid degree bound:<br>$$
+   \deg_H(p)\le4.
+   $$<br>In particular, $r\le k\le\tau$, and<br>$$
+   2\tau+1+2r=O(\tau).
+   $$<br>Choosing branching vertices, directions, and expressions therefore gives $\tau^{O(k+1)}$ systems.</p><p>The bit-complexity argument is also valid. The product of input denominators has logarithm $O(L)$. Matrix coefficients have absolute value at most four, and each right-hand side is a bounded signed sum of input masses. Cramer’s rule applies only to the retained nonsingular systems; Hadamard’s inequality bounds their determinants by a quantity with logarithm $O(r\log(r+1))$. These facts support the stated polynomial encoding length and exact solution time.</p><p>Corollary 4 follows directly by setting $k=0$.</p><ul><li><b>The path and cycle dynamic programs are correct.</b></li></ul><p>The internal path inequality uses the edge directions consistently: incoming neighbors contribute their full masses, and outgoing neighbors contribute their seed masses.</p><p>The state retains precisely the labels and direction needed to check the next local condition. Initialization checks the first endpoint; transitions check successive internal vertices; termination checks the final endpoint. Costs count each vertex once. Every path orientation is acyclic.</p><p>The resulting operation count is<br>$$
+   O(nK^3).
+   $$</p><p>For cycles, fixing the first two labels and first direction supplies the information needed for the final checks. Deferring the first vertex’s condition is necessary and explicitly stated.</p><p>Requiring both direction values is exactly the acyclicity condition for an orientation of a simple undirected cycle. A directed cycle would have to traverse the entire underlying cycle consistently. The additional direction-history state has constant size, giving<br>$$
+   O(nK^5)
+   $$<br>after enumeration of the initial labels.</p><p>Isolated vertices correctly have optimum zero, and zero is an allowed seed value because $-\mu_p\in\mathcal A_0$.</p><ul><li><b>The extension to branching types correctly handles interfaces and global acyclicity.</b></li></ul><p>Every vertex outside $B$ has original degree at most two. Consequently, a cycle component of $H-B$ has no boundary edges, while a path component has at most two. The separate treatment of singleton components is correct.</p><p>The bounds<br>$$
+   |F|\le4k,\qquad |B\cup F|\le5k
+   $$<br>justify the label enumeration. There are at most $4k$ distinct edges incident with $B$, so the direction count is a valid upper bound.</p><p>Once interface labels and directions are fixed, the local conditions at branching vertices are fully determined. Endpoint conditions in the remaining components receive the correct full-mass or seed-mass contribution from adjacent branching vertices.</p><p>The additional path restrictions correctly exclude directed traversals backwards in the chosen branching order and directed returns to the same branching vertex.</p><p>The global acyclicity argument is valid: a directed cycle avoiding $B$ would violate the cycle-component check; a directed cycle visiting $B$ would either contain a forbidden return or induce a closed sequence of strict increases in a linear order.</p><p>Conversely, restricting a topological order of any feasible acyclic orientation to $B$ produces an enumerated order satisfying these restrictions. Thus the enumeration retains every feasible allowed labeling, including an optimal one.</p><p>The cost accounting avoids double counting interface vertices.</p><ul><li><b>The total running time and exact optimization claim follow.</b></li></ul><p>Multiplying the tuple count by the interface and component-processing counts preserves<br>$$
+   \tau^{O(k+1)}.
+   $$<br>The factor $k!$ is absorbed because $k\le\tau$.</p><p>Candidate values have polynomial encoding length. Summing at most $\tau$ such values and comparing the result with the binary rational budget preserves polynomial bit complexity.</p><p>Lemma 3 guarantees that some enumerated candidate family contains a globally optimal labeling. Lemma 1 guarantees that every accepted labeling succeeds. Hence the algorithm computes the unrestricted optimum exactly, with the stated dependence on $k$.</p><ul><li><b>The counterexample is valid.</b></li></ul><p>The two specified grids have no edges between them and have minimum degree two. Their masses sum to one, and the proposed seed vector satisfies all mass bounds.</p><p>I independently checked the synchronous process with exact rational arithmetic. The newly fully active vertices in every listed round agree with the table. In particular, the degree-three activation in round two receives exactly $3w/2$, and the center in round three receives exactly $2w$.</p><p>The total continuous cost is correctly calculated as<br>$$
+   2\left(w+\frac w2\right)=\frac16.
+   $$</p><p>The single-seed discrete cases are exhaustive: corner and center seeds activate nothing further; a side-middle seed activates its two neighboring corners and then stalls. Therefore each disconnected copy requires at least two discrete seeds, so a total budget of three cannot succeed.</p><p>The cited discrete theorem is accurately described: Corollary 29 states $\mathsf{NP}$-completeness for majority thresholds on grid graphs, which the paper defines as induced subgraphs of a grid. [Dvořák, Knop, and Schierreich](https://dmtcs.episciences.org/13889/pdf).</p><ul><li><b>The unrestricted target remains unresolved — major scope limitation.</b></li></ul><p>The output explicitly acknowledges this limitation. Its algorithm is polynomial for fixed $k$, but the task does not bound $k$, and induced grid supports can have $k$ proportional to $\tau$.</p><p>Membership in $\mathsf{NP}$ does not establish either requested classification. The counterexample invalidates the direct budget-rescaling transfer, but does not establish or exclude another hardness reduction.</p><p><b>Required additional work:</b> provide either an algorithm polynomial in $m,\tau,L$ without a constant-$k$ assumption, or a valid $\mathsf{NP}$-hardness reduction for the continuous process. This requires new mathematics; no clarification alone completes the assignment.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

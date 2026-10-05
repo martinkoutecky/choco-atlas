@@ -1,0 +1,199 @@
+<!doctype html><html><head><meta charset="utf-8"><title>The Frontier of Intractability for EFX with Two Agents — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>The Frontier of Intractability for EFX with Two Agents <span style="font-weight:normal;color:#8a7350">(d4-conf-sagt-2023-0005)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.2 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>The problem of computing an EFX allocation for two identical agents with a submodular valuation function is PLS-hard. The reduction consists of two steps. First, following Plaut and Roughgarden [2020], we reduce the problem of local optimization on an odd Kneser graph to the problem of computing an EFX allocation for two agents sharing the same submodular valuation function.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a succinct monotone submodular valuation \(v:2^M\to\mathbb{Q}_{\ge 0}\) for one unit-mass type and per-capita supply \(b_g=\tfrac12\) for every good \(g\in M\), find an explicitly represented finite-support distribution \(\lambda_X\) over integral bundles \(X\subseteq M\) satisfying \(\sum_X\lambda_X=1\), \(\sum_{X:g\in X}\lambda_X=\tfrac12\), and \(v(X)\ge v(Y\setminus\{g\})\) for every pair of supported bundles \(X,Y\) and every \(g\in Y\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational; \(\tau\) denotes support size, not the number of possible types. Here \(\tau=1\), with total mass \(1\).<br>Let \(M\) be a finite set of \(m\) goods. The type&#x27;s valuation \(v:2^M\to\mathbb{Q}_{\ge0}\) is given by a Boolean circuit taking a bundle&#x27;s incidence vector and outputting a binary numerator and positive binary denominator. It is promised to be monotone, submodular, and normalized by \(v(\varnothing)=0\). Let \(L\) be the total input bit length.<br>Each good has per-capita supply \(b_g=\tfrac12\). Find a finite list \(\mathcal S\subseteq2^M\) of distinct integral bundles and positive binary rational weights \(\lambda_X\), satisfying \(\sum_{X\in\mathcal S}\lambda_X=1\) and \(\sum_{X\in\mathcal S:g\in X}\lambda_X=\tfrac12\) for every \(g\in M\).<br>Require \(v(X)\ge v(Y\setminus\{g\})\) for every \(X,Y\in\mathcal S\) and every \(g\in Y\), including goods with zero marginal value. Empty bundles are allowed, and supported bundles may overlap.</p><p>Is this distribution search problem solvable in time polynomial in \(m,\tau,L\), or is it NP-hard?</p><p>For two identical discrete agents, computing an EFX partition with succinct submodular valuations is PLS-hard and lies in PLS. [Goldberg–Høgh–Hollender](https://www.cs.ox.ac.uk/people/paul.goldberg/papers/TCS-GHH.pdf)<br>No result settling the exact distribution search problem above was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Restored the discrete valuation normalization v(empty set)=0.</li><li>Made &#x27;succinct valuation&#x27; precise using a Boolean circuit with explicitly encoded binary rational outputs; monotonicity and submodularity are promises.</li><li>Specified positive binary rational output weights and an explicit list of distinct supported bundles.</li><li>Retained weak EFX inequalities for every removed good, including zero-marginal goods, and allowed empty bundles as in the discrete definition.</li><li>Defined L as total input bit length and distinguished society support size tau=1 from output bundle support size.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and new progress</h3><p>I do not settle whether the general distribution problem has a polynomial-time algorithm or is NP-hard.</p><p>I prove a stronger separation than the counterexample in the notes:</p><blockquote><b>There is an explicit family of succinct, normalized, monotone submodular valuations for which computing an EFX partition is PLS-hard, while the requested distribution has a fixed four-bundle solution computable without evaluating the valuation circuit.</b></blockquote><p>Consequently, even a general polynomial-time procedure converting valid distributions into EFX partitions would imply that every problem in $\mathrm{PLS}$ is polynomial-time solvable.</p><p>I also prove an exact characterization of distributions for this family and re-establish the PLS upper bound for the general promised problem.</p><h3>1. A PLS upper bound for the distribution problem</h3><p>A partition $(A,B)$ of $M$ is <b>EFX</b> if<br>$$
+v(A)\ge v(B\setminus\{g\})\quad(g\in B),
+\qquad
+v(B)\ge v(A\setminus\{g\})\quad(g\in A).
+$$<br>The comparisons of a bundle with its own deletions hold by monotonicity.</p><p>Let $r\ge 1$ bound both output widths of the valuation circuit. Every circuit value has a representation $p/q$ with<br>$$
+0\le p&lt;2^r,\qquad 1\le q&lt;2^r.
+$$<br>If two represented values differ, then<br>$$
+\left|\frac pq-\frac{p&#x27;}{q&#x27;}\right|
+=\frac{|pq&#x27;-p&#x27;q|}{qq&#x27;}
+&gt;2^{-2r}.
+$$<br>Thus<br>$$
+z(X)=\left\lfloor 2^{2r}v(X)\right\rfloor
+$$<br>preserves strict comparisons and equality between valuation values. It is polynomial-time computable and satisfies $0\le z(X)&lt;2^{3r}$.</p><p>Define<br>$$
+s(X)=(m+1)z(X)+|X|.
+$$<br>Comparing these integers is equivalent to lexicographically comparing $(v(X),|X|)$.</p><p>Consider local maximization over partitions, with objective<br>$$
+\Phi(A,B)=\min\{s(A),s(B)\},
+$$<br>and neighbors obtained by transferring one good between the two bundles. A partition has an $m$-bit representation; its $m$ neighbors and their polynomial-bit objectives can be computed in polynomial time. The initial partition is $(\varnothing,M)$. These are the defining ingredients of a basic polynomial local search problem.</p><p><b>Every local maximum is EFX.</b> Indeed, suppose<br>$$
+v(X)&lt;v(Y\setminus\{g\})
+$$<br>for the two partition bundles and some $g\in Y$. Monotonicity implies $v(Y)&gt;v(X)$, so the current objective is $s(X)$.</p><p>After transferring $g$, let<br>$$
+X&#x27;=X\cup\{g\},\qquad Y&#x27;=Y\setminus\{g\}.
+$$<br>We have $s(Y&#x27;)&gt;s(X)$ because $v(Y&#x27;)&gt;v(X)$. Also $s(X&#x27;)&gt;s(X)$: either its value increases, or its value stays equal and its cardinality increases. Consequently,<br>$$
+\Phi(X&#x27;,Y&#x27;)&gt;s(X)=\Phi(X,Y).
+$$<br>An EFX violation therefore contradicts local optimality. The cardinality term explicitly handles a transferred good with zero marginal value.</p><p>For $m&gt;0$, an EFX partition gives a valid distribution by assigning weight $1/2$ to each of its two distinct complementary bundles. For $m=0$, the single empty bundle with weight $1$ is valid.</p><p><b>Proven conclusion.</b> On the promised inputs, the distribution task has a polynomial-time solution reduction to $\mathrm{PLS}$, and every instance has a solution supported on at most two bundles. This argument supplies no polynomial bound on the number of improvement steps.</p><h3>2. A polynomial-size family of submodular circuits</h3><p>We next construct the family separating partition search from distribution search.</p><p>Let<br>$$
+C:\{0,1\}^n\longrightarrow\{0,\ldots,W\}
+$$<br>be a Boolean circuit, where $W=2^r-1$ for an output width $r\ge 1$. Choose an even integer<br>$$
+k\ge \max\{4,n\},
+$$<br>with $k$ polynomial in $n$, and define<br>$$
+F(x_0,\ldots,x_{k-1})=C(x_0,\ldots,x_{n-1}).
+$$</p><p>The goods are<br>$$
+M=\{a_i,b_i:0\le i&lt;k\}\cup\{z\},
+\qquad |M|=2k+1.
+$$<br>For a bit vector $x\in\{0,1\}^k$, define the transversal<br>$$
+T(x)=\{a_i:x_i=1\}\cup\{b_i:x_i=0\}.
+$$<br>It contains one good from each pair and omits $z$.</p><p>For a $k$-element bundle $S$, write<br>$$
+c_i(S)=|S\cap\{a_i,b_i\}|,
+\qquad
+d(S)=|\{i:c_i(S)\ne 1\}|.
+$$<br>Here $d(S)$ counts pairs that are empty or contain both goods.</p><p>Define an integer score $f$ on $k$-element bundles as follows.</p><ul><li>If $d(S)=0$, then $S=T(x)$ for a unique $x$, and set</li></ul><p>$$
+   f(S)=2F(x).
+   $$</p><ul><li>If $d(S)=1$, then $S$ contains $z$, has one empty pair, and contains one good from every other pair. There are exactly two transversals $T(x),T(y)$ disjoint from $S$; their bit vectors differ only at the empty pair. Set</li></ul><p>$$
+   f(S)=2\max\{F(x),F(y)\}-1.
+   $$</p><ul><li>If $d(S)\ge 2$, set</li></ul><p>$$
+   f(S)=-d(S).
+   $$</p><p>To justify the assertion in the second case, let $a$ be the number of double pairs, $s$ the number of empty pairs, and $b=\mathbf 1_{\{z\in S\}}$. Since $|S|=k$,<br>$$
+s=a+b,\qquad d(S)=a+s=2a+b.
+$$<br>Thus $d(S)=1$ forces $a=0$, $b=1$, and $s=1$.</p><p>The score satisfies<br>$$
+-k\le f(S)\le 2W.
+$$<br>Put<br>$$
+D=2(2W+k+1)
+$$<br>and define<br>$$
+v(S)=
+\begin{cases}
+2|S|,&amp; |S|&lt;k,\\[2mm]
+2k-1+\dfrac{f(S)+k}{D},&amp; |S|=k,\\[3mm]
+2k,&amp; |S|&gt;k.
+\end{cases}
+$$</p><h3>Verification of the valuation promises</h3><p>For every $k$-element bundle,<br>$$
+0\le \frac{f(S)+k}{D}&lt;\frac12,
+$$<br>and hence<br>$$
+2k-1\le v(S)&lt;2k-\frac12.
+$$<br>The valuation is nonnegative and satisfies $v(\varnothing)=0$.</p><p>Its marginal values have the following bounds.</p><p>| Size before addition | Marginal value |<br>|---|---:|<br>| Less than $k-1$ | $2$ |<br>| $k-1$ | In $[1,3/2)$ |<br>| $k$ | In $(1/2,1]$ |<br>| Greater than $k$ | $0$ |</p><p>All marginals are nonnegative, proving monotonicity.</p><p>For submodularity, take $S\subseteq T$ and $g\notin T$. If $|S|=|T|$, then $S=T$ and the two marginals agree. Otherwise, the table shows that every possible marginal at size $|S|$ is at least every possible marginal at size $|T|$. Therefore<br>$$
+v(S\cup\{g\})-v(S)
+\ge
+v(T\cup\{g\})-v(T).
+$$<br>This is the diminishing-returns definition of submodularity.</p><p>The circuit representation also has polynomial size. It counts selected goods, identifies the three cases defining $f$, and evaluates at most two copies of $C$. The denominator $D$ has $O(r+\log k)$ bits. At cardinality $k$, the numerator is<br>$$
+(2k-1)D+f(S)+k,
+$$<br>which is nonnegative and has polynomial bit length. Other cardinalities use denominator $1$. Thus the construction meets the exact binary-rational circuit model of the task.</p><h3>3. Computing EFX partitions in this family is PLS-hard</h3><p>We use the standard <b>Flip</b> problem: given a nonnegative integer-valued Boolean circuit, find an input whose value cannot be increased by flipping one input bit. This problem is PLS-complete. The minimization formulation stated in [Goldberg–Høgh–Hollender, Section 4.2.2](https://www.cs.ox.ac.uk/people/paul.goldberg/papers/TCS-GHH.pdf) is equivalent: replacing the circuit value $C(x)$ by $W-C(x)$ reverses comparisons and is polynomial-time computable.</p><p>We prove directly that any EFX partition for the constructed valuation yields a Flip solution for $C$.</p><h3>3.1. EFX partitions are exactly score-local maxima</h3><p>Let $(A,B)$ be an EFX partition of $M$.</p><p>If its smaller bundle has size at most $k-1$, the larger has size at least $k+2$. Deleting any good from the larger leaves value $2k$, whereas the smaller has value at most $2k-2$. This violates EFX.</p><p>Consequently, the bundle sizes must be $k$ and $k+1$. Assume $|A|=k$.</p><p>The inequalities comparing $B$ with deletions of $A$ hold automatically:<br>$$
+v(B)=2k&gt;2k-2=v(A\setminus\{g\}).
+$$<br>The remaining inequalities are precisely<br>$$
+f(A)\ge f(B\setminus\{g\})\qquad(g\in B).
+$$</p><p>The $k$-element bundles disjoint from $A$ are exactly the sets $B\setminus\{g\}$ for $g\in B$. Hence:</p><blockquote>A $k$-element bundle $A$ forms an EFX partition with its complement exactly when it is a local maximum of $f$ under the neighborhood consisting of disjoint $k$-element bundles.</blockquote><h3>3.2. No nontransversal is a local maximum</h3><p>First suppose $d(S)=1$. Its two disjoint transversal neighbors are $T(x)$ and $T(y)$ from the definition of $f$. At least one has score<br>$$
+2\max\{F(x),F(y)\}=f(S)+1.
+$$<br>Thus $S$ is not locally maximal.</p><p>Now suppose $d(S)\ge 2$. With $a,s,b$ as above, $s=a+b$ implies $s\ge 1$. Choose a pair that is empty in $S$. Both its goods belong to $M\setminus S$. Remove one of them from this complement, obtaining a disjoint $k$-element neighbor $S&#x27;$.</p><p>The double pairs of $S&#x27;$ are the formerly empty pairs, except the chosen pair. Its empty pairs are the formerly double pairs. Therefore<br>$$
+d(S&#x27;)=(s-1)+a=d(S)-1.
+$$<br>If $d(S&#x27;)\ge 2$, then<br>$$
+f(S&#x27;)=-d(S&#x27;)=-d(S)+1&gt;f(S).
+$$<br>If $d(S&#x27;)=1$, then $f(S&#x27;)\ge -1&gt;-d(S)$. If $d(S&#x27;)=0$, then $f(S&#x27;)\ge 0&gt;-d(S)$.</p><p>Thus every nontransversal has a strictly improving neighbor.</p><h3>3.3. A locally maximal transversal decodes a Flip solution</h3><p>Let $T(x)$ be a local maximum. For any index $i$, let $x^{(i)}$ denote $x$ with bit $i$ flipped, and define<br>$$
+E_i=\{z\}\cup
+\left(T(\overline{x})\setminus\{a_i,b_i\}\right).
+$$<br>This is a $k$-element bundle disjoint from $T(x)$. It has one empty pair, and its two disjoint transversal neighbors are $T(x)$ and $T(x^{(i)})$. Hence<br>$$
+f(E_i)=2\max\{F(x),F(x^{(i)})\}-1.
+$$</p><p>If $F(x^{(i)})&gt;F(x)$, integrality gives<br>$$
+f(E_i)\ge 2F(x)+1&gt;f(T(x)),
+$$<br>contradicting local maximality. Therefore<br>$$
+F(x)\ge F(x^{(i)})\qquad(0\le i&lt;k).
+$$<br>In particular, $(x_0,\ldots,x_{n-1})$ is a Flip solution for $C$.</p><p>The valuation construction and this decoding are polynomial-time computable, and every constructed valuation satisfies all promises. This proves PLS-hardness of EFX partition search on this family.</p><h3>4. The same family has a fixed four-bundle distribution</h3><p>Define<br>$$
+T_0=\{b_i:0\le i&lt;k\},
+\qquad
+T_1=\{a_i:0\le i&lt;k\},
+$$<br>and<br>$$
+C_0=\{a_i,b_i:0\le i&lt;k/2\},
+\qquad
+C_1=\{a_i,b_i:k/2\le i&lt;k\}.
+$$<br>Both $C_0$ and $C_1$ have size $k$. Put<br>$$
+B_0=M\setminus C_0,\qquad B_1=M\setminus C_1.
+$$</p><p>Use the four distinct bundles<br>$$
+\mathcal S=\{T_0,T_1,B_0,B_1\},
+\qquad
+\lambda_X=\frac14\quad(X\in\mathcal S).
+$$<br>These bundles depend only on the labeled goods and $k$, not on $C$ or its values.</p><h3>Supply verification</h3><p>Every paired good belongs to exactly one of $T_0,T_1$ and exactly one of $B_0,B_1$. The good $z$ belongs to both $B_0,B_1$ and neither transversal.</p><p>Every good therefore belongs to exactly two supported bundles, giving marginal probability $1/2$. The four weights are positive binary rationals and sum to $1$.</p><h3>EFX verification</h3><p>Since $F$ is nonnegative,<br>$$
+v(T_j)\ge 2k-1+\frac{k}{D}\qquad(j=0,1).
+$$<br>Also $v(B_j)=2k$. Thus every supported bundle has value at least<br>$$
+2k-1+\frac{k}{D}.
+$$</p><p>Deleting a good from a supported transversal leaves value $2k-2$.</p><p>Consider a deletion from $B_j$.</p><ul><li>Deleting $z$ leaves the other $C$-bundle, which has defect $k$ and score $-k$.</li><li>Deleting a paired good leaves a bundle containing $z$ with defect $k-1$. Since $k\ge 4$, this falls in the third score case and has score $-(k-1)$.</li></ul><p>Consequently, every deletion from $B_j$ has value at most<br>$$
+2k-1+\frac1D.
+$$<br>Every supported deletion therefore has value at most $2k-1+1/D$, while every supported bundle has value at least $2k-1+k/D$. All required EFX inequalities hold.</p><p><b>Proven separation.</b> Partition search is PLS-hard on this explicitly constructed family, but distribution search on the family is solvable by outputting these four bundles and weights.</p><p>In particular, suppose a polynomial-time procedure could take a valuation circuit and <b>any valid distribution</b> and return an EFX partition for that valuation. Applying it to this fixed distribution, followed by the decoding in Section 3, would solve Flip in polynomial time. Thus such a procedure would make every problem in $\mathrm{PLS}$ polynomial-time solvable.</p><h3>5. An exact characterization of arbitrary distributions in the family</h3><p>The four-bundle construction reflects a precise distinction between the two search problems.</p><p>Let a feasible EFX distribution for a valuation from Section 2 be given. The supply equations imply<br>$$
+\mathbb E[|X|]
+=\sum_{g\in M}\Pr[g\in X]
+=\frac{2k+1}{2}
+=k+\frac12.
+$$</p><h3>5.1. Only cardinalities $k$ and $k+1$ can occur</h3><p>At least one supported bundle has size at least $k+1$. If another has size at most $k-1$, deleting a good from the former leaves size at least $k$, with value at least $2k-1$. The latter has value at most $2k-2$, contradicting EFX.</p><p>Thus every supported bundle has size at least $k$.</p><p>If some supported bundle has size at least $k+2$, its deletions have value $2k$. EFX then forces every supported bundle to have value at least $2k$. Since every $k$-element bundle has value strictly below $2k$, all supported bundles would have size at least $k+1$. That contradicts the displayed expectation.</p><p>Hence all supported bundles have size $k$ or $k+1$. The expectation equation now forces total weight $1/2$ on each cardinality.</p><h3>5.2. Equal incidence averages replace equality of bundles</h3><p>For each supported $k$-element bundle $A$, put<br>$$
+p_A=2\lambda_A.
+$$<br>For each supported $(k+1)$-element bundle $B$, associate its $k$-element complement $C=M\setminus B$ and put<br>$$
+r_C=2\lambda_B.
+$$<br>Both $p$ and $r$ are probability distributions.</p><p>Let $\mathbf 1_A$ denote the incidence vector of $A$, and let $\mathbf 1$ be the all-ones vector. The marginal constraints become<br>$$
+\frac12\sum_Ap_A\mathbf 1_A
++
+\frac12\sum_Cr_C(\mathbf 1-\mathbf 1_C)
+=\frac12\mathbf 1.
+$$<br>Equivalently,<br>$$
+\sum_Ap_A\mathbf 1_A
+=
+\sum_Cr_C\mathbf 1_C.
+$$</p><p>Let $N(C)$ be the collection of $k$-element bundles disjoint from $C$. These are exactly the deletions of $M\setminus C$.</p><p>All EFX comparisons are automatic except comparisons of a supported $k$-element bundle with a deletion of a supported $(k+1)$-element bundle. Thus EFX is equivalent to<br>$$
+\min_{A:p_A&gt;0}f(A)
+\ge
+\max_{C:r_C&gt;0}\ \max_{Z\in N(C)}f(Z).
+$$</p><p>Conversely, any finitely supported rational probability distributions $p,r$ satisfying these two displayed conditions give a valid distribution: assign weights $p_A/2$ to $A$ and $r_C/2$ to $M\setminus C$.</p><p>This is an exact characterization. A partition corresponds to the special case where $p$ and $r$ are the same point mass. A general distribution requires only equality of their incidence averages.</p><p>For the four-bundle solution, $p$ is uniform on $T_0,T_1$, while $r$ is uniform on $C_0,C_1$. Their averages agree, despite the completely different scores and neighborhood behavior.</p><h3>6. Four bundles are necessary for the complement-extraction obstruction</h3><p>The new family also yields a smallest possible support size for a valid distribution from which <b>no supported bundle forms an EFX partition with its complement</b>.</p><p>First, for any nonempty ground set, a feasible distribution on two distinct bundles must assign weight $1/2$ to each and use complementary bundles. Indeed, each coordinate must select a nonempty proper subset of the two weights summing to $1/2$, so it selects exactly one weight. The marginal constraints therefore force complementarity. If the distribution is EFX, this supported pair is an EFX partition.</p><p>There is no feasible distribution on exactly three distinct bundles with positive weights. To see this, write the weights as $\lambda_1,\lambda_2,\lambda_3$. Any coordinate selects a subset of these weights summing to $1/2$. That subset or its complement is a singleton, so some weight, say $\lambda_1$, equals $1/2$. The other two positive weights sum to $1/2$.</p><p>For every coordinate, the selected indices must then be either $\{1\}$ or $\{2,3\}$: selecting index $1$ with another index exceeds $1/2$, and selecting only index $2$ or only index $3$ falls short. Bundles $2$ and $3$ consequently have identical incidence vectors, contradicting distinctness.</p><p>Now specialize the constructed family to $n=k$ and<br>$$
+C(x)=\sum_{i=1}^{k-1}(x_i\oplus x_0).
+$$<br>Here $\oplus$ denotes exclusive OR. Both the all-zero and all-one vectors have value $0$, while flipping any bit with index $i\ge 1$ raises their value to $1$.</p><p>Therefore $T_0$ and $T_1$ each have an improving disjoint neighbor of score $1$, exceeding their own score $0$. Neither forms an EFX partition with its complement, by Section 3.1.</p><p>For $B_j$, its complement $C_j$ has score $-k$. Deleting a paired good from $B_j$ gives a disjoint neighbor of $C_j$ with score $-(k-1)&gt;-k$. Thus neither $B_j$ forms an EFX partition with its complement.</p><p>The fixed four-bundle distribution remains valid by Section 4. Hence support size four is the smallest possible size of this obstruction.</p><h3>7. What remains unresolved</h3><p>The general task has a PLS upper bound, but the local-search proof does not yield a polynomial running time.</p><p>The new construction proves that partition hardness can coexist with an elementary solution to the distribution problem on the entire hard family. It also gives a conditional obstruction to <b>any</b> general polynomial-time conversion from valid distributions to EFX partitions.</p><p>It does not establish hardness or a polynomial-time algorithm for the general distribution problem. A successful hardness reduction must constrain every valid overlapping-support output, rather than relying on the hardness of complementary partitions.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Overall response and Section 7: The requested general complexity classification is not established: a solution reduction to $\mathrm{PLS}$ and an algorithm on the constructed family prove neither a polynomial-time algorithm for arbitrary promised inputs nor NP-hardness of distribution search.</li><li><b>minor</b> — Section 6, smallest possible support claim: The minimality argument explicitly excludes supports of sizes two and three but omits the routine singleton-support check and the empty-ground-set case. State these checks to complete the global minimum-support claim.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial, with sound substantive progress.</b> The output proves the stated upper bound, the separation between partition search and distribution search on its constructed family, and the characterization of valid distributions in that family. It does <b>not</b> settle the polynomial-time versus NP-hardness question in <code>USER_TASK</code>, and explicitly acknowledges this.</p><p>I found no false central step or substantive mathematical gap in the auxiliary results. The minimum-support claim omits one routine edge case.</p><h3>1. General upper bound</h3><h3>Rational-value encoding</h3><p>The output-width assumption supplies<br>$$
+0\le p&lt;2^r,\qquad 1\le q&lt;2^r.
+$$<br>For distinct rational values, the cross-product numerator is a nonzero integer, so its absolute value is at least $1$. Since $qq&#x27;&lt;2^{2r}$, the stated bound<br>$$
+\left|\frac pq-\frac{p&#x27;}{q&#x27;}\right|&gt;2^{-2r}
+$$<br>is correct. Reduced fractions are not required.</p><p>Consequently,<br>$$
+z(X)=\left\lfloor 2^{2r}v(X)\right\rfloor
+$$<br>preserves strict order and equality. The bound $z(X)&lt;2^{3r}$ also follows from the numerator and denominator bounds. Computing this integer requires only polynomial-length integer arithmetic.</p><h3>Cardinality tie-breaking</h3><p>The definition<br>$$
+s(X)=(m+1)z(X)+|X|
+$$<br>correctly implements lexicographic comparison of $(v(X),|X|)$. A strict increase in $z$ contributes at least $m+1$, while cardinality differences have absolute value at most $m$.</p><h3>Local-search specification</h3><p>The partition representation, initial partition, objective, and single-good-transfer neighborhood are polynomially computable. Enumerating the $m$ neighbors suffices to identify an improvement or certify local optimality. Objective values have polynomial bit length.</p><p>These ingredients establish the claimed basic polynomial local search problem; they do not establish a polynomial number of improvement steps.</p><h3>Local optimality implies EFX</h3><p>Suppose an EFX violation is witnessed by<br>$$
+v(X)&lt;v(Y\setminus\{g\}).
+$$<br>Monotonicity gives $v(Y)&gt;v(X)$, so the current minimum objective is $s(X)$.</p><p>After the transfer, $s(Y\setminus\{g\})&gt;s(X)$. Also,<br>$$
+s(X\cup\{g\})&gt;s(X),
+$$<br>because either the valuation increases or the valuation stays equal and cardinality increases. Thus both arguments of the new minimum strictly exceed the old minimum.</p><p>This proves the implication correctly, including goods with zero marginal value.</p><h3>Conversion to a distribution</h3><p>For $m&gt;0$, complementary partition bundles are distinct. Giving each weight $1/2$ satisfies every marginal constraint. Cross-bundle EFX comparisons follow from the partition property, and self-comparisons follow from monotonicity.</p><p>For $m=0$, the explicitly supplied singleton distribution is valid.</p><p><b>Assessment:</b> The polynomial-time solution reduction to $\mathrm{PLS}$ and existence of a solution supported on at most two bundles are established. Neither implies the requested polynomial-time algorithm or NP-hardness classification.</p><h3>2. Constructed valuation family</h3><h3>Defect cases</h3><p>For a $k$-element bundle, the counting identity<br>$$
+s=a+b,\qquad d=2a+b
+$$<br>is correct. Hence $d=0$ means a transversal omitting $z$, and $d=1$ means exactly one empty pair, no double pairs, and inclusion of $z$.</p><p>In the latter case, disjointness fixes the transversal choice at every occupied pair and leaves two choices at the empty pair. The claimed two transversals therefore exist and are exactly the possibilities.</p><h3>Score and valuation bounds</h3><p>All three score cases satisfy<br>$$
+-k\le f(S)\le 2W.
+$$<br>With the specified denominator,<br>$$
+0\le\frac{f(S)+k}{D}
+\le\frac{2W+k}{2(2W+k+1)}
+&lt;\frac12.
+$$<br>The resulting bounds on $v(S)$ at cardinality $k$ are correct.</p><h3>Monotonicity and submodularity</h3><p>The marginal table is accurate:</p><ul><li>Below cardinality $k-1$, the marginal is $2$.</li><li>At cardinality $k-1$, it lies in $[1,3/2)$.</li><li>At cardinality $k$, it lies in $(1/2,1]$.</li><li>Above cardinality $k$, it is $0$.</li></ul><p>These intervals prove monotonicity. They also justify every diminishing-returns comparison when $S\subsetneq T$: the marginal interval at the smaller cardinality lies entirely above or equal to the interval at the larger cardinality. If the cardinalities agree, inclusion forces $S=T$.</p><p>Thus the submodularity argument does not assume additional regularity of $C$.</p><h3>Succinct representation</h3><p>The construction evaluates at most two copies of $C$ and performs counting, comparisons, and polynomial-length arithmetic. Although $f$ can be negative, the circuit’s actual valuation numerator<br>$$
+(2k-1)D+f(S)+k
+$$<br>is nonnegative. The denominator is positive, and both output lengths are polynomial.</p><p><b>Assessment:</b> All valuation promises and representation requirements are verified.</p><h3>3. Partition-search hardness</h3><h3>Cited theorem</h3><p>The cited paper states that Flip is $\mathrm{PLS}$-complete and defines its circuit objective as an unsigned binary integer, with single-bit flips as neighbors and minimization as the goal. This matches the prover’s stated source problem after reversing the objective by $W-C(x)$. The reversal is polynomially computable and preserves precisely the required local-optimum correspondence. [Goldberg–Høgh–Hollender, Section 4.2.2](https://www.cs.ox.ac.uk/people/paul.goldberg/papers/TCS-GHH.pdf)</p><h3>Partition cardinalities and neighborhood equivalence</h3><p>A partition with smaller cardinality at most $k-1$ has larger cardinality at least $k+2$. Its deletion values and smaller-bundle value violate EFX exactly as stated.</p><p>For cardinalities $k$ and $k+1$, comparisons against deletions of the smaller bundle are automatic. The remaining comparisons are exactly<br>$$
+f(A)\ge f(B\setminus\{g\}).
+$$<br>Every disjoint $k$-element bundle is one such deletion, since the complement of $A$ has cardinality $k+1$.</p><p>The claimed equivalence with score-local maximality is therefore correct in both directions.</p><h3>Excluding nontransversals</h3><p>For defect $1$, a disjoint transversal has score exactly one larger than the bundle’s score.</p><p>For defect at least $2$, the counting identity ensures an empty pair exists. Complementing and deleting one good from such a pair produces the stated neighbor, with defect reduced by one. The score comparisons are correct both within the third score case and when crossing into either earlier case.</p><p>Thus every score-local maximum is a transversal.</p><h3>Decoding a Flip solution</h3><p>The bundle $E_i$ has cardinality $k$, is disjoint from $T(x)$, and has the asserted two disjoint transversal neighbors. If a bit flip improves $F$, integrality makes its score strictly exceed that of $T(x)$.</p><p>Therefore every returned EFX partition decodes to a local maximum of $C$ on its original input bits. Padding introduces no problem because $F$ ignores the added bits.</p><p><b>Assessment:</b> The claimed $\mathrm{PLS}$-hardness of partition search on this family is established. It is not hardness of distribution search.</p><h3>4. Four-bundle distribution and conversion obstruction</h3><p>The four bundles are distinct: the transversals differ from one another, the larger bundles differ from one another, and their cardinalities separate the two groups.</p><p>Every paired good appears in exactly two supported bundles, and $z$ appears in exactly the two larger bundles. The positive weights sum to $1$ and yield all required marginals.</p><p>The deletion calculations are correct:</p><ul><li>A transversal deletion has value $2k-2$.</li><li>Deleting $z$ from a larger bundle leaves defect $k$ and score $-k$.</li><li>Deleting a paired good leaves defect $k-1$ and score $-(k-1)$.</li></ul><p>The condition $k\ge4$ ensures the last case uses the third score clause. Hence every deletion has value at most<br>$$
+2k-1+\frac1D,
+$$<br>while every supported bundle has value at least<br>$$
+2k-1+\frac{k}{D}.
+$$<br>This verifies every required ordered comparison, including self-comparisons and zero-marginal deletions.</p><p>The conditional conversion claim follows: the explicit distribution has polynomial size, so a polynomial-time converter accepting <b>any</b> valid distribution would compose with the partition decoder to solve Flip in polynomial time.</p><p><b>Assessment:</b> Both the family-specific distribution algorithm and the conditional conversion obstruction are established.</p><h3>5. Exact characterization of distributions</h3><p>The expectation identity follows directly from the marginal equations.</p><p>The two cardinality-exclusion arguments are valid. They force all support cardinalities to be $k$ or $k+1$, with total weight $1/2$ on each.</p><p>Rescaling the weights and complementing the larger bundles gives probability distributions $p,r$. The algebra converting marginal constraints to equality of incidence averages is correct.</p><p>All EFX comparisons other than a smaller bundle against a deletion of a larger bundle are automatic from the cardinality valuation bounds. The remaining comparisons are exactly the displayed minimum-versus-maximum score condition.</p><p>The converse is also correct: dividing the probability weights by $2$ reconstructs positive rational support weights, the marginal equations, and EFX. Bundles arising from the two groups cannot coincide because their cardinalities differ.</p><p><b>Assessment:</b> The characterization is proved.</p><h3>6. Minimum support for the extraction obstruction</h3><p>The two-bundle argument is correct for a nonempty ground set.</p><p>The three-bundle argument is also correct. A marginal equation forces a singleton weight of $1/2$; thereafter every coordinate must select either that singleton or the other two indices together. The other two bundles consequently coincide, contradicting distinctness.</p><p>The specialized circuit has the claimed values and improving bit flips. The complementary partition failures for all four supported bundles follow from the previously proved score characterization.</p><p><b>Minor issue:</b> The assertion that four is the *smallest possible* support omits explicit exclusion of support size one. The stated task also permits an empty ground set, which should be addressed when phrasing this global minimum claim.</p><p><b>Minimum clarification:</b> Add the routine singleton-support and empty-ground-set checks. No new lemma or substantive mathematics is needed.</p><h3>7. Scope deficit and actionable feedback</h3><p><b>Major scope deficit:</b> The central question in <code>USER_TASK</code> remains unresolved. The output proves an upper bound by reduction to $\mathrm{PLS}$ and a polynomial algorithm restricted to its constructed family. It supplies neither a polynomial-time algorithm for arbitrary promised valuation circuits nor an NP-hardness reduction for the distribution problem.</p><p>This is an acknowledged limitation, not a concealed failure in the auxiliary proofs.</p><p>To complete the assignment, the prover must supply one of the requested general complexity results, including its running-time justification or its search-reduction specification and correctness for every valid returned distribution. Clarification of the present arguments alone cannot supply that missing result.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

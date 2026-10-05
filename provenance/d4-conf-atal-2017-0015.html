@@ -1,0 +1,106 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-atal-2017-0015 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-atal-2017-0015 <span style="font-weight:normal;color:#8a7350">(d4-conf-atal-2017-0015)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\)-hard under polynomial-time Turing reductions; moreover, \(\mathrm{coNP}\)-hard under polynomial-time many-one reductions.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5.9 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Given a graph game (N, v, E) where v is non- negative and (N, E) is a star, it is co-NP-complete to determine whether the core is non-empty.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a star \(H=(T,F)\), rational masses \(\mu_t&gt;0\) summing to \(1\), and a succinct exact evaluator for a continuous nonnegative worth function \(V:\prod_{t\in T}[0,\mu_t]\to\mathbb{R}_{\ge 0}\) with \(V(0)=0\), decide whether there is a per-capita payoff vector \(p\in\mathbb{R}_{\ge 0}^{T}\) such that \(\sum_t\mu_t p_t=V(\mu)\) and \(\sum_t z_t p_t\ge V(z)\) for every \(z\in\prod_{t\in T}[0,\mu_t]\) whose positive-support types induce a connected subgraph of \(H\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list of the \(\tau\) types with positive binary-rational masses \(\mu_t\), where \(\sum_{t\in T}\mu_t=1\). Here \(\tau=|T|\) is the support size, not the number of possible types.<br>The input includes an undirected star \(H=(T,F)\), with \(m=|F|\), and an exact evaluator represented by a rational arithmetic formula using \(+,-,\times,\min,\max\). Let \(L\) be the total input bit length. The formula defines a continuous function \(V:\prod_{t\in T}[0,\mu_t]\to\mathbb R_{\ge0}\), with \(V(0)=0\); nonnegativity and normalization are promises.<br>A coalition is a mass vector \(z\) in this box. It is feasible if \(z=0\) or its positive support \(\{t:z_t&gt;0\}\) induces a connected subgraph of \(H\); singleton supports and arbitrarily small positive masses are allowed.<br>The continuous core consists of per-capita vectors \(p\in\mathbb R_{\ge0}^{T}\) satisfying \(\sum_{t\in T}\mu_t p_t=V(\mu)\) and \(\sum_{t\in T}z_t p_t\ge V(z)\) for every feasible \(z\). No cohesiveness, superadditivity, or supermodularity is assumed.</p><p>Is deciding whether this continuous core is nonempty solvable in time polynomial in \(m,\tau,L\), or is it NP-hard under polynomial-time Turing reductions?</p><p>For finite players, core nonemptiness with nonnegative, polynomial-time evaluable worths is coNP-complete even on stars; on trees, it is equivalent to cohesiveness, meaning that no partition into connected coalitions has total worth exceeding the grand coalition&#x27;s worth ([source](https://www.ifaamas.org/Proceedings/aamas2017/pdfs/p299.pdf)). No result settling the continuous problem with the specified evaluator representation was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The succinct exact evaluator had no specified encoding. It is represented by a rational arithmetic formula with addition, subtraction, multiplication, minimum, and maximum; this gives exact polynomial-time evaluation on rational inputs and a defined extension to real inputs.</li><li>The empty coalition is feasible by convention, matching the discrete definition; its constraint is redundant because V(0)=0.</li><li>The parameter m is the number of graph edges, and L includes the graph, masses, and evaluator.</li><li>Hardness uses polynomial-time Turing reductions because the anchor establishes coNP-completeness for the yes question of nonemptiness.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><p><b>Result.</b> Deciding continuous-core nonemptiness is \(\mathrm{NP}\)-hard under polynomial-time Turing reductions. More strongly, it is \(\mathrm{coNP}\)-hard under polynomial-time many-one reductions, even with uniform dyadic masses, a continuous piecewise-affine evaluator, and \(V(\mu)=1\).</p><p>The finite-player star result appears in [Igarashi, Theorem 5.9](https://www.ifaamas.org/Proceedings/aamas2017/pdfs/p299.pdf). The following reduction directly establishes hardness for the specified continuous formula representation.</p><p><b>1. A consequence of continuity.</b></p><p>For any connected graph \(H\), the feasible coalition vectors are dense in the entire box. Indeed, for any vector \(z\) in the box and \(0&lt;\varepsilon&lt;1\), define<br>\[
+z^{(\varepsilon)}=(1-\varepsilon)z+\varepsilon\mu.
+\]<br>Every coordinate of \(z^{(\varepsilon)}\) is positive, so its support is the connected graph \(H\). Moreover, \(z^{(\varepsilon)}\) converges to \(z\).</p><p>Consequently, if \(p\) satisfies every feasible-coalition inequality, continuity gives<br>\[
+\sum_t z_t p_t
+=\lim_{\varepsilon\to0}\sum_t z_t^{(\varepsilon)}p_t
+\ge \lim_{\varepsilon\to0}V(z^{(\varepsilon)})
+=V(z).
+\]<br>Thus, in this continuous model, the inequalities for feasible coalitions imply the inequalities for the whole box. The reduction below nevertheless supplies an explicitly feasible violating coalition.</p><p><b>2. A continuous satisfiability detector.</b></p><p>Let \(\Phi\) be a \(\mathrm{3SAT}\) instance with variables \(u_1,\ldots,u_n\) and clauses \(K_1,\ldots,K_q\), where \(n,q\ge1\).</p><p>For \(x\in[0,1]^n\), define each literal’s value by<br>\[
+\lambda_{u_i}(x)=x_i,\qquad
+\lambda_{\neg u_i}(x)=1-x_i.
+\]<br>Define<br>\[
+C_\Phi(x)=\min_{1\le j\le q}\ \max_{\ell\in K_j}\lambda_\ell(x),
+\qquad
+D(x)=\sum_{i=1}^n\min(x_i,1-x_i),
+\]<br>and<br>\[
+A_\Phi(x)=\max\bigl(0,C_\Phi(x)-D(x)\bigr).
+\]</p><p><b>Lemma.</b> If \(\Phi\) is unsatisfiable, then \(A_\Phi(x)=0\) throughout \([0,1]^n\). If \(\Phi\) is satisfiable, some \(a\in\{0,1\}^n\) satisfies \(A_\Phi(a)=1\).</p><p><b>Proof.</b> Given any \(x\), round its coordinates to the Boolean assignment<br>\[
+a_i=
+\begin{cases}
+0,&amp;x_i&lt;1/2,\\
+1,&amp;x_i\ge1/2.
+\end{cases}
+\]<br>Write \(d_i=\min(x_i,1-x_i)\). Every literal that is false under \(a\) has continuous value exactly \(d_i\): a false positive literal has \(a_i=0\) and value \(x_i=d_i\); a false negative literal has \(a_i=1\) and value \(1-x_i=d_i\).</p><p>If \(\Phi\) is unsatisfiable, some clause \(K_j\) is false under \(a\). All its literals therefore have values bounded by \(D(x)\), giving<br>\[
+C_\Phi(x)
+\le \max_{\ell\in K_j}\lambda_\ell(x)
+\le D(x).
+\]<br>Hence \(A_\Phi(x)=0\).</p><p>Conversely, at a satisfying Boolean assignment \(a\), every clause has maximum literal value \(1\), while \(D(a)=0\). Therefore \(A_\Phi(a)=1\). This proves the lemma.</p><p><b>3. Constructing the society and evaluator.</b></p><p>Let<br>\[
+N=2^{\lceil\log_2(n+1)\rceil}.
+\]<br>Construct a star with \(N\) types: a center \(c\), variable leaves \(t_1,\ldots,t_n\), and \(N-n-1\) additional leaves. Give every type mass<br>\[
+\mu_t=\frac1N.
+\]<br>These masses are positive dyadic rationals and sum to \(1\).</p><p>For any coalition \(z\), put<br>\[
+x_i=Nz_{t_i},\qquad y=Nz_c.
+\]<br>All these normalized coordinates lie in \([0,1]\). Define<br>\[
+B_\Phi(z)=\min\bigl(y,1-y,A_\Phi(x)\bigr),
+\qquad
+V_\Phi(z)=\sum_{t\in T}z_t+B_\Phi(z).
+\]</p><p>This evaluator meets every promise:</p><ul><li>It is a rational arithmetic formula using only the permitted operations. Multiplication occurs only by the integer constant \(N\).</li><li>It is continuous and piecewise affine.</li><li>Since \(y\), \(1-y\), and \(A_\Phi(x)\) are nonnegative throughout the box, \(B_\Phi(z)\ge0\), so \(V_\Phi(z)\ge0\).</li><li>At \(z=0\), the gate coordinate is \(y=0\), giving \(B_\Phi(0)=0\) and \(V_\Phi(0)=0\).</li><li>At the grand coalition, \(y=1\), so \(B_\Phi(\mu)=0\) and</li></ul><p>\[
+  V_\Phi(\mu)=\sum_t\mu_t=1.
+  \]</p><p><b>4. The singleton constraints force a unique candidate payoff.</b></p><p>Let \(e_t\) denote the coordinate unit vector for type \(t\). The full-mass singleton coalition \(\mu_t e_t\) is feasible.</p><p>If \(t=c\), its gate coordinate is \(y=1\); otherwise it is \(y=0\). In either case the bonus vanishes, and<br>\[
+V_\Phi(\mu_t e_t)=\mu_t.
+\]<br>Every core vector must therefore satisfy<br>\[
+\mu_t p_t\ge\mu_t,
+\]<br>hence \(p_t\ge1\) for every type.</p><p>Efficiency requires<br>\[
+\sum_t\mu_t p_t=V_\Phi(\mu)=1=\sum_t\mu_t.
+\]<br>Because every \(\mu_t\) is positive and every \(p_t-1\) is nonnegative, this equality forces \(p_t=1\) for every type. Thus the only possible core vector is \(\mathbf1\).</p><p><b>5. Correctness of the reduction.</b></p><p>Suppose first that \(\Phi\) is unsatisfiable. By the lemma, \(A_\Phi(x)=0\) everywhere. Consequently,<br>\[
+B_\Phi(z)=0,\qquad V_\Phi(z)=\sum_t z_t
+\]<br>throughout the box. The vector \(p=\mathbf1\) satisfies efficiency and every coalitional inequality with equality. The core is therefore nonempty.</p><p>Now suppose that \(\Phi\) has a satisfying assignment \(a\in\{0,1\}^n\). Choose the coalition<br>\[
+z_c=\frac1{2N},\qquad
+z_{t_i}=\frac{a_i}{N},
+\]<br>and give every additional leaf mass zero. Its support contains the center and some subset of its leaves, so it induces a connected subgraph, including when that subset is empty.</p><p>Here \(y=1/2\), \(x=a\), and \(A_\Phi(a)=1\). Hence<br>\[
+B_\Phi(z)=\frac12,\qquad
+V_\Phi(z)=\sum_t z_t+\frac12.
+\]<br>The unique candidate payoff \(p=\mathbf1\) violates this feasible coalition’s inequality:<br>\[
+\sum_t z_t p_t=\sum_t z_t&lt;V_\Phi(z).
+\]<br>Thus the core is empty.</p><p>We have proved the exact equivalence<br>\[
+\Phi\text{ is unsatisfiable}
+\quad\Longleftrightarrow\quad
+\operatorname{Core}(V_\Phi,H,\mu)\ne\varnothing.
+\]</p><p><b>6. Encoding size and complexity conclusion.</b></p><p>Since \(N&lt;2(n+1)\), the construction has<br>\[
+\tau=N,\qquad m=N-1,
+\]<br>both polynomial in the source input size. Every mass and scaling constant has \(O(\log(n+2))\) bits.</p><p>After expanding the definitions, the evaluator is an arithmetic <b>formula</b>, without any need for shared subexpressions. The baseline sum uses \(O(N)\) operations, the clause detector uses \(O(q)\), and the rounding penalty uses \(O(n)\). Nested binary minima and maxima implement all displayed multiargument operations. Thus the total output bit length \(L\) is polynomial in the \(\mathrm{3SAT}\) input length.</p><p>The equivalence above gives a polynomial-time many-one reduction from \(\mathrm{3UNSAT}\) to core nonemptiness. Therefore core nonemptiness is \(\mathrm{coNP}\)-hard. A polynomial-time algorithm with a core-nonemptiness oracle decides \(\mathrm{3SAT}\) using one query and reversing its answer, establishing the requested \(\mathrm{NP}\)-hardness under polynomial-time Turing reductions.</p><p>In particular, an algorithm polynomial in \(m,\tau,L\) would imply \(\mathrm{P}=\mathrm{NP}\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verdict</h3><p><b>The proof is correct and resolves the assigned question.</b> It establishes that continuous-core nonemptiness is \(\mathrm{coNP}\)-hard under polynomial-time many-one reductions and therefore \(\mathrm{NP}\)-hard under polynomial-time Turing reductions. No major or minor mathematical issues were found.</p><h3>Step-by-step verification</h3><h3>1. Density of feasible coalitions</h3><p>The density argument is valid. Every mass \(\mu_t\) is strictly positive, so for \(0&lt;\varepsilon&lt;1\), every coordinate of<br>\[
+z^{(\varepsilon)}=(1-\varepsilon)z+\varepsilon\mu
+\]<br>is positive. The vector remains in the box because it is a convex combination of two box elements. Its support is the whole connected graph, making it feasible.</p><p>For a fixed payoff vector \(p\), both the linear payment function and \(V\) are continuous. Passing to the limit therefore preserves the coalitional inequality. The conclusion applies to every box vector, including vectors with disconnected support and the zero vector.</p><p>This observation is correct but is not needed for the reduction: the later violating coalition is explicitly feasible.</p><h3>2. Satisfiability detector</h3><p>The lemma is correct in both directions.</p><p>For the stated rounding rule, every literal false under the rounded assignment has value \(d_i=\min(x_i,1-x_i)\). The tie case \(x_i=1/2\) is covered: the rounded variable is true, and its false negative literal has value \(1/2=d_i\).</p><p>If the formula is unsatisfiable, the rounded assignment falsifies at least one clause. Every literal in that clause has value at most \(D(x)\), since each \(d_i\) is a nonnegative summand of \(D(x)\). Thus \(C_\Phi(x)\le D(x)\), and the outer maximum gives \(A_\Phi(x)=0\).</p><p>At a satisfying Boolean assignment, every clause has maximum literal value \(1\), while every summand of \(D\) is zero. Hence \(A_\Phi(a)=1\).</p><p>Repeated literals cause no difficulty, and a tautological clause cannot be the falsified clause used in the unsatisfiable direction. The assumptions \(n,q\ge1\) ensure all displayed operations are defined and are compatible with the standard restricted \(\mathrm{3SAT}\) source problem.</p><h3>3. Society and evaluator promises</h3><p>The construction satisfies the task’s input requirements.</p><ul><li>\(N\) is a power of two with \(n+1\le N&lt;2(n+1)\), so the specified number of additional leaves is nonnegative.</li><li>The star has exactly \(N\) supported types. All masses are positive dyadic rationals and sum to \(1\).</li><li>The normalized coordinates \(x_i\) and \(y\) belong to \([0,1]\) throughout the coalition box.</li><li>The evaluator uses only permitted operations and rational constants. Products involve only constant scaling.</li><li>Finite sums, minima, and maxima of affine functions give a continuous piecewise-affine function.</li><li>Every argument of \(B_\Phi\) is nonnegative on the box, so both \(B_\Phi\) and \(V_\Phi\) are nonnegative.</li><li>The gate gives \(B_\Phi(0)=0\) and \(B_\Phi(\mu)=0\), establishing \(V_\Phi(0)=0\) and \(V_\Phi(\mu)=1\).</li></ul><p>The task imposes no upper bound on intermediate coalition values, so the positive bonus violates no promise.</p><h3>4. Unique candidate payoff</h3><p>Every full-mass singleton is feasible. For the center singleton, \(y=1\); for every leaf singleton, \(y=0\). In both cases the bonus vanishes, so the singleton inequality forces \(p_t\ge1\).</p><p>Efficiency then gives<br>\[
+\sum_t\mu_t(p_t-1)=0.
+\]<br>All summands are nonnegative and all masses are strictly positive. Consequently every \(p_t-1\) must be zero. The unique possible core vector is therefore \(\mathbf1\), which also satisfies the required nonnegativity condition.</p><h3>5. Reduction correctness</h3><p>For an unsatisfiable formula, the detector vanishes throughout the box. The resulting evaluator equals the baseline payment under \(\mathbf1\), so this vector satisfies efficiency and every feasible-coalition inequality.</p><p>For a satisfiable formula, the proposed coalition lies in the box. Its center mass is strictly positive, and its other positive coordinates are leaves adjacent to the center. Its support is therefore connected. If all assignment coordinates are zero, the support is the center singleton, which is expressly allowed.</p><p>The calculations are exact: \(y=1/2\), \(x=a\), and \(A_\Phi(a)=1\), giving \(B_\Phi(z)=1/2\). Thus the coalition strictly violates the inequality for the unique candidate payoff.</p><p>Both directions of the claimed equivalence are established.</p><h3>6. Formula size and complexity conclusion</h3><p>The encoding argument correctly addresses a <b>formula</b>, rather than assuming shared subexpressions.</p><p>After expansion, each clause has at most three literal occurrences, so the clause detector uses \(O(q)\) operations. The penalty uses \(O(n)\), and the baseline uses \(O(N)\). Repeated variable references and scaling constants contribute only polynomially many bits. Binary nesting implements the displayed multiargument minima and maxima without exponential duplication.</p><p>The graph and mass list likewise have polynomial encoding length. Thus the construction is a polynomial-time many-one reduction from \(\mathrm{3UNSAT}\) to the promised continuous-core problem.</p><p>The reduction’s orientation is correct: unsatisfiable instances correspond to nonempty cores. Reversing the answer to one core-nonemptiness oracle query decides \(\mathrm{3SAT}\), yielding the requested Turing hardness. A polynomial-time algorithm in \(m,\tau,L\) would therefore imply \(\mathrm P=\mathrm{NP}\). The proof appropriately makes no claim of membership in \(\mathrm{coNP}\) for the general continuous problem.</p><p>The background attribution also checks out: [Igarashi’s Theorem 5.9](https://www.ifaamas.org/Proceedings/aamas2017/pdfs/p299.pdf) states finite-player core-nonemptiness hardness on stars with nonnegative worths. The continuous reduction does not depend on transferring that theorem.</p><h3>Repair feedback</h3><p>No mathematical repair or additional clarification is needed. The proof establishes the claimed hardness within the specified evaluator representation and all input promises.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

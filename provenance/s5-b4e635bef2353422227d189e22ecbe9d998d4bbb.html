@@ -1,0 +1,152 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-b4e635bef2353422227d189e22ecbe9d998d4bbb — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-b4e635bef2353422227d189e22ecbe9d998d4bbb <span style="font-weight:normal;color:#8a7350">(s5-b4e635bef2353422227d189e22ecbe9d998d4bbb)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable under the standard positive-budget interpretation; all replica limits exist and are exactly rational.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem D.2 (Algorithmic Form) — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational finite support \(T\), masses \(\mu_t&gt;0\) with \(\sum_t\mu_t=1\), rational values \(v_t\), public budgets \(B_t\), and rational supply \(q\) per advertiser, let \(D\) be a common denominator of the masses. For each \(k\ge 1\), run the paper&#x27;s ACA with \(N=kD\) advertisers, \(N\mu_t\) advertisers of type \(t\), each having value \(v_t\) and budget \(B_t\), and total supply \(Nq\). Determine whether \(X_t^{(N)}=N^{-1}\sum_{i:\,\mathrm{type}(i)=t}x_i^{(N)}\) and \(P_t^{(N)}=N^{-1}\sum_{i:\,\mathrm{type}(i)=t}\pi_i^{(N)}\) converge for every type as \(k\to\infty\); if they do, compute all limits within \(\varepsilon\) in time polynomial in \(\tau\), input bit length \(L\), and \(\log(1/\varepsilon)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is supplied as an ordered list \(T\) of \(\tau\) types with positive binary-rational masses \(\mu_t\), summing to \(1\); \(\tau\) is the support size, not the number of possible types. Each type has positive rational value \(v_t\) and public budget \(B_t\). There is one divisible good, so \(m=1\), with rational supply per advertiser \(q\geq0\). Let \(L\) be the total input bit length.<br>Let \(D\) be the least common multiple of the reduced mass denominators. For each integer \(k\geq1\), form \(N=kD\) advertisers, with \(N\mu_t\) copies of type \(t\), and supply \(s=Nq\); order advertisers lexicographically by support-list position and copy index.<br>Define the adaptive clinching auction as follows. At price \(p=0\), allocations are \(x_i=0\) and remaining budgets are \(b_i=B_i\); remaining supply is \(S=s-\sum_i x_i\).<br>Between valuation prices, for \(p&gt;0\), let \(A=\{i:v_i&gt;p\}\) and \(C=\{i\in A:S=\sum_{j\in A\setminus\{i\}}b_j/p\}\). Right derivatives satisfy \(x_i&#x27;=S/p\), \(b_i&#x27;=-S\) for \(i\in C\), and both derivatives vanish otherwise; states are continuous between valuation prices.<br>At each valuation price \(a\), start from the left-limit state and remove advertisers with value \(a\) one at a time in the fixed order. After each removal, simultaneously assign every remaining advertiser \(i\in A\) the amount \(\delta_i=\max\{0,S-\sum_{j\in A\setminus\{i\}}b_j/a\}\), updating \(x_i\leftarrow x_i+\delta_i\), \(b_i\leftarrow b_i-a\delta_i\), and \(S\leftarrow S-\sum_{i\in A}\delta_i\). Removed advertisers retain their allocations and budgets; use right-continuous states thereafter.<br>Stop when supply is exhausted or no advertisers remain; zero supply gives zero allocations and payments. Write the final outcome as \(x_i^{(N)}\), \(\pi_i^{(N)}=B_i-b_i\), and define \(X_t^{(N)}=N^{-1}\sum_{i:\operatorname{type}(i)=t}x_i^{(N)}\), \(P_t^{(N)}=N^{-1}\sum_{i:\operatorname{type}(i)=t}\pi_i^{(N)}\).</p><p>Is deciding whether all \(X_t^{(kD)}\) and \(P_t^{(kD)}\) converge as \(k\to\infty\), and, when they do, computing their limits to additive error \(\varepsilon\), solvable in time polynomial in \(m,\tau,L,\log(1/\varepsilon)\), or is this task NP-hard? Here \(0&lt;\varepsilon&lt;1\) is rational and computation uses the binary Turing model.</p><p>For an explicit finite population of \(n\) advertisers, an algorithm computing the auction outcome in \(\widetilde O(n)\) arithmetic steps is known; this does not establish a binary bit-complexity bound ([source](https://www.cs.cornell.edu/~renatoppl/papers/online-clinching-soda13.pdf)). No result settling this precise replica-limit task was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified positive rational values and public budgets, and nonnegative rational supply; positivity avoids undefined valuation-price updates at zero.</li><li>Fixed the common denominator to the least common multiple of the reduced mass denominators.</li><li>Fixed advertiser labels by support-list position and copy index, making the prescribed lexicographic handling of repeated values unambiguous across replicas.</li><li>Corrected the repeated-value update to repeat the single-departure rule: include the positive part and exclude the recipient from the demand sum. The printed repeated-value formula contradicts its stated interpretation.</li><li>Specified additive error for both allocation and payment limits, rational accuracy between zero and one, and binary Turing computation.</li><li>Specified the zero-supply outcome and stopping convention; there is one divisible good, so m equals one.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Polynomial-time solvability of the replica limit</h3><p><b>Under the standard positive-budget interpretation, the task is polynomial-time solvable. All the replica limits exist, and they can be computed exactly as rational numbers.</b></p><p>I interpret public budgets as positive rationals. The proof also allows \(B_t\geq0\), provided \(\sum_t\mu_tB_t&gt;0\). If all budgets are zero and supply is positive, the stated initialization needs an additional convention: the first removal would otherwise give every remaining advertiser the entire supply and create negative budgets. The result below settles the positive-budget reading.</p><h3>1. Explicit formulas for the limits</h3><p>If \(q=0\), all allocations and payments are zero, as stipulated. Hence assume \(q&gt;0\), and define</p><p>\[
+w_t=\mu_tB_t,\qquad W=\sum_t w_t,\qquad M=\max_t B_t.
+\]</p><p>Here and below, \(W&gt;0\).</p><p>Define the budget masses strictly above and weakly above a price by</p><p>\[
+h_{&gt;}(p)=\sum_{t:v_t&gt;p}w_t,\qquad
+h_{\geq}(p)=\sum_{t:v_t\geq p}w_t.
+\]</p><p>There is a unique price \(p^\ast&gt;0\) satisfying</p><p>\[
+h_{&gt;}(p^\ast)\leq qp^\ast\leq h_{\geq}(p^\ast).
+\]</p><p>Existence follows by scanning the valuation prices: between consecutive valuations, the active budget mass is constant, so a crossing occurs either at that constant divided by \(q\), or at a valuation where the budget mass drops across \(qp\).</p><p>For uniqueness, suppose \(p_1&lt;p_2\) both satisfy the inequalities. Then</p><p>\[
+qp_2\leq h_{\geq}(p_2)\leq h_{&gt;}(p_1)\leq qp_1,
+\]</p><p>contradicting \(q&gt;0\).</p><p>Order types by increasing valuation, breaking equal-value ties by increasing support-list position. Write \(t\prec u\) for this order, and put</p><p>\[
+\ell_t=\sum_{u:t\prec u}w_u,\qquad R^\ast=qp^\ast.
+\]</p><p>The limits are</p><p>\[
+P_t^\ast=\min\{w_t,\max\{0,R^\ast-\ell_t\}\},
+\qquad
+X_t^\ast=\frac{P_t^\ast}{p^\ast}.
+\]</p><p>Thus limiting payments fill budgets in decreasing valuation order and, among equal valuations, decreasing support-list position. The fixed removal order matters precisely at the clearing valuation.</p><p>The remainder proves these formulas, including quantitative convergence bounds.</p><h3>2. A finite-population supply invariant</h3><p>Fix a replica population \(N=kD\) sufficiently large that \(NW&gt;M\). This condition holds for every sufficiently large \(k\).</p><p>At a price \(p&gt;0\), define</p><p>\[
+H=\sum_{i\in A}b_i,\qquad F=H-pS.
+\]</p><p>During the sequential removals at a valuation, \(A\) means the advertisers not yet removed.</p><p>We prove that, at ordinary auction states,</p><p>\[
+S\geq0,\qquad b_i\geq0,\qquad
+F\geq\max_{i\in A}b_i,
+\]</p><p>with the maximum over an empty set interpreted as zero. The last inequality is the usual supply invariant; it also appears as Lemma 4.9 in the [cited paper](https://www.cs.cornell.edu/~renatoppl/papers/online-clinching-soda13.pdf). Here we verify its preservation under the specified sequential removals.</p><h3>Continuous evolution</h3><p>For sufficiently small positive prices, every advertiser is active, no allocation has occurred, and</p><p>\[
+F=NW-pNq&gt;M.
+\]</p><p>Thus the invariant holds initially.</p><p>On an interval containing no valuation price, let \(r=|C|\). The prescribed derivatives give</p><p>\[
+S&#x27;=-\frac{rS}{p},\qquad H&#x27;=-rS,
+\qquad F&#x27;=H&#x27;-S-pS&#x27;=-S.
+\]</p><p>The clinching condition is exactly \(b_i=F\). Consequently, while \(F\) exceeds the largest active budget, nobody clinches and all budgets and supply remain constant.</p><p>When \(F\) reaches the largest budget, precisely the advertisers attaining that budget clinch. Their budgets and \(F\) have the same derivative, namely \(-S\). On a phase beginning at price \(p_1&gt;0\) with a fixed clinching set of size \(r\), the solution is</p><p>\[
+S(p)=S(p_1)\left(\frac{p_1}{p}\right)^r,
+\qquad
+F(p)=F(p_1)-\int_{p_1}^{p}S(u)\,du.
+\]</p><p>Clinching budgets equal \(F(p)\); other budgets remain constant. This phase continues until \(F\) meets another budget, at which point those advertisers join the clinching set, or until the next valuation price. There are at most \(|A|\) such joining events on an interval with fixed \(A\).</p><p>These phases preserve \(F\geq b_i\) and nonnegative supply. Budgets cannot cross zero while supply is positive: at the first such crossing, equality \(b_i=F=0\) would force every active budget to be zero, whereas \(H=F+pS\) would then force \(S=0\).</p><h3>A single valuation removal</h3><p>Suppose an advertiser with remaining budget \(d\) is removed at price \(a&gt;0\). Immediately before removal, \(d\leq F\). Set</p><p>\[
+g=F-d\geq0.
+\]</p><p>After removal and before allocation, the remaining active budget sum is \(H-d\). Therefore the prescribed increment to a remaining advertiser is</p><p>\[
+\delta_i
+=\frac{\max\{0,b_i-g\}}{a}.
+\]</p><p>Its updated budget is consequently</p><p>\[
+b_i^{\mathrm{new}}=\min\{b_i,g\}.
+\]</p><p>Because allocation and payment occur at the same price \(a\),</p><p>\[
+F^{\mathrm{new}}
+=H^{\mathrm{new}}-aS^{\mathrm{new}}
+=g.
+\]</p><p>Thus \(F^{\mathrm{new}}\geq\max_i b_i^{\mathrm{new}}\), and budgets remain nonnegative.</p><p>Supply also remains nonnegative. Indeed, before allocation,</p><p>\[
+\sum_{i\in A}b_i=g+aS\geq g.
+\]</p><p>If some remaining budget is at least \(g\), its capped budget is \(g\), so the sum of capped budgets is at least \(g\). Otherwise no budget is capped, and the same conclusion holds. Hence</p><p>\[
+S^{\mathrm{new}}
+=\frac{\sum_{i\in A}\min\{b_i,g\}-g}{a}\geq0.
+\]</p><p>The empty-set case also forces \(S=0\). This proves preservation after every individual removal.</p><p>In particular, the auction exhausts its supply by the time all advertisers have been removed: an empty active set with positive supply would give \(F=-pS&lt;0\), contradicting the invariant. Therefore</p><p>\[
+\sum_i x_i^{(N)}=Nq.
+\]</p><h3>3. Almost all budgets present at first clinching are spent</h3><p>Let \(p_N&gt;0\) be the price at which allocation first begins.</p><p>If allocation begins continuously, let \(K_N\) be the active set at its onset. If it begins with a discrete increment, let \(K_N\) be the remaining set immediately after the triggering removal and before that increment.</p><p>No advertiser in \(K_N\) has previously received an allocation, so its remaining budget is its original budget. Define</p><p>\[
+H_N^0=\sum_{i\in K_N}B_i,\qquad
+f_N=H_N^0-p_NNq.
+\]</p><p>Then</p><p>\[
+0\leq f_N\leq M.
+\]</p><p>For continuous onset, \(f_N\) equals the largest active budget. For discrete onset, \(f_N=g\geq0\) in the preceding calculation, and a positive increment requires \(g\) to be smaller than some remaining budget.</p><p>After onset, \(F\) decreases continuously at rate \(S\), and a later removal decreases \(F\) by that advertiser’s remaining budget. Allocations at a fixed valuation leave \(F\) unchanged.</p><p>Let \(U_N\) be the total final unused budget of advertisers in \(K_N\), including both subsequently removed advertisers and those still active when supply is exhausted. Telescoping the changes of \(F\), and using \(H=F\) when \(S=0\), gives</p><p>\[
+0\leq U_N
+=f_N-\int_{p_N}^{p_{\mathrm{end}}}S(p)\,dp
+\leq f_N\leq M.
+\]</p><p>Thus all but at most \(M\) of the budgets present at first clinching are spent, regardless of population size.</p><p>There is also a useful allocation-payment bound. Every purchased unit has price at least \(p_N\), because prices increase and no allocation precedes \(p_N\). Continuous evolution satisfies \(-b_i&#x27;=px_i&#x27;\), and discrete increments satisfy the same payment identity at their valuation price. Hence</p><p>\[
+\pi_i^{(N)}\geq p_Nx_i^{(N)}.
+\]</p><p>Summing over all advertisers yields</p><p>\[
+0\leq
+\sum_i\pi_i^{(N)}-p_NNq
+=H_N^0-U_N-p_NNq
+=f_N-U_N
+\leq M.
+\]</p><p>Each type’s contribution is nonnegative, so</p><p>\[
+0\leq P_t^{(N)}-p_NX_t^{(N)}\leq\frac{M}{N}.
+\]</p><h3>4. Comparing first clinching with the clearing price</h3><p>Put \(R_N=H_N^0/N\). Then</p><p>\[
+R_N=qp_N+\frac{f_N}{N}.
+\]</p><p>The set \(K_N\) contains every advertiser with valuation strictly above \(p_N\), and contains no advertiser with valuation strictly below it. Therefore</p><p>\[
+h_{&gt;}(p_N)\leq R_N\leq h_{\geq}(p_N).
+\]</p><p>First, \(p_N\leq p^\ast\). Otherwise,</p><p>\[
+qp_N\leq R_N\leq h_{\geq}(p_N)
+\leq h_{&gt;}(p^\ast)\leq qp^\ast,
+\]</p><p>which contradicts \(p_N&gt;p^\ast\).</p><p>If \(p_N&lt;p^\ast\), then</p><p>\[
+qp^\ast\leq h_{\geq}(p^\ast)
+\leq h_{&gt;}(p_N)\leq R_N.
+\]</p><p>If \(p_N=p^\ast\), the inequality \(qp^\ast\leq R_N\) follows directly from \(f_N\geq0\). In either case,</p><p>\[
+0\leq p^\ast-p_N\leq\frac{M}{Nq},
+\qquad
+0\leq R_N-R^\ast\leq\frac{M}{N}.
+\]</p><p>These inequalities include clearing prices coinciding with valuations and both endpoints of a valuation-price budget jump.</p><h3>5. Convergence, including the prescribed tie order</h3><p>For \(z\in[0,W]\), define</p><p>\[
+G_t(z)=\min\{w_t,\max\{0,z-\ell_t\}\}.
+\]</p><p>This is the budget mass of type \(t\) obtained by retaining a suffix, of total budget mass \(z\), in the order \(\prec\). Each \(G_t\) is nondecreasing and satisfies</p><p>\[
+|G_t(z)-G_t(z&#x27;)|\leq|z-z&#x27;|.
+\]</p><p>Before first allocation, advertisers are removed by increasing valuation, then increasing support-list position, then copy index. Consequently, \(K_N\) is a suffix in exactly this order. Since \(N\mu_t\) is an integer,</p><p>\[
+\frac{1}{N}\sum_{\substack{i\in K_N\\\operatorname{type}(i)=t}}B_i
+=G_t(R_N).
+\]</p><p>Let \(U_{t,N}\) be the final unused budget of the type-\(t\) advertisers in \(K_N\). Advertisers outside \(K_N\) received no allocation and made no payment. Hence</p><p>\[
+P_t^{(N)}=G_t(R_N)-\frac{U_{t,N}}{N},
+\qquad
+0\leq U_{t,N}\leq U_N\leq M.
+\]</p><p>Using the preceding Lipschitz bound,</p><p>\[
+|P_t^{(N)}-P_t^\ast|
+\leq |G_t(R_N)-G_t(R^\ast)|+\frac{U_{t,N}}{N}
+\leq\frac{2M}{N}.
+\]</p><p>For allocations, nonnegativity and full allocation imply \(X_t^{(N)}\leq q\). Therefore</p><p>\[
+\begin{aligned}
+|p^\ast X_t^{(N)}-P_t^\ast|
+&amp;\leq
+(p^\ast-p_N)X_t^{(N)}
++|p_NX_t^{(N)}-P_t^{(N)}|
++|P_t^{(N)}-P_t^\ast|\\
+&amp;\leq\frac{4M}{N}.
+\end{aligned}
+\]</p><p>Thus, for every sufficiently large replica,</p><p>\[
+|P_t^{(N)}-P_t^\ast|\leq\frac{2M}{N},
+\qquad
+|X_t^{(N)}-X_t^\ast|\leq\frac{4M}{Np^\ast}.
+\]</p><p>Taking \(N=kD\) proves convergence of every requested sequence.</p><h3>6. Exact computation in the binary Turing model</h3><p>The formulas give the following algorithm.</p><ul><li>If \(q=0\), return zero for every type.</li><li>Compute \(w_t=\mu_tB_t\), and sort types by increasing valuation and support-list position.</li><li>Find \(p^\ast\) by scanning the distinct valuations.</li><li>Set \(R^\ast=qp^\ast\). Traverse types in reverse sorted order, assigning each type the smaller of its budget mass \(w_t\) and the unassigned remainder of \(R^\ast\).</li><li>Return these assigned masses as \(P_t^\ast\), and return \(X_t^\ast=P_t^\ast/p^\ast\).</li></ul><p>For clarity, the price scan is explicit. Maintain \(H\), the budget mass before the next valuation \(a\).</p><ul><li>If \(H/q\leq a\), return \(p^\ast=H/q\).</li><li>Otherwise let \(H&#x27;=H-\sum_{t:v_t=a}w_t\). If \(H&#x27;\leq qa\), return \(p^\ast=a\).</li><li>Otherwise replace \(H\) by \(H&#x27;\) and continue.</li></ul><p>Whenever the scan advances, \(H&#x27;&gt;qa\), so the next candidate \(H&#x27;/q\) lies above the valuation just processed. At the highest valuation, the mass after removal is zero, so the scan necessarily terminates.</p><p>All operations are exact rational operations on numbers of polynomial encoding length. To verify this, write the mass and budget denominators as \(d_t\) and \(e_t\). The common denominator</p><p>\[
+Q=\prod_t d_te_t
+\]</p><p>has bit length bounded by the sum of their input bit lengths. Every budget-mass sum therefore has polynomial bit length. The clearing price is either an input valuation or such a sum divided by \(q\). The subsequent products, subtractions, comparisons and divisions likewise have polynomial bit length.</p><p>The algorithm uses a polynomial number of these operations, and exact integer arithmetic on polynomial-length operands takes polynomial time. It therefore runs in time polynomial in \(\tau\) and \(L\). Its exact rational outputs satisfy every requested additive error \(\varepsilon\), so this also establishes the stated bound polynomial in \(m,\tau,L,\log(1/\varepsilon)\), with \(m=1\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Opening budget interpretation and scope of the conclusion: The task leaves the budget sign and rational encoding less explicit than the value assumptions. The prover explicitly adopts the natural positive-rational-budget reading. State B_t in Q_{&gt;0} as an input assumption in the conclusion to make the scope unambiguous.</li><li><b>minor</b> — Section 3: definition of p_N and K_N: For continuous onset, there need not be a smallest price with positive accumulated allocation. Define p_N as the onset price or the infimum of prices with positive total allocation, and specify the state used for K_N. The subsequent argument already uses this convention.</li></ul>
+<div class="pre"><p>The argument establishes polynomial-time solvability under its explicitly stated positive-budget interpretation. The invariant, convergence bounds, tie-order formulas, and binary bit-complexity argument are sound. I found two minor clarification issues and no major gap.</p><ul><li><b>Scope and initialization.</b></li></ul><p>The case \(q=0\) is handled exactly as required.</p><p>For \(q&gt;0\), positive budgets imply \(W&gt;0\) and \(M&gt;0\). Restricting the convergence proof to replicas satisfying \(NW&gt;M\) is legitimate: every sufficiently large \(k\) satisfies this condition, and convergence is unaffected by finitely many initial terms.</p><p>The task does not explicitly specify the sign or rational encoding of \(B_t\) as clearly as it does for \(v_t\). The prover states its positive-rational-budget interpretation explicitly. This is a natural reading of the intended problem and is a <b>minor scope clarification</b>, rather than a substantive restriction that evades the target.</p><p><b>Minimum clarification:</b> state the conclusion with \(B_t\in\mathbb{Q}_{&gt;0}\) as an explicit input assumption. The claimed extension to nonnegative budgets with \(W&gt;0\) is consistent with the subsequent argument.</p><ul><li><b>Existence and uniqueness of the clearing price.</b></li></ul><p>The existence argument is supported by the explicit scan in Section 6. Before the first valuation, the active budget mass is \(W&gt;0\); after the highest valuation, it is zero. The scan checks both a crossing within an interval and a crossing across a valuation jump, including equality at either endpoint.</p><p>The uniqueness chain is correct. For \(p_1&lt;p_2\), every type counted by \(h_{\geq}(p_2)\) is counted by \(h_{&gt;}(p_1)\), so the displayed inequalities contradict \(qp_2&gt;qp_1\).</p><p>Thus \(p^\ast\) is well defined and positive.</p><ul><li><b>Continuous preservation of the supply invariant.</b></li></ul><p>The derivative calculations are correct:<br>\(S&#x27;=-rS/p\), \(H&#x27;=-rS\), and \(F&#x27;=-S\).</p><p>The clinching condition is equivalent to \(b_i=F\). Consequently, under the invariant, clinchers have the largest active budget. During a phase with fixed clinching set, their budgets evolve with the same derivative as \(F\), while the other budgets remain constant.</p><p>The stated solution for \(S(p)\) is correct. The phase description preserves \(F\geq b_i\), and there are finitely many joining events because the active set is fixed and each advertiser joins at most once on that interval.</p><p>The argument excluding a budget crossing below zero while supply remains positive is valid: at the first possible crossing, the invariant and nonnegativity force all active budgets to be zero, contradicting \(H=F+pS\) when \(S&gt;0\).</p><ul><li><b>Preservation after an individual valuation removal.</b></li></ul><p>The algebra is correct throughout. Removing budget \(d\) changes the pre-allocation value of \(F\) to \(g=F-d\). The prescribed increments therefore give<br>\(\delta_i=\max\{0,b_i-g\}/a\) and updated budgets \(\min\{b_i,g\}\).</p><p>Simultaneous allocation and payment leave this updated value of \(F\) equal to \(g\). The argument that the capped budgets sum to at least \(g\) correctly establishes nonnegative remaining supply.</p><p>The empty-set case is also covered: the displayed budget-sum identity and \(g\geq0\) force \(S=0\). Thus supply must be exhausted before termination with no active advertisers.</p><p>The citation is accurate: Lemma 4.9 states the corresponding supply inequality for each active advertiser. The prover supplies its own preservation argument for sequential removals, so it does not rely on transferring the paper’s tie treatment without verification. [Cited paper](https://www.cs.cornell.edu/~renatoppl/papers/online-clinching-soda13.pdf)</p><ul><li><b>First allocation and unused budgets.</b></li></ul><p>The bounds \(0\leq f_N\leq M\) are justified in both cases described. At continuous onset, \(f_N\) is the maximum active budget; at discrete onset, it is the nonnegative post-removal threshold, strictly below some remaining budget.</p><p>There is a <b>minor definitional ambiguity</b> in “the price at which allocation first begins.” For continuous onset, accumulated allocations can still be zero at the onset price, although they become positive immediately afterward.</p><p><b>Minimum clarification:</b> define \(p_N\) precisely as the onset price, or as the infimum of prices with positive total allocation. Specify that \(K_N\) is taken before the triggering increment in the discrete case and at the onset state in the continuous case. This merely formalizes the convention already used in the proof.</p><p>With that convention, the telescoping identity correctly accounts for unused budgets of subsequently removed advertisers and budgets retained at supply exhaustion. It yields \(0\leq U_N\leq M\).</p><p>The payment identity is valid during both continuous evolution and discrete increments. Since all purchases occur at prices at least \(p_N\), every advertiser satisfies \(\pi_i^{(N)}\geq p_Nx_i^{(N)}\). The resulting aggregate and typewise bounds are correct.</p><ul><li><b>Comparison with the clearing price.</b></li></ul><p>The description of \(K_N\) correctly gives<br>\(h_{&gt;}(p_N)\leq R_N\leq h_{\geq}(p_N)\).</p><p>Both monotonicity arguments are valid, including the separate equality case \(p_N=p^\ast\). Combining them with \(R_N=qp_N+f_N/N\) gives exactly the claimed bounds:<br>\(0\leq p^\ast-p_N\leq M/(Nq)\) and<br>\(0\leq R_N-R^\ast\leq M/N\).</p><p>No strict inequality assumption excludes clearing at a valuation or at a jump endpoint.</p><ul><li><b>Tie order and convergence.</b></li></ul><p>Before the first allocation, removals occur in the prescribed valuation, support-position, and copy-index order. Hence \(K_N\) is a suffix in that order.</p><p>The identity involving \(G_t(R_N)\) correctly handles a suffix cutting through the copies of a single type. The function \(G_t\) is nondecreasing and has Lipschitz constant one.</p><p>The payment error bound \(2M/N\) follows from the stated estimates. The allocation bound also checks: its three terms contribute at most \(M/N\), \(M/N\), and \(2M/N\), respectively. Dividing by the fixed positive \(p^\ast\) gives \(4M/(Np^\ast)\).</p><p>These estimates prove convergence along \(N=kD\) and establish the claimed limiting formulas, including reverse support-list priority within a clearing-price tie.</p><ul><li><b>Binary Turing complexity.</b></li></ul><p>The explicit scan terminates and returns the characterized clearing price. Reverse traversal computes precisely the proposed payment masses.</p><p>The common denominator \(Q\) has polynomial bit length, and budget-mass numerators and sums also have polynomial bit length. The clearing price requires only an input valuation or a budget-mass sum divided by \(q\). Subsequent rational operations do not involve an unbounded iteration or growing expression depth.</p><p>Sorting and scanning require polynomially many operations on polynomial-length integers. Exact rational outputs therefore establish the requested approximation bound without constructing \(D\), expanding the population, or simulating a finite auction.</p><p>The write-up needs only the two clarifications identified above. No additional mathematical lemma is needed to support its conclusion.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

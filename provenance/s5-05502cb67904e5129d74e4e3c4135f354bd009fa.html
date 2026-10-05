@@ -1,0 +1,247 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-05502cb67904e5129d74e4e3c4135f354bd009fa — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-05502cb67904e5129d74e4e3c4135f354bd009fa <span style="font-weight:normal;color:#8a7350">(s5-05502cb67904e5129d74e4e3c4135f354bd009fa)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: hard · adversarial review: proved · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> $\mathrm{NP}$-complete, even for capacity-one trees of depth three with dyadic masses and at most two preference classes per vertex.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.1 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Algorithm 1 can compute the optimal objective value of mmsmt in trees. Here we evaluate the time complexity of Algorithm 1. Deﬁne n := |V | and nv := |Cv| for each vertex v in U. Assume that for every vertex v in V and every pair of vertices u, w in N(v), we can decide whether u ≿v w in O(1) time. It is not diﬃcult to see that we can compute Ci v for all vertices v in U and all i = 1, 2, . . . , ℓ(v) in O(n log n) time in the same way as sorting.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite bipartite tree \(G=(V,E)\) of agent types, a positive rational mass \(\mu_v\) for each type with \(\sum_{v\in V}\mu_v=1\), an integer capacity \(q(v)\), and a weak preference order over neighboring types at each \(v\), compute an assignment maximizing total matched-pair mass subject to capacity and weak stability. Represent assignments by masses of bundles at each type, require matching incidences to balance across every edge, and require that for each type edge at least one endpoint has zero mass of agents willing to match across it.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(G=(V,E)\) be a finite simple bipartite tree, with \(m=|E|\). A society is given by its support: the list of \(\tau=|V|\) types with positive binary rational masses \(\mu_v\), summing to \(1\); \(\tau\) is the support size, not the number of possible types. Each type has a positive integer capacity \(q(v)\), encoded in binary, and an explicitly listed weak preference order over its neighbors \(N(v)\). All neighbors are acceptable; ties are retained.<br>A bundle for type \(v\) is a subset \(B\subseteq N(v)\) with \(|B|\le q(v)\), including the empty bundle. Thus an agent has at most one partner of each neighboring type. An assignment specifies nonnegative real masses \(x_{v,B}\) satisfying \(\sum_B x_{v,B}=\mu_v\).<br>For every edge \(\{v,w\}\), require incidence balance \(y_{vw}:=\sum_{B\ni w}x_{v,B}=\sum_{C\ni v}x_{w,C}\). Total matched-pair mass is \(\sum_{\{v,w\}\in E}y_{vw}\), counting each pair once.<br>A bundle \(B\) is willing toward \(w\in N(v)\) exactly when \(w\notin B\) and either \(|B|&lt;q(v)\) or \(w\succ_v u\) for some \(u\in B\). Let \(W_{v,w}\) be the sum of masses assigned to such bundles. Weak stability requires \(W_{v,w}=0\) or \(W_{w,v}=0\) for every edge.<br>Given also a nonnegative binary rational threshold \(b\), the decision problem asks whether a weakly stable assignment has total matched-pair mass at least \(b\). Let \(L\) be the total binary input length, including capacities and threshold; state running times in \(m,\tau,L\).</p><p>Is this continuous decision problem in \(\mathrm{P}\), with running time polynomial in \(m,\tau,L\), or is it \(\mathrm{NP}\)-hard?</p><p>The discrete maximum-cardinality many-to-many weakly stable matching problem on trees has a polynomial-time algorithm, with an \(O(n\log n)\) implementation for \(n\) vertices under constant-time preference comparisons ([Nakamura–Kamiyama](https://orsj.org/wp-content/or-archives50/pdf/e_mag/Vol.59_03_225.pdf)).<br>Related distributional many-to-many models have existence results for pairwise-stable outcomes ([Greinecker–Vocke](https://arxiv.org/abs/2604.26902)); no complexity classification for the exact mass optimization problem above was identified in the search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The graded question allowed integer capacities without specifying their sign; require positive integers, as in the discrete definition, and encode them in binary.</li><li>The bundle domain was undefined; use subsets of neighboring types, including the empty subset, carrying over the discrete model&#x27;s single incidence per edge.</li><li>Willingness was undefined; require the neighboring type to be absent from the bundle and either unused capacity or a strictly worse current partner. All listed neighbors are acceptable, and indifference alone does not permit replacement.</li><li>Assignment masses may be nonnegative real numbers; every type&#x27;s entire mass must be allocated among its feasible bundles.</li><li>Define matched-pair mass by balanced edge incidence, counting each edge once.</li><li>Express the exact optimization complexity question through a binary rational objective threshold; define m as the number of type edges and L as total binary input length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Classification</h3><p><b>The decision problem is $\mathrm{NP}$-complete.</b> It is $\mathrm{NP}$-hard even when every capacity is one, every preference list has at most two indifference classes, all masses are dyadic rationals, and the tree has depth three.</p><p>The proof uses a branch whose internal matched mass has an affine upper bound attained only at two possible flows to its parent. Attaining the global threshold then encodes SUBSET SUM.</p><h3>1. Capacity-one assignments</h3><p>Suppose $q(v)=1$ for every vertex. Write $y_{vw}$ for the incidence mass on an edge. The feasible incidence vectors are exactly those satisfying<br>$$
+y_{vw}\ge 0,\qquad
+\sum_{w\in N(v)}y_{vw}\le\mu_v.
+$$<br>Indeed, realize such a vector by setting<br>$$
+x_{v,\{w\}}=y_{vw},
+\qquad
+x_{v,\varnothing}=\mu_v-\sum_{w\in N(v)}y_{vw}.
+$$</p><p>For a neighbor $w$, the willing bundles are the empty bundle and singleton bundles containing a neighbor strictly worse than $w$. Consequently,<br>$$
+W_{v,w}
+=
+\mu_v-\sum_{\substack{u\in N(v)\\u\succeq_v w}}y_{vu}.
+$$<br>We use this identity throughout the reduction.</p><h3>2. A branch with two equality cases</h3><p>Fix $a&gt;0$. Consider six vertices $c,\ell,u,s,v,h$, attached to a parent $r$ by the edge $\{r,c\}$. The internal edges are<br>$$
+\{c,\ell\},\quad
+\{c,u\},\quad
+\{u,s\},\quad
+\{c,v\},\quad
+\{v,h\}.
+$$</p><p>All capacities are one. Specify masses and preferences as follows; the three leaves have only their displayed neighbor.</p><p>| Vertex | Mass | Preference order |<br>|---|---:|---|<br>| $c$ | $3a$ | $r\sim_c v\succ_c\ell\sim_c u$ |<br>| $\ell$ | at least $6a$ | $c$ |<br>| $u$ | $3a$ | $c\succ_u s$ |<br>| $s$ | $a$ | $u$ |<br>| $v$ | $a$ | $c\succ_v h$ |<br>| $h$ | $6a$ | $v$ |</p><p>Denote the edge masses by<br>$$
+t=y_{rc},\quad
+x=y_{c\ell},\quad
+y=y_{cu},\quad
+z=y_{us},\quad
+w=y_{cv},\quad
+k=y_{vh}.
+$$<br>Let<br>$$
+I=x+y+z+w+k
+$$<br>be the internal matched-pair mass, excluding the parent edge.</p><p><b>Branch lemma.</b> Every feasible assignment stable on the internal edges satisfies<br>$$
+I=
+\begin{cases}
+4a-t,&amp;0\le t\le 2a,\\
+2a,&amp;2a\le t\le 3a.
+\end{cases}
+$$<br>In particular,<br>$$
+I\le 4a-\frac23t,
+$$<br>with equality exactly when $t=0$ or $t=3a$. Both endpoint cases are attainable with internal stability.</p><p><b>Proof.</b> Feasibility gives<br>$$
+t+x+y+w\le 3a,\qquad
+y+z\le 3a,\qquad
+w+k\le a,\qquad
+z\le a.
+$$</p><p>Since $x\le 3a&lt;\mu_\ell$, the leaf $\ell$ has positive willingness toward $c$. Stability of $\{c,\ell\}$ therefore requires<br>$$
+W_{c,\ell}=3a-(t+x+y+w)=0,
+$$<br>so<br>$$
+t+x+y+w=3a.
+$$<br>Similarly, $k\le a&lt;6a=\mu_h$, so stability of $\{v,h\}$ requires<br>$$
+w+k=a.
+$$</p><p>On $\{u,s\}$, the willingness identity gives<br>$$
+W_{u,s}=3a-y-z,\qquad W_{s,u}=a-z.
+$$<br>Thus stability requires<br>$$
+z=a\quad\text{or}\quad y+z=3a.
+$$<br>On $\{c,v\}$, it gives<br>$$
+W_{c,v}=3a-t-w,\qquad W_{v,c}=a-w,
+$$<br>so<br>$$
+t+w=3a\quad\text{or}\quad w=a.
+$$</p><p>If $w=a$, then<br>$$
+k=0,\qquad x+y=2a-t,
+$$<br>and hence $t\le 2a$ and $y\le 2a$. If $z&lt;a$, stability on $\{u,s\}$ would force $y+z=3a$, implying $y&gt;2a$, a contradiction. Therefore $z=a$, and<br>$$
+I=(2a-t)+a+a=4a-t.
+$$</p><p>If $t+w=3a$, then $x+y=0$, so $x=y=0$. Stability on $\{u,s\}$ forces $z=a$, because its alternative would require $z=3a&gt;a$. Also $w\le a$ implies $t\ge 2a$. Therefore<br>$$
+I=z+w+k=a+a=2a.
+$$<br>These two cases exhaust the stability condition on $\{c,v\}$.</p><p>The difference from the asserted affine bound is<br>$$
+4a-\frac23t-I=
+\begin{cases}
+\frac13t,&amp;0\le t\le 2a,\\
+\frac23(3a-t),&amp;2a\le t\le 3a.
+\end{cases}
+$$<br>It is nonnegative and vanishes exactly at $t=0$ or $t=3a$.</p><p>Finally, use the following endpoint incidences:</p><p>| $t$ | $x$ | $y$ | $z$ | $w$ | $k$ |<br>|---:|---:|---:|---:|---:|---:|<br>| $0$ | $2a$ | $0$ | $a$ | $a$ | $0$ |<br>| $3a$ | $0$ | $0$ | $a$ | $0$ | $a$ |</p><p>Both rows satisfy all capacity constraints. They also satisfy the four stability conditions derived above. These conditions protect $\{c,\ell\}$, $\{u,s\}$, $\{c,v\}$, and $\{v,h\}$. The remaining internal edge $\{c,u\}$ is protected at $c$, since $c$ is saturated and every neighbor is weakly preferred to $u$. Thus both rows are internally stable. $\square$</p><h3>3. Reduction from SUBSET SUM</h3><p>Use the standard $\mathrm{NP}$-complete SUBSET SUM problem: given positive binary integers $a_1,\ldots,a_n$ and a target $B$, decide whether some subset sums to $B$. We may restrict to<br>$$
+0&lt;B&lt;A,\qquad A=\sum_{i=1}^n a_i,
+$$<br>because inputs outside this range are immediately decidable and can be mapped to fixed yes or no instances within the range. The underlying hardness theorem is classical; see [Karp, *Reducibility Among Combinatorial Problems*](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/Karp.pdf).</p><p>Create a root $r$ and one copy of the branch above for each $a_i$, connecting $r$ to its vertex $c_i$. Every capacity is one. The root is indifferent among all $c_i$.</p><p>First assign unnormalized masses:<br>$$
+\widehat\mu_r=3B,
+$$<br>and, in branch $i$,<br>$$
+(\widehat\mu_{c_i},\widehat\mu_{\ell_i},
+\widehat\mu_{u_i},\widehat\mu_{s_i},
+\widehat\mu_{v_i},\widehat\mu_{h_i})
+=
+(3a_i,6a_i,3a_i,a_i,a_i,6a_i).
+$$<br>Their sum is<br>$$
+S=3B+20A.
+$$</p><p>To make all masses dyadic, choose the smallest power of two $D\ge S$. Increase $\widehat\mu_{\ell_1}$ by $D-S$, and divide every mass by $D$. All masses are positive and sum to one. The increased leaf mass still meets the hypothesis of the branch lemma.</p><p>Set the threshold to<br>$$
+b=\frac{4A+B}{D}.
+$$</p><p>The resulting graph is a connected tree with<br>$$
+m=6n,\qquad \tau=6n+1.
+$$<br>Its bipartition is<br>$$
+\{r\}\cup\{u_i,v_i,\ell_i:1\le i\le n\}
+\quad\text{and}\quad
+\{c_i,s_i,h_i:1\le i\le n\}.
+$$<br>Every vertex is at distance at most three from $r$.</p><h3>Necessity</h3><p>Consider any weakly stable assignment, and write<br>$$
+\alpha_i=\frac{a_i}{D},\qquad
+t_i=y_{rc_i}.
+$$<br>Let $I_i$ be its internal matched mass in branch $i$. The branch lemma yields<br>$$
+I_i\le 4\alpha_i-\frac23t_i.
+$$<br>The root’s capacity constraint gives<br>$$
+T:=\sum_{i=1}^n t_i\le\mu_r=\frac{3B}{D}.
+$$<br>Therefore its total matched-pair mass $M$ satisfies<br>$$
+M=\sum_{i=1}^n(I_i+t_i)
+\le \frac{4A}{D}+\frac13T
+\le \frac{4A+B}{D}=b.
+$$</p><p>Suppose $M\ge b$. Equality must hold in both inequalities. More explicitly,<br>$$
+b-M
+=
+\frac13\left(\frac{3B}{D}-T\right)
++
+\sum_{i=1}^n
+\left(4\alpha_i-\frac23t_i-I_i\right),
+$$<br>and every term on the right is nonnegative. Hence<br>$$
+T=\frac{3B}{D},
+\qquad
+t_i\in\{0,3\alpha_i\}\quad\text{for every }i.
+$$<br>If<br>$$
+J=\{i:t_i=3\alpha_i\},
+$$<br>then<br>$$
+\frac3D\sum_{i\in J}a_i
+=
+\sum_i t_i
+=
+\frac{3B}{D},
+$$<br>so<br>$$
+\sum_{i\in J}a_i=B.
+$$</p><h3>Sufficiency</h3><p>Conversely, suppose a subset $J$ satisfies<br>$$
+\sum_{i\in J}a_i=B.
+$$<br>For branch $i$, use the endpoint construction from the lemma with<br>$$
+t_i=
+\begin{cases}
+3a_i/D,&amp;i\in J,\\
+0,&amp;i\notin J.
+\end{cases}
+$$<br>Every internal edge is stable. Moreover,<br>$$
+\sum_i t_i=\frac{3B}{D}=\mu_r.
+$$<br>Thus the root is saturated. Since all its neighbors are tied, Section 1 gives<br>$$
+W_{r,c_i}=\mu_r-\sum_j t_j=0
+$$<br>for every $i$. All parent edges are therefore stable as well.</p><p>Each branch attains its affine bound, so the total matched mass is<br>$$
+\sum_i(I_i+t_i)
+=
+\frac{4A}{D}+\frac13\sum_i t_i
+=
+\frac{4A+B}{D}=b.
+$$<br>The singleton/empty construction in Section 1 realizes these incidences as an assignment.</p><p>This proves the reduction in both directions.</p><h3>Encoding size</h3><p>Because $B&lt;A$,<br>$$
+S&lt;23A,\qquad D&lt;2S&lt;46A.
+$$<br>Every mass numerator and the threshold numerator have $O(\log A)$ bits. Including the graph and explicit preferences, the output length is<br>$$
+L=O\!\left(n(\log n+\log A)\right).
+$$<br>The construction takes polynomial bit time in the SUBSET SUM input length. Consequently, the continuous decision problem is $\mathrm{NP}$-hard.</p><h3>4. Membership in $\mathrm{NP}$ for arbitrary capacities</h3><p>For completeness, we prove that real assignment masses do not prevent polynomial-size certificates.</p><p>Suppose a stable assignment meets the threshold. For each edge, select an endpoint having zero willingness. At each vertex, retain only bundles unwilling toward every neighbor whose edge selected that vertex. The original assignment uses only retained bundles: a zero sum of nonnegative willing-bundle masses excludes every positive-mass willing bundle.</p><p>Introduce one nonnegative variable for each retained bundle, and a nonnegative slack variable $s$. Impose:</p><ul><li>The $\tau$ mass-conservation equations.</li><li>The $m$ incidence-balance equations.</li><li>The objective equation</li></ul><p>$$
+\sum_{v,B}|B|x_{v,B}-s=2b.
+$$</p><p>The last equation expresses the threshold because incidence balance gives<br>$$
+\sum_{v,B}|B|x_{v,B}
+=
+2\sum_{\{v,w\}\in E}y_{vw}.
+$$</p><p>This is a finite system<br>$$
+Az=c,\qquad z\ge0,
+$$<br>with<br>$$
+r=\tau+m+1
+$$<br>rows. Its coefficients are integers of absolute value at most $m+1$.</p><p>Choose a feasible solution with the fewest positive coordinates. Its corresponding columns of $A$ are linearly independent. Otherwise, let $h$ be a nonzero linear dependence supported on those coordinates, choosing its sign so that some $h_j&gt;0$. Setting<br>$$
+\varepsilon=\min_{j:h_j&gt;0}\frac{z_j}{h_j}
+$$<br>makes $z-\varepsilon h$ feasible and nonnegative, while eliminating at least one positive coordinate. This contradicts minimality.</p><p>Thus at most $r$ variables are positive. Choose a nonsingular square minor on their columns. Cramer’s rule shows that their values are rational.</p><p>To bound their encoding lengths, let $Q$ be the product of the denominators in $c$. Then $\log Q=O(L)$, and the entries of $Qc$ have $O(L)$ bits. A determinant of order at most $r$, with integer entries bounded by $m+1$, has absolute value at most<br>$$
+r!(m+1)^r.
+$$<br>For a Cramer numerator, one column instead contains entries of $Qc$, adding only $O(L)$ bits to this bound. Therefore every positive variable has<br>$$
+O\!\left(L+r\log(r(m+1))\right)
+$$<br>bits.</p><p>The resulting assignment remains stable because it uses only retained bundles. A certificate can list its at most $r$ positive bundle masses, with each bundle encoded as a subset of $V$. Its total size is polynomial in $m,\tau,L$.</p><p>A verifier checks bundle legality, mass conservation, incidence balance, the threshold, and every willingness condition using exact rational arithmetic, in<br>$$
+\operatorname{poly}(m,\tau,L)
+$$<br>bit time. Hence the problem belongs to $\mathrm{NP}$.</p><h3>5. Complexity conclusion</h3><p>The reduction proves $\mathrm{NP}$-hardness on capacity-one trees, and the certificate argument proves membership in $\mathrm{NP}$ for the full problem. Therefore the continuous decision problem is $\mathrm{NP}$-complete.</p><p>In particular, an exact algorithm polynomial in $m,\tau,L$ would imply<br>$$
+\mathrm{P}=\mathrm{NP}.
+$$</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s output resolves the task. The reduction establishes $\mathrm{NP}$-hardness under all the stated restrictions, and the certificate argument establishes membership in $\mathrm{NP}$ for arbitrary capacities. I found no major or minor mathematical issues.</p><h3>1. Capacity-one representation</h3><p>The incidence characterization is correct when every capacity equals one. The only legal bundles are the empty bundle and individual neighboring types, so nonnegative edge incidences satisfying<br>$$
+\sum_{w\in N(v)}y_{vw}\le\mu_v
+$$<br>are realized by exactly the singleton/empty construction given.</p><p>The willingness formula is also correct:<br>$$
+W_{v,w}
+=
+\mu_v-\sum_{u\succeq_v w}y_{vu}.
+$$<br>The excluded mass consists of singleton bundles whose partner is weakly preferred to $w$, including $w$ itself. The remaining mass consists precisely of empty bundles and singleton bundles with a strictly worse partner. Thus ties are handled consistently with the task’s definition.</p><h3>2. Branch lemma</h3><p>Every calculation in the branch lemma checks out.</p><p><b>Forced saturation.</b> Feasibility gives $x\le3a$, whereas $\mu_\ell\ge6a$. Consequently, $\ell$ has strictly positive willingness toward $c$, forcing<br>$$
+t+x+y+w=3a.
+$$<br>Likewise, $k\le a&lt;6a=\mu_h$ forces<br>$$
+w+k=a.
+$$<br>These conclusions remain valid when the mass of $\ell$ is increased during normalization.</p><p><b>The remaining necessary stability conditions.</b> The preferences at $u$ and $s$ give<br>$$
+z=a\quad\text{or}\quad y+z=3a.
+$$<br>The preferences at $c$ and $v$ give<br>$$
+t+w=3a\quad\text{or}\quad w=a.
+$$<br>Both disjunctions follow directly from zero willingness at at least one endpoint.</p><p><b>First case.</b> If $w=a$, saturation at $c$ gives $x+y=2a-t$, implying $t\le2a$ and $y\le2a$. If $z&lt;a$, the alternative $y+z=3a$ would imply $y&gt;2a$. Therefore $z=a$, and<br>$$
+I=4a-t.
+$$</p><p><b>Second case.</b> If $t+w=3a$, nonnegativity and saturation at $c$ force $x=y=0$. Stability on $\{u,s\}$ then forces $z=a$, while $w+k=a$ gives<br>$$
+I=2a.
+$$<br>The bound $w\le a$ implies $t\ge2a$.</p><p>The two cases cover every internally stable assignment. Their overlap at $t=2a$ is consistent: both expressions give $I=2a$.</p><p><b>Affine bound and equality cases.</b> The displayed differences are correct:<br>$$
+4a-\frac23t-I=
+\begin{cases}
+\frac13t,&amp;0\le t\le2a,\\
+\frac23(3a-t),&amp;2a\le t\le3a.
+\end{cases}
+$$<br>Since $a&gt;0$, equality occurs precisely at $t=0$ and $t=3a$.</p><p><b>Attainability.</b> Both endpoint rows satisfy feasibility and all internal stability requirements. In particular, the otherwise unused edge $\{c,u\}$ is protected at $c$: $c$ is saturated, and all its neighbors are weakly preferred to $u$.</p><p>The upper-bound derivation uses necessary internal stability conditions; it does not incorrectly assume those conditions alone are sufficient. Sufficiency is checked separately for the endpoint constructions.</p><h3>3. Reduction and input restrictions</h3><p>The source problem is stated with the appropriate binary encoding and positive integer weights. The invoked $\mathrm{NP}$-completeness of SUBSET SUM is the standard hardness premise cited by the prover. The positive-integer formulation is also stated in the research paper [*Subset Sum Made Simple*](https://arxiv.org/abs/1807.08248).</p><p>Restricting to $0&lt;B&lt;A$ is legitimate: outside this range, the source instances are immediately decidable, as the prover states.</p><p>The constructed instance satisfies all requirements:</p><ul><li>Each branch contributes six vertices and six edges, counting its parent edge. Hence $m=6n$ and $\tau=6n+1$.</li><li>The graph is connected and acyclic, and the displayed bipartition is correct.</li><li>Every vertex is within distance three of $r$.</li><li>All capacities are one, and every preference list has at most two indifference classes.</li><li>Every mass is strictly positive, so the listed vertices are exactly the support.</li></ul><p>The unnormalized branch masses sum to $20a_i$, giving $S=3B+20A$. Adding $D-S$ to $\widehat\mu_{\ell_1}$ makes the total exactly $D$. Dividing by the power of two $D$ produces positive dyadic masses summing to one.</p><p>Only the mass of an oversized leaf changes, so the branch lemma remains applicable with $a=\alpha_i=a_i/D$.</p><h3>4. Necessity of a subset-sum solution</h3><p>The global upper bound is correct:<br>$$
+M=\sum_i(I_i+t_i)
+\le\frac{4A}{D}+\frac13T
+\le\frac{4A+B}{D}=b.
+$$</p><p>The displayed identity for $b-M$ is also correct. Every summand is nonnegative by either root feasibility or the branch lemma. Thus $M\ge b$ forces all these summands to vanish, yielding<br>$$
+T=\frac{3B}{D},
+\qquad
+t_i\in\{0,3a_i/D\}.
+$$<br>The selected endpoint flows then give exactly<br>$$
+\sum_{i\in J}a_i=B.
+$$</p><p>This argument correctly excludes fractional intermediate flows at the threshold. There is no cancellation between branch deficits or between those deficits and unused root mass.</p><h3>5. Sufficiency and encoding size</h3><p>Given a subset summing to $B$, the endpoint constructions provide internally stable branches and feasible incidences. Their parent flows sum to $\mu_r$.</p><p>Because every root neighbor is tied, root saturation implies<br>$$
+W_{r,c_i}=0
+$$<br>for every parent edge, including those with zero incidence. Thus all parent edges are stable.</p><p>Each branch attains its affine bound, making the total matched mass exactly $b$. The capacity-one construction realizes the incidences as an assignment satisfying incidence balance.</p><p>The encoding estimates are valid:<br>$$
+S&lt;23A,
+\qquad
+D&lt;2S&lt;46A.
+$$<br>The increased leaf numerator is at most $D$, and all other mass numerators and the threshold numerator have $O(\log A)$ bits. The graph and explicitly listed preferences fit the stated bound<br>$$
+L=O\!\left(n(\log n+\log A)\right).
+$$<br>The construction therefore runs in polynomial bit time in the source input length. It does not require time polynomial in the numerical value of $A$.</p><h3>6. Membership in $\mathrm{NP}$</h3><p>The certificate argument is valid for arbitrary binary-encoded capacities.</p><p><b>Retaining bundles.</b> For each edge, stability supplies an endpoint with zero willingness. Since willingness is a sum of nonnegative bundle masses, every positive-mass bundle at that endpoint is unwilling toward the corresponding neighbor. Restricting to the retained bundles therefore preserves the original feasible solution.</p><p><b>Threshold equation.</b> Incidence balance justifies<br>$$
+\sum_{v,B}|B|x_{v,B}=2\sum_{\{v,w\}\in E}y_{vw}.
+$$<br>Consequently, the objective equation with nonnegative slack expresses precisely the required lower bound.</p><p><b>Sparse support.</b> Although there may be exponentially many legal bundles, their number is finite. A feasible solution with minimum support therefore exists. The linear-dependence perturbation preserves the equations and nonnegativity and removes a positive coordinate, contradicting minimum support. Thus the positive columns are independent, and there are at most<br>$$
+r=\tau+m+1
+$$<br>positive variables, including any positive slack.</p><p><b>Rationality and bit length.</b> Independent columns admit a nonsingular square minor. Cramer’s rule applies to that minor, and the original solution satisfies its selected equations.</p><p>The coefficient bound is valid because every bundle has size at most the vertex degree, hence at most $m$, regardless of the binary magnitude of its capacity. The denominator-clearing and determinant estimates give the stated polynomial encoding length. They bound denominators as well as numerators.</p><p><b>Verification.</b> The certificate can list only its positive bundle masses; omitted bundles have zero mass. Bundle legality, conservation, incidence balance, threshold attainment, and willingness can all be checked using polynomially many exact rational operations on polynomial-length numbers. No enumeration of all possible bundles is needed.</p><p>The argument also covers a tree with no edges and capacities exceeding vertex degrees.</p><h3>7. Verdict and repair feedback</h3><p>The output establishes $\mathrm{NP}$-completeness of the continuous decision problem. Its stronger hardness restrictions are also established. The conclusion concerning a polynomial-time algorithm is correctly conditional on $\mathrm{P}=\mathrm{NP}$.</p><p>No additional lemma, calculation, or clarification is needed to make the argument verifiable.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

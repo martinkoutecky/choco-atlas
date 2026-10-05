@@ -1,0 +1,372 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Online Resource Sharing: Better Robust Guarantees via Randomized Strategies — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Online Resource Sharing: Better Robust Guarantees via Randomized Strategies <span style="font-weight:normal;color:#8a7350">(ijcai25-00021)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite rational types \(θ=(a_θ,F_θ)\) with masses \(μ_θ\) satisfying \(∑_θ μ_θa_θ=1\) and a target \(β\), decide whether there is a compact type-indexed bidding policy \(Π\) for the repeated first-price artificial-currency auction such that, in every finite realization with \(Nμ_θ\in\mathbb{Z}\), fair share \(a_θ/N\), and \(T/N\to\infty\), every positive-mass type satisfies \(\liminf \inf \mathbb{E}[∑_{t=1}^T V_i[t]W_i[t]]/(Tv^*_{θ,N})\geβ\) against arbitrary behavior by all other agents; if so, output \(Π\) and a certificate.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list of \(\tau\) types \(\theta=(a_\theta,F_\theta)\) with positive binary-rational masses \(\mu_\theta\). Here \(\tau\) is the support size, not the number of possible types. Require \(\sum_\theta\mu_\theta=1\), \(a_\theta&gt;0\), and \(\sum_\theta\mu_\theta a_\theta=1\). Each \(F_\theta\) is explicitly supported on at most \(m\) nonnegative rational values with rational probabilities and positive mean. The input includes rational \(\beta\in[0,1]\); \(L\) is its total binary encoding length.<br>An admissible realization has an integer \(N\ge2\), exactly \(N\mu_\theta\in\mathbb Z\) agents of each type, and fair shares \(\alpha_i=a_\theta/N\le1\). Values are private and drawn independently across agents and rounds from their type distributions.<br>Over \(T\) rounds, agent \(i\) starts with \(\alpha_iT\) artificial tokens. Bids lie in \([0,B_i[t]]\); one highest bidder receives the item and pays its bid, losing bidders pay nothing, and tokens have no terminal utility. Ties may be resolved arbitrarily, including against the protected agent.<br>Define \(v^*_{\theta,N}=\max_{\rho:\operatorname{supp}(F_\theta)\to[0,1]}\{\mathbb E[V\rho(V)]:\mathbb E[\rho(V)]\le a_\theta/N\}\). Write \(W_i[t]\) for the winning indicator.<br>A compact type-indexed policy \(\Pi\) consists of one finite randomized program per type, taking \(N,T\), the current private value, remaining budget, and observed history as inputs. Programs may use rational or finitely encoded real-algebraic constants, exact real arithmetic, comparisons, and independent uniform samples; they must terminate each round. Their descriptions are independent of the expanded population and horizon, and policies may depend on history and budget.<br>Opponents may coordinate arbitrary feasible, history-dependent bids, but cannot observe the protected agent’s current private value or fresh randomization before submitting their simultaneous bids. Public history contains past bids, allocations, and payments.<br>Call \(\Pi\) asymptotically \(\beta\)-robust if, for every admissible sequence \((N_k,T_k)\) with \(T_k/N_k\to\infty\), every type satisfies \(\liminf_{k\to\infty}\inf_{i:\operatorname{type}(i)=\theta}\inf_{\sigma_{-i},\,\mathrm{ties}}\mathbb E_{\Pi_\theta,\sigma_{-i}}[\sum_{t=1}^{T_k}V_i[t]W_i[t]]/(T_kv^*_{\theta,N_k})\ge\beta\). Other agents need not follow \(\Pi\).</p><p>Is deciding whether the requested robustness factor \(\beta\) is attainable by a compact type-indexed policy in \(\mathrm P\), or is it \(\mathrm{NP}\)-hard? State synthesis running times in \(m,\tau,L\).</p><p>For finite societies, an explicit randomized policy guarantees a \(2-\sqrt2-o(1)\) fraction of ideal utility as the horizon grows with fixed positive fair shares. For Bernoulli values whose mean equals the fair share, bounded stationary bid distributions cannot exceed \(3/5\) as the share vanishes. [Verified source](https://arxiv.org/html/2505.13824v2)<br>No result settling the support-encoded robustness-attainability problem above was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Interpreted masses as a probability distribution, adding that they sum to one while retaining the specified weighted fair-share normalization.</li><li>Interpreted finite rational value distributions as explicitly listed finite supports with rational values and probabilities; m bounds each value-support size.</li><li>Required positive fair-share weights and positive mean values so that every normalized ideal-utility ratio is defined; allowed zero-valued support points.</li><li>Restricted the target factor to a binary rational in [0,1] and restricted realizations to at least two agents with valid fair shares.</li><li>Defined compact policies as finite randomized programs independent of the expanded population and horizon, allowing history and budget dependence and continuous random bids.</li><li>Specified simultaneous bidding, private current values and fresh randomization, public past bids and outcomes, and coordinated feasible opponents.</li><li>Required robustness against arbitrary tie-breaking and separately for every agent of each type, rather than only type-average utility.</li><li>Interpreted the asymptotic condition uniformly over admissible sequences with T/N tending to infinity, including sequences with fixed N.</li><li>Omitted the unspecified certificate output because the deliverable is a proof question, and retained policy synthesis as the constructive component.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and scope</h3><p>I do not establish whether general robustness attainability is in $\mathrm P$ or is $\mathrm{NP}$-hard.</p><p>The following are rigorously proved partial results:</p><ul><li>A stronger, polynomial-time computable sufficient condition, obtained by optimizing the valuation cutoff in the verified bidding construction.</li><li>Polynomial-time compact-policy synthesis throughout that sufficient interval.</li><li>A necessary bound using weighted subsets of agents, which can exclude factors that the total-welfare bound does not exclude.</li><li>A complete characterization of attainability of $\beta=1$ when $\tau=1$: it is attainable exactly when the value distribution is deterministic.</li><li>A finite-population reduction for every $0&lt;\beta&lt;1$.</li></ul><p>For the bit-complexity statements, I use the intended interpretation that the parameters $a_\theta$ are binary-encoded rationals. Otherwise their encoding needs specification.</p><h3>1. Admissible populations and the benchmark</h3><p>Let $D$ be the least common multiple of the denominators of the masses, written in lowest terms, and put</p><p>$$
+\ell_0=\left\lceil\frac{2}{D}\right\rceil.
+$$</p><p>The admissible population sizes are precisely</p><p>$$
+N=D\ell,\qquad \ell\in\mathbb Z,\qquad \ell\ge\ell_0.
+$$</p><p>Indeed, the integrality conditions are equivalent to $D\mid N$. For such a population,</p><p>$$
+\sum_i\alpha_i
+=
+\sum_\theta N\mu_\theta\frac{a_\theta}{N}
+=1.
+$$</p><p>Every agent has a positive share, and there are at least two agents. Consequently each share is strictly less than $1$, so the individual share constraint imposes no further restriction.</p><p>For a finite-support distribution $F$, define</p><p>$$
+g_F(x)
+=
+\max_{\substack{0\le\rho(v)\le1\\
+\mathbb E[\rho(V)]\le x}}
+\mathbb E[V\rho(V)],
+\qquad 0\le x\le1.
+$$</p><p>Thus</p><p>$$
+v^*_{\theta,N}=g_{F_\theta}(a_\theta/N).
+$$</p><p>Remove zero-probability atoms and merge repeated values. Write the remaining atoms in decreasing order as</p><p>$$
+v_1&gt;v_2&gt;\cdots&gt;v_s\ge0,
+\qquad
+\Pr(V=v_j)=p_j&gt;0,
+$$</p><p>where $s\le m$. Define</p><p>$$
+q_0=s_0=0,\qquad
+q_j=\sum_{r=1}^j p_r,\qquad
+s_j=\sum_{r=1}^j p_rv_r.
+$$</p><p>Here $s_j$ denotes accumulated utility, whereas $s$ denotes the number of atoms.</p><p>A maximizing selector first selects the largest values. To justify this, write the selected probability mass at atom $j$ as $z_j=p_j\rho(v_j)$. If $v_j&gt;v_k$, $z_j&lt;p_j$, and $z_k&gt;0$, transferring a positive amount of selected mass from $k$ to $j$ strictly increases utility without changing the total selected mass. Because values are nonnegative, the constraint can be saturated, including by selecting zero values when necessary.</p><p>It follows that, for $q_{j-1}\le x\le q_j$,</p><p>$$
+g_F(x)
+=
+s_{j-1}+v_j(x-q_{j-1}).
+$$</p><p>In particular, $g_F$ is increasing, concave, and piecewise affine. On each affine piece it has the form</p><p>$$
+g_F(x)=d+cx,\qquad c,d\ge0,
+$$</p><p>because</p><p>$$
+c=v_j,\qquad
+d=\sum_{r&lt;j}p_r(v_r-v_j).
+$$</p><p>Let</p><p>$$
+M=v_1,\qquad p=p_1.
+$$</p><p>Positive mean implies $M&gt;0$. For $0&lt;x\le p$,</p><p>$$
+g_F(x)=Mx.
+$$</p><h3>2. A uniform finite-horizon policy lemma</h3><p>The next lemma repairs both specification issues identified in the verifier report.</p><p><b>Lemma.</b> Fix a protected agent with share $0&lt;\alpha&lt;1$, horizon $T$, and initial budget $B_0=\alpha T$. Suppose a valuation selector has activation probability and conditional active value</p><p>$$
+q=\mathbb E[\rho(V)]&gt;0,
+\qquad
+w=\frac{\mathbb E[V\rho(V)]}{q}.
+$$</p><p>Set</p><p>$$
+b=1-\alpha+\frac{\alpha}{q},
+\qquad
+\delta=\frac{1}{1+B_0}.
+$$</p><p>The policy is:</p><ul><li>If the remaining budget is below $b+\delta$, bid zero.</li><li>Otherwise activate with probability $\rho(V)$; upon activation bid $b+\delta U$, with a fresh independent uniform sample $U$.</li><li>If not activated, bid zero.</li></ul><p>Against all feasible opponent strategies and all tie rules,</p><p>$$
+\mathbb E\left[\sum_{t=1}^T V[t]W[t]\right]
+\ge
+w\left(
+\frac{B_0}{b}-2-2\sqrt{\frac{B_0}{b}+1}
+\right).
+$$</p><p><b>Proof.</b> Since $q\le1$, we have $b\ge1$. The budget test makes every bid feasible. Conditional on the history, activation, and the opponents’ current bids, the protected positive bid has a continuous distribution independent of those bids. Positive-bid ties therefore have probability zero.</p><p>Let $S$ count protected wins with positive bids and put</p><p>$$
+K=\frac{B_0}{b}.
+$$</p><p>We first specify an unconditional coupling used below. On the full probability space, take an infinite independent sequence</p><p>$$
+X_1,X_2,\ldots\sim\operatorname{Bernoulli}(q).
+$$</p><p>An eligible round is one whose protected budget is at least $b+\delta$. Call an eligible round low if the maximum opponent bid is below $b$. Whether a round is eligible and low is determined before observing the protected current value or fresh samples. Supply successive eligible low rounds with successive $X_r$ as their activation indicators, and sample the current value and selector randomness conditionally on that indicator. In other rounds use separate fresh randomness.</p><p>This construction preserves the required joint law of the current value and activation. Unused $X_r$ remain defined. In particular, neither this sequence nor the random variable defined from it below is conditioned on eventual budget exhaustion.</p><p>Set</p><p>$$
+h_0=T-\frac{(1-\alpha)T}{b},
+\qquad
+n_0=\lceil h_0\rceil,
+$$</p><p>and define unconditionally</p><p>$$
+Z=
+\max_{0\le j\le n_0}
+\left|\sum_{r=1}^j(X_r-q)\right|.
+$$</p><p>There are two budget cases.</p><p><b>Case 1: the protected budget falls below $b+\delta$.</b> This includes initial insufficiency and a threshold crossing after the last round. Only positive-bid wins reduce the protected budget, and each costs at most $b+\delta$. Hence</p><p>$$
+S\ge\frac{B_0}{b+\delta}-1.
+$$</p><p>Because $B_0\delta&lt;1$ and $b\ge1$,</p><p>$$
+\frac{B_0}{b+\delta}
+=
+K-\frac{B_0\delta}{b(b+\delta)}
+\ge K-1.
+$$</p><p>Thus $S\ge K-2$ in this case.</p><p><b>Case 2: the protected budget never falls below $b+\delta$.</b> All rounds are eligible. Let $H$ count low rounds, and let $S_h$ count protected wins in the remaining, high rounds.</p><p>Every high round not won by the protected agent requires an opponent payment of at least $b$. The opponents’ aggregate initial budget is $(1-\alpha)T$, so</p><p>$$
+T-H-S_h\le\frac{(1-\alpha)T}{b},
+$$</p><p>and therefore</p><p>$$
+H\ge h_0-S_h.
+$$</p><p>The definition of $b$ gives</p><p>$$
+qh_0
+=
+\frac{qT(b-1+\alpha)}{b}
+=
+\frac{\alpha T}{b}
+=K.
+$$</p><p>Activation guarantees a win in a low round. Consequently,</p><p>$$
+S\ge
+\sum_{r=1}^{\min(H,n_0)}X_r+S_h.
+$$</p><p>Since $n_0\ge h_0$ and $H\ge h_0-S_h$,</p><p>$$
+\min(H,n_0)\ge h_0-S_h.
+$$</p><p>Using the definition of $Z$,</p><p>$$
+S
+\ge q\min(H,n_0)-Z+S_h
+\ge K+(1-q)S_h-Z
+\ge K-Z.
+$$</p><p>Combining the two cases gives, on the full probability space,</p><p>$$
+S\ge K-2-Z.
+$$</p><p>The centered Bernoulli partial sums form a square-integrable martingale. Doob’s maximal inequality and Cauchy–Schwarz give</p><p>$$
+\mathbb E[Z]
+\le
+2\sqrt{n_0q(1-q)}
+\le
+2\sqrt{K+1},
+$$</p><p>where the last inequality follows from $n_0q\le qh_0+q\le K+1$. Hence</p><p>$$
+\mathbb E[S]\ge K-2-2\sqrt{K+1}.
+$$</p><p>Finally, conditional on activation, the current value has mean $w$. Eligibility depends on the past, and the positive bid uses no further information about the active value. The opponents cannot observe that current value before bidding. Thus every counted win contributes expected utility $w$ conditional on the variables determining its winning event. Zero-bid wins contribute nonnegative utility. Therefore total expected utility is at least $w\mathbb E[S]$. $\square$</p><h3>3. Optimizing the valuation selector</h3><p>For fixed $F$ and $\alpha$, use a selector attaining $g_F(q)$ with activation probability exactly $q$. The leading factor from the lemma is</p><p>$$
+R_F(\alpha,q)
+=
+\frac{\alpha g_F(q)}
+{g_F(\alpha)\bigl(\alpha+(1-\alpha)q\bigr)}.
+$$</p><p>Define</p><p>$$
+R_F(\alpha)=\max_{0&lt;q\le1}R_F(\alpha,q).
+$$</p><p>This optimization has a finite exact solution.</p><p><b>Proposition.</b> An optimal $q$ belongs to the set of upper-tail probabilities $\{q_1,\ldots,q_s\}$. Consequently,</p><p>$$
+R_F(\alpha)
+=
+\max_{1\le j\le s}
+\frac{\alpha s_j}
+{g_F(\alpha)\bigl(q_j+(1-q_j)\alpha\bigr)}.
+$$</p><p><b>Proof.</b> The factors independent of $q$ can be omitted when maximizing. On a piece where $g_F(q)=d+cq$,</p><p>$$
+\frac{d}{dq}
+\left(
+\frac{d+cq}{\alpha+(1-\alpha)q}
+\right)
+=
+\frac{c\alpha-(1-\alpha)d}
+{\bigl(\alpha+(1-\alpha)q\bigr)^2}.
+$$</p><p>The derivative has constant sign on that piece. Its maximum therefore occurs at an endpoint, unless the function is constant, when either endpoint suffices. The endpoint $q=0$ has value zero, whereas $q_1&gt;0$ has positive value. The remaining endpoints are precisely $q_1,\ldots,q_s$. $\square$</p><p>The corresponding policy activates whenever the value is one of the top $j$ atoms. No cutoff randomization is needed.</p><p>There is also a uniform error bound. Write</p><p>$$
+C_F=\frac{M}{\mathbb E[V]}.
+$$</p><p>Since the selector $\rho(v)=\alpha$ is feasible,</p><p>$$
+g_F(\alpha)\ge\alpha\mathbb E[V].
+$$</p><p>Moreover $w\le M$ and $K\le\alpha T$. Applying the lemma to a maximizing cutoff gives</p><p>$$
+\frac{\mathbb E[\sum_t V[t]W[t]]}{Tg_F(\alpha)}
+\ge
+R_F(\alpha)
+-
+C_F\frac{2+2\sqrt{\alpha T+1}}{\alpha T}.
+$$</p><p>For each type,</p><p>$$
+\alpha_{\theta,N}T=a_\theta T/N.
+$$</p><p>Thus the error tends to zero along every sequence specified in the question, uniformly over protected agents, opponent strategies, and tie rules.</p><h3>4. Computing the worst population without enumerating populations</h3><p>Define the sufficient factor</p><p>$$
+G_{\mathrm{tail}}
+=
+\min_\theta
+\inf_{\ell\ge\ell_0}
+R_{F_\theta}\left(\frac{a_\theta}{D\ell}\right),
+$$</p><p>where $\ell$ ranges over integers.</p><p>Although the population sizes are unbounded, this number can be computed from polynomially many rational candidates.</p><p>Fix one type, suppress its subscript, and define</p><p>$$
+f_j(\alpha)
+=
+\frac{s_j}{q_j+(1-q_j)\alpha}.
+$$</p><p>The maximizing cutoff in $R_F(\alpha)$ is a maximizer of $f_j(\alpha)$. Two nonidentical functions $f_j,f_k$ can intersect at most once, because their equality is equivalent to the linear equation</p><p>$$
+s_j\bigl(q_k+(1-q_k)\alpha\bigr)
+=
+s_k\bigl(q_j+(1-q_j)\alpha\bigr).
+$$</p><p>Make a breakpoint set consisting of:</p><ul><li>all $q_j$;</li><li>all pairwise intersections lying in $(0,1)$;</li><li>the endpoint $1$.</li></ul><p>It has size $O(m^2)$, and all its entries are rational.</p><p>Between consecutive breakpoints, $g_F(\alpha)=d+c\alpha$ with $c,d\ge0$, and a single index $j$ can be chosen as a maximizer throughout the interval. There,</p><p>$$
+R_F(\alpha)
+=
+\frac{\alpha s_j}
+{\bigl(q_j+(1-q_j)\alpha\bigr)(d+c\alpha)}.
+$$</p><p>The sign of its derivative is the sign of</p><p>$$
+q_jd-(1-q_j)c\alpha^2.
+$$</p><p>As $\alpha$ increases, this expression can change sign only from positive to negative. Therefore the function has no strict interior minimum: it is monotone, constant, or increases and then decreases.</p><p>It follows that the minimum over the discrete points $\alpha=a/(D\ell)$ in any such interval occurs at an extreme discrete point of that interval. For a positive breakpoint $r$, these extreme points are obtained from integers adjacent to</p><p>$$
+\frac{a}{Dr}.
+$$</p><p>Accordingly, form the candidate set</p><p>$$
+\mathcal C=
+\{\ell_0\}
+\cup
+\bigcup_r
+\left\{
+\max\left\{\ell_0,\left\lfloor\frac{a}{Dr}\right\rfloor\right\},
+\max\left\{\ell_0,\left\lceil\frac{a}{Dr}\right\rceil\right\}
+\right\}.
+$$</p><p>The unbounded final interval also has the limiting endpoint $\alpha=0$. Its limit is</p><p>$$
+\lim_{\alpha\downarrow0}R_F(\alpha)=1.
+$$</p><p>To verify this, the maximum-atom cutoff alone gives</p><p>$$
+R_F(\alpha)\ge
+\frac{p}{p+(1-p)\alpha}
+\qquad
+\text{when }\alpha\le p.
+$$</p><p>Conversely, $R_F(\alpha,q)\le1$ for every $q$. If $q\le\alpha$, use $g_F(q)\le g_F(\alpha)$; if $q\ge\alpha$, concavity and $g_F(0)=0$ give</p><p>$$
+\frac{g_F(q)}{q}\le\frac{g_F(\alpha)}{\alpha}.
+$$</p><p>Substitution proves the claimed upper bound in both cases.</p><p>We have therefore established the exact finite formula</p><p>$$
+\inf_{\ell\ge\ell_0}
+R_F\left(\frac{a}{D\ell}\right)
+=
+\min\left(
+\{1\}\cup
+\left\{
+R_F\left(\frac{a}{D\ell}\right):\ell\in\mathcal C
+\right\}
+\right).
+$$</p><p>This computes $G_{\mathrm{tail}}$ exactly without enumerating the populations.</p><h3>5. Synthesis running time and the supplied baseline</h3><p><b>Proved synthesis result.</b> Every requested factor</p><p>$$
+\beta\le G_{\mathrm{tail}}
+$$</p><p>is attainable by a compact type-indexed policy.</p><p>For each type, the program stores its sorted support and the prefix data $(q_j,s_j)$. Given $N$, it computes $\alpha=a_\theta/N$, chooses a maximizing cutoff in Section 3, and applies the policy of Section 2.</p><p>There are $O(m^2)$ candidate populations per type. Evaluating $g_F(\alpha)$ and all cutoff expressions takes $O(m)$ rational operations per candidate. All preprocessing numbers have bit lengths $O(L)$: this includes $D$, prefix sums, pairwise intersections, and candidate population sizes.</p><p>Using elementary integer arithmetic, a conservative preprocessing and synthesis bound is</p><p>$$
+O\bigl((\tau m^3+1)L^3\bigr)
+$$</p><p>bit operations. The descriptions have polynomial length and contain formulas and support tables, rather than expanded agents or a horizon table. A round uses $O(m)$ exact arithmetic and comparison operations and finitely many uniform samples.</p><p>The supplied baseline can also be retained. [Theorem 1 and the RRB specification](https://arxiv.org/html/2505.13824v2) give the limiting factor $c_0=2-\sqrt2$ for each fixed positive share. The policy activates using an ideal selector and, while its budget is at least $1+\sqrt2$, bids uniformly on $[0,1+\sqrt2]$. Its assumptions—independent private values, first-price payments, arbitrary opponents, and arbitrary ties—match the present fixed-population setting.</p><p>To obtain the stronger population-sequence quantifier, set</p><p>$$
+H=
+\left\lceil
+\max\left\{2,\ 4\max_\theta\frac{a_\theta}{p_\theta}\right\}
+\right\rceil.
+$$</p><p>Use RRB for $N&lt;H$ and the maximum-atom policy for $N\ge H$. In the latter branch, $\alpha\le p_\theta/4$, and its leading factor is</p><p>$$
+\frac{1}{1+\alpha(1/p_\theta-1)}
+\ge\frac45.
+$$</p><p>Its uniform error vanishes when $T/N\to\infty$. The former branch contains finitely many populations, so their fixed-population convergence thresholds can be made simultaneous.</p><p>Thus the strengthened sufficient interval is</p><p>$$
+\boxed{
+\beta\le
+\max\{2-\sqrt2,\ G_{\mathrm{tail}}\}.
+}
+$$</p><p>The same polynomial synthesis bound applies. This is a sufficient-condition algorithm, not an algorithm deciding unrestricted attainability.</p><h3>6. A strict improvement over the previous cutoff rule</h3><p>Consider one type with</p><p>$$
+\mu=a=1
+$$</p><p>and distribution</p><p>$$
+\Pr(V=10)=\frac1{10},\qquad
+\Pr(V=9)=\frac25,\qquad
+\Pr(V=1)=\frac12.
+$$</p><p>The admissible populations are all $N\ge2$, with $\alpha=1/N$.</p><p>For the top-two-atoms cutoff,</p><p>$$
+q=\frac12,\qquad g_F(q)=\frac{23}{5}.
+$$</p><p>For $0&lt;\alpha\le1/10$,</p><p>$$
+g_F(\alpha)=10\alpha,
+$$</p><p>and its leading factor is</p><p>$$
+R_F(\alpha,1/2)
+=
+\frac{23}{25(1+\alpha)}
+\ge\frac{46}{55}&gt;\frac23.
+$$</p><p>For $1/10\le\alpha\le1/2$,</p><p>$$
+g_F(\alpha)=9\alpha+\frac1{10}.
+$$</p><p>The inequality $R_F(\alpha,1/2)\ge2/3$ is equivalent to</p><p>$$
+-9\alpha^2+\frac{47}{10}\alpha-\frac1{10}\ge0.
+$$</p><p>This polynomial is concave. Its values at $1/10$ and $1/2$ are respectively $7/25$ and zero, so it is nonnegative throughout that interval.</p><p>Consequently the top-two-atoms policy guarantees at least $2/3$ for every admissible population.</p><p>At $N=2$, the three possible cutoff probabilities give leading factors</p><p>$$
+R_F(1/2,1/10)=\frac{50}{253},\qquad
+R_F(1/2,1/2)=\frac23,\qquad
+R_F(1/2,1)=\frac{51}{92}.
+$$</p><p>Hence</p><p>$$
+G_{\mathrm{tail}}=\frac23.
+$$</p><p>For comparison, the previous rule—maximum-atom activation when $\alpha\le1/10$, and ideal-selector activation otherwise—has worst leading factor $10/19$, attained at $N=10$. Even after including the supplied baseline, its sufficient factor is only $2-\sqrt2&lt;2/3$.</p><p>This proves that optimizing all upper-tail cutoffs strictly enlarges the previously certified interval.</p><h3>7. A necessary bound from weighted subsets</h3><p>The following bound applies to every allowed policy, including arbitrary history-dependent policies.</p><p>Fix an admissible population $N$. Choose any subset $S$ of its agents and nonnegative weights $\lambda_i$, not all zero on $S$. If $\beta$ is attainable, then</p><p>$$
+\boxed{
+\beta
+\sum_{i\in S}\lambda_i v^*_{\operatorname{type}(i),N}
+\le
+\mathbb E\left[\max_{i\in S}\lambda_i V_i\right].
+}
+$$</p><p><b>Proof.</b> Run all agents’ assigned programs simultaneously, with a fixed permissible tie rule. For each protected agent, the other programs constitute an admissible opponent strategy: they do not observe its current private value or fresh randomization.</p><p>The requested robustness condition applies to a constant-population sequence. Therefore, for every $\varepsilon&gt;0$, all sufficiently large $T$ satisfy</p><p>$$
+\mathbb E\left[\sum_{t=1}^T V_i[t]W_i[t]\right]
+\ge
+(\beta-\varepsilon)T
+v^*_{\operatorname{type}(i),N}
+$$</p><p>for every agent. Since the population is finite, one horizon threshold works for all agents in $S$.</p><p>In each round, at most one agent receives the item, so</p><p>$$
+\sum_{i\in S}\lambda_iV_i[t]W_i[t]
+\le
+\max_{i\in S}\lambda_iV_i[t].
+$$</p><p>Multiply the robustness inequalities by their weights, sum, and compare with this roundwise bound. Division by $T$ and passage to $\varepsilon\downarrow0$ prove the result. $\square$</p><p>For type-symmetric subsets containing $k_\theta$ agents of type $\theta$, with weight $\lambda_\theta$, this becomes</p><p>$$
+\beta
+\sum_\theta
+k_\theta\lambda_\theta g_{F_\theta}(a_\theta/N)
+\le
+\mathbb E\left[
+\max_{\theta,\ 1\le r\le k_\theta}
+\lambda_\theta V_{\theta,r}
+\right].
+$$</p><p>Taking every agent and every weight equal to $1$ recovers the earlier total-welfare bound. Subsets can give strictly stronger obstructions.</p><p>For example, take two types with</p><p>$$
+\mu_1=\mu_2=\frac12,\qquad a_1=a_2=1,
+$$</p><p>where</p><p>$$
+F_1=\operatorname{Bernoulli}(1/4),
+\qquad
+F_2\text{ is deterministic at }100.
+$$</p><p>At $N=4$, there are two agents of each type, each with share $1/4$. The subset of the two Bernoulli agents has total ideal utility $1/2$, whereas</p><p>$$
+\mathbb E[\max(V_1,V_2)]
+=
+1-\left(\frac34\right)^2
+=
+\frac7{16}.
+$$</p><p>Thus every attainable factor satisfies</p><p>$$
+\beta\le\frac78.
+$$</p><p>The total-welfare bound instead gives</p><p>$$
+\beta\le
+\frac{100}{2(1/4)+2(25)}
+=
+\frac{200}{101}&gt;1,
+$$</p><p>which excludes no requested factor.</p><h3>8. Complete special cases</h3><h3>8.1 Deterministic values</h3><p>Suppose every type has a single positive value $M_\theta$. Use $q=1$ in the policy lemma. Then $b=1$, activation is deterministic, and the Bernoulli deviations vanish.</p><p>The two budget cases in its proof give the pathwise bound</p><p>$$
+S\ge\alpha T-2.
+$$</p><p>Since $g_F(\alpha)=\alpha M_\theta$,</p><p>$$
+\frac{\mathbb E[\sum_tV[t]W[t]]}{Tg_F(\alpha)}
+\ge
+1-\frac{2}{\alpha T}.
+$$</p><p>The error vanishes whenever $T/N\to\infty$. Therefore every permitted $\beta\in[0,1]$ is attainable.</p><p>In particular, the valid-input restriction $m=1$ is polynomial-time solvable, with compact-policy synthesis.</p><h3>8.2 The endpoint $\beta=1$ when there is one type</h3><p><b>Proposition.</b> For $\tau=1$, the factor $\beta=1$ is attainable if and only if the value distribution is deterministic.</p><p><b>Proof.</b> The input normalizations force $\mu=a=1$. Deterministic distributions were handled above.</p><p>Suppose instead that $F$ is nonconstant. Let $M$ be its largest value, $p$ the probability of that value, and $M&#x27;&lt;M$ the largest remaining value. Then $p&lt;1$.</p><p>Choose an integer</p><p>$$
+N\ge\max\left\{2,\left\lceil\frac1p\right\rceil\right\}.
+$$</p><p>This population is admissible, and</p><p>$$
+v^*_N=g_F(1/N)=\frac{M}{N}.
+$$</p><p>Thus the population’s total ideal utility is $M$. Applying the necessary bound to all $N$ agents gives</p><p>$$
+\beta M\le\mathbb E[\max_{1\le i\le N}V_i].
+$$</p><p>With probability $(1-p)^N&gt;0$, no agent realizes $M$; on that event the maximum is at most $M&#x27;$. Hence</p><p>$$
+\mathbb E[\max_iV_i]
+\le
+M-(M-M&#x27;)(1-p)^N&lt;M.
+$$</p><p>It follows that $\beta&lt;1$, excluding $\beta=1$. $\square$</p><p>This endpoint decision requires only checking whether the distribution has one distinct positive-probability value. It is polynomial-time solvable, and the affirmative case has the explicit policy above.</p><h3>9. Reduction to finitely many populations for $\beta&lt;1$</h3><p>The endpoint $\beta=0$ is immediate from nonnegative utility. Fix $0&lt;\beta&lt;1$.</p><p>For each type, let $M_\theta$ be its maximum value and $p_\theta$ its probability. Define</p><p>$$
+H_\beta=
+\left\lceil
+\max\left\{
+2,\
+\max_\theta\frac{a_\theta}{p_\theta},\
+\max_\theta
+\frac{a_\theta\beta(1-p_\theta)}
+{p_\theta(1-\beta)}
+\right\}
+\right\rceil.
+$$</p><p>When $N\ge H_\beta$, the maximum-atom policy has $\alpha\le p_\theta$ and leading factor</p><p>$$
+\frac{1}{1+\alpha(1/p_\theta-1)}
+\ge\beta.
+$$</p><p>Its error from Section 2 vanishes uniformly under $T/N\to\infty$.</p><p>Therefore the original instance is attainable if and only if each admissible population $N&lt;H_\beta$ admits finite type-indexed programs satisfying the fixed-$N$, $T\to\infty$ robustness condition, including its worst-case opponent and tie quantifiers.</p><p>Necessity follows by taking constant-population sequences. For sufficiency, combine the assumed programs for the finitely many exceptional populations by branching on $N$, and use the maximum-atom policy for larger populations. The finite branch has simultaneous convergence thresholds because it contains finitely many populations; the large branch has the uniform error bound.</p><p>This is an existential equivalence. It does not decide whether the exceptional programs exist.</p><p>Moreover, the number of exceptional populations can be exponential in $L$. For one type with</p><p>$$
+\mu=a=1,\qquad
+F=\operatorname{Bernoulli}(2^{-b}),\qquad
+\beta=\frac34,
+$$</p><p>the threshold is</p><p>$$
+H_\beta=3(2^b-1)
+$$</p><p>for $b\ge2$. Thus the reduction alone does not provide a polynomial-time decision algorithm.</p><h3>10. Remaining gap</h3><p>Even a particularly small fixed-population case is not settled by these results. For one type with</p><p>$$
+\mu=a=1,\qquad
+F=\operatorname{Bernoulli}(1/2),
+$$</p><p>the optimized cutoff construction guarantees $2/3$ across all populations. At $N=2$, the necessary welfare bound gives</p><p>$$
+\beta\le\frac34.
+$$</p><p>For target $\beta=3/4$, the finite reduction has $H_\beta=3$, leaving exactly the population $N=2$ to resolve.</p><p>The missing step is a characterization of fixed-population robustness under arbitrary terminating history-dependent programs. Neither the polynomial optimization of the cutoff construction nor the necessary welfare inequalities supply such a characterization. Consequently, the general complexity classification and unrestricted synthesis running times remain unproved.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 9–10 and the overall USER_TASK: The general robustness-attainability problem is not classified as polynomial-time solvable or $\mathrm{NP}$-hard, and unrestricted synthesis running times are not established. The finite-population reduction leaves the existence of arbitrary terminating history-dependent programs unresolved.</li><li><b>minor</b> — Section 4, discrete candidate populations: When $a/(Dr)$ is an integer, floor and ceiling both select the breakpoint population rather than the extreme points strictly inside adjacent open intervals. Clarify the endpoint convention, why these breakpoint candidates suffice, and how the interval truncated by $\ell_0$ is handled. The final formula is sound in substance.</li><li><b>minor</b> — Section 5, RRB baseline policy specification: Specify that the ideal selector is chosen with activation probability exactly $\alpha$. Optimal selectors can have smaller activation probability when zero-valued atoms occur, whereas the cited RRB specification uses exactly $\alpha$. Saturation is already available from Section 1.</li></ul>
+<div class="pre"><p>The output establishes substantial partial results, but it does <b>not</b> resolve the requested complexity classification. Its finite-horizon lemma, optimized cutoff guarantee, necessary welfare bounds, and special cases are sound in substance. I found two minor specification or endpoint issues, and no false central mathematical step.</p><p>The appropriate overall status is <b>partial</b>.</p><h3>Step-by-step verification</h3><h3>1. Input interpretation and admissible populations</h3><p>The additional assumption that the parameters $a_\theta$ are binary-encoded rationals is explicitly stated. This is a reasonable interpretation of the task’s encoding requirements; the bit-complexity conclusions are conditional on it.</p><p>The admissible-population characterization is correct. Integrality of every $N\mu_\theta$ is equivalent to divisibility by the least common multiple $D$ of the reduced denominators. The lower bound $\ell\ge\lceil 2/D\rceil$ imposes $N\ge2$.</p><p>The argument that the individual share restriction imposes no additional constraint also checks out: every type appears with a positive integer number of agents, all agent shares are positive, and their sum is $1$. With at least two agents, every individual share is strictly below $1$.</p><h3>2. The benchmark function</h3><p>The exchange argument correctly identifies an upper-tail optimizer. Saturating the selection constraint is permissible because values are nonnegative, including when saturation requires selecting zero-valued atoms.</p><p>The piecewise-affine formula</p><p>$$
+g_F(x)=s_{j-1}+v_j(x-q_{j-1})
+$$</p><p>is correct on the stated interval. The formulas for the slope and intercept establish concavity and nonnegative intercepts.</p><p>Here “increasing” should be understood as nondecreasing: a distribution with a zero-valued atom can produce a flat final segment. This wording does not affect any subsequent argument.</p><p>Positive mean guarantees that $M&gt;0$, and the identity $g_F(x)=Mx$ for $0&lt;x\le p$ is valid.</p><h3>3. The uniform finite-horizon policy lemma</h3><p>The lemma’s mathematical argument is valid.</p><ul><li><b>Feasibility:</b> Eligibility requires budget at least $b+\delta$, and every submitted positive bid is at most that amount. Also, $q\le1$ implies $b\ge1$.</li><li><b>Ties:</b> Conditional on activation and the information available before simultaneous bidding, the protected positive bid is continuous and independent of opponent bids. Thus positive-bid ties have probability zero. Adverse zero-bid ties do not undermine a lower bound that counts only positive-bid wins.</li><li><b>Coupling:</b> Eligibility and the low-round designation are determined without the protected current value or fresh samples. Supplying the next unused Bernoulli variable therefore preserves the required current-round distribution. Importantly, the proof does not condition the unused sequence on eventual budget exhaustion.</li><li><b>Budget exhaustion:</b> The bound</li></ul><p>$$
+  S\ge\frac{B_0}{b+\delta}-1\ge K-2
+  $$<br>follows from the payment upper bound and $B_0\delta&lt;1$. Initial insufficiency and exhaustion after the final round are explicitly covered.</p><ul><li><b>No exhaustion:</b> Every high round not won by the protected agent consumes at least $b$ from the opponents’ aggregate budget. This justifies</li></ul><p>$$
+  H\ge h_0-S_h.
+  $$<br>The identity $qh_0=K$ and the subsequent bound $S\ge K-Z$ are algebraically correct.</p><ul><li><b>Martingale estimate:</b> The centered Bernoulli sums are a square-integrable martingale. The stated application of the $L^2$ maximal inequality and Cauchy–Schwarz gives the claimed bound on $\mathbb E[Z]$. The estimate $n_0q\le K+1$ is correct.</li><li><b>Utility conversion:</b> Conditional on activation, the positive bid does not use the active value beyond its activation indicator. Under the stipulated information restriction, the conditional expected value of a counted win is $w$. Nonnegative utility from other wins may safely be omitted.</li></ul><p>The error bound is uniform over opponent strategies and tie rules, as required.</p><h3>4. Optimizing the selector and passing to population sequences</h3><p>The expression for $R_F(\alpha,q)$ follows correctly from the leading term of the lemma.</p><p>The derivative calculation is correct. On each affine segment of $g_F$, the objective has a derivative of constant sign. Consequently, an optimal activation probability can be chosen among the upper-tail probabilities. Extending the objective to $q=0$ for this endpoint argument is harmless: its value there is zero, while a positive cutoff gives positive utility.</p><p>The uniform error estimate also checks out. The inequalities</p><p>$$
+g_F(\alpha)\ge\alpha\mathbb E[V],\qquad w\le M,\qquad K\le\alpha T
+$$</p><p>justify the displayed error term.</p><p>For each fixed input type, $a_\theta&gt;0$ is constant, so $T/N\to\infty$ implies $\alpha_{\theta,N}T\to\infty$. This establishes the required vanishing error, including sequences with unbounded population sizes.</p><h3>5. Computing the worst population</h3><p>The pairwise-intersection equation is linear in $\alpha$, so the claimed polynomial number of rational breakpoints is correct.</p><p>The derivative-sign calculation</p><p>$$
+q_jd-(1-q_j)c\alpha^2
+$$</p><p>is correct. Its sign can change only from positive to negative, establishing the absence of an interior minimum on a segment with a fixed maximizing cutoff and benchmark piece.</p><p>The limiting value at $\alpha=0$ is correctly established. The maximum-atom cutoff supplies the lower bound tending to $1$, and the two cases $q\le\alpha$ and $q\ge\alpha$ justify the upper bound $R_F(\alpha,q)\le1$.</p><p><b>Minor issue — lattice endpoints.</b> The explanation of the candidate set is imprecise when $a/(Dr)$ is an integer. In that situation, floor and ceiling both return the population lying exactly at the breakpoint; they do not return the extreme points strictly inside an adjacent open interval. The final candidate formula survives this issue, but the write-up should explicitly explain its endpoint convention and why breakpoint populations suffice in this case. The interval truncated by $\ell_0$ should likewise be mentioned.</p><p>No new mathematical result is needed for this clarification.</p><h3>6. Synthesis complexity and the supplied baseline</h3><p>For the cutoff construction, the claimed bounds are supported:</p><ul><li>There are polynomially many candidates per type.</li><li>Each evaluation uses $O(m)$ rational operations.</li><li>Rational preprocessing quantities have bit lengths $O(L)$ under the stated encoding interpretation.</li><li>The conservative synthesis bound</li></ul><p>$$
+  O\bigl((\tau m^3+1)L^3\bigr)
+  $$<br>is sufficient for the operations described.</p><ul><li>The resulting programs store support data and formulas and terminate each round. Their descriptions do not expand the population or horizon.</li></ul><p>The claimed round cost counts exact arithmetic and comparison operations; it is not a bit-time bound involving the runtime encodings of $N$, $T$, and the budget. The output appropriately distinguishes these measures.</p><p>The cited source states the RRB guarantee and specifies the budget threshold, uniform bidding interval, and cutoff randomization for distributions with atoms. Its model matches the relevant private-value, first-price, arbitrary-opponent, and arbitrary-tie hypotheses. The fixed-share use of that result is justified. [Source: model, RRB specification, and Theorem 1](https://arxiv.org/html/2505.13824v2)</p><p><b>Minor issue — RRB selector specification.</b> “Activates using an ideal selector” should explicitly require a selector with activation probability exactly $\alpha$. An optimal selector need not saturate the probability constraint when zero values occur. For example, with $F=\operatorname{Bernoulli}(1/10)$ and $\alpha=1/2$, activating only on positive values is optimal but has activation probability $1/10$. The cited RRB construction specifies activation probability $\alpha$. Section 1 already explains that saturation is possible, so this is a routine policy-specification clarification.</p><p>The population cutoff $H$ and the $4/5$ lower bound are correct. The finite branch permits simultaneous fixed-population convergence thresholds, while the large-population branch has the required uniform error.</p><p>Thus the strengthened sufficient interval is supported, subject to the minor selector clarification. It remains a sufficient-condition synthesis result, not an unrestricted decision procedure.</p><h3>7. Numerical example</h3><p>The numerical example checks out.</p><p>The top-two-atoms selector has activation probability $1/2$ and selected utility $23/5$. Both benchmark formulas are correct.</p><p>The polynomial used to establish the $2/3$ guarantee has the stated endpoint values and is concave, so the interval argument is valid.</p><p>At $N=2$, all three displayed cutoff factors are correct. The middle cutoff attains $2/3$, while the others are smaller. Combined with the population-wide lower bound, this proves the claimed value of $G_{\mathrm{tail}}$.</p><p>The comparison with the explicitly described previous rule is also numerically correct. This establishes an improvement of the certified sufficient interval; it does not establish optimal robustness attainability.</p><h3>8. Weighted-subset necessary bound</h3><p>The necessary bound is valid for the full policy class in the task.</p><p>Running all assigned programs simultaneously gives an admissible opponent strategy for each protected agent. The fixed-population robustness condition supplies an eventual lower bound uniformly over the relevant opponents and ties.</p><p>Because the population is finite, the individual horizon thresholds can be combined. The roundwise weighted-utility inequality is valid because at most one agent wins and all weights and values are nonnegative.</p><p>The example is correct:</p><p>$$
+\mathbb E[\max(V_1,V_2)]=\frac7{16},
+$$</p><p>while the two selected agents’ total benchmark is $1/2$. Hence $\beta\le7/8$ is necessary.</p><p>The displayed total-welfare ratio is also correct and exceeds $1$, so it excludes no requested factor. The example genuinely demonstrates a stronger obstruction from subsets.</p><h3>9. Deterministic distributions and the homogeneous endpoint</h3><p>For deterministic distributions, setting $q=1$ gives $b=1$ and zero Bernoulli deviations. The pathwise win bound and the normalized error are correct. The conclusion holds along every stipulated population-horizon sequence.</p><p>The characterization of $\beta=1$ for $\tau=1$ is correct.</p><p>The normalizations imply $\mu=a=1$. For a nonconstant cleaned support, $p&lt;1$ and $M&#x27;&lt;M$ exist. The chosen admissible population satisfies $1/N\le p$, so total ideal utility is $M$.</p><p>The event that no agent realizes the maximum has strictly positive probability. The resulting strict upper bound on expected maximum welfare excludes $\beta=1$.</p><p>The stated endpoint decision test and affirmative synthesis are polynomial-time.</p><h3>10. Finite-population reduction and unresolved target</h3><p>The threshold $H_\beta$ correctly enforces both conditions needed for the maximum-atom guarantee:</p><p>$$
+\alpha\le p_\theta
+$$</p><p>and a leading factor at least $\beta$.</p><p>Necessity follows from constant-population sequences. Sufficiency follows from the finite exceptional branch together with the uniform large-population bound. This is a valid existential reduction: finitely many permitted programs can be combined into one finite program per type.</p><p>The reduction supplies neither an algorithm for finding those exceptional programs nor a polynomial bound on their descriptions. The prover explicitly acknowledges this limitation.</p><p>The exponential-threshold example and the final Bernoulli example are correct.</p><p><b>Major unresolved requirement.</b> The task asks for a general polynomial-time decision result or an $\mathrm{NP}$-hardness result, together with synthesis running times. The output establishes neither. It leaves fixed-population attainability for arbitrary terminating history-dependent policies unresolved and does not show that its sufficient and necessary conditions coincide.</p><p>The minimum substantive next requirement is a decision characterization or hardness argument for unrestricted attainability. Further optimization of the displayed cutoff construction alone would not fill this gap.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

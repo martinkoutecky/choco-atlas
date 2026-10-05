@@ -1,0 +1,195 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Consensus Halving for Sets of Items — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Consensus Halving for Sets of Items <span style="font-weight:normal;color:#8a7350">(d4-conf-wine-2020-0004)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>There exists a constant $\varepsilon &gt; 0$ such that finding an $\varepsilon$-approximate consensus halving for $n$ agents with monotonic utilities that uses at most $n$ cuts is PPAD-hard, even if all agents have symmetric-threshold utilities.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\) items, a rational distribution \(\mu\) over \(\tau\) positive-mass symmetric-threshold utility types with values \(u_t(j)\) and caps \(c_{tj}\), and the fixed constant \(\varepsilon\), find \(x\in[0,1]^m\) with \(\kappa(x)=|\{j:0&lt;x_j&lt;1\}|\leq\tau\) such that every type \(t\) satisfies \(\left|\sum_j f_{tj}(x_j)u_t(j)-\sum_j f_{tj}(1-x_j)u_t(j)\right|\leq\varepsilon\sum_j u_t(j)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list of \(\tau\geq1\) distinct utility types with positive binary-rational masses \(\mu_t\), summing to \(1\). Here \(\tau\) is the support size, not the number of possible types.<br>There are \(m\geq1\) unordered, divisible items. Type \(t\) has binary-rational values \(u_t(j)\geq0\) and caps \(0\leq c_{tj}&lt;1/2\). Define \(f_{tj}(z)=\max\{0,\min\{1,(z-c_{tj})/(1-2c_{tj})\}\}\) and \(U_t(x)=\sum_{j=1}^{m}u_t(j)f_{tj}(x_j)\).<br>Fix a sufficiently small positive rational constant \(\varepsilon\) in the finite-agent hardness regime. The search problem asks for a rational vector \(x\in[0,1]^m\) such that \(\kappa(x)=|\{j:0&lt;x_j&lt;1\}|\leq\tau\) and \(|U_t(x)-U_t(\mathbf{1}-x)|\leq\varepsilon\sum_{j=1}^{m}u_t(j)\) for every support type \(t\), independently of its mass. Let \(L\) be the total binary input length.</p><p>Is this search problem solvable in time polynomial in \(m,\tau,L\), or is it NP-hard?</p><p>For a sufficiently small fixed positive error, the finite-agent version is PPAD-hard even with symmetric-threshold utilities, and belongs to PPA. [Verified source](https://pubsonline.informs.org/doi/full/10.1287/moor.2021.1249).<br>The support formulation is computationally equivalent to the version with one agent per distinct type, so these bounds apply here as well; they do not establish NP-hardness or a polynomial-time algorithm.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Defined the omitted threshold functions using the symmetric-threshold formula, with nonnegative rational values and rational caps strictly below one half.</li><li>Normalized the positive rational masses to sum to one and retained the requirement for every support type without mass weighting.</li><li>Interpreted the unspecified fixed error as a sufficiently small positive rational constant in the anchor&#x27;s hardness regime.</li><li>Specified rational output coordinates, positive item and support counts, and total binary input length L; zero-total-value types remain allowed.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Status and new result</h3><p>I do not settle the classification for unrestricted $\tau$. I prove the stronger algorithmic bound<br>$$
+2^{O(\tau\log(2+\tau/\varepsilon))}
+\operatorname{poly}(m,\tau,L).
+$$<br>For fixed $\varepsilon$, this improves the verified bound in the notes from $2^{O(\tau^2)}$ to $2^{O(\tau\log(\tau+1))}$.</p><p>The improvement replaces exhaustive endpoint assignments with a dynamic program that retains one assignment per rounded vector of utility totals. I also give a polynomial-time exact algorithm when each item’s cap is independent of the type.</p><p>Throughout, values and caps have rational binary encodings. The masses play no role because every support type has its own requirement.</p><h3>2. Normalization and exact totality</h3><p>Write<br>$$
+W_t=\sum_{j=1}^m u_t(j).
+$$<br>If $W_t=0$, nonnegativity implies that every $u_t(j)$ is zero, so this type imposes no restriction. Define<br>$$
+w_{tj}=
+\begin{cases}
+u_t(j)/W_t,&amp;W_t&gt;0,\\
+0,&amp;W_t=0.
+\end{cases}
+$$<br>Thus each row of $w$ sums to either $1$ or $0$.</p><p>Let<br>$$
+d_{tj}(z)=2f_{tj}(z)-1.
+$$<br>The two unclipped affine expressions defining $f_{tj}(z)$ and $f_{tj}(1-z)$ sum to $1$. Clipping to $[0,1]$ preserves this complementary identity, so<br>$$
+f_{tj}(1-z)=1-f_{tj}(z).
+$$<br>Consequently, with<br>$$
+A_t(x)=\sum_{j=1}^m w_{tj}d_{tj}(x_j),
+$$<br>the required utility condition for a positive-value type is exactly<br>$$
+|A_t(x)|\leq\varepsilon.
+$$<br>Moreover,<br>$$
+d_{tj}(0)=-1,\qquad d_{tj}(1)=1,\qquad
+d_{tj}(1-z)=-d_{tj}(z).
+$$</p><p>If $\tau\geq m$, setting every coordinate to $1/2$ is an exact solution. The algorithm below therefore only needs to address $\tau&lt;m$.</p><h3>Lemma 1: a sparse exact solution exists</h3><p>Every instance has a real vector $x$ satisfying<br>$$
+A_t(x)=0\quad\text{for all }t,
+\qquad
+\kappa(x)\leq\tau.
+$$</p><p><b>Proof.</b> Use the following form of the Borsuk–Ulam theorem: every continuous odd map from $S^\tau$ to $\mathbb R^\tau$ has a zero.</p><p>For $a=(a_0,\ldots,a_\tau)\in S^\tau$, define<br>$$
+p_a(s)=\sum_{i=0}^{\tau}a_i s^i,
+\qquad
+x_j(a)=\lambda\{s\in[j-1,j]:p_a(s)\geq0\},
+$$<br>where $\lambda$ denotes length. Since $a$ is a unit vector, $p_a$ is a nonzero polynomial.</p><p>Each coordinate $x_j(a)$ depends continuously on $a$. Indeed, if $a^{(n)}\to a$, then the sign indicators converge pointwise wherever $p_a(s)\neq0$. The exceptional set is finite, and the indicators are bounded by $1$. Dominated convergence on the item interval proves continuity.</p><p>The zero set of $p_a$ has length zero. Since $p_{-a}=-p_a$,<br>$$
+x(-a)=\mathbf1-x(a).
+$$<br>Therefore<br>$$
+F(a)=\bigl(A_1(x(a)),\ldots,A_\tau(x(a))\bigr)
+$$<br>is continuous and odd. Borsuk–Ulam supplies $a^*$ with $F(a^*)=0$.</p><p>If $0&lt;x_j(a^*)&lt;1$, the polynomial takes both positive and negative values in the interior of that item interval. The intermediate value theorem gives a root in its interior. Distinct split items give distinct roots, while a nonzero polynomial of degree at most $\tau$ has at most $\tau$ roots. Hence $\kappa(x(a^*))\leq\tau$. $\square$</p><h3>Lemma 2: polynomial-length rational exact solutions exist</h3><p>An exact solution from Lemma 1 can be replaced by a rational exact solution of polynomial encoding length without increasing its number of split items.</p><p><b>Proof.</b> Let $S$ be the split coordinates of a real exact solution, with $r=|S|\leq\tau$. Freeze all coordinates outside $S$ at their endpoint values.</p><p>For each $j\in S$, sort the distinct breakpoints<br>$$
+\{0,1\}\cup\{c_{tj},1-c_{tj}:t\in[\tau]\}.
+$$<br>Choose a closed interval between consecutive breakpoints containing the real coordinate. Every $d_{tj}$ is affine on that interval; adjacent formulas agree at the breakpoints.</p><p>The exact balance equations and these interval bounds define a nonempty bounded rational polytope in $r$ variables. It has a vertex. At a vertex, the active constraints have rank $r$: otherwise a nonzero direction preserving every active constraint would permit sufficiently small feasible perturbations in both directions, contradicting extremality.</p><p>Choose $r$ independent active constraints. Their rational coefficients have polynomial bit length. This follows because they are formed from the input rationals by sums, products, and division by the nonzero rationals $1-2c_{tj}$. Clearing denominators gives an integer system with polynomial-bit entries. Cramer’s rule and the determinant bound<br>$$
+|\det B|\leq r!M^r
+$$<br>for an $r$ by $r$ matrix with entries of absolute value at most $M$ show that its solution has polynomial bit length.</p><p>Every point in this polytope satisfies exact balance and can split only coordinates in $S$. The case $r=0$ already has a rational endpoint solution. $\square$</p><h3>3. Improved approximation algorithm</h3><h3>Theorem</h3><p>For fixed rational $0&lt;\varepsilon&lt;1$, the required allocation can be found deterministically in time<br>$$
+2^{O(\tau\log(2+\tau/\varepsilon))}
+\operatorname{poly}(m,\tau,L).
+$$</p><h3>3.1. Separate heavy and light items</h3><p>Set<br>$$
+\delta=\frac{\varepsilon}{2\tau}.
+$$<br>Call an item heavy if $w_{tj}&gt;\delta$ for at least one type. Let $H$ be the heavy-item set, let $K=[m]\setminus H$, and write $h=|H|$.</p><p>For a fixed positive-value type, fewer than $1/\delta$ items can have weight greater than $\delta$, because its weights sum to $1$. Taking a union over types gives<br>$$
+h&lt;\frac{\tau}{\delta}
+=\frac{2\tau^2}{\varepsilon}.
+$$<br>Every light item satisfies<br>$$
+w_{tj}\leq\delta
+\quad\text{for every }t.
+$$</p><p>For the existence argument, replace all light-item caps by zero. The resulting normalized balance functions are<br>$$
+A_t^H(x)=
+\sum_{j\in H}w_{tj}d_{tj}(x_j)
++\sum_{j\in K}w_{tj}(2x_j-1).
+$$<br>This modified system is still a system of symmetric-threshold utilities. Lemma 1 therefore gives an exact allocation $x^*$ with<br>$$
+A_t^H(x^*)=0,\qquad \kappa(x^*)\leq\tau.
+$$<br>The algorithm does not need to compute $x^*$.</p><h3>3.2. Enumerate fractional heavy items</h3><p>Enumerate every set $S\subseteq H$ with $|S|\leq\tau$. These are the heavy items allowed to remain fractional.</p><p>For each $j\in S$, enumerate one interval between consecutive breakpoints from<br>$$
+\{0,1\}\cup\{c_{tj},1-c_{tj}:t\in[\tau]\}.
+$$<br>There are at most $2\tau+1$ choices per coordinate. On a chosen interval, write the rational affine formula for $d_{tj}$ as<br>$$
+d_{tj}(z_j)=a_{tj}z_j+b_{tj}.
+$$</p><p>It remains to handle endpoint assignments on $T=H\setminus S$ without enumerating all of them.</p><h3>3.3. Compress endpoint assignments by dynamic programming</h3><p>Define<br>$$
+\eta=\frac{\varepsilon}{4\max\{1,h\}},
+\qquad
+q_{tj}=\left\lfloor\frac{w_{tj}}{\eta}\right\rfloor.
+$$<br>An endpoint assignment on $T$ is specified by the subset $B\subseteq T$ assigned endpoint $1$; all other items in $T$ receive endpoint $0$.</p><p>Associate with $B$ the integer vector<br>$$
+v(B)=\left(\sum_{j\in B}q_{tj}\right)_{t=1}^{\tau}.
+$$<br>A standard subset-sum dynamic program retains one representative subset for each reachable vector. Initially, the zero vector has representative $\varnothing$. When processing item $j$, each existing state has an exclusion transition and an inclusion transition adding $(q_{tj})_t$. If transitions collide, retain either representative.</p><p>Induction over processed items proves that every reachable vector remains represented.</p><p>For every coordinate,<br>$$
+\sum_{j\in B}q_{tj}
+\leq \frac{1}{\eta}\sum_{j\in B}w_{tj}
+\leq\frac1\eta.
+$$<br>Thus the number of states is at most<br>$$
+N=\left(1+\left\lfloor\frac1\eta\right\rfloor\right)^\tau.
+$$</p><p>The compression has a controlled error. Write<br>$$
+w_{tj}=\eta q_{tj}+r_{tj},
+\qquad 0\leq r_{tj}&lt;\eta.
+$$<br>If $v(B)=v(B&#x27;)$, their integer contributions cancel, and each remainder sum lies between $0$ and $h\eta$. Hence<br>$$
+\left|
+\sum_{j\in B}w_{tj}-\sum_{j\in B&#x27;}w_{tj}
+\right|
+\leq h\eta.
+$$<br>Their signed endpoint contributions therefore differ by at most<br>$$
+\left|
+\sum_{j\in T}w_{tj}(2\mathbf1_B(j)-1)
+-
+\sum_{j\in T}w_{tj}(2\mathbf1_{B&#x27;}(j)-1)
+\right|
+\leq2h\eta
+\leq\frac{\varepsilon}{2}.
+$$</p><h3>3.4. Solve a linear program for each retained assignment</h3><p>For every enumerated $S$, interval choice, and retained representative $B$, introduce variables $z_j$ for $j\in S$ and $y_j$ for $j\in K$. Define<br>$$
+E_t(z,y)=
+\sum_{j\in T}w_{tj}(2\mathbf1_B(j)-1)
++\sum_{j\in S}w_{tj}(a_{tj}z_j+b_{tj})
++\sum_{j\in K}w_{tj}(2y_j-1).
+$$<br>Solve the rational linear feasibility problem consisting of the chosen interval bounds,<br>$$
+0\leq y_j\leq1\quad(j\in K),
+$$<br>and<br>$$
+|E_t(z,y)|\leq\frac{\varepsilon}{2}
+\quad(t\in[\tau]).
+$$</p><p><b>At least one branch is feasible.</b> Choose $S$ to be the fractional heavy coordinates of the sparse exact allocation $x^*$ for the modified system. Its size is at most $\tau$. Choose intervals containing its coordinates, and let $B^*\subseteq T$ describe its heavy endpoint assignments.</p><p>The dynamic program retains a representative $B$ with $v(B)=v(B^*)$. At $z_j=x_j^*$ and $y_j=x_j^*$, the expression using $B^*$ would equal $A_t^H(x^*)=0$. Replacing $B^*$ by $B$ changes it by at most $\varepsilon/2$, by the preceding calculation. Thus this branch is feasible.</p><h3>3.5. Obtain a vertex and round the light items</h3><p>Obtain a vertex $(z,y)$ of any feasible branch.</p><p>At most $\tau$ light coordinates can be fractional. To prove this, suppose more than $\tau$ coordinates $y_j$ lie strictly between $0$ and $1$. Their columns $(w_{tj})_{t=1}^{\tau}$ are linearly dependent. Therefore there is a nonzero vector $v$, supported on those coordinates, such that<br>$$
+\sum_{j\in K}w_{tj}v_j=0
+\quad\text{for every }t.
+$$<br>Holding $z$ fixed, both $y+\alpha v$ and $y-\alpha v$ satisfy the coordinate bounds for sufficiently small $\alpha&gt;0$. Every $E_t$ remains unchanged. Both points are feasible, contradicting extremality.</p><p>Round each light coordinate to a nearest endpoint $\widehat y_j\in\{0,1\}$. Each changed coordinate contributes an error bounded by<br>$$
+|2w_{tj}(\widehat y_j-y_j)|
+\leq w_{tj}\leq\delta.
+$$<br>At most $\tau$ coordinates change, so<br>$$
+|E_t(z,\widehat y)-E_t(z,y)|
+\leq\tau\delta
+=\frac{\varepsilon}{2}.
+$$</p><p>Define the final allocation by keeping the heavy coordinates from this branch and using $\widehat y$ on the light items. At endpoints, original threshold utilities and linear utilities agree. Consequently its original normalized imbalance is exactly $E_t(z,\widehat y)$, and<br>$$
+|A_t(\widehat x)|
+\leq |E_t(z,y)|
++|E_t(z,\widehat y)-E_t(z,y)|
+\leq\varepsilon.
+$$<br>All light items and all heavy items outside $S$ are endpoints. Thus<br>$$
+\kappa(\widehat x)\leq|S|\leq\tau.
+$$</p><h3>3.6. Running time and bit complexity</h3><p>The number of sets $S$ is at most $(h+1)^\tau$. This bound follows by encoding each subset of size at most $\tau$ as a sorted list padded to length $\tau$ with a sentinel.</p><p>There are at most $(2\tau+1)^\tau$ interval choices per set, and at most $N$ retained endpoint assignments. Since<br>$$
+h=O(\tau^2/\varepsilon),
+\qquad
+\frac1\eta
+=O(\tau^2/\varepsilon^2),
+$$<br>the total number of linear programs is bounded by<br>$$
+(h+1)^\tau(2\tau+1)^\tau
+\left(1+\left\lfloor\frac1\eta\right\rfloor\right)^\tau
+=
+2^{O(\tau\log(2+\tau/\varepsilon))}.
+$$<br>The dynamic programs have the same bound up to polynomial factors.</p><p>All linear programs have polynomially many variables and constraints and polynomial-bit rational coefficients. Exact rational linear programming decides feasibility and optimizes rational linear objectives in polynomial time.</p><p>A vertex can be obtained by minimizing coordinates successively, fixing each optimum before minimizing the next coordinate. Each optimization selects a nonempty face of the preceding polytope. After all coordinates are fixed, the remaining face is a singleton, hence a vertex of the original polytope. Its encoding length is polynomial by the determinant argument in Lemma 2.</p><p>All rounding and reconstruction operations use exact rational arithmetic. This completes the proof of the theorem.</p><h3>4. A polynomial-time case with arbitrary cap sizes</h3><p>Suppose that for each item there is a common cap $c_j$ such that<br>$$
+c_{tj}=c_j\quad\text{for every type }t.
+$$<br>Then an exact solution is computable in polynomial time.</p><p>Let $f_j$ be the common threshold function, and introduce variables $y_j\in[0,1]$. Solve<br>$$
+\sum_{j=1}^m u_t(j)y_j=\frac{W_t}{2}
+\quad(t\in[\tau]).
+$$<br>This bounded rational polytope is nonempty because $y_j=1/2$ satisfies every equation.</p><p>At a vertex, at most $\tau$ coordinates are fractional: if there were more, linear dependence among their value columns would give two feasible perturbations, exactly as in Section 3.5.</p><p>Recover an allocation by setting<br>$$
+x_j=
+\begin{cases}
+0,&amp;y_j=0,\\
+1,&amp;y_j=1,\\
+c_j+(1-2c_j)y_j,&amp;0&lt;y_j&lt;1.
+\end{cases}
+$$<br>Then $f_j(x_j)=y_j$. The complementary identity gives<br>$$
+U_t(x)-U_t(\mathbf1-x)
+=
+\sum_j u_t(j)(2y_j-1)=0.
+$$<br>Furthermore, $x_j$ is fractional exactly when $y_j$ is fractional. Hence $\kappa(x)\leq\tau$. Rational linear programming and the displayed reconstruction both take polynomial time.</p><p>This settles a substantial restricted case, including caps arbitrarily close to $1/2$.</p><h3>5. What these results imply about the requested classification</h3><p>The supplied constant-error $\mathrm{PPAD}$-hardness theorem applies to precisely the symmetric-threshold utility class and relative error used here. The cited paper also states $\mathrm{PPA}$ membership. These bounds imply that an unrestricted polynomial-time algorithm would solve every $\mathrm{PPAD}$ search problem in polynomial time, but they do not establish $\mathrm{NP}$-hardness. [Goldberg et al., *Consensus Halving for Sets of Items*, Theorem 4 and conclusion](https://pubsonline.informs.org/doi/full/10.1287/moor.2021.1249).</p><p>There is also a total-search obstruction to conventional $\mathrm{NP}$-hardness, which can be proved directly here.</p><p>By Lemma 2, every instance has a valid allocation of polynomial encoding length. Such an allocation is verifiable in polynomial time: check the coordinate bounds, count split items, and evaluate the rational utility differences. Restricting outputs to a sufficiently large polynomial length bound therefore gives a total, polynomially verifiable search relation.</p><p>Now suppose a deterministic polynomial-time oracle reduction decides satisfiability using this search relation, correctly for every valid oracle. An unsatisfiability certificate can consist of a complete rejecting oracle transcript:</p><ul><li>Recompute every query from the preceding transcript.</li><li>Verify every returned allocation.</li><li>Require repeated identical queries to receive identical replies.</li><li>Check that the simulated reduction rejects.</li></ul><p>The transcript has polynomial length, and all checks take polynomial time. For an unsatisfiable formula, totality supplies a valid oracle and hence such a rejecting transcript. For a satisfiable formula, any verified consistent transcript extends to a valid oracle: assign its recorded replies on queried inputs and choose valid replies elsewhere. Correctness excludes rejection for that oracle.</p><p>Thus unsatisfiability belongs to $\mathrm{NP}$, implying<br>$$
+\mathrm{NP}=\mathrm{coNP}.
+$$<br>This is a conditional consequence of the specified reduction notion, not an unconditional exclusion of $\mathrm{NP}$-hardness.</p><p>The improved algorithm remains superpolynomial when $\tau$ is unrestricted. No general polynomial-time algorithm or $\mathrm{NP}$-hardness reduction is established here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 1 and 5: unrestricted classification: The output explicitly leaves the assigned unrestricted classification unresolved. The established running time $2^{O(\tau\log(2+\tau/\varepsilon))}\operatorname{poly}(m,\tau,L)$ is not a polynomial bound for unrestricted $\tau$, and the common-cap algorithm requires an additional restriction. No $\mathrm{NP}$-hardness reduction is established.</li><li><b>minor</b> — Section 1: comparison with the verified bound in the notes: The supplied record does not identify or establish the earlier bound $2^{O(\tau^2)}$. Provide the referenced notes and assumptions, or remove the comparison; this does not affect the independently established algorithm.</li></ul>
+<div class="pre"><h3>Verification report</h3><p>The output establishes valid partial results, including the claimed parameter-dependent algorithm and the polynomial-time algorithm for common item caps. I found no substantive mathematical error in these arguments. It does <b>not</b> resolve the unrestricted classification requested by <code>USER_TASK</code>, and it explicitly acknowledges this limitation.</p><h3>1. Normalization and symmetry</h3><p>The normalization is correct. If $W_t=0$, nonnegative values imply $u_t(j)=0$ for every item, so that type’s requirement is automatic. Otherwise, dividing by $W_t$ preserves exactly the required relative-error inequality.</p><p>The complementary identity is also correct: the two unclipped affine expressions sum to $1$, and clipping satisfies the same identity. Consequently,</p><p>$$
+U_t(x)-U_t(\mathbf 1-x)=W_tA_t(x).
+$$</p><p>The endpoint values and oddness of $d_{tj}$ follow. Setting every coordinate to $1/2$ gives exact balance, and satisfies the split bound whenever $\tau\geq m$. Masses correctly play no role.</p><p><b>Finding:</b> Correct, including the zero-value and large-support cases.</p><h3>2. Lemma 1: sparse exact existence</h3><p>The stated Borsuk–Ulam theorem has the correct dimensions and hypotheses.</p><p>The construction satisfies them:</p><ul><li>A unit coefficient vector defines a nonzero polynomial, whose zero set on the item intervals is finite.</li><li>Coefficient convergence implies pointwise convergence of the sign indicators away from this zero set. Dominated convergence therefore proves continuity of each coordinate.</li><li>Negating the polynomial complements the allocation up to a set of length zero, yielding the exact identity $x(-a)=\mathbf 1-x(a)$.</li><li>Continuity and the complementary identity make $F$ continuous and odd.</li></ul><p>The split-count argument is valid. A split interval has positive-length positive and negative regions; hence it contains an interior root. Interiors of distinct item intervals are disjoint, so distinct split items require distinct roots. The polynomial has at most $\tau$ roots.</p><p><b>Finding:</b> Correct. The theorem’s hypotheses and the sparsity conclusion are verified.</p><h3>3. Lemma 2: rational exact solutions</h3><p>Freezing the nonsplit coordinates preserves their rational endpoint values. The listed breakpoints partition each remaining coordinate domain into closed intervals on which all relevant functions are affine. Continuity ensures that the formulas remain valid at interval boundaries.</p><p>The resulting polytope is rational, bounded, and nonempty. Its vertex argument works even when the polytope is lower-dimensional: deficient rank among all active constraints would permit feasible perturbations in both directions.</p><p>The bit-length argument is sound. Normalization, affine coefficients, and equation formation involve polynomially many rational arithmetic operations with polynomial-bit inputs. Clearing denominators preserves polynomial bit length. The determinant bound then gives polynomial-length rational vertex coordinates.</p><p>The separate treatment of $r=0$ covers the endpoint-only case.</p><p><b>Finding:</b> Correct. This establishes existence of polynomial-length exact certificates, without claiming an efficient method to find the appropriate polytope.</p><h3>4. Approximation algorithm</h3><h3>Heavy and light items</h3><p>The heavy-item estimate is valid. Each positive-value row has fewer than $1/\delta$ entries strictly exceeding $\delta$, and taking their union gives</p><p>$$
+h&lt;\frac{2\tau^2}{\varepsilon}.
+$$</p><p>Every light-item weight is at most $\delta$. Replacing light caps by zero produces functions to which Lemma 1 applies. Distinctness of the modified utility rows is unnecessary for that lemma’s proof.</p><p><b>Finding:</b> Correct.</p><h3>Enumeration</h3><p>Every possible set of fractional heavy coordinates of the modified sparse solution is enumerated. Every such coordinate belongs to one of the enumerated closed breakpoint intervals, including when it equals a breakpoint.</p><p>The bounds on the number of sets and interval choices are valid.</p><p><b>Finding:</b> Correct and exhaustive for the existence argument.</p><h3>Dynamic-programming compression</h3><p>The subset-sum recurrence preserves every reachable integer vector, while retaining one representative per vector.</p><p>Each coordinate of a state is bounded by $1/\eta$. Thus the stated state-count bound is valid, including zero-value rows and zero rounded weights.</p><p>For colliding states, their rounded contributions agree. Each residual sum lies between $0$ and $h\eta$, so the difference of residual sums is at most $h\eta$, rather than requiring twice that amount. Passing to signed endpoint contributions introduces the stated factor of $2$:</p><p>$$
+2h\eta\leq\frac{\varepsilon}{2}.
+$$</p><p>This remains valid when $h=0$, because the definition of $\eta$ avoids division by zero.</p><p><b>Finding:</b> Correct. The compression does not lose the feasibility guarantee.</p><h3>Feasible branch</h3><p>The modified exact solution supplies an enumerated set, interval choice, and endpoint state. Replacing its endpoint subset by the retained representative changes every normalized balance by at most $\varepsilon/2$. Therefore the specified linear feasibility problem has a feasible branch.</p><p><b>Finding:</b> Correct. No computation of the existential allocation is assumed.</p><h3>Vertex rounding and final allocation</h3><p>The vertex argument correctly bounds the number of fractional <b>light</b> coordinates by $\tau$. A dependence among their columns preserves every $E_t$, while sufficiently small perturbations preserve their coordinate bounds and leave the heavy variables fixed.</p><p>Nearest-endpoint rounding changes each affected row contribution by at most $w_{tj}\leq\delta$. Therefore,</p><p>$$
+|E_t(z,\widehat y)-E_t(z,y)|
+\leq\tau\delta=\frac{\varepsilon}{2}.
+$$</p><p>After rounding, all light coordinates are endpoints, where their original and modified utilities agree. Heavy utilities are represented exactly on the chosen intervals. Combining the feasibility tolerance with the rounding error gives the required error $\varepsilon$.</p><p>Only coordinates in $S$ can remain split, so the final split count is at most $\tau$.</p><p><b>Finding:</b> Correct. No bound on the combined number of fractional coordinates before rounding is needed.</p><h3>Running time and rational computation</h3><p>The product of enumeration and state-count bounds has the claimed form:</p><p>$$
+2^{O(\tau\log(2+\tau/\varepsilon))}.
+$$</p><p>The rational linear programs have polynomial dimensions and polynomial-bit coefficients. The invoked polynomial-time rational linear-programming result applies.</p><p>Successive coordinate minimization produces nested nonempty faces. Once all coordinates are fixed, the face is a singleton and therefore an original-polytope vertex. Intermediate optimal values also have polynomial bit length because each is attained at an original-polytope vertex; thus successive optimization does not invalidate the complexity claim.</p><p><b>Finding:</b> The stated algorithmic bound and rational-output guarantee are established.</p><h3>5. Common-cap polynomial-time case</h3><p>The linear feasibility system is nonempty at $y_j=1/2$. The same dependence argument bounds the number of fractional coordinates at a vertex by $\tau$.</p><p>The reconstruction satisfies $f_j(x_j)=y_j$. For fractional $y_j$, the assumption $c_j&lt;1/2$ ensures the reconstructed coordinate is strictly between $0$ and $1$. The endpoint cases are handled explicitly.</p><p>The displayed utility calculation proves exact balance, and rational reconstruction preserves polynomial encoding length.</p><p><b>Finding:</b> Correct, including caps arbitrarily close to $1/2$. This is a restricted case, not a classification of unrestricted inputs.</p><h3>6. Complexity discussion</h3><p>The cited theorem matches the symmetric-threshold class, relative-error convention, and agent-dependent split bound. The cited conclusion also states membership in $\mathrm{PPA}$. The transfer to support types is expressly supplied by <code>USER_TASK</code>. [Goldberg et al., *Consensus Halving for Sets of Items*, Theorem 4 and conclusion](https://pubsonline.informs.org/doi/full/10.1287/moor.2021.1249)</p><p>The conditional oracle-hardness argument is valid under its expressly stated reduction notion and polynomially bounded search relation:</p><ul><li>Polynomially many queries and polynomial-length replies give a polynomial-length transcript.</li><li>Verifying replies and repeated-query consistency certifies a partial valid oracle.</li><li>Totality permits extending that partial oracle.</li><li>Correctness for every valid oracle excludes a rejecting transcript for satisfiable formulas.</li></ul><p>Thus the conditional conclusion $\mathrm{NP}=\mathrm{coNP}$ follows. The output correctly avoids presenting it as an unconditional exclusion of $\mathrm{NP}$-hardness.</p><p><b>Finding:</b> Correct as a conditional statement. It does not answer the unrestricted classification.</p><h3>7. Issues and minimum feedback</h3><h3>Major: the requested unrestricted classification remains unresolved</h3><p><b>Where:</b> Sections 1 and 5.</p><p>The parameter-dependent running time is not a polynomial bound in unrestricted $\tau$. The common-cap result concerns an additional hypothesis absent from <code>USER_TASK</code>. No $\mathrm{NP}$-hardness reduction is supplied.</p><p><b>Minimum feedback:</b> Retain the explicit partial-status statement. Resolving the assigned target requires an additional unrestricted complexity result; clarification alone cannot supply it.</p><h3>Minor: the claimed improvement over an earlier bound is unsupported here</h3><p><b>Where:</b> Section 1, the reference to “the verified bound in the notes.”</p><p>Neither <code>USER_TASK</code> nor the supplied materials identify those notes or establish the earlier bound $2^{O(\tau^2)}$. The new bound is independently proved, but the comparison cannot be audited from the supplied record.</p><p><b>Minimum feedback:</b> Identify the earlier result and its assumptions, or remove the comparison.</p><p>The direction is promising because its principal algorithmic and structural claims survive verification. The appropriate overall status is <b>partial</b>.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

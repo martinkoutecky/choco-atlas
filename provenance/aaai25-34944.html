@@ -1,0 +1,189 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Joint Scoring Rules: Competition Between Agents Avoids Performative Prediction — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Joint Scoring Rules: Competition Between Agents Avoids Performative Prediction <span style="font-weight:normal;color:#8a7350">(aaai25-34944)</span></h1>
+<p class="banner">NEW RESULT — adversarial review: proved_with_minor_gaps · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> Equilibrium-correct identification is impossible for the stipulated deterministic oracle protocols. No finite uniform worst-case partition-query bound exists, and $O(\log m)$ queries do not suffice uniformly over $\mu$.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 6 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>A principal can identify a∗with at most O(log(|A|)) comparisons between actions. The proof shows that Algorithm 1, which essentially does a binary search through action space, maintains the incentives for honesty even as predictions can affect later predictions. Here, we rely on setting the term h(p−i) of the LSS scoring rule to zero for all p−i. One way of implementing Algorithm 1 would be to add more and more details to the action with each iteration.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(A\), \(O\), finite \(T\), rational \(\mu\in\Delta(T)\), a strict principal preference, a symmetric strictly proper scoring rule \(s\), and hidden conditional distributions \(q_a\), each query elicits type-level conditional reports for a binary action partition through mass-weighted LSS scoring and \(D_\mu^{\mathrm{ISA}}\); output the unique \(a^\star\) satisfying \(q_{a^\star}\succ q_a\) for all \(a\ne a^\star\), while minimizing worst-case queries and determining whether \(O(\log |A|)\) comparisons suffice uniformly over \(\mu\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(A\) be an explicitly listed action set with \(m=|A|\geq2\), and let \(O\) be a finite exhaustive set of mutually exclusive outcomes, with \(k=|O|\). A society is given by its support: the list of the \(\tau\geq2\) types with positive mass, each mass \(\mu_t\) a binary rational, with \(\sum_t\mu_t=1\); \(\tau\) is the support size, not the number of possible types.<br>Each type controls its entire mass&#x27;s reports and knows every hidden rational distribution \(q_a\in\Delta(O)\). The principal has complete, transitive preferences over distributions, with fixed tie-breaking including action labels, and a unique best action \(a^\star\). Preferences are accessed through an exact comparison oracle.<br>Fix a symmetric strictly proper scoring rule \(s(r,o)\), finite on the rational simplex and accessed through an exact evaluation oracle. Mass-weighted LSS assigns per-unit-mass score \(S_t(p,o)=s(p_t,o)-\sum_u\mu_u s(p_u,o)\), with no additional report-dependent term; thus \(\sum_t\mu_tS_t=0\).<br>A query partitions the current action set into two nonempty subsets \(B_1,B_2\). Each type reports \(p_{t,B_j}\in\Delta(O)\), predicting the terminal outcome conditional on continuing the protocol within \(B_j\), rather than an average over its actions.<br>The rule \(D_\mu^{\mathrm{ISA}}\) retains the subset whose most preferred report, taken over all positive-mass types, is most preferred overall, using fixed tie-breaking. The protocol repeats until a singleton remains and executes that action.<br>After the terminal outcome is observed, each visited query is scored using its retained subset&#x27;s reports; each type maximizes its mass times the sum of these scores. Reports and continuation strategies are evaluated at pure subgame-perfect equilibrium, and identification must hold in every such equilibrium. Equilibrium computation is outside the query model; no auxiliary prediction of the winning action is available.<br>Use rational reports. State oracle running times in \(m,\tau,k,L\), where \(L\) includes the binary encoding lengths of the public data, hidden distributions, and reports processed; count partition queries separately from preference-oracle calls.</p><p>Is equilibrium-correct identification of \(a^\star\) polynomial-time solvable in this oracle model, or is it NP-hard? What is the minimum worst-case number of partition queries, and do \(O(\log m)\) queries suffice uniformly over \(\mu\)?</p><p>For finitely many predictors sharing knowledge of the truth, zero-additive-term LSS scoring supports identification with \(O(\log m)\) partition queries. An augmented mechanism allowing an additional non-zero-sum prediction of the selected action achieves \(O(1)\) comparisons. [Verified discrete results](https://ojs.aaai.org/index.php/AAAI/article/download/34944/37099).<br>No result settling the specified mass-weighted protocol was identified in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The graded question did not define mass-weighted LSS. Chose own score minus the population-weighted mean, which is mass-weighted zero-sum and, at uniform masses, a positive scalar multiple of discrete LSS.</li><li>The graded question did not specify who controls reports or deviations. Chose one strategic controller per positive-mass type, controlling that type&#x27;s entire mass, with at least two types.</li><li>Restored shared knowledge of every conditional outcome distribution, zero additive scoring term, and evaluation only at equilibrium; used pure subgame-perfect equilibrium to specify behavior in continuation searches.</li><li>Defined subset reports as predictions of the terminal outcome under continuation within that subset, and defined total compensation as the sum of scores from visited queries.</li><li>Defined ISA selection by the most preferred report across positive-mass types, without averaging predictions or imposing Independence on principal preferences.</li><li>Excluded auxiliary winning-action elicitation because it is an additional move used by the separate constant-comparison result.</li><li>Specified rational distributions and reports, finite scoring values, exact preference and scoring oracles, and an oracle-relative running-time convention because the graded question supplied no computational representation for preferences or scoring rules.</li><li>Specified explicit action input, normalized positive masses, nonempty partitions, fixed tie-breaking, and encoding-length accounting.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p><b>Under the deterministic oracle-protocol reading, equilibrium-correct identification is impossible for the specified cumulative-payoff mechanism.</b> There is a counterexample with $m=3$, $\tau=2$, and $k=3$, using three distinct deterministic outcome distributions. It works for every positive pair of rational masses.</p><p>Consequently, the proposed polynomial-time versus NP-hardness dichotomy does not describe this mechanism: its equilibrium requirement fails independently of computation. There is no finite uniform worst-case partition-query bound, and $O(\log m)$ queries do not suffice uniformly over $\mu$.</p><p>Here, a deterministic protocol chooses partitions from public information and previous reporting histories; it cannot directly access the hidden distributions. Continuation strategies can depend on previous reports, as in the continuation subgames analyzed in the NOTES.</p><h3>1. Scoring identities</h3><p>Let the three outcomes be $o_1,o_2,o_3$, and let $e_i$ denote the distribution concentrated on $o_i$.</p><p>Symmetry of the scoring rule means invariance under simultaneous permutations of report coordinates and outcome labels. Consequently, there are finite constants $D,E$ such that</p><p>$$
+s(e_i,o_i)=D,\qquad s(e_i,o_j)=E\quad\text{for }i\ne j.
+$$</p><p>Strict propriety at the deterministic distribution $e_i$ implies</p><p>$$
+\delta:=D-E&gt;0.
+$$</p><p>Strict propriety also gives, for every rational report $r$,</p><p>$$
+s(r,o_i)\leq D,
+$$</p><p>with equality exactly when $r=e_i$.</p><p>Take two types of masses $w$ and $1-w$, where $0&lt;w&lt;1$ is rational. At any visited query, their mass-weighted payoffs are respectively</p><p>$$
+w(1-w)\bigl(s(r_1,o)-s(r_2,o)\bigr)
+$$</p><p>and its negative. Thus, writing $V$ for the expected sum of type $1$&#x27;s base scores minus type $2$&#x27;s base scores over visited queries,</p><p>$$
+U_1=w(1-w)V,\qquad U_2=-w(1-w)V.
+$$</p><p>Because $w(1-w)&gt;0$, type $1$ maximizes $V$ and type $2$ minimizes it. Their strategic incentives therefore do not depend on the particular positive masses.</p><h3>2. Preferences, actions, and the first partition</h3><p>Choose the principal’s preference order so that</p><p>$$
+e_1\succ e_2\succ r
+\quad\text{for every }r\notin\{e_1,e_2\}.
+$$</p><p>Order the remaining distributions lexicographically, and apply the fixed label tie-breaking when distributions coincide. This defines complete, transitive preferences. The order is discontinuous, which is permitted by the stated hypotheses.</p><p>Suppose the first partition is</p><p>$$
+\{a\}\quad\text{versus}\quad\{b,c\}.
+$$</p><p>Name the two actions in the pair so that ties between identical reports favor $b$ over $c$. Set</p><p>$$
+q_a=e_2,\qquad q_b=e_3,\qquad q_c=e_1.
+$$</p><p>The unique best action is therefore $c$. All three true distributions are distinct.</p><p>If the pair is retained, its next partition is necessarily $\{b\}$ versus $\{c\}$. We first specify an equilibrium of this continuation after <b>every possible rational first-round reporting history</b>.</p><h3>3. A continuation equilibrium at every inherited history</h3><p>Let $x,y$ be the first-round reports of types $1,2$ for the retained pair. Define the inherited expected score differences</p><p>$$
+H_b=s(x,o_3)-s(y,o_3),\qquad
+H_c=s(x,o_1)-s(y,o_1).
+$$</p><p>For second-round reports $r_{t,b},r_{t,c}$, the cumulative value is</p><p>$$
+V=
+\begin{cases}
+H_b+s(r_{1,b},o_3)-s(r_{2,b},o_3),&amp;\text{if }b\text{ is selected},\\
+H_c+s(r_{1,c},o_1)-s(r_{2,c},o_1),&amp;\text{if }c\text{ is selected}.
+\end{cases}
+$$</p><p>The inherited terms remain relevant because they depend on the selected action.</p><p><b>Lemma.</b> Every such continuation has a pure equilibrium with value</p><p>$$
+v(H_b,H_c)
+=
+\min\left\{H_b+\delta,\,
+\max\{H_b-\delta,H_c\}\right\}.
+$$</p><p>One equilibrium is specified by the following table. Each ordered pair gives that type’s reports for $(b,c)$.</p><p>| Condition | Type $1$ | Type $2$ | Selected action | Value |<br>|---|---|---|---|---|<br>| $H_c&lt;H_b-\delta$ | $(e_1,e_1)$ | $(e_3,e_1)$ | $b$ | $H_b-\delta$ |<br>| $H_b-\delta\leq H_c\leq H_b+\delta$ | $(e_3,e_1)$ | $(e_3,e_1)$ | $c$ | $H_c$ |<br>| $H_c&gt;H_b+\delta$ | $(e_3,e_1)$ | $(e_1,e_1)$ | $b$ | $H_b+\delta$ |</p><p><b>Proof.</b> The report $e_1$ is the principal’s uniquely most preferred distribution. A report of $e_1$ for $b$ therefore forces $b$, because ties with $c$ favor $b$.</p><p>In the middle case, both types report truthfully for both actions, and $c$ is selected.</p><p>For a deviation by type $1$, the opponent’s report $e_1$ for $c$ remains available. Thus:</p><ul><li>If the deviation selects $c$, strict propriety bounds the value by $H_c$.</li><li>If it selects $b$, the deviator must report $e_1$ for $b$. The value is $H_b+E-D=H_b-\delta\leq H_c$.</li></ul><p>For type $2$, selection of $c$ gives value at least $H_c$. Selection of $b$ requires its report $e_1$ for $b$ and gives $H_b+D-E=H_b+\delta\geq H_c$. Neither type improves.</p><p>In the lower case, type $1$ forces $b$. Against this strategy, every deviation by type $2$ still selects $b$, and</p><p>$$
+V=H_b+E-s(r_{2,b},o_3)\geq H_b-\delta.
+$$</p><p>Thus type $2$ cannot reduce the value. If type $1$ retains its report $e_1$ for $b$, the value stays $H_b-\delta$. If it withdraws that report, the opponent’s report $e_1$ for $c$ makes $c$ win, giving</p><p>$$
+V\leq H_c&lt;H_b-\delta.
+$$</p><p>Thus type $1$ cannot increase the value.</p><p>In the upper case, type $2$ forces $b$. Every deviation by type $1$ still selects $b$, and</p><p>$$
+V=H_b+s(r_{1,b},o_3)-E\leq H_b+\delta.
+$$</p><p>If type $2$ withdraws its forcing report, $c$ wins and gives</p><p>$$
+V\geq H_c&gt;H_b+\delta.
+$$</p><p>Thus neither type improves. The three equilibrium values give the displayed formula. $\square$</p><p>This proof establishes the required unilateral payoff bounds against arbitrary rational deviations, without invoking compactness or an equilibrium-existence theorem.</p><h3>4. A full incorrect pure subgame-perfect equilibrium</h3><p>At the first query, prescribe these reports:</p><p>| Type | Report for $\{a\}$ | Report for $\{b,c\}$ |<br>|---|---|---|<br>| $1$ | $e_2$ | $e_3$ |<br>| $2$ | $e_2$ | $e_1$ |</p><p>The pair is retained because $e_1\succ e_2$.</p><p>After every history retaining the pair, prescribe the continuation equilibrium from the lemma.</p><h3>Equilibrium-path outcome and payoffs</h3><p>On the displayed first-round history,</p><p>$$
+H_b=D-E=\delta,\qquad H_c=E-D=-\delta.
+$$</p><p>Since $H_c&lt;H_b-\delta=0$, the continuation reports are</p><p>$$
+(r_{1,b},r_{1,c})=(e_1,e_1),\qquad
+(r_{2,b},r_{2,c})=(e_3,e_1).
+$$</p><p>Tie-breaking selects $b$, whose deterministic outcome is $o_3$. The first query contributes $\delta$ to $V$, and the second contributes $-\delta$. Hence</p><p>$$
+V=0,\qquad U_1=U_2=0.
+$$</p><p>The executed action is $b$, although $c$ is uniquely best.</p><h3>Every full deviation by type $1$ is unprofitable</h3><p>Allow type $1$ to change both first-round reports and its entire continuation strategy.</p><p>If the singleton is retained, its outcome is $o_2$. Type $2$’s singleton report remains truthful, so the deviator’s payoff is</p><p>$$
+w(1-w)\bigl(s(r,o_2)-D\bigr)\leq0.
+$$</p><p>If the pair is retained, write $x$ for type $1$’s new pair report. Type $2$’s pair report remains $e_1$, giving</p><p>$$
+H_c=s(x,o_1)-D\leq0
+$$</p><p>and</p><p>$$
+H_b-\delta
+=s(x,o_3)-E-(D-E)
+=s(x,o_3)-D\leq0.
+$$</p><p>Therefore</p><p>$$
+v(H_b,H_c)\leq0.
+$$</p><p>At this new history, type $2$ follows the lemma’s continuation strategy. The lemma proves that type $1$ cannot obtain more than its equilibrium value against that strategy, even by changing its continuation report. Its total payoff consequently remains nonpositive.</p><h3>Every full deviation by type $2$ is unprofitable</h3><p>If the singleton is retained, type $1$’s singleton report remains truthful, and type $2$’s payoff is again nonpositive by strict propriety.</p><p>If the pair is retained, type $1$’s pair report remains $e_3$, while its singleton report remains $e_2$. Consequently, type $2$’s new pair report $y$ must satisfy</p><p>$$
+y\in\{e_1,e_2\}.
+$$</p><p>Every other distribution ranks below the unchanged singleton report $e_2$ and cannot make the pair win.</p><p>For $y=e_1$, the inherited values are</p><p>$$
+(H_b,H_c)=(\delta,-\delta),
+$$</p><p>and for $y=e_2$, they are</p><p>$$
+(H_b,H_c)=(\delta,0).
+$$</p><p>Both give</p><p>$$
+v(H_b,H_c)=0.
+$$</p><p>The lemma’s type $1$ continuation strategy prevents type $2$ from reducing $V$ below this value. Thus type $2$ cannot obtain positive payoff.</p><h3>Subgame perfection</h3><p>The first-round strategies are a Nash equilibrium by the preceding full-deviation analysis. After every possible history retaining the pair, the prescribed continuation is a pure Nash equilibrium by the lemma. Histories retaining the singleton are terminal.</p><p>Thus the constructed strategy profile is a <b>full pure subgame-perfect equilibrium</b>. In particular, the harmful inherited history occurs on its equilibrium path, closing the principal gap identified in the NOTES.</p><p>All prescribed reports are rational simplex vertices.</p><h3>5. Why choosing a different first partition cannot give a uniform guarantee</h3><p>Fix three public action labels, their tie-breaking, two positive rational masses, the scoring rule, and the preference order above.</p><p>Consider any deterministic protocol using only the stipulated information channels. Before its first partition query, it has received no reports. Preference-oracle and score-oracle answers depend on the public preferences and scoring rule, not on which hidden distribution belongs to which action.</p><p>Its first partition therefore has some singleton $a$ and some pair. Within that pair, call the label favored by tie-breaking $b$ and the other label $c$. Choose the hidden input distributions to be</p><p>$$
+q_a=e_2,\qquad q_b=e_3,\qquad q_c=e_1.
+$$</p><p>Section 4 supplies a full incorrect pure subgame-perfect equilibrium for this protocol. After the pair is retained, its only possible partition is the terminal comparison already analyzed.</p><p>Hence</p><p>$$
+\text{every deterministic protocol has an admissible input with an incorrect pure SPE.}
+$$</p><p>The construction works for every $0&lt;w&lt;1$, including equal masses. It uses the first strategically nontrivial action-set size, distinct true distributions, and an existing full equilibrium; it does not exploit vacuous equilibrium correctness.</p><h3>6. Query complexity and oracle running times</h3><h3>Equilibrium-correct identification</h3><p>For the full stipulated input class, the class of uniformly equilibrium-correct deterministic protocols is empty. Its minimum worst-case partition-query count is therefore undefined, or $+\infty$ under the extended-cost convention.</p><p>In particular, uniform $O(\log m)$ equilibrium-correct identification is false. The counterexample itself follows a balanced tree and uses exactly two partition queries.</p><h3>Execution costs</h3><p>These remain efficient, but do not imply correctness. If a run visits $d$ queries, then</p><p>$$
+d\leq m-1.
+$$</p><p>Balanced partitions give</p><p>$$
+d\leq\lceil\log_2 m\rceil.
+$$</p><p>Finding the most preferred of the $2\tau$ reports at each query uses</p><p>$$
+(2\tau-1)d
+$$</p><p>preference-oracle calls. Scoring the observed terminal outcome uses</p><p>$$
+\tau d
+$$</p><p>score-oracle evaluations. Evaluating all retained reports against one fixed terminal distribution would use at most $\tau k d$ score-oracle evaluations.</p><p>Partition construction and rational report handling require polynomial overhead in $m,\tau,k,L$; balanced partition construction along the visited path uses $O(m)$ action-list operations. Arbitrary score-oracle implementations remain outside these overhead bounds.</p><p>The impossibility also holds with computationally elementary oracles. For example, the Brier score</p><p>$$
+s(r,o)=2r(o)-\sum_z r(z)^2
+$$</p><p>is symmetric, finite, and strictly proper because</p><p>$$
+\sum_o q(o)\bigl(s(q,o)-s(r,o)\bigr)=\|q-r\|_2^2.
+$$</p><p>Its rational evaluations take polynomial bit time in $k,L$. The preference oracle above uses vertex equality tests followed by lexicographic comparison, also in polynomial bit time. Thus computational difficulty of the oracles is unnecessary for the counterexample.</p><h3>The two-action boundary case</h3><p>For completeness, $m=2$ does have equilibrium-correct identification with exactly one partition query.</p><p>Define the expected-score regret</p><p>$$
+R(q,r)=\sum_o q(o)\bigl(s(q,o)-s(r,o)\bigr).
+$$</p><p>In a single terminal comparison, truthful reporting for both actions guarantees type $t$ nonnegative payoff:</p><p>$$
+U_t=\mu_t\sum_{u\ne t}\mu_u R(q_a,p_{u,a})\geq0
+$$</p><p>for whichever action the deviation selects. Since total payoff is zero, every equilibrium payoff is zero.</p><p>If the winning report for the selected action is untruthful, another type can replace its report for that action by truth. The original winning report remains, so the selected action cannot change. The deviator obtains a strictly positive weighted sum of regrets, a contradiction. Once the winning report is truthful, any other untruthful selected-action report would give the winning type strictly positive payoff. Thus all selected-action reports are truthful.</p><p>If the selected action is inferior, reporting truth for the best action makes it win. Every opponent’s report for that action must differ from truth; otherwise it would already outrank the selected truthful report. The deviation therefore gives strictly positive payoff, another contradiction.</p><p>Finally, against fully truthful opponents, any deviation yields</p><p>$$
+-\mu_t(1-\mu_t)R(q_a,p_{t,a})\leq0.
+$$</p><p>Thus a truthful equilibrium exists, and every pure equilibrium is correct. Its execution uses $2\tau-1$ preference-oracle calls and $\tau$ score evaluations.</p><h3>7. Relation to the cited search result</h3><p>The [cited technical appendix](https://rubijhudson.com/files/Joint%20Scoring%20Rules%20-%20Technical%20Appendix.pdf) reduces subset comparisons to comparisons between their optimal terminal actions. For the cumulative-payoff game specified here, that reduction requires control of inherited outcome-dependent scores.</p><p>The lemma explicitly accounts for those scores, and Section 4 verifies an incorrect full equilibrium. Therefore the cited logarithmic search statement cannot establish the required guarantee for this precise protocol.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Result and Sections 5–6: The proof explicitly concerns deterministic protocols, whereas USER_TASK does not explicitly specify whether protocol randomization is permitted. Determinism is a natural reading of the stated complexity question, but the conclusions should remain expressly restricted to that reading; randomized protocols are not adjudicated by this proof.</li><li><b>minor</b> — Introduction and Section 4, Subgame perfection: The references to NOTES and a previously identified principal gap have no supplied referent. Remove them or identify the referenced material; the self-contained equilibrium proof does not depend on them.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>The counterexample is correct under the explicitly stated deterministic protocol interpretation.</b> The continuation lemma, first-round deviation analysis, and subgame-perfection argument all withstand verification. They establish failure of equilibrium-correct identification already at $m=3$, for $\tau=2$ and every positive rational pair of masses.</p><p>The only qualifications are minor: the task does not explicitly specify whether protocols may randomize, and the output refers to unavailable “NOTES.” No mathematical repair is needed for the deterministic impossibility result.</p><h3>1. Scope and admissibility</h3><p>The construction uses</p><p>$$
+m=3,\qquad \tau=2,\qquad k=3,\qquad (\mu_1,\mu_2)=(w,1-w),
+$$</p><p>where $w$ is rational and $0&lt;w&lt;1$. These satisfy the support and mass requirements.</p><p>All hidden distributions and prescribed reports are simplex vertices, hence rational. The constructed preferences are complete and transitive: two distinguished distributions occupy the top positions, and lexicographic comparison orders the remainder. Continuity and expected-utility representation are not required by the task.</p><p>The action $c$ is uniquely best because</p><p>$$
+q_c=e_1\succ q_a=e_2\succ q_b=e_3.
+$$</p><p>The proof uses action-label tie-breaking to name $b$ as the preferred label within the pair. This is consistent with the task’s fixed action-label tie-breaking.</p><p><b>Minor scope qualification.</b> The output explicitly restricts itself to deterministic protocols. Determinism is a natural interpretation of the task’s polynomial-time versus NP-hardness question, but randomized protocols are not explicitly excluded in <code>USER_TASK</code>. The proof establishes the deterministic result; it does not establish a randomized impossibility theorem.</p><h3>2. Scoring identities</h3><p>Symmetry gives common diagonal and off-diagonal vertex scores:</p><p>$$
+s(e_i,o_i)=D,\qquad s(e_i,o_j)=E\quad(i\ne j).
+$$</p><p>Strict propriety at $e_i$, applied to the distinct report $e_j$, implies</p><p>$$
+D&gt;E.
+$$</p><p>Strict propriety also establishes, for every rational report $r$,</p><p>$$
+s(r,o_i)\leq D,
+$$</p><p>with equality exactly at $r=e_i$. These statements use only admissible distributions and reports.</p><p>The mass-weighted payoff calculation is correct:</p><p>$$
+\mu_1S_1=w(1-w)\bigl(s(r_1,o)-s(r_2,o)\bigr),
+$$</p><p>and the other type receives its negative. Consequently, maximizing and minimizing the cumulative score difference $V$ correctly represents the two types’ incentives. The positive factor $w(1-w)$ does not affect best responses.</p><p><b>Assessment:</b> Correct, with no gap.</p><h3>3. Continuation lemma</h3><p>The inherited quantities</p><p>$$
+H_b=s(x,o_3)-s(y,o_3),\qquad
+H_c=s(x,o_1)-s(y,o_1)
+$$</p><p>correctly account for the first query’s score conditional on the eventual action. They cannot be discarded as constants independent of continuation play.</p><p>Each row of the equilibrium table has the stated selected action and payoff.</p><h3>Lower region</h3><p>When</p><p>$$
+H_c&lt;H_b-\delta,
+$$</p><p>type $1$ forces $b$ through its report $e_1$. Against that report, type $2$ cannot change the selected action and satisfies</p><p>$$
+V=H_b+E-s(r_{2,b},o_3)\geq H_b-\delta.
+$$</p><p>Type $1$ obtains the same value if it retains its forcing report. If it withdraws that report, the opponent’s $e_1$ report for $c$ selects $c$, and strict propriety gives</p><p>$$
+V\leq H_c&lt;H_b-\delta.
+$$</p><p>Thus neither type improves.</p><h3>Middle region</h3><p>When</p><p>$$
+H_b-\delta\leq H_c\leq H_b+\delta,
+$$</p><p>both types report truthfully, selecting $c$ with value $H_c$.</p><p>For type $1$, a deviation selecting $c$ yields at most $H_c$. Selecting $b$ requires reporting $e_1$ for $b$ and yields</p><p>$$
+H_b-\delta\leq H_c.
+$$</p><p>For type $2$, a deviation selecting $c$ yields at least $H_c$. Selecting $b$ yields</p><p>$$
+H_b+\delta\geq H_c.
+$$</p><p>The weak inequalities cover both boundary cases.</p><h3>Upper region</h3><p>When</p><p>$$
+H_c&gt;H_b+\delta,
+$$</p><p>type $2$ forces $b$. Type $1$ cannot exceed</p><p>$$
+H_b+D-E=H_b+\delta.
+$$</p><p>Type $2$ keeps that value by retaining its forcing report. Withdrawing it selects $c$ and gives value at least $H_c$, which is worse for the minimizing type.</p><p>The three regions therefore justify exactly the displayed formula</p><p>$$
+v(H_b,H_c)
+=
+\min\left\{H_b+\delta,\max\{H_b-\delta,H_c\}\right\}.
+$$</p><p>The proof covers arbitrary rational unilateral deviations. It does not depend on compactness, continuity of preferences, or a general equilibrium-existence theorem.</p><p><b>Assessment:</b> Correct, including the boundary cases and off-path histories.</p><h3>4. First-round equilibrium and full deviations</h3><p>On the proposed first-round history,</p><p>$$
+H_b=\delta,\qquad H_c=-\delta.
+$$</p><p>Since $\delta&gt;0$, this lies strictly in the lower region. The continuation selects $b$, and the cumulative score difference is</p><p>$$
+V=\delta-\delta=0.
+$$</p><p>Thus both types receive zero payoff, while the inferior action $b$ is executed.</p><h3>Type $1$</h3><p>If a deviation retains the singleton, the opponent’s truthful report bounds type $1$’s payoff by zero.</p><p>If it retains the pair, the opponent’s pair report remains $e_1$. The two bounds</p><p>$$
+H_c=s(x,o_1)-D\leq0
+$$</p><p>and</p><p>$$
+H_b-\delta=s(x,o_3)-D\leq0
+$$</p><p>imply</p><p>$$
+v(H_b,H_c)\leq0.
+$$</p><p>The continuation lemma supplies an upper bound against the prescribed opponent strategy, so changing the entire continuation strategy cannot improve this payoff.</p><h3>Type $2$</h3><p>If a deviation retains the singleton, strict propriety again bounds the deviator’s payoff by zero.</p><p>If it retains the pair, the unchanged singleton report $e_2$ implies the necessary condition</p><p>$$
+y\in\{e_1,e_2\}.
+$$</p><p>This remains necessary even when type $2$ also changes its singleton report: every other pair report is below the unchanged singleton report.</p><p>The inherited values are correctly computed as</p><p>$$
+(H_b,H_c)=(\delta,-\delta)
+$$</p><p>for $y=e_1$, and</p><p>$$
+(H_b,H_c)=(\delta,0)
+$$</p><p>for $y=e_2$. Both produce continuation value zero. The opponent’s prescribed continuation strategy prevents type $2$ from lowering $V$ below zero.</p><p><b>Assessment:</b> Correct. The analysis checks full strategy deviations, rather than merely deviations followed by the deviator’s original continuation.</p><h3>5. Subgame perfection and protocol quantifiers</h3><p>Every history retaining the pair receives a pure continuation equilibrium from the lemma. Histories retaining the singleton are terminal. Together with the first-round Nash equilibrium, this establishes a full pure subgame-perfect equilibrium.</p><p>The deterministic protocol quantifier is also correct. Before receiving reports, the protocol’s oracle answers do not identify which hidden distribution belongs to which action. Its first partition is therefore fixed independently of that assignment. For its resulting singleton and pair, the construction assigns</p><p>$$
+q_a=e_2,\qquad q_b=e_3,\qquad q_c=e_1.
+$$</p><p>The subsequent partition of the retained pair is forced. Thus the output establishes</p><p>$$
+\text{For every deterministic protocol, there exists an admissible input with an incorrect pure SPE.}
+$$</p><p>This is an actual equilibrium counterexample, not an argument relying on equilibrium nonexistence.</p><p><b>Assessment:</b> Correct for deterministic protocols.</p><h3>6. Query bounds and computational claims</h3><p>For deterministic equilibrium-correct identification, the feasible protocol class is empty. Accordingly, the minimum worst-case query count is undefined, or $+\infty$ under the stated extended-cost convention. This does not assert that individual executions require infinitely many queries.</p><p>The execution bounds are correct:</p><p>$$
+d\leq m-1,
+$$</p><p>and balanced partitions give</p><p>$$
+d\leq\lceil\log_2m\rceil.
+$$</p><p>Scanning the $2\tau$ reports uses $(2\tau-1)d$ preference-oracle calls. Scoring the retained reports at the observed outcome uses $\tau d$ evaluation calls. Evaluating their expectations against a fixed terminal distribution uses at most $\tau kd$ evaluation calls.</p><p>The Brier-score identity is correct:</p><p>$$
+\sum_o q(o)\bigl(s(q,o)-s(r,o)\bigr)=\|q-r\|_2^2.
+$$</p><p>Its rational evaluation, and the specified vertex tests and lexicographic preference comparisons, have polynomial bit complexity. Thus the impossibility does not depend on computationally difficult oracles.</p><p><b>Assessment:</b> Correct within the stated oracle model and deterministic scope.</p><h3>7. Two-action boundary case</h3><p>The $m=2$ argument is valid for arbitrary positive support masses.</p><p>Truthful reporting guarantees each type nonnegative expected payoff. Zero-sum payoffs then force every equilibrium payoff to be zero.</p><p>If a selected winning report is untruthful, a different positive-mass type can report truth for that action while leaving the original winning report available. The action remains selected, and strict propriety gives strictly positive payoff.</p><p>Once a winning report is truthful, any other untruthful selected-action report would give its type strictly positive payoff. Hence all selected-action reports are truthful.</p><p>If the selected action is inferior, truthfully reporting the best action selects it and gives strictly positive payoff, because no opponent could already be reporting its truth. Finally, fully truthful reporting is itself an equilibrium by the displayed regret bound.</p><p><b>Assessment:</b> Correct. The one-query positive result is compatible with the three-action impossibility.</p><h3>8. Literature comparison and minimal feedback</h3><p>The description of the cited appendix is accurate: its Theorem $7$ reduces subset comparisons to comparisons between their optimal terminal actions through an induction argument. The counterexample checks the additional inherited-payoff issue directly. [Technical appendix](https://rubijhudson.com/files/Joint%20Scoring%20Rules%20-%20Technical%20Appendix.pdf)</p><p>The minimum editorial clarifications are:</p><ul><li>State that the impossibility and query conclusions concern deterministic protocols, and that randomized protocols are outside the established result.</li><li>Remove or explain the references to “NOTES,” which were not supplied. They are unnecessary to the self-contained proof.</li></ul><p>There are no blocking mathematical issues under the deterministic interpretation.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,160 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Controlling Elections through Social Influence — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Controlling Elections through Social Influence <span style="font-weight:normal;color:#8a7350">(d4-conf-atal-2018-0223)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\)-hard for every fixed \(\alpha\in(0,1]\), already with \(m=2\) and \(s=1\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>It is NP-hard to compute an α-approximation to the problem max|S|≤k POV(S) for any α &gt; 0, even for two candidates and even when the instance is deterministic.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given two candidates \(c^\star,c_1\), a finite set \(T\) of complete voter-and-network-block types, a rational distribution \(\mu\in\mathbb{Q}_{\ge0}^{T}\) with \(\sum_t\mu_t=1\), a finite scenario distribution \(\rho\), typed kernels \(\lambda^\omega_{ut}\), and seed fraction \(\kappa\), choose \(x_t\in[0,\mu_t]\) with \(\sum_t x_t\le\kappa\) to maximize \(\Pr_{\omega\sim\rho}[2\sum_{t:\pi_t(2)=c^\star}r_t^\omega(x)&gt;a_1-a_\star]\), where \(a_c=\sum_{t:\pi_t(1)=c}\mu_t\) and \(r^\omega(x)\) is the least fixed point of \(r_t=x_t+(\mu_t-x_t)(1-e^{-\sum_u\lambda^\omega_{ut}r_u})\); return an optimum or an \(\alpha\)-approximation.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list \(T\) of \(\tau\) types with positive binary-rational masses \(\mu_t\), summing to \(1\); \(\tau\) is the support size, not the number of possible types. There are \(m=2\) candidates, \(c^\star,c_1\). Each type specifies a strict ranking \(\pi_t\) and a network block; distinct blocks may have identical rankings.<br>The input explicitly lists \(s\ge1\) scenarios \(\Omega\), positive binary-rational probabilities \(\rho_\omega\) summing to \(1\), and finite nonnegative binary-rational influence intensities \(\lambda^\omega_{ut}\) from type \(u\) to type \(t\). The seed budget is a binary rational \(\kappa\in[0,1]\).<br>Choose seed masses \(x_t\in[0,\mu_t]\) with \(\sum_t x_t\le\kappa\), before the scenario is drawn. Every type may be seeded and transmit influence, including types already ranking \(c^\star\) first.<br>In scenario \(\omega\), the influenced masses \(r^\omega(x)\) are the coordinatewise least fixed point in \(\prod_t[0,\mu_t]\) of \(r_t=x_t+(\mu_t-x_t)(1-\exp(-\sum_u\lambda^\omega_{ut}r_u))\). Influenced voters promote \(c^\star\) one position; those already ranking it first retain their vote. Ties count as failure.<br>Define \(a_c=\sum_{t:\pi_t(1)=c}\mu_t\) and maximize \(F(x)=\sum_{\omega\in\Omega}\rho_\omega\mathbf{1}\{2\sum_{t:\pi_t(2)=c^\star}r_t^\omega(x)&gt;a_{c_1}-a_{c^\star}\}\). Let \(\mathrm{OPT}\) be the supremum over feasible real seed vectors. Algorithms use the Turing bit model and output binary-rational feasible seed vectors; inequalities have their exact mathematical meaning, without a tolerance or margin promise. Let \(L\) be the total input bit length.</p><p>For each fixed \(\alpha\in(0,1]\), is obtaining a feasible \(x\) with \(F(x)\ge\alpha\mathrm{OPT}\) polynomial-time solvable in \(m,\tau,s,L\), or NP-hard?</p><p>For finite voters with independent-cascade diffusion, obtaining any positive multiplicative approximation to probability of victory is NP-hard, even with two candidates and deterministic propagation. [Wilder and Vorobeychik](https://www.cais.usc.edu/wp-content/uploads/2018/01/aamas_elections_final.pdf)<br>No result settling this explicitly represented scenario model with fractional seeds and the exponential least-fixed-point dynamics was identified in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Interpreted complete voter-and-network-block types as strict rankings paired with block identities; identical rankings need not identify the same type.</li><li>Made scenarios explicitly listed with positive binary-rational probabilities, and kernels finite nonnegative binary-rational intensities rather than probabilities bounded by one.</li><li>Set the normalized seed budget domain to [0,1], allowing seeding and transmission by every type, including existing supporters.</li><li>Retained strict victory and failure on ties; no discrete one-vote increment is added to a mass threshold.</li><li>Specified the least fixed point within the mass box and exact threshold semantics without a numerical tolerance or separation promise.</li><li>Used real feasible seeds for the optimization benchmark, its supremum, and binary-rational outputs in the Turing bit model.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>For every fixed \(\alpha\in(0,1]\), obtaining the requested approximation is \(\mathrm{NP}\)-hard, already with \(m=2\) and a single scenario \(s=1\).</p><p>The proof below handles arbitrary fractional seeds, permits seeding every type, and avoids evaluating transcendental expressions when decoding an algorithm’s output.</p><h3>1. Source problem and a fractional rounding lemma</h3><p>We reduce from <b>Independent Set on simple cubic graphs</b>. An instance consists of a simple undirected graph \(G=(V,E)\), with every vertex having degree three, and an integer \(k\). The question is whether \(G\) contains an independent set of size at least \(k\). This problem is \(\mathrm{NP}\)-hard; see Theorem 3.2 and the discussion extending the result to graphs of degree exactly three in [Alimonti and Kann, *Hardness of Approximating Problems on Cubic Graphs*](https://www.cs.yale.edu/homes/aspnes/pinewiki/attachments/MarkovChains/alimanti-mis-cubic.pdf).</p><p>Write \(n=|V|\). We restrict to \(1\le k\le n\), since instances outside this range are trivial.</p><p>For a positive rational \(h\), define</p><p>\(
+P_k=\{z\in[0,h]^V:\sum_{v\in V}z_v\le kh\}
+\)</p><p>and</p><p>\(
+Q(z)=3h\sum_{v\in V}z_v-2\sum_{\{u,v\}\in E}z_uz_v.
+\)</p><p><b>Rounding lemma.</b> For every \(z\in P_k\), there is a subset \(A\subseteq V\), with \(|A|\le k\), such that</p><p>\(
+Q(z)\le Q(h\mathbf 1_A)=h^2(3|A|-2e(A)),
+\)</p><p>where \(e(A)\) denotes the number of edges with both endpoints in \(A\).</p><p><b>Proof.</b> Suppose two coordinates \(z_i,z_j\) lie strictly between zero and \(h\). Replace them by \(z_i+t,z_j-t\), allowing \(t\) to range over the closed interval on which both coordinates remain in \([0,h]\). This preserves the total seed mass.</p><p>If \(\{i,j\}\notin E\), the resulting function of \(t\) is affine. If \(\{i,j\}\in E\), its quadratic term is \(2t^2\), because the contribution of that edge is</p><p>\(
+-2(z_i+t)(z_j-t).
+\)</p><p>All other contributions are affine in \(t\). Thus the function is convex, and at least one endpoint has value no smaller than its value at \(t=0\). At either endpoint, at least one of the two coordinates becomes zero or \(h\).</p><p>Repeating this operation leaves at most one coordinate strictly between zero and \(h\), without decreasing \(Q\).</p><p>If one such coordinate remains and there are \(j\) coordinates equal to \(h\), feasibility implies \(j\le k-1\). Consequently, the remaining coordinate can vary throughout \([0,h]\) while preserving feasibility. Since \(Q\) is affine in that coordinate, setting it to zero or \(h\) can again avoid decreasing \(Q\). The resulting vector is \(h\mathbf 1_A\), with \(|A|\le k\). Substitution gives the stated formula. \(\square\)</p><p>Two consequences will be used:</p><ul><li>If \(G\) has an independent set of size at least \(k\), there is \(z\in P_k\) with \(Q(z)=3kh^2\).</li><li>If \(G\) has no independent set of size \(k\), then every \(z\in P_k\) satisfies</li></ul><p>\(
+  Q(z)\le(3k-2)h^2.
+  \)</p><p>For the second consequence, apply the lemma. If \(|A|\le k-1\), then \(3|A|-2e(A)\le3k-3\). If \(|A|=k\), then \(e(A)\ge1\), giving the bound \(3k-2\).</p><h3>2. Construction of the society</h3><p>Let \(N\) be the smallest power of two satisfying \(N\ge n\). Set</p><p>\(
+h=\frac1{8N},\qquad
+\ell=\frac1{128N},\qquad
+\kappa=kh,
+\)</p><p>and define the rational victory threshold</p><p>\(
+\theta=\kappa+\ell(3k-1)h^2.
+\)</p><p>Construct \(n+2\) types, each with its own network block:</p><ul><li>For every \(v\in V\), a <b>vertex type</b> of mass \(h\), ranking \(c_1\) above \(c^\star\).</li><li>An isolated type \(b\), ranking \(c_1\) above \(c^\star\), of mass</li></ul><p>\(
+  \mu_b=\frac12+\theta-nh.
+  \)</p><ul><li>An isolated type \(p\), ranking \(c^\star\) above \(c_1\), of mass</li></ul><p>\(
+  \mu_p=\frac12-\theta.
+  \)</p><p>There is one scenario, of probability one. For each graph edge \(\{u,v\}\in E\), put intensity \(\ell\) in both directions between the corresponding vertex types. Every other intensity is zero.</p><p>All types remain seedable.</p><p>We verify that this is a valid input. First, \(nh\le1/8\), so \(\kappa\le1/8\). Also \(3\ell h&lt;1\), and therefore</p><p>\(
+0&lt;\theta
+&lt;\kappa(1+3\ell h)
+&lt;2\kappa
+\le\frac14.
+\)</p><p>Hence both auxiliary masses are positive. The masses sum to one.</p><p>All numerical parameters are dyadic rationals with bit length \(O(\log n)\). The support size is \(\tau=n+2\); even explicitly listing the entire intensity matrix takes only polynomial space and time.</p><p>The initial mass supporting \(c_1\) is</p><p>\(
+B=nh+\mu_b=\frac12+\theta,
+\)</p><p>and the initial mass supporting \(c^\star\) is \(1-B\). Thus, writing</p><p>\(
+S(x)=\sum_{v\in V}r_v(x)+r_b(x),
+\)</p><p>the exact victory condition is</p><p>\(
+2S(x)&gt;B-(1-B)=2\theta,
+\)</p><p>or equivalently \(S(x)&gt;\theta\).</p><h3>3. A uniform bound for the exponential dynamics</h3><p>Fix any feasible seed vector. Write \(z_v=x_v\) for its vertex coordinates.</p><p>Because the auxiliary types are isolated,</p><p>\(
+r_b=x_b,\qquad r_p=x_p.
+\)</p><p>On the vertex types, the fixed-point equations are</p><p>\(
+r_v=z_v+(h-z_v)\left(1-\exp\left(-\ell\sum_{u\in N_G(v)}r_u\right)\right).
+\)</p><p>These equations have a unique fixed point in \([0,h]^V\). Indeed, their right-hand side maps this box into itself. Since \(a\mapsto1-e^{-a}\) is Lipschitz with constant one on the nonnegative reals, the map has Lipschitz constant at most \(3\ell h&lt;1\) in the maximum norm. The contraction mapping theorem therefore applies. In particular, this unique fixed point is the stipulated least fixed point.</p><p>We next prove the uniform estimate</p><p>\(
+\left|\sum_{v\in V}r_v-\sum_{v\in V}z_v-\ell Q(z)\right|\le\mathcal E,
+\qquad
+\mathcal E=\frac{27}{2}n\ell^2h^3.
+\)</p><p>Define</p><p>\(
+\delta_v=r_v-z_v,\qquad
+a_v=\ell\sum_{u\in N_G(v)}r_u.
+\)</p><p>Since \(0\le r_u\le h\) and each vertex has three neighbors,</p><p>\(
+0\le a_v\le3\ell h.
+\)</p><p>Using \(0\le1-e^{-a}\le a\) for \(a\ge0\), we obtain</p><p>\(
+0\le\delta_v=(h-z_v)(1-e^{-a_v})\le3\ell h^2.
+\)</p><p>Also, for every \(a\ge0\),</p><p>\(
+|1-e^{-a}-a|\le\frac{a^2}{2}.
+\)</p><p>For completeness, the difference satisfies<br>\(
+a-(1-e^{-a})=\int_0^a(1-e^{-t})\,dt,
+\)<br>which lies between zero and \(\int_0^a t\,dt=a^2/2\).</p><p>Consequently,</p><p>\(
+\delta_v-\ell(h-z_v)\sum_{u\in N_G(v)}z_u
+=
+(h-z_v)\left((1-e^{-a_v})-a_v+\ell\sum_{u\in N_G(v)}\delta_u\right).
+\)</p><p>Its absolute value is at most</p><p>\(
+h\left(\frac{(3\ell h)^2}{2}+\ell\cdot3\cdot3\ell h^2\right)
+=
+\frac{27}{2}\ell^2h^3.
+\)</p><p>Summing over vertices proves the estimate, because cubic regularity gives</p><p>\(
+\sum_v(h-z_v)\sum_{u\in N_G(v)}z_u
+=
+3h\sum_vz_v-2\sum_{\{u,v\}\in E}z_uz_v
+=
+Q(z).
+\)</p><p>Finally, the error is smaller than the required gap:</p><p>\(
+\frac{\mathcal E}{\ell h^2}
+=
+\frac{27}{2}n\ell h
+\le\frac{27}{256}
+&lt;\frac14,
+\)</p><p>where we used \(n\le N\), \(\ell=1/(128N)\), and \(h\le1\). Thus</p><p>\(
+\mathcal E&lt;\frac14\ell h^2.
+\)</p><h3>4. Correctness of the reduction</h3><h3>Yes-instances</h3><p>Suppose \(G\) contains an independent set \(A\) of size \(k\). Fully seed its vertex types:</p><p>\(
+z=h\mathbf1_A,\qquad x_b=x_p=0.
+\)</p><p>This is a feasible binary-rational vector, and \(Q(z)=3kh^2\). The uniform estimate yields</p><p>\(
+S(x)\ge\kappa+3k\ell h^2-\mathcal E
+=
+\theta+\ell h^2-\mathcal E
+&gt;\theta.
+\)</p><p>Thus this seed vector wins, and \(\mathrm{OPT}=1\).</p><h3>No-instances, including arbitrary fractional and auxiliary seeds</h3><p>Suppose \(G\) has no independent set of size \(k\). Consider any feasible real seed vector.</p><p>Its vertex coordinates belong to \(P_k\). Moreover, the budget constraint gives</p><p>\(
+\sum_vz_v+x_b\le\kappa.
+\)</p><p>This remains true when some budget is spent on the initially preferred type \(p\).</p><p>Using the uniform estimate and the rounding lemma,</p><p>\(
+S(x)
+\le
+\sum_vz_v+x_b+\ell Q(z)+\mathcal E
+\le
+\kappa+\ell(3k-2)h^2+\mathcal E.
+\)</p><p>Therefore,</p><p>\(
+S(x)\le\theta-\ell h^2+\mathcal E&lt;\theta.
+\)</p><p>No feasible real seed vector wins, and \(\mathrm{OPT}=0\).</p><p>This proves that deciding whether \(\mathrm{OPT}&gt;0\) is \(\mathrm{NP}\)-hard in the constructed single-scenario family.</p><h3>5. Decoding an approximation algorithm in the Turing bit model</h3><p>Fix any \(\alpha\in(0,1]\). Suppose a polynomial-time algorithm outputs a feasible binary-rational vector \(x\) satisfying</p><p>\(
+F(x)\ge\alpha\mathrm{OPT}.
+\)</p><p>Because there is one scenario, \(F(x)\in\{0,1\}\). On every yes-instance, \(\mathrm{OPT}=1\), so the algorithm must output a winning vector.</p><p>We must still explain how to distinguish the source instances in polynomial time from that vector. Directly testing the exponential victory inequality could raise exact-comparison difficulties. The reduction avoids this issue.</p><p>Compute the rational number \(Q(z)\) from the output’s vertex coordinates and accept precisely when</p><p>\(
+Q(z)&gt;\left(3k-\frac32\right)h^2.
+\)</p><p>On a no-instance, the rounding lemma guarantees</p><p>\(
+Q(z)\le(3k-2)h^2
+&lt;
+\left(3k-\frac32\right)h^2,
+\)</p><p>so the test rejects.</p><p>On a yes-instance, the output must satisfy \(S(x)&gt;\theta\). The uniform upper bound and budget constraint imply</p><p>\(
+\theta&lt;S(x)\le\kappa+\ell Q(z)+\mathcal E.
+\)</p><p>Hence</p><p>\(
+Q(z)&gt;
+\frac{\theta-\kappa-\mathcal E}{\ell}
+=
+(3k-1)h^2-\frac{\mathcal E}{\ell}
+&gt;
+\left(3k-\frac54\right)h^2
+&gt;
+\left(3k-\frac32\right)h^2.
+\)</p><p>Thus the test accepts.</p><p>The output of a polynomial-time Turing algorithm has polynomial bit length. Evaluating \(Q(z)\) and comparing these rationals therefore takes polynomial time.</p><p>The hypothetical approximation algorithm would consequently decide Independent Set on cubic graphs in polynomial time. This establishes the claimed \(\mathrm{NP}\)-hardness for every fixed positive approximation factor. The proof does not require an exact transcendental comparison oracle or a margin promise on the general input.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The proof resolves the assigned question. The reduction handles arbitrary real fractional seeds, respects the least-fixed-point semantics, and gives a polynomial-time rational test for decoding the approximation algorithm’s output. I found no major or minor mathematical issues.</p><ul><li><b>Source problem and applicability of the citation</b></li></ul><p>The required source problem is Independent Set on simple graphs in which every vertex has degree exactly three. The cited paper’s Theorem 3.2 establishes APX-completeness for maximum degree three, and its subsequent discussion explicitly extends the results to degree exactly three. Thus the citation supports the NP-hard source problem used here. [Alimonti and Kann, Theorem 3.2 and the discussion on page 5](https://www.cs.yale.edu/homes/aspnes/pinewiki/attachments/MarkovChains/alimanti-mis-cubic.pdf).</p><p>Restricting to integer thresholds \(1\le k\le n\) removes only trivial instances. Cubic regularity supplies both properties subsequently needed: exactly three neighbors per vertex and the identity involving \(Q\).</p><ul><li><b>Fractional rounding lemma</b></li></ul><p>The pairwise rounding argument is valid.</p><p>For two fractional coordinates, the allowed interval of \(t\) is closed, contains zero, and preserves both coordinate bounds and total mass. For a nonedge, the objective is affine in \(t\). For an edge, the contribution<br>\(-2(z_i+t)(z_j-t)\) has quadratic coefficient \(2\), so the objective is convex. In either case, an endpoint has objective at least its value at zero.</p><p>Each operation reduces the number of fractional coordinates by at least one. Previously integral coordinates are unaffected, so the procedure terminates.</p><p>If one fractional coordinate remains and \(j\) coordinates equal \(h\), feasibility and the positive fractional remainder imply \(j&lt;k\). Since \(j\) and \(k\) are integers, \(j\le k-1\). Therefore the last coordinate may range over all of \([0,h]\) while preserving feasibility. Affinity permits rounding it to an endpoint without decreasing \(Q\).</p><p>Substitution into \(Q\) gives<br>\(Q(h\mathbf 1_A)=h^2(3|A|-2e(A))\).<br>Both consequences follow with the stated constants:</p><ul><li>An independent set of size at least \(k\) contains one of size exactly \(k\), yielding \(3kh^2\).</li><li>In a no-instance, a rounded set of size at most \(k-1\) yields at most \((3k-3)h^2\), while a set of size \(k\) has an internal edge and yields at most \((3k-2)h^2\).</li></ul><p>The bound therefore applies to every real \(z\in P_k\), not merely rational or integral vectors.</p><ul><li><b>Validity and encoding of the constructed society</b></li></ul><p>The construction satisfies all input restrictions.</p><p>Since \(k\le n\le N\), both \(nh\le1/8\) and \(\kappa\le1/8\). The threshold estimate follows because<br>\[
+   \ell(3k-1)h^2&lt;3k\ell h^2=3\kappa\ell h.
+   \]<br>Consequently \(0&lt;\theta&lt;1/4\). Thus \(\mu_p&gt;1/4\), and \(\mu_b&gt;3/8\); both auxiliary masses are positive. The masses sum exactly to one.</p><p>All parameters are dyadic rationals of polynomial encoding length. There are \(n+2\) explicitly represented types and one scenario of probability one. Listing even the full intensity matrix requires only polynomial space and time. The intensities are finite and nonnegative.</p><p>Distinct network blocks with identical rankings are permitted by the task. All types remain seedable, including \(p\).</p><p>The initial opposition mass is \(B=1/2+\theta\). The types ranking \(c^\star\) second are precisely the vertex types and \(b\). Hence the task’s strict victory inequality is exactly \(S(x)&gt;\theta\). No tie convention is lost.</p><ul><li><b>Fixed-point semantics</b></li></ul><p>The auxiliary types are isolated, so their equations give \(r_b=x_b\) and \(r_p=x_p\) exactly.</p><p>On the vertex box, the diffusion map takes values in \([0,h]^V\). For fixed \(z\), its maximum-norm Lipschitz constant is at most \(3\ell h&lt;1\): each coordinate has three incoming neighbors, and its multiplier \(h-z_v\) is at most \(h\).</p><p>The box is nonempty and complete in the maximum norm. The contraction mapping theorem therefore applies and gives a unique fixed point. Because every fixed point of the full system has the stated auxiliary coordinates, this also establishes uniqueness for the full system. Its unique fixed point is necessarily the stipulated coordinatewise least fixed point.</p><ul><li><b>Uniform error estimate</b></li></ul><p>All bounds hold uniformly for every feasible real seed vector.</p><p>The fixed-point equations imply<br>\(0\le a_v\le3\ell h\) and<br>\(0\le\delta_v\le3\ell h^2\).<br>The stated integral argument correctly proves<br>\(\lvert1-e^{-a}-a\rvert\le a^2/2\) for every nonnegative \(a\).</p><p>The decomposition of \(\delta_v\) is exact. Its two error contributions are bounded by<br>\((9/2)\ell^2h^3\) and \(9\ell^2h^3\), respectively. Their sum is the claimed<br>\((27/2)\ell^2h^3\).</p><p>Cubic regularity gives the stated identity with \(Q(z)\): each \(z_u\) occurs three times in the linear neighbor sum, and each undirected edge contributes twice to the quadratic sum. Summing coordinate errors consequently establishes the claimed \(\mathcal E\).</p><p>The gap calculation is also correct:<br>\[
+   \frac{\mathcal E}{\ell h^2}
+   =\frac{27}{2}n\ell h
+   \le\frac{27}{256}&lt;\frac14.
+   \]<br>The intermediate bound is loose but valid using \(n\le N\) and \(h\le1\).</p><ul><li><b>Yes- and no-instance separation</b></li></ul><p>In a yes-instance, fully seeding exactly \(k\) independent vertex types gives a feasible binary-rational vector. The lower error bound yields<br>\(S(x)\ge\theta+\ell h^2-\mathcal E&gt;\theta\).<br>Hence \(\mathrm{OPT}=1\).</p><p>In a no-instance, every feasible real vector has \(z\in P_k\) and<br>\(\sum_vz_v+x_b\le\kappa\), regardless of seeds assigned to \(p\). Combining the rounding bound and the uniform upper error bound gives<br>\(S(x)\le\theta-\ell h^2+\mathcal E&lt;\theta\).<br>Thus no feasible real vector wins, and \(\mathrm{OPT}=0\).</p><p>These statements establish the required separation over the full continuous feasible domain. The supremum definition causes no difficulty: the yes-instance value is attained, and every no-instance value is zero.</p><ul><li><b>Approximation decoding and bit complexity</b></li></ul><p>With one scenario, \(F(x)\in\{0,1\}\). For every fixed positive \(\alpha\), the approximation guarantee forces a winning output on a yes-instance.</p><p>The rational decoder is valid. Every no-instance output satisfies<br>\(Q(z)\le(3k-2)h^2\), below its acceptance threshold. Every winning output satisfies<br>\[
+   Q(z)&gt;(3k-1)h^2-\frac{\mathcal E}{\ell}
+   &gt;(3k-\tfrac54)h^2
+   &gt;(3k-\tfrac32)h^2,
+   \]<br>so every yes-instance output is accepted.</p><p>A polynomial-time Turing algorithm has polynomial output length. Computing \(Q(z)\) and comparing the resulting rationals therefore takes polynomial time. No exponential evaluation or exact transcendental comparison is required.</p><p>The reduction consequently establishes NP-hardness of the requested approximation search task for every fixed \(\alpha\in(0,1]\), already with two candidates and one explicitly represented scenario.</p><p>No additional clarification or repair is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

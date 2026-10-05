@@ -1,0 +1,295 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Fair and Efficient Resource Allocation with Partial Information — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Fair and Efficient Resource Allocation with Partial Information <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2021-0484)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>With n agents and m goods, it is possible to guarantee EF1 using top-k rankings if and only if k ⩾    m −n, if m mod n = 0; m −2, if m mod n = 1; m −(m mod n), if m mod n &gt; 1.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite set \(T\) of top-\(k\) ranking types with mass distribution \(\mu\), finite good classes \(G\) with \(\rho_g\) indivisible copies per unit population, and class-symmetric rankings \(\sigma_t\), decide whether there exist masses \(x_{t,A}\ge0\) over integral bundles \(A\) such that \(\sum_A x_{t,A}=\mu_t\), \(\sum_{t,A}A_gx_{t,A}=\rho_g\) for every \(g\), and whenever \(x_{t,A}&gt;0\) and \(x_{s,B}&gt;0\), every additive unit-sum valuation \(v\succeq\sigma_t\) satisfies \(v(A)\ge v(B)\) or \(v(A)\ge v(B\setminus\{g\})\) for some \(g\in B\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(G\) be a set of \(m\ge1\) good classes, with positive binary-rational supplies \(\rho_g\) of indivisible copies per unit population. A society is given by its support: the list of its \(\tau\) types with positive binary-rational masses \(\mu_t\), where \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types; let \(L\) be the total input bit length.<br>Each type reports an ordered list \(\sigma_t\) of its top \(k\) distinct classes, with a common \(0\le k\le m\). Copies within a class have equal value. Consistent valuations are vectors \(v\in\mathbb R_{\ge0}^{G}\) with \(\sum_gv_g=1\): values weakly decrease along the reported list, and every ranked class is weakly preferred to every unranked class. Ties may be ordered arbitrarily; unranked classes have no further constraints.<br>An integral bundle is \(A\in\mathbb Z_{\ge0}^{G}\), including the empty bundle, with \(v(A)=\sum_g A_gv_g\). There is no individual bound on copies beyond aggregate supply. An allocation consists of nonnegative real masses \(x_{t,A}\), indexed by all integral bundles, satisfying \(\sum_Ax_{t,A}=\mu_t\) and \(\sum_{t,A}A_gx_{t,A}=\rho_g\) for every \(g\).<br>Require robust EF1 across the entire positive support: for every \((t,A),(s,B)\) with \(x_{t,A}x_{s,B}&gt;0\), including \(t=s\), and every valuation \(v\) consistent with \(\sigma_t\), either \(v(A)\ge v(B)\), or there exists \(g\) with \(B_g&gt;0\) such that \(v(A)\ge v(B)-v_g\). The removed copy may depend on \(v\).</p><p>Is deciding whether such an allocation exists solvable in polynomial time in \(m,\tau,k,L\), or is it NP-hard?</p><p>For finite societies with \(n\ge2\) agents and \(m\) distinct goods, polynomial-time rules guarantee robust EF1 for every top-\(k\) profile exactly when \(k\ge m-n\) if \(m\bmod n=0\), \(k\ge m-2\) if \(m\bmod n=1\), and \(k\ge m-(m\bmod n)\) otherwise. [Halpern and Shah](https://www.cs.toronto.edu/~nisarg/papers/distortion-fair-division.pdf)<br>No result settling this exact mass feasibility problem was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized total population mass to one and took supplies to be positive binary rationals; classes with zero supply are omitted.</li><li>Interpreted m and top-k rankings at the class level: m is the number of classes, rankings list distinct classes, and every copy of a class has the same value.</li><li>Normalized per-copy class values by their sum over the class catalogue; consistency uses weak inequalities and arbitrary ordering of ties, with no ordering imposed among unranked classes.</li><li>Allowed the common ranking length to range from zero to m, retaining the empty-ranking case explicitly considered by the discrete result.</li><li>Interpreted integral bundles as arbitrary nonnegative integer copy vectors, including empty bundles, without bounding an individual&#x27;s copies by a per-unit-population supply.</li><li>Allowed nonnegative real allocation masses over all integral bundles and applied robust EF1 to all positive-support pairs, including different bundles assigned to the same type; removing a good means removing one copy.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and new result</h3><p>This is a <b>partial resolution</b>. The general complexity classification remains open.</p><p>I prove a stronger polynomial-time special case than the one in the notes:</p><blockquote><b>If every type reports the same set of ranked classes, feasibility is decidable in polynomial time. The reported orders may differ.</b><br><br>In particular, this resolves every instance with a single type.</blockquote><p>The decision in this case depends only on the supplies of the unranked classes and the fractional part of the <b>total</b> ranked supply. Individual ranked supplies need not be integral.</p><p>I also give self-contained proofs of the pairwise verification criterion and membership in $\mathrm{NP}$, which are used below.</p><h3>1. Exact verification of robust EF1</h3><p>For a bundle $A$ and a set $S\subseteq G$, write<br>$$
+A(S)=\sum_{g\in S}A_g,
+\qquad
+|A|=\sum_{g\in G}A_g.
+$$<br>For a real number $z$, write $z_+=\max\{z,0\}$.</p><p>Fix a type $t$ with report<br>$$
+\sigma_t=(g_{t,1},\ldots,g_{t,k}).
+$$<br>Let $R_t$ be its ranked set, $U_t=G\setminus R_t$, and<br>$$
+P_{t,j}=\{g_{t,1},\ldots,g_{t,j}\}.
+$$</p><p><b>Proposition.</b> Bundle $A$ satisfies robust EF1 toward bundle $B$, under type $t$&#x27;s report, exactly when<br>$$
+B(P_{t,j})-A(P_{t,j})\le 1
+\qquad
+(1\le j\le k)
+$$<br>and<br>$$
+B(R_t)-A(R_t)
++\sum_{g\in U_t}(B_g-A_g)_+
+\le 1.
+$$</p><p><b>Proof.</b> For a consistent valuation $v$, put<br>$$
+M_B(v)=\max\bigl(\{v_g:B_g&gt;0\}\cup\{0\}\bigr).
+$$<br>The required EF1 condition is equivalent to<br>$$
+v(B)-v(A)\le M_B(v).
+$$<br>Indeed, if envy is positive, removing a copy attaining this maximum eliminates it exactly when the inequality holds. If there is no envy, the inequality holds automatically.</p><p>Call a set $S$ upper if membership of a class forces membership of every class constrained to precede it. The nonempty upper sets are the ranked prefixes and the sets $R_t\cup W$, where $W\subseteq U_t$, excluding the empty set.</p><p>For every nonempty upper set $S$, the valuation $\mathbf 1_S/|S|$ is consistent. Robust EF1 therefore implies<br>$$
+B(S)-A(S)\le 1.
+$$<br>If $B(S)=0$, this inequality follows directly from $A(S)\ge0$.</p><p>Conversely, suppose these upper-set inequalities hold. Let the distinct positive coordinate values of a consistent valuation be<br>$$
+0&lt;a_1&lt;\cdots&lt;a_\ell,
+\qquad a_0=0,
+$$<br>and put $S_i=\{g:v_g\ge a_i\}$. Each $S_i$ is upper, and<br>$$
+v=\sum_{i=1}^{\ell}(a_i-a_{i-1})\mathbf 1_{S_i}.
+$$<br>If $B(S_i)=0$, its contribution to $v(B)-v(A)$ is nonpositive. Otherwise, its contribution is at most $a_i-a_{i-1}$. Consequently,<br>$$
+v(B)-v(A)
+\le
+\sum_{i:B(S_i)&gt;0}(a_i-a_{i-1})
+=M_B(v).
+$$<br>The equality follows because precisely the thresholds at or below $M_B(v)$ intersect $B$.</p><p>Finally,<br>$$
+\max_{W\subseteq U_t}
+\bigl(B(R_t)-A(R_t)+B(W)-A(W)\bigr)
+=
+B(R_t)-A(R_t)+\sum_{g\in U_t}(B_g-A_g)_+.
+$$<br>This gives the claimed finite test. $\square$</p><h3>2. Polynomial certificates for the general problem</h3><p>Let<br>$$
+s=\sum_{g\in G}\rho_g.
+$$</p><p><b>Proposition.</b> Every supported bundle in a feasible allocation has size $\lfloor s\rfloor$ or $\lceil s\rceil$. Every feasible instance has a certificate with at most $m+\tau$ positive type–bundle pairs, with polynomial-length rational masses. Thus the general problem belongs to $\mathrm{NP}$.</p><p><b>Proof.</b> The uniform valuation $v_g=1/m$ is consistent with every report. Applying robust EF1 in both directions gives<br>$$
+\bigl||A|-|B|\bigr|\le1
+$$<br>for any two supported bundles.</p><p>The nonempty set of supported bundle sizes has a minimum $q$, since its elements are nonnegative integers. All supported sizes are therefore $q$ or $q+1$. There are only finitely many integral bundles of these sizes, so the allocation has finite support.</p><p>The allocation equalities imply<br>$$
+\sum_{t,A}x_{t,A}=1,
+\qquad
+\sum_{t,A}|A|x_{t,A}=s.
+$$<br>Thus $s$ is their weighted average. If both sizes occur, $q&lt;s&lt;q+1$; otherwise the common size equals $s$. This proves the size restriction.</p><p>Associate to a type–bundle pair the integer column<br>$$
+c_{t,A}=(e_t,A)\in\mathbb Z^{m+\tau}.
+$$<br>The allocation constraints are<br>$$
+\sum_{t,A}x_{t,A}c_{t,A}
+=
+b,
+\qquad
+b=(\mu_1,\ldots,\mu_\tau,\rho_1,\ldots,\rho_m).
+$$</p><p>If the positive-support columns are dependent, choose a nonzero dependence $\sum_i\lambda_i c_i=0$. Summing the type coordinates gives $\sum_i\lambda_i=0$, so the dependence has both positive and negative coefficients. Set<br>$$
+\varepsilon=\min_{\lambda_i&gt;0}\frac{x_i}{\lambda_i},
+\qquad
+x_i&#x27;=x_i-\varepsilon\lambda_i.
+$$<br>This preserves all equations, keeps all masses nonnegative, and removes at least one support entry. Robust EF1 is preserved because the support only shrinks.</p><p>Repeating yields at most $m+\tau$ linearly independent columns. Choose an invertible square row submatrix $C$ of these columns. The remaining masses are uniquely determined by its rational equations and hence are rational.</p><p>Every bundle coordinate is at most $\lceil s\rceil$, whose bit length is polynomial in the input length. A common denominator $D$ of $b$ can be obtained by multiplying the input denominators; its bit length is also polynomial. Cramer&#x27;s rule writes each surviving mass as<br>$$
+x_i=\frac{\det C_i}{D\det C},
+$$<br>where $C_i$ replaces the corresponding column by the selected coordinates of $Db$.</p><p>If these matrices have dimension $h$ and entries bounded in absolute value by $H$, their determinants are bounded by $h!H^h$. Here $h\le m+\tau$ and $\log H$ is polynomial in the input length. Thus every mass has polynomial bit length.</p><p>A verifier checks the allocation equalities and the criterion from Section 1 for every ordered support pair. All these checks take polynomial time. $\square$</p><h3>3. Reduction when the ranked set is common</h3><p>Assume from now on that every type ranks the same set $R$, although its order on $R$ may differ. Write<br>$$
+U=G\setminus R,
+\qquad
+z=(\rho_g)_{g\in U},
+$$<br>and<br>$$
+S_R=\sum_{g\in R}\rho_g,
+\qquad
+q=\lfloor S_R\rfloor,
+\qquad
+r=S_R-q.
+$$</p><p>For a nonnegative vector $w$ on $U$, write $|w|=\sum_{g\in U}w_g$. All vector inequalities below are coordinatewise.</p><h3>3.1. Necessary restrictions on unranked bundles</h3><p>The set $R$ is upper for every type. Hence the counts $A(R)$ of supported bundles differ by at most one. Their average is $S_R$.</p><p>If $r=0$, every supported bundle has ranked total $q$.</p><p>If $0&lt;r&lt;1$, every supported bundle has ranked total $q$ or $q+1$. The total mass with ranked total $q+1$ is exactly $r$, and the remaining mass is $1-r$.</p><p>In the latter case, let $\mathcal L$ and $\mathcal H$ be the distinct unranked vectors occurring with ranked totals $q$ and $q+1$, respectively. Both families are nonempty.</p><p>Within either family, Section 1 gives<br>$$
+\sum_{g\in U}(B_g-A_g)_+\le1
+$$<br>for every ordered pair.</p><p>For $L\in\mathcal L$ and $H\in\mathcal H$, the comparison from the low ranked total to the high ranked total gives<br>$$
+1+\sum_{g\in U}(H_g-L_g)_+\le1,
+$$<br>so $H\le L$. The reverse comparison gives<br>$$
+-1+\sum_{g\in U}(L_g-H_g)_+\le1.
+$$<br>Together these are exactly<br>$$
+H\le L,
+\qquad
+|L-H|\le2.
+$$</p><p>The supply vector must therefore satisfy<br>$$
+z=(1-r)\,\mathbb E[L]+r\,\mathbb E[H]
+$$<br>for distributions on these families.</p><h3>3.2. These restrictions are sufficient</h3><p>The ranked coordinates can be supplied without imposing any further restrictions on these unranked distributions.</p><p>To prove this, choose a positive integer $N$ divisible by the denominators of all type masses and ranked supplies. Create $N\mu_t$ agents of each type and $N\rho_g$ copies of every ranked class. Allocate these copies by cyclic round robin, with each agent choosing its highest-ranked available class.</p><p>Every agent receives $q$ or $q+1$ ranked copies. The proportion receiving $q+1$ is $r$.</p><p>The allocation satisfies every ranked-prefix inequality. Indeed, fix agents $i,j$ and a prefix $P$ of $i$&#x27;s report. Each pick of $i$ maximizes the indicator value $\mathbf 1_P$ among available copies.</p><p>If $i$ precedes $j$ in the cycle, match every pick of $j$ to $i$&#x27;s pick in the same cycle. The latter occurs earlier, and $i$ has at least as many picks. Hence<br>$$
+A_j(P)\le A_i(P).
+$$<br>If $i$ follows $j$, match every pick of $j$ after its first to $i$&#x27;s pick in the preceding cycle. The latter occurs earlier, and the required picks exist. Hence<br>$$
+A_j(P)\le A_i(P)+1.
+$$<br>Comparing an agent with itself is automatic.</p><p>Aggregate this ranked allocation to masses $y_{t,K}$, where $K$ is a ranked bundle. Given conditional unranked distributions $\lambda_{\mathcal L}$ and $\lambda_{\mathcal H}$, define<br>$$
+x_{t,K+V}
+=
+\begin{cases}
+y_{t,K}\lambda_{\mathcal L}(V),&amp;|K|=q,\\
+y_{t,K}\lambda_{\mathcal H}(V),&amp;|K|=q+1.
+\end{cases}
+$$<br>Here $K$ and $V$ have disjoint coordinate sets.</p><p>This preserves type masses and ranked supplies. Its unranked supply is the required mixture with weights $1-r$ and $r$. Ranked-prefix inequalities are preserved. The final inequality of Section 1 holds within each level by the within-family condition, and between levels by $H\le L$ and $|L-H|\le2$.</p><p>For $r=0$, the same argument works with one unranked distribution whose support satisfies the within-family condition.</p><p>The expansion by $N$ proves existence only. The decision algorithm below never performs this expansion.</p><h3>4. Structure of compatible integral families</h3><p>The following elementary lemma supplies the needed classification.</p><h3>4.1. Families with one-copy directed differences</h3><p><b>Lemma.</b> Let $\mathcal A$ be a finite nonempty family of nonnegative integral vectors satisfying<br>$$
+\sum_g(B_g-A_g)_+\le1
+\qquad
+(A,B\in\mathcal A).
+$$<br>Then $\mathcal A$ is contained in one of the forms<br>$$
+\{C\}\cup\{C+e_g:g\in U\},
+$$<br>or<br>$$
+\{D\}\cup\{D-e_g:g\in U,\ D_g&gt;0\},
+$$<br>for a nonnegative integral center $C$ or $D$.</p><p><b>Proof.</b> Let $c_g=\min_{A\in\mathcal A}A_g$. Each coordinate varies by at most one, so<br>$$
+A=c+\mathbf 1_{S_A}.
+$$<br>The resulting sets satisfy<br>$$
+|S_B\setminus S_A|\le1
+$$<br>for every ordered pair. Their sizes consequently differ by at most one.</p><p>Let their maximum size be $h$. If $h=0$, the family is a singleton. Otherwise, add a new symbol $*$ to every set of size $h-1$, leaving the sets of size $h$ unchanged. All augmented sets have size $h$ and still have directed differences of size at most one. For sets $S,T$ of sizes $h-1,h$, this follows because<br>$$
+|T\setminus S|-|S\setminus T|=1,
+\qquad
+|T\setminus S|\le1,
+$$<br>which forces $S\subseteq T$.</p><p>An equal-size family with these differences either contains a common $(h-1)$-element subset or lies in a common $(h+1)$-element set. Here is a proof. Choose distinct members<br>$$
+X=I\cup\{a\},
+\qquad
+Y=I\cup\{b\},
+$$<br>where $|I|=h-1$ and $a\ne b$. If all members contain $I$, the first alternative holds. Otherwise, a member omitting $u\in I$ must be<br>$$
+(I\setminus\{u\})\cup\{a,b\},
+$$<br>because it differs from each of $X,Y$ by at most one element. All members omitting part of $I$ therefore lie in $J=I\cup\{a,b\}$. A member containing $I$ has form $I\cup\{z\}$; if $z\notin\{a,b\}$, its difference from the chosen member omitting $u$ contains both $u$ and $z$, a contradiction. Thus all members lie in $J$.</p><p>Deleting $*$ from the first alternative yields a common set with at most one element added. Deleting it from the second yields a common set with at most one element removed. Adding back $c$ gives the stated vector forms. $\square$</p><h3>4.2. Classification of the two ranked-total levels</h3><p><b>Lemma.</b> Suppose nonempty finite families $\mathcal L,\mathcal H$ satisfy the within-family condition above and<br>$$
+H\le L,
+\qquad
+|L-H|\le2
+\qquad
+(L\in\mathcal L,\ H\in\mathcal H).
+$$<br>At least one of the following descriptions holds:</p><ul><li>There is a nonnegative integral $D$ such that</li></ul><p>$$
+   \mathcal L\subseteq\{D,D+e_g:g\in U\},
+   \qquad
+   \mathcal H\subseteq\{D,D-e_g:g\in U,\ D_g&gt;0\}.
+   $$</p><ul><li>The high family is a singleton $\mathcal H=\{C\}$. For some nonnegative integral $E$ with $|E|\le3$,</li></ul><p>$$
+   \mathcal L\subseteq
+   \{C+E\}\cup\{C+E-e_g:E_g&gt;0\},
+   $$<br>and every used low vector satisfies $|L-C|\le2$.</p><ul><li>The low family is a singleton $\mathcal L=\{D\}$. For some nonnegative integral $E\le D$ with $|E|\le3$,</li></ul><p>$$
+   \mathcal H\subseteq
+   \{D-E\}\cup\{D-E+e_g:E_g&gt;0\},
+   $$<br>and every used high vector satisfies $|D-H|\le2$.</p><p><b>Proof.</b> Define coordinatewise extrema<br>$$
+C_0=\min_{L\in\mathcal L}L,
+\qquad
+D_0=\max_{H\in\mathcal H}H.
+$$<br>The cross inequalities imply $D_0\le C_0$. Put<br>$$
+a=\max_{L\in\mathcal L}|L-C_0|,
+\quad
+b=\max_{H\in\mathcal H}|D_0-H|,
+\quad
+d=|C_0-D_0|.
+$$<br>For every cross pair,<br>$$
+|L-H|=|L-C_0|+d+|D_0-H|.
+$$<br>Choosing members attaining $a$ and $b$ gives<br>$$
+a+b+d\le2.
+$$</p><p>First suppose $a,b\le1$. Choose an integer $\ell$ satisfying<br>$$
+\max\{0,a+d-1\}\le\ell\le\min\{d,1-b\}.
+$$<br>This interval is nonempty: $a\le1$ gives $a+d-1\le d$, and $a+b+d\le2$ gives $a+d-1\le1-b$; also $0\le d$ and $0\le1-b$.</p><p>There is an integral vector $T$ between $D_0$ and $C_0$ with $|T-D_0|=\ell$: distribute $\ell$ units among the coordinate capacities $C_0-D_0$. Then<br>$$
+|L-T|\le a+d-\ell\le1,
+\qquad
+|T-H|\le b+\ell\le1.
+$$<br>Since $H\le T\le L$, these differences are zero or unit vectors. This proves description 1.</p><p>If $a=2$, the inequality $a+b+d\le2$ forces $b=d=0$. Hence $\mathcal H=\{C_0\}$. By the preceding lemma, $\mathcal L$ lies in a lower or upper family.</p><p>A family lying in $\{Q,Q+e_g\}$ has maximum distance from its coordinatewise minimum at most one. For a singleton this distance is zero; otherwise the minimum is $Q$, since two distinct added coordinates, or the center itself, occur. Thus the lower alternative is impossible when $a=2$.</p><p>Consequently, $\mathcal L\subseteq\{Q,Q-e_g\}$. Put $E=Q-C_0\ge0$. Choose $L$ attaining $|L-C_0|=2$. Since $Q-L$ is zero or a unit vector,<br>$$
+|E|=|Q-L|+|L-C_0|\le3.
+$$<br>Only coordinates with $E_g&gt;0$ can be deleted while retaining $L\ge C_0$. This proves description 2.</p><p>If $b=2$, then $a=d=0$ and $\mathcal L=\{D_0\}$. The preceding lemma applies to $\mathcal H$. A family in an upper form has maximum distance from its coordinatewise maximum at most one, so that alternative is impossible. Thus<br>$$
+\mathcal H\subseteq\{Q,Q+e_g\}
+$$<br>for nonnegative integral $Q$. Set $E=D_0-Q\ge0$. Choosing $H$ attaining $|D_0-H|=2$ gives<br>$$
+|E|=|D_0-H|+|H-Q|\le3.
+$$<br>Only coordinates with $E_g&gt;0$ can be added while retaining $H\le D_0$. This proves description 3.</p><p>These cases exhaust the nonnegative integers satisfying $a+b+d\le2$. $\square$</p><h3>5. Exact polynomial-time test for a common ranked set</h3><p>We now turn the structural classification into an algorithm.</p><h3>5.1. Integral total ranked supply</h3><p>Suppose $r=0$. Define<br>$$
+F_U=\sum_{g\in U}\bigl(z_g-\lfloor z_g\rfloor\bigr),
+\qquad
+H_U=\sum_{g\in U}\bigl(\lceil z_g\rceil-z_g\bigr).
+$$</p><p><b>Claim.</b> Feasibility is equivalent to<br>$$
+F_U\le1
+\quad\text{or}\quad
+H_U\le1.
+$$</p><p><b>Proof.</b> All ranked totals equal $q$, so the unranked support satisfies the lemma in Section 4.1.</p><p>In its lower form, its expectation satisfies<br>$$
+z_g\ge C_g,
+\qquad
+\sum_g(z_g-C_g)\le1.
+$$<br>Since integral $C_g\le z_g$ implies $C_g\le\lfloor z_g\rfloor$, this gives $F_U\le1$. The upper form similarly gives $H_U\le1$.</p><p>Conversely, if $F_U\le1$, use unranked bundle $\lfloor z\rfloor+e_g$ with probability $z_g-\lfloor z_g\rfloor$, and $\lfloor z\rfloor$ with the remaining probability. Its expectation is $z$, and its support has the required directed differences.</p><p>If $H_U\le1$, use $\lceil z\rceil-e_g$ with probability $\lceil z_g\rceil-z_g$, and $\lceil z\rceil$ with the remaining probability. A positively used deletion has $\lceil z_g\rceil\ge1$, so its bundle is nonnegative. Section 3.2 supplies the ranked coordinates.</p><p>If $U=\varnothing$, both sums are zero. The unranked distribution consists solely of the empty vector, and the ranked round-robin construction supplies the entire allocation. This explicitly handles the boundary omitted in the notes. $\square$</p><p>Notice that this argument requires only $S_R$ to be integral. It does not require the individual ranked supplies to be integral.</p><h3>5.2. Nonintegral total ranked supply</h3><p>Suppose $0&lt;r&lt;1$, and put $p=1-r$.</p><p>Feasibility is equivalent to passing at least one of the following three tests. All integral vectors below are indexed by $U$.</p><p><b>Test I.</b> There exists a nonnegative integral vector $D$ such that<br>$$
+\sum_g(z_g-D_g)_+\le p,
+\qquad
+\sum_g(D_g-z_g)_+\le r.
+$$</p><p><b>Test II.</b> There exist nonnegative integral vectors $C,E$, with $e=|E|\le3$, such that<br>$$
+h_g=E_g-\frac{z_g-C_g}{p}
+$$<br>satisfies<br>$$
+h_g\ge0,
+\qquad
+h_g=0\ \text{when }E_g=0,
+\qquad
+\sum_g h_g\le1,
+$$<br>and, if $e=3$,<br>$$
+\sum_g h_g=1.
+$$</p><p><b>Test III.</b> There exist nonnegative integral vectors $D,E$, with $E\le D$ and $e=|E|\le3$, such that<br>$$
+a_g=E_g-\frac{D_g-z_g}{r}
+$$<br>satisfies<br>$$
+a_g\ge0,
+\qquad
+a_g=0\ \text{when }E_g=0,
+\qquad
+\sum_g a_g\le1,
+$$<br>and, if $e=3$,<br>$$
+\sum_g a_g=1.
+$$</p><p><b>Proof of equivalence.</b></p><p>In description 1 of Section 4.2, write the conditional low and high expectations as<br>$$
+D+\alpha,
+\qquad
+D-\beta,
+$$<br>where $\alpha,\beta\ge0$ and $|\alpha|,|\beta|\le1$. Thus<br>$$
+z=D+p\alpha-r\beta.
+$$<br>Coordinatewise,<br>$$
+(z_g-D_g)_+\le p\alpha_g,
+\qquad
+(D_g-z_g)_+\le r\beta_g,
+$$<br>which proves necessity of Test I.</p><p>Conversely, when Test I holds, set<br>$$
+\alpha_g=\frac{(z_g-D_g)_+}{p},
+\qquad
+\beta_g=\frac{(D_g-z_g)_+}{r}.
+$$<br>Use conditional low probabilities $\alpha_g$ on $D+e_g$, and conditional high probabilities $\beta_g$ on $D-e_g$, putting each remaining probability on $D$. The probability sums are at most one. A positive $\beta_g$ implies $D_g&gt;z_g&gt;0$, so the deletion is valid. These distributions have the required expectation and compatibility.</p><p>In description 2, the high vector is $C$. Let $h_g$ be the conditional probability of low vector $C+E-e_g$. The remaining probability is on $C+E$. Deletions can occur only where $E_g&gt;0$. If $|E|=3$, the center itself is forbidden by $|L-C|\le2$, so the deletion probabilities sum to one. The expectation is<br>$$
+z=C+p(E-h),
+$$<br>which is precisely Test II.</p><p>Conversely, Test II defines these probabilities. Since $h_g\le1$ and positive $h_g$ requires integral $E_g\ge1$, every deletion remains at least $C$. If $e\le2$, every used low vector differs from $C$ by at most two copies. If $e=3$, only deletion vectors are used, and each differs by exactly two copies. Within the low family, directed positive differences are at most one. Thus all required conditions hold.</p><p>In description 3, use conditional probabilities $a_g$ on high vectors $D-E+e_g$ and the remaining probability on $D-E$. The center is forbidden when $|E|=3$. Its mixture with the constant low vector $D$ has expectation<br>$$
+z=D-r(E-a).
+$$<br>This gives Test III. Conversely, its conditions define valid nonnegative high bundles, all at most $D$, whose distance below $D$ is at most two. Within-family directed differences are at most one.</p><p>The structural lemma proves necessity of the union of the tests. The constructions and Section 3.2 prove sufficiency. $\square$</p><h3>5.3. Implementing the tests in polynomial time</h3><p>Let $u=|U|$.</p><p>For <b>Test I</b>, each coordinate must satisfy<br>$$
+z_g-p\le D_g\le z_g+r.
+$$<br>Write $f_g=z_g-\lfloor z_g\rfloor$. Since $p+r=1$:</p><ul><li>If $f_g&lt;p$, the sole possible integer is $\lfloor z_g\rfloor$.</li><li>If $f_g&gt;p$, it is $\lceil z_g\rceil$.</li><li>If $f_g=p$, both are possible.</li></ul><p>At an ambiguous coordinate, choosing the floor contributes exactly $p$ to the first budget, while choosing the ceiling contributes exactly $r$ to the second. Therefore at most one ambiguous coordinate can be rounded down and at most one can be rounded up. With more than two ambiguous coordinates, Test I fails. Otherwise there are at most four candidate vectors to check.</p><p>For <b>Test II</b>, enumerate all nonnegative integral $E$ with $|E|\le3$. Their number is<br>$$
+\binom{u+3}{3}.
+$$<br>Let $J=\{g:E_g&gt;0\}$, so $|J|\le3$.</p><p>Outside $J$, the conditions force $C_g=z_g$, so these supplies must be integral. Inside $J$, the conditions imply<br>$$
+0\le z_g-C_g=p(E_g-h_g)\le3.
+$$<br>Here $E_g-h_g\ge0$ because $E_g\ge1$ and $h_g\le1$. Thus enumerate<br>$$
+C_g\in[z_g-3,z_g]\cap\mathbb Z_{\ge0}.
+$$<br>There are at most four choices per coordinate and at most $4^3$ candidate vectors for each $E$. Check the displayed Test II conditions exactly.</p><p>For <b>Test III</b>, outside $J$ one must have $D_g=z_g$. Inside $J$,<br>$$
+0\le D_g-z_g=r(E_g-a_g)\le3.
+$$<br>Thus enumerate<br>$$
+D_g\in[z_g,z_g+3]\cap\mathbb Z_{\ge0},
+$$<br>again with at most $4^3$ candidates, checking also $D\ge E$.</p><p>The tests use $O((u+1)^4)$ rational arithmetic operations. Candidate coordinates have polynomial bit length. Computing $r$, dividing by $r$ or $1-r$, and checking all rational inequalities also require polynomial bit length. The algorithm therefore runs in polynomial time in the binary input size.</p><p>This completes the promised polynomial-time result for a common ranked set.</p><h3>6. Examples showing why all three tests matter</h3><p>Consider one type reporting only $a$, with<br>$$
+\rho_a=\frac12,
+\qquad
+\rho_b=\frac14,
+\qquad
+\rho_c=\rho_d=\frac38.
+$$<br>Here $r=p=1/2$. Test I fails: every unranked supply is below $p$, so its sole candidate is $D=0$, whose positive-deviation sum is $1&gt;p$.</p><p>Nevertheless, Test II succeeds with<br>$$
+C=0,
+\qquad
+E=(1,1,1),
+\qquad
+h=\left(\frac12,\frac14,\frac14\right).
+$$<br>An explicit allocation is<br>$$
+\begin{aligned}
+x_{e_a}&amp;=\frac12,\\
+x_{e_c+e_d}&amp;=\frac14,\\
+x_{e_b+e_d}&amp;=\frac18,\\
+x_{e_b+e_c}&amp;=\frac18.
+\end{aligned}
+$$<br>The supplies are exactly those specified. The three low ranked-total bundles have directed differences at most one. Their unranked vectors contain the high ranked-total vector $0$ and differ from it by two copies, satisfying the cross conditions.</p><p>By contrast, with the same report and<br>$$
+\rho_a=\rho_b=\rho_c=\rho_d=\frac12,
+$$<br>the instance is infeasible:</p><ul><li>Test I has three ambiguous coordinates and therefore fails.</li><li>In Test II, all three nonintegral unranked supplies force $E=(1,1,1)$. The inequalities $0\le z-C$ force $C=0$. Then $h=0$, contradicting the required sum $1$ when $|E|=3$.</li><li>In Test III, again $E=(1,1,1)$. The bounds $0\le D-z\le rE$ force $D=(1,1,1)$. Then $a=0$, giving the same contradiction.</li></ul><p>Thus nonintegral ranked supply does not simply remove the obstruction: its interaction with unranked supplies is captured by the three tests.</p><h3>7. Proven scope and remaining question</h3><p>The results proved here establish:</p><ul><li>Membership in $\mathrm{NP}$ for arbitrary reports.</li><li>A polynomial-time decision algorithm whenever all types have the same ranked set, including every single-type instance.</li><li>In that regime, independence of the answer from type masses and the orders within the ranked set.</li><li>The exact floor-or-ceiling criterion whenever the common ranked total is integral, including the empty-unranked-set boundary.</li></ul><p>Also, every instance with $k\ge m-1$ is feasible: each report then specifies a complete class order, and the round-robin argument from Section 3.2 applies to all classes. Aggregating a denominator-expanded finite allocation gives the required mass allocation.</p><p>What remains unresolved is the general intermediate-information case with <b>different ranked sets</b>. The structural reduction above uses a common ranked-total coordinate; when ranked sets differ, its two-level decomposition is unavailable. No general polynomial-time algorithm or hardness reduction is proved here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 4.1, equal-size augmented-family argument: The proof chooses distinct members $X,Y$ without first handling a singleton augmented family of positive size. Explicitly discharge that singleton case before making this choice; the omitted case is routine and does not undermine the structural claim.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>The output is a valid partial resolution of the task.</b> It establishes membership in $\mathrm{NP}$ for arbitrary reports and a polynomial-time decision algorithm when all types share the same ranked set. It does <b>not</b> settle the requested complexity classification for arbitrary ranked sets, and it explicitly acknowledges this limitation.</p><p>I found no false central step. There is one minor omitted case in the proof of the structural lemma.</p><h3>1. Pairwise robust EF1 criterion</h3><p>The proposition in Section 1 is correct.</p><ul><li>The equivalence between robust EF1 and</li></ul><p>$$
+   v(B)-v(A)\le M_B(v)
+   $$<br>correctly permits the removed copy to depend on $v$. The definition of $M_B(v)$ also handles the empty bundle.</p><ul><li>The stated upper sets correctly describe the ordering constraints: ranked prefixes and sets containing all ranked classes together with an arbitrary subset of unranked classes. When $k=0$, these are precisely the nonempty subsets of $G$.</li></ul><ul><li>For a nonempty upper set $S$, the valuation $\mathbf 1_S/|S|$ is normalized, nonnegative, and consistent. If $B(S)&gt;0$, its maximum value on an occupied class of $B$ is $1/|S|$, giving</li></ul><p>$$
+   B(S)-A(S)\le1.
+   $$<br>If $B(S)=0$, the inequality holds directly.</p><ul><li>The decomposition by positive valuation thresholds is exact. Each threshold set is upper, and the thresholds intersecting $B$ are precisely those at or below $M_B(v)$. Consequently, the sum of their coefficients equals $M_B(v)$, including when this maximum is zero.</li></ul><ul><li>Maximizing over unranked subsets correctly produces</li></ul><p>$$
+   \sum_{g\in U_t}(B_g-A_g)_+.
+   $$</p><p>Thus the finite test is both necessary and sufficient, including the boundaries $k=0$ and $k=m$.</p><h3>2. Polynomial certificates and membership in $\mathrm{NP}$</h3><p>Section 2 is correct.</p><p>The uniform valuation is consistent with every report. Applying robust EF1 in both directions gives the claimed bound on supported bundle sizes. The minimum supported size exists because sizes are nonnegative integers. Once all supported sizes lie in two consecutive values, only finitely many bundles can occur.</p><p>The weighted-average argument correctly refines those two values to $\lfloor s\rfloor$ and $\lceil s\rceil$. In particular, when $s$ is integral, two different sizes cannot both have positive mass.</p><p>The support-reduction argument is valid:</p><ul><li>A nonzero column dependence has coefficients summing to zero, because every column has exactly one unit among its type coordinates.</li><li>It therefore has both positive and negative coefficients.</li><li>The chosen perturbation preserves the allocation equations and nonnegativity while removing a positive support entry.</li><li>Shrinking support preserves all robust EF1 requirements.</li></ul><p>The surviving independent columns determine rational masses through an invertible square row submatrix. The denominator clearing and determinant formula are correct. Bundle coordinates, input denominator products, and the resulting determinants all have polynomial bit length.</p><p>Finally, checking the allocation equations and every ordered support pair using Section 1 takes polynomial time. This establishes membership in $\mathrm{NP}$, but does not determine whether the problem is polynomial-time solvable or $\mathrm{NP}$-hard.</p><h3>3. Reduction for a common ranked set</h3><h3>Necessary restrictions</h3><p>Section 3.1 is correct.</p><p>For a nonempty common ranked set $R$, the upper-set inequalities in both directions bound the difference in ranked totals by one. When $R$ is empty, the same conclusion holds immediately because every ranked total is zero.</p><p>The average ranked total is $S_R$. Therefore:</p><ul><li>If $r=0$, every supported ranked total equals $q$.</li><li>If $0&lt;r&lt;1$, the two levels have total masses $1-r$ and $r$.</li></ul><p>Within one level, the final criterion from Section 1 reduces to the stated directed positive-difference bound.</p><p>Across levels, the low-to-high comparison forces $H\le L$. With that restriction, the reverse comparison becomes exactly $|L-H|\le2$. The mixture equation for $z$ follows from the allocation supplies.</p><h3>Sufficiency</h3><p>Section 3.2 is correct.</p><p>The denominator expansion produces integral numbers of agents and ranked copies. Cyclic round robin gives each agent $q$ or $q+1$ ranked copies, with the prescribed proportions.</p><p>The prefix comparison is valid even when types order $R$ differently: an agent whose prefix is being evaluated chooses a class in that prefix whenever any such class remains available. The same-cycle and preceding-cycle matchings have the required temporal order and sufficient picks. They establish every ordered prefix inequality.</p><p>The product construction preserves type masses and ranked supplies. Its unranked expectation has the required mixture weights. Compatibility follows from the within-level and cross-level restrictions already derived.</p><p>The potentially large expansion by $N$ is used only to prove existence. The output correctly avoids presenting it as a polynomial-time implementation.</p><h3>4. Structural lemmas</h3><h3>Section 4.1</h3><p>The structural claim is correct, and the proof is sound apart from a minor omitted singleton case.</p><p>The coordinatewise minimum representation is justified because each coordinate varies by at most one. The resulting sets have directed differences at most one and sizes differing by at most one.</p><p>The augmentation by $*$ preserves the directed-difference condition. In particular, a smaller original set must be contained in any larger original set with which it is compared.</p><p>For an augmented family containing two distinct members, the proof of the common-subset or common-superset alternatives is correct. The argument restricting members that omit an element of $I$, and then excluding an additional element outside $\{a,b\}$, checks out. Deleting $*$ produces the claimed vector forms.</p><p><b>Minor issue:</b> If the augmented family is a singleton with positive size, the instruction to choose distinct members $X,Y$ cannot be followed. Only the case $h=0$ was explicitly discharged.</p><p><b>Minimum clarification:</b> Explicitly handle a singleton augmented family before choosing distinct members. This is a routine omitted case and does not affect the lemma’s substance.</p><h3>Section 4.2</h3><p>The two-level classification is correct.</p><p>The cross inequalities imply $D_0\le C_0$, so the displayed distance decomposition uses only nonnegative coordinate differences. Since low and high members can be chosen independently to attain $a$ and $b$, it follows that<br>$$
+a+b+d\le2.
+$$</p><p>When $a,b\le1$, all inequalities needed to show the interval for $\ell$ is nonempty are supplied. An integral vector with the specified intermediate total exists within the integer coordinate capacities. The subsequent distance bounds yield description 1.</p><p>When $a=2$, the bound forces $b=d=0$, making the high family a singleton. The exclusion of the lower form from Section 4.1 is valid: such a family has maximum distance from its coordinatewise minimum at most one. The upper center dominates $C_0$, and the calculation giving $|E|\le3$ is correct.</p><p>The argument for $b=2$ correctly reverses these considerations. These cases exhaust the possible nonnegative integer values satisfying the displayed bound.</p><h3>5. Exact tests and polynomial-time implementation</h3><h3>Integral ranked total</h3><p>Section 5.1 is correct.</p><p>In the lower form, the integral center lies coordinatewise below $\lfloor z\rfloor$, so the expectation bound implies $F_U\le1$. The upper form gives $H_U\le1$ by the corresponding ceiling argument.</p><p>The proposed distributions have nonnegative probabilities summing to one, yield expectation $z$, and satisfy the directed-difference condition. Every positively used deletion is valid.</p><p>The empty-unranked-set case is explicitly and correctly handled. Individual ranked supplies need not be integral.</p><h3>Nonintegral ranked total</h3><p>All three tests in Section 5.2 correctly encode the structural descriptions.</p><p>For Test I, necessity follows from the conditional expectation equation and the two deviation budgets. Conversely, the positive and negative parts define valid conditional probabilities. Any positively used high deletion has $D_g&gt;z_g&gt;0$, hence removes a copy from a positive integer coordinate.</p><p>For Test II, the expectation equation is correct. The condition on zero coordinates of $E$ restricts deletions to admissible coordinates. When $|E|=3$, requiring deletion probabilities to sum to one correctly excludes the center, whose distance from $C$ would exceed two. The remaining bundles satisfy all compatibility conditions.</p><p>Test III correctly expresses the reversed construction. The restriction $E\le D$ guarantees nonnegative centers, and the probability and support restrictions keep the high bundles below $D$ with the required distance.</p><p>Thus the union of the tests is necessary and sufficient, subject only to the minor proof omission in Section 4.1.</p><h3>Running time</h3><p>Section 5.3 is correct.</p><p>For Test I, the interval for $D_g$ has length one. The floor/ceiling classification, including the equality case $f_g=p$, is accurate. Each ambiguous floor choice consumes the entire first budget, and each ambiguous ceiling choice consumes the entire second budget. More than two ambiguous coordinates therefore cannot be accommodated.</p><p>For Tests II and III, the enumeration count<br>$$
+\binom{u+3}{3}
+$$<br>is correct. Each enumerated $E$ has at most three positive coordinates. Outside those coordinates the center is forced; inside them the length-three intervals contain at most four integers per coordinate.</p><p>The stated arithmetic-operation bound is valid. All candidate coordinates and exact rational calculations have polynomial bit length, including division by a potentially small positive $r$ or $1-r$.</p><p>Therefore the common-ranked-set algorithm is polynomial in the binary input size.</p><h3>6. Examples and additional feasibility claim</h3><p>Both examples in Section 6 check out.</p><p>In the first example, Test I fails because its only candidate is zero and the positive-deviation total is $1$, exceeding $p=1/2$. The displayed Test II probabilities sum to one. The explicit allocation supplies $a$, $b$, $c$, and $d$ in exactly the claimed amounts, and its support satisfies the required compatibility conditions.</p><p>In the second example, Test I has three ambiguous coordinates. For Tests II and III, the three nonintegral supplies force all three coordinates of $E$ to be positive; the total bound then forces $E=(1,1,1)$. The resulting zero deletion or addition probabilities contradict the required sum of one. The infeasibility conclusion follows.</p><p>The final claim for $k\ge m-1$ is also valid. Each report then determines a complete weak class order compatible with round-robin choices. Applying the supplied prefix-matching argument to all classes and aggregating the finite allocation proves feasibility.</p><h3>7. Scope and actionable feedback</h3><p>The genuine established results are:</p><ul><li>Membership in $\mathrm{NP}$ for arbitrary reports.</li><li>Polynomial-time feasibility testing for a common ranked set, including every single-type instance.</li><li>Independence from type masses and ranked orders within that regime.</li><li>Feasibility for every instance with $k\ge m-1$.</li></ul><p>The general classification for different ranked sets remains unproved. This is an acknowledged limitation, not a false claim of completion.</p><p>The only write-up repair needed for the established results is to handle the singleton case in Section 4.1 explicitly. Settling the original general question would require an additional argument beyond the present output.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

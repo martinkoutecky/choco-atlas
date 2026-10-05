@@ -1,0 +1,111 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-aaai-2018-0589 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-aaai-2018-0589 <span style="font-weight:normal;color:#8a7350">(d4-conf-aaai-2018-0589)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\)-complete, even with hyperedges of size at most three</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 7 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>There exists a family of hypergraph games with dependency degree~7 and supermodular degree~1 for which the separation problem for $\LP_0$ is {\em NP}-hard.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finitely many role types \(T\) with rational masses \(\mu_t&gt;0\) summing to \(1\), a weighted hypergraph on \(T\) of rank at most four defining \(V(y)=\sum_{E\in\mathcal E}w_E\prod_{t\in E}y_t\), nonnegative rational payoff rates \(a_t\) satisfying \(\sum_t\mu_ta_t=V(\mathbf 1)\), and a positive rational threshold \(\varepsilon\), decide whether some participation vector \(y\in[0,1]^T\) has excess \(V(y)-\sum_t\mu_ta_ty_t\ge\varepsilon\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list \(T\) of \(\tau\) types with positive binary rational masses \(\mu_t\), where \(\sum_{t\in T}\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types.<br>The input includes an explicitly listed hypergraph \(\mathcal E\) with \(m\) nonempty edges, each satisfying \(1\leq |E|\leq4\), and signed binary rational weights \(w_E\). Define \(V(y)=\sum_{E\in\mathcal E}w_E\prod_{t\in E}y_t\).<br>A participation vector \(y\in[0,1]^T\) selects mass \(\mu_ty_t\) of type \(t\). The input payoff rates \(a_t\) are nonnegative binary rationals satisfying \(\sum_t\mu_ta_t=V(\mathbf1)\) and \(\mu_ta_t\geq V(\mathbf e_t)\) for every type, where \(\mathbf e_t\) is its unit vector.<br>Given a positive binary rational \(\varepsilon\), decide whether some participation vector has \(V(y)-\sum_t\mu_ta_ty_t\geq\varepsilon\). Let \(L\) be the total binary input length; state running times in \(m,\tau,L\).</p><p>Is this continuous excess-threshold decision problem in \(\mathrm P\), or is it \(\mathrm{NP}\)-hard?</p><p>For discrete hypergraph games, deciding whether a coalition exceeds a given excess threshold at an imputation is \(\mathrm{NP}\)-hard even with rank at most four, dependency degree seven, and supermodular degree one. Dependency counts players whose presence can change another player&#x27;s marginal contribution; supermodular dependency counts those whose presence can increase it.<br>The supplied discrete results do not establish a complexity classification for the fractional participation problem stated here.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The weight domain was unspecified; allow signed binary rational weights, since the discrete construction uses negative hyperedge weights.</li><li>Exclude empty hyperedges to preserve the discrete convention that the empty coalition has value zero.</li><li>The graded question omitted individual rationality; require mu_t a_t &gt;= V(e_t), interpreting mu_t a_t as the payoff assigned to the whole type, consistently with the supplied efficiency condition.</li><li>Interpret y_t as the fraction of type t participating, so its participating mass is mu_t y_t.</li><li>Define m as the number of explicitly listed hyperedges and L as the total binary input length.</li><li>Retain the graded question&#x27;s unrestricted rank-four hypergraph domain; the discrete bounded dependency degrees describe the known hardness subclass.</li><li>Retain the full participation cube: efficiency and the positive threshold make the empty and full participation vectors unable to witness a yes-instance.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The problem is \(\mathrm{NP}\)-complete, even with hyperedges of size at most three, uniform dyadic masses, and identical positive payoff rates. Consequently, it is not in \(\mathrm P\) unless \(\mathrm P=\mathrm{NP}\).</p><h3>1. Fractional participation has the same maximum as Boolean participation</h3><p>Define the excess function<br>\(F(y)=V(y)-\sum_{t\in T}\mu_ta_ty_t\).</p><p>Every hyperedge is a set, so each variable occurs with exponent at most one in every monomial. Thus \(F\) is affine in each coordinate separately.</p><p>Fix \(y\in[0,1]^T\) and a type \(t\). Let \(y^{t,0}\) and \(y^{t,1}\) be obtained by setting coordinate \(t\) to zero and one, respectively. Affineness gives<br>\[
+F(y)=(1-y_t)F(y^{t,0})+y_tF(y^{t,1}).
+\]<br>Since \(0\leq y_t\leq1\), at least one of these endpoint values is at least \(F(y)\).</p><p>Apply this argument successively to every coordinate, retaining an endpoint that does not decrease the excess. After \(\tau\) steps, the resulting vector \(b\in\{0,1\}^T\) satisfies \(F(b)\geq F(y)\). Therefore<br>\[
+\max_{y\in[0,1]^T}F(y)
+=
+\max_{b\in\{0,1\}^T}F(b).
+\]</p><p>In particular, the continuous instance is a yes-instance exactly when it has a Boolean witness. This proves the bridge from fractional participation to discrete coalitions.</p><h3>2. Membership and running times</h3><p>A certificate consists of \(\tau\) bits specifying \(b\in\{0,1\}^T\). Its excess is<br>\[
+F(b)=
+\sum_{\substack{E\in\mathcal E\\b_t=1\text{ for every }t\in E}}w_E
+-
+\sum_{\substack{t\in T\\b_t=1}}\mu_ta_t.
+\]</p><p>This expression can be compared with \(\varepsilon\) using exact rational arithmetic. To bound its bit complexity, take a common denominator equal to the product of all denominators appearing in the input. This denominator has \(O(L)\) bits and clears both the weights and the products \(\mu_ta_t\). The resulting integer coefficients and accumulated sums also have \(O(L)\) bits.</p><p>Using classical integer arithmetic, certificate verification takes<br>\[
+O((m+\tau)L^2)
+\]<br>bit operations. Hence the problem belongs to \(\mathrm{NP}\).</p><p>Enumerating all Boolean vectors gives a deterministic decision algorithm taking<br>\[
+O\!\left(2^\tau(m+\tau)L^2\right)
+\]<br>bit operations. The exponential factor depends on the actual support size \(\tau\).</p><h3>3. A reduction satisfying every input constraint</h3><p>We reduce from unweighted Max Cut: given a simple graph \(G=(U,A)\) and a positive integer \(k\), decide whether a cut contains at least \(k\) edges. This problem is \(\mathrm{NP}\)-complete. [Garey, Johnson, and Stockmeyer, *Some simplified NP-complete graph problems*](https://doi.org/10.1016/0304-3975(76)90059-1).</p><p>Write \(n=|U|\), \(p=|A|\), and \(d_v=\deg_G(v)\). Choose the smallest power of two \(q\) satisfying \(q\geq n+1\). Introduce a gate type \(z\) and a set \(D\) of \(q-n-1\) additional types. Set<br>\[
+T=U\cup\{z\}\cup D,\qquad
+\tau=q,\qquad
+\mu_t=\frac1q,\qquad
+a_t=q
+\quad(t\in T).
+\]<br>Thus every mass is positive and dyadic, the masses sum to one, every rate is positive, and \(\mu_ta_t=1\).</p><p>Define<br>\[
+V(y)=
+\sum_{t\in T}y_t
++
+\sum_{\substack{v\in U\\d_v&gt;0}}d_vy_zy_v
+-
+2\sum_{\{u,v\}\in A}y_zy_uy_v.
+\]<br>This is an explicitly listed hypergraph polynomial consisting of:</p><ul><li>a singleton of weight one for every type;</li><li>an edge \(\{z,v\}\) of weight \(d_v\) for each nonisolated graph vertex;</li><li>an edge \(\{z,u,v\}\) of weight \(-2\) for each graph edge \(\{u,v\}\).</li></ul><p>Every edge has size at most three. Set \(\varepsilon=k&gt;0\).</p><h3>Verification of the payoff constraints</h3><p>The handshake identity \(\sum_{v\in U}d_v=2p\) gives<br>\[
+V(\mathbf1)=q+2p-2p=q.
+\]<br>Meanwhile,<br>\[
+\sum_{t\in T}\mu_ta_t=q.
+\]<br>Thus efficiency holds.</p><p>For any type \(t\), all nonsingleton monomials vanish at \(\mathbf e_t\), so<br>\[
+V(\mathbf e_t)=1=\mu_ta_t.
+\]<br>Thus every individual-rationality inequality holds, with equality.</p><h3>Verification of the reduction</h3><p>The singleton terms cancel the payoff terms. Hence<br>\[
+F(y)=
+y_z\left(
+\sum_{v\in U}d_vy_v
+-
+2\sum_{\{u,v\}\in A}y_uy_v
+\right).
+\]</p><p>Consider a Boolean vector \(b\), and put \(S=\{v\in U:b_v=1\}\).</p><p>If \(b_z=0\), then \(F(b)=0\). If \(b_z=1\), then<br>\[
+F(b)=
+\sum_{\{u,v\}\in A}
+\left(b_u+b_v-2b_ub_v\right).
+\]<br>For each graph edge, the summand is one precisely when exactly one endpoint belongs to \(S\), and zero otherwise. Therefore<br>\[
+F(b)=|\delta_G(S)|,
+\]<br>where \(\delta_G(S)\) denotes the edges crossing the cut.</p><p>The additional types in \(D\) have no effect on excess. It follows that<br>\[
+\max_{b\in\{0,1\}^T}F(b)
+=
+\max_{S\subseteq U}|\delta_G(S)|.
+\]<br>By the rounding result,<br>\[
+\exists y\in[0,1]^T:\ F(y)\geq k
+\quad\Longleftrightarrow\quad
+\exists S\subseteq U:\ |\delta_G(S)|\geq k.
+\]<br>This establishes both directions of the reduction.</p><h3>Size and construction time</h3><p>If \(n_+\) is the number of nonisolated graph vertices, the constructed instance has<br>\[
+\tau=q&lt;2(n+1),\qquad m=q+n_++p.
+\]<br>All indices, weights, masses, and rates require \(O(\log(n+2))\) bits each. Consequently,<br>\[
+L=O((n+p)\log(n+2)+\log(k+1)).
+\]<br>The graph degrees and the explicit output can be constructed in time polynomial in the graph input length; a direct implementation takes<br>\[
+O((n+p)\log(n+2)+\log(k+1))
+\]<br>bit operations under the usual explicit graph encoding.</p><p>Thus the reduction is polynomial and produces valid instances. Together with membership in \(\mathrm{NP}\), it proves the claimed classification.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verdict</h3><p>The output correctly resolves the task. It proves that the continuous excess-threshold decision problem is \(\mathrm{NP}\)-complete, including the claimed restriction to hyperedges of size at most three, uniform dyadic masses, and identical positive payoff rates.</p><p>No major or minor mathematical issues were found. No repair or additional clarification is needed.</p><h3>Step-by-step verification</h3><h3>1. Fractional-to-Boolean rounding</h3><p>Every hyperedge is a set, so its monomial contains each variable at most once. Subtracting the linear payoff terms preserves separate affineness in every coordinate.</p><p>The identity<br>\[
+F(y)=(1-y_t)F(y^{t,0})+y_tF(y^{t,1})
+\]<br>is correct. Since the coefficients are nonnegative and sum to one, one endpoint has value at least \(F(y)\).</p><p>Successive rounding is valid: each operation fixes one coordinate without changing previously fixed coordinates or decreasing the current value. After exactly \(\tau\) operations, the resulting Boolean vector satisfies the stated inequality.</p><p>Consequently, every fractional threshold witness yields a Boolean threshold witness. The reverse implication follows because Boolean vectors belong to the participation domain. The equality of maxima is also justified: the Boolean domain is finite, and the rounding argument bounds every fractional value by a Boolean value.</p><p><b>Assessment:</b> Correct, with all required quantifiers and domain restrictions respected.</p><h3>2. Membership in \(\mathrm{NP}\) and arithmetic bounds</h3><p>The proposed certificate has \(\tau\) bits. The displayed expression for its excess correctly includes precisely the hyperedges whose coordinates are all selected and the payoff terms for selected types.</p><p>The common-denominator argument is valid when “all denominators appearing in the input” counts their input occurrences. In particular, the denominator factors for both \(\mu_t\) and \(a_t\) are included, so their product denominator is cleared. Repeated numerical denominator values cause no problem.</p><p>The product denominator has \(O(L)\) bits. Scaled numerators, products, and accumulated sums also have \(O(L)\) bits; the additional growth from summing explicitly listed terms is absorbed by \(L\). Including the denominator of \(\varepsilon\) allows an exact threshold comparison.</p><p>Because each edge has at most four members, the claimed certificate-verification bound<br>\[
+O((m+\tau)L^2)
+\]<br>is sufficient under classical integer arithmetic. The exhaustive-search bound<br>\[
+O(2^\tau(m+\tau)L^2)
+\]<br>therefore follows.</p><p><b>Assessment:</b> Correct. The running times use the actual support size, as required.</p><h3>3. Source problem</h3><p>The reduction uses the decision version of unweighted Max Cut on simple graphs. Its cited source establishes NP-completeness of Simple Max Cut with unit edge weights. The citation is appropriate. Restricting to positive thresholds excludes only automatically affirmative nonpositive-threshold instances and does not undermine the hardness premise. [Garey, Johnson, and Stockmeyer](https://www.sciencedirect.com/science/article/pii/0304397576900591)</p><p><b>Assessment:</b> The cited hardness result matches the source problem used.</p><h3>4. Validity of the constructed instance</h3><p>The padding count is nonnegative because \(q\geq n+1\). There are exactly \(q\) types, each with positive dyadic mass \(1/q\), and their masses sum to one.</p><p>All payoff rates equal the positive integer \(q\), giving \(\mu_ta_t=1\).</p><p>The listed singleton, pair, and triple edges are nonempty and have rank at most three. Simplicity of the source graph and the distinct gate type ensure that the listed triples have three distinct members. All coefficients have valid signed binary rational encodings.</p><p>The efficiency calculation is correct:<br>\[
+V(\mathbf1)=q+2p-2p=q=\sum_t\mu_ta_t.
+\]<br>At each unit vector, every nonsingleton monomial vanishes, leaving exactly the singleton contribution. Thus every individual-rationality inequality holds with equality.</p><p>The threshold \(k\) is a positive binary rational as required.</p><p><b>Assessment:</b> Every input constraint is satisfied.</p><h3>5. Correctness of the reduction</h3><p>The singleton contributions cancel the payoff terms exactly, yielding the stated gated excess expression.</p><p>For Boolean participation with the gate selected, the degree sum converts correctly into the displayed sum over graph edges. Each edge contribution is zero when its endpoints have equal Boolean values and one when they differ. Hence the excess equals the cut size.</p><p>With the gate unselected, the excess is zero. Padding types have no effect on excess. Since cut sizes are nonnegative, these observations justify the claimed equality of Boolean maxima.</p><p>The earlier rounding result then gives both directions of the continuous decision equivalence. No assertion that fractional participation itself represents an ordinary cut is needed.</p><p><b>Assessment:</b> Correct; the reduction establishes hardness for the continuous problem.</p><h3>6. Output size and construction time</h3><p>The bounds on \(q\), \(\tau\), and \(m\) are correct. Degrees, indices, masses, and rates have the stated logarithmic encoding sizes. The threshold contributes its binary encoding length separately.</p><p>The resulting bound on \(L\) and the claimed polynomial construction time are valid under the explicitly stated usual explicit graph encoding.</p><p><b>Assessment:</b> Correct. The reduction is polynomial.</p><h3>Scope and actionable feedback</h3><p>The argument establishes the claimed complexity classification independently of the supplied discrete-game hardness results. It does not establish the additional dependency-degree restrictions mentioned in the task, but it does not claim them, and they are not required.</p><p>There are no blocking issues or requested repairs.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

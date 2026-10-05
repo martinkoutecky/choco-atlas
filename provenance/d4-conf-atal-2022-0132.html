@@ -1,0 +1,199 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-atal-2022-0132 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-atal-2022-0132 <span style="font-weight:normal;color:#8a7350">(d4-conf-atal-2022-0132)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>There is an nO(log ℓ)-time algorithm for computing a NE.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(P\) partitioned among \(\ell=2^h\) parties, a fixed seeding, and a supported set \(T\) of complete voter rankings with rational masses \(\mu_t\) summing to \(1\), define each pairwise match by strict majority, restricting to societies without pairwise ties or fixing a tie-breaking rule. Compute a pure Nash equilibrium of the one-shot winner-take-all knockout game, or report that none exists.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(P\) be a set of \(m\) candidates partitioned into nonempty parties \(C_1,\ldots,C_\ell\), where \(\ell=2^h\) and \(h\geq1\). A fixed, publicly known seeding bijectively assigns parties to the leaves of a perfect binary knockout tree.<br>A society is given by its support: a list \(T\) of \(\tau\) distinct strict complete rankings of \(P\), each with positive binary rational mass \(\mu_t\), with \(\sum_{t\in T}\mu_t=1\). Here \(\tau\) is the support size, not the number of possible rankings; \(L\) is the total input bit length.<br>For distinct candidates in different parties, \(a\) beats \(b\) exactly when \(\sum_{t:a\succ_t b}\mu_t&gt;1/2\). Promise that every such comparison is tie-free.<br>Each party simultaneously chooses one nominee \(p_i\in C_i\) before play and retains that nominee throughout. Match winners advance up the tree; party \(i\) has utility \(1\) if its nominee wins the tournament and \(0\) otherwise. Only parties make strategic choices; the society is fixed.<br>Compute a pure Nash equilibrium profile \((p_1,\ldots,p_\ell)\), or report that none exists. Unilateral deviations may replace a party&#x27;s nominee by any other member of that party.</p><p>Is this equilibrium computation problem polynomial-time solvable in \(m,\tau,L,\ell\), or is it NP-hard? State running times in \(m,\tau,L\) and \(h\) (equivalently, \(\ell\)).</p><p>For explicitly supplied deterministic pairwise outcomes, equilibrium computation takes \(m^{O(\log\ell)}\) time, and equilibrium recognition is polynomial-time solvable. [Verified results](https://ifmas.csc.liv.ac.uk/Proceedings/aamas2022/pdfs/p807.pdf)<br>No NP-hardness or W[1]-hardness result for this discrete problem, or exact complexity classification for the supported rational-mass formulation, was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Required nonempty parties and positive integer height h, carrying over the discrete domain.</li><li>Resolved the alternative concerning ties by promising tie-free comparisons between candidates in different parties.</li><li>Interpreted complete rankings as strict linear orders over all candidates.</li><li>Specified that seeding assigns parties to leaves of a perfect binary tree and remains fixed under deviations.</li><li>Specified party utilities as winning indicators, with every member available as a unilateral replacement and nominations fixed throughout play.</li><li>Defined m as the candidate count and L as the total input bit length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and new partial result</h3><p>I do <b>not</b> resolve polynomial-time solvability versus NP-hardness for unrestricted $h$.</p><p>The new result proved below is a parameterized algorithm. Extend the cross-party comparison table to a tournament on all candidates by orienting within-party pairs arbitrarily. If deleting $k$ candidates makes this tournament transitive, equilibrium computation is fixed-parameter tractable in $k$. In particular, it is polynomial-time solvable when $k=O(\log m)$, even for unrestricted $h$.</p><p>The proof also simplifies the general dynamic program: its states need not explicitly identify the party that will win the entire tournament.</p><h3>1. Exact comparisons and representation equivalence</h3><p>Write $a\triangleright b$ when $a$ beats $b$. Initially, this relation is defined only between different parties.</p><p>Suppose the rational masses are supplied as $\mu_t=a_t/b_t$. Set<br>$$
+Q=\prod_{t\in T}b_t,
+\qquad
+A_t=a_t(Q/b_t).
+$$<br>Normalization gives $\sum_t A_t=Q$. Hence<br>$$
+a\triangleright b
+\quad\Longleftrightarrow\quad
+2\sum_{t:\,a\succ_t b}A_t&gt;Q.
+$$<br>The integers involved have $O(L)$ bits: the bit length of $Q$ is bounded by the sum of the denominator bit lengths, and $A_t=\mu_tQ\leq Q$.</p><p>After constructing candidate positions in each ranking, all cross-party comparisons can therefore be computed exactly in the conservative bound<br>$$
+B=O(m^2\tau L^2)
+$$<br>bit operations, using schoolbook arithmetic. The tie-free promise ensures that every required pair has exactly one winner.</p><p>Conversely, every deterministic cross-party table admits a polynomial-size supported representation. Here is a proof, because this equivalence explains why the supported formulation alone does not settle the classification.</p><p>Extend the table to all pairs arbitrarily. For each intended orientation $a\triangleright b$, list the remaining candidates as $r_1,\ldots,r_{m-2}$ and introduce the rankings<br>$$
+a\succ b\succ r_1\succ\cdots\succ r_{m-2},
+$$<br>$$
+r_{m-2}\succ\cdots\succ r_1\succ a\succ b.
+$$<br>These two rankings give margin $2$ to $a$ against $b$. They give margin zero to every other pair: their orders disagree on pairs of remaining candidates and on pairs involving one remaining candidate and either $a$ or $b$.</p><p>Applying this construction to all $\binom m2$ pairs produces<br>$$
+N_0=m(m-1)
+$$<br>ranking occurrences, with margin $2$ in every intended direction. Let $N$ be the least power of two with $N\geq N_0$. Both numbers are even. Pad with $(N-N_0)/2$ ranking-and-reverse pairs, each of which has zero margins.</p><p>Giving every occurrence mass $1/N$ yields winning support<br>$$
+\frac{N+2}{2N}=\frac12+\frac1N.
+$$<br>Merge identical rankings by adding their masses. The resulting support consists of distinct rankings with positive dyadic masses. Since $N&lt;2m(m-1)$, it has fewer than $2m(m-1)$ rankings and encoding length $O(m^3\log m)$.</p><p>The construction preserves parties, seeding, and all cross-party outcomes. Consequently, it preserves every profile’s winner and every unilateral deviation’s winner, and hence preserves equilibrium profiles exactly.</p><p>Thus the supported and explicit-table formulations are polynomially equivalent.</p><h3>2. Recognition and the role of outside opponents</h3><p>For a fixed nomination profile, consider party $i$’s leaf-to-root path. At each of its $h$ rounds, let $o_{i,r}$ be the winner of the sibling subtree.</p><p>These sibling subtrees exclude party $i$, so their winners do not change when only party $i$ changes its nominee. Therefore a replacement $q\in C_i$ wins the tournament exactly when<br>$$
+q\triangleright o_{i,r}
+\qquad\text{for every }r\in\{1,\ldots,h\}.
+$$<br>Indeed, conditional on surviving the preceding rounds, $q$ faces precisely $o_{i,r}$ at round $r$.</p><p>If $g$ is the winning party, its utility is already $1$. Every other party has a profitable deviation precisely when some replacement beats every opponent on its path. Hence the profile is an equilibrium exactly when<br>$$
+\forall i\ne g\;\forall q\in C_i\;\exists r:
+\quad o_{i,r}\triangleright q.
+$$<br>Compute all subtree winners once, then check this condition. Recognition takes<br>$$
+O(\ell+mh)
+$$<br>table operations after preprocessing. Equilibrium existence therefore belongs to $\mathrm{NP}$: a profile is a polynomial-length certificate.</p><p>The algorithm below uses the following observation. For a collection $S$ of outside opponents, define its <b>blocked set</b><br>$$
+D(S)=\bigcup_{s\in S}N^+(s),
+\qquad
+N^+(s)=\{q\in P:s\triangleright q\}.
+$$<br>Here and subsequently, orient within-party pairs arbitrarily, producing a tournament on $P$; set $q\notin N^+(q)$.</p><p>Whenever $S$ consists of actual outside opponents of a subtree, every candidate in that subtree belongs to a different party from every member of $S$. Thus the added within-party orientations do not affect the interpretation:<br>$$
+q\in D(S)
+\quad\Longleftrightarrow\quad
+q\text{ loses to at least one opponent in }S.
+$$<br>Only the blocked set matters, rather than the identities or order of all outside opponents separately.</p><h3>3. A dynamic program with two exemption states</h3><p>For a tree node $v$, let $P_v$ be the candidates belonging to parties below $v$. For $w\in P_v$, let $i(w)$ denote its party.</p><p>For any set $D\subseteq P$, define two predicates.</p><ul><li>$F_0(v,w,D)$ holds if some profile below $v$ has winner $w$, and no party below $v$ can unilaterally nominate a candidate $q\notin D$ that wins subtree $v$.</li><li>$F_1(v,w,D)$ has the same meaning, except that party $i(w)$ is exempt from the deviation condition.</li></ul><p>These are mathematical definitions for arbitrary $D$. They do not require $D$ to arise from actual outside opponents.</p><p>At the root $r$, equilibrium existence is equivalent to<br>$$
+\exists w\in P:\ F_1(r,w,\varnothing).
+$$<br>To justify this, $q\notin\varnothing$ imposes no restriction. Thus $F_1$ forbids every winning deviation by every party other than the actual winning party. The latter already has utility $1$.</p><h3>Leaf conditions</h3><p>At the leaf of party $i$, every $q\in C_i$ wins the one-leaf subtree when nominated. Therefore, for every $w\in C_i$,<br>$$
+F_0(v,w,D)\quad\Longleftrightarrow\quad C_i\subseteq D,
+$$<br>whereas<br>$$
+F_1(v,w,D)\quad\Longleftrightarrow\quad \text{true}.
+$$</p><h3>Internal recurrence</h3><p>Let $u,z$ be the children of $v$. For prospective child champions $a\in P_u$ and $b\in P_z$, put<br>$$
+D_a=D\cup N^+(a),
+\qquad
+D_b=D\cup N^+(b).
+$$</p><p>If $a\triangleright b$, this pair witnesses $F_0(v,a,D)$ exactly when<br>$$
+F_0(u,a,D_b)\ \land\ F_0(z,b,D_a),
+$$<br>and it witnesses $F_1(v,a,D)$ exactly when<br>$$
+F_1(u,a,D_b)\ \land\ F_0(z,b,D_a).
+$$<br>If $b\triangleright a$, use the symmetric conditions:<br>$$
+F_0(u,a,D_b)\ \land\ F_0(z,b,D_a)
+$$<br>for $F_0(v,b,D)$, and<br>$$
+F_0(u,a,D_b)\ \land\ F_1(z,b,D_a)
+$$<br>for $F_1(v,b,D)$.</p><p>Each parent entry is true if at least one child-champion pair witnesses it.</p><p><b>Proof.</b> Fix a party below $u$ and a replacement candidate $q$. The other child’s champion remains $b$. Thus $q$ wins subtree $v$ and lies outside $D$ exactly when it wins subtree $u$ and satisfies<br>$$
+q\notin D
+\quad\text{and}\quad
+q\triangleright b.
+$$<br>The comparison is between different parties. Because it is tie-free, these conditions are equivalent to<br>$$
+q\notin D\cup N^+(b)=D_b.
+$$<br>The analogous equivalence holds for parties below $z$.</p><p>For $F_0$, every party must be checked, giving two $F_0$ child states. For $F_1$ when $a$ wins the parent match, only party $i(a)$ is exempt. It belongs to $u$, giving an $F_1$ state in $u$ and an $F_0$ state in $z$.</p><p>Restricting a parent witness proves necessity. Conversely, combining witnessing child profiles proves sufficiency: their party sets are disjoint, their champions are $a,b$, and the equivalences above establish every required deviation condition. The symmetric case follows identically. $\square$</p><p>Storing a witnessing pair for each true internal entry permits reconstruction of a complete profile. If every eligible root entry is false, the recurrence proves nonexistence.</p><h3>4. The general height-dependent bound</h3><p>The recurrence recovers the unrestricted quasipolynomial algorithm without a global winning-party index.</p><p>At a node of depth $d$, represent its context by a set<br>$$
+S\subseteq P\setminus P_v,
+\qquad |S|\leq d,
+$$<br>and interpret the state through $D(S)$. Moving to a child adds the sibling champion to $S$. The resulting context remains outside that child and has size at most $d+1$.</p><p>There are at most<br>$$
+\sum_{j=0}^d\binom mj\leq(m+1)^d\leq(m+1)^h
+$$<br>contexts per node.</p><p>Two counting identities control the work:<br>$$
+\sum_v |P_v|=m(h+1),
+$$<br>because each candidate occurs in one node per depth, and<br>$$
+\sum_{\substack{v\text{ internal}\\u,z\text{ children of }v}}
+|P_u|\,|P_z|
+\leq \binom m2.
+$$<br>For the second identity, a pair of candidates in different leaves is counted exactly at the lowest common ancestor of their leaves.</p><p>For each context and child-champion pair, the recurrence updates both exemption states and the uniquely determined parent winner. Context copying and leaf membership checks cost $O(h+1)$. Including initialization, this gives the conservative bound<br>$$
+O\!\left((h+1)m^2(m+1)^h\right)
+$$<br>table operations.</p><p>With exact-majority preprocessing, the overall bit-time bound is<br>$$
+O(m^2\tau L^2)+m^{O(h)}\operatorname{poly}(\log m).
+$$<br>Since nonempty parties imply $\ell\leq m$ and $h=\log_2\ell$, this is polynomial for fixed $h$ and quasipolynomial in general. The corresponding unrestricted upper bound is also Theorem 1 of [Lisowski, Ramanujan, and Turrini](https://ifmas.csc.liv.ac.uk/Proceedings/aamas2022/pdfs/p807.pdf).</p><h3>5. New result: deleting few candidates to obtain transitivity</h3><p><b>Theorem.</b> Fix any extension of the cross-party outcomes to a tournament on $P$. Suppose $X\subseteq P$, with $|X|=k$, is supplied such that the tournament on<br>$$
+G=P\setminus X
+$$<br>is transitive. Then equilibrium computation, including a correct nonexistence report, takes<br>$$
+O\!\left(
+4^k(m+1)\bigl[m^2(k+1)+m(h+1)\bigr]
+\right)
+$$<br>table operations after preprocessing.</p><p>Consequently, its bit complexity is bounded by<br>$$
+O(m^2\tau L^2)
++
+4^{O(k)}\operatorname{poly}(m,h,\log m).
+$$</p><h3>Compact blocked-set representation</h3><p>Transitivity means that $G$ has a strict total order $\prec$ satisfying<br>$$
+a\triangleright b
+\quad\Longleftrightarrow\quad
+a\prec b
+\qquad(a,b\in G,\ a\ne b).
+$$<br>Earlier candidates are stronger.</p><p>For any opponent set $S\subseteq P$, record:</p><ul><li>$s$, the earliest member of $S\cap G$, or $\bot$ if there is none;</li><li>$U=S\cap X$;</li><li>$V=D(S)\cap X$.</li></ul><p>For $q\in G$, transitivity gives<br>$$
+q\in D(S)
+\quad\Longleftrightarrow\quad
+\bigl(s\ne\bot\text{ and }s\prec q\bigr)
+\ \lor\
+\exists x\in U:\ x\triangleright q.
+$$<br>Indeed, among the good opponents $S\cap G$, their earliest member defeats every candidate defeated by any later member. For $q\in X$, membership in $D(S)$ is recorded directly by $V$.</p><p>Thus the triple $(s,U,V)$ determines the entire blocked set.</p><p>For all triples, including ones not realized by an opponent set, define<br>$$
+\mathcal D(s,U,V)
+=
+V
+\ \cup\
+\{q\in G:s\ne\bot,\ s\prec q\}
+\ \cup\
+\{q\in G:\exists x\in U,\ x\triangleright q\}.
+$$<br>There are at most<br>$$
+R=(|G|+1)4^k\leq(m+1)4^k
+$$<br>such signatures. Distinct signatures may describe the same set; this causes no difficulty.</p><h3>Closure under adding a sibling champion</h3><p>Given a signature $(s,U,V)$ and candidate $b$, define the updated signature as follows.</p><ul><li>If $b\in G$, replace $s$ by the earlier of $s$ and $b$, treating $\bot$ as absent; leave $U$ unchanged.</li><li>If $b\in X$, leave $s$ unchanged and replace $U$ by $U\cup\{b\}$.</li><li>In both cases, replace $V$ by</li></ul><p>$$
+V\cup\bigl(N^+(b)\cap X\bigr).
+$$</p><p>This update satisfies<br>$$
+\mathcal D(\text{updated signature})
+=
+\mathcal D(s,U,V)\cup N^+(b).
+$$<br>For candidates in $X$, this follows from the update to $V$. For candidates in $G$, adding a good candidate adds a suffix of the total order, while adding an exceptional candidate adds exactly its defeated good candidates.</p><p>Importantly, the equality holds for <b>every</b> signature, not merely realizable ones. Hence the signature family is closed under every context update required by the recurrence.</p><p>The empty blocked set is represented by<br>$$
+(\bot,\varnothing,\varnothing).
+$$</p><h3>Correctness and running time</h3><p>Run the two-state dynamic program using signatures instead of explicit blocked sets. Their exact set semantics and closure identity make every recurrence from Section 3 applicable. Induction on subtree height therefore proves that every computed entry has precisely its stated meaning.</p><p>Membership tests and signature updates take $O(k+1)$ elementary operations using $k$-bit vectors and the order on $G$. Updates can also be precomputed for every signature-candidate pair.</p><p>There are $R$ signatures. The counting identities from Section 4 give:</p><ul><li>$O(Rm(h+1))$ state initialization work;</li><li>$O(Rm(k+1))$ leaf-condition work;</li><li>$O(Rm^2(k+1))$ recurrence work;</li><li>$O(Rm(k+1))$ work to precompute signature updates.</li></ul><p>Substituting $R\leq(m+1)4^k$ gives the theorem’s stated table-operation bound. State indices and signatures have polynomial bit length in $k$, $h$, and $\log m$, yielding the displayed fixed-parameter bit bound. Backtracking takes polynomial additional time. $\square$</p><h3>6. Finding the deletion set</h3><p>The set $X$ need not be supplied. For the fixed tournament extension, one can find a suitable set of size at most $k$, or prove that none exists, in<br>$$
+O(3^k m^3)
+$$<br>table operations.</p><p>First, a tournament is transitive exactly when it has no directed triangle.</p><p>To prove the nontrivial direction, suppose a tournament has a directed cycle and choose one of shortest length. If its length exceeds three, write its first three vertices as $v_1,v_2,v_3$. If $v_3\triangleright v_1$, they form a directed triangle. Otherwise $v_1\triangleright v_3$, and bypassing $v_2$ produces a shorter directed cycle. Thus every cyclic tournament has a directed triangle. An acyclic tournament has a topological order, which is a transitive order because every pair is adjacent.</p><p>The deletion algorithm finds a directed triangle. Any deletion set producing a transitive tournament must delete at least one of its three vertices. Branch on these three choices and decrease the remaining budget by one.</p><p>Each node searches for a triangle in $O(m^3)$ time. The search tree has $O(3^k)$ nodes. A triangle-free residual tournament supplies the required transitive order. Trying budgets successively up to the minimum successful value retains the same asymptotic bound.</p><p>Combining this search with Section 5 gives a fixed-parameter algorithm where $k$ is the minimum deletion-set size for the chosen extension.</p><p>In particular, if $k\leq c\log_2m$ for a fixed constant $c$, then<br>$$
+4^k\leq m^{2c},
+$$<br>so the resulting algorithm is polynomial in $m,\tau,L$, even when $h$ varies.</p><h3>7. What remains open</h3><p>The unrestricted hypotheses impose no bound on this deletion parameter. Therefore the new algorithm does not establish unrestricted polynomial-time solvability.</p><p>The following conclusions are proved:</p><ul><li>The supported and explicit-table formulations are polynomially equivalent.</li><li>Recognition is polynomial, and equilibrium existence belongs to $\mathrm{NP}$.</li><li>General computation takes $O(m^2\tau L^2)+m^{O(h)}\operatorname{poly}(\log m)$ time.</li><li>Computation is fixed-parameter tractable in the number of candidates whose deletion makes a chosen tournament extension transitive.</li></ul><p>Neither an unrestricted polynomial algorithm nor an NP-hardness reduction is established here. A polynomial many-one NP-hardness proof for existence, combined with the general quasipolynomial algorithm, would imply deterministic quasipolynomial algorithms for every language in $\mathrm{NP}$; that consequence is not a contradiction and does not rule out hardness.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 5–7 and the opening status statement: The output does not settle the unrestricted classification requested by USER_TASK. Its polynomial-time consequence requires $k=O(\log m)$ for a chosen tournament extension, a restriction absent from the task; its unrestricted upper bound remains quasipolynomial. Neither an unrestricted polynomial-time algorithm nor an NP-hardness proof is established.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial, with correct substantive results.</b> The output explicitly declines to settle the unrestricted polynomial-time versus NP-hardness question. Its representation equivalence, recognition criterion, dynamic program, and parameterized algorithm are sound as written. I found no false central step or mathematical gap in those partial results.</p><p>The blocking issue is scope: the parameterized tractability result does not classify the unrestricted problem requested in <code>USER_TASK</code>.</p><h3>1. Exact comparisons and representation equivalence</h3><h3>Exact majority computation</h3><p>The common-denominator construction is valid:<br>$$
+Q=\prod_{t\in T}b_t,
+\qquad
+A_t=a_t(Q/b_t).
+$$</p><p>Each quotient is integral, and normalization gives<br>$$
+\sum_{t\in T}A_t=Q.
+$$</p><p>Consequently, the stated strict-majority test<br>$$
+2\sum_{t:a\succ_t b}A_t&gt;Q
+$$<br>is exactly equivalent to the original comparison.</p><p>The bit-length argument is correct. The sum of denominator bit lengths is bounded by the input length, so $Q$ has $O(L)$ bits. Positivity and normalization imply $\mu_t\leq1$, hence $A_t\leq Q$. All comparison sums also have $O(L)$ bits.</p><p>The conservative preprocessing bound<br>$$
+O(m^2\tau L^2)
+$$<br>covers common-denominator arithmetic, ranking-position construction, and pairwise comparisons using schoolbook arithmetic. The tie-free promise supplies a unique orientation for every cross-party pair.</p><h3>Realizing an arbitrary outcome table</h3><p>The two-ranking construction has the claimed margins:</p><ul><li>Both rankings place $a$ above $b$, contributing margin $2$.</li><li>They reverse each comparison between two remaining candidates.</li><li>They reverse each comparison involving a remaining candidate and either $a$ or $b$.</li></ul><p>Thus every gadget affects only its designated pair. Applying one gadget per unordered pair produces margin $2$ in each intended direction.</p><p>The padding argument is also correct. Because $h\geq1$ and parties are nonempty, $m\geq2$. Therefore $N_0=m(m-1)$ and its power-of-two ceiling $N$ are both even. Ranking-and-reverse padding preserves all margins, and the winning mass is exactly<br>$$
+\frac{N+2}{2N}=\frac12+\frac1N.
+$$</p><p>Merging identical rankings preserves these masses and produces distinct support entries with positive dyadic masses. The support-size and encoding-length bounds follow from<br>$$
+N&lt;2m(m-1).
+$$</p><p>The edge case $m=2$ is valid: the two gadget rankings coincide, and merging them yields a single ranking of mass $1$.</p><p>Preserving every cross-party outcome preserves the winner under every profile and every unilateral deviation. Accordingly, the claimed polynomial equivalence applies to equilibrium computation, including nonexistence reports.</p><p><b>Assessment:</b> correct.</p><h3>2. Equilibrium recognition</h3><p>A party’s sibling subtrees contain no member of that party. Their winners therefore remain unchanged under its unilateral nomination change.</p><p>A replacement $q$ wins the tournament exactly when it beats all $h$ sibling-subtree champions on its path. This criterion applies even when the original nominee was eliminated early: the sibling-subtree winners remain defined independently of that elimination.</p><p>The winning party cannot improve its utility beyond $1$. For every losing party, a replacement winning the tournament is precisely a profitable deviation. Thus the displayed recognition condition is necessary and sufficient.</p><p>The bound<br>$$
+O(\ell+mh)
+$$<br>table operations is valid: subtree winners take $O(\ell)$ operations, and checking each candidate against its party’s path takes at most $h$ comparisons.</p><p>The polynomial certificate claim is correct <b>for equilibrium existence</b>. Recognition alone does not supply a certificate for nonexistence; the output does not claim otherwise.</p><p><b>Assessment:</b> correct.</p><h3>3. Blocked sets and the two-state dynamic program</h3><h3>State meanings and root condition</h3><p>The predicates are defined for arbitrary $D\subseteq P$, rather than only contexts realized by outside opponents. This stronger formulation supports the later use of unrealizable signatures.</p><p>These auxiliary predicates forbid specified winning nominations. They need not themselves describe profitable deviations within the subtree. At the root, however, exempting the actual winning party makes $F_1$ exactly the equilibrium condition.</p><p>There is no assumption that an equilibrium always exists: the root existential test can fail.</p><h3>Leaf conditions</h3><p>At a one-party leaf, every member of that party wins when nominated. Consequently:</p><ul><li>$F_0$ holds exactly when the entire party is contained in $D$.</li><li>$F_1$ holds automatically because its sole party is exempt.</li></ul><p>Both base cases are correct, including singleton parties.</p><h3>Internal recurrence</h3><p>For a party below $u$, its unilateral change leaves the other child’s champion $b$ fixed. A candidate $q$ wins the parent subtree outside $D$ exactly when it wins $u$, lies outside $D$, and beats $b$.</p><p>Because $q$ and $b$ belong to different parties, the tie-free promise gives<br>$$
+q\triangleright b
+\quad\Longleftrightarrow\quad
+q\notin N^+(b).
+$$</p><p>Hence the updated blocked set $D_b$ is correct. The analogous statement holds for the other child.</p><p>The exemption is passed correctly. When $a$ wins the parent match, the exempt party is $i(a)$, which lies below $u$. Therefore the winning child receives an $F_1$ condition and the losing child an $F_0$ condition.</p><p>The necessity and sufficiency arguments are valid:</p><ul><li>Restricting a parent witness produces the required child witnesses.</li><li>Combining child witnesses preserves their respective champions.</li><li>Disjoint party sets ensure that a unilateral change affects only the relevant child subtree.</li></ul><p>Witness storage supports reconstruction, and exhaustive failure of the eligible root states justifies a nonexistence report.</p><p><b>Assessment:</b> correct.</p><h3>4. General height-dependent running time</h3><p>At depth $d$, a context containing at most $d$ outside candidates is sufficient. Passing to a child adds its sibling champion, which is outside that child. The context family is therefore closed under the required updates.</p><p>The context bound<br>$$
+\sum_{j=0}^d\binom mj\leq(m+1)^d
+$$<br>is valid, including $d=0$.</p><p>Both work-counting statements are correct:<br>$$
+\sum_v|P_v|=m(h+1),
+$$<br>and<br>$$
+\sum_{\substack{v\text{ internal}\\u,z\text{ children of }v}}
+|P_u|\,|P_z|\leq\binom m2.
+$$</p><p>For the second bound, only candidates belonging to different leaves are counted, and each such pair is counted at its unique lowest common ancestor.</p><p>These bounds support the conservative table-operation estimate<br>$$
+O\!\left((h+1)m^2(m+1)^h\right).
+$$</p><p>Since $\ell\leq m$ and $h=\log_2\ell$, this is polynomial for fixed $h$ and quasipolynomial in general. The corresponding cited result is indeed Theorem 1 of the referenced paper; its setting uses fixed seeding, one-shot nominations, and win-or-lose utilities. [Lisowski, Ramanujan, and Turrini](https://ifmas.csc.liv.ac.uk/Proceedings/aamas2022/pdfs/p807.pdf)</p><p><b>Assessment:</b> correct. This upper bound does not settle the requested complexity dichotomy.</p><h3>5. Parameterized algorithm</h3><h3>Compact blocked-set representation</h3><p>Within the transitive residual tournament, the out-neighborhood of an earlier candidate contains the out-neighborhood of every later candidate. Accordingly, the earliest member of $S\cap G$ determines all blocking contributed by good opponents.</p><p>The exceptional opponents $U$ determine their contribution on $G$, while $V$ records blocked exceptional candidates directly. Thus $(s,U,V)$ determines the entire blocked set.</p><p>The signature count<br>$$
+R=(|G|+1)4^k
+$$<br>is correct. The two exceptional subsets may be counted independently because the algorithm intentionally includes unrealizable signatures.</p><h3>Closure identity</h3><p>The update satisfies the claimed identity for every signature:</p><ul><li>Adding a good candidate unions its strict suffix with the existing strict suffix.</li><li>Adding an exceptional candidate adds exactly its defeated good candidates.</li><li>Updating $V$ adds exactly the newly defeated exceptional candidates.</li></ul><p>This remains valid when the signature is unrealizable. That point is essential: it permits the recurrence to operate on the whole signature family without introducing spurious set semantics.</p><p>The empty signature represents the empty blocked set, including when $G$ is empty.</p><h3>Correctness and cost</h3><p>Because signature updates implement exact union with $N^+(b)$, the previously verified recurrence applies unchanged. Induction on subtree height therefore establishes the stated semantics.</p><p>Membership testing by examining at most $k$ exceptional candidates and updating $k$-bit subsets fit the conservative $O(k+1)$ operation bound. The initialization, leaf-testing, recurrence, and update-precomputation counts support<br>$$
+O\!\left(
+4^k(m+1)\bigl[m^2(k+1)+m(h+1)\bigr]
+\right).
+$$</p><p>The stated bit-complexity form follows with polynomial overhead for indexing and signature manipulation.</p><p><b>Assessment:</b> correct, conditional on a deletion set for the chosen extension. No proof of priority for the description “new result” is supplied; the mathematical result itself is verified.</p><h3>6. Finding a deletion set</h3><p>The directed-triangle characterization is proved correctly. A shortest directed cycle longer than three either contains the displayed triangle or admits the stated shortcut. An acyclic tournament’s topological order orients every pair consistently.</p><p>Every deletion set making the tournament transitive must intersect each surviving directed triangle. Branching on its three vertices is therefore exhaustive.</p><p>The search-tree and triangle-search bounds yield<br>$$
+O(3^k m^3).
+$$</p><p>Successively trying budgets up to the first successful one retains this bound by a geometric sum. The argument includes $k=0$ through the triangle-free stopping condition.</p><p>Combining this search with the signature algorithm establishes fixed-parameter tractability in the minimum deletion-set size <b>for the fixed, chosen extension</b>. The output does not establish optimization over within-party extensions.</p><p>For a fixed constant $c$, the calculation<br>$$
+k\leq c\log_2m
+\quad\Longrightarrow\quad
+4^k\leq m^{2c}
+$$<br>is correct. Thus the asserted restricted polynomial-time result follows.</p><p><b>Assessment:</b> correct.</p><h3>7. Blocking issue and required feedback</h3><p><b>Major scope issue — the unrestricted classification remains unresolved.</b> Nothing in the task bounds the deletion parameter by $O(\log m)$, and the general algorithm remains quasipolynomial. The output supplies neither an unrestricted polynomial-time algorithm nor an NP-hardness proof.</p><p>This is an acknowledged limitation, not a contradiction within the partial proof. No clarification of the existing parameterized theorem suffices to complete <code>USER_TASK</code>; an additional classification result is required.</p><p>The final observation about the consequence of a polynomial many-one NP-hardness proof is correct: composing such a reduction with the established quasipolynomial decision algorithm would yield deterministic quasipolynomial algorithms for every language in $\mathrm{NP}$.</p><p>The direction is promising because the supplied compression and recurrence are valid. They nevertheless do not resolve the assigned unrestricted question.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

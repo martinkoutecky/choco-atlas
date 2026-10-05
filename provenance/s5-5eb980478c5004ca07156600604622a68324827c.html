@@ -1,0 +1,273 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-5eb980478c5004ca07156600604622a68324827c — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-5eb980478c5004ca07156600604622a68324827c <span style="font-weight:normal;color:#8a7350">(s5-5eb980478c5004ca07156600604622a68324827c)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.7 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>The Standard Consensus Protocol achieves ϵ-MI consensus in at most 2 ϵ rounds. The Discretized Consensus Protocol achieves ϵ-MI consensus in at most 512 ϵ3 log 1 E−1( 1 4 ϵ) rounds.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite set of cohort types \(T\), positive rational masses \(\mu_t\) summing to \(1\), and an explicit finite common prior over binary \(W\) and the cohort signals \((X_t)_{t\in T}\), run the Standard Consensus Protocol with one representative announcement per positive-mass type in each round. Find the least round \(r\) for which \(\max_{t:\mu_t&gt;0} I(X_t;W\mid H_r)\le\epsilon\), and return the horizon and transcript.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: an ordered list \(T\) of \(\tau\ge1\) cohort types with positive binary rational masses \(\mu_t\) summing to \(1\); \(\tau\) is the support size, not the number of possible types.<br>The input also gives a common prior as an explicit list of \(m\) positive-probability atoms \((w,(x_t)_{t\in T})\), with binary rational probabilities summing to \(1\), where \(W\in\{0,1\}\) and each signal has a finite alphabet. Correlations are unrestricted. Let \(\epsilon&gt;0\) be a binary rational and \(L\) the total input bit length.<br>All members of cohort \(t\) observe the same signal \(X_t\). In each round, one representative of each type announces sequentially in the supplied order; masses do not weight announcements or Bayesian updates.<br>The Standard Consensus Protocol announcement at a turn is the exact posterior \(\Pr(W=1\mid X_t,h)\), where \(h\) contains every earlier announcement, including those earlier in the current round. Only positive-probability conditioning events are relevant.<br>Let \(H_r\) be the random transcript through the end of round \(r\). Mutual information uses base-two logarithms, and \(I(X_t;W\mid H_r)\) averages over transcript realizations.<br>Find the least integer \(r\ge1\) satisfying \(\max_{t\in T}I(X_t;W\mid H_r)\le\epsilon\), and return \(r\) and the transcript random variable, represented by its values on the listed prior atoms. The inequality is exact, including equality.</p><p>Can this horizon and transcript be computed in polynomial time in \(m,\tau,L\), or is the problem NP-hard?</p><p>For finitely many agents, the Standard Consensus Protocol reaches this mutual-information consensus within \(2/\epsilon\) rounds; this is a round bound, not a polynomial bit-complexity result for computing the least horizon. [Kong–Schoenebeck](https://d-nb.info/1366711041/34)<br>Aaronson establishes efficient communication for approximate agreement and computational simulation for a different protocol and agreement criterion. No result settling the exact mass-input problem above was verified. [Aaronson](https://arxiv.org/abs/cs/0406061)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified a supplied fixed order of sequential announcements, including conditioning on announcements earlier in the same round.</li><li>Specified rational atom probabilities, finite signal alphabets, and m as the number of positive-probability prior atoms.</li><li>Interpreted each cohort signal as shared by its members; masses affect neither representative announcements nor Bayesian conditioning.</li><li>Specified positive binary rational epsilon, base-two logarithms, and exact threshold comparison without a numerical gap promise.</li><li>Used conditional mutual information averaged over random histories, rather than evaluated at a single realized history.</li><li>Restricted candidate horizons to completed rounds r &gt;= 1, matching the discrete round convention.</li><li>Because no realized signal profile is supplied, interpreted the transcript output as the random transcript on all listed prior atoms.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial result: equivalence to succinct product comparison</h3><p>I do not settle the polynomial-time versus NP-hardness classification. I prove a stronger characterization of the remaining difficulty:</p><p><b>The requested horizon-and-transcript function is polynomial-time computable if and only if comparison of binary-encoded products of integer powers is polynomial-time decidable.</b></p><p>The reverse reduction already uses societies with only $3$ cohorts whose least horizon is either $1$ or $2$. Thus the product comparison difficulty can actually be realized by the protocol; it is not merely an artifact of an upper-bound calculation.</p><h3>1. The auxiliary comparison problem</h3><p>Define $\mathsf{PoE}_{\le}$ as follows. The input consists of positive integers $b_j,e_j,c_k,f_k$, all encoded in binary. Decide whether</p><p>$$
+P=\prod_j b_j^{e_j}\leq \prod_k c_k^{f_k}=Q.
+$$</p><p>This is the product-of-exponentials inequality problem studied by [Etessami, Stewart, and Yannakakis](https://arxiv.org/pdf/1304.5429).</p><p>I prove two unconditional reductions:</p><ul><li>The society function is computable in polynomial time with an oracle for $\mathsf{PoE}_{\le}$.</li><li>$\mathsf{PoE}_{\le}$ has a polynomial-time many-one reduction to deciding whether the society’s least horizon is $1$, even for the restricted societies described above.</li></ul><p>Neither reduction establishes a polynomial-time algorithm or NP-hardness by itself.</p><h3>2. Exact simulation and a polynomial horizon bound</h3><p>Index the listed prior atoms by $\Omega=\{1,\ldots,m\}$. Atom $i$ has probability $p_i$, outcome $w_i$, and signals $x_{i,t}$.</p><p>Multiply the denominators of the probabilities to obtain a common denominator $D$, and put</p><p>$$
+a_i=Dp_i.
+$$</p><p>Then the $a_i$ are positive integers satisfying $\sum_i a_i=D$. Their binary lengths, and that of $D$, are $O(L)$.</p><p>At any point, equality of public transcripts partitions $\Omega$ into nonempty blocks. If $C$ is such a block and type $t$ speaks, its announcement on signal $x$ is</p><p>$$
+q_{C,t,x}
+=
+\frac{\sum_{i\in C:\,x_{i,t}=x,\ w_i=1}a_i}
+{\sum_{i\in C:\,x_{i,t}=x}a_i}.
+$$</p><p>The denominator is positive for every realized signal. Both numerator and denominator are at most $D$.</p><p>The turn replaces each block $C$ by its subsets having equal announcement values. Rational equality is tested by cross multiplication. Updating the partition after every turn incorporates announcements earlier in the same round.</p><p>Thus every turn can be simulated in polynomial time using integers of polynomial binary length. Recording the announcement on each atom gives the requested transcript representation. The cohort masses do not enter this calculation or the stopping criterion.</p><h3>A horizon bound</h3><p>The least requested horizon satisfies</p><p>$$
+r\leq \max\{1,m-1\}.
+$$</p><p>To prove this, observe that public partitions only refine. Each strict refinement increases the number of blocks, so at most $m-1$ strict refinements can occur.</p><p>Suppose an entire round leaves the partition unchanged. No turn in that round can have split a block, because refinements cannot subsequently merge blocks. Hence, for every block $C$ and every type $t$, the posterior</p><p>$$
+\Pr(W=1\mid X_t=x,C)
+$$</p><p>is constant over realized signals $x$. Averaging over $x$ identifies that constant with $\Pr(W=1\mid C)$. Since $W$ is binary, this establishes conditional independence of $X_t$ and $W$ within $C$. Consequently, every residual conditional mutual information is zero.</p><p>For $m\geq2$, either an unchanged round occurs among the first $m-1$ rounds, or each of those rounds increases the block count. In the latter case there are $m$ blocks by the end of round $m-1$. They are singletons, so the transcript determines $W$, and every residual information is again zero.</p><p>For $m=1$, the least permitted horizon is $1$.</p><p>It follows that all potentially needed transcripts have polynomial total size and can be generated in polynomial time.</p><h3>3. Upper reduction: exact stopping tests are product comparisons</h3><p>Fix a candidate round and a type $t$. Let $\mathcal C$ be its end-of-round transcript partition. Define</p><p>$$
+n_{Cwx}=\sum_{i\in C:\,w_i=w,\ x_{i,t}=x}a_i,
+$$</p><p>and define $n_{Cx}$, $n_{Cw}$, and $n_C$ by summing over the omitted indices.</p><p>From the definition of conditional mutual information,</p><p>$$
+I(X_t;W\mid H_r)
+=
+\frac1D
+\sum_{\substack{C,w,x\\n_{Cwx}&gt;0}}
+n_{Cwx}
+\log_2\frac{n_{Cwx}n_C}{n_{Cx}n_{Cw}}.
+$$</p><p>Indeed, conditional on $C$, the joint probability is $n_{Cwx}/n_C$, its marginals are $n_{Cx}/n_C$ and $n_{Cw}/n_C$, and $\Pr(C)=n_C/D$. All denominators in the displayed sum are positive.</p><p>Write $\epsilon=u/v$ with positive integers $u,v$. Form the succinct products</p><p>$$
+P_t=
+\prod_{\substack{C,w,x\\n_{Cwx}&gt;0}}
+(n_{Cwx}n_C)^{v n_{Cwx}},
+$$</p><p>$$
+Q_t=
+2^{uD}
+\prod_{\substack{C,w,x\\n_{Cwx}&gt;0}}
+(n_{Cx}n_{Cw})^{v n_{Cwx}}.
+$$</p><p>Then</p><p>$$
+\log_2(P_t/Q_t)
+=
+vD\bigl(I(X_t;W\mid H_r)-\epsilon\bigr).
+$$</p><p>Therefore, including equality,</p><p>$$
+I(X_t;W\mid H_r)\leq\epsilon
+\quad\Longleftrightarrow\quad
+P_t\leq Q_t.
+$$</p><p>There are at most $m$ positive cells, because they are disjoint and each contains an atom. All bases and exponents have polynomial binary length.</p><p>Simulate successive rounds through $\max\{1,m-1\}$, test every type using the oracle, and return the first passing round and its transcript. This is a polynomial-time oracle algorithm. It does not require monotonicity of the stopping condition.</p><h3>4. A short entropy representation of an integer logarithm</h3><p>The reverse reduction uses the following identity.</p><p><b>Lemma.</b> Given a positive integer $a$ in binary, one can compute in polynomial time a rational $c_a$ and at most $O(\log a)$ pairs of positive rationals $(\alpha_j,p_j)$ such that</p><p>$$
+\log_2 a=c_a+\sum_j\alpha_j h(p_j),
+$$</p><p>where</p><p>$$
+h(p)=-p\log_2p-(1-p)\log_2(1-p),
+\qquad
+\frac12&lt;p_j&lt;1.
+$$</p><p>All output rationals have polynomial binary length.</p><p><b>Proof.</b> Write the binary expansion of $a$ as</p><p>$$
+a=\sum_{j=1}^{\ell}2^{k_j},
+\qquad
+k_1&gt;k_2&gt;\cdots&gt;k_\ell\geq0.
+$$</p><p>Set</p><p>$$
+r_j=\sum_{q=j}^{\ell}2^{k_q}.
+$$</p><p>For $j&lt;\ell$, define</p><p>$$
+p_j=\frac{2^{k_j}}{r_j},
+\qquad
+\alpha_j=\frac{r_j}{a},
+$$</p><p>and put</p><p>$$
+c_a=\frac1a\sum_{j=1}^{\ell}k_j2^{k_j}.
+$$</p><p>The lower binary digits sum to strictly less than $2^{k_j}$, so</p><p>$$
+\frac12&lt;p_j&lt;1.
+$$</p><p>Since $r_{j+1}=r_j-2^{k_j}$, expanding the binary entropy gives</p><p>$$
+r_jh(p_j)
+=
+r_j\log_2r_j
+-
+2^{k_j}k_j
+-
+r_{j+1}\log_2r_{j+1}.
+$$</p><p>Summing over $j&lt;\ell$ telescopes. The remaining terminal term is</p><p>$$
+r_\ell\log_2r_\ell=2^{k_\ell}k_\ell.
+$$</p><p>Consequently,</p><p>$$
+a\log_2a
+=
+\sum_{j=1}^{\ell}k_j2^{k_j}
++
+\sum_{j&lt;\ell}r_jh(p_j).
+$$</p><p>Division by $a$ proves the identity.</p><p>There are at most as many terms as binary digits of $a$. The numerators and denominators displayed above have polynomial binary length. If $a$ is a power of $2$, the entropy sum is empty. $\square$</p><h3>5. From product comparison to averaged binary mutual information</h3><p>Given an instance of $\mathsf{PoE}_{\le}$, define</p><p>$$
+\Delta
+=
+\log_2(P/Q)
+=
+\sum_j e_j\log_2b_j-\sum_k f_k\log_2c_k.
+$$</p><p>Apply the preceding lemma separately to every base. This produces, in polynomial time,</p><p>$$
+\Delta=C+\sum_{i=1}^{n}\eta_i h(p_i),
+$$</p><p>where $C$ and the nonzero coefficients $\eta_i$ are rational, and every $p_i$ satisfies $1/2&lt;p_i&lt;1$. We retain individual entropy terms rather than cancelling repeated ones.</p><p>If $n=0$, deciding $\Delta\leq0$ is a rational comparison. Assume henceforth that $n&gt;0$, and define</p><p>$$
+A=\sum_i|\eta_i|,
+\qquad
+B=\sum_{\eta_i&lt;0}|\eta_i|,
+\qquad
+\beta_i=\frac{|\eta_i|}{A}.
+$$</p><p>Thus $A&gt;0$, and the $\beta_i$ are positive rational weights summing to $1$.</p><p>For each $i$, construct a rational joint distribution $\mathcal P_i$ of binary variables $(X,R)$.</p><p>If $\eta_i&gt;0$, let $R=X$ and let $\Pr(X=1)=p_i$. Then</p><p>$$
+I_i:=I_{\mathcal P_i}(X;R)=h(p_i).
+$$</p><p>If $\eta_i&lt;0$, let $X$ be fair and set</p><p>$$
+\Pr(R=1\mid X=0)=p_i,
+\qquad
+\Pr(R=1\mid X=1)=1-p_i.
+$$</p><p>Here $R$ is fair, while $H(R\mid X)=h(p_i)$. Therefore,</p><p>$$
+I_i=1-h(p_i).
+$$</p><p>Let</p><p>$$
+J=\sum_i\beta_iI_i.
+$$</p><p>By the definitions,</p><p>$$
+AJ=B+\sum_i\eta_i h(p_i),
+$$</p><p>so</p><p>$$
+\Delta=AJ+C-B.
+$$</p><p>Consequently,</p><p>$$
+P\leq Q
+\quad\Longleftrightarrow\quad
+J\leq\theta,
+\qquad
+\theta=\frac{B-C}{A}.
+$$</p><p>The parameter ranges permit trivial cases to be handled exactly. For $p\in(1/2,1)$, both terms defining $h(p)$ are positive. Also,</p><p>$$
+h&#x27;(p)=\log_2\frac{1-p}{p}&lt;0,
+\qquad
+h(1/2)=1.
+$$</p><p>Hence $0&lt;h(p)&lt;1$, and therefore $0&lt;I_i&lt;1$ and $0&lt;J&lt;1$.</p><p>It follows that:</p><ul><li>If $\theta\leq0$, the product comparison is false.</li><li>If $\theta\geq1$, the product comparison is true.</li><li>The remaining case is $0&lt;\theta&lt;1$.</li></ul><p>The next construction realizes that remaining comparison as a protocol stopping test.</p><h3>6. A three-cohort realization gadget</h3><p>For each distribution $\mathcal P_i$, write</p><p>$$
+s_i=\Pr_{\mathcal P_i}(R=1),
+\qquad
+\gamma_i(x)=\Pr_{\mathcal P_i}(X=x).
+$$</p><p>Our component distributions satisfy</p><p>$$
+\frac12\leq s_i&lt;1,
+\qquad
+\gamma_i(0)&gt;0,
+\qquad
+\gamma_i(1)&gt;0.
+$$</p><p>Specifically, $s_i=p_i$ for a positive coefficient and $s_i=1/2$ for a negative coefficient.</p><p>Set</p><p>$$
+\lambda=\frac14,
+\qquad
+q_i=\frac13+\frac{i}{12(n+1)},
+\qquad
+d_i=\frac{4q_i-s_i}{3}.
+$$</p><p>The $q_i$ are distinct and lie in $(1/3,5/12)$. Moreover,</p><p>$$
+\frac19&lt;d_i&lt;\frac7{18}&lt;\frac12\leq s_i.
+$$</p><p>The lower bound follows from $4q_i&gt;4/3$ and $s_i&lt;1$; the upper bound follows from $4q_i&lt;5/3$ and $s_i\geq1/2$. In particular, $d_i\neq s_i$, and all dummy Bernoulli probabilities are positive.</p><h3>The prior</h3><p>Introduce a selector $S\in\{1,\ldots,n\}$, a branch indicator $E\in\{0,1\}$, and a fair bit $V$.</p><p>The branch $E=0$ uses $\mathcal P_i$; the branch $E=1$ uses a dummy distribution in which $X$ has marginal $\gamma_i$ and $R$ is independently Bernoulli with parameter $d_i$.</p><p>Explicitly, for $v,x,b\in\{0,1\}$, set</p><p>$$
+\Pr(S=i,E=0,V=v,X=x,R=b)
+=
+\frac{\lambda\beta_i}{2}\mathcal P_i(x,b),
+$$</p><p>$$
+\Pr(S=i,E=1,V=v,X=x,R=b)
+=
+\frac{(1-\lambda)\beta_i}{2}
+\gamma_i(x)d_i^b(1-d_i)^{1-b}.
+$$</p><p>Define the actual state by</p><p>$$
+W=
+\begin{cases}
+R,&amp;V=0,\\
+1-R,&amp;V=1.
+\end{cases}
+$$</p><p>List only positive-probability atoms. The probabilities are rational and sum to $1$: the total real-branch mass for selector $i$ is $\lambda\beta_i$, and the dummy-branch mass is $(1-\lambda)\beta_i$.</p><p>Use $3$ cohorts, in this order, with signals</p><p>$$
+U=(S,X),
+\qquad
+Z=(S,V),
+\qquad
+E.
+$$</p><p>For example, assign them masses $1/4,1/4,1/2$.</p><h3>First-round announcements</h3><p>The first cohort announces $1/2$ everywhere. Indeed, $V$ is fair and independent of $(S,E,X,R)$, so</p><p>$$
+\Pr(W=1\mid U)=\frac12.
+$$</p><p>The second cohort announces</p><p>$$
+\Pr(W=1\mid S=i,V=0)
+=
+\lambda s_i+(1-\lambda)d_i
+=
+q_i,
+$$</p><p>or $1-q_i$ when $V=1$.</p><p>All these values are distinct: the $q_i$ are distinct and below $1/2$, while the $1-q_i$ are distinct and above $1/2$. Thus the second announcement reveals $(S,V)$.</p><p>The third cohort’s posterior, now conditioning on the publicly revealed $(S,V)$, is</p><p>$$
+\begin{cases}
+s_i,&amp;E=0,\ V=0,\\
+1-s_i,&amp;E=0,\ V=1,\\
+d_i,&amp;E=1,\ V=0,\\
+1-d_i,&amp;E=1,\ V=1.
+\end{cases}
+$$</p><p>For each fixed $(i,V)$, the two branch values differ because $s_i\neq d_i$. Therefore this announcement reveals $E$.</p><p>Conversely, all three announcements are determined by $(S,V,E)$. Hence $H_1$ and $(S,V,E)$ determine each other on the listed atoms.</p><h3>Residual information after round one</h3><p>The signals $Z$ and $E$ are determined by $H_1$, so</p><p>$$
+I(Z;W\mid H_1)=I(E;W\mid H_1)=0.
+$$</p><p>For the first cohort, conditioning on $H_1$ fixes $S,V,E$. In the real branch, its residual information is $I_i$: complementing a binary outcome is a bijection and preserves mutual information. In the dummy branch, $R$ is independent of $X$, so the residual information is zero.</p><p>Averaging over selectors, branches, and $V$ therefore gives</p><p>$$
+I(U;W\mid H_1)
+=
+\lambda\sum_i\beta_iI_i
+=
+\lambda J.
+$$</p><h3>Round two gives zero residual information</h3><p>Let $K$ denote the first cohort’s round-two announcement:</p><p>$$
+K=\Pr(W=1\mid U,H_1).
+$$</p><p>Because $K$ is a function of $(U,H_1)$,</p><p>$$
+\Pr(W=1\mid U,H_1,K)=K.
+$$</p><p>Averaging over compatible $U$ gives</p><p>$$
+\Pr(W=1\mid H_1,K)=K.
+$$</p><p>Since $W$ is binary, these equalities establish conditional independence of $U$ and $W$ given $(H_1,K)$.</p><p>The other cohorts’ signals are already determined by $H_1$. Each therefore announces the public posterior $K$, adding no information. Thus every cohort has zero residual information at the end of round two.</p><p>For every positive threshold $\epsilon$, this gadget has least horizon</p><p>$$
+r=
+\begin{cases}
+1,&amp;\lambda J\leq\epsilon,\\
+2,&amp;\lambda J&gt;\epsilon.
+\end{cases}
+$$</p><p>This statement includes equality exactly.</p><h3>7. Completing the reverse reduction</h3><p>When $0&lt;\theta&lt;1$, set</p><p>$$
+\epsilon=\lambda\theta=\frac{\theta}{4}.
+$$</p><p>This is an admissible positive rational threshold. The constructed society satisfies</p><p>$$
+r=1
+\quad\Longleftrightarrow\quad
+J\leq\theta
+\quad\Longleftrightarrow\quad
+\Delta\leq0
+\quad\Longleftrightarrow\quad
+P\leq Q.
+$$</p><p>The previously handled trivial cases can be mapped to fixed yes- and no-instances, so the reduction is many-one rather than an algorithm that sometimes avoids its target problem.</p><p>For those fixed instances, use the same gadget with a single component $R=X$ and $\Pr(X=1)=3/4$. Its first-round residual information is</p><p>$$
+\frac14h(3/4).
+$$</p><p>Taking $\epsilon=1/4$ gives a yes-instance because $h(3/4)&lt;1$. Taking $\epsilon=1/8$ gives a no-instance because</p><p>$$
+h(3/4)
+=
+\frac12+\frac34\log_2\frac43
+&gt;
+\frac12.
+$$</p><p>Both fixed instances have $3$ cohorts and least horizon at most $2$.</p><h3>Encoding size</h3><p>Let $N$ be the binary length of the product-comparison input.</p><p>The logarithm expansion produces $O(N)$ entropy terms. Every initial coefficient and parameter has polynomial binary length. Sums of these rationals retain polynomial binary length: a common denominator can be formed by multiplying polynomially many denominators whose total binary length is polynomial in $N$.</p><p>Thus $A,B,C,\beta_i,\theta,q_i,d_i$, and $\epsilon$ are all computable exactly in polynomial time.</p><p>Each component contributes at most $8$ real-branch atoms and $8$ dummy-branch atoms. Therefore the society has at most $16n=O(N)$ listed atoms. Each atom probability is a product of a constant number of rationals of polynomial binary length. The signal labels also have polynomial encoding length.</p><p>This proves the claimed polynomial-time many-one reduction.</p><h3>8. Proven conclusion and remaining question</h3><p>The proved characterization is</p><p>$$
+\boxed{
+\text{The society function is polynomial-time computable}
+\quad\Longleftrightarrow\quad
+\mathsf{PoE}_{\le}\text{ is polynomial-time decidable}.
+}
+$$</p><p>The forward implication uses the three-cohort reduction and reads the returned horizon. The reverse implication uses exact simulation and the stopping comparisons from Sections 2–3.</p><p>Also, an NP-hardness proof for $\mathsf{PoE}_{\le}$ would immediately prove NP-hardness of the society problem, already with $3$ cohorts and horizons restricted to $\{1,2\}$.</p><p>What remains unresolved in this write-up is the requested classification itself. I have proved neither a polynomial-time algorithm for variable-factor product comparison nor an NP-hardness reduction for it or for the society problem.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 8, Proven conclusion and remaining question: The requested polynomial-time versus NP-hardness classification is not established. The valid equivalence with $\mathsf{PoE}_{\le}$ and the polynomial-time oracle algorithm leave that classification unresolved, as the prover explicitly acknowledges.</li></ul>
+<div class="pre"><p>The output establishes a correct polynomial-time equivalence with $\mathsf{PoE}_{\le}$, but it does <b>not</b> resolve the polynomial-time versus NP-hardness question in <code>USER_TASK</code>. Its description of its result as partial is accurate. I found no substantive mathematical error in either reduction.</p><h3>Step-by-step verification</h3><h3>1. Auxiliary problem and claimed scope</h3><p>The definition of $\mathsf{PoE}_{\le}$ is precise: all bases and exponents are positive binary-encoded integers, and equality is included.</p><p>The claimed equivalence concerns polynomial-time computability, not a many-one equivalence between two decision problems. The proposed polynomial-time oracle algorithm in one direction and many-one reduction to the first-horizon decision problem in the other direction are sufficient for that claim.</p><p>The external citation identifies the auxiliary problem. No theorem from that source is used to establish either reduction, so there is no unverified external theorem application.</p><h3>2. Exact protocol simulation</h3><p>The common-denominator construction is correct. Multiplying the input probability denominators produces an integer $D$ whose bit length is bounded by their total input bit length. Each $a_i=Dp_i$ is a positive integer, and normalization gives</p><p>$$
+\sum_i a_i=D.
+$$</p><p>For a public transcript block $C$, the displayed announcement formula correctly conditions on both the public history and the speaking cohort’s signal. Grouping atoms by equal rational announcement values therefore gives precisely the next public transcript partition.</p><p>Updating after every turn correctly incorporates announcements earlier in the same round. Cross multiplication uses integers of polynomial bit length, because announcement numerators and denominators are bounded by $D$.</p><p>Recording each announcement on each atom provides the required transcript representation. Cohort masses correctly play no role.</p><p><b>Finding:</b> Correct.</p><h3>3. Polynomial horizon bound</h3><p>Public transcript partitions only refine. Every strict refinement increases the block count, so there are at most $m-1$ strict refinements.</p><p>If a whole round leaves the partition unchanged, no individual turn can have refined it. Within every public block, each cohort’s posterior is consequently constant across its realized signals. Averaging identifies that constant with the public posterior. Since $W$ is binary, equality of these posterior probabilities establishes conditional independence, and hence zero residual mutual information.</p><p>If every one of the first $m-1$ rounds changes the partition, there have been at least $m-1$ strict refinements from the initial single block. The resulting partition therefore consists of singletons. It determines $W$, giving zero residual information.</p><p>The case $m=1$ is handled correctly by the requirement $r\geq1$. Thus</p><p>$$
+r\leq\max\{1,m-1\}.
+$$</p><p>This also bounds the explicit transcript size polynomially.</p><p><b>Finding:</b> Correct, including the boundary case.</p><h3>4. Stopping tests as product comparisons</h3><p>The conditional mutual information formula is correct: the contribution of a positive cell is its joint conditional probability times the logarithm of the joint-to-product-of-marginals ratio, weighted by the public block probability.</p><p>Restricting to $n_{Cwx}&gt;0$ correctly removes zero-probability terms and ensures all logarithm arguments have positive denominators.</p><p>The products satisfy</p><p>$$
+\log_2(P_t/Q_t)
+=
+vD\bigl(I(X_t;W\mid H_r)-\epsilon\bigr).
+$$</p><p>Because $vD&gt;0$ and the logarithm is strictly increasing, the equivalence with $P_t\leq Q_t$ preserves both inequality and equality exactly.</p><p>For a fixed cohort, positive cells are disjoint and each contains a listed atom, so their number is at most $m$. All bases and exponents have polynomial bit length. There are polynomially many candidate rounds and cohort tests.</p><p>Testing rounds in increasing order returns the least qualifying round without requiring monotonicity of residual mutual information.</p><p><b>Finding:</b> Correct polynomial-time oracle algorithm; it is not an unconditional polynomial-time algorithm.</p><h3>5. Entropy representation lemma</h3><p>The binary expansion and suffix sums are well defined for every positive integer $a$. For each nonterminal suffix, the remaining lower digits have positive sum strictly smaller than $2^{k_j}$, establishing</p><p>$$
+\frac12&lt;p_j&lt;1.
+$$</p><p>Expanding binary entropy gives the stated identity for $r_jh(p_j)$. The telescoping sum and terminal contribution are correct, yielding the claimed representation of $\log_2 a$.</p><p>The number of terms and the bit lengths of the displayed rational quantities are polynomial in the input length. For a power of $2$, including $a=1$, the empty entropy sum gives the correct identity.</p><p><b>Finding:</b> Correct.</p><h3>6. Reduction to averaged binary mutual information</h3><p>Multiplying the logarithm representations by the input exponents produces the stated rational constant $C$ and signed rational coefficients $\eta_i$.</p><p>For positive coefficients, $R=X$ gives mutual information $h(p_i)$. For negative coefficients, the specified channel has fair output $R$, and its conditional entropy is $h(p_i)$, giving mutual information $1-h(p_i)$.</p><p>Consequently, the algebra</p><p>$$
+AJ=B+\sum_i\eta_i h(p_i),
+\qquad
+\Delta=AJ+C-B
+$$</p><p>is correct. Since $A&gt;0$, comparison with $\theta=(B-C)/A$ preserves the inequality.</p><p>The derivative calculation establishes $0&lt;h(p_i)&lt;1$, so $0&lt;J&lt;1$. Thus the cases $\theta\leq0$ and $\theta\geq1$ are correctly decided, including their endpoints. The case with no entropy terms is a rational comparison.</p><p><b>Finding:</b> Correct.</p><h3>7. Three-cohort gadget</h3><p>The constants satisfy the claimed bounds:</p><p>$$
+\frac19&lt;d_i&lt;\frac7{18}&lt;\frac12\leq s_i.
+$$</p><p>Thus the dummy distributions are valid and their branch posterior differs from the real branch posterior.</p><p>The atom probabilities are nonnegative rational numbers, and the prescribed branch totals sum to $1$. Removing zero-probability atoms leaves a valid input.</p><p>The first-round announcement analysis is correct:</p><ul><li>Independence and fairness of $V$ make the first announcement constantly $1/2$.</li><li>The second announcement is $q_i$ or $1-q_i$. These values uniquely determine $(S,V)$.</li><li>Given $(S,V)$, the distinct real and dummy posterior values reveal $E$.</li></ul><p>Conversely, the first-round transcript depends only on $(S,V,E)$. Therefore the asserted mutual determination is valid.</p><p>Conditioning on that transcript fixes the selector, branch, and complement bit. The real branch contributes $I_i$ and the dummy branch contributes zero, giving</p><p>$$
+I(U;W\mid H_1)=\lambda J.
+$$</p><p>The other signals are already publicly determined, so their residual information is zero.</p><p>In round two, the posterior announcement $K$ satisfies both displayed conditional posterior identities. For binary $W$, these imply conditional independence of $U$ and $W$ given $(H_1,K)$. The other cohorts have publicly determined signals and announce $K$, so they do not further change the conditioning partition.</p><p><b>Finding:</b> Correct. The least horizon is exactly the stated choice between $1$ and $2$, including equality.</p><h3>8. Reverse reduction and encoding</h3><p>For $0&lt;\theta&lt;1$, the threshold $\epsilon=\theta/4$ is positive and gives the required equivalence with $r=1$.</p><p>The fixed instances correctly handle the other cases. In particular,</p><p>$$
+h(3/4)=\frac12+\frac34\log_2(4/3)&gt;\frac12,
+$$</p><p>so the proposed no-instance fails the first-round threshold strictly. The yes-instance passes because $h(3/4)&lt;1$.</p><p>The encoding argument is sound. The total number of entropy terms is linear in the product-comparison input length. Polynomially many rational arithmetic operations on the stated quantities retain polynomial bit length. Each component contributes at most $16$ atoms, and all signals, masses, probabilities, and thresholds have polynomial encoding size.</p><p><b>Finding:</b> Correct polynomial-time many-one reduction.</p><h3>Issue and required additional work</h3><p><b>Major — requested classification remains unresolved.</b> Section 8 explicitly acknowledges that neither a polynomial-time algorithm nor NP-hardness has been established. The equivalence is genuine progress, but it does not answer <code>USER_TASK</code>.</p><p>No clarification is needed to verify the reductions themselves. To resolve the original task, the prover must supply an unconditional complexity classification with its supporting argument. Restating the oracle algorithm or the equivalence would not close this issue.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,181 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-7bfd7a856f1a98f0d6b2e61b773d5ddfdb632ccb — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-7bfd7a856f1a98f0d6b2e61b773d5ddfdb632ccb <span style="font-weight:normal;color:#8a7350">(s5-7bfd7a856f1a98f0d6b2e61b773d5ddfdb632ccb)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> Yes. An exactly envy-free feasible rational assignment satisfying the approximation factor \(\mathrm{e}^{1/\mathrm{e}}+\eta\) can be computed in time and value-oracle queries polynomial in \(m,\tau,L,\log(1/\eta)\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3.4 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Let $\rho\,:\,2^{\items}\to \Rp$ be a submodular function and $u\in\Rp^{\agents\times\items}$ denote the utility values. Then, any optimal solution $\mx\in\R^{\agents\times\items}$ to the convex program \eqref{cp::EF-approximatePO-1} is envy-free and $\ee^{1 / \ee}$-approximates the maximum Nash welfare. Consequently, $\mx$ is $\ee^{1 / \ee}$-Pareto efficient.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given an item set \(E\), types \(T\) with rational masses \(\mu_t&gt;0\) summing to \(1\), rational nonnegative per-member utilities \(u_{tj}\), and per-capita submodular capacities \(\rho\), choose type-level assignment lotteries \(x_{tj}\ge 0\). Require \(\sum_j x_{tj}\le 1\) and \(z_j=\sum_t\mu_t x_{tj}\in P(\rho)\); define \(U_t(x_t)=\sum_j u_{tj}x_{tj}\), require envy-freeness \(U_t(x_t)\ge U_t(x_s)\) for every \(t,s\), and weighted Nash welfare \(W_\mu(x)=\exp(\sum_t\mu_t\log U_t(x_t))\). Let \(W_\mu^*\) be the maximum over all feasible assignments, without the envy-free constraint. Can an algorithm, polynomial in \(|E|\), \(|T|\), the input bit length, and \(\log(1/eta)\), return an envy-free feasible assignment with \(W_\mu(x)\ge W_\mu^*/(e^{1/e}+\eta)\), using value-oracle access to \(\rho\)?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list of \(\tau\geq1\) types \(T\) with positive binary rational masses \(\mu_t\) summing to \(1\); \(\tau\) is the support size, not the number of possible types.<br>There are \(m\geq1\) items \(E\), binary rational utilities \(u_{tj}\geq0\), and per-capita capacities given by a normalized monotone submodular function \(\rho:2^E\to\mathbb{Q}_{\geq0}\), with \(\rho(\emptyset)=0\), accessible through an exact value oracle.<br>Let \(L\) be the explicit input bit length plus a supplied uniform bound on the bit length of oracle answers. Define \(P(\rho)=\{z\in\mathbb{R}_{\geq0}^E:\sum_{j\in S}z_j\leq\rho(S)\text{ for every }S\subseteq E\}\).<br>An assignment specifies the same lottery \(x_t\) for every member of type \(t\): \(x_{tj}\geq0\), \(\sum_jx_{tj}\leq1\), and \(z_j=\sum_t\mu_tx_{tj}\), with \(z\in P(\rho)\). Unassigned probability is permitted.<br>Write \(U_t(v)=\sum_ju_{tj}v_j\). Envy-freeness means \(U_t(x_t)\geq U_t(x_s)\) for every \(t,s\in T\).<br>Define \(W_\mu(x)=\prod_tU_t(x_t)^{\mu_t}\), taking it to be zero if any utility is zero, and let \(W_\mu^*\) be its maximum over feasible assignments without envy-freeness.</p><p>Can an algorithm, for every binary rational \(0&lt;\eta&lt;1\), return an envy-free feasible assignment satisfying \(W_\mu(x)\geq W_\mu^*/(\mathrm{e}^{1/\mathrm{e}}+\eta)\), with running time and number of value-oracle queries polynomial in \(m,\tau,L,\log(1/\eta)\)?</p><p>For finitely many equally weighted agents, maximizing Nash welfare subject to envy-freeness gives an \(\mathrm{e}^{1/\mathrm{e}}\)-approximation; polynomial arithmetic-operation and value-oracle bounds are established for approximate computation. [Finite-agent result](https://arxiv.org/html/2507.03359v2#Thmtheorem3.4)<br>No result settling the stated guarantee with arbitrary binary rational masses and polynomial dependence on support size was identified in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified that capacities are nonnegative, monotone, and normalized, as required by the underlying submodular assignment model.</li><li>Specified rational capacity values, exact oracle answers, and a uniform oracle-answer bit-length bound included in L, to make the requested bit-complexity bound well-defined.</li><li>Extended welfare to zero utilities using the weighted product convention, preserving the permitted nonnegative utility domain.</li><li>Restricted the accuracy parameter to binary rational 0&lt;eta&lt;1 so that its encoding and log(1/eta) dependence are well-defined.</li><li>Made the item set and society nonempty and explicitly retained partial lotteries with at most one assigned item per member.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p><b>Yes.</b> The finite-agent welfare bound extends to rational masses by replication and averaging. Replication is needed only for the existence proof. The algorithm works directly with the \(\tau\) types.</p><p>To obtain the requested bit complexity while preserving exact feasibility and envy-freeness, we optimize an implicit rational piecewise-linear approximation to the logarithmic objective.</p><p>Write \(C=\mathrm{e}^{1/\mathrm{e}}\).</p><h3>1. Removing the zero-welfare case</h3><p>Query every singleton and define<br>\[
+J=\{j\in E:\rho(\{j\})&gt;0\}.
+\]</p><p>For \(j\notin J\), feasibility implies \(\sum_t\mu_tx_{tj}=0\). Since every mass is positive and every assignment coordinate is nonnegative, \(x_{tj}=0\) for every type.</p><p>Consequently, if some type has zero utility for every item in \(J\), then \(W_\mu^*=0\). Returning the zero assignment settles this case.</p><p>Otherwise, restrict the instance to \(J\). The restricted capacity function remains normalized, monotone, and submodular. For each type, divide its utilities by<br>\[
+c_t=\max_{j\in J}u_{tj}&gt;0.
+\]<br>This preserves envy-freeness and multiplies all welfare values by the same positive factor \(\prod_tc_t^{-\mu_t}\). Thus approximation ratios are unchanged. Henceforth utilities are normalized so that<br>\[
+0\leq u_{tj}\leq1,\qquad \max_{j\in J}u_{tj}=1.
+\]</p><p>Let<br>\[
+r=\min_{j\in J}\rho(\{j\}),\qquad
+d=\frac{\min\{1,r\}}{m}.
+\]<br>Give every type the identical lottery \(b\), where \(b_j=d\) for \(j\in J\).</p><p>Its row sum is at most \(md\leq1\). For every nonempty \(S\subseteq J\), monotonicity gives<br>\[
+b(S)\leq md\leq r\leq\rho(S).
+\]<br>Because the masses sum to one, its aggregate consumption is also \(b\). Thus this assignment is feasible and envy-free, and<br>\[
+U_t(b)\geq d&gt;0
+\]<br>for every type. The rational number \(d\) has polynomial encoding length.</p><h3>2. Extending the welfare bound to rational masses</h3><p>Let \(\mathcal F\) be the feasible assignment polytope and let \(\mathcal F_{\mathrm{EF}}\) be its envy-free subpolytope. Both are compact. The welfare function is continuous, and the preceding assignment has positive welfare, so both welfare maxima exist and are positive.</p><p>We prove<br>\[
+\max_{x\in\mathcal F_{\mathrm{EF}}}W_\mu(x)
+\ \geq\
+\frac{W_\mu^*}{C}.
+\tag{1}
+\]</p><p>Choose an integer \(D\) for which \(n_t=D\mu_t\) is a positive integer for every type. Construct a finite-agent instance with \(n_t\) identical agents of type \(t\), and capacity function<br>\[
+\rho_D(S)=D\rho(S).
+\]<br>There are \(D\) agents because \(\sum_t\mu_t=1\).</p><p>The function \(\rho_D\) satisfies the hypotheses of the finite-agent welfare theorem: it is normalized, monotone, and submodular, and agents have nonnegative linear utilities and row sums at most one. The existence part of [Theorem 3.4](https://arxiv.org/html/2507.03359v2#Thmtheorem3.4) therefore supplies an envy-free finite assignment whose Nash welfare is at least the unrestricted finite optimum divided by \(C\).</p><p>Lifting any type assignment to all its copies preserves feasibility. Moreover, its finite Nash welfare is exactly<br>\[
+\prod_t U_t(x_t)^{n_t/D}
+=
+W_\mu(x).
+\]<br>The unrestricted finite optimum is therefore at least \(W_\mu^*\).</p><p>Now take the finite envy-free assignment \(y\), and average within each type:<br>\[
+\bar y_t=\frac1{n_t}\sum_{a\text{ of type }t}y_a.
+\]<br>Row constraints survive averaging, and<br>\[
+\sum_t\mu_t\bar y_t
+=
+\frac1D\sum_a y_a
+\in P(\rho).
+\]</p><p>For any types \(t,s\), finite envy-freeness gives \(U_t(y_a)\geq U_t(y_b)\) for every copy \(a\) of \(t\) and copy \(b\) of \(s\). Averaging these inequalities proves<br>\[
+U_t(\bar y_t)\geq U_t(\bar y_s).
+\]<br>Thus \(\bar y\) is envy-free.</p><p>Finally, concavity of the logarithm gives<br>\[
+\sum_t\mu_t\log U_t(\bar y_t)
+\geq
+\frac1D\sum_a\log U_{\operatorname{type}(a)}(y_a).
+\]<br>All utilities here are positive because the finite welfare guarantee is positive. Averaging therefore does not decrease welfare, proving (1).</p><p>The possibly enormous value of \(D\) is used only in this existence argument.</p><h3>3. Restricting utilities away from zero</h3><p>Define<br>\[
+F(x)=\sum_t\mu_t\log U_t(x_t).
+\]<br>On positive-utility assignments, \(F(x)=\log W_\mu(x)\).</p><p>Set<br>\[
+\theta=\frac{\eta}{16},
+\qquad
+a=\theta d,
+\qquad
+\delta=\frac{\eta}{16},
+\]<br>and introduce the rational polytope<br>\[
+K=
+\{x\in\mathcal F_{\mathrm{EF}}:U_t(x_t)\geq a
+\text{ for every }t\}.
+\]<br>Normalization and the row constraints imply \(U_t(x_t)\leq1\) throughout \(K\).</p><p>Let \(x^{\mathrm{EF}}\) maximize welfare over \(\mathcal F_{\mathrm{EF}}\), and mix it with the common lottery:<br>\[
+x^\theta=(1-\theta)x^{\mathrm{EF}}+\theta b.
+\]<br>Every defining constraint is linear, so \(x^\theta\) is feasible and envy-free. Furthermore,<br>\[
+U_t(x^\theta_t)\geq\theta U_t(b)\geq a,
+\]<br>so \(x^\theta\in K\). Also,<br>\[
+F(x^\theta)
+\geq F(x^{\mathrm{EF}})+\log(1-\theta)
+\geq F(x^{\mathrm{EF}})-2\theta.
+\tag{2}
+\]<br>The last inequality follows from<br>\[
+-\log(1-\theta)
+=\int_0^\theta\frac{ds}{1-s}
+\leq2\theta,
+\]<br>since \(\theta&lt;1/2\).</p><p>Thus restricting to \(K\) loses at most \(2\theta\) in logarithmic welfare.</p><h3>4. An implicit rational approximation to the logarithm</h3><p>We construct a concave rational piecewise-linear function \(g\) satisfying<br>\[
+|g(q)-\log q|\leq\delta
+\qquad(a\leq q\leq1),
+\tag{3}
+\]<br>with polynomial-time exact evaluation and supporting-line computation.</p><p>Choose \(N=2^k\) sufficiently large that<br>\[
+h=\frac{1-a}{N}\leq\frac{\delta a}{2}.
+\]<br>Here \(k\) is polynomially bounded in \(L+\log m+\log(1/\eta)\). Define grid points<br>\[
+q_i=a+ih,\qquad 0\leq i\leq N.
+\]</p><p>Choose a precision \(p\) such that<br>\[
+\gamma=2^{-p}\leq
+\min\left\{\frac{h^2}{8},\frac{\delta}{2}\right\}.
+\]<br>For each grid point, let \(r_i\) be a deterministically computed dyadic approximation satisfying<br>\[
+|r_i-\log q_i|\leq\gamma.
+\]<br>Define \(g\) by linear interpolation of the points \((q_i,r_i)\).</p><p>Although this defines exponentially many grid values, the algorithm computes only queried values.</p><h3>Concavity</h3><p>For an interior grid point, the second difference of the exact logarithm satisfies<br>\[
+\log(q_i+h)-2\log q_i+\log(q_i-h)
+=
+-\int_{-h}^{h}\frac{h-|s|}{(q_i+s)^2}\,ds
+\leq-h^2.
+\]<br>Indeed, all \(q_i+s\) lie in \([a,1]\), so their squared reciprocals are at least one.</p><p>Replacing logarithms by the \(r_i\) changes a second difference by at most \(4\gamma\). Hence<br>\[
+r_{i+1}-2r_i+r_{i-1}
+\leq-h^2+4\gamma
+\leq-\frac{h^2}{2}&lt;0.
+\]<br>The interpolation slopes decrease, proving concavity.</p><h3>Approximation error</h3><p>The logarithm is \(1/a\)-Lipschitz on \([a,1]\). Its exact linear interpolant on any grid interval consequently differs from it by at most \(h/a\). Perturbing the endpoint values contributes at most \(\gamma\). Therefore<br>\[
+|g(q)-\log q|
+\leq\frac{h}{a}+\gamma
+\leq\delta,
+\]<br>proving (3).</p><h3>Exact evaluation and coefficient size</h3><p>Given rational \(q\in[a,1]\), integer division identifies its grid interval. Computing its two endpoint approximations determines \(g(q)\) and that segment’s affine extension exactly.</p><p>The logarithm approximations themselves require polynomial bit time. Explicitly, scale a positive rational \(q\) as \(q=2^\ell w\), with \(1\leq w&lt;2\), and use<br>\[
+\log w
+=
+2\sum_{n=0}^{\infty}
+\frac{1}{2n+1}
+\left(\frac{w-1}{w+1}\right)^{2n+1}.
+\]<br>The ratio has absolute value at most \(1/3\), giving geometric convergence. The same series computes \(\log2\). Truncation followed by deterministic dyadic rounding produces the required error in polynomial time.</p><p>Every grid point, dyadic value, and segment coefficient has polynomial encoding length in \(L,m,\log(1/\eta)\). This holds despite the number of segments being exponential.</p><h3>5. Exact optimization over a rational polytope</h3><p>Introduce variables \(v_t\), and solve<br>\[
+\max \sum_t\mu_tv_t
+\]<br>subject to<br>\[
+x\in K,\qquad
+-B\leq v_t\leq g(U_t(x_t))
+\quad\text{for every }t,
+\tag{4}
+\]<br>where<br>\[
+B=2+\left\lceil\log_2(1/a)\right\rceil.
+\]</p><p>The lower bound does not interfere with optimization: by (3), \(g(q)&gt;-B\) throughout \([a,1]\).</p><p>Because \(g\) is concave and piecewise linear, it equals the minimum of its segment extensions. Thus (4) defines a bounded rational polytope \(Q\). Its dimension is at most \(\tau m+\tau\), and every defining inequality has polynomial encoding length.</p><p>We now give a polynomial-time <b>strong separation oracle</b> for \(Q\).</p><p>First check all explicit inequalities: nonnegativity, row sums, envy-freeness, utility lower bounds, and the bounds on \(v_t\).</p><p>To check the polymatroid constraints, form \(z_j=\sum_t\mu_tx_{tj}\) and minimize<br>\[
+S\longmapsto\rho(S)-\sum_{j\in S}z_j.
+\]<br>This function is submodular because the second term is modular. A negative minimum supplies a violated capacity inequality; a nonnegative minimum certifies every capacity inequality. Exact value-oracle submodular minimization is polynomial-time, including polynomial bit complexity for rational answers of bounded encoding length; see [Iwata–Fleischer–Fujishige](https://arxiv.org/abs/math/0004089).</p><p>Finally, evaluate \(g(U_t(x_t))\) exactly. If \(v_t\) exceeds this value, the affine extension of the active segment gives a violated inequality valid throughout \(Q\). Concavity, proved above, guarantees its validity.</p><p>The strong separation–optimization theorem for well-described rational polyhedra now solves (4) exactly in polynomial bit time and polynomially many separation calls. Its hypotheses are precisely bounded dimension and inequality encoding length, a rational objective, and a strong separation oracle; full dimensionality is unnecessary. See [Grötschel–Lovász–Schrijver, Chapter 6](https://www.zib.de/userpage/groetschel/pubnew/paper/groetschellovaszschrijver1988.pdf).</p><p>Thus the algorithm returns a rational assignment \(\hat x\in K\), with exact feasibility and exact envy-freeness.</p><p>Writing<br>\[
+G(x)=\sum_t\mu_tg(U_t(x_t)),
+\]<br>optimality in (4) means that \(\hat x\) maximizes \(G\) over \(K\). Since the masses sum to one, (3) implies<br>\[
+|G(x)-F(x)|\leq\delta
+\qquad(x\in K).
+\]<br>Consequently,<br>\[
+F(\hat x)
+\geq G(\hat x)-\delta
+\geq G(x^\theta)-\delta
+\geq F(x^\theta)-2\delta.
+\tag{5}
+\]</p><h3>6. Welfare guarantee and complexity</h3><p>Combining (1), (2), and (5) yields<br>\[
+F(\hat x)
+\geq
+\log W_\mu^*-\log C-2\theta-2\delta
+=
+\log W_\mu^*-\log C-\frac{\eta}{4}.
+\]<br>Therefore<br>\[
+W_\mu(\hat x)
+\geq
+\frac{W_\mu^*}{C\,\mathrm{e}^{\eta/4}}.
+\]</p><p>To compare denominators, \(C&lt;2\), and<br>\[
+\log\left(1+\frac{\eta}{C}\right)
+\geq\frac{\eta}{C+\eta}
+&gt;\frac{\eta}{3}
+&gt;\frac{\eta}{4}.
+\]<br>Here the first inequality follows by integrating \(1/(1+s)\) on \([0,\eta/C]\). Hence<br>\[
+C\,\mathrm{e}^{\eta/4}&lt;C+\eta,
+\]<br>which proves the requested guarantee.</p><p>Finally, every positive singleton oracle answer is at least \(2^{-O(L)}\), so<br>\[
+\log(1/a)=O\bigl(L+\log m+\log(1/\eta)\bigr).
+\]<br>All rational coefficients used by the implicit linear program therefore have polynomial encoding length. Each separation call uses polynomial bit time and polynomially many value-oracle queries, and exact linear optimization makes polynomially many such calls.</p><p>The total running time and number of value-oracle queries are consequently polynomial in \(m,\tau,L,\log(1/\eta)\), with explicit input-reading time included in the input-length convention.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 4, Exact evaluation and coefficient size; Section 5, hypograph separation: The interval-identification procedure omits the endpoint q=1: integer division returns grid index N, but the final segment has index N-1. Specify the endpoint convention for exact evaluation and supporting-segment selection. This is a routine implementation clarification.</li></ul>
+<div class="pre"><p><b>Assessment: proved with minor gaps.</b> The argument establishes the requested polynomial-time approximation in substance. The replication argument, rational approximation of the logarithm, and exact separation–optimization reduction are sound. I found one omitted endpoint convention, with no substantive mathematical obstruction.</p><ul><li><b>Zero welfare and normalization: correct.</b></li></ul><p>A zero singleton capacity forces every assignment coordinate for that item to vanish, because masses are strictly positive. Consequently, a type with zero utility on all remaining items forces unrestricted welfare to be zero. This also handles the case where the remaining item set is empty.</p><p>Otherwise, each normalization factor is positive. Scaling a type’s utility by a positive constant preserves all of its envy comparisons and scales every assignment’s welfare by the same factor.</p><p>The common lottery satisfies every row constraint and every capacity constraint: for each nonempty remaining set, its consumption is bounded by the minimum positive singleton capacity, which monotonicity bounds by that set’s capacity. Each normalized type values some remaining item at one, so its utility is at least \(d\). The positive rational \(d\) has polynomial encoding length.</p><ul><li><b>Replication and the finite-agent theorem: correct.</b></li></ul><p>Rational positive masses admit a common denominator \(D\), with positive integer multiplicities \(n_t=D\mu_t\) summing to \(D\). Scaling the capacity function by \(D\) preserves its required properties.</p><p>The cited theorem concerns nonnegative linear utilities, row sums at most one, aggregate polymatroid constraints, and pairwise envy-freeness. Its welfare conclusion is the asserted factor \(C=\mathrm{e}^{1/\mathrm{e}}\). Thus the replicated instance satisfies the relevant hypotheses; no singleton lower bound or full-assignment requirement is needed for this theorem. The positive common lottery ensures the logarithmic optimization has a positive-welfare feasible point. [Theorem 3.4](https://arxiv.org/html/2507.03359v2#Thmtheorem3.4)</p><p>Lifting a type assignment gives exactly the stated finite geometric mean, so the finite unrestricted optimum is at least \(W_\mu^*\). Averaging within types preserves row constraints and aggregate consumption. Averaging the finite envy inequalities preserves type-level envy-freeness.</p><p>The finite guarantee implies all individual utilities are positive. Jensen’s inequality therefore applies to every within-type average and establishes the stated logarithmic welfare inequality. The conclusion in equation (1) follows. The algorithm never constructs the replicated population.</p><ul><li><b>Restricting utilities away from zero: correct.</b></li></ul><p>Both assignment polytopes are compact, and welfare is continuous, including at zero utilities. Their maxima exist and are positive after preprocessing.</p><p>The mixture lies in the envy-free feasible polytope by convexity, and every utility is at least \(a=\theta d\). Nonnegativity gives the multiplicative utility bound used in equation (2). Since the masses sum to one, the logarithmic loss is \(-\log(1-\theta)\), without an additional support-size factor.</p><p>The integral estimate is valid because \(0&lt;\theta&lt;1/16\). Normalization and row constraints give the upper utility bound of one throughout \(K\).</p><ul><li><b>Implicit logarithm approximation: correct, with one minor endpoint omission.</b></li></ul><p>The exact second-difference identity is correct. Its kernel integrates to \(h^2\), and the reciprocal-square factor is at least one on the grid domain. Endpoint perturbations change the second difference by at most \(4\gamma\), so the stated choice of precision guarantees decreasing interpolation slopes.</p><p>The approximation estimate is also valid: the interpolation error is at most \(h/a\), and rounding contributes at most \(\gamma\). The resulting total is at most \(\delta\).</p><p>The logarithm series has the claimed geometric convergence after scaling. Accounting for the integer scaling exponent and dyadic rounding requires only routine precision bookkeeping. Grid indices, queried grid points, rounded values, and affine coefficients have polynomial encoding length under the stated input-length convention. Exponentially many segments need not be enumerated.</p><p><b>Minor issue:</b> the interval-identification procedure does not specify what happens at \(q=1\). Integer division at that endpoint produces index \(N\), whereas segment indices end at \(N-1\). Exact utility one is permitted and may occur in a separation query.</p><p><b>Minimum clarification:</b> specify the endpoint convention for evaluating \(g(1)\) and selecting its supporting segment. No new mathematical argument is needed.</p><ul><li><b>Rational polytope and strong separation: correct.</b></li></ul><p>The lower bound on the auxiliary variables does not exclude any maximizing choice: the approximation guarantee implies \(g(q)&gt;-B\) throughout the utility domain. The auxiliary variables also have a finite upper bound because \(g\) is bounded on that domain.</p><p>A concave piecewise-linear interpolant equals the minimum of its segment extensions over its domain. Hence the hypograph constraints define a rational polytope with uniformly bounded inequality encoding length.</p><p>Explicit constraints can be checked exactly. For capacities, subtracting aggregate consumption gives a submodular function. Its negative minimum identifies a violated inequality; a nonnegative minimum certifies all capacity inequalities. The cited submodular minimization algorithm applies to real-valued submodular functions, and its rational implementation supports the bounded-bit setting used here. Each evaluation of the modified function requires one capacity-oracle query and polynomial rational arithmetic. [Iwata–Fleischer–Fujishige, Theorem 4.2](https://arxiv.org/pdf/math/0004089)</p><p>After the explicit checks, utility arguments lie in the domain of \(g\). A violated hypograph constraint is separated by the active segment extension, which is globally valid by concavity. This step needs the endpoint convention identified above.</p><ul><li><b>Exact optimization: correct application of the cited framework.</b></li></ul><p>The required hypotheses are present: polynomial ambient dimension, a polynomial bound on rational inequality encoding length, a rational objective, and polynomial-time strong separation. The polytope is nonempty and bounded.</p><p>Strong separation–optimization equivalence applies to well-described rational polyhedra without requiring full dimensionality or an explicit list of all inequalities. It provides an exact rational optimizer with polynomial encoding length and polynomially many oracle calls. Thus neither possible lower dimensionality nor the exponential number of segments invalidates this step. [Grötschel and Nešetřil, Section 11](https://arxiv.org/html/2303.03148)</p><p>Positive masses ensure that at an optimum every auxiliary variable reaches its permitted upper value. Therefore the returned assignment maximizes \(G\). The uniform approximation error transfers from individual utilities to the weighted objective with error at most \(\delta\), yielding equation (5).</p><ul><li><b>Final guarantee and complexity: correct.</b></li></ul><p>The accumulated logarithmic loss is<br>\[
+   2\theta+2\delta=\frac{\eta}{4}.
+   \]<br>Exponentiation gives the stated denominator \(C\mathrm{e}^{\eta/4}\).</p><p>The denominator comparison is valid: \(C&lt;2\), \(0&lt;\eta&lt;1\), and the integral lower bound gives<br>\[
+   \log(1+\eta/C)\geq\frac{\eta}{C+\eta}&gt;\frac{\eta}{3}&gt;\frac{\eta}{4}.
+   \]<br>Hence the requested approximation follows.</p><p>The singleton bit bound controls \(\log(1/a)\). Combined with polynomial coefficient sizes, polynomial separation cost, and polynomially many optimization calls, this establishes polynomial running time and capacity-oracle complexity in the requested parameters. This assessment uses the prover’s stated convention that explicit input-reading length is counted; the representation length of a general rational \(\eta\) is not automatically bounded by \(\log(1/\eta)\).</p><p>The sole required repair is to specify the logarithm oracle’s endpoint convention. The substantive argument resolves the assigned target.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

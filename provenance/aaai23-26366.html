@@ -1,0 +1,239 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Multi-Unit Auctions for Allocating Chance-Constrained Resources — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Multi-Unit Auctions for Allocating Chance-Constrained Resources <span style="font-weight:normal;color:#8a7350">(aaai23-26366)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Proposition 1 — class: other</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Substituting Constraint (10) in the above MINLP with the following Constraint (13) will result in a MILP with an equivalent solution: ∑ i∈[n] ∑ α∈[mi] xi,α log 1−εi,α  ≥log(1−δ).</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finite agent types \(T\) with rational masses \(\mu\), population scale \(N\), capacity \(L\), risk limit \(\delta\), and finite bid menus \(Q_t\) containing bids \((k_{tq},b_{tq},\varepsilon_{tq})\), choose nonnegative masses \(x_{tq}\) summing to \(\mu_t\) for each type, maximizing \(N\) times total expected reward subject to \(N\) times total allocated resource being at most \(L\) and the product of \((1-\varepsilon_{tq})^{N x_{tq}}\) being at least \(1-\delta\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of \(\tau\) types with positive binary-rational masses \(\mu_t\), normalized by \(\sum_t\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types.<br>Each type has an explicitly listed finite bid menu \(Q_t\). A bid \((k_{tq},b_{tq},\varepsilon_{tq})\) specifies an integer resource allocation \(0\le k_{tq}\le C\), a signed rational expected reward \(b_{tq}\), and a rational probability \(0\le\varepsilon_{tq}&lt;1\) of exceeding that allocation. Include a null bid \((0,0,0)\) in every menu, representing nonselection.<br>The remaining inputs are a positive integer population scale \(N\), positive integer capacity \(C\), rational risk limit \(0\le\delta&lt;1\), and rational reward threshold \(r\), all encoded in binary. Write \(m=\sum_t|Q_t|\) and let \(L\) be the total input bit length.<br>An allocation consists of real masses \(x_{tq}\ge0\) with \(\sum_{q\in Q_t}x_{tq}=\mu_t\) for every type. Its reward is \(N\sum_{t,q}b_{tq}x_{tq}\).<br>Decide whether an allocation exists satisfying \(N\sum_{t,q}k_{tq}x_{tq}\le C\), \(\prod_{t,q}(1-\varepsilon_{tq})^{Nx_{tq}}\ge1-\delta\), and \(N\sum_{t,q}b_{tq}x_{tq}\ge r\). The product is the stipulated risk constraint; all comparisons are exact.</p><p>Is this exact reward-threshold decision problem in \(\mathrm{P}\), with running time polynomial in \(m,\tau,L\), or is it \(\mathrm{NP}\)-hard?</p><p>For discrete agents selecting at most one bid each, the multiplicative risk constraint admits an equivalent MILP formulation with logarithmic coefficients; this establishes no polynomial-time complexity bound. [Gautier et al. (2023)](https://www.robots.ox.ac.uk/~nickh/papers/gautier23aaai.pdf)<br>No result settling this exact continuous decision problem was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized masses to sum to one and took the population scale N to be a positive binary-encoded integer.</li><li>Added a null bid (0,0,0) to each menu so that the stipulated mass equalities retain the discrete formulation&#x27;s option to select no bid.</li><li>Specified nonnegative integer resource allocations bounded by capacity, signed rational rewards consistent with the unrestricted reward function, and rational risks in [0,1). Zero resource allocations are allowed.</li><li>Carried over positive integer capacity and risk limit in [0,1), including zero.</li><li>Used a rational reward threshold to state the decision version of the supplied maximization problem; allocation masses are real and comparisons are exact.</li><li>Renamed capacity to C, reserved L for total input bit length, and defined m as the total number of explicitly listed bids.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial result: polynomial-time many-one equivalence with product-of-powers comparison</h3><p>I do not settle the unrestricted classification as polynomial-time solvable or $\mathrm{NP}$-hard. I prove a stronger characterization than the Turing equivalence in the notes.</p><p>Let $\mathcal A$ denote the allocation decision problem, and let $\mathrm{PoE}_{\ge}$ denote binary-encoded product-of-powers comparison. Then<br>$$
+\mathcal A\equiv_m^p\mathrm{PoE}_{\ge},
+$$<br>where $\equiv_m^p$ means polynomial-time many-one reducibility in both directions. Consequently,<br>$$
+\mathcal A\in\mathrm P
+\quad\Longleftrightarrow\quad
+\mathrm{PoE}_{\ge}\in\mathrm P,
+$$<br>and<br>$$
+\mathcal A\text{ is }\mathrm{NP}\text{-hard}
+\quad\Longleftrightarrow\quad
+\mathrm{PoE}_{\ge}\text{ is }\mathrm{NP}\text{-hard}.
+$$</p><p>The new ingredient is an unconditional polynomial-time algorithm that finds an exact rational allocation minimizing risk among allocations satisfying capacity and reward. It requires only logarithmic comparisons involving a fixed number of arguments. Comparing the resulting minimum risk with the prescribed limit is the single unrestricted product-of-powers comparison that remains.</p><p>All proofs below include ties, zero multipliers, and empty products.</p><h3>1. The arithmetic comparison problem</h3><p>An instance of $\mathrm{PoE}_{\ge}$ consists of positive integers $a_i,u_i,c_j,v_j$, encoded in binary. The question is whether<br>$$
+\prod_{i=1}^{s}a_i^{u_i}
+\ge
+\prod_{j=1}^{h}c_j^{v_j}.
+$$<br>Either factor list may be empty; an empty product equals $1$. Factors with base $1$ may be omitted. Any zero exponents arising in reductions are also omitted.</p><p>We use the following unconditional theorem:</p><p><b>Fixed-factor comparison theorem.</b> For every fixed constant $K$, product-of-powers comparison with at most $K$ factors in total is decidable in polynomial time in its binary encoding length.</p><p>This is Proposition 3.7(2) of [Etessami–Stewart–Yannakakis, *A note on the complexity of comparing succinctly represented integers*](https://www.pure.ed.ac.uk/ws/files/17370828/Etessami_Stewart_ET_AL_2014_A_note_on_the_complexity_of_comparing_succinctly_represented_integers_with_an_application_to_maximum_probability_parsing.pdf).</p><p>Here is the precise consequence needed below. Consider<br>$$
+\Lambda=\sum_{\ell=1}^{J}\gamma_\ell\log\rho_\ell,
+$$<br>where $\gamma_\ell$ are rational and $\rho_\ell&gt;0$ are rational, all binary encoded. Write $\rho_\ell=U_\ell/V_\ell$ with positive integers $U_\ell,V_\ell$. Choose a positive common denominator $M$ of the coefficients and put $e_\ell=M\gamma_\ell\in\mathbb Z$. Then<br>$$
+M\Lambda
+=
+\sum_{\ell=1}^{J}e_\ell\log U_\ell
+-
+\sum_{\ell=1}^{J}e_\ell\log V_\ell.
+$$<br>Moving negative coefficients to the opposite side converts $\Lambda\ge0$ into a product-of-powers comparison with at most $2J$ factors.</p><p>The transformation preserves equality, since multiplication by $M&gt;0$ and exponentiation are order preserving. Its encoding length is polynomial: a product of the coefficient denominators has bit length at most their total bit length, and the resulting integer exponents have polynomial bit length.</p><p>Therefore, when $J$ is bounded by a fixed constant, the exact sign of $\Lambda$ is computable in polynomial time. Two weak comparisons distinguish positive, zero, and negative values. Empty sides are handled by the convention above.</p><h3>2. Product-of-powers comparison reduces to allocation</h3><p><b>Proposition 1.</b><br>$$
+\mathrm{PoE}_{\ge}\le_m^p\mathcal A,
+$$<br>even with $N=C=1$, zero resource consumption, dyadic masses, and two bids per type.</p><p><b>Proof.</b> Write<br>$$
+A=\prod_i a_i^{u_i},
+\qquad
+B=\prod_j c_j^{v_j},
+\qquad
+E=\sum_i u_i+\sum_j v_j.
+$$</p><p>If $E=0$, both lists are empty and the comparison is true. Output the fixed feasible allocation instance with one type of mass $1$, only its null bid, $N=C=1$, and $r=\delta=0$.</p><p>Now suppose $E&gt;0$. Choose powers of two $S,D$ such that<br>$$
+E\le S&lt;2E,
+\qquad
+D\ge2,
+\qquad
+D&gt;\max\bigl(\{a_i\}_i\cup\{c_j\}_j\bigr).
+$$</p><p>For every left-hand factor, create a type of mass $u_i/S$ with bids<br>$$
+(0,0,0),
+\qquad
+(0,1,1-a_i/D).
+$$<br>For every right-hand factor, create a type of mass $v_j/S$ with bids<br>$$
+(0,0,0),
+\qquad
+(0,1,1-1/(Dc_j)).
+$$<br>If $S&gt;E$, add a type of mass $(S-E)/S$ with bids<br>$$
+(0,0,0),
+\qquad
+(0,1,1-1/D).
+$$</p><p>Set<br>$$
+N=C=1,
+\qquad
+r=1,
+\qquad
+\delta=1-\frac1D.
+$$</p><p>Every included mass is positive and dyadic, and their sum is $1$. Every nonnull bid has an admissible exceedance probability: its success probability lies strictly between $0$ and $1$. All allocations satisfy capacity because every bid has resource consumption zero.</p><p>The reward equals $1$ minus the total mass assigned to null bids. Thus meeting $r=1$ forces every type’s entire mass onto its nonnull bid. The risk product of this unique reward-feasible allocation is<br>$$
+\prod_i(a_i/D)^{u_i/S}
+\prod_j(1/(Dc_j))^{v_j/S}
+(1/D)^{(S-E)/S}
+=
+\frac1D\left(\frac AB\right)^{1/S},
+$$<br>where the padding factor is omitted if $S=E$.</p><p>Hence the risk condition holds precisely when<br>$$
+\frac1D\left(\frac AB\right)^{1/S}\ge\frac1D,
+$$<br>equivalently $A\ge B$.</p><p>The binary lengths of $S,D$, all masses, and all bid probabilities are polynomial in the source input length. No expanded product is computed. $\square$</p><h3>3. The rational feasible polytope and its risk objective</h3><p>For an allocation instance, define<br>$$
+y_{tq}=Nx_{tq},
+\qquad
+w_t=N\mu_t,
+\qquad
+a_{tq}=-\log(1-\varepsilon_{tq}),
+\qquad
+d=-\log(1-\delta).
+$$<br>All logarithms are finite because their arguments are positive. Also $a_{tq}\ge0$ and $d\ge0$.</p><p>The substitution between $x$ and $y$ is bijective because $N&gt;0$. Define the rational polytope<br>$$
+P=
+\left\{
+y\ge0:
+\sum_qy_{tq}=w_t\ \text{for every }t,\ 
+\sum_{t,q}k_{tq}y_{tq}\le C,\ 
+\sum_{t,q}b_{tq}y_{tq}\ge r
+\right\}.
+$$<br>Its rational coefficients have polynomial encoding length. The polynomial-time theorem for rational linear programming therefore decides whether $P$ is empty.</p><p>If $P$ is nonempty, its type equalities imply<br>$$
+0\le y_{tq}\le w_t.
+$$<br>Thus $P$ is compact, and<br>$$
+z^*=\min_{y\in P}\sum_{t,q}a_{tq}y_{tq}
+$$<br>exists and is finite.</p><p>Taking logarithms of the stipulated product gives<br>$$
+\prod_{t,q}(1-\varepsilon_{tq})^{y_{tq}}\ge1-\delta
+\quad\Longleftrightarrow\quad
+\sum_{t,q}a_{tq}y_{tq}\le d.
+$$<br>Consequently, the original instance is feasible exactly when $P$ is nonempty and $z^*\le d$.</p><p>The objective coefficients are generally irrational. Ordinary rational linear programming alone does not justify computing $z^*$.</p><h3>4. An attained dual optimum among polynomially many candidates</h3><p>For $\lambda,\nu\ge0$, put<br>$$
+f_{tq}(\lambda,\nu)
+=
+a_{tq}+\lambda k_{tq}-\nu b_{tq},
+$$<br>and<br>$$
+g(\lambda,\nu)
+=
+-C\lambda+r\nu+
+\sum_t w_t\min_q f_{tq}(\lambda,\nu).
+$$</p><p><b>Lemma 2.</b> If $P$ is nonempty, then $g$ attains its maximum on the nonnegative quadrant, and that maximum equals $z^*$.</p><p><b>Proof.</b> The linear-programming dual is<br>$$
+\max
+\left\{
+-C\lambda+r\nu+\sum_t w_t\alpha_t:
+\lambda,\nu\ge0,\ 
+\alpha_t\le a_{tq}+\lambda k_{tq}-\nu b_{tq}
+\text{ for every }t,q
+\right\}.
+$$<br>The signs follow from the Lagrangian terms<br>$$
+\lambda\left(\sum_{t,q}k_{tq}y_{tq}-C\right)
++
+\nu\left(r-\sum_{t,q}b_{tq}y_{tq}\right).
+$$</p><p>The primal is feasible and has a finite optimum. The dual is feasible: take $\lambda=\nu=0$ and $\alpha_t=0$, using $a_{tq}\ge0$. Finite-dimensional linear-programming strong duality, which applies to real coefficients, gives an attained dual optimum equal to $z^*$.</p><p>Since $w_t&gt;0$, maximizing over $\alpha_t$ for fixed $\lambda,\nu$ sets<br>$$
+\alpha_t=\min_q f_{tq}(\lambda,\nu).
+$$<br>This yields the stated conclusion. $\square$</p><p>For each same-type pair of bids with different vectors $(k,b)$, form the indifference line<br>$$
+(k_{tq}-k_{tq&#x27;})\lambda
+-
+(b_{tq}-b_{tq&#x27;})\nu
+=
+a_{tq&#x27;}-a_{tq}.
+$$<br>Include both coordinate axes. There are $O(m^2)$ lines.</p><p>Pairs with identical $(k,b)$ are omitted because their difference is constant. Let $V$ consist of all intersections of two lines with independent normals that lie in the nonnegative quadrant. The axes ensure $(0,0)\in V$, and<br>$$
+|V|=O(m^4).
+$$</p><p><b>Lemma 3.</b> Some point of $V$ maximizes $g$.</p><p><b>Proof.</b> Let $p^*$ be an attained maximizer. For each type, choose a minimizing bid $q_t$ at $p^*$. Define<br>$$
+H=
+\left\{
+(\lambda,\nu)\ge0:
+f_{tq_t}(\lambda,\nu)\le f_{tq}(\lambda,\nu)
+\text{ for every }t,q
+\right\}.
+$$<br>This closed polyhedron contains $p^*$. On $H$, the function $g$ agrees with the affine function<br>$$
+F(\lambda,\nu)
+=
+-C\lambda+r\nu+\sum_t w_t f_{tq_t}(\lambda,\nu).
+$$<br>Because $g\le z^*$ throughout the quadrant,<br>$$
+H^*=\{p\in H:F(p)=z^*\}
+$$<br>is a nonempty face of $H$.</p><p>This face contains an extreme point. Indeed, minimize $\lambda+\nu$ on $H^*$. The minimum is attained because restricting to a sublevel set through any chosen point gives a nonempty compact set. Among its minimizers, choose $v$ minimizing $\lambda$.</p><p>If $v$ were a nontrivial convex combination of two points of $H^*$, minimality would force both points to have the same coordinate sum and then the same $\lambda$. They would also have the same $\nu$, so both would equal $v$. Thus $v$ is extreme in $H^*$. Since $H^*$ is a face, $v$ is extreme in $H$.</p><p>The active constraint normals of $H$ at $v$ span the plane. Otherwise, a nonzero direction perpendicular to all active normals would permit sufficiently small perturbations in both directions: active constraints would remain equalities, and every inactive constraint would remain satisfied by its positive slack. This would contradict extremality.</p><p>Therefore two independent active boundaries meet at $v$. Each is an axis or one of the included indifference lines. Hence $v\in V$ and $g(v)=z^*$. $\square$</p><h3>5. Exact minimization without unrestricted product comparisons</h3><p><b>Theorem 4.</b> There is an unconditional algorithm, polynomial in $m,\tau,L$, that either detects $P=\varnothing$ or outputs a rational minimizer of<br>$$
+\sum_{t,q}a_{tq}y_{tq}
+$$<br>over $P$. Its output has polynomial encoding length.</p><p><b>Proof.</b> First test rational feasibility of $P$. Suppose it is nonempty.</p><h3>Computing the candidates and their minimizing bids</h3><p>Each indifference line has rational normal coefficients and a right-hand side that is a difference of two bid-risk logarithms. Solving two independent line equations therefore expresses both candidate coordinates as rational linear combinations of at most four bid-risk logarithms. Intersections involving axes use no more.</p><p>The rational coefficients have polynomial bit length: solving a rational system of order two uses a fixed number of rational operations, and its determinant and inverse have polynomial encoding length.</p><p>Candidate membership in the nonnegative quadrant can therefore be tested using the fixed-factor comparison theorem.</p><p>At any retained candidate $v=(\lambda,\nu)$, compute, for every type,<br>$$
+M_t(v)=
+\left\{
+q:
+f_{tq}(v)=\min_{q&#x27;}f_{tq&#x27;}(v)
+\right\}.
+$$<br>A comparison of two bids has the form<br>$$
+f_{tq}(v)-f_{tq&#x27;}(v)
+=
+a_{tq}-a_{tq&#x27;}
++
+(k_{tq}-k_{tq&#x27;})\lambda
+-
+(b_{tq}-b_{tq&#x27;})\nu.
+$$<br>It involves at most six bid-risk logarithms: the four from the candidate coordinates and the two from the compared bids. After splitting rational arguments into numerators and denominators, there are at most twelve integer bases.</p><p>Thus all minimizing sets, including exact ties, and the signs of $\lambda,\nu$ are computable in polynomial time using the unconditional fixed-factor theorem.</p><h3>Testing optimality using a rational system</h3><p>For each candidate $v$, form the following rational feasibility system $Q(v)$:</p><ul><li>Require $y\in P$.</li><li>Require $y_{tq}=0$ whenever $q\notin M_t(v)$.</li><li>If $\lambda&gt;0$, require $\sum_{t,q}k_{tq}y_{tq}=C$.</li><li>If $\nu&gt;0$, require $\sum_{t,q}b_{tq}y_{tq}=r$.</li></ul><p>Every coefficient in this system is rational. The logarithmic comparisons determine only which equations to include.</p><p>We show that every feasible point of $Q(v)$ minimizes risk. Put<br>$$
+\alpha_t=\min_q f_{tq}(v),
+\qquad
+K(y)=\sum_{t,q}k_{tq}y_{tq},
+\qquad
+B(y)=\sum_{t,q}b_{tq}y_{tq}.
+$$<br>For every $y\in P$,<br>$$
+\sum_{t,q}a_{tq}y_{tq}-g(v)
+=
+\sum_{t,q}y_{tq}\bigl(f_{tq}(v)-\alpha_t\bigr)
++
+\lambda\bigl(C-K(y)\bigr)
++
+\nu\bigl(B(y)-r\bigr).
+$$<br>This identity follows by expanding $f_{tq}$ and using $\sum_qy_{tq}=w_t$.</p><p>Every summand on the right is nonnegative. For $y\in Q(v)$, the first sum vanishes because positive coordinates occur only at minimizing bids. Each of the last two terms vanishes either because its multiplier is zero or because its imposed equality holds. Hence<br>$$
+\sum_{t,q}a_{tq}y_{tq}=g(v).
+$$<br>Lemma 2 gives $g(v)\le z^*$, whereas feasibility gives $\sum a_{tq}y_{tq}\ge z^*$. Both must equal $z^*$.</p><p>At least one $Q(v)$ is nonempty. By Lemma 3, choose $v\in V$ with $g(v)=z^*$, and let $y^*$ be any primal minimizer. The displayed identity has zero left-hand side and nonnegative summands. Thus every summand vanishes. In particular, $y^*$ is supported on $M_t(v)$ and satisfies every global equality whose multiplier is positive. Therefore $y^*\in Q(v)$.</p><p>The algorithm enumerates the $O(m^4)$ candidates, constructs their minimizing sets, and tests the corresponding rational systems. It stops at the first feasible one and outputs a rational feasible point. Rational linear programming supplies such a point in polynomial time with polynomial encoding length. All preceding comparisons have a constant number of logarithmic arguments. $\square$</p><p>This is the crucial strengthening: the algorithm never compares the global values $g(v)$ with one another or with the risk limit.</p><h3>6. A sparse optimal allocation</h3><p>The optimizer can additionally be chosen with at most $\tau+2$ positive coordinates.</p><p><b>Proposition 5.</b> If $P$ is nonempty, an exact risk minimizer can be computed in polynomial time that is a vertex of $P$. Every vertex of $P$ has at most $\tau+2$ positive coordinates. Consequently, at most two types split their mass among several bids.</p><p><b>Proof.</b> For any feasible $Q(v)$, its extra constraints set nonnegative coordinates to zero or make original global inequalities tight. Each such restriction defines a face of $P$; their nonempty intersection $Q(v)$ is therefore a face of $P$.</p><p>A vertex of $Q(v)$ can be computed by sequential rational linear programs minimizing coordinates. Each minimization restricts to a nonempty compact face; after all coordinates have been fixed, the remaining set is a singleton and hence a vertex. All these faces have vertices among the original rational polytope’s vertices, whose coordinates have polynomial bit length by determinant bounds. Thus this procedure is polynomial-time.</p><p>A vertex of a face is a vertex of $P$, and Theorem 4 shows that every point of $Q(v)$ minimizes risk.</p><p>Now let $y$ be a vertex of $P$, with $h$ positive coordinates. Restrict to those coordinates. There are $\tau$ type equalities and at most two active global inequalities. If $h&gt;\tau+2$, their coefficient matrix has a nonzero null vector. Extend that vector by zero on the other coordinates.</p><p>Sufficiently small perturbations of $y$ in either direction preserve positivity on its support, all type equalities, and every active global constraint. They preserve inactive constraints because those have positive slack. This contradicts that $y$ is a vertex. Hence<br>$$
+h\le\tau+2.
+$$</p><p>Every type has at least one positive coordinate because $w_t&gt;0$. Each type using several bids contributes at least one coordinate beyond this baseline of $\tau$. Therefore at most two types split their mass. $\square$</p><h3>7. Allocation reduces to one product-of-powers comparison</h3><p><b>Proposition 6.</b><br>$$
+\mathcal A\le_m^p\mathrm{PoE}_{\ge}.
+$$</p><p><b>Proof.</b> If rational feasibility testing finds $P=\varnothing$, output the fixed false comparison $1\ge2$.</p><p>Otherwise, use Theorem 4 to compute a rational minimizer $y^*$. Write<br>$$
+1-\varepsilon_{tq}=\frac{U_{tq}}{V_{tq}},
+\qquad
+1-\delta=\frac{H}{J},
+$$<br>with positive integers in numerator and denominator.</p><p>Choose a positive common denominator $M$ of all coordinates of $y^*$ and set<br>$$
+e_{tq}=My^*_{tq}\in\mathbb Z_{\ge0}.
+$$<br>The original allocation instance is feasible exactly when<br>$$
+\prod_{t,q}(1-\varepsilon_{tq})^{y^*_{tq}}\ge1-\delta,
+$$<br>because $y^*$ minimizes the negative logarithm of that product over $P$.</p><p>Raising both sides to the positive integer $M$ and cross-multiplying positive denominators gives the equivalent comparison<br>$$
+J^M\prod_{t,q}U_{tq}^{e_{tq}}
+\ge
+H^M\prod_{t,q}V_{tq}^{e_{tq}}.
+$$<br>This is one $\mathrm{PoE}_{\ge}$ instance. Omit zero exponents and unit bases, interpreting any empty side as $1$.</p><p>The rational optimizer has polynomial encoding length. Choosing $M$ as the product of its coordinate denominators therefore gives $M$ and every $e_{tq}$ polynomial bit length. The entire comparison is constructed in polynomial time. $\square$</p><p>Propositions 1 and 6 establish the asserted many-one equivalence. Composing these reductions also proves the equivalence of $\mathrm{NP}$-hardness under polynomial-time many-one reductions.</p><h3>8. Consequences and remaining open question</h3><p>Two unconditional polynomial-time special cases follow.</p><p><b>Fixed support size.</b> By Proposition 5, the final risk comparison uses at most $\tau+2$ bid-risk arguments and one threshold argument. For fixed $\tau$, this is a fixed number of rational logarithm arguments. The fixed-factor comparison theorem therefore decides the final comparison in polynomial time.</p><p><b>Fixed number of distinct exceedance probabilities.</b> If the menus contain at most a fixed number of distinct exceedance probabilities, collect the optimizer’s exponents for equal success probabilities. The final comparison again has a fixed number of rational arguments, including the threshold, so the same theorem applies.</p><p>For unrestricted inputs, the proved result isolates the difficulty precisely: an exact minimum-risk allocation is computable in polynomial time, but its comparison with the prescribed threshold is equivalent to unrestricted binary-encoded product-of-powers comparison.</p><p>I have not supplied an unconditional polynomial-time algorithm or an $\mathrm{NP}$-hardness proof for that arithmetic problem. Thus the requested unrestricted classification remains unresolved in this answer.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 8, Consequences and remaining open question: The unrestricted classification requested by USER_TASK is not established: the proved many-one equivalence supplies neither an unconditional polynomial-time algorithm nor an $\mathrm{NP}$-hardness proof. This is a limitation of scope, not a defect in the equivalence proof.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Assessment: correct and rigorous partial progress.</b> The write-up establishes the claimed polynomial-time many-one equivalence and the two stated polynomial-time special cases. I found no false step or substantive gap in those arguments. It does <b>not</b> resolve the unrestricted classification requested in <code>USER_TASK</code>, and it explicitly acknowledges that limitation.</p><h3>1. Arithmetic comparison theorem</h3><p>The fixed-factor comparison theorem is correctly stated and attributed. Proposition 3.7(2) establishes unconditional polynomial-time inequality testing when the numbers of factors on both sides are fixed constants, with integer bases and exponents encoded in binary. See [Etessami–Stewart–Yannakakis, Proposition 3.7(2)](https://www.pure.ed.ac.uk/ws/files/17370828/Etessami_Stewart_ET_AL_2014_A_note_on_the_complexity_of_comparing_succinctly_represented_integers_with_an_application_to_maximum_probability_parsing.pdf).</p><p>The conversion of a rational logarithmic form is valid:</p><ul><li>All logarithm arguments are positive.</li><li>Multiplying by a positive common denominator preserves the sign.</li><li>Splitting each rational argument into numerator and denominator introduces at most two integer-base terms.</li><li>Moving terms according to the signs of their integer coefficients produces the stated comparison.</li><li>The common denominator and resulting exponents have polynomial binary encoding length, even though their numerical values may be large.</li><li>Two weak comparisons suffice to distinguish all three possible signs.</li></ul><p>Unit bases and zero coefficients can be omitted without changing the comparison. Empty products cause no arithmetic difficulty.</p><p><b>Finding:</b> The theorem applies exactly as needed. No issue.</p><h3>2. Reduction from product-of-powers comparison to allocation</h3><p>Proposition 1 correctly constructs a legal allocation instance.</p><p>For nonempty factor lists, $E$ is positive. Powers of two satisfying the specified conditions on $S$ and $D$ exist and have polynomial encoding length. All constructed masses are positive and dyadic; the padding type is included only when its mass is positive.</p><p>Every bid satisfies the input restrictions:</p><ul><li>Resource consumption is zero, hence lies in the permitted range.</li><li>Rewards are rational.</li><li>The success probabilities $a_i/D$, $1/(Dc_j)$, and $1/D$ lie strictly between zero and one.</li><li>Every menu contains the null bid.</li><li>The capacity, population scale, and risk limit are admissible.</li></ul><p>Because total mass is one and every nonnull bid has reward one, the reward threshold forces all mass onto nonnull bids. There is therefore exactly one reward-feasible allocation.</p><p>The critical product calculation is correct:</p><p>$$
+D^{-E/S}D^{-(S-E)/S}
+\left(\frac AB\right)^{1/S}
+=
+\frac1D\left(\frac AB\right)^{1/S}.
+$$</p><p>The padding exponent is zero when padding is absent. Since $S$ and $D$ are positive, comparison with $1/D$ is equivalent to $A\ge B$.</p><p>When $E=0$, positivity of all listed exponents implies that both lists are empty. The fixed feasible instance correctly represents the true comparison.</p><p>No expanded product is needed, and the construction has polynomial output size.</p><p><b>Finding:</b> The reduction is correct, including empty lists and padding. No issue.</p><h3>3. Rational polytope and logarithmic risk objective</h3><p>The substitution $y_{tq}=Nx_{tq}$ is bijective because $N&gt;0$. It correctly transforms type masses, capacity, and reward.</p><p>The polytope $P$ uses only rational coefficients of polynomial encoding length. Polynomial-time rational linear-programming feasibility testing therefore applies.</p><p>For nonempty $P$, each coordinate satisfies</p><p>$$
+0\le y_{tq}\le w_t.
+$$</p><p>Together with closedness, this establishes compactness. Consequently, the real linear risk objective attains its minimum.</p><p>All success probabilities and the threshold success probability are positive, including when an exceedance probability or the risk limit is zero. Taking logarithms is therefore valid, and the direction of the risk inequality is correctly reversed when multiplying by negative one.</p><p>The write-up correctly distinguishes rational feasibility testing from optimization with generally irrational objective coefficients.</p><p><b>Finding:</b> The formulation and feasibility equivalence are correct. Signed rewards introduce no omitted restriction. No issue.</p><h3>4. Dual attainment and candidate sufficiency</h3><h3>Lemma 2</h3><p>The Lagrangian signs and displayed dual constraints are correct.</p><p>The primal is feasible and bounded whenever this lemma is invoked. The dual is feasible at zero multipliers and zero type variables because all risk coefficients are nonnegative. Finite-dimensional linear-programming strong duality applies to real coefficients and provides attainment under these hypotheses.</p><p>Since every $w_t$ is positive, maximizing over each type variable gives precisely the corresponding minimum bid value.</p><p><b>Finding:</b> Dual attainment and equality with $z^*$ are justified. No issue.</p><h3>Lemma 3</h3><p>The chosen minimizing bids define a nonempty closed polyhedron $H$. On this polyhedron, the function $g$ equals the specified affine function $F$.</p><p>Because $g$ is everywhere bounded above by $z^*$, the nonempty set where $F=z^*$ is a face of $H$.</p><p>The extreme-point argument is valid:</p><ul><li>Nonnegativity of both coordinates makes a coordinate-sum sublevel set bounded.</li><li>Closedness makes the relevant nonempty sublevel set compact.</li><li>Minimizing the coordinate sum and then the first coordinate yields the stated extreme point.</li><li>Extremality passes from the face to $H$.</li><li>If active normals failed to span the plane, sufficiently small perturbations in both directions would preserve every constraint, contradicting extremality.</li></ul><p>Thus two independent active boundaries determine the point. They are coordinate axes or included indifference lines.</p><p>Omitting pairs with identical resource and reward vectors is harmless: their difference is constant, so they introduce no nonzero boundary normal. Ties, coincident lines, lower-dimensional regions, and unbounded regions do not invalidate the argument.</p><p>There are polynomially many line pairs, with at most $O(m^4)$ candidate intersections.</p><p><b>Finding:</b> A candidate attaining the dual optimum is rigorously established. No issue.</p><h3>5. Polynomial-time computation of a rational risk minimizer</h3><p>Theorem 4 is the central algorithmic claim. Its argument checks out.</p><h3>Candidate representation and comparisons</h3><p>Solving two independent line equations uses rational coefficients and at most four bid-risk logarithms. Independence is determined by rational normals; no comparison of irrational determinants is required.</p><p>The rational coefficients obtained from these fixed-size systems have polynomial bit length. Testing coordinate signs therefore uses only a fixed number of logarithmic arguments.</p><p>A bid comparison adds at most two further bid-risk logarithms. The resulting bound of six rational logarithmic arguments, or twelve integer bases after splitting arguments, is correct.</p><p>The algorithm consequently determines minimizing bids and multiplier signs exactly, including equality cases, in polynomial time.</p><h3>Rational optimality tests</h3><p>The system $Q(v)$ is rational. The candidate values themselves need not be inserted as irrational coefficients: only minimizing sets and multiplier signs determine which rational restrictions are included.</p><p>The displayed identity is algebraically correct:</p><p>$$
+\sum_{t,q}a_{tq}y_{tq}-g(v)
+=
+\sum_{t,q}y_{tq}\bigl(f_{tq}(v)-\alpha_t\bigr)
++
+\lambda\bigl(C-K(y)\bigr)
++
+\nu\bigl(B(y)-r\bigr).
+$$</p><p>For feasible $y$, every term on the right is nonnegative. For $y\in Q(v)$, each term vanishes under precisely the restrictions stated in the proof. Such a point therefore achieves the dual value and is optimal.</p><p>Conversely, at an optimal candidate, any primal minimizer makes the nonnegative right-hand side sum to zero. This forces the support and tightness conditions required by $Q(v)$. Hence at least one tested system is feasible.</p><p>There are polynomially many candidates and comparisons, and every rational feasibility system has polynomial encoding length. Rational linear programming supplies a rational feasible point of polynomial encoding length.</p><p><b>Finding:</b> The algorithm computes an exact rational optimizer without an unrestricted product comparison. No issue.</p><h3>6. Sparse optimal allocation</h3><p>Each additional restriction defining $Q(v)$ makes an original valid inequality tight: either a nonnegativity inequality or a global inequality. Their nonempty intersection is therefore a face of $P$.</p><p>Sequential coordinate minimization on this compact rational face produces a singleton face, hence a vertex. The bit-length argument is valid because the intermediate sets remain faces whose vertices are vertices of the original rational polytope.</p><p>For the support bound, if a vertex had more than $\tau+2$ positive coordinates, the type equalities and active global constraints would leave a nonzero null direction on that support. Small perturbations in both directions preserve nonnegativity and all constraints, contradicting extremality.</p><p>Positive type masses ensure at least one positive coordinate per type. The support bound therefore implies that at most two types split their mass.</p><p><b>Finding:</b> Both the constructive vertex claim and the support bound are correct. No issue.</p><h3>7. Reduction from allocation to one product comparison</h3><p>If $P$ is empty, the fixed false comparison correctly represents infeasibility.</p><p>Otherwise, using the computed optimizer is valid because minimizing the negative logarithm maximizes the risk product over $P$. Thus testing that optimizer against the risk limit decides allocation feasibility.</p><p>The common-denominator transformation is correct. Raising both sides to the positive integer $M$ and cross-multiplying gives</p><p>$$
+J^M\prod_{t,q}U_{tq}^{e_{tq}}
+\ge
+H^M\prod_{t,q}V_{tq}^{e_{tq}}.
+$$</p><p>Every base is positive, every retained exponent is positive, and omitted zero exponents or unit bases preserve the comparison. The optimizer’s polynomial encoding length ensures polynomial encoding length for the common denominator and all exponents.</p><p><b>Finding:</b> The polynomial-time many-one reduction is correct. Together with Proposition 1, it establishes the asserted equivalence and its stated membership and hardness consequences.</p><h3>8. Special cases and unresolved target</h3><p>The fixed-support special case follows from the bound of $\tau+2$ positive optimizer coordinates. Adding the threshold yields a fixed number of rational logarithmic arguments when $\tau$ is fixed.</p><p>The fixed-number-of-distinct-probabilities special case also follows: collecting rational exponents preserves polynomial encoding length and leaves a fixed number of arguments.</p><p>Neither special case covers unrestricted input. The many-one equivalence transfers a classification between the two problems; it does not itself supply one.</p><p><b>Major scope issue:</b> The unrestricted question in <code>USER_TASK</code> remains unanswered. This is an explicitly acknowledged limitation, not an error in the proved characterization.</p><p><b>Minimum additional work required:</b> Establish one of the requested unrestricted complexity classifications and invoke the proved reductions. No clarification or repair of the existing proof is needed to verify its partial results.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

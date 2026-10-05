@@ -1,0 +1,442 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-atal-2018-0341 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-atal-2018-0341 <span style="font-weight:normal;color:#8a7350">(d4-conf-atal-2018-0341)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.2 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Let $c^\star = \frac{\sqrt{2}-1}{2}$ be a universal constant. Let $G=(V, E)$ be an $(n, \epsilon, c_r, c_d)$-Core-Periphery network such that $d_{_{\min}} = \omega(\log n)$ and let $G$ run the \choice{}.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given core and periphery masses \(\mu_C,\mu_P\) with \(\mu_C+\mu_P=1\), per-capita degree-volume weights \(d_C,d_P\), a rational \(q\in[0,1]\) for the periphery’s probability of sampling the frozen-blue core on each draw, a target \(\kappa\), and a horizon \(H\), initialize the core blue and the periphery red. Let \(x_t\) be the blue fraction of the periphery, \(y_t=q+(1-q)x_t\), and \(x_{t+1}=(1-x_t)y_t^2+x_t(1-(1-y_t)^2)\). Decide whether, for some \(t\le H\), the degree-volume-weighted blue share \((\mu_Cd_C+\mu_Pd_Px_t)/(\mu_Cd_C+\mu_Pd_P)\) is at least \(1-\kappa\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational; \(\tau\) is the support size, not the number of possible types. Here the types are core and periphery, \(\tau=2\), and there are \(m=2\) colors.<br>The input consists of positive rational masses \(\mu_C+\mu_P=1\), positive rational degree-volume weights \(d_C,d_P\), rationals \(q,\kappa\in[0,1]\), and a nonnegative integer horizon \(H\) encoded in binary. Let \(L\) be the total input bit length.<br>The core stays blue forever. Initially the periphery is red. In each synchronous round, each periphery draw independently samples the core with probability \(q\), and otherwise samples the periphery uniformly by mass; two matching sampled colors replace the current color, while differing colors leave it unchanged.<br>The deterministic mass evolution is defined exactly by \(x_0=0\), \(y_t=q+(1-q)x_t\), and \(x_{t+1}=(1-x_t)y_t^2+x_t(1-(1-y_t)^2)\), where \(x_t\) is the blue fraction of the periphery.<br>The decision problem asks whether some integer \(0\leq t\leq H\) satisfies \((\mu_Cd_C+\mu_Pd_Px_t)/(\mu_Cd_C+\mu_Pd_P)\geq1-\kappa\); comparison is exact, including equality.</p><p>Is this decision problem in \(\mathrm{P}\), or is it \(\mathrm{NP}\)-hard, with running times measured in \(m,\tau,L\) and the binary encoding length of \(H\)?</p><p>Discrete: A stochastic phase-transition theorem gives blue almost-consensus within \(O(\log(1/\kappa(n)))\) rounds with high probability on graphs having periphery size \(n\), core size \(n^\varepsilon\), \(1/2\leq\varepsilon\leq1\), minimum degree \(\omega(\log n)\), periphery core/internal-neighbor ratio constantly above \((\sqrt2-1)/2\), core internal/periphery-neighbor ratio exceeding \(n^{(\varepsilon+\delta)/2}\) for suitable constant \(\delta&gt;0\), and \(\kappa(n)\geq\lambda\log n/d_{\min}\) for suitable constant \(\lambda\); below the dominance threshold, at least three quarters of periphery volume stays red for polynomially many rounds with high probability. [Source](https://link.springer.com/article/10.1007/s00446-021-00396-5).<br>Continuous: No result settling this exact binary-horizon decision problem was identified in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Require both masses and both degree-volume weights to be positive binary rationals, ensuring nonempty populations and positive total volume.</li><li>Take the tolerance as a rational in [0,1] and the horizon as a nonnegative integer encoded in binary; include the initial round.</li><li>Interpret the recurrence as exact deterministic mass evolution under homogeneous, independent sampling, rather than as the expectation of an unspecified finite stochastic network.</li><li>Treat the degree-volume weights as reporting weights and q as the supplied sampling probability, without adding an undirected-network realization requirement.</li><li>Use the supplied scalar tolerance directly: no population-size index or finite-network concentration lower bound is imposed on the deterministic mass model.</li><li>Retain the graded question&#x27;s arbitrary positive normalized masses and frozen core instead of introducing finite-network size and robustness parameters.</li><li>Use the inclusive threshold specified in the graded question; the source&#x27;s literal equality formulation conflicts with its own consensus proof, which bounds residual volume from above.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status: partial progress</h3><p>I do not obtain a classification of the unrestricted problem as belonging to $\mathrm P$ or being $\mathrm{NP}$-hard.</p><p>The main new result is a polynomial-time computable estimate of the first crossing time whose error is only $O(L)$ rounds, even when that crossing time is exponentially large. Consequently, for each choice of the non-horizon inputs, all but $O(L)$ integer horizons can be decided in polynomial time.</p><p>For the fixed target $x=1/2$ near the critical bias, the estimate can be sharpened to a <b>constant</b> error:</p><p>$$
+\left|
+T(q)-\frac{\pi(3-q)}{\sqrt{6q-q^2-1}}
+\right|\leq128,
+\qquad
+3-2\sqrt2&lt;q\leq\frac15.
+$$</p><p>These results substantially narrow the remaining comparison problem, but do not decide the exceptional horizons.</p><h3>1. Scalar reduction and exact reachability conditions</h3><p>Put</p><p>$$
+A=\mu_Cd_C,\qquad B=\mu_Pd_P.
+$$</p><p>Both numbers are positive. The required volume inequality is equivalent to</p><p>$$
+x_t\geq r,
+\qquad
+r=1-\kappa\frac{A+B}{B}.
+$$</p><p>The rational number $r$ has bit length $O(L)$: its construction uses a fixed number of rational arithmetic operations.</p><p>Because $\kappa\geq0$, we have $r\leq1$. If $r\leq0$, time $0$ satisfies the condition. Henceforth suppose $r&gt;0$.</p><p>Write $a=1-q$ and denote the update map by $F_q$. Direct expansion gives</p><p>$$
+F_q(x)-x=(1-x)h_q(x),
+$$</p><p>where</p><p>$$
+h_q(x)=2a^2x^2+a(3q-1)x+q^2.
+$$</p><p>Equivalently, for $z=1-x$,</p><p>$$
+1-F_q(x)=az^2(2+a-2az).
+$$</p><p>The endpoint cases are immediate:</p><ul><li>If $H=0$, the answer is no when $r&gt;0$.</li><li>If $q=0$, every iterate is $0$.</li><li>If $q=1$, every iterate from time $1$ onward is $1$.</li></ul><p>Suppose now that $0&lt;q&lt;1$. The original recurrence expresses $F_q(x)$ as a convex combination of $y^2$ and $1-(1-y)^2$, with $y=q+(1-q)x\in[0,1]$. Thus $F_q$ maps $[0,1]$ into itself. Moreover,</p><p>$$
+F_q&#x27;(x)=2a(1-x)\bigl(2+a-3a(1-x)\bigr)&gt;0
+\qquad(0\leq x&lt;1),
+$$</p><p>because the expression in parentheses is at least $2-2a=2q&gt;0$.</p><p>Since $x_1=q^2&gt;x_0$, applying strict monotonicity inductively proves</p><p>$$
+0=x_0&lt;x_1&lt;x_2&lt;\cdots&lt;1.
+$$</p><p>The last strict inequality follows also from the displayed formula for $1-F_q(x)$, which is positive when $x&lt;1$.</p><p>Therefore the bounded-horizon question is exactly whether $x_H\geq r$. In particular, $r=1$ is unreachable at every finite time when $0&lt;q&lt;1$.</p><p>Define</p><p>$$
+D(q)=q^2-6q+1,
+\qquad
+q_\star=3-2\sqrt2.
+$$</p><p>The discriminant of $h_q$ is $a^2D(q)$. Since $q_\star$ is irrational, rational input cannot satisfy $q=q_\star$.</p><p>If $0&lt;q&lt;q_\star$, the roots of $h_q$ are</p><p>$$
+\alpha=
+\frac{1-3q-\sqrt{D(q)}}{4(1-q)},
+\qquad
+\beta=
+\frac{1-3q+\sqrt{D(q)}}{4(1-q)}.
+$$</p><p>They satisfy $0&lt;\alpha&lt;\beta&lt;1$. Indeed, $q_\star&lt;1/3$, and</p><p>$$
+(1-3q)^2-D(q)=8q^2&gt;0
+$$</p><p>proves positivity of both numerators. Also $D(q)&lt;1$, so the numerator defining $\beta$ is less than $2$, whereas its denominator exceeds $8/3$.</p><p>Because $F_q(\alpha)=\alpha$ and $F_q$ is strictly increasing, every finite iterate lies strictly below $\alpha$. The increasing orbit has a limit $\ell\leq\alpha$. Continuity makes $\ell$ a fixed point; the only fixed points are $\alpha,\beta,1$, so $\ell=\alpha$.</p><p>If $q_\star&lt;q&lt;1$, then $D(q)&lt;0$, hence $h_q$ is positive everywhere. The only fixed point in $[0,1]$ is $1$, so the same limit argument gives $x_t\to1$.</p><p>Thus, for $0&lt;q&lt;1$ and $0&lt;r&lt;1$,</p><p>$$
+r\text{ is eventually reached}
+\quad\Longleftrightarrow\quad
+\begin{cases}
+r&lt;\alpha,&amp;q&lt;q_\star,\\
+\text{always},&amp;q&gt;q_\star.
+\end{cases}
+$$</p><p>These conditions are polynomial-time decidable. The sign of $D(q)$ identifies the regime. In the subcritical regime, putting</p><p>$$
+W=1-3q-4(1-q)r
+$$</p><p>gives the exact equivalence</p><p>$$
+r&lt;\alpha
+\quad\Longleftrightarrow\quad
+W&gt;0\ \text{and}\ W^2&gt;D(q).
+$$</p><p>From now on, assume these tests establish that $0&lt;r&lt;1$ is reachable. Define its first crossing time by</p><p>$$
+T=\min\{t\geq0:x_t\geq r\}.
+$$</p><p>Then $T$ exists, $T\geq1$, and the original answer is yes exactly when $H\geq T$.</p><h3>2. A discrete-time estimate from an integral</h3><p>Define the positive one-round increase on the interval $[0,r]$ by</p><p>$$
+v(x)=F_q(x)-x=(1-x)h_q(x).
+$$</p><p>It is positive there: in the subcritical case $r&lt;\alpha$, and in the supercritical case $h_q$ is everywhere positive.</p><p>Consider</p><p>$$
+J(r)=\int_0^r\frac{dx}{v(x)}.
+$$</p><p>The following lemma controls its discrepancy from the integer crossing time.</p><h3>Lemma 1: integral versus crossing time</h3><p>Let $F$ be a continuously differentiable, nondecreasing map, and let $v(x)=F(x)-x&gt;0$ on $[0,r]$. Suppose the orbit from $x_0=0$ reaches $r$, with first crossing time $T$. Then</p><p>$$
+|T-J(r)|
+\leq
+1+\int_0^r\frac{|v&#x27;(x)|}{v(x)}\,dx.
+$$</p><h3>Proof</h3><p>Consider an orbit interval starting at $a=x_t&lt;r$, and truncate its endpoint at</p><p>$$
+b=\min\{F(a),r\}.
+$$</p><p>Integration by parts gives</p><p>$$
+\int_a^b\frac{dx}{v(x)}
+=
+\frac{b-a}{v(a)}
+-
+\int_a^b
+\frac{b-s}{v(s)}
+\frac{v&#x27;(s)}{v(s)}\,ds.
+$$</p><p>For $s\in[a,b]$, monotonicity of $F$ implies</p><p>$$
+F(s)\geq F(a)\geq b.
+$$</p><p>Consequently,</p><p>$$
+v(s)=F(s)-s\geq b-s,
+$$</p><p>and therefore</p><p>$$
+0\leq\frac{b-s}{v(s)}\leq1.
+$$</p><p>It follows that</p><p>$$
+\left|
+\int_a^b\frac{dx}{v(x)}
+-\frac{b-a}{v(a)}
+\right|
+\leq
+\int_a^b\frac{|v&#x27;(s)|}{v(s)}\,ds.
+$$</p><p>There are $T-1$ complete orbit intervals before the last interval; each complete interval has $(b-a)/v(a)=1$. On the last interval this ratio is some $\theta\in(0,1]$. Summing over the partition of $[0,r]$ yields</p><p>$$
+J(r)=T-1+\theta+E,
+\qquad
+|E|\leq\int_0^r\frac{|v&#x27;(x)|}{v(x)}\,dx.
+$$</p><p>Since $0\leq1-\theta&lt;1$, the claimed bound follows. $\square$</p><h3>3. A uniform $O(L)$ error bound</h3><p>Write the reduced fractions as</p><p>$$
+q=\frac uv,\qquad r=\frac bc,
+$$</p><p>with positive denominators. In this section, the integer $v$ denotes the denominator of $q$; the function $v(x)$ retains its argument.</p><p>Let $N_v,N_c$ be the binary bit lengths of these denominators, and define</p><p>$$
+K=10+6N_v+3N_c.
+$$</p><p>Both bit lengths are $O(L)$.</p><h3>Subcritical inputs</h3><p>For $x\leq r&lt;\alpha$,</p><p>$$
+h_q&#x27;(x)&lt;h_q&#x27;(\alpha)=-a\sqrt{D(q)}&lt;0.
+$$</p><p>Since $h_q(x)&gt;0$,</p><p>$$
+v&#x27;(x)=-h_q(x)+(1-x)h_q&#x27;(x)&lt;0.
+$$</p><p>Thus</p><p>$$
+\int_0^r\frac{|v&#x27;(x)|}{v(x)}\,dx
+=
+\log\frac{v(0)}{v(r)}.
+$$</p><p>The positive rational number $v(r)$ has denominator dividing $v^2c^3$, so</p><p>$$
+v(r)\geq\frac1{v^2c^3}.
+$$</p><p>Also $v(0)=q^2\leq1$. Hence</p><p>$$
+\int_0^r\frac{|v&#x27;(x)|}{v(x)}\,dx
+\leq2\log v+3\log c.
+$$</p><h3>Supercritical inputs</h3><p>Completing the square gives</p><p>$$
+h_q(x)
+=
+2a^2\left(x-\frac{1-3q}{4a}\right)^2-\frac{D(q)}8.
+$$</p><p>The positive rational number $-D(q)$ has denominator dividing $v^2$, so $-D(q)\geq1/v^2$. Since $1-r\geq1/c$,</p><p>$$
+v(x)\geq\frac1{8v^2c}
+\qquad(0\leq x\leq r).
+$$</p><p>Also $v(x)\leq1$, because $F_q(x)\leq1$.</p><p>The polynomial $v$ has degree three, so $v&#x27;$ has at most two roots. Therefore $[0,r]$ can be partitioned into at most three intervals on which $v$ is monotone. On each such interval, the variation of $\log v$ is at most $\log(8v^2c)$. Consequently,</p><p>$$
+\int_0^r\frac{|v&#x27;(x)|}{v(x)}\,dx
+\leq3\log(8v^2c).
+$$</p><p>Combining either bound with Lemma 1, and using $\log v&lt;N_v$ and $\log c&lt;N_c$, proves the uniform estimate</p><p>$$
+\boxed{|T-J(r)|\leq K=O(L).}
+$$</p><p>This estimate does not depend on the numerical size of $T$.</p><h3>4. Polynomial-time evaluation of the estimate</h3><p>The integral $J(r)$ has an explicit expression involving elementary functions.</p><p>Put</p><p>$$
+U(x)=4ax+3q-1.
+$$</p><p>Then</p><p>$$
+h_q(x)=\frac{U(x)^2-D(q)}8.
+$$</p><p>The partial fraction identity</p><p>$$
+\frac1{(1-x)h_q(x)}
+=
+\frac1{1-x}
++
+\frac{2a^2x+1-q^2}{h_q(x)}
+$$</p><p>follows by multiplying both sides by $(1-x)h_q(x)$. Furthermore,</p><p>$$
+2a^2x+1-q^2
+=
+\frac12h_q&#x27;(x)+\frac{a(3-q)}2.
+$$</p><p>Thus</p><p>$$
+J(r)
+=
+-\log(1-r)
++\frac12\log\frac{h_q(r)}{q^2}
++\frac{a(3-q)}2\int_0^r\frac{dx}{h_q(x)}.
+$$</p><p>Writing $U_0=U(0)$ and $U_r=U(r)$ gives the following formulas.</p><p>If $D(q)&lt;0$, put $s=\sqrt{-D(q)}$. Then</p><p>$$
+J(r)=
+-\log(1-r)
++\frac12\log\frac{h_q(r)}{q^2}
++\frac{3-q}{s}
+\left(
+\arctan\frac{U_r}{s}
+-
+\arctan\frac{U_0}{s}
+\right).
+$$</p><p>If $D(q)&gt;0$, put $s=\sqrt{D(q)}$. Reachability gives $U_0&lt;U_r&lt;-s$, and</p><p>$$
+J(r)=
+-\log(1-r)
++\frac12\log\frac{h_q(r)}{q^2}
++\frac{3-q}{2s}
+\log
+\frac{(U_r-s)(U_0+s)}
+     {(U_r+s)(U_0-s)}.
+$$</p><p>All logarithm arguments are positive.</p><h3>Bit complexity</h3><p>These formulas permit approximation of $J(r)$ with absolute error at most $1/4$ in polynomial time.</p><p>Here are the required size and precision checks:</p><ul><li>Because $D(q)\neq0$ and its denominator divides $v^2$,</li></ul><p>$$
+   \frac1v\leq\sqrt{|D(q)|}\leq2.
+   $$</p><ul><li>The positive rational $h_q(r)$ has denominator dividing $v^2c^2$, so</li></ul><p>$$
+   h_q(r)\geq\frac1{v^2c^2}.
+   $$</p><ul><li>In the subcritical logarithm, none of the four factors $U_r\pm s,U_0\pm s$ is zero. Their magnitudes are bounded below by $2^{-O(L)}$: for example,</li></ul><p>$$
+   |U_r-s|\,|U_r+s|=8h_q(r),
+   $$</p><p>while each factor is bounded above by an absolute constant. The same argument at $0$ uses $h_q(0)=q^2$.</p><p>Thus all arguments and intermediate nonzero divisors have magnitudes between $2^{-O(L)}$ and $2^{O(L)}$. A fixed number of arithmetic operations therefore requires only $O(L)$ working precision, with a sufficiently large constant, to attain the stated absolute error.</p><p>For completeness, the elementary functions needed here admit polynomial-time approximations at that precision:</p><ul><li>Square roots can be approximated by rational bisection.</li><li>For a positive logarithm argument, multiplication by a power of $2$ reduces it to $[1,2]$. On that interval, the series</li></ul><p>$$
+  \log z
+  =
+  2\sum_{j=0}^{\infty}
+  \frac{w^{2j+1}}{2j+1},
+  \qquad
+  w=\frac{z-1}{z+1},
+  $$</p><p>has $|w|\leq1/3$, so a linear number of terms in the requested precision suffices. The same series computes $\log2$.</p><ul><li>For arctangent, reciprocal reduction handles arguments of magnitude exceeding $1$. On $[0,1]$, the identity</li></ul><p>$$
+  \arctan u
+  =
+  2\arctan\frac{u}{1+\sqrt{1+u^2}}
+  $$</p><p>reduces the argument below $1/2$. Its power series then converges geometrically. This also computes $\pi=4\arctan1$.</p><p>The rational arithmetic in these truncated series has polynomial bit complexity. Hence a dyadic rational $\widehat J$ satisfying</p><p>$$
+|\widehat J-J(r)|\leq\frac14
+$$</p><p>is computable in polynomial time.</p><h3>Consequence for binary horizons</h3><p>The following answers are certified:</p><p>$$
+H&lt;\widehat J-K-\frac14
+\quad\Longrightarrow\quad
+H&lt;T,
+$$</p><p>and</p><p>$$
+H\geq\widehat J+K+\frac14
+\quad\Longrightarrow\quad
+H\geq T.
+$$</p><p>Both comparisons are exact rational comparisons computable in polynomial time, including when $H$ is encoded in binary.</p><p>The remaining interval has length $2K+1/2$ and contains at most $2K+2=O(L)$ integer horizons.</p><p><b>What this proves:</b> a polynomial-time procedure decides all horizons outside an explicitly computable interval containing only $O(L)$ integers.</p><p><b>What it does not prove:</b> a polynomial-time decision procedure for the horizons inside that interval.</p><h3>5. A constant-error estimate near the phase transition</h3><p>For the fixed target $r=1/2$, the error can be bounded independently of input length.</p><p>We first give a sharper general estimate.</p><h3>Lemma 2: a corrected integral estimate</h3><p>Under the assumptions of Lemma 1, suppose additionally that $v$ is twice continuously differentiable and</p><p>$$
+|v&#x27;(x)|\leq\frac12,
+\qquad
+|v&#x27;&#x27;(x)|\leq M
+\qquad(0\leq x\leq r).
+$$</p><p>Define</p><p>$$
+\Phi(r)=J(r)+\frac12\log\frac{v(r)}{v(0)}.
+$$</p><p>Then</p><p>$$
+|T-\Phi(r)|
+\leq
+6\int_0^r\frac{v&#x27;(x)^2}{v(x)}\,dx
++12M^2r^2+2Mr+3.
+$$</p><h3>Proof</h3><p>Consider a complete orbit interval $[a,a+v(a)]$ contained in $[0,r]$. Write</p><p>$$
+v_i=v(a),\qquad k_i=v&#x27;(a),
+\qquad
+w(u)=\frac{v(a+v_i u)}{v_i}
+\quad(0\leq u\leq1).
+$$</p><p>The derivative bound gives $1/2\leq w(u)\leq3/2$. Taylor&#x27;s theorem gives</p><p>$$
+|w(u)-(1+k_i u)|
+\leq\frac12Mv_i u^2.
+$$</p><p>The increment of $\Phi$ over this interval is</p><p>$$
+\int_0^1\frac{du}{w(u)}
++\frac12\log w(1).
+$$</p><p>Replacing $w(u)$ by $1+k_i u$ changes the integral by at most $2Mv_i/3$, because both denominators are at least $1/2$. It changes the half-logarithm by at most $Mv_i/2$. Their sum is therefore at most $2Mv_i$.</p><p>For $|k|\leq1/2$,</p><p>$$
+\int_0^1\frac{du}{1+ku}
+=
+1-\frac k2+R,
+\qquad
+|R|\leq\frac23k^2,
+$$</p><p>using</p><p>$$
+\frac1{1+ku}=1-ku+\frac{k^2u^2}{1+ku}.
+$$</p><p>Also $|\log(1+k)-k|\leq k^2$, obtained by integrating the bound $|s/(1+s)|\leq2|s|$. Consequently,</p><p>$$
+\left|
+\int_0^1\frac{du}{1+ku}
++\frac12\log(1+k)-1
+\right|
+\leq2k^2.
+$$</p><p>The discrepancy of the complete increment of $\Phi$ from $1$ is therefore at most</p><p>$$
+2k_i^2+2Mv_i.
+$$</p><p>For every $x$ in that interval,</p><p>$$
+k_i^2\leq2v&#x27;(x)^2+2M^2v_i^2.
+$$</p><p>Moreover,</p><p>$$
+\frac23
+\leq
+\int_a^{a+v_i}\frac{dx}{v(x)}
+\leq2.
+$$</p><p>Integrating the preceding inequality against $dx/v(x)$ yields</p><p>$$
+k_i^2
+\leq
+3\int_a^{a+v_i}\frac{v&#x27;(x)^2}{v(x)}\,dx
++6M^2v_i^2.
+$$</p><p>The complete intervals are disjoint, and their lengths satisfy</p><p>$$
+\sum_i v_i\leq r,
+\qquad
+\sum_i v_i^2\leq r^2.
+$$</p><p>Summing their discrepancies gives the first three terms in the asserted bound.</p><p>Finally, on the last, possibly truncated interval,</p><p>$$
+\Phi&#x27;(x)=\frac{1+v&#x27;(x)/2}{v(x)}&gt;0.
+$$</p><p>Its increment is at most $5/2$: throughout that interval, $v(x)\geq v(a)/2$, and its length is at most $v(a)$. Its discrepancy from one round is thus at most $3$. This proves the lemma. $\square$</p><h3>Application to $q_\star&lt;q\leq1/5$ and $r=1/2$</h3><p>First,</p><p>$$
+\frac16&lt;q_\star&lt;\frac7{40},
+$$</p><p>because $D$ is decreasing on $[0,1]$ and</p><p>$$
+D\left(\frac16\right)=\frac1{36}&gt;0,
+\qquad
+D\left(\frac7{40}\right)=-\frac{31}{1600}&lt;0.
+$$</p><p>Hence</p><p>$$
+\frac45\leq a&lt;\frac56.
+$$</p><p>For $z=1-x\in[1/2,1]$,</p><p>$$
+F_q&#x27;(x)=2az(2+a-3az).
+$$</p><p>This is a concave quadratic in $z$. Its endpoint values exceed $1/2$:</p><p>$$
+4aq&gt;\frac8{15},
+\qquad
+a\left(2-\frac a2\right)\geq\frac{19}{15}.
+$$</p><p>Its maximum is at most</p><p>$$
+\frac{(2+a)^2}{6}
+\leq\frac{289}{216}&lt;\frac32.
+$$</p><p>Thus $|v&#x27;(x)|\leq1/2$.</p><p>Also,</p><p>$$
+v&#x27;&#x27;(x)=2a\bigl(6a(1-x)-(2+a)\bigr).
+$$</p><p>The bracket lies between $-2/5$ and $13/6$, so $|v&#x27;&#x27;(x)|&lt;4$. We may take $M=4$.</p><p>Put $s=\sqrt{-D(q)}$ and $b_0=(1-3q)/(4a)$. Then</p><p>$$
+h_q(x)=2a^2(x-b_0)^2+\frac{s^2}{8}.
+$$</p><p>Since $h_q$ is convex and</p><p>$$
+h_q(0)=q^2,\qquad h_q(1/2)=q,
+$$</p><p>we have $h_q(x)\leq q\leq1/5$ on $[0,1/2]$. Furthermore,</p><p>$$
+\frac{h_q&#x27;(x)^2}{h_q(x)}\leq8a^2.
+$$</p><p>Using $v&#x27;=(1-x)h_q&#x27;-h_q$, we obtain</p><p>$$
+\begin{aligned}
+\frac{v&#x27;(x)^2}{v(x)}
+&amp;\leq
+2(1-x)\frac{h_q&#x27;(x)^2}{h_q(x)}
++\frac{2h_q(x)}{1-x}\\
+&amp;\leq16a^2+4q\\
+&amp;\leq\frac{536}{45}&lt;12.
+\end{aligned}
+$$</p><p>Therefore</p><p>$$
+\int_0^{1/2}\frac{v&#x27;(x)^2}{v(x)}\,dx\leq6.
+$$</p><p>Lemma 2 now gives</p><p>$$
+|T-\Phi(1/2)|
+\leq36+48+4+3=91.
+$$</p><p>Since $v(1/2)=q/2$ and $v(0)=q^2$,</p><p>$$
+\Phi(1/2)-J(1/2)
+=
+\frac12\log\frac1{2q},
+$$</p><p>which lies between $0$ and $1$. Thus</p><p>$$
+|T-J(1/2)|\leq92.
+$$</p><h3>6. An explicit bottleneck formula and exponential crossing times</h3><p>For $r=1/2$,</p><p>$$
+U_r=1+q,\qquad U_0=3q-1,\qquad h_q(1/2)=q.
+$$</p><p>Hence</p><p>$$
+J(1/2)=
+\log2+\frac12\log\frac1q
++\frac{3-q}{s}
+\left(
+\arctan\frac{1+q}{s}
+-
+\arctan\frac{3q-1}{s}
+\right).
+$$</p><p>In the range $q_\star&lt;q\leq1/5$, the first arctangent argument is positive and the second is negative. Therefore</p><p>$$
+\arctan\frac{1+q}{s}
+-
+\arctan\frac{3q-1}{s}
+=
+\pi
+-\arctan\frac{s}{1+q}
+-\arctan\frac{s}{1-3q}.
+$$</p><p>For $u\geq0$, $0\leq\arctan u\leq u$. Since $1+q\geq1$, $1-3q\geq2/5$, and $3-q\leq3$, replacing the arctangent difference by $\pi$ changes its contribution by at most $21/2$.</p><p>The remaining logarithms have sum less than $7/2$, using $q&gt;1/6$ and $\log z\leq z-1$. Consequently,</p><p>$$
+\left|
+J(1/2)-\frac{\pi(3-q)}s
+\right|\leq14.
+$$</p><p>Together with the preceding section, this proves</p><p>$$
+\boxed{
+\left|
+T(q)-\frac{\pi(3-q)}{\sqrt{6q-q^2-1}}
+\right|\leq128
+}
+$$</p><p>for every rational $q_\star&lt;q\leq1/5$.</p><p>The displayed expression is approximable to absolute error $1/4$ in polynomial time by the methods of Section 4. Therefore, in this regime with target $1/2$, at most $258$ integer horizons remain undecided by this estimate, independently of input length.</p><h3>Exact leading asymptotic</h3><p>Put $\delta=q-q_\star&gt;0$. Factoring $-D(q)$ gives</p><p>$$
+s^2=\delta(6-q-q_\star).
+$$</p><p>The constant-error estimate consequently implies</p><p>$$
+\lim_{\substack{q\downarrow q_\star\\q\in\mathbb Q}}
+\sqrt{q-q_\star}\,T(q)
+=
+\frac{\pi(3-q_\star)}{\sqrt{6-2q_\star}}
+=
+\pi\,2^{1/4}.
+$$</p><p>Indeed, multiplying the bounded error by $\sqrt\delta$ makes it tend to zero, and the remaining coefficient is continuous at $q_\star$.</p><h3>A controlled exponential family</h3><p>For $n\geq10$, define</p><p>$$
+q_n=
+\frac{\lceil2^nq_\star\rceil+1}{2^n}.
+$$</p><p>Irrationality of $q_\star$ gives</p><p>$$
+2^{-n}&lt;q_n-q_\star&lt;2^{1-n}.
+$$</p><p>The ceiling can be computed in polynomial time by binary search, comparing dyadic rationals to $q_\star$ through the sign of $D$.</p><p>The upper-margin check is explicit:</p><p>$$
+q_n&lt;
+\frac7{40}+\frac1{512}
+&lt;
+\frac9{50}
+&lt;
+\frac15.
+$$</p><p>Thus the constant-error estimate applies and proves</p><p>$$
+T(q_n)=\Theta(2^{n/2}).
+$$</p><p>To realize the target $r=1/2$ in the original inputs, take</p><p>$$
+\mu_C=\mu_P=\frac12,
+\qquad
+d_C=d_P=1,
+\qquad
+\kappa=\frac14.
+$$</p><p>Taking $H_n=2^{n+10}$ gives total input length $\Theta(n)$ and includes the crossing. For example, the estimate implies</p><p>$$
+T(q_n)\leq6\,2^{n/2}+128&lt;H_n.
+$$</p><p>Hence exponentially long crossing times occur, while the crossing-time estimate itself remains polynomial-time computable. Long transients alone therefore do not establish computational hardness.</p><h3>7. Remaining unresolved comparison</h3><p>The unrestricted decision problem has been reduced to exact placement of the first crossing time within an explicitly computable interval containing $O(L)$ integers. For the fixed target $1/2$ near the phase transition, the interval contains only a constant number of integers.</p><p>However, a short uncertainty interval does not itself resolve its remaining integer comparisons. None of the estimates above determines whether an exceptional horizon satisfies $x_H\geq r$, including a potentially very close strict comparison.</p><p>The [cited stochastic paper](https://link.springer.com/article/10.1007/s00446-021-00396-5) studies random graph dynamics. Its probabilistic conclusions are not used to decide these exact deterministic comparisons.</p><p>A uniform polynomial-time algorithm for the exceptional horizons, or a hardness reduction exploiting them, remains unproved here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 4, Bit complexity, sentence beginning “Thus all arguments”: The positive lower bound does not apply to every elementary-function argument: for $q=1/5$ and reachable $r=1/8$, the arctangent argument $U_r/s$ equals $0$. Clarify that separation from zero is asserted only where needed; this does not affect the polynomial-time approximation claim.</li><li><b>major</b> — Section 7 and the requested complexity classification: The output leaves exact decisions for the exceptional horizons unresolved and supplies neither a uniform polynomial-time algorithm nor an $\mathrm{NP}$-hardness reduction. This is an acknowledged incompleteness relative to USER_TASK, not a defect in the proved crossing-time estimates.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p><b>The output establishes substantial, mathematically sound partial results, but does not resolve the requested complexity classification.</b></p><p>The scalar reachability analysis, the two integral estimates, the polynomial-time approximation procedure, and the exponential-transient family check out. I found one minor overstatement in the numerical-conditioning discussion. The major outstanding requirement is explicitly acknowledged: exact decisions for the exceptional horizons remain unproved.</p><p>The appropriate status is <b>partial</b>, and the continuous problem remains <b>unresolved</b>.</p><h3>1. Scalar reduction and reachability</h3><p>The definitions $A=\mu_Cd_C$ and $B=\mu_Pd_P$ give strictly positive rational numbers. Rearranging the volume inequality correctly gives</p><p>$$
+x_t\geq r,
+\qquad
+r=1-\kappa\frac{A+B}{B}.
+$$</p><p>A fixed number of rational arithmetic operations suffices to construct $r$, with bit length $O(L)$. The observations $r\leq1$ and immediate success when $r\leq0$ are correct.</p><p>I checked the polynomial identities</p><p>$$
+F_q(x)-x=(1-x)h_q(x)
+$$</p><p>and</p><p>$$
+1-F_q(x)=a(1-x)^2\bigl(2+a-2a(1-x)\bigr),
+$$</p><p>with $a=1-q$. Both are correct.</p><p>The endpoint cases $H=0$, $q=0$, and $q=1$ are correctly handled. For $0&lt;q&lt;1$, the convex-combination argument establishes that $F_q$ maps $[0,1]$ into itself. The displayed derivative is correct and strictly positive for $x&lt;1$. Consequently, the induction proving strict increase of the orbit is valid. The complement formula also proves that no finite iterate equals $1$.</p><p>Thus the bounded-horizon condition is correctly reduced to $x_H\geq r$, including equality, and $r=1$ is correctly excluded for finite horizons when $0&lt;q&lt;1$.</p><p>The discriminant, the critical value $q_\star=3-2\sqrt2$, and the formulas for $\alpha$ and $\beta$ are correct. The inequalities establishing</p><p>$$
+0&lt;\alpha&lt;\beta&lt;1
+$$</p><p>are valid. Strict monotonicity prevents the orbit from reaching $\alpha$ in finitely many steps. The monotone-limit and continuity argument therefore correctly proves convergence to $\alpha$ in the subcritical regime and to $1$ in the supercritical regime.</p><p>The resulting eventual-reachability conditions correctly distinguish $r&lt;\alpha$ from $r=\alpha$. The exact rational test</p><p>$$
+r&lt;\alpha
+\quad\Longleftrightarrow\quad
+W&gt;0\ \text{and}\ W^2&gt;D(q)
+$$</p><p>is also correct: the sign condition is necessary before squaring.</p><p><b>Finding:</b> This section establishes the stated reachability reduction rigorously.</p><h3>2. Lemma 1: integral versus crossing time</h3><p>The integration-by-parts identity has the correct sign and integrand. On each truncated orbit interval, nondecreasingness of $F$ gives</p><p>$$
+F(s)\geq F(a)\geq b,
+$$</p><p>and hence</p><p>$$
+0\leq\frac{b-s}{v(s)}\leq1.
+$$</p><p>This justifies the interval error bound.</p><p>The intervals partition $[0,r]$. There are $T-1$ complete intervals, and the final interval contributes a ratio $\theta\in(0,1]$. Summing the interval bounds therefore proves</p><p>$$
+|T-J(r)|
+\leq
+1+\int_0^r\frac{|v&#x27;(x)|}{v(x)}\,dx.
+$$</p><p>The application satisfies the hypotheses: $F_q$ is continuously differentiable and increasing, $v$ is positive throughout $[0,r]$, and reachability has already been established.</p><p><b>Finding:</b> Lemma 1 and its application are correct.</p><h3>3. The uniform $O(L)$ discrepancy</h3><p>In the subcritical regime, the inequalities for $h_q&#x27;$ correctly imply $v&#x27;&lt;0$ throughout $[0,r]$. Therefore the integral of $|v&#x27;|/v$ is exactly the logarithmic endpoint ratio.</p><p>The denominator bound for the positive rational number $v(r)$ is correct:</p><p>$$
+v(r)\geq\frac1{v^2c^3}.
+$$</p><p>Here the reuse of $v$ as a denominator and as a function is explicitly explained, so it does not create a mathematical ambiguity.</p><p>In the supercritical regime, completing the square gives the stated formula. The rational separation bound</p><p>$$
+-D(q)\geq\frac1{v^2}
+$$</p><p>and $1-r\geq1/c$ correctly yield the uniform positive lower bound on the increase function.</p><p>The cubic increase function has at most two derivative roots and thus at most three monotonicity intervals. The bound on the variation of $\log v$ follows on each interval. The constants are sufficient to obtain</p><p>$$
+|T-J(r)|\leq K,
+\qquad
+K=10+6N_v+3N_c.
+$$</p><p><b>Finding:</b> The uniform discrepancy estimate is proved, with the stated constants and dependence on input length.</p><h3>4. Explicit integration and polynomial bit complexity</h3><p>I checked the partial-fraction identity, the numerator decomposition, and both antiderivative formulas. They are correct.</p><p>In the subcritical case, reachability implies</p><p>$$
+U_0&lt;U_r&lt;-\sqrt{D(q)}.
+$$</p><p>This verifies that none of the logarithmic factors vanishes and that the displayed logarithm argument is positive.</p><p>The principal size bounds are also correct:</p><p>$$
+\frac1v\leq\sqrt{|D(q)|}\leq2,
+\qquad
+h_q(r)\geq\frac1{v^2c^2}.
+$$</p><p>The product identity involving $U_r\pm s$, together with the constant upper bounds on those factors, establishes their stated separation from zero. The same reasoning applies at the initial endpoint.</p><p>These bounds control the conditioning of the formula. The elementary-function procedures described are sufficient for polynomial-time approximation: their argument reductions give geometric convergence, and polynomially many terms with polynomial-size rational arithmetic suffice. The exponentially large coefficient $1/s$ requires additional precision of order $O(L)$, which the stated working-precision allowance covers.</p><p>Accordingly, the claim that a dyadic approximation satisfying</p><p>$$
+|\widehat J-J(r)|\leq\frac14
+$$</p><p>can be computed in polynomial time is justified.</p><h3>Minor issue: an overbroad lower-bound statement</h3><p>The sentence</p><blockquote>“Thus all arguments and intermediate nonzero divisors have magnitudes between $2^{-O(L)}$ and $2^{O(L)}$.”</blockquote><p>is too broad if “all arguments” includes arctangent inputs. Such an input can be zero.</p><p>For example, take $q=1/5$ and the reachable target $r=1/8$. Then</p><p>$$
+U_r=4(1-q)r+3q-1=0,
+$$</p><p>so $U_r/s=0$.</p><p>This does not affect the approximation algorithm: arctangent is well defined and well conditioned at zero.</p><p><b>Minimum clarification:</b> Restrict the asserted positive lower bound to the quantities that require separation from zero, and explicitly allow zero arctangent arguments.</p><h3>5. Certified decisions outside the uncertainty interval</h3><p>The two horizon tests follow correctly from the approximation error and the discrepancy bound. In particular, the non-strict sufficient condition for a yes answer is valid:</p><p>$$
+H\geq\widehat J+K+\frac14
+\quad\Longrightarrow\quad
+H\geq T.
+$$</p><p>All these comparisons are exact rational comparisons, so binary encoding of $H$ creates no additional difficulty.</p><p>The stated uncertainty interval has length $2K+1/2$, and its asserted upper bound of $2K+2$ integer horizons is valid.</p><p><b>Finding:</b> The output proves a polynomial-time procedure that decides every horizon outside an explicitly computable set of $O(L)$ consecutive candidates. It does not decide the candidates inside that set.</p><h3>6. Lemma 2: corrected integral estimate</h3><p>The proof’s bounds check out individually:</p><ul><li>The derivative assumption gives $1/2\leq w(u)\leq3/2$.</li><li>Taylor’s theorem gives the stated remainder involving $Mv_i$.</li><li>The reciprocal-integral and half-logarithm replacement errors satisfy the stated bounds.</li><li>The expansions for $|k|\leq1/2$ correctly bound the remaining discrepancy by $2k^2$.</li><li>The comparison between $k_i^2$ and $v&#x27;(x)^2$, followed by integration against $dx/v(x)$, gives the stated coefficients.</li><li>The complete intervals are disjoint, so the bounds on $\sum_i v_i$ and $\sum_i v_i^2$ apply.</li><li>The final truncated interval has a positive corrected-integral increment and the asserted upper bound.</li></ul><p>The final constant $3$ is conservative but valid. Combining these steps proves the lemma as stated.</p><p><b>Finding:</b> Lemma 2 is correct.</p><h3>7. Application near the critical bias</h3><p>The rational evaluations used to bracket $q_\star$ are correct. Consequently, the stated range for $a$ follows.</p><p>The endpoint and maximum bounds for the concave quadratic $F_q&#x27;$ establish $|v&#x27;|\leq1/2$. The displayed second derivative and its bounds establish that $M=4$ is admissible.</p><p>The identities</p><p>$$
+h_q(0)=q^2,
+\qquad
+h_q(1/2)=q
+$$</p><p>are correct. Convexity gives the asserted upper bound on $h_q$. The estimate on $h_q&#x27;^2/h_q$ is valid, and the subsequent inequality has the correct numerical constant:</p><p>$$
+16a^2+4q\leq\frac{536}{45}&lt;12.
+$$</p><p>Thus the integral bound is valid. Substituting into Lemma 2 gives exactly</p><p>$$
+36+48+4+3=91.
+$$</p><p>The logarithmic correction lies between $0$ and $1$, so the bound $|T-J(1/2)|\leq92$ follows.</p><p><b>Finding:</b> The constant-error application is proved.</p><h3>8. Bottleneck formula, asymptotic, and exponential family</h3><p>The substitutions for $U_r$, $U_0$, and $h_q(1/2)$ are correct. The arctangent identity applies with the stated signs.</p><p>The error bound $21/2$ for replacing the arctangent difference by $\pi$ is valid. The remaining logarithms have sum less than $7/2$, so the bound $14$ follows. Combining this with the previous discrepancy estimate gives a bound stronger than the claimed $128$, so the displayed constant-error theorem is valid.</p><p>The assertion that at most $258$ integer horizons remain uncertified by this estimate is also valid.</p><p>The factorization of $s^2$ and the limiting coefficient are correct, giving</p><p>$$
+\lim_{\substack{q\downarrow q_\star\\q\in\mathbb Q}}
+\sqrt{q-q_\star}\,T(q)
+=
+\pi\,2^{1/4}.
+$$</p><p>For the family $q_n$, irrationality gives the strict dyadic-distance inequalities. Exact comparisons using $D$ support the claimed polynomial-time construction. The upper-margin check places every stated family member in the required regime.</p><p>The conclusion</p><p>$$
+T(q_n)=\Theta(2^{n/2})
+$$</p><p>follows from the proved constant-error estimate. The original input choices correctly realize $r=1/2$, and the supplied horizon has encoding length $\Theta(n)$ and exceeds the crossing time.</p><p><b>Finding:</b> The exponential-transient example is sound. The output correctly avoids treating long transients as a hardness proof.</p><h3>9. Resolution of the assigned task</h3><p>The major remaining requirement is the complexity classification itself.</p><p>An interval containing only $O(L)$ possible crossing times does not provide an algorithm for comparing $x_H$ with $r$ at those horizons. The corresponding horizons may be exponentially large. Neither integral estimate resolves exact equality or arbitrarily close strict comparisons there.</p><p>The output explicitly acknowledges this limitation. Its conclusions do not improperly invoke the stochastic theorem. The [cited paper](https://link.springer.com/article/10.1007/s00446-021-00396-5) concerns stochastic graph dynamics; it supplies no missing exact-comparison step in this write-up.</p><p><b>Minimum additional work required:</b> Provide either a uniform polynomial-time exact decision procedure for the exceptional horizons, with bit-complexity and equality handling, or a valid hardness reduction for the specified problem. This requires additional mathematics, not an expositional correction.</p><p>The direction is promising because the established estimates are sound and sharply isolate the unresolved comparisons. The main target nevertheless remains unsettled.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

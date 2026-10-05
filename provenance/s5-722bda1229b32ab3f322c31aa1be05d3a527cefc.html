@@ -1,0 +1,401 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-722bda1229b32ab3f322c31aa1be05d3a527cefc — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-722bda1229b32ab3f322c31aa1be05d3a527cefc <span style="font-weight:normal;color:#8a7350">(s5-722bda1229b32ab3f322c31aa1be05d3a527cefc)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 (Geometric convergence) — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>In the pure arbitrageur environment, starting from φ0 = 0 with step size η ≤1/(2L): E∥φt −φ∗∥2 ≤(1 −2ηµ)t ∥φ∗∥2 + ησ2 2µ , where σ2 = E∥gt(φ∗)∥2 is the gradient variance at the optimum. With η = 0.2 and µ ≈1 4, the contraction factor per round is 0.9; roughly 22 rounds suffice to reduce the initial error by 10×. Three results underpin this guarantee. Moment-matched target.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(M\) binary events and a stationary trader population with rational type masses \(\mu_r\), where type \(r\) has a fixed contract \(S_r\) and target price \(p_r\), study the shared-state AMM with objective \(F_\mu(\phi)=\sum_r \mu_r\,\mathrm{CE}(p_r,q_{S_r}(\phi))\). Starting from \(\phi_0=0\), determine the convergence guarantee for the state and coherent contract prices after \(t\) type draws; in the complete-parlay case \(\mu_S=1/(2^M-1)\), certify the cumulative expected loss.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(M\geq2\). A society is given by its support: the list of \(\tau\) types with positive mass, each mass \(\mu_r\) a binary rational, with \(\sum_r\mu_r=1\); \(\tau\) is the support size, not the number of possible types. Type \(r\) specifies a nonempty contract \(S_r\subseteq[M]\) and a rational target \(p_r\in(0,1)\). Let \(L\) be the total input bit length; state computational running times in \(M,\tau,L\) and the other parameters.<br>The belief state is \(\phi=(\theta,W)\in\mathbb R^{M+\binom M2}\), with \(P_\phi(x)=Z(\phi)^{-1}\exp(\sum_i\theta_i x_i+\sum_{i&lt;j}W_{ij}x_ix_j)\) on \(\{0,1\}^M\); contract \(S\) pays \(\prod_{i\in S}x_i\) and has exact coherent price \(q_S(\phi)=\mathbb E_{P_\phi}[\prod_{i\in S}X_i]\).<br>Every singleton and pair occurs in the support. Promise that a finite parameter \(\phi^\star\) satisfies \(p_r=q_{S_r}(\phi^\star)\) for every type; the singleton and pair constraints uniquely identify it.<br>Define \(\mathrm{CE}(p,q)=-p\log q-(1-p)\log(1-q)\) and \(F_\mu(\phi)=\sum_r\mu_r\mathrm{CE}(p_r,q_{S_r}(\phi))\). Independently draw \(r_s\sim\mu\) and update \(\phi_{s+1}=\phi_s-\eta\nabla_\phi\mathrm{CE}(p_{r_s},q_{S_{r_s}}(\phi_s))\), starting at \(\phi_0=0\), with constant \(\eta&gt;0\). All quotes refresh after each update; there is no additional update or projection.<br>For liquidity \(b&gt;0\), define cumulative expected informed-trade LMSR loss by \(\mathcal L_t=b\sum_{s=0}^{t-1}\mathbb E[\mathrm{KL}(\mathrm{Bern}(p_{r_s})\Vert\mathrm{Bern}(q_{S_{r_s}}(\phi_s)))]\); only the actually drawn contract incurs loss. Complete-parlay sampling means one type per nonempty subset, each with mass \(1/(2^M-1)\).</p><p>Does this initialization yield geometric mean-square convergence of the state and all coherent contract prices toward their targets for sufficiently small constant \(\eta\), or can convergence fail under these promises?<br>Under complete-parlay sampling, is \(\mathcal L_t=O(b\|\phi^\star\|^2/\eta+b\eta t)\) with constants independent of \(M\), or can this scaling fail?</p><p>Known for sequential trading: geometric convergence is claimed, but the supporting estimate assumes every iterate remains in a strongly convex neighborhood and assumes bounded conditional gradient variance. [Verified source](https://arxiv.org/html/2603.22596v3).<br>The complete-parlay loss estimate additionally assumes dimension-independent convergence and average-sensitivity bounds; these conditional results do not establish that the input promises and initialization ensure the requested guarantees. [Verified source](https://arxiv.org/html/2603.22596v3).</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized positive rational masses to sum to one and interpreted successive type draws as independent.</li><li>Required nonempty contracts, interior rational targets, and positive liquidity and step size.</li><li>Carried over positive singleton and pair sampling and the augmented-objective assumption that all traded targets are realizable by one finite pairwise parameter.</li><li>Specified exact marginal prices and gradients; shadow repricing refreshes quotes without adding gradient steps or loss-bearing trades.</li><li>Defined loss as expected informed-trade LMSR extraction on the sampled contract, excluding bookkeeping shadow trades.</li><li>Expressed transient loss through the target parameter norm because the graded question supplies no correlation-strength parameter.</li><li>Made applicability from the stated initialization part of the target: the local-neighborhood and uniform-estimate assumptions remain explicit in the nearest known results rather than being silently presumed.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Rigorous partial results</h3><p>The global convergence question remains unresolved here. In particular, I do not prove that every fixed promised instance converges geometrically from zero for sufficiently small constant step size, and I do not construct an instance where eventual convergence fails.</p><p>The following results advance that question:</p><ul><li>An explicit promised instance with $M=2$ has <b>strictly increasing expected squared state error on the first update, for every $\eta&gt;0$</b>. Thus contraction at every step from zero is false.</li><li>A loss-dependent gradient bound gives geometric convergence, a dimension-independent cumulative-loss coefficient, and an exit-probability estimate for the actual process stopped upon leaving a strongly convex neighborhood.</li><li>The complete-parlay loss bound fails uniformly over any dimension-independent interval of positive step sizes.</li></ul><p>The cited convergence proof explicitly assumes that every iterate remains in a local neighborhood. That assumption is not supplied by the input promises. [Appendix C.2 of the cited paper](https://arxiv.org/html/2603.22596v3)</p><h3>1. Global identities and bounds</h3><p>Write<br>$$
+d=M+\binom M2,
+\qquad
+T(x)=\bigl((x_i)_i,(x_ix_j)_{i&lt;j}\bigr).
+$$<br>For a nonempty contract $S$, let<br>$$
+A_S=\{x:x_i=1\text{ for every }i\in S\}.
+$$<br>At every finite parameter, both $A_S$ and its complement have positive probability: they contain the all-one and all-zero outcomes, respectively.</p><p>For a type $r$, define<br>$$
+D_r(\phi)=
+\mathrm{KL}\!\left(\mathrm{Bern}(p_r)\,\middle\Vert\,
+\mathrm{Bern}(q_{S_r}(\phi))\right).
+$$<br>Realizability gives<br>$$
+J(\phi):=\sum_r\mu_rD_r(\phi)
+=F_\mu(\phi)-F_\mu(\phi^\star).
+$$<br>Thus $J\geq0$, and the loss in the question is exactly<br>$$
+\mathcal L_t=b\sum_{s=0}^{t-1}\mathbb E[J(\phi_s)].
+$$<br>This identity charges only the drawn contract, because $r_s$ is independent of the history determining $\phi_s$.</p><h3>Gradient and Hessian identities</h3><p>Fix a contract $S$ and target $p$. Put<br>$$
+m=\mathbb E_\phi T,\qquad
+m^+=\mathbb E_\phi[T\mid A_S],\qquad
+m^-=\mathbb E_\phi[T\mid A_S^c],
+\qquad q=q_S(\phi).
+$$<br>Differentiating the finite partition sums gives<br>$$
+\nabla\log q=m^+-m,
+\qquad
+\nabla\log(1-q)=m^--m.
+$$<br>Consequently, its cross-entropy gradient is<br>$$
+g_{S,p}(\phi)
+=m-pm^+-(1-p)m^-
+=(q-p)(m^+-m^-).
+$$<br>Every conditional-mean coordinate belongs to $[0,1]$. Therefore<br>$$
+\|g_{S,p}(\phi)\|^2\leq d(q-p)^2\leq d.
+$$<br>In particular, every finite-time iterate is finite and<br>$$
+\|\phi_s\|\leq s\eta\sqrt d.
+$$</p><p>Let $C,C^+,C^-$ be the unconditional and corresponding conditional covariance matrices of $T$. Differentiation again gives<br>$$
+\nabla^2\mathrm{CE}(p,q_S(\phi))
+=C-pC^+-(1-p)C^-.
+$$<br>Each covariance matrix is positive semidefinite and has trace at most $d/4$, since its coordinates are binary. Hence both $C$ and $pC^++(1-p)C^-$ lie between $0$ and $(d/4)I$, and<br>$$
+\left\|\nabla^2\mathrm{CE}(p,q_S(\phi))\right\|_{\mathrm{op}}
+\leq K,
+\qquad K=\frac d4.
+$$<br>The same global smoothness bound holds for $F_\mu$.</p><h3>A loss-dependent second-moment bound</h3><p>For fixed $q\in(0,1)$, consider<br>$$
+f(u)=\mathrm{KL}(\mathrm{Bern}(u)\Vert\mathrm{Bern}(q)).
+$$<br>It satisfies $f(q)=f&#x27;(q)=0$ and<br>$$
+f&#x27;&#x27;(u)=\frac1{u(1-u)}\geq4.
+$$<br>Integrating this second-derivative inequality between $q$ and $p$ yields<br>$$
+\mathrm{KL}(\mathrm{Bern}(p)\Vert\mathrm{Bern}(q))
+\geq2(p-q)^2.
+$$<br>Combining it with the gradient identity proves the global bound<br>$$
+\boxed{\quad
+\mathbb E_r\|g_r(\phi)\|^2\leq\frac d2J(\phi).
+\quad}
+$$<br>Thus the conditional gradient variance is globally bounded:<br>$$
+\mathbb E\!\left[
+\|g_{r_s}(\phi_s)-\nabla F_\mu(\phi_s)\|^2
+\,\middle|\,\phi_s\right]\leq d.
+$$<br>More strongly, that variance is at most $dJ(\phi_s)/2$. It vanishes at the realized target; there is no intrinsic additive noise floor there.</p><p>Since every individual gradient vanishes at $\phi^\star$, Taylor’s formula and the global Hessian bound also give<br>$$
+D_r(\phi)\leq\frac K2\|\phi-\phi^\star\|^2,
+\qquad
+\boxed{\quad J(\phi)\leq\frac d8\|\phi-\phi^\star\|^2.\quad}
+$$</p><h3>2. A local theorem for the actual unprojected process</h3><p>This section establishes a stopped-process guarantee without assuming that all iterates remain in the neighborhood.</p><h3>Positive curvature at the target</h3><p>The covariance matrix<br>$$
+C(\phi)=\operatorname{Cov}_\phi(T)
+$$<br>is positive definite at every finite parameter. Indeed, if $u^\top C(\phi)u=0$, full support implies that $u^\top T(x)$ is constant over all outcomes. Evaluation at the zero outcome makes the constant zero. Evaluation at each unit vector makes every singleton coefficient zero; evaluation at each outcome with exactly two ones then makes every pair coefficient zero. Thus $u=0$.</p><p>At the target,<br>$$
+\nabla^2F_\mu(\phi^\star)
+=
+\sum_r
+\frac{\mu_r}{p_r(1-p_r)}
+\nabla q_{S_r}(\phi^\star)
+\nabla q_{S_r}(\phi^\star)^\top.
+$$<br>For singleton and pair contracts, their price gradients are the columns of $C(\phi^\star)$. Those columns span $\mathbb R^d$, and every corresponding contract has positive total sampling mass. Therefore<br>$$
+\nabla^2F_\mu(\phi^\star)\succ0.
+$$</p><p>By continuity, there are $R&gt;0$ and $\kappa&gt;0$ such that<br>$$
+\nabla^2F_\mu(\phi)\succeq\kappa I
+\qquad
+\text{whenever }\|\phi-\phi^\star\|\leq R.
+$$<br>The global smoothness bound implies $\kappa\leq d/4$.</p><h3>Conditional contraction and loss decrease</h3><p>Suppose $\phi$ belongs to this ball, and write $e=\phi-\phi^\star$. Strong convexity along the segment from $\phi$ to $\phi^\star$ gives<br>$$
+\langle e,\nabla F_\mu(\phi)\rangle
+\geq J(\phi)+\frac\kappa2\|e\|^2.
+$$<br>Expanding the actual stochastic update and applying the loss-dependent second-moment bound yields<br>$$
+\begin{aligned}
+\mathbb E_r\|\phi-\eta g_r(\phi)-\phi^\star\|^2
+&amp;=\|e\|^2-2\eta\langle e,\nabla F_\mu(\phi)\rangle
++\eta^2\mathbb E_r\|g_r(\phi)\|^2\\
+&amp;\leq
+(1-\eta\kappa)\|e\|^2
+-\eta\left(2-\frac{\eta d}{2}\right)J(\phi).
+\end{aligned}
+$$<br>Assume henceforth<br>$$
+0&lt;\eta\leq\frac2d,
+\qquad
+a=2-\frac{\eta d}{2}\geq1,
+\qquad
+\rho=1-\eta\kappa\in[1/2,1).
+$$</p><h3>Exit probability and loss before exit</h3><p>Assume the prescribed initialization lies strictly inside the ball:<br>$$
+r_0:=\|\phi_0-\phi^\star\|=\|\phi^\star\|&lt;R.
+$$<br>Define the stopping time<br>$$
+\xi=\inf\{s\geq0:\|\phi_s-\phi^\star\|\geq R\},
+$$<br>with $\xi=\infty$ if the set is empty. Stopping is only an analytical device; the updates are not changed.</p><p>Let<br>$$
+Y_s=\|\phi_{s\wedge\xi}-\phi^\star\|^2.
+$$<br>With respect to the history before drawing $r_s$, the preceding inequality gives<br>$$
+\mathbb E[Y_{s+1}\mid\mathcal F_s]
+\leq
+Y_s-\mathbf1_{\{s&lt;\xi\}}
+\left(
+\eta\kappa\|\phi_s-\phi^\star\|^2
++a\eta J(\phi_s)
+\right).
+$$<br>All these variables are integrable by the finite-time parameter bound in Section 1.</p><p>Taking expectations and summing proves<br>$$
+a\eta\sum_{s=0}^{t-1}
+\mathbb E[\mathbf1_{\{s&lt;\xi\}}J(\phi_s)]
+\leq r_0^2.
+$$<br>Independence of the next draw gives<br>$$
+\boxed{\quad
+b\,\mathbb E\!\left[
+\sum_{s=0}^{t-1}\mathbf1_{\{s&lt;\xi\}}D_{r_s}(\phi_s)
+\right]
+\leq\frac{br_0^2}{a\eta}
+\leq\frac{br_0^2}{\eta}.
+\quad}
+$$<br>This includes the trade whose update first exits the ball, because its starting state is inside.</p><p>Also, $\mathbb E Y_t\leq r_0^2$. On $\{\xi\leq t\}$, $Y_t\geq R^2$. Consequently,<br>$$
+\boxed{\quad
+\Pr(\xi&lt;\infty)\leq\frac{r_0^2}{R^2}.
+\quad}
+$$</p><h3>Geometric convergence on trajectories that stay inside</h3><p>Discarding the nonnegative contribution of trajectories that exit at the next update gives<br>$$
+\mathbb E\!\left[
+\|\phi_t-\phi^\star\|^2\mathbf1_{\{\xi&gt;t\}}
+\right]
+\leq\rho^t r_0^2.
+$$<br>Let $A=\{\xi=\infty\}$ and $\alpha=\Pr(A)$. Then<br>$$
+\alpha\geq1-\frac{r_0^2}{R^2}&gt;0,
+$$<br>and<br>$$
+\mathbb E[\|\phi_t-\phi^\star\|^2\mid A]
+\leq\frac{\rho^t r_0^2}{\alpha}.
+$$<br>Moreover,<br>$$
+\sum_{t=0}^{\infty}
+\mathbb E\!\left[
+\|\phi_t-\phi^\star\|^2\mathbf1_{\{\xi&gt;t\}}
+\right]&lt;\infty.
+$$<br>Thus the corresponding random series is finite almost surely, which implies $\phi_t\to\phi^\star$ almost surely on $A$.</p><p>For every nonempty $S$,<br>$$
+\nabla q_S(\phi)=\operatorname{Cov}_\phi(\mathbf1_{A_S},T).
+$$<br>Each covariance coordinate has absolute value at most $1/4$ by Cauchy–Schwarz and the binary variance bound. Hence<br>$$
+|q_S(\phi)-q_S(\phi^\star)|^2
+\leq\frac d{16}\|\phi-\phi^\star\|^2.
+$$<br>The bound is uniform in $S$, so it also proves<br>$$
+\mathbb E\!\left[
+\max_{\varnothing\neq S\subseteq[M]}
+|q_S(\phi_t)-q_S(\phi^\star)|^2
+\mathbf1_{\{\xi&gt;t\}}
+\right]
+\leq\frac d{16}\rho^t r_0^2.
+$$</p><p>If containment holds almost surely, these estimates become unconditional and yield<br>$$
+\mathcal L_t\leq\frac{b\|\phi^\star\|^2}{\eta}.
+$$<br>This conditional loss coefficient is independent of $M$ and requires neither a dimension-independent curvature constant nor a dimension-independent sensitivity bound. However, the theorem does not control the loss after an exit, and the promises do not ensure $\|\phi^\star\|&lt;R$.</p><h3>3. A promised instance moves farther from the target immediately</h3><p>Take $M=2$ and<br>$$
+\phi^\star=(\log2,-\log100,-\log8).
+$$<br>The unnormalized weights of outcomes $00,10,01,11$ are<br>$$
+1,\quad2,\quad\frac1{100},\quad\frac1{400}.
+$$<br>Therefore the exact rational targets are<br>$$
+p_1=\frac{801}{1205},
+\qquad
+p_2=\frac1{241},
+\qquad
+p_{12}=\frac1{1205}.
+$$<br>Use the three types with masses<br>$$
+\mu_1=\frac{1022}{1024},
+\qquad
+\mu_2=\mu_{12}=\frac1{1024}.
+$$<br>Every required contract occurs, and the displayed finite parameter realizes every target.</p><p>At initialization, the singleton-$1$ gradient is<br>$$
+g_1(0)=\left(\frac12-\frac{801}{1205}\right)(1,0,1/2).
+$$<br>For $e_0=-\phi^\star$,<br>$$
+\langle e_0,g_1(0)\rangle
+=
+-\frac{397\log2}{4820}.
+$$<br>For either of the other types, the coordinate gradient bound gives<br>$$
+|\langle e_0,g_r(0)\rangle|
+\leq\|\phi^\star\|_1
+=\log1600&lt;11\log2.
+$$<br>Consequently,<br>$$
+\begin{aligned}
+\langle e_0,\nabla F_\mu(0)\rangle
+&amp;&lt;
+\frac{\log2}{1024}
+\left(
+-\frac{1022\cdot397}{4820}+22
+\right)\\
+&amp;&lt;0,
+\end{aligned}
+$$<br>where the last inequality follows from<br>$$
+1022\cdot397=405734&gt;106040=22\cdot4820.
+$$<br>The exact first-update expansion therefore gives, for every $\eta&gt;0$,<br>$$
+\begin{aligned}
+\mathbb E\|\phi_1-\phi^\star\|^2
+&amp;=\|\phi^\star\|^2
+-2\eta\langle e_0,\nabla F_\mu(0)\rangle
++\eta^2\mathbb E_r\|g_r(0)\|^2\\
+&amp;&gt;\|\phi^\star\|^2.
+\end{aligned}
+$$</p><p>Thus a guarantee of the form<br>$$
+\mathbb E\|\phi_t-\phi^\star\|^2
+\leq\rho^t\|\phi^\star\|^2,
+\qquad 0&lt;\rho&lt;1,
+$$<br>cannot follow from the promises.</p><p><b>Scope:</b> a first-step increase does not exclude eventual convergence, or a geometric estimate with a larger prefactor. It is not a counterexample to the intended eventual-convergence question.</p><h3>4. No finite spurious stationary points with only singleton and pair contracts</h3><p>This result holds for every $M$, not just $M=2$.</p><p>Suppose every supported contract is a singleton or pair. Combine types sharing a contract into a total mass $\lambda_j&gt;0$; their targets agree by realizability. Index these contracts by the coordinates of $T$, and write<br>$$
+m_j=q_{S_j}(\phi),
+\qquad
+m_j^\star=q_{S_j}(\phi^\star).
+$$<br>The gradient is<br>$$
+\nabla F_\mu(\phi)=C(\phi)a,
+\qquad
+a_j=\lambda_j
+\frac{m_j-m_j^\star}{m_j(1-m_j)}.
+$$<br>Positive definiteness of $C(\phi)$ implies that stationarity forces $a=0$, hence $m=m^\star$.</p><p>For completeness, the mean map is injective. If $v=\phi-\psi\neq0$, differentiation along their connecting segment gives<br>$$
+v^\top(m(\phi)-m(\psi))
+=
+\int_0^1v^\top C(\psi+uv)v\,du&gt;0.
+$$<br>Thus $m=m^\star$ forces $\phi=\phi^\star$.</p><p>So, with only singleton and pair contracts, $\phi^\star$ is the unique finite stationary point. This does not establish boundedness or exclude convergence toward infinity.</p><h3>5. Complete-parlay loss scaling fails on any uniform step-size interval</h3><p>I prove that there are no constants $C&lt;\infty$ and $\eta_0&gt;0$, both independent of $M$, such that every promised complete-parlay instance satisfies<br>$$
+\mathcal L_t
+\leq Cb\left(\frac{\|\phi^\star\|^2}{\eta}+\eta t\right)
+$$<br>for every $t\geq1$ and every $0&lt;\eta\leq\eta_0$.</p><h3>Construction and promises</h3><p>For $M\geq8$, set<br>$$
+h=\lceil\log_2M\rceil,
+\qquad
+a=(1+1/M)^{16h},
+\qquad
+w=\log a.
+$$<br>Choose<br>$$
+\theta_i^\star=0,
+\qquad
+W_{ij}^\star=w.
+$$<br>Use complete-parlay sampling, so $\tau=2^M-1$, and give every contract its exact target.</p><p>An outcome with $j$ ones has weight $a^{\binom j2}$. Since $a$ is rational, for $k=|S|$ its target is the rational number<br>$$
+p_S=
+\frac{\displaystyle\sum_{j=k}^M
+\binom{M-k}{j-k}a^{\binom j2}}
+{\displaystyle\sum_{j=0}^M
+\binom Mj a^{\binom j2}}.
+$$<br>Every outcome has positive weight, so every target lies in $(0,1)$. Singleton and pair means identify the finite parameter by the injectivity argument in Section 4.</p><p>Using $\log(1+1/M)\leq1/M$,<br>$$
+\|\phi^\star\|^2
+=\binom M2w^2
+\leq128h^2.
+$$</p><h3>Every target exceeds one half</h3><p>An outcome with $k$ zeros has weight relative to the all-one outcome equal to<br>$$
+\exp\!\left(-\frac{wk(2M-k-1)}2\right)
+\leq
+\exp\!\left(-\frac{wk(M-1)}2\right).
+$$<br>Since $\log(1+1/M)\geq1/(2M)$,<br>$$
+\frac{w(M-1)}2
+\geq2h
+\geq2\log M.
+$$<br>The relative weight is therefore at most $M^{-2k}$. Summing these relative weights over all outcomes gives<br>$$
+P_{\phi^\star}(\mathbf1)
+\geq(1+M^{-2})^{-M}
+\geq e^{-1/M}
+&gt;\frac12.
+$$<br>Every nonempty contract pays on $\mathbf1$, so $p_S&gt;1/2$ for every $S$.</p><h3>The first trade already violates uniform scaling</h3><p>At initialization, $q_S(0)=2^{-|S|}$. Binary entropy is at most $\log2$, and the complement term in cross-entropy is nonnegative. Thus<br>$$
+D_S(0)
+\geq p_S|S|\log2-\log2
+\geq\left(\frac{|S|}{2}-1\right)\log2.
+$$<br>A uniformly sampled nonempty subset satisfies<br>$$
+\mathbb E|S|
+=\frac{M2^{M-1}}{2^M-1}
+\geq\frac M2.
+$$<br>Consequently, for $M\geq8$,<br>$$
+\mathcal L_1
+\geq b\left(\frac M4-1\right)\log2
+\geq\frac{bM\log2}{8}.
+$$<br>For every fixed $\eta&gt;0$,<br>$$
+\frac{\mathcal L_1}
+{b\|\phi^\star\|^2/\eta+b\eta}
+\geq
+\frac{M\log2/8}{128h^2/\eta+\eta}
+\longrightarrow\infty.
+$$<br>Choosing any fixed $\eta\in(0,\eta_0]$ proves the asserted impossibility. This loss occurs before the first update and charges only the sampled contract.</p><p><b>Scope:</b> this does not refute a guarantee with an instance-dependent or dimension-dependent step-size threshold. For this family, a bound with a fixed constant $C$ and $\eta\leq1$ would require<br>$$
+\eta=O\!\left(\frac{(\log M)^2}{M}\right),
+$$<br>as follows by multiplying the proposed first-trade inequality by $\eta$.</p><h3>6. Input size and computational running times</h3><h3>Constructing the loss counterexample</h3><p>Put<br>$$
+A=(M+1)^{16h},
+\qquad
+B=M^{16h},
+\qquad
+D=\binom M2.
+$$<br>Multiplying every outcome weight by $B^D$ gives integer weights<br>$$
+u_j=A^{\binom j2}B^{D-\binom j2}.
+$$<br>The target numerator and denominator are the corresponding integer sums from Section 5. Their bit lengths are<br>$$
+K=O(M^2(\log M)^2).
+$$<br>Listing the contracts, masses, and targets explicitly therefore gives<br>$$
+L=O(\tau K)
+=O\!\left(\tau M^2(\log M)^2\right),
+\qquad
+\tau=2^M-1.
+$$</p><p>For an explicit conservative construction bound, repeated multiplication computes all $u_j$ in $O(M^3K^2)$ bit operations using schoolbook arithmetic. Computing the $M$ distinct target fractions costs $O(M^2K^2)$ further bit operations. Reduction by the elementary Euclidean algorithm costs at most $O(MK^3)$, and writing the support costs $O(\tau K)$. Hence a valid overall bound is<br>$$
+O(M^3K^2+MK^3+\tau K)
+$$<br>bit operations.</p><h3>Computing gradients and refreshing quotes</h3><p>After parsing the $L$-bit input, use subset masks to enumerate all outcome weights<br>$$
+v(A)=
+\exp\!\left(
+\sum_{i\in A}\theta_i+
+\sum_{\{i,j\}\subseteq A}W_{ij}
+\right),
+\qquad A\subseteq[M].
+$$<br>Direct computation costs $O(M^2 2^M)$ arithmetic operations and $2^M$ exponential evaluations.</p><p>Initialize $H(A)=v(A)$. For each $i\in[M]$, perform<br>$$
+H(A)\leftarrow H(A)+H(A\cup\{i\})
+\qquad\text{for every }A\text{ not containing }i.
+$$<br>This superset-sum transform costs $O(M2^M)$ additions and produces<br>$$
+H(S)=\sum_{A\supseteq S}v(A).
+$$<br>Therefore<br>$$
+Z=H(\varnothing),
+\qquad
+q_S=\frac{H(S)}Z.
+$$<br>It refreshes all coherent quotes with shared work; extracting the $\tau$ supported quotes costs $O(\tau)$ further operations.</p><p>If coordinate $j$ of $T$ corresponds to singleton or pair $B_j$, then<br>$$
+\frac{\partial q_S}{\partial\phi_j}
+=q_{S\cup B_j}-q_Sq_{B_j}.
+$$<br>Thus the sampled gradient can be recovered from the quote table in $O(d)$ additional operations.</p><p>A round, including the update and subsequent quote refresh, consequently costs<br>$$
+O(M^2 2^M+\tau)
+$$<br>real-arithmetic operations, with $O(2^M+\tau+d)$ storage. Over $t$ rounds the operation count is<br>$$
+O\!\left(t(M^2 2^M+\tau)\right),
+$$<br>in addition to input parsing and sampling preprocessing.</p><p>These are real-arithmetic and exponential-evaluation counts. They do not assert exact finite-bit computation of arbitrary transcendental iterates.</p><h3>7. Remaining gap</h3><p>The stopped-process theorem controls actual trades until an exit and proves convergence on the event of permanent containment. It does not control trajectories after an exit. The explicit initialization example shows that global contraction cannot simply be substituted for that missing argument, even when no finite spurious stationary point exists.</p><p>For loss, uniform scaling on a dimension-independent positive step-size interval is disproved. Scaling under a precisely specified dimension-dependent or instance-dependent small-step restriction remains open without an additional global argument.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 2–4 and 7: global convergence from the prescribed initialization: The output does not decide whether every fixed promised instance has geometric mean-square convergence from $\phi_0=0$ for sufficiently small constant $\eta&gt;0$, or whether convergence can fail. The local theorem requires $\|\phi^\star\|&lt;R$ and controls convergence only on permanent containment; the first-update increase and restricted stationary-point result do not settle the requested alternative. Completing this part requires additional mathematics.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: correct partial progress; the main convergence question remains unresolved.</b> The substantive calculations and conditional results are valid. The complete-parlay construction disproves the loss bound uniformly over a dimension-independent interval of positive step sizes. It does not address every possible instance-dependent small-step formulation.</p><p>No central mathematical step in the supplied argument is false.</p><h3>1. Global identities and bounds</h3><p><b>Verified.</b></p><p>For each nonempty contract, the all-one outcome belongs to its paying event and the all-zero outcome belongs to its complement. Full support at finite parameters therefore ensures<br>$$
+0&lt;q_S(\phi)&lt;1.
+$$<br>All logarithms, conditional expectations, and derivatives used subsequently are well-defined.</p><p>Realizability gives<br>$$
+D_r(\phi)
+=\mathrm{CE}(p_r,q_{S_r}(\phi))-\mathrm{CE}(p_r,p_r).
+$$<br>Consequently, the identities for $J$ and $\mathcal L_t$ are correct. Independence of the current draw from the state justifies averaging only the loss of the sampled contract.</p><p>The conditional-mean derivative identities correctly yield<br>$$
+g_{S,p}(\phi)=(q-p)(m^+-m^-).
+$$<br>Because every coordinate of both conditional means lies in $[0,1]$, the bounds<br>$$
+\|g_{S,p}(\phi)\|^2\leq d(q-p)^2\leq d
+$$<br>and<br>$$
+\|\phi_s\|\leq s\eta\sqrt d
+$$<br>follow.</p><p>The Hessian identity is also correct. Each covariance matrix has trace at most $d/4$, hence is bounded above by $(d/4)I$. The difference of the two positive semidefinite matrices appearing in the Hessian lies between $-(d/4)I$ and $(d/4)I$. Thus the stated global Hessian bound uses the correct constant.</p><p>The calculation<br>$$
+f&#x27;&#x27;(u)=\frac1{u(1-u)}\geq4
+$$<br>establishes the claimed Bernoulli divergence bound throughout the required domain. It correctly implies<br>$$
+\mathbb E_r\|g_r(\phi)\|^2\leq\frac d2J(\phi).
+$$<br>The conditional variance bounds follow by subtracting the squared norm of the conditional mean gradient.</p><p>Finally, each individual divergence and its gradient vanish at $\phi^\star$. Taylor’s formula with the global Hessian bound therefore justifies<br>$$
+D_r(\phi)\leq\frac d8\|\phi-\phi^\star\|^2
+$$<br>globally. No convexity assumption is needed for this upper bound.</p><h3>2. Local curvature and stopping-time results</h3><p><b>Verified under the explicitly stated additional initialization condition.</b></p><p>The proof that $C(\phi)$ is positive definite is complete: full support turns zero variance into constancy on every outcome; evaluation at the zero, singleton, and pair outcomes eliminates all coefficients.</p><p>At realizability, the displayed Hessian formula is correct. Singleton and pair price gradients are covariance columns, and these span the parameter space. Their positive sampling masses therefore ensure strict positive definiteness of the objective Hessian at $\phi^\star$.</p><p>Continuity supplies some $R&gt;0$ and $\kappa&gt;0$ with the stated curvature bound. This establishes local curvature only; it supplies no guarantee that zero belongs to that neighborhood.</p><p>The strong-convexity inequality and stochastic squared-error expansion give precisely<br>$$
+\mathbb E_r\|\phi-\eta g_r(\phi)-\phi^\star\|^2
+\leq
+(1-\eta\kappa)\|\phi-\phi^\star\|^2
+-a\eta J(\phi).
+$$<br>The step-size restriction ensures $a\geq1$ and $\rho\in[1/2,1)$.</p><p>The stopping argument handles the exit update correctly. When $s&lt;\xi$, the next stopped state equals the actual next state, including when that update exits. When $s\geq\xi$, the stopped state is unchanged. Thus the conditional inequality for $Y_s$ is valid, and finite-time boundedness ensures its integrability.</p><p>Telescoping proves the claimed loss bound before exit. The exit-probability estimate follows from $Y_t\geq R^2$ on $\{\xi\leq t\}$ and then passage to the increasing union of these events.</p><p>The geometric estimate is correctly restricted to surviving trajectories:<br>$$
+\mathbb E\!\left[
+\|\phi_t-\phi^\star\|^2\mathbf1_{\{\xi&gt;t\}}
+\right]\leq\rho^t r_0^2.
+$$<br>Conditioning on permanent containment is legitimate because $r_0&lt;R$ implies $\Pr(\xi=\infty)&gt;0$. Summability of the nonnegative random series correctly establishes almost-sure convergence on that event.</p><p>The covariance bound for contract-price gradients is valid coordinatewise. Integration along a parameter segment gives the stated global Lipschitz bound, uniformly over contracts. Taking the maximum over contracts therefore preserves the displayed estimate.</p><p><b>Scope limitation:</b> these results do not give unconditional convergence for the prescribed initialization. They neither establish $r_0&lt;R$ for every promised instance nor control the state after an exit. The prover explicitly acknowledges both limitations.</p><p>The statement about the cited proof’s containment assumption is accurate: Appendix C.2 expressly assumes that all iterates remain in its local neighborhood. [Referenced proof](https://arxiv.org/html/2603.22596v3)</p><h3>3. First-update increase</h3><p><b>Verified, with the limited interpretation stated by the prover.</b></p><p>The four weights sum to $1205/400$, giving exactly<br>$$
+p_1=\frac{801}{1205},\qquad
+p_2=\frac1{241},\qquad
+p_{12}=\frac1{1205}.
+$$<br>All required contracts occur with positive rational masses summing to one.</p><p>At zero, conditioning on the first singleton gives the displayed conditional-mean difference. In particular,<br>$$
+\frac12-\frac{801}{1205}=-\frac{397}{2410},
+$$<br>and the resulting inner product is<br>$$
+\langle e_0,g_1(0)\rangle=-\frac{397\log2}{4820}.
+$$</p><p>The bounds for the remaining two types are valid, including<br>$$
+\|\phi^\star\|_1=\log1600&lt;11\log2.
+$$<br>The integer comparison establishing the negative averaged inner product is correct.</p><p>The first-update expansion consequently proves strict increase of expected squared state error for every $\eta&gt;0$.</p><p>This refutes the particular estimate with initial-error prefactor and contraction beginning at the first update. It does <b>not</b> refute eventual geometric convergence with a larger prefactor. The prover correctly makes that distinction.</p><h3>4. Singleton-and-pair stationary points</h3><p><b>Verified.</b></p><p>Realizability ensures that duplicate contracts have identical targets, so combining their masses is legitimate.</p><p>The gradient expression<br>$$
+\nabla F_\mu(\phi)=C(\phi)a
+$$<br>is correct. Positive definiteness forces every component of $a$ to vanish at stationarity; positive masses and interior means then force moment equality.</p><p>The segment integral proving injectivity of the mean map is valid and strictly positive whenever its parameter difference is nonzero.</p><p>Thus $\phi^\star$ is the unique finite stationary point when only singleton and pair contracts are supported. As acknowledged, this result does not establish bounded trajectories or exclude behavior at infinity, and it does not cover additional larger contracts.</p><h3>5. Complete-parlay loss counterexample</h3><p><b>Verified for the exact quantifiers stated in Section 5.</b></p><p>The parameter is finite, the outcome weights are rational, and the supplied target formula correctly counts outcomes containing a fixed contract. Every target is strictly between zero and one. Singleton and pair moments identify the parameter.</p><p>The norm estimate<br>$$
+\|\phi^\star\|^2\leq128h^2
+$$<br>has the correct constant.</p><p>For an outcome with $k$ zeros, the difference in pair counts is exactly<br>$$
+\frac{k(2M-k-1)}2.
+$$<br>For $M\geq8$, the subsequent bounds on $w(M-1)/2$ are valid. Summing relative weights yields<br>$$
+P_{\phi^\star}(\mathbf1)\geq(1+M^{-2})^{-M}
+\geq e^{-1/M}&gt;\frac12.
+$$<br>Every contract target therefore exceeds one half.</p><p>At zero, $q_S(0)=2^{-|S|}$. The entropy bound and nonnegative complement cross-entropy term justify the divergence lower bound. The mean cardinality of a uniformly chosen nonempty subset is correctly computed. Hence<br>$$
+\mathcal L_1\geq\frac{bM\log2}{8}.
+$$</p><p>For fixed positive $\eta$, the denominator in the proposed scaling grows at most as $(\log M)^2$, while this first-trade loss grows linearly in $M$. The displayed ratio therefore diverges. Choosing a fixed $\eta$ in any proposed dimension-independent interval proves the asserted impossibility.</p><p>The concluding necessary restriction on $\eta$ also follows from the first-trade inequality.</p><p><b>Quantifier boundary:</b> this establishes failure of a uniform step-size interval. It does not establish failure for every dimension-dependent or instance-dependent sufficiently-small-step regime. The explicit scope qualification is essential and correct.</p><h3>6. Computational claims</h3><p><b>Verified in the computational models stated.</b></p><p>The scaled integer weights have bit lengths bounded by<br>$$
+O(M^2(\log M)^2).
+$$<br>The additional binomial coefficients and finite sums preserve that order. Contract and mass encodings fit within the resulting support-list size bound.</p><p>The construction-time estimates are conservative valid upper bounds using the stated elementary arithmetic methods.</p><p>The superset-sum transform correctly computes all paying-event weight sums. The price-derivative identity<br>$$
+\frac{\partial q_S}{\partial\phi_j}
+=q_{S\cup B_j}-q_Sq_{B_j}
+$$<br>is correct. The resulting operation and storage counts are valid in a real-arithmetic model, with exponential evaluations counted separately.</p><p>These counts do not establish a finite-bit implementation of exact transcendental updates. The prover expressly states that limitation, so it is not an unsupported bit-complexity claim.</p><h3>7. Blocking issue and actionable feedback</h3><p><b>Major issue — unresolved global convergence target.</b> Sections 2–4 provide local convergence, failure of immediate contraction, and a restricted stationary-point result. None decides whether every fixed promised instance converges geometrically from zero for sufficiently small constant $\eta$, or whether convergence can fail.</p><p>To complete this assignment, the prover must provide one of those two conclusions with its full quantifiers. A positive conclusion must cover the actual unprojected process from zero, including trajectories outside the local neighborhood. A negative conclusion must demonstrate failure of the requested convergence property, beyond a first-step increase. This requires additional mathematics, not merely clarification.</p><p>The loss counterexample and the other partial results stand as written. There is no reason to discard them.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

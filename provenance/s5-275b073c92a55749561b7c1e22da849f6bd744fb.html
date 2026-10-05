@@ -1,0 +1,117 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-275b073c92a55749561b7c1e22da849f6bd744fb — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-275b073c92a55749561b7c1e22da849f6bd744fb <span style="font-weight:normal;color:#8a7350">(s5-275b073c92a55749561b7c1e22da849f6bd744fb)</span></h1>
+<p class="banner">NEW RESULT — adversarial review: proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> \(q^*(\epsilon,\delta)=\Theta(\epsilon^{-2}\log(1/\delta))\), uniformly for \(0&lt;\epsilon,\delta\leq1/8\), already with \(m=\tau=2\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5.2 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For any $\delta, \epsilon &gt; 0$, no algorithm can use fewer than $\Omega(\log(1/\delta)/\epsilon^2)$ discriminative queries and for every distribution $\mathcal{D}$ identify an element of the $\epsilon$-PVC with probability greater than $1-\delta$.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given two alternatives \(a_1,a_2\) with uniform \(\mathcal D\), a hidden society over the two ranking types \(a_1\succ a_2\) and \(a_2\succ a_1\), with masses either \((1/2+2\epsilon,1/2-2\epsilon)\) or the reverse, and oracle access that samples a type, how many preference queries are necessary to return an element of the \(\epsilon\)-PVC with probability at least \(1-\delta\)? Prove an \(\Omega(\log(1/\delta)/\epsilon^2)\) lower bound for valid small \(\epsilon\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is specified by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational; \(\tau\) is the support size, not the number of possible types. Here this specification is hidden from the algorithm, which receives only the oracle access defined below. Let \(L\) denote the encoding bit length; state running times in \(m,\tau,L,\epsilon,\delta\).<br>Let \(M=\{a_1,a_2\}\), so \(m=2\), and let \(\mathcal D\) be the known uniform distribution on \(M\). The two strict ranking types are \(a_1\succ a_2\) and \(a_2\succ a_1\), so \(\tau=2\).<br>For binary rational parameters \(0&lt;\epsilon\leq 1/8\) and \(0&lt;\delta\leq 1/8\), the hidden mass vector is either \((1/2+2\epsilon,1/2-2\epsilon)\) or its reverse; masses sum to \(1\). Both possibilities are known to the algorithm.<br>A coalition consists of quantities \(t_r\in[0,p_r]\) of each type \(r\), with total mass \(t=\sum_r t_r&gt;0\). It \(\epsilon\)-blocks \(a\) if a nonempty \(S\subseteq M\) satisfies \(\mu_{\mathcal D}(S)&gt;1-t+\epsilon\), and every type with \(t_r&gt;0\) strictly prefers every member of \(S\) to \(a\). The \(\epsilon\)-PVC consists of the unblocked alternatives.<br>Each preference query independently samples a type according to the hidden masses and reveals its ranking. The algorithm may randomize and must output one alternative; its success probability must be at least \(1-\delta\) under each hidden society.<br>Let \(q^*(\epsilon,\delta)\) be the smallest fixed upper bound on the number of queries of any such algorithm.</p><p>Does \(q^*(\epsilon,\delta)\) require \(\Omega(\epsilon^{-2}\log(1/\delta))\) queries uniformly over the stated parameter domain, or can a smaller asymptotic query bound suffice?</p><p>The finite-voter query model has a stated \(\Omega(\epsilon^{-2}\log(1/\delta))\) discriminative-query lower bound; its displayed two-type construction uses a margin exactly equal to \(\epsilon\), which does not establish blocking under the strict inequality above. [Source](https://arxiv.org/html/2603.16751v1#S5.SS1)<br>A general two-distribution testing lower bound is also established there, but no separate result explicitly addressing this mass-society PVC formulation was verified. [Source](https://arxiv.org/html/2603.16751v1#S5.SS1)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Interpreted the support-list convention as specifying the hidden instance, rather than revealing its masses to the algorithm, to preserve the explicitly requested oracle model.</li><li>Normalized society mass to one and allowed coalitions to include arbitrary portions of types, replacing voter fractions by coalition mass while retaining strict blocking and strict preferences.</li><li>Restricted epsilon and delta to positive binary rationals at most one eighth, ensuring positive type masses and a nontrivial confidence domain.</li><li>Defined each preference query as a fresh independent type sample revealing its ranking, and measured complexity by a fixed worst-case query cap rather than expected stopping time.</li><li>Retained the graded question&#x27;s margin of twice epsilon; the checked full versions still use the erroneous equality-boundary construction.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>Interpreting success as outputting an alternative in the \(\epsilon\)-PVC, the answer is <b>yes</b>:</p><p>\[
+q^*(\epsilon,\delta)=\Theta\!\left(\epsilon^{-2}\log(1/\delta)\right)
+\]</p><p>uniformly over the stated parameter domain. The constants are absolute. Below, all logarithms except \(\log_2\) are natural.</p><h3>1. The strict blocking condition forces identification</h3><p>Write \(p_i\) for the mass of the type that ranks \(a_i\) first.</p><p>If a coalition blocks \(a_2\), its nonempty blocking set must be \(\{a_1\}\): strict preference excludes \(a_2\) itself. Every participating type must therefore rank \(a_1\) first, so its total mass satisfies \(t\leq p_1\). The blocking inequality is precisely</p><p>\[
+\frac12&gt;1-t+\epsilon
+\quad\Longleftrightarrow\quad
+t&gt;\frac12+\epsilon.
+\]</p><p>Conversely, if \(p_1&gt;\frac12+\epsilon\), the coalition containing the entire first type blocks \(a_2\). Consequently,</p><p>\[
+a_2\text{ is }\epsilon\text{-blocked}
+\quad\Longleftrightarrow\quad
+p_1&gt;\frac12+\epsilon.
+\]</p><p>The symmetric statement holds for \(a_1\).</p><p>Denote the society with \(p_1=\frac12+2\epsilon\) by \(H_+\), and its reverse by \(H_-\). The preceding equivalence gives</p><p>\[
+C_\epsilon(H_+)=\{a_1\},
+\qquad
+C_\epsilon(H_-)=\{a_2\},
+\]</p><p>where \(C_\epsilon\) denotes the \(\epsilon\)-PVC. Thus successful selection requires distinguishing the two societies.</p><p>This also identifies the equality issue in the construction displayed in [Theorem 5.2 of the cited paper](https://arxiv.org/html/2603.16751v1#S5.SS1): with majority mass exactly \(\frac12+\epsilon\), the strict blocking condition fails, and both alternatives are unblocked. The present \(2\epsilon\) margin avoids that issue.</p><h3>2. A lower bound covering randomized and early-stopping algorithms</h3><p>Encode each oracle response by \(X=1\) when the sampled type ranks \(a_1\) first, and \(X=0\) otherwise. Its distributions under the two societies are</p><p>\[
+P=\operatorname{Bernoulli}\!\left(\frac12+2\epsilon\right),
+\qquad
+Q=\operatorname{Bernoulli}\!\left(\frac12-2\epsilon\right).
+\]</p><p>Consider any algorithm with a fixed upper bound of \(q\) queries. Generate \(q\) independent responses in advance; an algorithm that stops earlier simply ignores the unused responses. Its randomized output is therefore described by a common conditional distribution \(K(z\mid x)\), where \(x\in\{0,1\}^q\) and \(z\in\{a_1,a_2\}\).</p><p>For distributions \(A,B\) on a finite set, define their relative entropy by</p><p>\[
+D(A\Vert B)=\sum_y A(y)\log\frac{A(y)}{B(y)}.
+\]</p><p>The joint distributions of responses and output are \(P^{\otimes q}(x)K(z\mid x)\) and \(Q^{\otimes q}(x)K(z\mid x)\). Cancelling the common conditional probabilities in the likelihood ratio gives joint relative entropy \(qD(P\Vert Q)\).</p><p>Let \(u\) and \(v\) be the probabilities of outputting \(a_1\) under \(H_+\) and \(H_-\), respectively. Applying the log-sum inequality separately to each output value yields</p><p>\[
+qD(P\Vert Q)
+\geq
+u\log\frac uv+(1-u)\log\frac{1-u}{1-v}.
+\]</p><p>For completeness, the log-sum inequality follows from Jensen’s inequality for the convex function \(s\mapsto s\log s\), using weights proportional to the denominators. Thus this step also applies to randomized output rules.</p><p>Success in both societies requires \(u\geq1-\delta\) and \(v\leq\delta\). Writing \(h(u)=-u\log u-(1-u)\log(1-u)\), the last expression equals</p><p>\[
+u\log(1/v)+(1-u)\log(1/(1-v))-h(u).
+\]</p><p>Since the second term is nonnegative and \(h(u)\leq\log2\), it is at least \((1-\delta)\log(1/\delta)-\log2\). Because \(\delta\leq1/8\),</p><p>\[
+qD(P\Vert Q)
+\geq
+\left(\frac78-\frac13\right)\log(1/\delta)
+\geq
+\frac12\log(1/\delta).
+\]</p><p>It remains to bound the information in one response. Set \(x=4\epsilon\), so \(0&lt;x\leq1/2\). Direct calculation gives</p><p>\[
+D(P\Vert Q)=x\log\frac{1+x}{1-x}.
+\]</p><p>Furthermore,</p><p>\[
+\log\frac{1+x}{1-x}
+=2\int_0^x\frac{ds}{1-s^2}
+\leq\frac{2x}{1-x^2}
+\leq\frac83x.
+\]</p><p>Therefore \(D(P\Vert Q)\leq\frac{128}{3}\epsilon^2\), and every admissible algorithm satisfies</p><p>\[
+q\geq\frac{3}{256}\epsilon^{-2}\log(1/\delta).
+\]</p><p>This bound holds throughout the entire stated domain, including its endpoints.</p><h3>3. A matching upper bound</h3><p>Take \(n\) independent samples and output the alternative ranked first by a sample majority, breaking ties arbitrarily.</p><p>Under either society, let \(Y\) count samples ranking the uniquely correct alternative first. Then \(Y\) is binomial with parameters \(n\) and \(p=\frac12+2\epsilon\). Failure implies \(Y\leq n/2\).</p><p>Set \(\lambda=\log(p/(1-p))&gt;0\). Markov’s inequality and independence give</p><p>\[
+\Pr(Y\leq n/2)
+\leq
+\mathbb E\!\left[e^{-\lambda(Y-n/2)}\right]
+=
+\left(pe^{-\lambda/2}+(1-p)e^{\lambda/2}\right)^n.
+\]</p><p>The expression in parentheses equals \(2\sqrt{p(1-p)}=\sqrt{1-16\epsilon^2}\). Using \(\log(1-z)\leq-z\) for \(0\leq z&lt;1\), we obtain</p><p>\[
+\Pr(\text{failure})\leq e^{-8n\epsilon^2}.
+\]</p><p>An exactly computable sample schedule for binary rational inputs is</p><p>\[
+b=\left\lceil\log_2(1/\delta)\right\rceil,
+\qquad
+N=\left\lceil\frac{b}{8\epsilon^2}\right\rceil.
+\]</p><p>Since \(b\geq\log(1/\delta)\), using \(N\) samples achieves failure probability at most \(\delta\). Moreover, \(N=O(\epsilon^{-2}\log(1/\delta))\) uniformly for \(\delta\leq1/8\). Together with the lower bound, this proves the claimed order.</p><h3>4. Running time and encoding length</h3><p>Here \(m=\tau=2\). After computing \(N\), sample majority takes \(O(N)\) word operations, or conservatively \(O(N\log(N+1))\) bit operations with binary counters. The hidden society’s encoding length \(L\) does not affect this query-processing time.</p><p>Parameter preprocessing uses exact integer arithmetic. If \(L\) includes the known parameter encodings, a conservative total bit-time bound is</p><p>\[
+O\!\left(L^2+
+\epsilon^{-2}\log(1/\delta)
+\log\!\left(2+\epsilon^{-2}\log(1/\delta)\right)\right).
+\]</p><p>If \(L\) counts only the hidden support specification, replace the preprocessing term \(L^2\) by \((L+\ell_\epsilon+\ell_\delta)^2\), where \(\ell_\epsilon,\ell_\delta\) are the actual parameter encoding lengths. Those lengths cannot generally be bounded by the parameters’ magnitudes alone.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 2: definition of relative entropy and cancellation of the common conditional probabilities: The conditional kernel may have zero entries, so joint relative-entropy terms can formally contain 0 log(0/0). State that zero-numerator terms contribute zero and that likelihood-ratio cancellation is restricted to terms with positive kernel probability. This is a routine expositional clarification.</li></ul>
+<div class="pre"><p>The query bound is correct in substance and uniform over the stated domain. The proof resolves the assigned question; the only issue is a minor omission concerning zero-probability terms in relative entropy.</p><h3>Step-by-step verification</h3><h3>1. Blocking and identification</h3><p>The interpretation of success as selecting an element of the \(\epsilon\)-PVC agrees with the evident intent of USER_TASK.</p><p>For blocking \(a_2\), strict preference excludes any blocking set containing \(a_2\). Since there are only two alternatives, the only possible nonempty blocking set is \(\{a_1\}\). Only the type ranking \(a_1\) first can participate, so \(t\leq p_1\).</p><p>The calculation<br>\[
+\frac12&gt;1-t+\epsilon
+\quad\Longleftrightarrow\quad
+t&gt;\frac12+\epsilon
+\]<br>is correct. Taking the entire first type establishes the stated converse whenever \(p_1&gt;\frac12+\epsilon\). Thus the blocking equivalence is valid.</p><p>Under \(H_+\), the mass favoring \(a_1\) exceeds the blocking threshold, while the mass favoring \(a_2\) does not. The claimed singleton cores follow; the reverse society is symmetric. All masses remain positive, including at \(\epsilon=\frac18\), so the support size really is \(\tau=2\).</p><p>The observation about equality is also correct: a majority mass of exactly \(\frac12+\epsilon\) cannot satisfy the strict blocking inequality. The cited paper does display that margin in its two-type construction. [Theorem 5.2](https://arxiv.org/html/2603.16751v1#S5.SS1)</p><p><b>Assessment:</b> Correct. Successful selection necessarily identifies the hidden society.</p><h3>2. Fixed-budget algorithms and randomization</h3><p>Generating all \(q\) oracle responses in advance correctly represents every algorithm with a fixed upper bound of \(q\) queries, including algorithms that stop early.</p><p>The conditional output rule \(K(z\mid x)\) is common to both societies: the algorithm receives the same known parameters and differs only through its sampled responses. Internal randomization is therefore properly included.</p><p>The joint relative entropy equals \(qD(P\Vert Q)\), and applying the log-sum inequality separately to the two output values gives the displayed binary relative-entropy lower bound. The finite-domain and nonnegative-weight hypotheses required for the stated Jensen argument are satisfied.</p><p><b>Minor issue:</b> The definition of relative entropy does not explicitly specify how zero-probability terms are interpreted. The kernel \(K\) may vanish, producing joint terms formally written as \(0\log(0/0)\); cancellation is justified only on the positive support.</p><p><b>Minimum clarification:</b> State the standard convention that zero-numerator terms contribute zero, and that cancellation is performed on terms with \(K(z\mid x)&gt;0\).</p><p>This is an expositional omission, not a substantive obstruction.</p><h3>3. Dependence on the error probability</h3><p>Success implies \(u\geq1-\delta\) and \(v\leq\delta\), as claimed. The entropy rearrangement is correct, and discarding the nonnegative second term gives<br>\[
+qD(P\Vert Q)\geq(1-\delta)\log(1/\delta)-\log 2.
+\]</p><p>For \(\delta\leq\frac18\), both numerical estimates used are valid:<br>\[
+1-\delta\geq\frac78,
+\qquad
+\frac{\log 2}{\log(1/\delta)}\leq\frac13.
+\]<br>Consequently the coefficient is at least \(\frac{13}{24}\), which exceeds \(\frac12\). The stated lower bound therefore holds uniformly, including the endpoint.</p><p><b>Assessment:</b> Correct.</p><h3>4. Information per response</h3><p>With \(x=4\epsilon\), the Bernoulli parameters are \(\frac{1+x}{2}\) and \(\frac{1-x}{2}\). Direct substitution verifies<br>\[
+D(P\Vert Q)=x\log\frac{1+x}{1-x}.
+\]</p><p>The integral identity and both inequalities are correct for \(0&lt;x\leq\frac12\). In particular,<br>\[
+D(P\Vert Q)\leq\frac83x^2=\frac{128}{3}\epsilon^2.
+\]<br>Combining this with the preceding testing bound yields exactly<br>\[
+q\geq\frac{3}{256}\epsilon^{-2}\log(1/\delta).
+\]</p><p><b>Assessment:</b> Correct constants, directions, and parameter range.</p><h3>5. Matching upper bound</h3><p>Under either society, the number of samples favoring the uniquely correct alternative has the asserted binomial distribution. Arbitrary tie-breaking causes no problem because failure is contained in \(Y\leq n/2\).</p><p>The exponential random variable is nonnegative, so Markov’s inequality applies. Independence gives the displayed product expectation. Substituting the chosen positive \(\lambda\) correctly simplifies its base to<br>\[
+2\sqrt{p(1-p)}=\sqrt{1-16\epsilon^2}.
+\]<br>The logarithmic estimate applies throughout the domain, since \(16\epsilon^2\leq\frac14&lt;1\). The resulting failure bound is valid.</p><p>The exact schedule also works: \(\lceil\log_2(1/\delta)\rceil\geq\log(1/\delta)\), and rounding \(N\) upward preserves the guarantee. Its asserted asymptotic order is uniform because \(\log(1/\delta)\) is bounded below by \(\log 8\).</p><p><b>Assessment:</b> Correct.</p><h3>6. Running time and encoding</h3><p>The bounds are appropriate for \(m=\tau=2\), counting each oracle response as one query and charging separately for processing it.</p><p>The stated binary-counter cost is conservative. Exact preprocessing can be performed within the quadratic arithmetic bound stated in the output. The distinction between hidden-support length \(L\) and known parameter encoding lengths is necessary and explicitly acknowledged.</p><p>These are bounds polynomial in inverse accuracy and logarithmic confidence, with additional encoding costs. They do not assert polynomial time solely in binary input length: inverse accuracy can be exponentially large in that length.</p><p><b>Assessment:</b> Adequately qualified. The established complexity result is a matching oracle-query bound, rather than a conventional polynomial-time or hardness classification.</p><h3>Overall assessment</h3><p>The blocking reduction, randomized testing argument, constants, endpoint checks, and matching sampling algorithm are sound. No major issue prevents the claimed uniform query bound. The only requested repair is the standard zero-probability convention in the relative-entropy calculation.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

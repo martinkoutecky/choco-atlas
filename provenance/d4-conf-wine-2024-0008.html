@@ -1,0 +1,300 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-wine-2024-0008 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-wine-2024-0008 <span style="font-weight:normal;color:#8a7350">(d4-conf-wine-2024-0008)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 7 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given item classes \(J=[d]\) with rational per-capita supplies \(q_j\ge 0\), a finite set of additive valuation types \(T\) with rational masses \(\mu_t\) summing to one, and comparison-oracle access to each type’s valuation \(v_t\), compute a finite-support rational assignment \(x_{t,b}\ge 0\) over integral bundles \(b\in\mathbb{Z}_{\ge 0}^d\). Require \(\sum_b x_{t,b}=\mu_t\) and \(\sum_{t,b}x_{t,b}b_j=q_j\) for every class \(j\); every bundle with positive assigned mass must satisfy \(v_t\cdot(b+e_j)\ge v_t\cdot q\) for some class with positive supply, and \(v_t\cdot b\ge\frac12\mathrm{MMS}_t(q)\). Here \(\mathrm{MMS}_t(q)\) is the maximum \(z\) for which a distribution over integral bundles has expectation \(q\) and every bundle in its support has value at least \(z\) under \(v_t\). Determine the comparison-query and running-time complexity in \(d\), \(|T|\), and the input bit length.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>There are \(m=d\ge 1\) item classes with binary-rational per-capita supplies \(q_j\ge 0\), with \(\sum_j q_j&gt;0\).<br>A society is given by its support: the list of \(\tau=|T|\) types with positive binary-rational masses \(\mu_t\), summing to one; \(\tau\) counts supported types, not possible types.<br>Each type has a hidden additive valuation vector \(v_t\in\mathbb R_{\ge0}^d\). A comparison query presents two binary-encoded integral bundles \(a,b\in\mathbb Z_{\ge0}^d\) and returns one of greater value, choosing arbitrarily on equality; no numerical values or fractional-bundle queries are available.<br>Let \(L\) be the total bit length of the explicit rational input. Count oracle calls separately from bit operations, including the encoding of queries and output.<br>Define \(\mathrm{MMS}_t(q)=\sup\{z\ge0:\exists\text{ a probability distribution }p\text{ on }\mathbb Z_{\ge0}^d,\ \mathbb E_p[b]=q,\ p(b)&gt;0\Rightarrow v_t\cdot b\ge z\}\).<br>The required assignment is a finite list of binary-encoded bundles and nonnegative rational masses \(x_{t,b}\), satisfying \(\sum_bx_{t,b}=\mu_t\) and \(\sum_{t,b}x_{t,b}b_j=q_j\) for every \(j\).<br>Every \(x_{t,b}&gt;0\) must satisfy \(v_t\cdot b\ge\tfrac12\mathrm{MMS}_t(q)\) and \(v_t\cdot(b+e_j)\ge v_t\cdot q\) for some \(j\) with \(q_j&gt;0\), where \(e_j\) is the unit vector; the added copy is hypothetical.<br>Is computing such an assignment deterministically possible with polynomially many comparison queries and polynomial bit running time in \(m,\tau,L\), or is it NP-hard? What is its worst-case comparison-query complexity in these parameters?<br>For finite societies with \(n\) agents and \(m\) indivisible goods, simultaneous PROP1 and \(\tfrac12\)-MMS allocation has a deterministic algorithm using \(O(n^4\log m)\) comparisons and the same stated running time; \(\Omega(\log m)\) comparisons are necessary even for constant-sized societies with identical valuations. [Source](https://arxiv.org/html/2404.18133v2)<br>These discrete results do not settle the mass-society problem defined above.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Valuation signs and representation were unspecified: valuations are hidden nonnegative real vectors, including zero vectors, as in the discrete model; L measures only explicitly supplied data.</li><li>The continuous oracle domain was unspecified: queries compare arbitrary integral count vectors encoded in binary, with arbitrary tie-breaking and no fractional-bundle comparisons.</li><li>Algorithmic randomness was unspecified: algorithms are deterministic, matching the anchor.</li><li>The all-zero supply case makes the required positive-supply witness impossible: exclude it, matching the discrete assumption of a nonempty goods set.</li><li>The benchmark distribution&#x27;s support and probability domain were unspecified: allow countable support and real probabilities, with finite expectation q; use a supremum so its definition does not presuppose attainment.</li><li>There is no finite total number of goods in the continuous input: use m=d for the number of item classes and measure query and output encoding costs in bit operations.</li><li>Interpret the added unit as a hypothetical copy of a positive-supply class; per-capita supplies impose aggregate conservation, not individual bundle caps.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Polynomial-time construction and stronger query lower bounds</h3><p>The assignment is computable deterministically in polynomial bit time, with<br>$$
+O\!\left(\tau m\log(m+1)\right)
+$$<br>comparison queries.</p><p>The optimal query complexity remains unresolved. The lower bounds can, however, be strengthened substantially beyond those in the notes: for $m\ge2$, the worst case requires<br>$$
+\Omega\!\left(m+\tau\log(m+1)\right)
+$$<br>comparisons. These bounds hold even when queries may use arbitrarily large integral coefficients.</p><p>The exceptional cases are completely settled: $m=1$ requires no comparisons, and $m=2$ has worst-case complexity $\Theta(\tau)$.</p><p>All arguments below concern the mass-society model directly; they do not apply the [cited finite-society theorem](https://arxiv.org/html/2404.18133v2).</p><h3>1. Reduction to a single-type lottery</h3><p>Write<br>$$
+J=\{j:q_j&gt;0\}.
+$$<br>This set is nonempty by hypothesis.</p><p>Suppose that, for each type $t$, we construct a finite rational probability distribution $p_t$ on integral bundles with mean $q$, satisfying both required inequalities. Setting<br>$$
+x_{t,b}=\mu_t p_t(b)
+$$<br>then gives<br>$$
+\sum_b x_{t,b}=\mu_t,
+\qquad
+\sum_{t,b}x_{t,b}b_j
+=\sum_t\mu_t q_j=q_j.
+$$<br>Thus the types may be handled independently.</p><p>For the single-type construction, fix a valuation $v\in\mathbb R_{\ge0}^m$, and define<br>$$
+V=v\cdot q,
+\qquad
+M=\max_{j\in J}v_j.
+$$<br>The PROP1 requirement is equivalent to<br>$$
+v\cdot b+M\ge V.
+$$<br>Indeed, a class attaining $M$ belongs to $J$ and supplies the required hypothetical copy.</p><p>We will sometimes describe comparisons between nonnegative rational vectors. These are legal abbreviations: multiplying both vectors by a common positive denominator gives integral query bundles with the same comparison outcome. Each returned side certifies a weak inequality, including under arbitrary equality responses.</p><h3>2. A threshold bounding distributional MMS</h3><p>For nonnegative rational supplies $s$ and positive rational population mass $r$, define<br>$$
+U(s,r)=\frac{v\cdot s}{r}
+$$<br>and<br>$$
+\mathcal T(s,r)=
+\max\left\{
+z\ge0:
+\sum_j s_j\min(v_j,z)\ge rz
+\right\}.
+$$</p><p>The maximum exists. The feasible set contains zero and is closed, and every feasible threshold satisfies<br>$$
+rz\le\sum_j s_j\min(v_j,z)\le v\cdot s.
+$$<br>It is therefore contained in the compact interval $[0,U(s,r)]$.</p><p>Set<br>$$
+\Theta=\mathcal T(q,1).
+$$</p><h3>Lemma 1: MMS upper bound</h3><p>For every valuation $v$,<br>$$
+\mathrm{MMS}_v(q)\le\Theta.
+$$</p><p><b>Proof.</b> Suppose a distribution with mean $q$ guarantees value at least $z$ on its support. Every supported integral bundle satisfies<br>$$
+\sum_j b_j\min(v_j,z)\ge z.
+$$<br>If the bundle contains a copy worth at least $z$, that copy contributes $z$ to the truncated sum. Otherwise truncation leaves its value unchanged.</p><p>Taking expectations gives<br>$$
+\sum_j q_j\min(v_j,z)\ge z.
+$$<br>The expectations are legitimate because there are finitely many coordinates, each with finite prescribed mean. Hence $z\le\Theta$. Taking the supremum over feasible $z$ proves the claim. $\square$</p><h3>Singleton removal</h3><p>Sort the active classes by nonincreasing unit value, using comparisons of unit bundles. Start with $s=q$ and $r=1$.</p><p>While supplies remain, let $h$ be a maximum-valued remaining class.</p><ul><li>If $s_h\ge r$, stop.</li><li>Otherwise compare $e_h$ with $s/r$.</li><li>If the oracle returns $s/r$, stop.</li><li>If it returns $e_h$, assign singleton $e_h$ to population mass $s_h$, replace $r$ by $r-s_h$, and set $s_h=0$.</li></ul><p>Every removal leaves $r&gt;0$. There are at most $m$ removals.</p><h3>Lemma 2: Removal preserves the threshold</h3><p>Every removal preserves $\mathcal T(s,r)$.</p><p><b>Proof.</b> At a removal,<br>$$
+s_h&lt;r,
+\qquad
+v_h\ge U(s,r).
+$$<br>For the new supplies $s&#x27;$ and mass $r&#x27;=r-s_h$,<br>$$
+U(s&#x27;,r&#x27;)
+=
+\frac{rU(s,r)-s_hv_h}{r-s_h}
+\le U(s,r).
+$$<br>For every $z\in[0,U(s,r)]$, we have $\min(v_h,z)=z$, so<br>$$
+\sum_j s_j\min(v_j,z)\ge rz
+\quad\Longleftrightarrow\quad
+\sum_j s&#x27;_j\min(v_j,z)\ge r&#x27;z.
+$$<br>Both feasible sets lie in this interval: the old one by its average bound, and the new one because its average does not increase. Thus the feasible sets coincide. $\square$</p><p>At termination, every remaining class satisfies<br>$$
+v_j\le U(s,r).
+$$<br>If a comparison caused termination, this follows because $h$ was maximum-valued. If $s_h\ge r$, nonnegativity gives<br>$$
+U(s,r)\ge\frac{s_hv_h}{r}\ge v_h.
+$$<br>If no supplies remain, the assertion is vacuous.</p><p>Consequently, truncation changes nothing at $z=U(s,r)$, and Lemma 2 yields<br>$$
+\Theta=U(s,r),
+\qquad
+v\cdot s=r\Theta,
+\qquad
+v_j\le\Theta\quad\text{whenever }s_j&gt;0.
+$$<br>Every removed singleton has value at least $\Theta$, since its value was at least the current average, which bounds the preserved threshold.</p><p>Finally, if any removal occurred, its first removed class satisfied $v_h\ge V$. Therefore<br>$$
+M\ge V.
+$$<br>In that situation every nonnegative bundle automatically satisfies PROP1.</p><h3>3. A finite rational rounding lemma</h3><h3>Lemma 3</h3><p>Let $a\in\mathbb Q_{\ge0}^k$, with corresponding values<br>$$
+w_1\ge\cdots\ge w_k\ge0.
+$$<br>One can construct, without further valuation queries, a rational distribution on at most $k+1$ integral bundles with mean $a$, every supported bundle having value at least<br>$$
+\sum_{j=1}^k a_jw_j-w_1.
+$$</p><p><b>Proof.</b> Put<br>$$
+C_0=0,
+\qquad
+C_j=\sum_{\ell=1}^j a_\ell.
+$$<br>Let $g$ equal $w_j$ on $[C_{j-1},C_j)$ and zero on $[C_k,\infty)$. It is nonincreasing.</p><p>For $u\in[0,1)$, place one copy in the bundle for each point $u+\ell$, with $\ell$ a nonnegative integer, lying in a class interval. The resulting counts are<br>$$
+b_j(u)=
+\left\lceil C_j-u\right\rceil
+-
+\left\lceil C_{j-1}-u\right\rceil.
+$$<br>These counts are nonnegative integers and can be computed directly.</p><p>Averaging over $u$ gives<br>$$
+\int_0^1 b_j(u)\,du=C_j-C_{j-1}=a_j.
+$$<br>For example, this follows by integrating the indicators of the points $u+\ell$ lying in $[C_{j-1},C_j)$; together, their integration domains cover that interval.</p><p>By monotonicity,<br>$$
+\sum_{\ell\ge0}g(u+\ell)
+\ge\int_u^\infty g(x)\,dx
+\ge\int_0^\infty g(x)\,dx-w_1.
+$$<br>This is the claimed value bound.</p><p>The bundle changes only at fractional parts of the prefix sums $C_j$. Partitioning $[0,1)$ at these rational breakpoints gives at most $k+1$ intervals. On each interval, evaluate the bundle at a rational midpoint and assign probability equal to the interval length. This produces the required finite rational distribution. $\square$</p><p>For $k=0$, the analogous construction is the empty bundle with probability one.</p><h3>4. Completing the polynomial-time construction</h3><p>Consider the residual supplies $s$ and population mass $r$ after singleton removal.</p><p>For each remaining class, compare $2e_j$ with $s/r$. Let $A$ contain those classes for which the oracle returns $2e_j$. Then<br>$$
+j\in A\Longrightarrow v_j\ge\frac{\Theta}{2},
+\qquad
+j\notin A\Longrightarrow v_j\le\frac{\Theta}{2}.
+$$<br>Either classification is valid on equality. Put<br>$$
+B=\sum_{j\in A}s_j.
+$$</p><h3>Case 1: $B\ge r$</h3><p>Choose rational quantities $c_j$, supported on $A$, with<br>$$
+0\le c_j\le s_j,
+\qquad
+\sum_jc_j=r.
+$$<br>A greedy choice suffices. Assign singleton $e_j$ to population mass $c_j$. Every recipient thereby gets value at least $\Theta/2$.</p><p>Distribute the leftover supplies $s-c$ to these same recipients as follows. Parametrize them by $u\in[0,1)$, with population mass $r\,du$. Give singleton labels on intervals of lengths $c_j/r$. Write<br>$$
+\frac{s_j-c_j}{r}=k_j+f_j,
+\qquad
+k_j\in\mathbb Z_{\ge0},
+\quad
+0\le f_j&lt;1.
+$$<br>Give everyone $k_j$ additional copies of class $j$, and one more when $u&lt;f_j$.</p><p>The singleton-label boundaries and the thresholds $f_j$ give only $O(m)$ intervals. Their bundles and rational masses consume exactly $s$. Nonnegative valuations preserve the singleton value guarantee.</p><h3>Case 2: $B&lt;r$</h3><p>Assign singleton $e_j$ to mass $s_j$ for every $j\in A$. The remaining mass is<br>$$
+R=r-B&gt;0,
+$$<br>with supplies consisting of the classes outside $A$.</p><p>Its average value is<br>$$
+U_{\mathrm{small}}
+=
+\frac{\sum_{j\notin A}s_jv_j}{R}
+=
+\frac{r\Theta-\sum_{j\in A}s_jv_j}{r-B}
+\ge\Theta,
+$$<br>because $v_j\le\Theta$ for every residual class.</p><p>Apply Lemma 3 to the small-class supplies divided by $R$, in their known value order. Their maximum value $w$ satisfies $w\le\Theta/2$. Hence every resulting bundle has value at least<br>$$
+U_{\mathrm{small}}-w\ge\frac{\Theta}{2}.
+$$<br>If no small classes remain, the preceding inequality forces $\Theta=0$, and the empty bundle is valid.</p><h3>Fairness verification</h3><p>If singleton removal occurred, then $M\ge V$, so every constructed bundle satisfies PROP1.</p><p>Otherwise $\Theta=V$. A bundle containing an assigned singleton from $A$ satisfies<br>$$
+v\cdot b+M
+\ge v_j+M
+\ge2v_j
+\ge\Theta=V.
+$$<br>A rounded small-class bundle satisfies<br>$$
+v\cdot b+M
+\ge U_{\mathrm{small}}-w+M
+\ge U_{\mathrm{small}}
+\ge\Theta=V,
+$$<br>since $M\ge w$.</p><p>Every bundle also has value at least $\Theta/2$, including the initially removed singletons. Lemma 1 therefore gives<br>$$
+v\cdot b\ge\frac{\Theta}{2}
+\ge\frac12\mathrm{MMS}_v(q).
+$$</p><p>The assigned masses sum to one, and their consumption is exactly $q$. Applying this construction independently to every type completes the assignment.</p><h3>Query and bit complexity</h3><p>For each type, the algorithm uses:</p><ul><li>$O(m\log(m+1))$ comparisons to sort unit values;</li><li>at most $m$ comparisons during singleton removal;</li><li>at most $m$ comparisons to classify residual classes.</li></ul><p>Sorting remains valid under arbitrary equality responses: every comparison agrees with the weak numerical ordering of the actual values.</p><p>There are $O(m)$ output bundles per type. To check their encoding lengths, let $D$ be the product of the input supply denominators. Its bit length is $O(L)$. Every positive residual population mass $r$ or $R$ is an integer multiple of $1/D$, and thus is at least $1/D$. All supplies divided by these masses have polynomial encoding length.</p><p>The remaining operations—prefix sums, ceilings, fractional parts, interval lengths, and multiplication by $\mu_t$—preserve polynomial encoding length. Integral query bundles are obtained by denominator clearing. Bundle multiplicities are computed in binary without enumerating copies.</p><p>Thus the total query count is<br>$$
+O\!\left(\tau m\log(m+1)\right),
+$$<br>and all bit operations, query encoding, and output encoding take polynomial time in $m,\tau,L$.</p><h3>5. A stronger lower bound: $\Omega(\tau\log m)$</h3><p>Fix an integer $k$ with $2\le k\le m$, and take<br>$$
+q_j=\frac1k\quad\text{for every }j,
+\qquad
+\mu_t=\frac1\tau\quad\text{for every }t.
+$$<br>Each hidden valuation will be the indicator of a $k$-element set $H_t$:<br>$$
+v_{t,j}=
+\begin{cases}
+1,&amp;j\in H_t,\\
+0,&amp;j\notin H_t.
+\end{cases}
+$$</p><h3>The MMS of these valuations</h3><p>For every such valuation,<br>$$
+\mathrm{MMS}_t(q)=1.
+$$<br>The expected value is exactly $k/k=1$, giving the upper bound.</p><p>For attainability, choose one class uniformly from $H_t$, and independently include each class outside $H_t$ with probability $1/k$. This finite distribution has mean $q$ and value exactly one on every bundle.</p><p>Consequently, every qualifying bundle must satisfy<br>$$
+\sum_{j\in H_t}b_j\ge1,
+$$<br>because its value is integral and must be at least $1/2$.</p><h3>Independent adversaries for the types</h3><p>For each type maintain a set $S_t$, initially all $m$ indices, such that every $k$-element subset of $S_t$ remains a possible valued set.</p><p>For a query to type $t$, let $c=a-b$.</p><p>If $|S_t|\ge2k$, retain whichever of<br>$$
+\{j\in S_t:c_j\ge0\},
+\qquad
+\{j\in S_t:c_j&lt;0\}
+$$<br>is larger. Answer in favor of $a$ for the first set, and $b$ for the second. Every $k$-element subset of the retained set is consistent with this answer.</p><p>If $|S_t|&lt;2k$, fix any $k$-element subset of $S_t$ and answer this and subsequent queries truthfully for that fixed valuation.</p><p>Each query reduces the maintained set size by at most a factor of two. If $K_t$ queries have been directed to type $t$, then<br>$$
+|S_t|\ge m\,2^{-K_t}.
+$$<br>The possible valuations for different types remain independent.</p><h3>Resource conservation forces many queries</h3><p>At termination, every positive-mass bundle assigned to type $t$ must intersect every $k$-element subset of $S_t$. Otherwise a possible hidden valuation would give it value zero.</p><p>Thus the bundle has at most $k-1$ zero coordinates within $S_t$, and integrality implies<br>$$
+\sum_j b_j\ge |S_t|-k+1.
+$$<br>The total supply is $m/k$. Therefore<br>$$
+\frac{m}{k}
+\ge
+\frac1\tau\sum_t\bigl(|S_t|-k+1\bigr),
+$$<br>or<br>$$
+\frac1\tau\sum_t|S_t|
+\le\frac{m}{k}+k-1.
+$$</p><p>Let $N=\sum_tK_t$ be the total number of queries. Convexity of the exponential gives<br>$$
+\frac1\tau\sum_t|S_t|
+\ge
+\frac{m}{\tau}\sum_t2^{-K_t}
+\ge m\,2^{-N/\tau}.
+$$<br>Combining the inequalities yields the explicit lower bound<br>$$
+N\ge
+\tau\log_2\left(
+\frac{m}{m/k+k-1}
+\right).
+$$</p><p>Choose $k=\lceil\sqrt m\rceil$. Then<br>$$
+\frac{m}{k}+k-1&lt;2\sqrt m,
+$$<br>so<br>$$
+N&gt;
+\tau\left(\frac12\log_2m-1\right).
+$$<br>In particular, for $m\ge16$,<br>$$
+N\ge\frac{\tau}{4}\log_2m.
+$$<br>This proves $\Omega(\tau\log m)$.</p><p>The proof places no restriction on query coefficient sizes.</p><h3>6. A linear lower bound, even with identical valuations</h3><p>This bound uses the same supplies $q_j=1/k$, but all types have the same unknown valued set $H$, of size $k$.</p><p>For a fixed output, aggregate its positive masses into a probability distribution $p$ on bundles. It has mean $q$.</p><p>If the output is valid for $H$, every supported bundle contains at least one valued copy. Its expected number of valued copies is<br>$$
+\sum_{j\in H}q_j=1.
+$$<br>Hence every positive-mass bundle must contain <b>exactly one</b> valued copy:<br>$$
+\sum_{j\in H}b_j=1.
+$$</p><p>We next bound how many valued sets can be compatible with one output.</p><h3>Lemma 4: Counting compatible valued sets</h3><p>A finite distribution with mean $(1/k,\ldots,1/k)$ can satisfy<br>$$
+\sum_{j\in H}b_j=1
+$$<br>on every supported bundle for at most<br>$$
+\left(\frac{m}{k}\right)^k
+$$<br>different $k$-element sets $H$.</p><p><b>Proof.</b> Let $\mathcal F$ be the family of compatible sets. If it is empty, there is nothing to prove.</p><p>Let $E$ consist of those coordinates satisfying $b_j\le1$ on every supported bundle. Every $H\in\mathcal F$ is contained in $E$, since a valued coordinate with multiplicity at least two would violate the displayed equality.</p><p>For each supported bundle define<br>$$
+A_b=\{j\in E:b_j=1\}.
+$$<br>Every compatible set intersects $A_b$ in exactly one coordinate. Moreover, for each $j\in E$,<br>$$
+\sum_b p(b)\mathbf 1_{\{j\in A_b\}}
+=\mathbb E_p[b_j]=\frac1k.
+$$</p><p>Choose $H$ uniformly from $\mathcal F$, and let $X_j$ be its membership indicators on $E$. Write $\mathsf H$ for Shannon entropy in bits.</p><p>We use three elementary entropy facts: the chain rule, reduction of conditional entropy under additional conditioning, and the bound $\mathsf H(Y)\le\log_2 r$ for a variable with at most $r$ possible outcomes. The chain rule follows by factoring joint probabilities. Conditioning reduction follows from concavity of entropy; the outcome bound follows from concavity of the logarithm.</p><p>Order the coordinates of $E$. For every subset $A\subseteq E$, the chain rule and conditioning reduction give<br>$$
+\mathsf H(X_A)
+\ge
+\sum_{j\in A}\mathsf H(X_j\mid X_{&lt;j}),
+$$<br>where $X_{&lt;j}$ includes all earlier coordinates of $E$.</p><p>Multiply this inequality for $A=A_b$ by $kp(b)$ and sum over bundles. The covering identity above gives<br>$$
+\begin{aligned}
+k\sum_b p(b)\mathsf H(X_{A_b})
+&amp;\ge
+\sum_{j\in E}
+\left(k\sum_b p(b)\mathbf 1_{\{j\in A_b\}}\right)
+\mathsf H(X_j\mid X_{&lt;j})\\
+&amp;=
+\sum_{j\in E}\mathsf H(X_j\mid X_{&lt;j})\\
+&amp;=\mathsf H(X_E).
+\end{aligned}
+$$</p><p>Since $X_{A_b}$ has exactly one nonzero coordinate,<br>$$
+\mathsf H(X_{A_b})\le\log_2|A_b|.
+$$<br>Every $A_b$ is nonempty because $\mathcal F$ is nonempty. Concavity of the logarithm now gives<br>$$
+\begin{aligned}
+\log_2|\mathcal F|
+=\mathsf H(X_E)
+&amp;\le k\sum_b p(b)\log_2|A_b|\\
+&amp;\le k\log_2\left(\sum_b p(b)|A_b|\right)\\
+&amp;=k\log_2\left(\frac{|E|}{k}\right)\\
+&amp;\le k\log_2\left(\frac{m}{k}\right).
+\end{aligned}
+$$<br>Exponentiation proves the lemma. $\square$</p><h3>Decision-tree lower bound</h3><p>Fix a permissible deterministic tie rule, such as returning the first bundle on equality. There are<br>$$
+\binom{m}{k}
+$$<br>possible identical valuations. An algorithm using at most $Q$ binary comparisons has at most $2^Q$ leaves.</p><p>By Lemma 4, each leaf’s output can be valid for at most $(m/k)^k$ of these valuations. Therefore<br>$$
+Q\ge
+\log_2\binom{m}{k}
+-
+k\log_2\left(\frac{m}{k}\right).
+$$</p><p>For $m=2k$, this becomes<br>$$
+Q\ge\log_2\binom{2k}{k}-k.
+$$<br>The central binomial coefficient is the largest of the $2k+1$ binomial coefficients whose sum is $2^{2k}$, so<br>$$
+Q\ge k-\log_2(2k+1)=\Omega(m).
+$$<br>For odd $m$, use $m-1$ active classes and give the remaining class zero supply. This proves the same asymptotic bound.</p><p>Thus $\Omega(m)$ comparisons are necessary even with identical valuations and any number of supported types.</p><h3>7. Exact edge cases and the remaining gap</h3><h3>One class</h3><p>For $m=1$, let $q&gt;0$ and $v\ge0$. Then<br>$$
+\mathrm{MMS}_v(q)=v\lfloor q\rfloor.
+$$<br>The floor-and-ceiling lottery attains this value. If $v&gt;0$, any strictly larger guaranteed threshold would require every bundle to contain at least $\lfloor q\rfloor+1$ copies, contradicting its mean. For $v=0$, the identity is immediate.</p><p>Give every type this lottery. Each bundle has at least $\lfloor q\rfloor$ copies and satisfies<br>$$
+b+1\ge q.
+$$<br>Both fairness requirements follow without any comparison queries.</p><h3>Two classes</h3><p>The upper bound already gives $O(\tau)$ comparisons.</p><p>For a matching lower bound, take equal type masses and<br>$$
+q=\left(\frac9{10},\frac9{10}\right).
+$$<br>Consider the two possible valuations<br>$$
+v^{(1)}=(1,9),
+\qquad
+v^{(2)}=(9,1).
+$$<br>Both have MMS equal to $9$. For $v^{(1)}$, a lottery assigning $e_2$ with probability $9/10$ and $9e_1$ with probability $1/10$ has mean $q$ and constant value $9$. The expected-value upper bound is also $9$. The other valuation is symmetric.</p><p>Answer every query consistently with $v^{(1)}$. An unqueried type could have either valuation. Every bundle assigned to it must therefore satisfy both half-MMS inequalities. A bundle with fewer than two copies cannot do so: a singleton has value one under one of the valuations.</p><p>Every queried type must receive a nonempty bundle. If $U$ types remain unqueried, total consumption is therefore at least<br>$$
+\frac{2U+(\tau-U)}{\tau}
+=1+\frac U\tau.
+$$<br>The actual total supply is $9/5$, forcing<br>$$
+U\le\frac45\tau.
+$$<br>At least $\tau/5$ types must be queried. Hence the worst-case complexity for $m=2$ is $\Theta(\tau)$.</p><h3>Established bounds</h3><p>For $m\ge2$, combining the linear lower bound with the product lower bound gives<br>$$
+\boxed{
+\Omega\!\left(m+\tau\log(m+1)\right)
+\ \le\
+\text{optimal worst-case query complexity}
+\ \le\
+O\!\left(\tau m\log(m+1)\right).
+}
+$$<br>For bounded $m$, the two-class construction supplies the needed $\Omega(\tau)$ lower bound by adding zero-supply classes.</p><p>The upper bound holds for every explicit input length $L$. The lower bounds use input families of length<br>$$
+O\!\left(m\log(m+1)+\tau\log(\tau+1)\right).
+$$<br>Thus they establish hardness already for polynomial-size rational inputs, without relying on large query encodings.</p><p>The positive polynomial-time classification is fully proved. The optimal dependence of query complexity on jointly growing $m$ and $\tau$ remains open.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 5, Independent adversaries for the types, freezing branch: When $|S_t|&lt;2k$, the adversary fixes one valued subset but does not explicitly redefine $S_t$. If $S_t$ remains unchanged, subsequent truthful responses need not preserve the assertion that every $k$-element subset of $S_t$ is possible. Specify the maintained set after freezing and confirm that the possible-subset invariant and the bound $|S_t|\ge m2^{-K_t}$ concern that same set.</li><li><b>major</b> — Section 7, Established bounds, and final open_points: The output leaves the optimal worst-case comparison-query complexity unresolved for jointly growing $m$ and $\tau$: its lower bound $\Omega(m+\tau\log(m+1))$ and upper bound $O(\tau m\log(m+1))$ do not match. Thus the polynomial-time classification is established, but the complete query-complexity target is not settled.</li></ul>
+<div class="pre"><p>The polynomial-time construction is sound. The output therefore resolves the polynomial-time-versus-hardness question in favor of polynomial time. It does <b>not</b> determine the optimal worst-case comparison-query complexity, which it explicitly leaves open. One lower-bound argument also needs a minor clarification about its maintained state.</p><ul><li><b>Reduction to independent type lotteries</b></li></ul><p>This reduction is correct. If each $p_t$ has mean $q$, then $x_{t,b}=\mu_t p_t(b)$ satisfies both the type-mass constraints and aggregate supply constraints. Finiteness and rationality are preserved.</p><p>The PROP1 reformulation is also correct:<br>$$
+   v\cdot b+M\ge V,
+   \qquad
+   M=\max_{j:q_j&gt;0}v_j,
+   \qquad
+   V=v\cdot q.
+   $$<br>The maximum is attained because the active set is finite and nonempty.</p><p>Clearing a common positive denominator makes the proposed rational-vector comparisons legal integral-bundle queries. Arbitrary equality responses certify the weak inequalities used subsequently.</p><ul><li><b>Threshold definition and MMS upper bound</b></li></ul><p>The existence argument for $\mathcal T(s,r)$ is valid. Its feasible set is nonempty, closed, and contained in the finite interval $[0,U(s,r)]$.</p><p>Lemma 1 is correct. For every supported integral bundle, either some copy has value at least $z$, or truncation leaves every included copy’s value unchanged. In either case,<br>$$
+   \sum_j b_j\min(v_j,z)\ge z.
+   $$<br>Taking expectations is justified by the finite number of coordinates and their finite prescribed means. Taking the supremum over attainable guarantees proves the stated MMS upper bound; attainment of MMS is unnecessary.</p><ul><li><b>Singleton removal</b></li></ul><p>Every removal has $s_h&lt;r$, so the remaining population mass is positive. The oracle response used for removal implies $v_h\ge U(s,r)$.</p><p>Lemma 2’s algebra and feasible-set equivalence are correct. The new average does not increase, and both feasible sets lie in the interval on which $\min(v_h,z)=z$.</p><p>At termination, the stated bound on every residual unit value follows from either stopping condition. If supplies are exhausted, the residual average and threshold are both zero. Thus this edge case causes no division by zero or omitted positive-value population.</p><p>Removed singletons meet the threshold guarantee. Moreover, the first removal implies $M\ge V$, which indeed makes PROP1 automatic for every nonnegative bundle.</p><ul><li><b>Rational rounding lemma</b></li></ul><p>Lemma 3 is correct.</p><p>The ceiling formula counts the nonnegative integral lattice points belonging to each class interval. Its integral over $u\in[0,1)$ gives the prescribed mean.</p><p>The monotonicity estimate<br>$$
+   \sum_{\ell\ge0}g(u+\ell)
+   \ge \int_u^\infty g(x)\,dx
+   \ge \int_0^\infty g(x)\,dx-w_1
+   $$<br>is valid because $g$ is nonnegative, nonincreasing, and bounded above by $w_1$.</p><p>The rational breakpoints yield at most $k+1$ positive-length intervals. Midpoint representatives preserve the means because breakpoint values have measure zero. The empty-coordinate case is explicitly covered.</p><ul><li><b>Residual construction and fairness</b></li></ul><p>Both cases are correct.</p><p>When $B\ge r$, the singleton masses total $r$. The additional-copy construction consumes exactly the remaining supplies and preserves each singleton’s value guarantee.</p><p>When $B&lt;r$, the calculation $U_{\mathrm{small}}\ge\Theta$ correctly uses the residual bound $v_j\le\Theta$. Lemma 3 then gives the required half-threshold guarantee. The case of no small classes is handled correctly: it forces $\Theta=0$.</p><p>The PROP1 verification covers removed singletons, residual singleton recipients, and rounded bundles. When no removal occurred, $\Theta=V$; the displayed inequalities establish PROP1 in each residual case.</p><p>Consequently, every positive-mass output bundle satisfies both requirements of the task.</p><ul><li><b>Query and bit complexity</b></li></ul><p>The upper bound<br>$$
+   O\!\left(\tau m\log(m+1)\right)
+   $$<br>is justified. Sorting, singleton removal, and residual classification use the stated numbers of comparisons. A conventional comparison sort remains valid under arbitrary tie responses because every response respects the actual weak numerical order.</p><p>The bit-complexity accounting is sound. The product $D$ of supply denominators has bit length $O(L)$. Positive residual masses are integer multiples of $1/D$, so their reciprocals have polynomial encoding length. The subsequent rational operations, denominator clearing, and binary bundle counts also have polynomial encoding length.</p><p>The construction produces $O(m)$ bundles per type and never needs to enumerate individual copies. Thus query encoding and output encoding are included in the polynomial-time conclusion.</p><ul><li><b>Per-type logarithmic lower bound</b></li></ul><p>The indicator valuations have MMS exactly one, and the initial sign-based adversary responses are consistent with every $k$-element subset of the retained set.</p><p><b>Minor issue: the freezing branch does not explicitly update $S_t$.</b> The proof first describes $S_t$ as representing every still-possible $k$-element valued set. When $|S_t|&lt;2k$, it fixes one subset and answers truthfully for that valuation, but does not state what happens to $S_t$. The later resource argument still requires every $k$-element subset of $S_t$ to remain possible.</p><p>Under a literal interpretation that leaves $S_t$ unchanged, this invariant is false. For example, take $m=5$, $k=3$, and fix $H=\{1,2,3\}$. The query comparing $e_1$ with $e_4$ returns $e_1$, excluding the alternative set $\{2,4,5\}$, although that set remains a subset of the unchanged $S_t$.</p><p><b>Minimum clarification:</b> explicitly specify the maintained set after fixing a valuation and confirm that both the possible-subset invariant and the displayed size bound apply to that same set. This is a routine state-definition clarification rather than a gap requiring new mathematics.</p><p>Subject to that clarification, the resource-conservation calculation, convexity inequality, and choice $k=\lceil\sqrt m\rceil$ check out. The claimed coefficient for $m\ge16$ is correct.</p><ul><li><b>Linear lower bound</b></li></ul><p>This argument is correct.</p><p>For identical indicator valuations, every positive-mass bundle must contain exactly one valued copy: it contains at least one, and the aggregate expected number is exactly one.</p><p>Lemma 4’s entropy argument is valid. All variables have finite ranges. The coordinate coverage identity justifies the weighted chain-rule inequality, and the exactly-one condition gives the stated entropy bound for each $A_b$. The logarithmic concavity step then yields the claimed bound on compatible valued sets.</p><p>The decision-tree leaf count is applicable after fixing a permissible tie rule. The central-binomial calculation proves the asymptotic linear bound. Adding a zero-supply coordinate handles odd dimensions without allowing that coordinate to appear in any positive-mass bundle.</p><ul><li><b>Edge cases and overall coverage</b></li></ul><p>The one-class MMS formula and zero-query lottery are correct, including zero valuations and integral supplies.</p><p>The two-class lower bound is also correct. Both example valuations have MMS nine. An unqueried type needs at least two copies in every assigned bundle, while every queried type needs at least one. Aggregate supply therefore forces at least $\tau/5$ queried types, establishing the claimed $\Theta(\tau)$ complexity.</p><p><b>Major coverage gap:</b> the jointly growing query-complexity parameters remain unresolved. The displayed upper and lower bounds do not match, and the output explicitly acknowledges this. This is incomplete coverage of the requested optimal worst-case complexity, not a defect in the polynomial-time algorithm.</p><p>The work establishes substantial progress: a valid deterministic polynomial-time construction, a valid linear query lower bound, and the exact stated edge cases. The optimal general query complexity still requires another round.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

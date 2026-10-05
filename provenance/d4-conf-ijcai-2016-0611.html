@@ -29,6 +29,7 @@
 
 <h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite catalogue of complete additive valuation types \(V\), rational population masses \(\mu\), rational per-capita supplies \(q\), and a target ratio \(\rho\), decide whether there exists a clone-stable truthful no-money mechanism assigning integral bundles with mass variables \(x_{v,b}\) satisfying \(\sum_b x_{v,b}=\mu_v\) and \(\sum_{v,b}b_kx_{v,b}=q_k\), while every assigned type \(v\) receives bundles with \(v\cdot b\ge\rho\,\operatorname{MMS}_v(q)\), where \(\operatorname{MMS}_v(q)=\sup_{\pi:\,\mathbb E_\pi[b]=q}\min_{b\in\operatorname{supp}(\pi)}v\cdot b\), and every denominator-cleared finite clone realization is individually truthful.</p></div>
 <h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(V\) be a finite catalogue of nonnegative additive valuation vectors for \(m\) goods, \(\mu\) a rational distribution on \(V\), \(q\) a rational vector of per-capita supplies, and \(\rho\) a rational target ratio. A bundle is \(b\in\mathbb Z_{\ge0}^{m}\). Define \(\operatorname{MMS}_{v}(q)=\sup_{\pi:\,\mathbb E_{\pi}[b]=q}\min_{b\in\operatorname{supp}(\pi)}v\cdot b\).<br>A clone-stable mechanism is a family of no-money allocation rules for finite populations obtained by scaling \(\mu\) and \(q\) by a common denominator. At every compatible scale, its allocation induces the same rational masses \(x_{v,b}\), with \(\sum_b x_{v,b}=\mu_v\) and \(\sum_{v,b}b_kx_{v,b}=q_k\). Each finite rule is individually truthful under unilateral reports from \(V\). Whenever \(x_{v,b}&gt;0\), require \(v\cdot b\ge\rho\,\operatorname{MMS}_{v}(q)\).<br>Is deciding whether such a mechanism exists in P, or is it NP-hard?<br>For two finite agents and at least four indivisible goods, no deterministic truthful cardinal mechanism guarantees a maximin-share ratio above \(1/2\); for four or five goods, ratio \(1/2\) is achievable. No result for the exact mass-and-clone decision problem was verified.</p></div>
+
 <h2>Prover output (gpt-6-astra / medium, Bolzano prover prompt)</h2><div class="pre"><h3>Partial results: a finite characterization and benchmark hardness</h3><p>I do not establish whether the stated mechanism-existence problem is in \(\mathrm{P}\) or is \(\mathrm{NP}\)-hard. I prove that its benchmark-threshold subproblem is \(\mathrm{NP}\)-complete, and give an exact finite formulation of the allocation-mass constraints without truthfulness. The missing step is relating these results to truthful implementation at every compatible scale.</p><p>For computational statements, assume valuation coordinates are nonnegative rationals encoded in binary. The hardness construction uses strictly positive integer valuations.</p><h3>1. The benchmark is attained by a finite rational distribution</h3><p>Fix \(v\in\mathbb Q_{\ge 0}^{m}\) and \(q\in\mathbb Q_{\ge 0}^{m}\).</p><p><b>Proposition 1.</b> The supremum defining \(\operatorname{MMS}_{v}(q)\) is attained. Moreover, some attaining distribution has finite support and rational probabilities.</p><p><b>Proof.</b> First, a distribution with mean \(q\) exists: independently round each coordinate of \(q\) to its floor or ceiling, with probabilities preserving its expectation.</p><p>Choose a positive integer \(L\) such that every coordinate of \(Lv\) is integral. Every bundle utility belongs to \(\frac1L\mathbb Z_{\ge 0}\). Consequently, the utilities in any nonempty support have a minimum.</p><p>For any distribution \(\pi\) with mean \(q\),</p><p>\( \displaystyle
 \min_{b\in\operatorname{supp}(\pi)}v\cdot b
 \le \mathbb E_{\pi}[v\cdot b]
@@ -39,12 +40,12 @@
 S_v(t)=\{b\in\mathbb Z_{\ge 0}^{m}:v\cdot b\ge t\},
 \)</p><p>and let \(D_v(t)\) be the coordinatewise minimal elements of \(S_v(t)\). Here, coordinatewise minimal means that no distinct \(d&#x27;\in S_v(t)\) satisfies \(d&#x27;\le d\).</p><p>For \(t=0\), we have \(D_v(0)=\{0\}\). For \(t&gt;0\), every \(d\in D_v(t)\) satisfies:</p><ul><li>\(d_k=0\) if \(v_k=0\);</li><li>\(d_k\le \lceil t/v_k\rceil\) if \(v_k&gt;0\).</li></ul><p>Indeed, if \(d_k&gt;0\), minimality gives \(v\cdot(d-e_k)&lt;t\), where \(e_k\) is the \(k\)-th unit vector. Hence</p><p>\( \displaystyle
 (d_k-1)v_k\le v\cdot(d-e_k)&lt;t,
-\)</p><p>which implies the asserted bound. In particular, \(D_v(t)\) is finite.</p><p><b>Proposition 2.</b> A distribution with mean \(q\), supported on \(S_v(t)\), exists if and only if the following finite system is feasible:</p><p>\( \displaystyle
+\)</p><p>which implies the asserted bound. In particular, \(D_v(t)\) is finite.</p><p><b>Proposition 2.</b> A distribution with mean \(q\), supported on \(S_v(t)\), exists if and only if the following finite system is feasible:</p><p>\[ \displaystyle
 \lambda_d\ge 0,\qquad
 \sum_{d\in D_v(t)}\lambda_d=1,\qquad
 \sum_{d\in D_v(t)}\lambda_d d\le q.
 \tag{1}
-\)</p><p>Whenever it is feasible, a finite rational distribution with mean exactly \(q\) exists.</p><p><b>Proof.</b> Suppose first that \(\pi\) is such a distribution. Every \(b\in S_v(t)\) dominates a minimal element: repeatedly delete one unit of a good whenever the threshold remains satisfied. This process terminates because the sum of the coordinates decreases at every deletion.</p><p>Choose one resulting minimal element \(d(b)\le b\) for every \(b\). Pushing \(\pi\) forward under this map gives weights satisfying (1).</p><p>Conversely, suppose (1) is feasible. Its coefficients are rational, so it has a rational feasible solution. Explicitly, its feasible region is a nonempty compact rational polytope, and any vertex is rational.</p><p>Let</p><p>\( \displaystyle
+\]</p><p>Whenever it is feasible, a finite rational distribution with mean exactly \(q\) exists.</p><p><b>Proof.</b> Suppose first that \(\pi\) is such a distribution. Every \(b\in S_v(t)\) dominates a minimal element: repeatedly delete one unit of a good whenever the threshold remains satisfied. This process terminates because the sum of the coordinates decreases at every deletion.</p><p>Choose one resulting minimal element \(d(b)\le b\) for every \(b\). Pushing \(\pi\) forward under this map gives weights satisfying (1).</p><p>Conversely, suppose (1) is feasible. Its coefficients are rational, so it has a rational feasible solution. Explicitly, its feasible region is a nonempty compact rational polytope, and any vertex is rational.</p><p>Let</p><p>\( \displaystyle
 r=q-\sum_d\lambda_d d\ge 0.
 \)</p><p>Choose a finite rational distribution on \(Z\in\mathbb Z_{\ge 0}^{m}\) with mean \(r\), using independent floor-or-ceiling rounding. Independently choose \(D=d\) with probability \(\lambda_d\), and set \(B=D+Z\). Then</p><p>\( \displaystyle
 \mathbb E[B]=q,\qquad
@@ -61,23 +62,23 @@ v_{i,+}=H+R^i+a_i,\qquad
 v_{i,-}=H+R^i.
 \)</p><p>Give every good per-capita supply \(\frac12\), and define</p><p>\( \displaystyle
 T=nH+\sum_{i=1}^{n}R^i+B.
-\)</p><p>These numbers have polynomial binary length. Their construction is therefore polynomial-time. Moreover,</p><p>\( \displaystyle
+\)</p><p>These numbers have polynomial binary length. Their construction is therefore polynomial-time. Moreover,</p><p>\[ \displaystyle
 v\cdot q
 =\frac12\sum_{i=1}^{n}(v_{i,+}+v_{i,-})
 =T.
 \tag{2}
-\)</p><p>I claim that the PARTITION instance is a yes-instance exactly when \(\operatorname{MMS}_{v}(q)\ge T\).</p><p><b>Forward direction.</b> Suppose \(I\subseteq\{1,\ldots,n\}\) satisfies \(\sum_{i\in I}a_i=B\). Define a binary bundle \(b\) that selects the \(+\) good for \(i\in I\) and the \(-\) good for \(i\notin I\). Then \(v\cdot b=T\).</p><p>Its coordinatewise complement \(\mathbf1-b\) also has utility \(T\), because the total utility of all goods is \(2T\). Giving these two bundles probability \(\frac12\) each produces mean \(q\) and minimum utility \(T\).</p><p><b>Reverse direction.</b> Suppose \(\operatorname{MMS}_{v}(q)\ge T\). By Proposition 1 and (2), an attaining distribution has every supported utility at least \(T\) and expected utility exactly \(T\). Thus every supported bundle has utility exactly \(T\). Choose one such bundle \(b\).</p><p>Let</p><p>\( \displaystyle
+\]</p><p>I claim that the PARTITION instance is a yes-instance exactly when \(\operatorname{MMS}_{v}(q)\ge T\).</p><p><b>Forward direction.</b> Suppose \(I\subseteq\{1,\ldots,n\}\) satisfies \(\sum_{i\in I}a_i=B\). Define a binary bundle \(b\) that selects the \(+\) good for \(i\in I\) and the \(-\) good for \(i\notin I\). Then \(v\cdot b=T\).</p><p>Its coordinatewise complement \(\mathbf1-b\) also has utility \(T\), because the total utility of all goods is \(2T\). Giving these two bundles probability \(\frac12\) each produces mean \(q\) and minimum utility \(T\).</p><p><b>Reverse direction.</b> Suppose \(\operatorname{MMS}_{v}(q)\ge T\). By Proposition 1 and (2), an attaining distribution has every supported utility at least \(T\) and expected utility exactly \(T\). Thus every supported bundle has utility exactly \(T\). Choose one such bundle \(b\).</p><p>Let</p><p>\( \displaystyle
 \ell=\sum_{i=1}^{n}(b_{i,+}+b_{i,-}).
 \)</p><p>Every good has value at least \(H\). Also, because \(B&lt;R\),</p><p>\( \displaystyle
 T&lt;(n+1)H.
-\)</p><p>Consequently \(\ell\le n\).</p><p>Expanding \(v\cdot b=T\) gives</p><p>\( \displaystyle
+\)</p><p>Consequently \(\ell\le n\).</p><p>Expanding \(v\cdot b=T\) gives</p><p>\[ \displaystyle
 \ell H+
 \sum_{i=1}^{n}(b_{i,+}+b_{i,-})R^i+
 \sum_{i=1}^{n}a_i b_{i,+}
 =
 nH+\sum_{i=1}^{n}R^i+B.
 \tag{3}
-\)</p><p>All displayed coefficients are valid base-\(R\) digits:</p><p>\( \displaystyle
+\]</p><p>All displayed coefficients are valid base-\(R\) digits:</p><p>\( \displaystyle
 \ell\le n&lt;R,\qquad
 b_{i,+}+b_{i,-}\le n&lt;R,
 \)</p><p>and</p><p>\( \displaystyle
@@ -89,16 +90,16 @@ b_{i,+}+b_{i,-}=1\quad\text{for every }i,
 \)</p><p>Therefore each \(b_{i,+}\) is binary, and the indices for which it equals one solve PARTITION. This completes the reduction. ∎</p><h3>3. An exact finite relaxation of the mechanism problem</h3><p>We can also characterize the mass constraints after omitting truthfulness and the requirement of implementation at every prescribed scale.</p><p>Let \(t_v\ge 0\) be a specified rational utility threshold for each \(v\in V\).</p><p><b>Proposition 4.</b> There exist finite rational masses \(x_{v,b}\) satisfying</p><p>\( \displaystyle
 \sum_bx_{v,b}=\mu_v,\qquad
 \sum_{v,b}b_kx_{v,b}=q_k,
-\)</p><p>with \(v\cdot b\ge t_v\) whenever \(x_{v,b}&gt;0\), if and only if the finite system</p><p>\( \displaystyle
+\)</p><p>with \(v\cdot b\ge t_v\) whenever \(x_{v,b}&gt;0\), if and only if the finite system</p><p>\[ \displaystyle
 y_{v,d}\ge0,\qquad
 \sum_{d\in D_v(t_v)}y_{v,d}=\mu_v
 \quad(v\in V),
 \tag{4}
-\)</p><p>\( \displaystyle
+\]</p><p>\[ \displaystyle
 \sum_{v\in V}\sum_{d\in D_v(t_v)}d_k y_{v,d}\le q_k
 \quad(k=1,\ldots,m)
 \tag{5}
-\)</p><p>is feasible.</p><p><b>Proof.</b> Given the masses, replace every supported bundle by a coordinatewise minimal bundle below it. This preserves each type&#x27;s mass and threshold, and can only decrease resource consumption. The resulting weights satisfy (4)–(5).</p><p>Conversely, choose a rational feasible solution of (4)–(5), which exists whenever the system is feasible because its feasible region is a bounded rational polytope. Write the unused supply as</p><p>\( \displaystyle
+\]</p><p>is feasible.</p><p><b>Proof.</b> Given the masses, replace every supported bundle by a coordinatewise minimal bundle below it. This preserves each type&#x27;s mass and threshold, and can only decrease resource consumption. The resulting weights satisfy (4)–(5).</p><p>Conversely, choose a rational feasible solution of (4)–(5), which exists whenever the system is feasible because its feasible region is a bounded rational polytope. Write the unused supply as</p><p>\( \displaystyle
 r=q-\sum_{v,d}d\,y_{v,d}\ge0.
 \)</p><p>Choose a type \(v_0\) with \(\mu_{v_0}&gt;0\). For this type, independently augment every bundle by an integer random vector of mean \(r/\mu_{v_0}\), using finite rational floor-or-ceiling rounding. Leave other types unchanged.</p><p>The total increase in consumption is exactly \(r\). Nonnegative valuations ensure that augmentation preserves every threshold. The resulting masses are finite and rational and satisfy the required equalities. ∎</p><p>For the task&#x27;s thresholds, use</p><p>\( \displaystyle
 t_v=\max\{0,\rho\,\operatorname{MMS}_{v}(q)\}.

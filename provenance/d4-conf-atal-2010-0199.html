@@ -1,0 +1,115 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-atal-2010-0199 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-atal-2010-0199 <span style="font-weight:normal;color:#8a7350">(d4-conf-atal-2010-0199)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> Exact computation of all bloc EGSVs and optional per-capita rates is polynomial-time solvable, with \(O(L+\tau+K+mK)\) arithmetic operations and input-processing steps, and \(O((L+\tau+K+mK)(L+K\log_2(K+1))^2)\) bit operations for exact numerator–denominator outputs.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5.5 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given supported types \(t\) with rational masses \(\mu_t\) summing to \(1\), a fixed partition of those types into \(K\) blocs \(B_1,\ldots,B_K\), and literal embedded rules with per-unit rates \(q\), compute each bloc&#x27;s EGSV and, optionally, its per-capita rate. A matching rule contributes \(q\lambda(B_j)\) to its target bloc, where \(\lambda(B_j)=\sum_{t\in B_j}\mu_t\), and type cohorts join blocs as units.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support \(U\): the list of the \(\tau\) types with positive binary-rational masses \(\mu_t\), summing to \(1\); \(\tau\) is the support size, not the number of possible types. The input includes a partition \(\pi=\{B_1,\ldots,B_K\}\) into nonempty blocs; type cohorts are indivisible. Write \(\lambda(S)=\sum_{t\in S}\mu_t\).<br>There are \(m\) embedded rules \(P_0\mid P_1,\ldots,P_k\to q\), with signed binary-rational rates \(q\). Each \(P_i\) is a conjunction of positive and negative type literals: \(S\) satisfies it exactly when it contains every positive type and no negative type. An empty conjunction is true. Each rule has at least one positive literal in \(P_0\) or negative literal among \(P_1,\ldots,P_k\).<br>For a partition \(\rho\) of \(U\) and \(S\in\rho\), a rule matches \((S,\rho)\) when \(S\) satisfies \(P_0\) and every external pattern \(P_i\) has a witness in \(\rho\setminus\{S\}\); witnesses need not be distinct. Its contribution is \(q\lambda(S)\). Let \(w(S,\rho)\) be the sum of matching contributions.<br>Define a characteristic-function game on the \(K\) blocs by \(v(\varnothing)=0\) and, for nonempty \(T\subseteq\pi\), \(v(T)=w(S_T,\{S_T,U\setminus S_T\}\setminus\{\varnothing\})\), where \(S_T=\bigcup_{B\in T}B\). The EGSV of \(B_j\) is its standard Shapley value \(\phi_j(v)\); its optional per-capita rate is \(\phi_j(v)/\lambda(B_j)\).</p><p>Is exact computation of all bloc EGSVs (and optional per-capita rates) polynomial-time solvable, or is it NP-hard? State running times in \(m,\tau,K,L\), where \(L\) is the total binary input length, including all literal occurrences.</p><p>For finite agents with constant rule values, EGSV admits a representation with two transformed rules per input rule and computation linear in representation size ([discrete result](https://www.cs.ox.ac.uk/people/michael.wooldridge/pubs/aamas2010c.pdf)).<br>No result settling this exact mass-dependent formulation was identified in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Interpreted rule literals as membership tests on supported types, with each type cohort indivisible.</li><li>Specified nonempty blocs and allowed signed binary-rational rates, following the discrete partition and value domains.</li><li>Restored the restriction that each rule has a positive target literal or a negative external literal.</li><li>Specified existential external witnesses, allowed shared witnesses, and treated empty conjunctions as true only on actual coalitions.</li><li>Defined EGSV through the standard Shapley value of the bloc game, applying the per-unit rate to the mass of every merged target coalition.</li><li>Set the empty coalition&#x27;s characteristic value to zero and omitted empty complement coalitions at the grand-coalition endpoint.</li><li>Used m for the number of input rules and L for total binary input length, including pattern encodings.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>Exact computation of all bloc EGSVs and their optional per-capita rates is <b>polynomial-time solvable</b>.</p><p>Let \(B=L+K\log_2(K+1)\). An algorithm uses</p><p>\[
+O(L+\tau+K+mK)
+\]</p><p>arithmetic operations and input-processing steps, and can be implemented in</p><p>\[
+O\!\left((L+\tau+K+mK)B^2\right)
+\]</p><p>bit operations using schoolbook integer arithmetic, with exact rational outputs represented as numerator–denominator pairs.</p><p>The proof below derives the required Shapley formulas directly. It uses conjunction games, as in the [linked discrete result](https://www.cs.ox.ac.uk/people/michael.wooldridge/pubs/aamas2010c.pdf), while explicitly accounting for coalition mass.</p><h3>1. Compiling one embedded rule</h3><p>Identify the blocs with the player set \(N=\{1,\ldots,K\}\). Write \(b(t)\) for the bloc containing type \(t\), and put \(a_j=\lambda(B_j)\). Thus \(a_j&gt;0\) and \(\sum_{j\in N}a_j=1\).</p><p>Consider one rule \(r:P_0\mid P_1,\ldots,P_k\to q\). Let \(X_i^+\) and \(X_i^-\) denote the positive and negative type literals in \(P_i\).</p><p>If literals may name types outside \(U\), first normalize them. A positive literal naming an absent type makes the rule impossible, because every possible witness is a subset of \(U\). Negative literals naming absent types can be deleted. This preprocessing also covers the interpretation in which every literal already names a supported type.</p><p>For a remaining rule, define</p><p>\[
+A=\left\{b(t):t\in X_0^+\cup\bigcup_{i=1}^kX_i^-\right\},
+\qquad
+D=\left\{b(t):t\in X_0^-\cup\bigcup_{i=1}^kX_i^+\right\}.
+\]</p><p>Here \(A\) contains the required blocs, and \(D\) contains the forbidden blocs. Cohort indivisibility justifies this translation: a coalition of blocs contains type \(t\) exactly when it contains \(b(t)\).</p><p>If \(A\cap D\ne\varnothing\), discard the rule. No coalition can meet its simultaneous inclusion and exclusion requirements.</p><p>Suppose henceforth that \(A\cap D=\varnothing\). For a nonempty proper coalition \(T\subsetneq N\), its embedded partition contains exactly two coalitions: \(S_T\) and \(U\setminus S_T\). Consequently, every external pattern must be witnessed by \(U\setminus S_T\). The rule therefore matches exactly when</p><p>\[
+A\subseteq T,\qquad D\cap T=\varnothing.
+\]</p><p>This equivalence uses the stipulated permission to reuse a witness.</p><p>Define</p><p>\[
+g_{A,D}(T)=
+\left(\sum_{j\in T}a_j\right)
+\mathbf 1_{\{A\subseteq T,\ D\cap T=\varnothing\}}.
+\]</p><p>This definition gives \(g_{A,D}(\varnothing)=0\), including when \(A=\varnothing\).</p><p>Let \(u_N(T)=\mathbf 1_{\{T=N\}}\), and set</p><p>\[
+\delta_r=
+\begin{cases}
+1,&amp;k&gt;0\text{ and }D=\varnothing,\\
+0,&amp;\text{otherwise}.
+\end{cases}
+\]</p><p>The rule’s characteristic-function contribution is exactly</p><p>\[
+v_r(T)=q\,g_{A,D}(T)-\delta_r q\,u_N(T).
+\]</p><p>To verify the boundary cases:</p><ul><li>At \(T=\varnothing\), both sides are zero.</li><li>If \(k=0\), there is no external-witness requirement, so the conjunction description remains valid at \(T=N\).</li><li>If \(k&gt;0\), the grand coalition has no external witness and the rule never matches there. When \(D\ne\varnothing\), \(g_{A,D}(N)=0\) already. When \(D=\varnothing\), \(g_{A,D}(N)=1\), which the correction removes.</li></ul><p>In particular, an empty external pattern still requires a witness; the correction handles this case.</p><h3>2. Shapley values of conjunction games</h3><p>For disjoint sets \(H,D\subseteq N\), with \(h=|H|\geq1\) and \(d=|D|\), define</p><p>\[
+e_{H,D}(T)=\mathbf 1_{\{H\subseteq T,\ D\cap T=\varnothing\}}.
+\]</p><p>Its Shapley values are</p><p>\[
+\phi_j(e_{H,D})=
+\begin{cases}
+\dfrac{(h-1)!\,d!}{(h+d)!},&amp;j\in H,\\[6pt]
+-\dfrac{h!\,(d-1)!}{(h+d)!},&amp;j\in D,\\[6pt]
+0,&amp;j\notin H\cup D.
+\end{cases}
+\]</p><p>The second case applies only when \(d\geq1\).</p><p><b>Proof.</b> Use the random-permutation definition of the Shapley value. The relative order of the \(h+d\) players in \(H\cup D\) is uniform.</p><p>For \(j\in H\), its marginal contribution is \(1\) precisely when every player in \(H\setminus\{j\}\) precedes \(j\), and every player in \(D\) follows \(j\). There are \((h-1)!\,d!\) such relative orders out of \((h+d)!\).</p><p>For \(j\in D\), its marginal contribution is \(-1\) precisely when every player in \(H\) precedes \(j\), and every player in \(D\setminus\{j\}\) follows \(j\). There are \(h!\,(d-1)!\) such relative orders.</p><p>Adding a player outside \(H\cup D\) never changes the game value, so its marginal contribution is always zero. These observations prove every case. \(\square\)</p><p>Also, \(\phi_j(u_N)=1/K\): a player changes the grand-coalition indicator precisely when it is last in the permutation.</p><h3>3. Factoring the mass dependence</h3><p>For every \(T\subseteq N\),</p><p>\[
+g_{A,D}(T)=
+\sum_{j\in N\setminus D}a_j\,e_{A\cup\{j\},D}(T).
+\]</p><p>Indeed, if \(T\) violates the requirements \(A\subseteq T\) and \(D\cap T=\varnothing\), every term on the right vanishes. Otherwise, its \(j\)-th term equals \(a_j\) exactly when \(j\in T\), so the sum equals the mass of \(T\).</p><p>Every conjunction on the right has at least one required player. Thus the formula proved in Section 2 applies even if normalization produced \(A=\varnothing\).</p><p>This already proves polynomial-time computability: each input rule becomes at most \(K\) constant-valued conjunction games and one grand-coalition correction. The following aggregation gives a sharper running time.</p><p>Let</p><p>\[
+F=N\setminus(A\cup D),\qquad
+p=|A|,\qquad d=|D|,\qquad
+M_A=\sum_{j\in A}a_j,\qquad
+M_F=\sum_{j\in F}a_j.
+\]</p><p>Then</p><p>\[
+g_{A,D}=M_Ae_{A,D}+\sum_{j\in F}a_j e_{A\cup\{j\},D},
+\]</p><p>where the first term is omitted when \(A=\varnothing\).</p><p>For \(h\geq1\), define</p><p>\[
+c_+(h,d)=\frac{(h-1)!\,d!}{(h+d)!},
+\]</p><p>and, when \(d\geq1\), define</p><p>\[
+c_-(h,d)=-\frac{h!\,(d-1)!}{(h+d)!}.
+\]</p><p>Linearity of the Shapley value now gives the complete formulas.</p><p>If \(j\in A\), then \(p\geq1\) and</p><p>\[
+\phi_j(g_{A,D})
+=M_Ac_+(p,d)+M_Fc_+(p+1,d).
+\]</p><p>If \(j\in D\), then \(d\geq1\), and</p><p>\[
+\phi_j(g_{A,D})=
+\begin{cases}
+M_Ac_-(p,d)+M_Fc_-(p+1,d),&amp;p\geq1,\\
+M_Fc_-(1,d),&amp;p=0.
+\end{cases}
+\]</p><p>If \(j\in F\), then</p><p>\[
+\phi_j(g_{A,D})=a_jc_+(p+1,d).
+\]</p><p>Terms multiplied by \(M_F=0\) can simply be omitted.</p><p>To justify the aggregation, a required player belongs to the positive set of every component conjunction; a forbidden player belongs to the negative set of every component conjunction. A free player \(j\) occurs only in its own component, with coefficient \(a_j\), and is a null player in all other components.</p><p>Therefore, one input rule contributes</p><p>\[
+\phi_j(v_r)=q\,\phi_j(g_{A,D})-\frac{\delta_rq}{K}
+\]</p><p>to bloc \(j\).</p><p>The input game is the sum of these rule games. Summing these contributions therefore computes all bloc EGSVs exactly, including for signed rates.</p><h3>4. Algorithm and exact running time</h3><p>The algorithm performs the following steps:</p><ul><li>Construct the type-to-bloc map and compute all bloc masses.</li><li>For each rule, construct \(A,D\), discard impossible rules, and determine \(\delta_r\).</li><li>Compute \(p,d,M_A,M_F\).</li><li>Apply the formulas above to all \(K\) blocs and add the results to their accumulators.</li></ul><p>Reading and translating all literal occurrences takes \(O(L)\) input-processing steps. Computing bloc masses takes \(O(\tau)\) arithmetic operations. Each rule takes \(O(K)\) additional arithmetic operations, including its updates to all outputs. Precomputing factorials takes \(O(K)\) operations.</p><p>Hence the total is</p><p>\[
+O(L+\tau+K+mK).
+\]</p><p>For the bit bound, write the input rationals as integer numerator–denominator pairs. Let \(D_\mu\) be the product of the mass denominators and \(D_q\) the product of the rate denominators. Both have \(O(L)\) bits. Set</p><p>\[
+H=D_\mu D_q K!.
+\]</p><p>For every conjunction actually used, \(h+d\leq K\). Its Shapley coefficients satisfy</p><p>\[
+K!c_+(h,d)=\frac{K!}{(h+d)!}(h-1)!\,d!\in\mathbb Z,
+\]</p><p>and, for \(d\geq1\),</p><p>\[
+K!c_-(h,d)=-\frac{K!}{(h+d)!}h!\,(d-1)!\in\mathbb Z.
+\]</p><p>The grand-coalition correction also has denominator dividing \(K!\).</p><p>Consequently, all outputs can be accumulated as integers over the common denominator \(H\). Specifically, \(D_\mu a_j\) and \(D_q q\) are integers, and multiplying these integers by the scaled Shapley coefficients gives the corresponding output numerator increments.</p><p>Input rate magnitudes are at most \(2^{O(L)}\), and summing over \(m\) rules adds only \(O(\log(m+1))\) bits. Thus every integer used in this implementation has</p><p>\[
+O\!\left(L+K\log_2(K+1)\right)=O(B)
+\]</p><p>bits, including intermediate factorial products.</p><p>Schoolbook multiplication and long division on these integers cost \(O(B^2)\) bit operations. This proves the stated bound</p><p>\[
+O\!\left((L+\tau+K+mK)B^2\right)
+\]</p><p>for exact numerator–denominator outputs. Reducing the fractions, if desired, also takes polynomial time.</p><p>Since \(K\leq\tau\) and the society, partition, and rules are explicitly represented, this is polynomial in the total input length.</p><h3>5. Per-capita rates and verification</h3><p>Every bloc is nonempty and every supported type has positive mass. Therefore \(a_j&gt;0\), and the per-capita rate \(\phi_j(v)/a_j\) is well-defined.</p><p>Write \(a_j=x_j/D_\mu\), where \(x_j\) is a positive integer. If the computed EGSV is \(n_j/H\), then its per-capita rate is</p><p>\[
+\frac{\phi_j(v)}{a_j}
+=\frac{n_j}{D_qK!\,x_j}.
+\]</p><p>This requires only \(O(K)\) additional integer operations on \(O(B)\)-bit numbers and preserves the polynomial bit bound.</p><p>As a computational cross-check, the formulas were compared using exact rational arithmetic with direct Shapley summation over every coalition in 600 generated instances with one through six blocs. These checks included grouped types, contradictory requirements, absent-type literals, empty external patterns, and signed rates. All comparisons agreed; the proof above establishes correctness independently.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover resolves the stated task. The rule compilation, Shapley formulas, and exact bit-complexity bound are correct. I found no major or minor issues requiring repair.</p><h3>1. Scope and definitions</h3><p>The proof uses the \(K\) blocs as Shapley players, as required. The mass \(a_j=\lambda(B_j)\) is positive because each bloc is nonempty and each supported type has positive mass. Also, \(K\geq1\), so division by \(K\) is valid.</p><p>The argument addresses the specified mass-dependent contribution \(q\lambda(S)\), including signed rates. It does not substitute the constant-valued discrete formulation.</p><h3>2. Compilation of an embedded rule</h3><p>The preprocessing of unsupported types is correct: an unsupported positive literal cannot be satisfied by any coalition or witness, while an unsupported negative literal is always satisfied.</p><p>For a nonempty proper coalition \(T\), the embedded partition has exactly one external coalition, namely its complement. Therefore:</p><ul><li>Positive literals in \(P_0\) and negative literals in external patterns require their blocs to belong to \(T\).</li><li>Negative literals in \(P_0\) and positive literals in external patterns forbid their blocs from belonging to \(T\).</li></ul><p>These are precisely the definitions of \(A\) and \(D\). Reusing the complement as a witness is permitted by the task. Thus the matching equivalence is correct.</p><p>If \(A\cap D\neq\varnothing\), the requirements are inconsistent. Discarding such a rule is valid, including at the grand coalition: external patterns then have no witness, while a rule without external patterns retains contradictory internal requirements.</p><h3>3. Empty and grand-coalition boundaries</h3><p>The identity \(v_r=qg_{A,D}-\delta_rqu_N\) handles both boundaries correctly.</p><p>At the empty coalition, the mass factor makes \(g_{A,D}\) zero even when \(A=\varnothing\). The grand-coalition indicator is also zero there.</p><p>At the grand coalition:</p><ul><li>When \(k=0\), no external witness is needed.</li><li>When \(k&gt;0\), the rule cannot match.</li><li>If \(D\neq\varnothing\), the conjunction already vanishes.</li><li>If \(D=\varnothing\), its mass-weighted value is \(1\), and the correction removes exactly \(q\).</li></ul><p>An empty external conjunction still needs an external witness under the task’s definition. The correction handles this correctly.</p><h3>4. Conjunction-game Shapley values</h3><p>The permutation counting is correct.</p><p>For \(j\in H\), a positive marginal occurs exactly when all other required players precede \(j\) and all forbidden players follow it. The number of qualifying relative orders is \((h-1)!\,d!\), out of \((h+d)!\).</p><p>For \(j\in D\), a negative marginal occurs exactly when all required players precede \(j\) and every other forbidden player follows it. The count is \(h!\,(d-1)!\).</p><p>Players outside \(H\cup D\) have zero marginal contribution. The restrictions \(h\geq1\) and \(d\geq1\) for the negative case prevent undefined factorials.</p><p>The grand-coalition indicator gives each player \(1/K\), since its marginal is nonzero exactly when that player is last.</p><h3>5. Mass decomposition and aggregation</h3><p>The decomposition into conjunction games is valid coalition by coalition. If a coalition violates the original requirements, every component vanishes. Otherwise, precisely the components indexed by its members contribute their masses.</p><p>Every component has a nonempty required set, so the conjunction formulas apply even when \(A=\varnothing\).</p><p>The aggregated formulas correctly distinguish required, forbidden, and free players. In particular, a free player appears as a required player only in its own component and is null in every other component.</p><p>When \(F=\varnothing\), the stated instruction to omit terms multiplied by \(M_F=0\) avoids evaluating coefficients for unused conjunctions whose sizes could exceed \(K\).</p><p>Shapley linearity then justifies summing the rule contributions. Signed rates introduce no additional restriction.</p><h3>6. Arithmetic and bit complexity</h3><p>The operation count is consistent with the algorithm:</p><ul><li>Input processing and literal translation take \(O(L)\) steps.</li><li>Bloc-mass computation takes \(O(\tau)\) arithmetic operations.</li><li>Factorial precomputation takes \(O(K)\) operations.</li><li>Each rule requires \(O(K)\) additional work.</li></ul><p>The common denominator \(H=D_\mu D_qK!\) is sufficient. For every conjunction actually used, \(h+d\leq K\), so the displayed scaled coefficients are integers. The grand-coalition correction also has denominator dividing \(K!\).</p><p>The denominator products have \(O(L)\) bits, and \(K!\) has \(O(K\log_2(K+1))\) bits. Input magnitudes and accumulation over the explicitly represented rules preserve the claimed \(O(B)\) bound on integer lengths. Schoolbook multiplication and division therefore yield the stated bit bound \(O((L+\tau+K+mK)B^2)\).</p><p>Because \(K\leq\tau\) and the support and partition are explicitly represented, this is polynomial in input length.</p><h3>7. Per-capita rates and computational checks</h3><p>The division by bloc mass is valid because every \(a_j&gt;0\). The cancellation giving the denominator \(D_qK!x_j\) is correct, and its bit length remains \(O(B)\).</p><p>The reported randomized checks are supplementary. Their execution is not independently documented in the supplied output, but correctness does not depend on them: the written derivation establishes the result.</p><p>No repair or additional lemma is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,98 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-22dde3e1ac8e37a69779fe9bb5dbd9b1c812cde8 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-22dde3e1ac8e37a69779fe9bb5dbd9b1c812cde8 <span style="font-weight:normal;color:#8a7350">(s5-22dde3e1ac8e37a69779fe9bb5dbd9b1c812cde8)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> The existential decision problem is NP-complete, even for $\tau=3$ distinct rankings with $\mu_1=\mu_2=\mu_3=1/3$. Producing a feasible order or reporting infeasibility is NP-hard. Polynomial-time solvability is equivalent to $\mathrm{P}=\mathrm{NP}$.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>KEMENY SCORE with three voters is NP-complete. Membership in NP is clear. Hardness follows from the following reduction.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a set of alternatives \(A\), distinct complete rankings \(\succ_t\) with positive rational masses \(\mu_t\) summing to \(1\), and a rational threshold \(B\), decide whether there is a linear order \(\succ\) such that \(\sum_t \mu_t\,\mathrm{KT}(\succ_t,\succ)\le B\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list of \(\tau\) distinct strict complete rankings \(\succ_t\) of a finite nonempty alternative set \(A\), with positive binary rational masses \(\mu_t\) satisfying \(\sum_{t=1}^{\tau}\mu_t=1\). Here \(m=|A|\), and \(\tau\) is the support size, not the number \(m!\) of possible rankings.<br>Given a binary rational threshold \(B\in\mathbb{Q}\), decide whether a linear order \(\succ\) of \(A\) satisfies \(\sum_{t=1}^{\tau}\mu_t\,\mathrm{KT}(\succ_t,\succ)\le B\), where \(\mathrm{KT}\) is the unnormalized Kendall–tau distance. The output is one linear order. Let \(L\) be the total input bit length; state running times in \(m,\tau,L\).</p><p>Is this decision problem solvable in polynomial time, or is it NP-hard?</p><p>Discrete Kemeny score is NP-complete even for three voters, both for the total Kendall–tau objective and for the majority-margin disagreement objective, which differ by a profile-dependent additive constant.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Take the alternative set to be finite and nonempty.</li><li>Use unnormalized Kendall–tau distance, as in the discrete definition.</li><li>Define L as the total bit length of the rankings, masses, and threshold.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Conclusion and interpretation</h3><p>The intended decision problem is <b>NP-complete</b>, and finding a feasible order or reporting that none exists is <b>NP-hard</b>. Hardness holds even when the support consists of exactly three distinct rankings, each of mass $1/3$.</p><p>I interpret the question as asking whether <b>there exists</b> an order meeting the threshold. If an order is already supplied and only its score must be checked, verification takes polynomial time.</p><h3>Polynomial-time verification</h3><p>For rankings $R,S$, define<br>$$
+d(R,S)=\mathrm{KT}(R,S)
+$$<br>as the number of unordered pairs of alternatives whose relative order differs between $R$ and $S$. Consequently,<br>$$
+0\le d(R,S)\le \binom m2.
+$$</p><p>A certificate is a permutation $R$ of the alternatives. After checking that it contains each alternative exactly once, we can compute all distances $d(\succ_t,R)$ by comparing the relative order of every pair in every support ranking.</p><p>The rational comparison can also be performed exactly in polynomial time. Write<br>$$
+\mu_t=\frac{p_t}{q_t},
+\qquad
+B=\frac bc,
+$$<br>with positive denominators, and put<br>$$
+D=\prod_{t=1}^{\tau}q_t.
+$$<br>Then feasibility is equivalent to the integer inequality<br>$$
+c\sum_{t=1}^{\tau}p_t\frac{D}{q_t}\,d(\succ_t,R)\le bD.
+$$<br>The bit length of $D$ is at most the sum of the denominator bit lengths, hence is $O(L)$. Since the masses are positive and sum to one,<br>$$
+0\le
+\sum_{t=1}^{\tau}p_t\frac{D}{q_t}\,d(\succ_t,R)
+\le D\binom m2.
+$$<br>Thus all integers used in the comparison have $O(L+\log m)=O(L)$ bits. Using elementary integer arithmetic gives the conservative verification bound<br>$$
+O(\tau m^2L^2)
+$$<br>bit operations. The certificate has polynomial length, so the existential decision problem belongs to $\mathrm{NP}$.</p><h3>Reduction from three-voter Kemeny score</h3><p>Use the three-voter NP-completeness theorem supplied in the task, for the total Kendall–tau objective.</p><p>An instance consists of three rankings $R_1,R_2,R_3$ and an integer threshold $K$, and asks whether some ranking $R$ satisfies<br>$$
+d(R_1,R)+d(R_2,R)+d(R_3,R)\le K.
+$$</p><p>Let $S_1,\ldots,S_\tau$ be the distinct rankings among these three, and let $c_t$ be the multiplicity of $S_t$. Construct the society with masses<br>$$
+\mu_t=\frac{c_t}{3}
+$$<br>and threshold<br>$$
+B=\frac K3.
+$$<br>The support rankings are distinct, the masses are positive binary-encoded rationals, and their sum is one. For every candidate $R$,<br>$$
+\sum_{t=1}^{\tau}\mu_t\,d(S_t,R)
+=
+\frac13\bigl(d(R_1,R)+d(R_2,R)+d(R_3,R)\bigr).
+$$<br>Therefore the constructed instance is feasible exactly when the original instance is feasible.</p><p>The construction has polynomial running time and output length; $O(m^2L^2)$ bit operations is a conservative bound. It already establishes NP-hardness with support size at most three.</p><h3>Exactly three distinct rankings suffice</h3><p>For completeness, repeated rankings in the source instances can be handled without weakening the restriction to exactly three distinct support rankings.</p><p>First, Kendall–tau distance satisfies the triangle inequality:<br>$$
+d(X,Z)\le d(X,Y)+d(Y,Z).
+$$<br>Indeed, for each unordered pair, disagreement between $X$ and $Z$ implies disagreement between $X$ and $Y$ or between $Y$ and $Z$. Summing this pairwise inequality proves the claim.</p><p>If a three-voter profile has repeated rankings, write it as $X,X,Y$, allowing $X=Y$. Every candidate $R$ satisfies<br>$$
+\begin{aligned}
+2d(X,R)+d(Y,R)
+&amp;\ge d(X,R)+d(X,Y)\\
+&amp;\ge d(X,Y).
+\end{aligned}
+$$<br>The first inequality uses the triangle inequality, and the second uses nonnegativity. Equality is attained at $R=X$. Thus the optimum is exactly $d(X,Y)$, which can be computed in polynomial time.</p><p>Modify the reduction as follows:</p><ul><li>If the three source rankings are distinct, use masses $1/3$ and threshold $K/3$.</li><li>If a ranking repeats, compute the optimum above and output a fixed yes-instance or a fixed no-instance according to whether it is at most $K$.</li></ul><p>For both fixed instances, take the three distinct rankings<br>$$
+a\succ b\succ c,\qquad
+a\succ c\succ b,\qquad
+b\succ a\succ c,
+$$<br>each with mass $1/3$. Threshold $3$ gives a yes-instance because every distance on three alternatives is at most $3$. Threshold $0$ gives a no-instance: a weighted sum of nonnegative distances with positive weights can equal zero only if the candidate equals all three support rankings, which is impossible.</p><p>This is a polynomial-time reduction whose every output has exactly three distinct rankings of equal mass. Hence the decision problem remains NP-complete under that restriction.</p><h3>Running-time implications</h3><p>An exhaustive algorithm enumerates all $m!$ orders and verifies each, taking<br>$$
+O(m!\,\tau m^2L^2)
+$$<br>bit operations. A polynomial-time algorithm in $m,\tau,L$ exists if and only if $\mathrm{P}=\mathrm{NP}$.</p><p>For the requested output, a polynomial-time algorithm that returns a feasible order or reports infeasibility would decide this NP-complete problem. Conversely, if $\mathrm{P}=\mathrm{NP}$, a feasible order can be constructed in polynomial time by extending a prefix one alternative at a time: the question whether a prefix has a feasible completion belongs to $\mathrm{NP}$, and at most $m^2$ such queries suffice.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The output resolves the intended existential decision problem. The proof is correct, conditional on the three-voter NP-completeness theorem explicitly supplied in the task. I found no major or minor gaps.</p><ul><li><b>Interpretation and scope.</b> The prover explicitly interprets the task as deciding whether an order satisfying the threshold exists, and separately addresses producing that order. This matches the evident intent. Its distinction between finding an order and checking a supplied order is correct.</li></ul><ul><li><b>Membership in $\mathrm{NP}$.</b> A permutation is a polynomial-length certificate. Checking that every alternative occurs exactly once and computing pairwise disagreements verifies the certificate in polynomial time. The distance definition and bound</li></ul><p>$$
+   0\le d(R,S)\le \binom m2
+   $$<br>are correct, including the case $m=1$.</p><p>The exact rational comparison is also correct. Since all denominators are positive and each $q_t$ divides $D$, clearing denominators preserves the inequality:<br>$$
+   c\sum_{t=1}^{\tau}p_t\frac{D}{q_t}d(\succ_t,R)\le bD.
+   $$<br>This remains valid for negative thresholds. The product $D$ has $O(L)$ bits. Positivity and normalization of the masses justify the stated bound on the integer sum, and multiplication by $b$ or $c$ still produces integers with $O(L)$ bits. The conservative verification bound<br>$$
+   O(\tau m^2L^2)
+   $$<br>is sufficient.</p><ul><li><b>Use of the supplied hardness theorem.</b> The prover invokes precisely the version supplied in the task: three-voter Kemeny score with the total, unnormalized Kendall–tau objective. Its source instance and threshold condition match that premise. No conversion from the majority-margin objective is required.</li></ul><ul><li><b>Reduction to distinct support rankings.</b> Grouping identical source rankings and assigning mass $c_t/3$ satisfies every society requirement: distinct support rankings, positive rational masses, and total mass one. The identity</li></ul><p>$$
+   \sum_{t=1}^{\tau}\mu_t d(S_t,R)
+   =
+   \frac13\bigl(d(R_1,R)+d(R_2,R)+d(R_3,R)\bigr)
+   $$<br>holds for every candidate order. Consequently, choosing $B=K/3$ preserves both yes-instances and no-instances. The construction has polynomial encoding length and running time, and proves hardness for $\tau\le 3$.</p><ul><li><b>Strengthening to exactly three distinct rankings.</b> The triangle inequality is proved correctly by counting disagreements separately for each unordered pair. For a repeated profile $X,X,Y$, it gives</li></ul><p>$$
+   2d(X,R)+d(Y,R)\ge d(X,R)+d(X,Y)\ge d(X,Y).
+   $$<br>At $R=X$, the objective equals $d(X,Y)$, so the claimed optimum is exact. This also covers $X=Y$.</p><p>The repeated-profile branch therefore determines the source answer in polynomial time. Both fixed target instances meet the restriction of exactly three distinct rankings with equal masses. Threshold $3$ gives a yes-instance because each distance is at most $3$. Threshold $0$ gives a no-instance because positive masses and nonnegative distances force every distance to vanish, which would require three distinct rankings to equal the same candidate. Thus this strengthened reduction is valid.</p><ul><li><b>Running times and producing an order.</b> Enumerating all $m!$ orders and applying the verifier yields the stated bound</li></ul><p>$$
+   O(m!\,\tau m^2L^2).
+   $$<br>The equivalence between polynomial-time decision and $\mathrm{P}=\mathrm{NP}$ follows from the established NP-completeness. An algorithm producing a feasible order or reporting infeasibility would decide the problem. Conversely, the stated prefix-completion predicate belongs to $\mathrm{NP}$, and extending a feasible prefix requires at most $m^2$ candidate queries. The conditional polynomial-time construction is therefore justified.</p><p>No additional clarification is needed to make the argument verifiable.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

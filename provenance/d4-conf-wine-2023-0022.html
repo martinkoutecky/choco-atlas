@@ -1,0 +1,150 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-wine-2023-0022 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-wine-2023-0022 <span style="font-weight:normal;color:#8a7350">(d4-conf-wine-2023-0022)</span></h1>
+<p class="banner">NEW RESULT — discrete: hard → continuous: hard · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> \(\mathrm{NP}\text{-complete}\)</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For binary preferences, deciding whether an envy-free arrangement on a cycle exists is NP-hard.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite type set \(T\), binary utilities \(p:T\times T\to\{0,1\}\), and rational masses \(\mu_t\ge 0\) summing to one, decide whether there is a nonnegative mass distribution \(\rho_{abcd}\) over four consecutive types in a large cycle. Require total mass one, stationarity \(\sum_d\rho_{abcd}=\sum_x\rho_{xabc}\), and type marginals \(\mu_t=\sum_{a,c}Q_{atc}\), where \(Q_{abc}=\sum_d\rho_{abcd}\). For every pair of positive-mass triples \((a,t,c)\) and \((d,u,e)\), require \(p(t,a)+p(t,c)\ge p(t,d)+p(t,e)\); for every positive-mass adjacent window \((a,t,u,e)\), require \(p(t,a)\ge p(t,e)\) and \(p(u,e)\ge p(u,a)\). This asks whether a large-cycle mass society can be envy-free except on a set of vanishing population mass.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a nonempty list \(T\) of \(\tau\) types with positive binary-rational masses \(\mu_t\), where \(\sum_{t\in T}\mu_t=1\). Thus \(\tau\) is the support size, not the number of possible types. Here \(m=|T|=\tau\); let \(L\) be the total input bit length.<br>Preferences are an explicitly given, possibly asymmetric function \(p:T\times T\to\{0,1\}\). The value \(p(t,t)\) concerns distinct individuals of type \(t\) and may be either binary value. Utility is additive over the two neighbors; envy means a strict utility increase after exchanging seats, including adjacent seats.<br>Define a mass arrangement to be real numbers \(\rho_{abcd}\geq0\), indexed by \(T^4\), representing frequencies of four consecutive types, with \(\sum_{a,b,c,d\in T}\rho_{abcd}=1\) and \(\sum_{d\in T}\rho_{abcd}=\sum_{x\in T}\rho_{xabc}\) for every \((a,b,c)\in T^3\).<br>Put \(Q_{abc}=\sum_{d\in T}\rho_{abcd}\) and require \(\sum_{a,c\in T}Q_{atc}=\mu_t\) for every \(t\in T\).<br>Require \(p(t,a)+p(t,c)\geq p(t,d)+p(t,e)\) whenever \(Q_{atc}&gt;0\) and \(Q_{due}&gt;0\), for all \(a,t,c,d,u,e\in T\), allowing repeated types and identical triples.<br>Also require \(p(t,a)\geq p(t,e)\) and \(p(u,e)\geq p(u,a)\) whenever \(\rho_{atue}&gt;0\). These conditions define envy-freeness for this mass problem; equality permits indifference.</p><p>Is deciding whether such an envy-free mass arrangement exists solvable in polynomial time in \(m,\tau,L\), or is it NP-hard?</p><p>For finite societies, deciding existence of an envy-free cycle seating is NP-hard with binary preferences; with any fixed number of types it is polynomial-time solvable even for arbitrary preferences. [Source](https://arxiv.org/html/2305.09549v2).<br>No result settling this exact mass feasibility problem was located in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Removed zero-mass types so that the supplied type list is precisely the positive-mass support.</li><li>Specified that preferences may be asymmetric and that diagonal type preferences describe distinct individuals of the same type, rather than self-utility.</li><li>Specified real nonnegative arrangement masses and allowed repeated types and identical triples in the compatibility conditions.</li><li>Used the stated stationary-window feasibility conditions as the exact definition of the mass problem, without imposing an additional finite-cycle realization or connectedness requirement.</li><li>Identified m with the number of supported types because this problem has no separate candidate or object universe; defined L as total input bit length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The stated mass feasibility problem is \(\mathrm{NP}\)-complete. In particular, it is \(\mathrm{NP}\)-hard even when all masses are dyadic rationals.</p><p>The proof below uses the specified mass constraints directly.</p><h3>1. Consequences of the constraints</h3><p>For an arrangement \(\rho\), retain the definition \(Q_{abc}=\sum_d\rho_{abcd}\).</p><p><b>Common utility lemma.</b> For each type \(t\), there is a number \(k_t\in\{0,1,2\}\) such that every supported triple centered at \(t\) has utility \(k_t\). Moreover, every supported triple \((d,u,e)\) satisfies<br>\[
+p(t,d)+p(t,e)\leq k_t.
+\]</p><p>Indeed, \(\mu_t&gt;0\) guarantees at least one supported triple centered at \(t\). Applying the nonadjacent comparison in both directions to two such triples shows that their utilities are equal. Comparing one of them with any supported triple proves the asserted upper bound.</p><p>We will also use neighbor-incidence quantities. Set<br>\[
+R_{uv}=\sum_c Q_{uvc}.
+\]<br>The flow equations give<br>\[
+R_{uv}=\sum_{c,x}\rho_{xuvc}=\sum_x Q_{xuv}.
+\]<br>Consequently, both the row and column marginals of \(R\) are \(\mu\). Define<br>\[
+H_{uv}=R_{uv}+R_{vu}.
+\]<br>Then<br>\[
+H_{uv}=H_{vu},
+\qquad
+\sum_v H_{uv}=2\mu_u,
+\qquad
+\sum_v p(u,v)H_{uv}=k_u\mu_u.
+\]<br>Thus \(H_{uv}\) counts the mass of neighbor incidences between the two types, counting both incidences when \(u=v\).</p><p>If the preference row of \(t\) contains a \(1\), then \(k_t\geq1\). To see this, choose \(s\) with \(p(t,s)=1\). Since \(\mu_s&gt;0\), some supported triple has \(s\) as a neighbor. The common utility lemma then gives \(k_t\geq1\).</p><h3>2. Membership in \(\mathrm{NP}\)</h3><p>Guess the profile \(k\in\{0,1,2\}^{T}\).</p><p>Call a triple \((a,b,c)\) admissible if<br>\[
+p(b,a)+p(b,c)=k_b
+\quad\text{and}\quad
+p(t,a)+p(t,c)\leq k_t
+\quad\text{for every }t\in T.
+\]</p><p>Allow \(\rho_{abcd}\) to be positive only when both \((a,b,c)\) and \((b,c,d)\) are admissible and<br>\[
+p(b,a)\geq p(b,d),
+\qquad
+p(c,d)\geq p(c,a).
+\]<br>Set every other coordinate to zero, and impose the given nonnegativity, normalization, flow, and mass equations.</p><p>This is a rational linear feasibility problem of polynomial encoding length: it has at most \(m^4\) variables, and admissibility can be checked in polynomial time. Rational linear feasibility is decidable in time polynomial in its encoding length.</p><p>Every envy-free arrangement yields such a profile by the common utility lemma. Conversely, any solution of this linear program satisfies both kinds of envy constraints. Guessing the profile and checking its linear program therefore establishes membership in \(\mathrm{NP}\).</p><h3>3. Reduction from \(\mathrm{3SAT}\)</h3><p>Take a formula with variables indexed by \(i\in\{1,\ldots,n\}\) and nonempty clauses indexed by \(j\in\{1,\ldots,r\}\). Each clause has at most three literals and contains each variable at most once.</p><p>This restriction preserves \(\mathrm{NP}\)-hardness: starting with ordinary \(\mathrm{3SAT}\), remove tautological clauses and repeated literals. If no clauses remain, output a fixed feasible mass instance. Hence assume \(n,r\geq1\).</p><p>Write the literals of clause \(j\) as \(\ell_{j1},\ldots,\ell_{jq_j}\), and put \(q=\sum_j q_j\). Thus \(r\leq q\leq3r\).</p><p>For each variable introduce five types<br>\[
+X_i,\ Y_i,\ a_i,\ b_i,\ c_i.
+\]<br>The types \(X_i,Y_i\) will monitor its positive and negative literals, respectively.</p><p>For each clause introduce types<br>\[
+B_j,\ A_j,\ C_j
+\]<br>and one type \(P_{jk}\) for each literal occurrence. Finally introduce two types \(Z,E\).</p><p>Define the monitor of a literal by \(M(v_i)=X_i\) and \(M(\neg v_i)=Y_i\).</p><h3>Masses</h3><p>Choose positive dyadic numbers \(s,w\) satisfying<br>\[
+s\leq\frac1{64n},
+\qquad
+w\leq\frac{s}{16r},
+\]<br>with denominators of polynomial bit length. For example, take<br>\[
+s=2^{-\lceil\log_2(64n)\rceil},
+\qquad
+w=s\,2^{-\lceil\log_2(16r)\rceil}.
+\]</p><p>Assign masses as follows:</p><p>| Types | Mass of each type |<br>|---|---:|<br>| \(X_i,Y_i\) | \(2s\) |<br>| \(a_i,b_i,c_i\) | \(s\) |<br>| \(B_j,A_j,C_j,P_{jk}\) | \(w\) |<br>| \(Z\) | \(3/4\) |<br>| \(E\) | \(1/4-7ns-(3r+q)w\) |</p><p>These masses sum to \(1\). Their positivity will also follow from the construction below.</p><h3>Preferences</h3><p>All entries not specified here are zero.</p><ul><li>\(Z\) approves only \(Z\).</li><li>\(B_j\) approves only \(A_j\).</li><li>\(A_j\) approves only \(C_j\).</li><li>\(C_j\) approves \(Z,A_j\), and every \(P_{jk}\) belonging to its clause.</li><li>\(X_i\) approves \(a_i,b_i\). For each occurrence \(\ell_{jk}=v_i\), it also approves \(A_j,P_{jk}\).</li><li>\(Y_i\) approves \(b_i,c_i\). For each occurrence \(\ell_{jk}=\neg v_i\), it also approves \(A_j,P_{jk}\).</li></ul><p>The rows of \(E,a_i,b_i,c_i,P_{jk}\) are identically zero.</p><p>There are \(5n+3r+q+2\) types. All masses are dyadic with polynomial bit length, and the explicit preference matrix has polynomial size.</p><h3>4. Soundness: feasibility implies satisfiability</h3><p>Assume the constructed instance has an envy-free mass arrangement.</p><h3>The type \(Z\) is isolated and attains utility \(2\)</h3><p>Since \(Z\) approves itself, \(k_Z\geq1\).</p><p>If \(k_Z=1\), then \(H_{ZZ}=\mu_Z\), so its neighbor incidences with other types total<br>\[
+\sum_{u\neq Z}H_{Zu}=2\mu_Z-H_{ZZ}=\mu_Z=\frac34.
+\]<br>By symmetry and the degree bounds of the other types, this total is at most<br>\[
+\sum_{u\neq Z}2\mu_u=\frac12,
+\]<br>a contradiction.</p><p>Therefore \(k_Z=2\). Every supported triple centered at \(Z\) is consequently \(ZZZ\), and<br>\[
+H_{Zu}=0\quad(u\neq Z),
+\qquad
+Q_{ZZZ}=\mu_Z&gt;0.
+\]</p><p>Every \(C_j\) approves \(Z\). Comparing its own seat with \(ZZZ\) forces \(k_{C_j}=2\).</p><h3>Each clause forces a literal monitor to attain utility \(2\)</h3><p>Fix a clause \(j\). Because the rows of \(B_j,A_j\) are nonzero,<br>\[
+H_{B_jA_j}=k_{B_j}w\geq w,
+\qquad
+H_{A_jC_j}=k_{A_j}w\geq w.
+\]<br>The total neighbor incidence available at \(A_j\) is \(2w\). Hence both inequalities are equalities:<br>\[
+k_{B_j}=k_{A_j}=1,
+\qquad
+H_{A_jB_j}=H_{A_jC_j}=w.
+\]</p><p>Since \(B_j\) approves only \(A_j\) and has utility \(1\), the common utility lemma forbids every supported neighborhood having two neighbors of type \(A_j\).</p><p>In particular, every supported triple centered at \(C_j\) has at most one \(A_j\) neighbor. But<br>\[
+H_{C_jA_j}=w=\mu_{C_j}.
+\]<br>Averaging therefore forces every such triple to have exactly one \(A_j\) neighbor.</p><p>Its other neighbor must be some \(P_{jk}\): \(C_j\) attains utility \(2\), and adjacency to \(Z\) is impossible because \(Z\) is isolated.</p><p>The monitor \(M(\ell_{jk})\) approves both \(A_j\) and \(P_{jk}\). Comparing against this supported neighborhood forces<br>\[
+k_{M(\ell_{jk})}=2.
+\]<br>Thus every clause has at least one literal whose monitor attains utility \(2\).</p><h3>The two monitors of a variable cannot both attain utility \(2\)</h3><p>Fix \(i\). Let \(S_i\) be the union of the types approved by \(X_i\) and \(Y_i\).</p><p>It contains \(a_i,b_i,c_i\). Each clause contributes at most one \(A_j\) and one occurrence type \(P_{jk}\), because that clause contains variable \(i\) at most once. Hence<br>\[
+\mu(S_i)\leq3s+2rw.
+\]</p><p>If both monitors attained utility \(2\), all their neighbor incidences would be with \(S_i\), giving<br>\[
+8s
+=\sum_{v\in S_i}(H_{X_iv}+H_{Y_iv})
+\leq\sum_{v\in S_i}2\mu_v
+\leq6s+4rw
+\leq\frac{25s}{4}
+&lt;8s.
+\]<br>This contradiction proves that they cannot both attain utility \(2\).</p><p>Set variable \(i\) to true exactly when \(k_{X_i}=2\). A positive literal with monitor utility \(2\) is then true. A negative literal with monitor utility \(2\) has \(k_{Y_i}=2\), which forces \(k_{X_i}\neq2\), so it too is true.</p><p>Every clause has such a literal. The formula is satisfiable.</p><h3>5. Completeness: satisfiability implies feasibility</h3><p>Assume a satisfying assignment is given.</p><p>We construct \(\rho\) by adding frequencies from periodic words. A word \(W\) of length \(h\), with a per-position mass \(\gamma\), contributes \(\gamma\) to the quadruple beginning at each of its \(h\) cyclic positions.</p><p>Such contributions automatically satisfy the flow equations: cyclic shifting pairs every outgoing occurrence of a triple with an incoming occurrence.</p><h3>Words and their masses</h3><p>For a true variable \(i\), use the words<br>\[
+(X_i,a_i,X_i,b_i),
+\qquad
+(Y_i,c_i,Y_i,E,E),
+\]<br>each with per-position mass \(s\).</p><p>For a false variable, use<br>\[
+(Y_i,c_i,Y_i,b_i),
+\qquad
+(X_i,a_i,X_i,E,E),
+\]<br>again with per-position mass \(s\).</p><p>Thus each variable contributes the required masses of its five types and contributes \(2s\) to \(E\).</p><p>In each clause \(j\), select one true literal \(\ell_{jk}\). Use<br>\[
+(B_j,A_j,C_j,P_{jk})
+\]<br>with per-position mass \(w\).</p><p>For each unselected occurrence \(P_{jh}\), use<br>\[
+(P_{jh},E,E)
+\]<br>with per-position mass \(w\). This supplies every occurrence type with its required mass and contributes \(2(q-r)w\) to \(E\).</p><p>Finally use the homogeneous word \(Z\) with mass \(3/4\), and the homogeneous word \(E\) with mass<br>\[
+\eta=\frac14-9ns-(r+3q)w.
+\]<br>Since \(q\leq3r\),<br>\[
+9ns+(r+3q)w
+\leq\frac9{64}+10rw
+\leq\frac9{64}+\frac{10}{1024}
+&lt;\frac14.
+\]<br>Thus \(\eta&gt;0\). In particular, the input mass of \(E\) is positive.</p><p>The resulting mass of \(E\) is exactly<br>\[
+2ns+2(q-r)w+\eta
+=\frac14-7ns-(3r+q)w.
+\]<br>All prescribed masses and normalization are therefore satisfied.</p><h3>Nonadjacent envy constraints</h3><p>Assign the intended utilities as follows:</p><ul><li>\(Z,C_j\), and the monitor corresponding to each variable’s assigned truth value have utility \(2\).</li><li>\(A_j,B_j\), and the opposite monitor have utility \(1\).</li><li>Every zero-row type has utility \(0\).</li></ul><p>Every type attains its intended utility in the words above. It remains to check that no supported neighborhood exceeds that utility when evaluated by the type.</p><p>For a utility-\(2\) type, this is automatic because preferences are binary. For a zero-row type, it is also automatic.</p><p>For \(B_j\), its sole approved type \(A_j\) occurs only once in the clause word. No supported neighborhood has two \(A_j\) neighbors. The same argument applies to \(A_j\), whose sole approved type is \(C_j\).</p><p>Consider a utility-\(1\) monitor of variable \(i\).</p><ul><li>In its own five-letter word, every neighborhood has at most one approved neighbor.</li><li>In the other monitor’s four-letter word, it approves only the shared resource \(b_i\), so again every neighborhood has score at most \(1\).</li><li>Other variable words contain no types it approves.</li><li>In a clause word, the only potentially approved neighbor pair is \(A_j,P_{jk}\). The selected occurrence represents a true literal, so its monitor is the utility-\(2\) monitor. Consequently, the utility-\(1\) monitor does not approve the selected \(P_{jk}\), and the pair has score at most \(1\).</li><li>In an unselected occurrence word \(P_{jh},E,E\), every neighborhood has at most one approved neighbor.</li><li>It approves neither \(Z\) nor \(E\).</li></ul><p>Thus every supported neighborhood has score at most the type’s attained utility. This proves all nonadjacent envy inequalities.</p><h3>Adjacent envy constraints</h3><p>An endpoint whose utility is \(2\) automatically satisfies its adjacent-swap inequality: its outer neighbor is approved, and the proposed new outer neighbor has preference value at most \(1\). A zero-row endpoint also automatically satisfies its inequality.</p><p>Only the utility-\(1\) endpoints need checking.</p><p>A utility-\(1\) monitor appears in a word<br>\[
+(M,d,M,E,E),
+\]<br>where it approves \(d\) and approves neither \(M\) nor \(E\).</p><p>When adjacent to \(d\), the old and new outer neighbors are \(E\) and \(M\), both valued \(0\). When adjacent to \(E\), its old outer neighbor is \(d\), valued \(1\), and its new outer neighbor is \(E\), valued \(0\). Both inequalities hold.</p><p>In the clause word \(B_j,A_j,C_j,P_{jk}\), the remaining checks are:</p><p>| Endpoint and adjacent type | Old outer neighbor’s value | New outer neighbor’s value |<br>|---|---:|---:|<br>| \(B_j\) adjacent to \(A_j\) | \(p(B_j,P_{jk})=0\) | \(p(B_j,C_j)=0\) |<br>| \(B_j\) adjacent to \(P_{jk}\) | \(p(B_j,A_j)=1\) | \(p(B_j,C_j)=0\) |<br>| \(A_j\) adjacent to \(B_j\) | \(p(A_j,C_j)=1\) | \(p(A_j,P_{jk})=0\) |<br>| \(A_j\) adjacent to \(C_j\) | \(p(A_j,B_j)=0\) | \(p(A_j,P_{jk})=0\) |</p><p>These exhaust the utility-\(1\) endpoints. Therefore every required adjacent-swap inequality holds.</p><p>The constructed \(\rho\) is an envy-free mass arrangement.</p><h3>6. Conclusion</h3><p>The reduction is polynomial, uses positive dyadic masses, and proves equivalence between satisfiability and the exact mass feasibility conditions in the question. Together with membership in \(\mathrm{NP}\), this establishes \(\mathrm{NP}\)-completeness.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s claim is <b>proved</b>. The argument establishes NP-completeness for the exact mass feasibility problem, including its adjacent-swap constraints. I found no major or minor mathematical gaps.</p><h3>1. Common utilities and neighbor incidences</h3><p>The common utility lemma is correct. Positive mass guarantees a supported triple centered at each type. Applying the stipulated comparison in both directions between two triples centered at the same type forces equal utilities. Comparing either with an arbitrary supported triple gives the claimed upper bound. Binary preferences imply that the common utility belongs to \(\{0,1,2\}\).</p><p>The identities for \(R\) follow correctly from the flow equations:<br>\[
+R_{uv}=\sum_c Q_{uvc}=\sum_x Q_{xuv}.
+\]<br>Its row and column marginals are consequently \(\mu\). Thus the stated symmetry, degree identity, and utility identity for \(H\) are all correct:<br>\[
+\sum_v H_{uv}=2\mu_u,
+\qquad
+\sum_v p(u,v)H_{uv}=k_u\mu_u.
+\]<br>The definition also correctly counts two incidences for a same-type neighbor pair.</p><p>The assertion that a nonzero preference row forces \(k_t\geq1\) is justified. Positive mass of an approved type gives positive neighbor incidence involving that type, hence a supported neighborhood whose evaluation by \(t\) is at least one.</p><h3>2. Membership in NP</h3><p>The guessed profile has polynomial length. For each profile, the admissibility tests and the resulting rational linear program have polynomial encoding length: there are at most \(m^4\) variables, and every triple requires only \(m\) preference comparisons.</p><p>Both directions of the characterization hold:</p><ul><li>A positive quadruple guarantees that its first triple is supported directly and that its second triple is supported by the flow equation. Thus any envy-free arrangement obeys the proposed restrictions.</li><li>Conversely, every supported triple in a feasible restricted linear program is admissible. Its central type receives its prescribed utility, and every type evaluates that neighborhood at no more than its own prescribed utility. These are exactly the required triple-comparison inequalities.</li><li>The restrictions on positive quadruples are exactly the two adjacent-swap inequalities.</li></ul><p>The invoked polynomial-time theorem for rational linear feasibility applies to the explicitly described rational system. Guessing the profile and running that algorithm establishes NP membership.</p><h3>3. Reduction and input validity</h3><p>The preprocessing of ordinary 3SAT preserves satisfiability. Removing tautological clauses and duplicate literals yields nonempty clauses of size at most three, with each variable appearing at most once per clause. The case in which no clauses remain is correctly treated as satisfiable.</p><p>The number of types and the explicit preference matrix have polynomial size. The chosen \(s\) and \(w\) are positive dyadic rationals with polynomial bit length.</p><p>The mass accounting is correct:</p><ul><li>Each variable contributes total prescribed mass \(7s\).</li><li>Clause and occurrence types contribute total mass \((3r+q)w\).</li><li>Adding the masses of \(Z\) and \(E\) gives total mass one.</li></ul><p>Positivity of \(E\) is established later by the positive residual mass \(\eta\). This is sufficient because that calculation depends only on \(n,r,q,s,w\), not on satisfiability.</p><h3>4. Soundness</h3><p><b>Isolation of \(Z\).</b> The exclusion of \(k_Z=1\) is valid. It would require cross-type neighbor incidence \(3/4\), while all other types together have degree capacity \(1/2\). Therefore \(k_Z=2\), all its supported central neighborhoods are \(ZZZ\), and it has no cross-type neighbor incidence.</p><p>Because every \(C_j\) approves \(Z\), comparison with the supported neighborhood \(ZZZ\) forces \(k_{C_j}=2\).</p><p><b>Clause forcing.</b> The incidence lower bounds involving \(B_j,A_j,C_j\) are correct. The two bounds exhaust the degree capacity \(2w\) of \(A_j\), forcing<br>\[
+k_{B_j}=k_{A_j}=1,
+\qquad
+H_{A_jB_j}=H_{A_jC_j}=w.
+\]</p><p>The preference row of \(B_j\), together with \(k_{B_j}=1\), forbids two \(A_j\) neighbors in any supported triple. Since \(C_j\) has total mass \(w\) and incidence \(w\) with \(A_j\), the averaging argument correctly forces exactly one \(A_j\) neighbor in every supported triple centered at \(C_j\).</p><p>Its remaining neighbor must be an occurrence type belonging to that clause: both neighbors must be approved by \(C_j\), and \(Z\) is isolated. The monitor of this occurrence approves both neighbors, so its utility is forced to two. Consequently every clause supplies such a monitor.</p><p><b>Variable consistency.</b> The bound<br>\[
+\mu(S_i)\leq3s+2rw
+\]<br>correctly uses the restriction that a variable appears at most once in each clause. The monitor types themselves do not belong to \(S_i\).</p><p>If both monitors had utility two, their combined required incidence would be \(8s\). Symmetry and the degree capacities of the resource types give the stated upper bound. Its numerical calculation is correct:<br>\[
+6s+4rw\leq6s+\frac{s}{4}=\frac{25s}{4}&lt;8s.
+\]</p><p>Thus both monitors cannot attain utility two. The proposed truth assignment then makes every clause’s forced literal true. Soundness follows.</p><h3>5. Completeness</h3><p><b>Flow and masses.</b> Contributions from cyclic words satisfy flow, including words with repeated types and the homogeneous words. Counting positions gives precisely the prescribed variable, clause, occurrence, and \(Z\) masses.</p><p>The residual calculation for \(E\) is correct:<br>\[
+2ns+2(q-r)w+\eta
+=\frac14-7ns-(3r+q)w.
+\]<br>The positivity estimate is also valid:<br>\[
+9ns+(r+3q)w
+\leq\frac9{64}+\frac{10}{1024}&lt;\frac14.
+\]<br>Thus all masses are positive and normalization holds.</p><p><b>Attained utilities.</b> Inspection of the cyclic neighborhoods confirms every listed intended utility. In particular, the four-position variable word gives its monitor utility two, while both monitor positions in the five-position word have utility one. The clause word gives utilities one, one, and two to \(B_j,A_j,C_j\), respectively.</p><p><b>Triple-comparison inequalities.</b> Utility-two and zero-row types are handled correctly. No constructed neighborhood contains two copies of the sole approved type of \(B_j\) or \(A_j\).</p><p>The case analysis for a utility-one monitor is exhaustive. In a clause word, the only neighborhood potentially containing two approved types is the pair \(A_j,P_{jk}\). Since the selected occurrence is true, its monitor is the utility-two monitor. The utility-one monitor cannot approve that selected occurrence. The restriction on repeated variables in a clause ensures this conclusion also covers clauses containing other literals.</p><p>The occurrence words, variable words, and homogeneous words satisfy the remaining bounds. Therefore every supported neighborhood is evaluated at no more than the evaluating type’s attained utility.</p><p><b>Adjacent-swap inequalities.</b> A utility-two endpoint approves its old outer neighbor, so its inequality follows from binary preferences. Zero-row endpoints satisfy their inequalities directly.</p><p>For the utility-one monitor’s five-position word, the stated old and new outer-neighbor values are correct for both monitor positions. The four table entries for \(B_j\) and \(A_j\) also correctly describe their cyclic adjacencies. These cases exhaust all utility-one endpoints.</p><p>The construction therefore satisfies every required adjacent-swap inequality.</p><h3>6. Final assessment</h3><p>The reduction is polynomial and establishes equivalence with satisfiability using positive dyadic masses. Together with the valid NP-membership argument, it proves the claimed NP-completeness. No repair or additional clarification is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

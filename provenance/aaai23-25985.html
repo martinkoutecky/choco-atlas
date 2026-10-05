@@ -1,0 +1,548 @@
+<!doctype html><html><head><meta charset="utf-8"><title>An Efficient Algorithm for Fair Multi-Agent Multi-Armed Bandit with Low Regret — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>An Efficient Algorithm for Fair Multi-Agent Multi-Armed Bandit with Low Regret <span style="font-weight:normal;color:#8a7350">(aaai23-25985)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 4.5 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Suppose ∀j, a, t, rj,t,a ∈[0, 1] and wj,a,t = q 12(1−ˆµj,a,t) ln(4NKT/δ) Na,t + 12 ln(4NKT/δ) Na,t , for any δ ∈ (0, 1), the regret of the Fair multi-agent UCB algorithm (Al- gorithm 1) is RT = eO √ NKT + NK  with probability at least 1 −δ.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite set of reward types Θ, rational masses ν, K arms, horizon H, and unknown bounded type-arm reward laws, a learner chooses one common arm per round and observes the aggregate reward of every positive-mass type; compute adaptive policies with polynomial-time implementation and determine a high-probability bound for per-capita regret relative to the ν-weighted Nash-welfare-optimal policy.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list \(\Theta\) of \(\tau\geq1\) types with positive binary-rational masses \(\nu_\theta\), normalized by \(\sum_\theta\nu_\theta=1\). Here \(\tau\) is the support size, not the number of possible types; there are \(m=K\geq1\) arms and \(H\geq1\) rounds.<br>Each arm has an unknown stationary joint reward law on \([0,1]^\Theta\), with type means \(\mu_{\theta,a}\); successive pulls give independent samples, while coordinates within a sample may be dependent.<br>At round \(t\), using only previous observations, the learner selects \(\pi_t\in\Delta_K\), samples one common arm \(a_t\sim\pi_t\), and observes each type&#x27;s aggregate \(Y_{\theta,t}=\nu_\theta X_{\theta,a_t,t}\).<br>Define \(W_\nu(\pi,\mu)=\prod_{\theta\in\Theta}(\sum_a\pi_a\mu_{\theta,a})^{\nu_\theta}\), with value zero if any factor vanishes, and \(\pi^\star\in\arg\max_{\pi\in\Delta_K}W_\nu(\pi,\mu)\). Per-capita cumulative regret is \(R_H=\sum_{t=1}^H[W_\nu(\pi^\star,\mu)-W_\nu(\pi_t,\mu)]\).<br>For \(\delta\in(0,1)\), let \(B^\star(K,H,\nu,\delta)=\inf_A\inf\{b\geq0:\sup_D\Pr_{A,D}(R_H&gt;b)\leq\delta\}\), where \(A\) ranges over learners without computational restrictions and \(D\) over the reward laws above.<br>Use binary-rational reward observations; \(L\) denotes the input bit length plus the largest observation encoding length. Polynomial implementation means time per round polynomial in \(m,\tau,L,\log H,\log(1/\delta)\).</p><p>What is the minimax high-probability regret \(B^\star(K,H,\nu,\delta)\), and can it be attained up to logarithmic factors and additive \(1\) with polynomial-time implementation, or is attaining that guarantee NP-hard?</p><p>For discrete agents and unnormalized Nash-product regret, an efficient algorithm achieves \(\widetilde O(\sqrt{NKH}+NK)\) with probability \(1-\delta\). [Jones–Nguyen–Nguyen](https://arxiv.org/abs/2209.11817)<br>For equal masses \(\nu_\theta=1/\tau\), geometric-mean expected regret has upper bound \(\widetilde O(K^{2/\tau}H^{(\tau-1)/\tau}+K)\) and a matching horizon exponent in the stated lower-bound regime; this does not settle arbitrary rational masses and minimax high-probability regret. [Zhang–Vuong–Luo](https://arxiv.org/html/2405.20678v1)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the positive type masses to sum to one, as required by a distribution over types.</li><li>Interpreted per-capita weighted Nash welfare as the weighted geometric mean, and regret as cumulative differences of this welfare applied to expected utilities.</li><li>Interpreted aggregate feedback as mass times one bounded stochastic type-level reward observation, rather than exact population means; imposed stationary independent samples across pulls and allowed dependence across types.</li><li>Allowed zero utilities and defined welfare as zero whenever a positive-mass type has zero expected utility; any maximizing comparator is admissible.</li><li>The graded question supplies no regret threshold. Used unrestricted minimax high-probability regret as the performance benchmark, with logarithmic-factor and additive-one tolerance.</li><li>Specified binary-rational observations and included their encoding lengths in L to make polynomial-time implementation meaningful.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and proved results</h3><p>The full joint characterization in $K,H,\nu,\delta$ remains <b>partial</b>. The results below establish polynomial-time attainment of the minimax rate up to logarithmic factors and additive $1$ for $0&lt;\delta&lt;1/4$, extend the lower bounds to every $\delta&lt;1$, and characterize exactly when the minimax quantile is zero.</p><p>Assume first that $K\geq2$. Define<br>$$
+q=\min\{1,K/H\},\qquad
+\beta_S=\sum_{\theta\in S}\nu_\theta,
+$$<br>and<br>$$
+\mathcal F
+=
+H\max\left\{
+\sqrt q,\ 
+\max_{\varnothing\neq S\subseteq\Theta}\beta_Sq^{\beta_S}
+\right\},
+\qquad
+\Lambda=\log\left(\frac{8\tau KH}{\delta}\right).
+$$<br>For the confidence-dependent lower bound, put<br>$$
+s=1-\delta,\qquad
+\lambda=\max\left\{0,1-\frac1{Ks}\right\}.
+$$</p><p>There are universal constants $c,C&gt;0$ such that, for every $\delta\in(0,1)$,<br>$$
+\begin{aligned}
+cH\max\left\{
+s\lambda^2\sqrt q,\ 
+\max_{\varnothing\neq S\subsetneq\Theta}
+\beta_S(1-\beta_S)s^{\beta_S+2}q^{\beta_S}
+\right\}
+&amp;\leq B^\star(K,H,\nu,\delta)\\
+&amp;\leq
+\min\{H,C\Lambda^2\mathcal F+1\}.
+\end{aligned}
+$$<br>An empty maximum over proper subsets is interpreted as zero. The upper bound has an implementation whose time per round is polynomial in $K,\tau,L,\log H,\log(1/\delta)$.</p><p>In particular, for $0&lt;\delta&lt;1/4$,<br>$$
+c\mathcal F
+\leq B^\star(K,H,\nu,\delta)
+\leq
+\min\{H,C\Lambda^2\mathcal F+1\}.
+$$</p><p>The exact zero-quantile characterization is<br>$$
+B^\star(K,H,\nu,\delta)=0
+\quad\Longleftrightarrow\quad
+K=1
+\ \text{or}\
+\left(\tau=1\ \text{and}\ \delta\geq1-\frac1K\right).
+$$</p><p>The larger-$\delta$ regime cannot have the same uniform mass dependence as the high-confidence regime. Section 8 gives an explicit two-type example demonstrating this.</p><h3>1. A continuity inequality adapted to Bernstein bounds</h3><p>For positive weights $w_i$ satisfying<br>$$
+\sum_iw_i\leq1,
+$$<br>define<br>$$
+F_w(x)=\prod_i x_i^{w_i},
+\qquad
+\alpha=\min\left\{\frac12,\min_iw_i\right\}.
+$$</p><p><b>Lemma.</b> Suppose $x,y\in[0,1]^I$, $x\leq y$ coordinatewise, and<br>$$
+y_i-x_i\leq8\sqrt{zx_i}+25z
+$$<br>for every $i$, where $z\geq0$. Then<br>$$
+F_w(y)-F_w(x)\leq40z^\alpha.
+$$</p><p><b>Proof.</b> On the positive orthant,<br>$$
+h^\top\nabla^2F_w(x)h
+=
+F_w(x)\left[
+\left(\sum_iw_i\frac{h_i}{x_i}\right)^2
+-
+\sum_iw_i\left(\frac{h_i}{x_i}\right)^2
+\right].
+$$<br>Weighted Cauchy–Schwarz bounds the squared sum by<br>$$
+\left(\sum_iw_i\right)
+\sum_iw_i\left(\frac{h_i}{x_i}\right)^2.
+$$<br>Thus the Hessian is negative semidefinite. Continuity extends concavity to the boundary.</p><p>The cases $z=0$ and $z\geq1$ follow immediately from the hypothesis and $0\leq F_w\leq1$. Suppose $0&lt;z&lt;1$. Let<br>$$
+m=\min_i x_i,
+$$<br>and choose $j$ with $x_j=m$.</p><p>If $m\leq z$, then $y_j\leq34z$. When $34z&lt;1$,<br>$$
+F_w(y)\leq y_j^{w_j}
+\leq(34z)^\alpha
+\leq\sqrt{34}\,z^\alpha.
+$$<br>When $34z\geq1$, the same bound follows from<br>$$
+F_w(y)\leq1\leq(34z)^\alpha.
+$$</p><p>If $m&gt;z$, the tangent inequality for concavity gives<br>$$
+\begin{aligned}
+F_w(y)-F_w(x)
+&amp;\leq F_w(x)\sum_iw_i\frac{y_i-x_i}{x_i}\\
+&amp;\leq33\sqrt z\,F_w(x)\sum_i\frac{w_i}{\sqrt{x_i}}.
+\end{aligned}
+$$<br>Here $z/x_i\leq\sqrt{z/x_i}$. Also,<br>$$
+\sum_i\frac{w_i}{\sqrt{x_i}}\leq\frac1{\sqrt m},
+\qquad
+F_w(x)\leq m^{w_j}\leq m^\alpha.
+$$<br>Therefore<br>$$
+F_w(y)-F_w(x)
+\leq33\sqrt z\,m^{\alpha-1/2}
+\leq33z^\alpha,
+$$<br>because $m&gt;z$ and $\alpha\leq1/2$. This proves the lemma.</p><h3>2. Confidence bounds and adaptive sampling</h3><p>Because $\nu_\theta&gt;0$, the learner recovers each individual reward exactly:<br>$$
+X_{\theta,a_t,t}=\frac{Y_{\theta,t}}{\nu_\theta}.
+$$<br>Dependence between coordinates within a reward vector does not prevent marginal concentration inequalities.</p><p>For bounded-size empirical statistics, round each recovered reward upwards to a dyadic grid of mesh<br>$$
+\eta=2^{-\lceil\log_2H\rceil}\leq\frac1H.
+$$<br>If $\mu&#x27;_{\theta,a}$ is its rounded mean, then<br>$$
+\mu_{\theta,a}\leq\mu&#x27;_{\theta,a}\leq\mu_{\theta,a}+\eta.
+$$<br>Rounded observations remain in $[0,1]$ and remain independent across successive pulls.</p><p>Let<br>$$
+b=\left\lceil\log_2\left(\frac{4\tau KH}{\delta}\right)\right\rceil.
+$$<br>For $n\geq1$, let $\widehat\mu_{\theta,a,n}$ denote the rounded empirical mean after $n$ pulls. A bounded random variable in $[0,1]$ with mean $u$ has variance at most $u$. Bernstein’s inequality consequently gives<br>$$
+\Pr\left(
+\left|\widehat\mu_{\theta,a,n}-\mu&#x27;_{\theta,a}\right|
+&gt;
+\sqrt{\frac{2\mu&#x27;_{\theta,a}b}{n}}+\frac bn
+\right)
+\leq2e^{-b}.
+$$<br>A union bound over $\theta,a,n$ with $n\leq H$ shows that these inequalities hold simultaneously with probability at least $1-\delta/2$. They concern the fixed sample stream of each arm, so adaptive selection of which stream to observe causes no difficulty.</p><p>For a pulled arm, use<br>$$
+U_{\theta,a}
+=
+\min\left\{
+1,\
+\widehat\mu_{\theta,a,n}
++4\sqrt{\widehat\mu_{\theta,a,n}b/n}
++8b/n
+\right\}.
+$$<br>Approximate the square root upwards with error at most $b/(4n)$. For an unpulled arm set $U_{\theta,a}=1$.</p><p>On the simultaneous concentration event, with $d_a=\max\{1,n_a\}$,<br>$$
+\mu&#x27;_{\theta,a}\leq U_{\theta,a}
+\leq
+\mu&#x27;_{\theta,a}
++
+8\sqrt{\frac{\mu&#x27;_{\theta,a}b}{d_a}}
++
+\frac{16b}{d_a}.
+$$</p><p>To verify the constants, write $h=\widehat\mu_{\theta,a,n}$, $u=\mu&#x27;_{\theta,a}$ and $v=b/n$. The concentration event implies<br>$$
+|h-u|\leq\sqrt{2uv}+v.
+$$<br>Since $\sqrt{2uv}\leq u/2+v$, it follows that $u\leq2h+4v$, and hence<br>$$
+u-h\leq2\sqrt{hv}+4v.
+$$<br>This proves optimism. Also $h\leq2u+2v$, so the upper-estimate error, including the upwards square-root approximation, is at most<br>$$
+8\sqrt{uv}+16v.
+$$<br>Clipping at $1$ preserves optimism. The unpulled case follows from $b\geq1$.</p><p>At round $t$, define<br>$$
+z_t=\sum_a\frac{\pi_{t,a}}{\max\{1,n_{t,a}\}},
+\qquad
+\rho_t=bz_t,
+$$<br>and<br>$$
+x_{\theta,t}=\sum_a\pi_{t,a}\mu_{\theta,a},
+\qquad
+y_{\theta,t}=\sum_a\pi_{t,a}U_{\theta,a}.
+$$<br>Weighted Cauchy–Schwarz gives<br>$$
+y_{\theta,t}-x_{\theta,t}
+\leq
+\eta+8\sqrt{\rho_t(x_{\theta,t}+\eta)}+16\rho_t.
+$$<br>Every denominator in $z_t$ is at most $H$, so $\eta\leq1/H\leq\rho_t$. Consequently,<br>$$
+y_{\theta,t}-x_{\theta,t}
+\leq8\sqrt{\rho_tx_{\theta,t}}+25\rho_t.
+$$</p><p>We next control the predictable sampling quantities $z_t$. Set<br>$$
+Z_t=\frac1{\max\{1,n_{t,a_t}\}},
+\qquad c_0=1-e^{-1}.
+$$<br>Conditional on the selected policy, $\mathbb E[Z_t]=z_t$. Since<br>$$
+e^{-u}\leq1-c_0u\qquad(0\leq u\leq1),
+$$<br>the process<br>$$
+\exp\left(c_0\sum_{t\leq h}z_t-\sum_{t\leq h}Z_t\right)
+$$<br>is a nonnegative supermartingale starting at $1$. Markov’s inequality therefore gives, with probability at least $1-\delta/2$,<br>$$
+c_0\sum_{t=1}^Hz_t
+\leq
+\sum_{t=1}^HZ_t+\log(2/\delta).
+$$<br>An arm pulled $n\geq1$ times contributes<br>$$
+1+\sum_{j=1}^{n-1}\frac1j\leq2+\log H.
+$$<br>Thus, on an event of probability at least $1-\delta$ encompassing both estimates,<br>$$
+\sum_{t=1}^H\rho_t\leq Q,
+\qquad
+Q=\frac b{c_0}\left[K(2+\log H)+\log(2/\delta)\right].
+$$<br>For a universal constant $C_0$,<br>$$
+Q\leq C_0K\Lambda^2.
+$$</p><h3>3. Optimism after discarding a small total mass</h3><p>Let $J\subseteq\Theta$ be discarded types, and suppose $G=\Theta\setminus J$ is nonempty. Write<br>$$
+\beta=\sum_{\theta\in J}\nu_\theta,
+\qquad
+\alpha_G=\min\left\{\frac12,\min_{\theta\in G}\nu_\theta\right\},
+$$<br>and define the retained objective without renormalizing its exponents:<br>$$
+F_G(\pi,\mu)
+=
+\prod_{\theta\in G}
+\left(\sum_a\pi_a\mu_{\theta,a}\right)^{\nu_\theta}.
+$$</p><p>Set<br>$$
+\gamma=\varepsilon=\frac1{2H},
+\qquad
+\mathcal P_\gamma
+=
+\{\pi\in\Delta_K:\pi_a\geq\gamma/K\text{ for every }a\}.
+$$<br>At each round compute a dyadic policy satisfying<br>$$
+\pi_{t,a}\geq\frac{\gamma}{2K},
+$$<br>and<br>$$
+F_G(\pi_t,U_t)
+\geq
+\max_{\pi\in\mathcal P_\gamma}F_G(\pi,U_t)-\varepsilon.
+$$<br>Section 5 establishes the polynomial-time implementation, including exact feasibility.</p><p>Mixing any policy with the uniform policy at weight $\gamma$ preserves every retained utility by a factor at least $1-\gamma$. The retained exponent sum is at most $1$, so restricting to $\mathcal P_\gamma$ costs at most $\gamma$ in objective value.</p><p>Optimism and the continuity lemma now imply<br>$$
+\max_{\pi\in\Delta_K}F_G(\pi,\mu)-F_G(\pi_t,\mu)
+\leq\gamma+\varepsilon+40\rho_t^{\alpha_G}.
+$$</p><p>For each type, put $M_\theta=\max_a\mu_{\theta,a}$. If some $M_\theta=0$, the original welfare and regret are identically zero. Otherwise define<br>$$
+C_J=\prod_{\theta\in J}M_\theta^{\nu_\theta}.
+$$<br>Every implemented policy gives each discarded type utility at least $\gamma M_\theta/(2K)$. Therefore<br>$$
+W_\nu(\pi^\star,\mu)
+\leq C_J\max_\pi F_G(\pi,\mu),
+$$<br>whereas<br>$$
+W_\nu(\pi_t,\mu)
+\geq
+C_J\left(\frac{\gamma}{2K}\right)^\beta F_G(\pi_t,\mu).
+$$<br>Using $C_J\leq1$, $F_G\leq1$, and $1-e^{-u}\leq u$, we obtain<br>$$
+\begin{aligned}
+W_\nu(\pi^\star,\mu)-W_\nu(\pi_t,\mu)
+&amp;\leq
+\max_\pi F_G(\pi,\mu)-F_G(\pi_t,\mu)
++\beta\log(4KH).
+\end{aligned}
+$$</p><p>Since $u\mapsto u^{\alpha_G}$ is concave,<br>$$
+\sum_{t=1}^H\rho_t^{\alpha_G}
+\leq H^{1-\alpha_G}Q^{\alpha_G}.
+$$<br>It follows that, with probability at least $1-\delta$,<br>$$
+R_H
+\leq
+40H^{1-\alpha_G}Q^{\alpha_G}
++\beta H\log(4KH)+1.
+$$</p><h3>4. Selecting discarded types without subset optimization</h3><p>If $q\geq1/2$, use any policy. Then<br>$$
+R_H\leq H\leq\sqrt2\,\mathcal F.
+$$<br>Suppose $q&lt;1/2$. Compute<br>$$
+d=1+\left\lceil\log_2(1/q)\right\rceil,
+\qquad r=\frac1d,
+$$<br>and discard exactly the types satisfying $\nu_\theta&lt;r$. Let $\beta$ be their total mass.</p><p>If $\beta\geq r$, accumulate discarded types until their total mass first reaches $r$. Each increment is smaller than $r$, so this gives a subset $S$ satisfying<br>$$
+r\leq\beta_S&lt;2r.
+$$<br>Since $\log(1/q)/d&lt;1$,<br>$$
+q^{2r}\geq e^{-2}.
+$$<br>Consequently,<br>$$
+\mathcal F\geq H\beta_Sq^{\beta_S}\geq e^{-2}Hr.
+$$<br>Any policy then satisfies $R_H\leq e^2d\,\mathcal F$.</p><p>If $\beta&lt;r$, the retained set is nonempty, and $\alpha_G\geq r$. Using the estimate on $Q$ from Section 2,<br>$$
+R_H
+\leq
+C_1\Lambda Hq^{\alpha_G}
++\beta H\log(4KH)+1.
+$$<br>If $\alpha_G=1/2$, the ordinary-bandit term in $\mathcal F$ gives<br>$$
+Hq^{\alpha_G}\leq\mathcal F.
+$$<br>Otherwise a retained singleton of mass $\alpha_G$ gives<br>$$
+\mathcal F\geq H\alpha_Gq^{\alpha_G},
+$$<br>so in either case<br>$$
+Hq^{\alpha_G}\leq d\,\mathcal F.
+$$<br>When $\beta&gt;0$, the discarded set itself gives<br>$$
+\mathcal F\geq H\beta q^\beta\geq e^{-1}\beta H,
+$$<br>because $\beta&lt;r$. The required bound is immediate when $\beta=0$.</p><p>Finally, $d=O(\Lambda)$ and $\log(4KH)\leq\Lambda$. Thus<br>$$
+R_H\leq C\Lambda^2\mathcal F+1
+$$<br>with probability at least $1-\delta$. Combining this with the deterministic bound $R_H\leq H$ proves the claimed upper bound.</p><p>The algorithm uses only comparisons between individual rational masses and $1/d$. It never computes the subset maximum defining $\mathcal F$.</p><h3>5. Polynomial implementation with exact feasibility</h3><p>All confidence entries are rational and satisfy<br>$$
+\frac1H\leq U_{\theta,a}\leq1.
+$$<br>Indeed, an unpulled entry equals $1$; a pulled entry has an added term at least $8b/n\geq8/H$ before clipping.</p><p>For a fixed retained set, maximize<br>$$
+g(\pi)=
+\sum_{\theta\in G}\nu_\theta
+\log\left(\sum_a\pi_aU_{\theta,a}\right).
+$$<br>It is concave, and maximizing it is equivalent to maximizing $F_G=e^g$. On the simplex,<br>$$
+-\log H\leq g(\pi)\leq0,
+$$<br>and<br>$$
+0\leq
+\frac{\partial g}{\partial\pi_a}
+=
+\sum_{\theta\in G}
+\frac{\nu_\theta U_{\theta,a}}
+{\sum_b\pi_bU_{\theta,b}}
+\leq H.
+$$<br>Thus $g$ is $H$-Lipschitz in the $\ell_1$ norm on the simplex.</p><h3>5.1 The precise weak-optimization guarantee</h3><p>We use the following consequence of Theorem 3.1 of Grötschel–Lovász–Schrijver, with weak optimization defined in Section 1: for a compact convex body with an explicitly known interior ball, outer ball, and polynomial-time weak separation, linear weak optimization returns a rational point $y$ such that<br>$$
+\operatorname{dist}(y,Q)\leq\xi,
+\qquad
+c^\top y\geq\max_{z\in Q}c^\top z-\xi.
+$$<br>Its running time is polynomial in the input lengths and $\log(1/\xi)$, including the encoding lengths of the ball parameters. This guarantee allows approximate feasibility; we repair it explicitly below. [Grötschel–Lovász–Schrijver, Theorem 3.1](https://www.zib.de/userpage/groetschel/pubnew/paper/groetschellovaszschrijver1981a.pdf).</p><p>Write<br>$$
+p(x)=(x_1,\ldots,x_{K-1},1-\textstyle\sum_{i&lt;K}x_i),
+$$<br>and let<br>$$
+B=2+\lceil\log_2H\rceil.
+$$<br>Apply weak optimization to the compact convex hypograph<br>$$
+Q=
+\left\{
+(x,v):
+p(x)\in\mathcal P_\gamma,\ 
+-B\leq v\leq g(p(x))
+\right\},
+$$<br>with objective $c^\top(x,v)=v$.</p><p>A known interior-ball center is<br>$$
+x_i=\frac1K,\qquad v=-B+1,
+$$<br>with radius $1/(8K^2)$. To check this, a perturbation of $x$ within this radius changes the last probability coordinate by at most $K/(8K^2)$, while the distance from the uniform policy to each probability floor is at least $1/(2K)$. Also,<br>$$
+g(p)\geq-\log H\geq-B+2,
+$$<br>so the vertical coordinate has adequate slack. An outer-ball radius $B+K+3$ suffices.</p><p>The weak separation oracle first checks the rational linear constraints. At a feasible $p(x)$, evaluate $g(p(x))$ to error at most one quarter of the oracle tolerance. A point lying at most that tolerance above the graph is certified as approximately feasible. Otherwise concavity supplies a separating hyperplane using the rational gradient of $g(p(x))$. Rational normalization, or sufficiently accurate normalization with the tolerance budget, gives the required weak separator.</p><p>Logarithms are polynomial-time evaluable to the necessary binary precision. For example, after dyadic range reduction to $u\in[1,2)$,<br>$$
+\log u
+=
+2\sum_{j=0}^{\infty}
+\frac{z^{2j+1}}{2j+1},
+\qquad
+z=\frac{u-1}{u+1}\in[0,1/3).
+$$<br>The tail decreases geometrically. Rational gradients are computed exactly. Hence all oracle hypotheses hold.</p><h3>5.2 Repairing the returned policy</h3><p>Choose<br>$$
+\xi=\frac{\varepsilon}{4+16HK^2}.
+$$<br>Let $(x,v)$ be the weak-optimization output. There exists $(x&#x27;,v&#x27;)\in Q$ at distance at most $\xi$. Put<br>$$
+p=p(x),\qquad p&#x27;=p(x&#x27;).
+$$<br>Then<br>$$
+\sum_ap_a=1,\qquad
+p_a\geq\frac{\gamma}{K}-K\xi,
+\qquad
+\|p-p&#x27;\|_1\leq2K\xi.
+$$<br>Also,<br>$$
+g(p&#x27;)\geq v&#x27;\geq v-\xi\geq\max_{\mathcal P_\gamma}g-2\xi.
+$$</p><p>Let $u$ be the uniform policy and define<br>$$
+e=K\xi,\qquad
+a=\frac{1-\gamma}{K},
+\qquad
+\ell=\frac{e}{a+e},
+\qquad
+\widetilde\pi=(1-\ell)p+\ell u.
+$$<br>For every coordinate,<br>$$
+\widetilde\pi_a
+\geq
+(1-\ell)\left(\frac{\gamma}{K}-e\right)
++\ell\left(\frac{\gamma}{K}+a\right)
+=\frac{\gamma}{K}.
+$$<br>Thus $\widetilde\pi$ is exactly feasible.</p><p>Since $a\geq1/(2K)$, we have $\ell\leq2K^2\xi$. Our choice of $\xi$ also ensures $\|u-p\|_1\leq3$, and therefore<br>$$
+\|\widetilde\pi-p&#x27;\|_1
+\leq2K\xi+3\ell
+\leq8K^2\xi.
+$$<br>The Lipschitz bound yields<br>$$
+g(\widetilde\pi)
+\geq
+\max_{\mathcal P_\gamma}g-(2+8HK^2)\xi
+=
+\max_{\mathcal P_\gamma}g-\frac{\varepsilon}{2}.
+$$<br>Because $F_G=e^g\leq1$, this entails product-objective error at most $\varepsilon/2$.</p><p>Finally, round $\widetilde\pi$ to a dyadic simplex policy with denominator $D$, where $D$ is a power of two satisfying<br>$$
+D\geq
+\max\left\{\frac{2HK}{\varepsilon},\frac{2K}{\gamma}\right\}.
+$$<br>Rounding down all coordinates and distributing the remaining units gives coordinate error at most $1/D$. It preserves the floor $\gamma/(2K)$.</p><p>On the simplex, every partial derivative of $F_G$ is at most $H$. Thus rounding changes its value by at most<br>$$
+\frac{HK}{D}\leq\frac{\varepsilon}{2}.
+$$<br>This establishes the policy guarantee used in Section 3.</p><p>Dyadic policies can be sampled with exactly $\log_2D$ random bits. The empirical statistics, confidence bounds, optimization output, and rounding precision all have polynomial encoding length. The running time depends on rational mass denominators through their bit lengths, never through their numerical values.</p><h3>6. Lower bounds throughout the confidence range</h3><p>All constructions below use binary individual rewards. Their aggregate observations are therefore binary rational because the masses are binary rational.</p><h3>6.1 The ordinary-bandit contribution</h3><p>Suppose $\lambda&gt;0$, equivalently $\delta&lt;1-1/K$. Give every type the same Bernoulli reward. Then<br>$$
+W_\nu(\pi,\mu)=\sum_a\pi_a\mu_a.
+$$</p><p>Under a reference environment $D_0$, every arm has mean $1/2$. Define<br>$$
+S_j=\sum_{t=1}^H\pi_{t,j}.
+$$<br>Since $\sum_jS_j=H$, some $j$ satisfies<br>$$
+\mathbb E_0S_j\leq\frac HK.
+$$<br>Let<br>$$
+a=1-\frac{\lambda}{2}.
+$$<br>Markov’s inequality gives<br>$$
+\Pr_0(S_j\leq aH)
+\geq1-\frac1{Ka}
+=
+\delta+\frac{s\lambda}{2-\lambda}.
+$$</p><p>In environment $D_j$, raise only arm $j$’s mean by<br>$$
+\epsilon=\frac{s\lambda}{32}\sqrt q.
+$$<br>The adaptive likelihood chain rule gives<br>$$
+\operatorname{KL}(P_0\Vert P_j)
+=
+\mathbb E_0N_j\,
+\operatorname{kl}(1/2,1/2+\epsilon).
+$$<br>Here $\mathbb E_0N_j=\mathbb E_0S_j$. Since $\epsilon\leq1/32$,<br>$$
+\operatorname{kl}(1/2,1/2+\epsilon)
+=
+-\frac12\log(1-4\epsilon^2)
+\leq3\epsilon^2.
+$$<br>Consequently,<br>$$
+\operatorname{KL}(P_0\Vert P_j)
+\leq\frac{3s^2\lambda^2}{1024}.
+$$<br>Pinsker’s inequality gives total variation distance smaller than $s\lambda/8$. The event $S_j\leq aH$ therefore has probability strictly greater than $\delta$ under $D_j$.</p><p>On that event,<br>$$
+R_H=\epsilon(H-S_j)
+\geq
+\frac{s\lambda^2}{64}H\sqrt q.
+$$<br>Every smaller regret threshold fails the minimax probability requirement. Hence<br>$$
+B^\star\geq\frac{s\lambda^2}{64}H\sqrt q.
+$$</p><h3>6.2 A hidden rare arm with an unknown optimal mixture</h3><p>Fix a nonempty proper subset $S$ of types, and write<br>$$
+\beta=\beta_S\in(0,1).
+$$<br>Put<br>$$
+q&#x27;=\min\{1,(K-1)/H\},
+\qquad
+\epsilon=\frac{s q&#x27;}4.
+$$</p><p>In a reference environment, all types in $S$ receive a common Bernoulli reward of mean $\epsilon$ from arm $1$, and zero from every other arm. All types outside $S$ receive a common Bernoulli reward of mean $1-\beta$ from arm $1$, and deterministic reward $1$ from every other arm. The two groups may be sampled independently.</p><p>Choose $j\in\{2,\ldots,K\}$ with<br>$$
+\mathbb E_0N_j\leq\frac{H}{K-1}.
+$$</p><p>For a parameter $z\in[1/4,3/4]$, define<br>$$
+a_z=\frac{1-z}{2-\beta-z}.
+$$<br>In the alternative environment $D_{j,z}$, change only the reward of group $S$ on arm $j$: it becomes a common Bernoulli reward of mean $\epsilon a_z$.</p><p>Couple the reference and alternative histories using the same learner randomness and all unchanged reward samples. Histories can first diverge only when arm $j$ produces a positive group-$S$ reward. Thus their total variation distance is at most<br>$$
+\epsilon a_z\,\mathbb E_0N_j
+\leq
+\frac{\epsilon H}{K-1}
+\leq\frac s4.
+$$</p><p>For a policy, write $p=\pi_1$. Its first-group utility is<br>$$
+\epsilon(p+a_z\pi_j)
+\leq\epsilon(a_z+(1-a_z)p),
+$$<br>and its second-group utility is $1-\beta p$. Define<br>$$
+f_z(p)
+=
+(a_z+(1-a_z)p)^\beta(1-\beta p)^{1-\beta}.
+$$<br>The policy using probability $z$ on arm $1$ and $1-z$ on arm $j$ attains $\epsilon^\beta f_z(z)$.</p><p>We now verify that $z$ is the unique maximizer and quantify the loss away from it. Differentiating the logarithm,<br>$$
+\frac{f_z&#x27;(p)}{f_z(p)}
+=
+\frac{\beta(1-a_z)}{a_z+(1-a_z)p}
+-
+\frac{(1-\beta)\beta}{1-\beta p}.
+$$<br>Substitution of $p=z$ gives zero. Moreover,<br>$$
+f_z&#x27;&#x27;(p)
+=
+-\beta(1-\beta)f_z(p)
+\left(
+\frac{1-a_z}{a_z+(1-a_z)p}
++
+\frac{\beta}{1-\beta p}
+\right)^2.
+$$</p><p>For all admissible $z,p$,<br>$$
+a_z\geq\frac15,
+\qquad
+1-a_z\geq\frac{1-\beta}{2}.
+$$<br>Also,<br>$$
+f_z(p)\geq a_z^\beta(1-\beta)^{1-\beta}\geq\frac1{10}.
+$$<br>For the last inequality, $t^t\geq e^{-1/e}&gt;1/2$ for $t\in(0,1)$, as follows by minimizing $t\log t$. Both utility factors are at most $1$, so the expression in parentheses is at least<br>$$
+1-a_z+\beta\geq\frac12.
+$$<br>Therefore<br>$$
+f_z&#x27;&#x27;(p)\leq-\frac{\beta(1-\beta)}{40}.
+$$<br>Integrating this inequality from the stationary point $z$ proves<br>$$
+f_z(z)-f_z(p)
+\geq
+\frac{\beta(1-\beta)}{80}(p-z)^2.
+$$<br>In particular, $z$ is the unique maximizer.</p><p>Let<br>$$
+\bar p=\frac1H\sum_{t=1}^H\pi_{t,1}.
+$$<br>Concavity of $f_z$ and the preceding welfare bound give, on every alternative history,<br>$$
+R_H
+\geq
+\frac{\beta(1-\beta)}{80}
+H\epsilon^\beta(\bar p-z)^2.
+$$</p><p>Set $r=s/16$. Under the reference law, average over $z$ uniformly in $[1/4,3/4]$. For every fixed value of $\bar p$, the set of parameters within distance $r$ has length at most $2r$. Hence<br>$$
+\frac1{1/2}
+\int_{1/4}^{3/4}
+\Pr_0(|\bar p-z|\leq r)\,dz
+\leq4r=\frac s4.
+$$<br>There is consequently a parameter $z$ for which the reference probability is at most $s/4$.</p><p>For this parameter, let<br>$$
+b_\beta
+=
+\frac{\beta(1-\beta)}{80}H\epsilon^\beta r^2.
+$$<br>The event $R_H\leq b_\beta$ implies $|\bar p-z|\leq r$. Transferring this event through the coupling yields<br>$$
+\Pr_{j,z}(R_H\leq b_\beta)\leq\frac s2&lt;s.
+$$<br>Thus its complementary probability exceeds $\delta$.</p><p>Finally, $q&#x27;\geq q/2$, so $\epsilon\geq sq/8$. It follows that<br>$$
+B^\star
+\geq b_\beta
+\geq
+\frac1{163840}
+\beta(1-\beta)s^{\beta+2}Hq^\beta.
+$$<br>This proves the proper-subset lower bound for every $\delta&lt;1$.</p><h3>6.3 Recovering the high-confidence characterization</h3><p>When $\delta&lt;1/4$,<br>$$
+s&gt;\frac34,\qquad \lambda\geq\frac13.
+$$<br>Thus the ordinary-bandit lower bound is a universal constant times $H\sqrt q$.</p><p>For every subset mass $\beta\leq1/2$, the rare-mixture lower bound is a universal constant times $\beta Hq^\beta$, because<br>$$
+1-\beta\geq\frac12,
+\qquad
+s^{\beta+2}\geq(3/4)^3.
+$$<br>A subset with $\beta&gt;1/2$ contributes at most $H\sqrt q$ to $\mathcal F$. The full subset, of mass $1$, also contributes at most $H\sqrt q$.</p><p>Taking the largest contribution proves $B^\star\geq c\mathcal F$.</p><h3>7. Exact zero quantiles and a one-round formula</h3><p>If $K=1$, there is only one policy, so regret is zero.</p><p>Suppose $K\geq2$ and $\tau=1$. Choose one uniformly random arm and use it throughout. Every environment has at least one optimal arm, so this learner has zero regret with probability at least $1/K$. Therefore<br>$$
+B^\star=0
+\qquad\text{if}\qquad
+\delta\geq1-\frac1K.
+$$<br>For smaller $\delta$, the ordinary-bandit lower bound is strictly positive.</p><p>If $\tau\geq2$, a nonempty proper subset exists and has mass strictly between zero and one. The rare-mixture lower bound is then strictly positive for every $\delta&lt;1$. This proves the zero-quantile characterization stated at the outset.</p><p>There is also an exact formula for one type and one round:<br>$$
+B^\star(K,1,(1),\delta)
+=
+1-\frac1{\lceil K(1-\delta)\rceil}.
+$$</p><p><b>Proof.</b> Put $n=\lceil K(1-\delta)\rceil$. Choose a uniformly random subset of $n$ arms and assign probability $1/n$ to each of them. Any fixed optimal arm belongs to this subset with probability $n/K\geq1-\delta$. On that event, regret is at most $1-1/n$, since rewards lie in $[0,1]$.</p><p>For the converse, consider the $K$ environments in which exactly one arm has deterministic reward $1$ and all others have reward zero. If a learner guarantees threshold $b$, its first policy must satisfy<br>$$
+\Pr(\pi_j\geq1-b)\geq1-\delta
+$$<br>for every $j$. If $b&lt;1-1/n$, each policy has at most $n-1$ coordinates satisfying $\pi_j\geq1-b$. Summing their probabilities would give<br>$$
+K(1-\delta)\leq n-1,
+$$<br>contrary to the definition of $n$. For $n=1$, the lower bound is simply nonnegativity.</p><h3>8. Why the uniform rate changes at larger $\delta$</h3><p>Let $\theta_0$ have largest mass, and put<br>$$
+\beta=1-\nu_{\theta_0}.
+$$<br>Suppose $\tau\geq2$. Choose a uniformly random arm $j$ and use the fixed policy<br>$$
+\pi=(1-\beta)e_j+\beta u,
+$$<br>where $u$ is uniform.</p><p>With probability at least $1/K$, arm $j$ maximizes the utility of type $\theta_0$. On this event, if $M_\theta=\max_a\mu_{\theta,a}$, then<br>$$
+W_\nu(\pi^\star,\mu)
+\leq
+M_{\theta_0}^{1-\beta}
+\prod_{\theta\neq\theta_0}M_\theta^{\nu_\theta},
+$$<br>whereas<br>$$
+W_\nu(\pi,\mu)
+\geq
+(1-\beta)^{1-\beta}
+\left(\frac{\beta}{K}\right)^\beta
+M_{\theta_0}^{1-\beta}
+\prod_{\theta\neq\theta_0}M_\theta^{\nu_\theta}.
+$$<br>If any $M_\theta=0$, regret is zero; otherwise the displayed inequalities apply directly.</p><p>Define binary entropy using natural logarithms:<br>$$
+h(\beta)=-\beta\log\beta-(1-\beta)\log(1-\beta).
+$$<br>For $\delta\geq1-1/K$, the guessing strategy proves<br>$$
+B^\star
+\leq
+H\left[1-e^{-h(\beta)-\beta\log K}\right]
+\leq H[h(\beta)+\beta\log K].
+$$</p><p>For example, take<br>$$
+K=2,\qquad
+\delta=\frac12,\qquad
+\nu=(H^{-2},1-H^{-2}),
+$$<br>with $H$ a power of two, so the masses are binary rational. Since<br>$$
+h(\beta)\leq\beta\log(1/\beta)+\beta,
+$$<br>the preceding bound gives<br>$$
+B^\star
+\leq
+\frac{2\log H+1+\log2}{H}.
+$$<br>But<br>$$
+\mathcal F\geq\sqrt{2H}.
+$$<br>Thus $\mathcal F$ cannot characterize the minimax quantile uniformly over masses at $\delta=1/2$, even up to logarithmic factors.</p><p>A further statistical comparison identifies a useful scale in this regime. Define<br>$$
+\Psi=\max_{\varnothing\neq S\subsetneq\Theta}
+\beta_S(1-\beta_S)q^{\beta_S}.
+$$<br>For $\tau\geq2$ and $\delta\geq1-1/K$,<br>$$
+c(1-\delta)^3H\Psi
+\leq B^\star
+\leq
+C\Lambda^2H\Psi+1.
+$$</p><p>The lower bound follows from Section 6 because $s^{\beta+2}\geq s^3$. Here is a proof of the upper comparison.</p><p>First,<br>$$
+\frac{\mathcal F}{H}\leq\max\{\sqrt q,2\Psi\}.
+$$<br>Indeed, masses above $1/2$ contribute at most $\sqrt q$, and for masses at most $1/2$ the factor $1-\beta_S$ is at least $1/2$.</p><p>Let $\rho=1-\max_\theta\nu_\theta$. If $\rho\geq1/4$, there is a subset of mass in $[1/4,1/2]$. If the largest mass is at least $1/2$, use its complement. Otherwise accumulate types until their total first reaches $1/4$; that total is below $3/4$, and either it or its complement has the required mass. Consequently,<br>$$
+\Psi\geq\frac3{16}\sqrt q,
+$$<br>and the $\mathcal F$ upper bound suffices.</p><p>Suppose $\rho&lt;1/4$, and put $T=\log(1/q)$. If $\rho T\leq2$, then<br>$$
+\Psi\geq\rho(1-\rho)q^\rho
+\geq\frac34e^{-2}\rho.
+$$<br>Guessing an arm maximizing the largest-mass type and mixing it with the uniform policy at weight $\gamma=1/(2H)$ gives, on the successful guess,<br>$$
+R_H\leq\frac12+\rho H\log(2KH).
+$$<br>Its success probability is at least $1/K$, which suffices in the stated confidence regime.</p><p>If $\rho T\geq1$, then<br>$$
+\frac{\Psi}{\sqrt q}
+\geq
+\frac34\rho e^{(1/2-\rho)/\rho}
+\geq\frac{3e}{16}&gt;\frac12.
+$$<br>The middle inequality follows because $\rho e^{1/(2\rho)-1}$ decreases on $(0,1/4]$. Again the $\mathcal F$ upper bound suffices. These two cases cover all possibilities.</p><p>This comparison leaves a factor polynomial in $1/(1-\delta)$ between the lower and upper bounds, rather than a logarithmic factor. It therefore does not settle the requested joint confidence dependence.</p><h3>9. Fixed-mass rates and the remaining question</h3><p>For every fixed mass vector with $\tau\geq2$, put<br>$$
+\alpha=\min_\theta\nu_\theta\leq\frac12.
+$$<br>The singleton of mass $\alpha$ in Section 6 gives, for every fixed $\delta&lt;1$,<br>$$
+B^\star\geq
+c_{\nu,\delta}Hq^\alpha.
+$$<br>Conversely, every nonempty subset has mass at least $\alpha$, so<br>$$
+\mathcal F\leq Hq^\alpha.
+$$<br>Hence, with constants allowed to depend on $\nu,\delta$,<br>$$
+B^\star(K,H,\nu,\delta)
+=
+\widetilde\Theta(Hq^\alpha).
+$$<br>In particular, for $H\geq K$,<br>$$
+B^\star
+=
+\widetilde\Theta(K^\alpha H^{1-\alpha}).
+$$<br>The polynomial algorithm above attains this fixed-mass rate throughout $\delta&lt;1$.</p><p>For arbitrary rational masses treated as part of the input, the stronger uniform conclusion is proved for $0&lt;\delta&lt;1/4$: the minimax scale is $\mathcal F$ up to logarithmic factors and additive $1$, and attaining that guarantee admits a polynomial-time implementation. No computational hardness assumption is needed for this result.</p><p>What remains unresolved is a characterization with uniform constants and only logarithmic losses across the full joint parameter range, especially near $\delta=1-1/K$ and as $\delta$ approaches $1$. Consequently, the polynomial-attainment versus hardness question for that full guarantee also remains open here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Opening characterization, Section 8, and Section 9: The output does not resolve the uniform joint dependence on $K,H,\nu,\delta$ over the full confidence range. Its larger-confidence bounds leave a factor polynomial in $1/(1-\delta)$, and it establishes neither attainment of the corresponding full-range minimax guarantee with only logarithmic losses nor an applicable hardness result. Additional mathematics is required.</li><li><b>minor</b> — Section 5.1, weak-separation oracle: The acceptance threshold for approximate evaluation of $g$ and the normalized weak-separation inequality are not specified explicitly. State both and account for evaluation and rational-normalization errors within the oracle tolerance; this is routine precision bookkeeping.</li><li><b>minor</b> — Section 8, example with $\nu=(H^{-2},1-H^{-2})$: Allowing every power-of-two horizon includes $H=1$, where one mass is zero and the example is inadmissible. Restrict the example to powers of two with $H\geq2$; the displayed bound $\mathcal F\geq\sqrt{2H}$ also needs this restriction.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial, with substantial valid progress.</b> The statistical arguments support the stated bounds, the characterization for $0&lt;\delta&lt;1/4$, and the exact zero-quantile result. I found no false central step. The polynomial implementation is sound in substance, with a minor clarification needed in the weak-separation oracle.</p><p>The output does <b>not</b> resolve the full <code>USER_TASK</code>: it leaves the uniform joint confidence dependence, and attainment of the corresponding full-range minimax guarantee, unresolved. It explicitly acknowledges this limitation.</p><h3>1. Scope and quantifiers</h3><p>The initial restriction $K\geq2$ is necessary for the displayed positive lower bounds. Section 7 correctly handles $K=1$ separately.</p><p>The bounds are uniform over admissible reward laws. Recovering individual observations by dividing by positive masses is legitimate, and the lower-bound constructions use admissible observations. Bernoulli probabilities need not themselves be binary rational: the task restricts observation encodings, and these constructions produce individual observations in $\{0,1\}$.</p><p>For each learner, the lower bounds select an environment after examining its reference-law behavior. This is consistent with the supremum over environments in the definition of $B^\star$.</p><p><b>Major issue — incomplete target coverage.</b> The full-range lower and upper bounds do not establish minimax attainment with only logarithmic losses uniformly in all parameters. In particular, the larger-confidence comparison leaves a factor polynomial in $1/(1-\delta)$. No hardness result resolves the remaining computational question.</p><p><b>Minimum additional work:</b> establish the missing uniform confidence dependence and attainment guarantee, or an applicable hardness result. This requires additional mathematics, not an expositional clarification.</p><h3>2. Continuity lemma</h3><p>The Hessian identity is correct. Weighted Cauchy–Schwarz proves concavity under the stated exponent-sum condition, and continuity extends it to boundary points.</p><p>Both cases in the modulus argument check out:</p><ul><li>When $m\leq z$, the hypothesis gives $y_j\leq34z$. The comparisons involving $w_j\geq\alpha$ and $\alpha\leq1/2$ have the correct directions, including the case $34z\geq1$.</li><li>When $m&gt;z$, all coordinates are positive, so the tangent inequality applies. The bounds using $F_w(x)\leq m^\alpha$ and $m^{\alpha-1/2}\leq z^{\alpha-1/2}$ are valid.</li></ul><p>The constant $40$ covers the displayed estimates. The lemma is valid for the finite, nonempty index sets used later.</p><h3>3. Confidence bounds and adaptive sampling</h3><p>The observation recovery and upward dyadic rounding are valid. The rounding grid includes $1$, so rounded observations remain in $[0,1]$.</p><p>The Bernstein bound follows from the variance bound for a bounded random variable with mean $u$. The use of a base-two logarithm for $b$ is conservative; the union bound gives the claimed failure probability.</p><p>The optimism and upper-error constants remain valid after the specified upward square-root approximation. Clipping preserves optimism, and the unpulled-arm convention satisfies the stated inequalities.</p><p>The mixture calculation correctly applies weighted Cauchy–Schwarz. The absorption of rounding error into $25\rho_t$ is valid because $\eta\leq\rho_t$.</p><p>The sampling-process argument also checks out:</p><ul><li>Conditioned on the chosen policy, the conditional mean of $Z_t$ is $z_t$.</li><li>The exponential process is a nonnegative supermartingale.</li><li>The harmonic contribution of each arm is bounded by $2+\log H$.</li><li>The resulting estimate $Q\leq C_0K\Lambda^2$ holds throughout the stated parameter range.</li></ul><p>Using fixed arm sample streams correctly handles adaptive observation times. Dependence among coordinates within a sample does not invalidate these marginal bounds.</p><h3>4. Discarded types and the upper regret bound</h3><p>The retained objective keeps the original exponents, whose sum is at most $1$; thus the continuity lemma applies without renormalization.</p><p>The restriction to $\mathcal P_\gamma$ costs at most $\gamma$. The implemented policy need only satisfy the weaker floor stated in Section 3, because its objective guarantee is separately compared with the optimum over $\mathcal P_\gamma$.</p><p>The discarded-type argument is correct. The separate treatment of a type with $M_\theta=0$ handles the degenerate welfare case. Otherwise, the policy floor supplies the stated utility lower bounds, and the logarithmic discarded-mass penalty follows.</p><p>The concavity bound for the sum of $\rho_t^{\alpha_G}$ is valid. With $\gamma=\varepsilon=1/(2H)$, the optimization and restriction losses sum to the additive $1$ claimed.</p><p>The threshold selection in Section 4 is also correct:</p><ul><li>In the large-$q$ regime, the deterministic regret bound suffices.</li><li>If discarded mass reaches $r$, the accumulated subset has mass in $[r,2r)$.</li><li>If discarded mass is below $r$, the retained set is nonempty and $\alpha_G\geq r$.</li><li>The singleton and discarded-subset comparisons correctly bound the two regret contributions by logarithmic multiples of $\mathcal F$.</li></ul><p>The algorithm does not need to compute the subset maximum defining $\mathcal F$.</p><h3>5. Polynomial implementation</h3><p>The lower bound on confidence entries ensures that every logarithm argument is at least $1/H$. Consequently, the bounds on $g$, its derivatives, and its Lipschitz constant are correct.</p><p>The cited weak-optimization guarantee matches the weak optimization definition in Section 1 of the referenced paper: it permits approximate feasibility and compares the objective with the maximum over the entire body. The application therefore does not incorrectly assume exact feasibility. The explicit interior and outer balls satisfy the required geometric conditions. [Grötschel–Lovász–Schrijver, Sections 1 and 3](https://www.ufsj.edu.br/portal2-repositorio/File/nepomuceno/elip.pdf).</p><p>The logarithm evaluation argument provides polynomial dependence on precision. Exact rational gradients also have polynomial encoding length.</p><p><b>Minor issue — oracle tolerance specification.</b> The write-up does not explicitly state the decision thresholds used with the approximate evaluation of $g$, or the normalized weak-separation inequality returned after rational normalization. An evaluation error of one quarter of the tolerance does not, by itself, specify a valid acceptance rule.</p><p><b>Minimum clarification:</b> state the acceptance threshold and the returned separator inequality, accounting for evaluation and normalization errors within the oracle tolerance. This is routine precision bookkeeping and does not require new mathematics.</p><p>The feasibility repair in Section 5.2 checks out. The affine-coordinate error, uniform mixing coefficient, policy-distance bound, and resulting objective error all have valid constants.</p><p>The final dyadic rounding also gives the claimed guarantee when remaining units are assigned to distinct coordinates, as in standard simplex rounding. It preserves the weaker floor and yields bounded-time exact sampling. Encoding lengths depend polynomially on mass bit lengths rather than numerical denominators.</p><p>Thus the polynomial implementation claim is supported in substance.</p><h3>6. Ordinary-bandit lower bound</h3><p>Giving every type the same reward reduces welfare exactly to the linear bandit objective.</p><p>The reference-arm selection, Markov bound, and identity involving $s$ and $\lambda$ are correct. The adaptive likelihood calculation is valid for these Bernoulli environments.</p><p>The relative-entropy bound and Pinsker constant leave sufficient probability margin: the transferred event has probability strictly greater than $\delta$. On that event, the stated regret lower bound follows.</p><p>The quantile argument correctly considers every threshold strictly smaller than the displayed regret level. This establishes the lower bound despite the strict inequality in the definition of the failure event.</p><h3>7. Rare-arm mixture lower bound</h3><p>This construction is valid and addresses nonlinear welfare rather than merely reproducing the ordinary-bandit lower bound.</p><p>The coupling bound correctly uses the expected reference pull count. The first-group policy utility bound and the exact second-group utility are correct.</p><p>The calculations establishing the maximizer check out:</p><ul><li>Substitution of $a_z$ gives $f_z&#x27;(z)=0$.</li><li>The second-derivative identity is correct.</li><li>The uniform lower bounds on $a_z$, $f_z$, and the squared expression imply the stated curvature bound.</li><li>The quadratic loss estimate follows from that curvature bound.</li></ul><p>The passage to $\bar p$ uses concavity correctly. Parameter averaging supplies a suitable $z$, and the coupling transfers the small-regret probability with the required strict margin.</p><p>The final numerical constant is valid: the factors from the curvature bound, $r^2$, and the estimate on $\epsilon^\beta$ produce the denominator $163840$.</p><p>The lower bound holds uniformly for every nonempty proper subset and every $\delta&lt;1$.</p><h3>8. High-confidence and zero-quantile conclusions</h3><p>For $0&lt;\delta&lt;1/4$, the bounds on $s$ and $\lambda$ supply universal constants.</p><p>Proper subsets of mass at most $1/2$ receive the required rare-mixture lower bound. Subsets of larger mass, including the full subset, are dominated by the ordinary-bandit contribution. Therefore the stated lower bound by $c\mathcal F$ follows.</p><p>The zero-quantile characterization is correct:</p><ul><li>For $K=1$, regret is identically zero.</li><li>For one type, guessing an optimal arm has success probability at least $1/K$.</li><li>Below that confidence threshold, the ordinary-bandit lower bound is positive.</li><li>With at least two positive-mass types, the proper-subset lower bound is positive for every $\delta&lt;1$.</li></ul><p>The one-type, one-round formula is also correct. Its converse uses the strict threshold properly, and the case where the ceiling equals $1$ is explicitly handled.</p><h3>9. Larger-confidence comparison and fixed-mass rates</h3><p>The guessing strategy and entropy bound are valid. They demonstrate that $\mathcal F$ cannot uniformly describe the larger-confidence minimax quantile over input-dependent masses.</p><p><b>Minor issue — inadmissible example endpoint.</b> The example permits $H$ to be any power of two, which includes $H=1$. At that endpoint, the second mass is zero, violating the task’s positive-mass assumption. The displayed comparison with $\sqrt{2H}$ also requires $H\geq2$.</p><p><b>Minimum clarification:</b> restrict the example to powers of two with $H\geq2$.</p><p>The subsequent $\Psi$ comparison is mathematically consistent. The subset-existence argument, dominant-mass cases, and exponential comparison have the correct ranges and constants. The overlapping case conditions cover all possibilities.</p><p>Section 9 correctly derives the fixed-mass rate, with constants allowed to depend on $\nu$ and $\delta$. This does not supply the uniform input-dependent characterization requested by the task, and the output appropriately distinguishes those claims.</p><h3>Final adjudication</h3><p>The output contains genuine, substantial progress: valid statistical upper and lower bounds, a high-confidence minimax characterization up to logarithmic factors, a polynomial implementation in substance, and exact zero-quantile and one-round results.</p><p>The full assignment remains unresolved. The appropriate status is <b>partial</b>, rather than refuted. The identified implementation and example issues are minor; the missing uniform confidence characterization is the substantive blocker.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

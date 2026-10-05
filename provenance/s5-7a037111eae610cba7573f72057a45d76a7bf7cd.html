@@ -1,0 +1,67 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Complaint, compromise and solution concepts for cooperative games — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Complaint, compromise and solution concepts for cooperative games <span style="font-weight:normal;color:#8a7350">(s5-7a037111eae610cba7573f72057a45d76a7bf7cd)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2.1 — class: other</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite anonymous typed TU game with type set \(T=\operatorname{supp}(\mu)\), rational masses \(\mu_t&gt;0\) summing to \(1\), normalized grand worth \(W\), and per-unit grand-marginal contributions \(b_t\), find \(x\in\mathbb R^T\) minimizing \(\sum_{t\in T}\mu_t(b_t-x_t)^2\) subject to \(\sum_{t\in T}\mu_t x_t=W\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\geq 1\) types \(T\) with positive mass, each mass \(\mu_t\) a binary rational, with \(\sum_{t\in T}\mu_t=1\). Here \(\tau\) is the support size, not the number of possible types.<br>The input additionally supplies signed binary rationals \(W\) and \(b_t\): the grand worth per unit of total mass and the grand-marginal contribution per unit of type \(t\), respectively. These are supplied data, with no coalition-worth oracle or derivative computation required.<br>An allocation \(x\in\mathbb R^T\) specifies a common payoff per unit of each type. Feasibility requires only \(\sum_{t\in T}\mu_t x_t=W\); there are no sign, individual-rationality, or coalitional constraints.<br>Find an exact minimizer of \(\sum_{t\in T}\mu_t(b_t-x_t)^2\) over feasible allocations. Let \(L\) be the total input bit length; running times are measured in \(\tau\) and \(L\). There is no separate \(m\) parameter.</p><p>Is this exact minimization problem solvable in polynomial time in \(\tau\) and \(L\), or is it \(\mathrm{NP}\)-hard?</p><p>For finite TU games, minimizing the unweighted sum of squared deviations from individual grand-marginal contributions over efficient allocations has a unique minimizer, the ENSC value ([Sun, 2019](https://doi.org/10.3990/1.9789036547192)).<br>No result addressing exactly the support-encoded continuous formulation above was identified in the literature search.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>The encoding and signs of W and b_t were unspecified; they are explicitly supplied signed binary rationals, consistent with unrestricted TU worths.</li><li>Per-unit grand-marginal contributions have no specified continuous game representation; b_t are treated as supplied numerical data rather than quantities to derive from an unspecified worth function.</li><li>Normalization is by total mass: W is grand worth per unit of total mass, not necessarily equal to one.</li><li>The feasible domain retains only efficiency and unrestricted real payoffs, as in the discrete anchor.</li><li>The computational model is exact binary computation with total input bit length L; this formulation has no separate m parameter.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Exact minimizer</h3><p>The problem is <b>solvable exactly in polynomial time</b> in \(\tau\) and \(L\).</p><p>Define the mass-weighted mean of the supplied contributions by<br>\[
+B=\sum_{t\in T}\mu_t b_t.
+\]<br>The unique minimizer is<br>\[
+x_t^*=b_t+W-B \qquad(t\in T),
+\]<br>and the minimum objective value is \((W-B)^2\).</p><h3>Proof of existence and uniqueness</h3><p>Write \(c=W-B\). Since \(\sum_{t\in T}\mu_t=1\), the proposed allocation is feasible:<br>\[
+\sum_{t\in T}\mu_t x_t^*
+=\sum_{t\in T}\mu_t(b_t+c)
+=B+c=W.
+\]</p><p>Now let \(x\) be any feasible allocation, and define \(z_t=x_t-x_t^*\). Feasibility of both allocations implies<br>\[
+\sum_{t\in T}\mu_t z_t=0.
+\]<br>Also, \(b_t-x_t=-c-z_t\). Expanding the objective therefore gives<br>\[
+\begin{aligned}
+\sum_{t\in T}\mu_t(b_t-x_t)^2
+&amp;=\sum_{t\in T}\mu_t(c+z_t)^2\\
+&amp;=c^2\sum_{t\in T}\mu_t
+  +2c\sum_{t\in T}\mu_t z_t
+  +\sum_{t\in T}\mu_t z_t^2\\
+&amp;=c^2+\sum_{t\in T}\mu_t z_t^2.
+\end{aligned}
+\]<br>The final sum is nonnegative. Because every supported type has strictly positive mass, it equals zero precisely when every \(z_t=0\). Thus \(x^*\) is the unique minimizer, with objective value \(c^2\). This argument covers every \(\tau\geq 1\) and all signed values of \(W\) and \(b_t\).</p><h3>Exact computation and bit complexity</h3><p>For completeness, the algorithm works even for general binary-encoded rationals, not only dyadic rationals. Write the input as \(\mu_t=p_t/q_t\), \(b_t=r_t/s_t\), and \(W=u/v\), with positive integer denominators and signed integer numerators where appropriate.</p><p>Choose the common denominator<br>\[
+D=v\prod_{t\in T}q_t s_t.
+\]<br>Every \(q_t s_t\), every \(s_t\), and \(v\) divides \(D\). Hence the following computations use integer arithmetic:<br>\[
+N=\sum_{t\in T}p_t r_t\frac{D}{q_t s_t},
+\qquad
+A_t=r_t\frac{D}{s_t}+u\frac{D}{v}-N.
+\]<br>They satisfy \(B=N/D\) and \(x_t^*=A_t/D\), so the output is exact.</p><p>The bit length of \(D\) is \(O(L)\), because it is a product of denominators whose total encoding length is at most \(L\). Each summand defining \(N\) has \(O(L)\) bits; summing \(\tau\) such integers produces \(O(L+\log\tau)\) bits. The same bound holds for every \(A_t\) and all intermediate integers.</p><p>Computing \(D\), \(N\), and all \(A_t\) requires \(O(\tau)\) integer arithmetic operations on numbers of polynomially bounded bit length. Standard integer multiplication and division therefore give polynomial running time in \(\tau\) and \(L\). Fractions may be output unreduced, or reduced using polynomial-time greatest-common-divisor computations.</p><p>Thus the supplied-data, support-encoded formulation has an explicit rational solution computable in polynomial time; no coalition-worth information is required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><h3>Verdict</h3><p><b>The prover resolves the task correctly.</b> The formula, optimality and uniqueness argument, and exact bit-complexity analysis are valid under the stated input model. No major or minor issues were found.</p><h3>Step-by-step verification</h3><ul><li><b>Definitions and domain.</b> The quantities \(B=\sum_{t\in T}\mu_t b_t\) and \(c=W-B\) are well-defined rational numbers. The proposed allocation \(x_t^*=b_t+c\) respects the unrestricted real payoff domain. No positivity assumption on \(W\), \(b_t\), or the allocation is introduced.</li></ul><ul><li><b>Feasibility.</b> The calculation \(\sum_{t\in T}\mu_t x_t^*=B+c=W\) correctly uses the supplied normalization \(\sum_{t\in T}\mu_t=1\). Thus the proposed allocation exists and is feasible.</li></ul><ul><li><b>Comparison with every feasible allocation.</b> For an arbitrary feasible allocation \(x\), defining \(z_t=x_t-x_t^*\) gives \(\sum_{t\in T}\mu_t z_t=0\). The identity \(b_t-x_t=-c-z_t\) has the correct sign. The displayed expansion is correct: normalization makes the constant term \(c^2\), and feasibility makes the cross term vanish. Consequently, the objective is exactly \(c^2+\sum_{t\in T}\mu_t z_t^2\).</li></ul><ul><li><b>Optimality and uniqueness.</b> Every term in the residual sum is nonnegative. Because all supported masses are strictly positive, the sum vanishes exactly when every coordinate \(z_t\) is zero. This establishes global optimality, uniqueness, and the claimed minimum value \((W-B)^2\). The argument also covers \(\tau=1\), \(c=0\), and arbitrary signed supplied contributions.</li></ul><ul><li><b>Exact rational computation.</b> The denominator \(D=v\prod_{t\in T}q_t s_t\) is positive and divisible by each denominator used in the formulas. All indicated divisions are exact integer divisions. The formulas for \(N\) and \(A_t\) correctly represent \(B=N/D\) and \(x_t^*=A_t/D\). Coprimality of the input fractions is unnecessary.</li></ul><ul><li><b>Bit complexity.</b> The bit length of the product \(D\) is bounded by the sum of the input denominator lengths, hence is \(O(L)\). Products involving input numerators and the displayed quotients also have \(O(L)\) bits. Summing \(\tau\) signed terms requires at most \(O(L+\log\tau)\) bits; the bounds for \(A_t\) and intermediate integers follow as stated. The algorithm uses \(O(\tau)\) integer arithmetic operations with polynomially bounded operand lengths. Exact division, multiplication, and optional fraction reduction therefore take polynomial time. The total output length is polynomial as well.</li></ul><p>No external theorem is needed for the proof, and the finite-game literature reference is not used as a substitute for establishing the continuous result.</p><h3>Feedback</h3><p>No repair or additional clarification is required.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

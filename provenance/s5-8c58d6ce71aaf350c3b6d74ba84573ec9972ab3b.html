@@ -1,0 +1,197 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-8c58d6ce71aaf350c3b6d74ba84573ec9972ab3b — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-8c58d6ce71aaf350c3b6d74ba84573ec9972ab3b <span style="font-weight:normal;color:#8a7350">(s5-8c58d6ce71aaf350c3b6d74ba84573ec9972ab3b)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved_with_minor_gaps · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> $\Omega((\tau-2\eta)^2)$ deterministic exact queries are necessary for the stated rank and partner-at-rank oracle, even when an unrestricted stable bijection changes only four agents. Thus $o((\tau-2\eta)^2)$ queries cannot suffice. An exact algorithm uses $O(m\tau)$ queries and $O(L+m\tau)$ word-RAM time.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5.1 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Given a predicted matching $\hat{\mu}$ and an error bound $\eta$, any algorithm to determine if $\hat{\mu}$ has maximum error at most $\eta$ requires $\Omega((n - 2\eta)^2)$ queries to the agents&#x27; preference lists in the worst case, even if $\hat{\mu}$ can be made stable by changing the match of at most $6$ agents.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given τ resident types and τ hospital types, each with mass \(1/\tau\), strict rankings over the opposite-side types, a predicted bijection π, and an error bound η, does there exist a stable flow \(x_{ij}\geq 0\) with every row and column summing to \(1/\tau\), such that every edge with \(x_{ij}&gt;0\) is within rank displacement η of the predicted partner on both sides? Stability means no type pair has positive mass on both sides assigned to types each ranks below the other. In the rank-query version, rankings are exposed by rank queries and instances may promise that at most \(6/\tau\) mass leaves the predicted flow.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Each side of a society is given by its support: a list of \(\tau\geq2\) types with positive binary-rational masses; \(\tau\) is the support size, not the number of possible types. Here every mass is \(1/\tau\), each side totals \(1\), and the number of possible partners is \(m=\tau\).<br>Each resident \(r_i\) and hospital \(h_j\) has a complete strict ranking of the opposite support; write \(p_i(j)\) and \(q_j(i)\) for ranks, with rank \(1\) best. Input also includes a predicted bijection \(\pi\) and an integer \(0\leq\eta&lt;\tau/2\).<br>A flow \(x\in\mathbb R_{\geq0}^{\tau\times\tau}\) is perfect if every row and column sums to \(1/\tau\). It is stable if no pair \((i,j)\) satisfies both \(\sum_{k:p_i(k)&gt;p_i(j)}x_{ik}&gt;0\) and \(\sum_{\ell:q_j(\ell)&gt;q_j(i)}x_{\ell j}&gt;0\); all pairs are tested, including edges outside the permitted windows.<br>Decide whether a perfect stable flow exists with \(x_{ij}&gt;0\) only when \(\lvert p_i(j)-p_i(\pi(i))\rvert\leq\eta\) and \(\lvert q_j(i)-q_j(\pi^{-1}(j))\rvert\leq\eta\).<br>Rankings are accessible only through unit-cost queries returning either a specified partner&#x27;s rank or the partner at a specified rank. Restrict to instances promising some perfect stable flow \(y\), without window restrictions, with \(2\sum_i(1/\tau-y_{i,\pi(i)})\leq6/\tau\), counting displaced mass on both sides.<br>Let \(L\) be the binary encoding length of the support, prediction, bound, and underlying rankings; express running times in \(m,\tau,L,\eta\), separately from query counts.</p><p>What is the worst-case deterministic exact query complexity of this decision problem: is \(\Omega((\tau-2\eta)^2)\) necessary even under the displaced-mass promise, or can \(o((\tau-2\eta)^2)\) queries suffice as \(\tau-2\eta\to\infty\)?</p><p>Discrete prediction-error testing requires \(\Omega((n-2\eta)^2)\) preference queries even when at most six agents must change partners to reach stability ([McCauley et al.](https://arxiv.org/html/2602.02254v1)).<br>For fractional matching, polynomial-time results cover unpruned ordinal stability with strict bipartite preferences, but do not address this prediction-window query problem ([Chen, Roy, and Sorge](https://www.ijcai.org/proceedings/2021/0013.pdf)).</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Made rankings complete and strict, used rank 1 as best, and required stability against every original pair.</li><li>Restricted the integer error bound to the nonvacuous lower-bound regime 0 &lt;= eta &lt; tau/2.</li><li>Specified both partner-to-rank and rank-to-partner oracle queries, since the anchor leaves preference-query access unspecified.</li><li>Used deterministic exact algorithms to make the query-complexity target precise.</li><li>Interpreted the six-agent promise as displaced endpoint mass summed over both sides, bounded by 6/tau; its witnessing stable flow need not satisfy the windows.</li><li>Defined m as the opposite-side support size and L as the underlying binary instance length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p>The lower bound is necessary in the precise two-query model of the question. Writing $k=\tau-2\eta$, every deterministic exact algorithm has worst-case query complexity</p><p>$$
+\Omega(k^2)=\Omega((\tau-2\eta)^2).
+$$</p><p>This holds even under the stronger promise that an unrestricted stable bijection can be obtained from the prediction by changing only four agents’ partners.</p><p>An exact algorithm uses $O(m\tau)$ queries and $O(L+m\tau)$ word-RAM time, where $m=\tau$. Consequently, the query complexity is $\Theta(\tau^2)$ when $\tau-2\eta=\Theta(\tau)$. No uniformly tight upper bound in terms of $\tau-2\eta$ alone is asserted.</p><p>The lower bound below is proved directly for both permitted query operations. Thus it repairs the oracle-model gap identified in NOTES without requiring an interpretation of the preference queries in [McCauley et al., Section 5](https://arxiv.org/html/2602.02254v1#S5).</p><h3>1. Stable flows and stable bijections</h3><p>For a bijection $\mu$, let its associated flow be</p><p>$$
+x^\mu_{ij}=
+\begin{cases}
+1/\tau,&amp;j=\mu(i),\\
+0,&amp;j\neq\mu(i).
+\end{cases}
+$$</p><p>A pair $(i,j)$ blocks $\mu$ precisely when</p><p>$$
+p_i(j)&lt;p_i(\mu(i))
+\quad\text{and}\quad
+q_j(i)&lt;q_j(\mu^{-1}(j)).
+$$</p><p>For $x^\mu$, these inequalities are equivalent to positivity of the two sums in the question’s definition of instability. Therefore $x^\mu$ is stable if and only if $\mu$ is stable.</p><p><b>Lemma 1.</b> Every perfect bijection contained in the positive support of a stable flow is stable.</p><p><b>Proof.</b> Suppose $x_{i,\mu(i)}&gt;0$ for every $i$. If $(i,j)$ blocked $\mu$, then</p><p>$$
+\sum_{u:p_i(u)&gt;p_i(j)}x_{iu}
+\geq x_{i,\mu(i)}&gt;0
+$$</p><p>and</p><p>$$
+\sum_{v:q_j(v)&gt;q_j(i)}x_{vj}
+\geq x_{\mu^{-1}(j),j}&gt;0.
+$$</p><p>This contradicts stability of $x$. The argument tests every original pair, including pairs outside the windows. $\square$</p><p>We also need the following decomposition, including its support property.</p><p><b>Lemma 2.</b> If $z$ is a nonnegative square matrix with every row and column sum equal to $1$, then</p><p>$$
+z=\sum_{a=1}^{t}\lambda_a P^{\mu_a},
+\qquad
+\lambda_a&gt;0,
+\qquad
+\sum_{a=1}^{t}\lambda_a=1,
+$$</p><p>where every $\mu_a$ uses only positive entries of $z$.</p><p><b>Proof.</b> More generally, consider a nonnegative residual matrix whose row and column sums all equal some $c&gt;0$. In its positive-support bipartite graph, let $S$ be any set of rows and $N(S)$ its neighboring columns. The mass leaving $S$ is $c|S|$, and it enters columns with total capacity $c|N(S)|$. Hence</p><p>$$
+|S|\leq |N(S)|.
+$$</p><p>Hall’s theorem states that this condition, for every row subset in a finite bipartite graph with equally sized sides, guarantees a perfect matching. Thus the residual matrix has a supported permutation $\mu$.</p><p>Subtract $\delta P^\mu$, where $\delta$ is the minimum of the residual entries used by $\mu$. Nonnegativity is preserved, all row and column sums become $c-\delta$, and at least one positive entry disappears. Repeat if $c-\delta&gt;0$.</p><p>No positive entry is introduced, so there are at most $\tau^2$ iterations. The process finishes with the zero matrix. The subtracted coefficients are positive and sum to $1$, by considering any row sum of the original matrix. Every selected permutation uses positive entries of the original matrix. $\square$</p><p>For a perfect flow $x$, the matrix $z=\tau x$ satisfies Lemma 2. If $x$ is stable, Lemma 1 makes every component bijection stable. Any restriction on positive-support edges is inherited by every component. Consequently,</p><p>$$
+\boxed{
+\text{A window-supported perfect stable flow exists}
+\iff
+\text{a window-supported stable bijection exists}.
+}
+$$</p><h3>2. Exact interpretation of the displaced-mass promise</h3><p>Let $y$ be an unrestricted perfect stable flow. Apply Lemma 2 to $\tau y$, and write</p><p>$$
+t_a=|\{i:\mu_a(i)\neq\pi(i)\}|.
+$$</p><p>Every component $\mu_a$ is stable, and the decomposition gives</p><p>$$
+2\sum_i\left(\frac1\tau-y_{i,\pi(i)}\right)
+=
+\frac2\tau\sum_a\lambda_a t_a.
+$$</p><p>The promise therefore implies</p><p>$$
+\sum_a\lambda_a t_a\leq3.
+$$</p><p>At least one $t_a$ is at most $3$: otherwise every term in this finite weighted average would exceed $3$.</p><p>For any two bijections $\mu,\pi$, exactly as many hospitals as residents change partners. Indeed, if</p><p>$$
+S=\{i:\mu(i)\neq\pi(i)\},
+$$</p><p>then agreement outside $S$ and bijectivity imply $\mu(S)=\pi(S)$. Precisely those hospitals have changed partners. Thus $t_a\leq3$ means at most six agents change partners.</p><p>Conversely, a stable bijection changing at most three resident partners satisfies</p><p>$$
+2\sum_i\left(\frac1\tau-x^\mu_{i,\pi(i)}\right)
+=
+\frac{2|\{i:\mu(i)\neq\pi(i)\}|}{\tau}
+\leq\frac6\tau.
+$$</p><p>Hence the fractional promise is equivalent to the existence of an unrestricted stable bijection changing at most six agents.</p><h3>3. A direct lower-bound construction</h3><p>Put $n=\tau=m$ and $k=n-2\eta$. We construct hard instances whenever $k\geq4$, which suffices for the requested asymptotic regime. Define</p><p>$$
+s=\left\lfloor\frac{k}{2}\right\rfloor,
+\qquad
+e=k-2s\in\{0,1\}.
+$$</p><p>Thus $s\geq2$ and</p><p>$$
+n=2s+2\eta+e.
+$$</p><h3>3.1 Agents, prediction, and baseline rankings</h3><p>There are core residents and hospitals</p><p>$$
+R_A=\{a_1,\ldots,a_s\},
+\qquad
+R_B=\{b_1,\ldots,b_s\},
+$$</p><p>$$
+H_A=\{A_1,\ldots,A_s\},
+\qquad
+H_B=\{B_1,\ldots,B_s\}.
+$$</p><p>There are also $\eta$ upper dummy pairs, $\eta$ lower dummy pairs, and $e$ extra dummy pairs. Write their hospital sets as $H_U,H_D,H_X$, and their resident sets as $R_U,R_D,R_X$, respectively.</p><p>The prediction pairs $a_u$ with $A_u$, $b_v$ with $B_v$, and every dummy with its corresponding dummy.</p><p>Every dummy pair ranks each other first; all its remaining rankings are fixed arbitrarily. All unspecified orders below are also fixed in advance.</p><p>For each $u$, resident $a_u$ has the baseline list</p><p>$$
+[\,H_A\setminus\{A_u\}\mid H_U\mid A_u\mid H_D\mid H_B\mid H_X\,].
+$$</p><p>For each $v$, hospital $B_v$ has the baseline list</p><p>$$
+[\,R_B\setminus\{b_v\}\mid R_U\mid b_v\mid R_D\mid R_A\mid R_X\,].
+$$</p><p>Hospital $A_u$ ranks $a_u$ first, then all of $R_B$, then every remaining resident. Resident $b_v$ ranks $B_v$ first, then all of $H_A$, then every remaining hospital.</p><p>These lists are complete and strict.</p><p><b>Baseline stability.</b> Every dummy has its first choice under $\pi$. Every hospital in $H_A$ and every resident in $R_B$ also has its first choice. A blocking pair could therefore only involve a resident in $R_A$ and a hospital in $H_B$. But every resident in $R_A$ ranks its predicted hospital above every hospital in $H_B$. Thus $\pi$ is stable, so the baseline instance is a YES instance satisfying the promise with zero displaced mass.</p><h3>3.2 One modified instance for every hidden pair</h3><p>For each $u$, choose a map</p><p>$$
+g_u:\{1,\ldots,s\}\longrightarrow H_A\setminus\{A_u\}
+$$</p><p>whose fibers have size at most two. Such a map exists: list the $s-1$ target hospitals and assign the $s$ arguments cyclically to this list. Only its first target is used twice.</p><p>Similarly, for each $v$, choose</p><p>$$
+f_v:\{1,\ldots,s\}\longrightarrow R_B\setminus\{b_v\}
+$$</p><p>with fibers of size at most two.</p><p>For every candidate $(u,v)\in\{1,\ldots,s\}^2$, modify exactly two lists:</p><ul><li>In $a_u$’s list, swap $B_v$ with $g_u(v)$.</li><li>In $B_v$’s list, swap $a_u$ with $f_v(u)$.</li></ul><p>All other lists remain at baseline.</p><p>Both swapped-in partners now occupy ranks between $1$ and $s-1$. Their predicted partners remain at rank $s+\eta$. Hence</p><p>$$
+p_{a_u}(A_u)-p_{a_u}(B_v)\geq\eta+1,
+$$</p><p>$$
+q_{B_v}(b_v)-q_{B_v}(a_u)\geq\eta+1.
+$$</p><p>In particular, $(a_u,B_v)$ blocks $\pi$, and its edge lies outside both windows.</p><h3>3.3 Every modified instance is a NO instance</h3><p>In every baseline or modified list of a resident in $R_A$, the predicted hospital has rank $s+\eta$. All other core hospitals have ranks in</p><p>$$
+\{1,\ldots,s-1\}
+\quad\text{or}\quad
+\{s+2\eta+1,\ldots,2s+2\eta\}.
+$$</p><p>Every such rank differs from $s+\eta$ by at least $\eta+1$. The same assertion holds for the predicted resident and all other core residents on each hospital list in $H_B$. The swaps preserve this property.</p><p>In every stable bijection, each dummy must be paired with its corresponding dummy: otherwise that mutually first-choice pair would block.</p><p>Now suppose a stable bijection satisfies the windows. Since dummy hospitals are occupied by their dummy partners, each resident in $R_A$ must receive a core hospital. Its window permits only its predicted core hospital. Likewise, each hospital in $H_B$ must receive its predicted resident. Together these assignments determine the entire prediction $\pi$.</p><p>But $\pi$ is blocked by $(a_u,B_v)$ in the modified instance. Therefore no stable bijection satisfies the windows. Section 1 implies that no window-supported perfect stable flow exists either.</p><h3>3.4 Every modified instance satisfies the promise</h3><p>For the modification indexed by $(u,v)$, define a bijection $\sigma$ by</p><p>$$
+\sigma(a_u)=B_v,
+\qquad
+\sigma(b_v)=A_u,
+$$</p><p>with all other residents retaining their predicted partners.</p><p>We prove that $\sigma$ is stable.</p><p>Dummy endpoints cannot participate in a blocking pair because they retain their first choices. Hospitals $A_c$ with $c\neq u$ and residents $b_d$ with $d\neq v$ also retain their first choices. After excluding those endpoints, all remaining pairs have one of four forms.</p><ul><li><b>$(a_c,B_d)$.</b> If $c\neq u$, resident $a_c$ ranks its predicted hospital above every hospital in $H_B$. If $c=u$ and $d\neq v$, resident $a_u$ ranks its new partner $B_v$, now in the upper core block, above every other hospital in $H_B$. The remaining pair $(a_u,B_v)$ is assigned.</li></ul><ul><li><b>$(a_c,A_u)$.</b> If $c=u$, resident $a_u$ prefers its new partner $B_v$ to $A_u$. If $c\neq u$, hospital $A_u$ ranks its assigned resident $b_v$ above $a_c$, because it ranks all of $R_B$ above $R_A\setminus\{a_u\}$.</li></ul><ul><li><b>$(b_v,B_d)$.</b> If $d=v$, hospital $B_v$ prefers its new partner $a_u$ to $b_v$. If $d\neq v$, resident $b_v$ ranks its assigned hospital $A_u$ above $B_d$, because it ranks all of $H_A$ above $H_B\setminus\{B_v\}$.</li></ul><ul><li><b>$(b_v,A_u)$.</b> This pair is assigned.</li></ul><p>Thus no pair blocks $\sigma$.</p><p>Exactly two residents and two hospitals change partners. Its associated stable flow therefore satisfies</p><p>$$
+2\sum_i\left(\frac1n-x^\sigma_{i,\pi(i)}\right)
+=
+\frac4n
+\leq\frac6n.
+$$</p><p>Every modified instance satisfies the required promise.</p><h3>4. The adversary works for both query operations</h3><p>There are $s^2$ modified instances, all with the same public support, masses, prediction, and bound.</p><p>Fix a query and compare its baseline answer with its answers in all modified instances.</p><p>For a query to resident $a_u$’s list:</p><ul><li>A specified-partner rank query can change only if the specified partner is $B_v$ or $g_u(v)$. A hospital in $H_B$ identifies at most one candidate; a hospital in $H_A$ belongs to at most two fibers of $g_u$.</li><li>A specified-rank partner query can change only at the baseline position of $B_v$ or $g_u(v)$. A lower core position identifies at most one candidate; an upper core position identifies at most two.</li></ul><p>Therefore any query to this list distinguishes the baseline from at most two candidates.</p><p>The same argument applies to hospital $B_v$’s list, using the fiber bound for $f_v$. Every other list is unchanged in every modification. Hence:</p><p>$$
+\boxed{\text{Every permitted query distinguishes at most two candidates.}}
+$$</p><p>Let a deterministic exact algorithm make $Q$ queries on the baseline instance. If</p><p>$$
+2Q&lt;s^2,
+$$</p><p>some candidate modification agrees with every answer along that baseline transcript. Inductively, determinism forces the algorithm to make the same next query after every identical prefix. It therefore also stops with the same answer on that modification.</p><p>The baseline is YES, whereas the modification is NO, and both satisfy the promise. This contradicts correctness. Consequently,</p><p>$$
+Q\geq
+\left\lceil\frac{s^2}{2}\right\rceil
+=
+\left\lceil
+\frac12\left\lfloor\frac{\tau-2\eta}{2}\right\rfloor^2
+\right\rceil.
+$$</p><p>For $k\geq4$, $\lfloor k/2\rfloor\geq k/3$, so in particular</p><p>$$
+Q\geq\frac{k^2}{18}.
+$$</p><p>This proves the required $\Omega((\tau-2\eta)^2)$ lower bound uniformly as $\tau-2\eta\to\infty$, including when both query operations are available.</p><h3>5. An exact quadratic-query algorithm</h3><p>The following upper bound does not require the displaced-mass promise.</p><p>Query every list using partner-at-rank queries, and invert the lists to obtain all ranks. Define the original window endpoints</p><p>$$
+a_i=\max\{1,p_i(\pi(i))-\eta\},
+\qquad
+b_i=\min\{\tau,p_i(\pi(i))+\eta\},
+$$</p><p>$$
+c_j=\max\{1,q_j(\pi^{-1}(j))-\eta\},
+\qquad
+d_j=\min\{\tau,q_j(\pi^{-1}(j))+\eta\}.
+$$</p><p>Tighten the upper endpoints to</p><p>$$
+B_i=
+\min\left(
+\{b_i\}\cup
+\{p_i(j)-1:q_j(i)&lt;c_j\}
+\right),
+$$</p><p>$$
+D_j=
+\min\left(
+\{d_j\}\cup
+\{q_j(i)-1:p_i(j)&lt;a_i\}
+\right).
+$$</p><p>Keep precisely the edges</p><p>$$
+E=
+\{(i,j):
+a_i\leq p_i(j)\leq B_i,\;
+c_j\leq q_j(i)\leq D_j
+\}.
+$$</p><p>An upper endpoint below its lower endpoint produces an empty list.</p><h3>5.1 Every original-window stable bijection uses only edges of $E$</h3><p>Let $\mu$ be stable and satisfy the original windows.</p><p>If $q_j(i)&lt;c_j$, hospital $j$ prefers resident $i$ to its assignment, whose rank is at least $c_j$. Moreover, $i$ cannot be assigned to $j$, because that would violate $j$’s window. Stability and strict rankings therefore imply</p><p>$$
+p_i(\mu(i))&lt;p_i(j),
+$$</p><p>and hence $p_i(\mu(i))\leq p_i(j)-1$. Taking all such hospitals gives</p><p>$$
+p_i(\mu(i))\leq B_i.
+$$</p><p>Symmetrically, if $p_i(j)&lt;a_i$, resident $i$ prefers $j$ to its assignment, and stability implies</p><p>$$
+q_j(\mu^{-1}(j))\leq q_j(i)-1.
+$$</p><p>Taking all such residents gives $q_j(\mu^{-1}(j))\leq D_j$. The original lower endpoints already hold, so $\mu$ uses only edges of $E$.</p><p>It is also stable on $E$: a blocking pair in $E$ would be an original blocking pair.</p><h3>5.2 Every perfect matching stable on $E$ is originally stable</h3><p>Let $\mu$ be perfect and stable on $E$. Pairs in $E$ cannot block. For an excluded pair $(i,j)$, at least one defining inequality of $E$ fails:</p><ul><li>If $p_i(j)&lt;a_i$, then $D_j\leq q_j(i)-1$, so hospital $j$ prefers its assignment to $i$.</li><li>If $q_j(i)&lt;c_j$, then $B_i\leq p_i(j)-1$, so resident $i$ prefers its assignment to $j$.</li><li>If $p_i(j)&gt;B_i$, resident $i$ prefers its assignment, whose rank is at most $B_i$.</li><li>If $q_j(i)&gt;D_j$, hospital $j$ prefers its assignment, whose rank is at most $D_j$.</li></ul><p>Thus excluded pairs cannot block either. Since $E$ is contained in the original windows, $\mu$ is an original-window stable bijection.</p><h3>5.3 Deferred acceptance decides whether such a matching exists</h3><p>Run sequential resident-proposing deferred acceptance on $E$, with inherited strict preferences. Accept exactly when the output is perfect.</p><p>For completeness, its correctness follows from two rejection arguments.</p><p>First, the output is stable on $E$. A resident who prefers an acceptable hospital to its final assignment must have proposed there and been rejected. Once a hospital rejects a resident, its held partner only improves, so that pair cannot block at termination. Unmatched agents regard every acceptable partner as preferable to being unmatched.</p><p>Second, suppose $E$ admits a perfect stable matching $\mu$. Consider the earliest rejection of any edge $(i,\mu(i))$. Hospital $j=\mu(i)$ rejects $i$ in favor of some $i&#x27;$ whom it strictly prefers. Since $\mu$ is a bijection, $j\neq\mu(i&#x27;)$. Resident $i&#x27;$ has proposed to $j$. If $i&#x27;$ preferred $\mu(i&#x27;)$ to $j$, it would already have been rejected by $\mu(i&#x27;)$, contradicting earliest rejection. Otherwise $(i&#x27;,j)$ blocks $\mu$, also a contradiction.</p><p>Thus no edge of $\mu$ is ever rejected. No resident can exhaust its list while unmatched, because its partner in $\mu$ is on that list. The deferred-acceptance output is therefore perfect whenever a perfect stable matching exists on $E$.</p><p>Sections 5.1–5.2 and the flow–bijection equivalence now prove the algorithm’s correctness.</p><h3>6. Queries, running time, and conclusion</h3><p>There are $2\tau$ lists, each of length $m=\tau$. Recovering them requires at most $2m\tau$ queries.</p><p>List inversion, endpoint computation, filtering in the recovered preference order, and deferred acceptance each use $O(m\tau)$ word operations. Deferred acceptance makes at most one proposal per retained edge. Thus the bounds are:</p><p>| Resource | Bound |<br>|---|---|<br>| Preference queries | $O(m\tau)$ |<br>| Word-RAM running time, including unit-cost queries | $O(L+m\tau)$ |<br>| Auxiliary storage | $O(m\tau)$ words |</p><p>Charging each rank/index word operation $O(\log(m+\tau))$ bit operations gives the corresponding accounting bound</p><p>$$
+O\bigl(L+m\tau\log(m+\tau)\bigr).
+$$</p><p>No fractional-flow computation is needed.</p><p>Together, the direct adversary and exact algorithm establish</p><p>$$
+\Omega((\tau-2\eta)^2)
+\leq Q_{\mathrm{det}}(\tau,\eta)
+\leq O(m\tau)=O(\tau^2).
+$$</p><p>In particular, $o((\tau-2\eta)^2)$ queries cannot suffice as $\tau-2\eta\to\infty$, even under the displaced-mass promise.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 4, specified-partner rank queries to a resident list: The phrase that a hospital in $H_A$ &#x27;belongs to at most two fibers of $g_u$&#x27; misdescribes fibers. Clarify that a specified target hospital is the image of at most two arguments. The required fiber-size bound is already explicitly established, so this wording defect does not affect the query lower bound.</li></ul>
+<div class="pre"><h3>Overall assessment</h3><p>The argument establishes the requested deterministic query lower bound, including under the displaced-mass promise and with both query operations available. The reduction from stable flows to stable bijections and the exact polynomial-time algorithm are also sound.</p><p>There is one minor wording defect in the query-count argument. Its intended meaning is explicit elsewhere, and it does not affect the conclusion. No major mathematical gap or false central assertion was found.</p><h3>1. Stable flows and stable bijections</h3><p>The equivalence between stability of a bijection $\mu$ and stability of its associated flow $x^\mu$ is correct. Each row and column has exactly one positive entry, so the two positive-tail conditions are precisely the two strict preferences defining a blocking pair.</p><p>Lemma 1 is correct. If a supported bijection had a blocking pair, its two assigned edges would contribute positive mass to the corresponding tails of the flow. This contradicts the stated stability condition. The argument correctly includes pairs outside the windows.</p><p>Lemma 2 is rigorous:</p><ul><li>For a residual matrix with common row and column sum $c&gt;0$, the positive-support graph satisfies $c|S|\leq c|N(S)|$ for every row subset $S$.</li><li>The stated version of Hall’s theorem applies: the graph is finite, its sides have equal size, and the required inequality holds for every row subset.</li><li>The selected permutation has strictly positive entries, so the subtraction coefficient $\delta$ is positive.</li><li>Subtraction preserves nonnegativity and equal row and column sums.</li><li>Each iteration removes at least one positive entry and introduces none. Thus the process terminates after at most $\tau^2$ iterations.</li><li>At termination, common row sum zero implies that the residual matrix is zero. The coefficients consequently sum to one.</li></ul><p>Applying this decomposition to $\tau x$ and then applying Lemma 1 proves the claimed flow–bijection equivalence. Positive-support restrictions are inherited by the component bijections.</p><p><b>Finding:</b> Correct and complete.</p><h3>2. Interpretation of the displaced-mass promise</h3><p>The displayed identity<br>$$
+2\sum_i\left(\frac1\tau-y_{i,\pi(i)}\right)
+=
+\frac2\tau\sum_a\lambda_a t_a
+$$<br>is correct: each component contributes one unit to the scaled missing predicted mass for every resident whose partner changes.</p><p>The promise therefore gives a finite weighted average of the integers $t_a$ that is at most $3$. Because every coefficient is positive, at least one component satisfies $t_a\leq3$.</p><p>The count of changed hospital partners is also correct. Agreement outside<br>$$
+S=\{i:\mu(i)\neq\pi(i)\}
+$$<br>and bijectivity give $\mu(S)=\pi(S)$. Every hospital in this set changes partners, and every hospital outside it retains its predicted partner. Hence exactly $2|S|$ agents change partners.</p><p>The converse follows from the associated integral flow and the same displaced-mass calculation.</p><p><b>Finding:</b> The fractional promise is correctly shown equivalent to the existence of an unrestricted stable bijection changing at most six agents.</p><h3>3. Lower-bound construction</h3><h3>Parameters and rankings</h3><p>For $k\geq4$, the definitions<br>$$
+s=\left\lfloor\frac{k}{2}\right\rfloor,\qquad e=k-2s
+$$<br>give $s\geq2$, $e\in\{0,1\}$, and the stated total support size.</p><p>Each displayed ranking contains every opposite-side agent exactly once. Empty dummy blocks, including when $\eta=0$, cause no difficulty.</p><p>The prediction’s rank in each relevant baseline list is $s+\eta$. The upper core block occupies ranks $1,\ldots,s-1$, while the lower core block occupies ranks $s+2\eta+1,\ldots,2s+2\eta$. These positions and their distances from the predicted rank are calculated correctly.</p><h3>Baseline stability</h3><p>The baseline argument exhausts possible blocking pairs. Dummy endpoints, hospitals in $H_A$, and residents in $R_B$ have their first choices. The remaining possible pairs lie in $R_A\times H_B$, where the resident prefers its prediction.</p><p>Thus the baseline is a promised YES instance.</p><h3>Modified instances</h3><p>The maps $g_u$ and $f_v$ exist with the stated fiber-size bound, including when $s=2$. Each modification swaps distinct entries in exactly two lists.</p><p>The predicted partners retain rank $s+\eta$. Both endpoints of the hidden pair receive each other at ranks at most $s-1$, so both rank improvements are at least $\eta+1$. Therefore the hidden pair blocks $\pi$ and lies outside both windows.</p><h3>Absence of a window-supported stable bijection</h3><p>Every dummy pair must remain together in a stable bijection because its endpoints rank each other first.</p><p>After these assignments are fixed, every resident in $R_A$ must receive a core hospital. The rank calculation shows that its window permits only its predicted core hospital. Likewise, every hospital in $H_B$ must receive its predicted resident.</p><p>These assignments force the entire prediction. Since the hidden pair blocks that prediction, the modified instance has no window-supported stable bijection. The previously established equivalence correctly extends this conclusion to flows.</p><h3>Satisfaction of the promise</h3><p>The proposed unrestricted bijection $\sigma$ changes exactly two resident partners and two hospital partners.</p><p>The four listed pair classes exhaust all pairs after endpoints retaining their first choices are excluded. In each unassigned pair, the stated endpoint preference prevents blocking. In particular, the ordering of $R_B$ in $A_u$’s list and of $H_A$ in $b_v$’s list is sufficient; no additional ordering assumption is required.</p><p>The displaced mass is correctly calculated as<br>$$
+\frac4n\leq\frac6n.
+$$</p><p>As a supplementary computational check, I tested $34$ modified instances across six small parameter choices, including $\eta=0$ and $e=1$. In every case the proposed $\sigma$ was stable, and exhaustive enumeration found no window-supported stable bijection. This supports, but does not replace, the written verification.</p><p><b>Finding:</b> The construction correctly supplies promised YES and NO instances for every parameter choice used in the asymptotic lower bound.</p><h3>4. Both query operations and the adversary</h3><p>A specified-partner rank query changes only when it names one of the swapped entries. A specified-rank partner query changes only when it names one of their original positions.</p><p>For a fixed resident list, a lower core partner or position selects at most one candidate. An upper core partner or position selects at most two candidates by the stipulated fiber-size bound. The hospital-list argument is symmetric. All other lists are unchanged.</p><p>The only wording defect is:</p><blockquote>“a hospital in $H_A$ belongs to at most two fibers of $g_u$.”</blockquote><p>A fiber is a set of arguments mapping to one target; the target hospital does not itself “belong” to those fibers. The surrounding definition supplies the intended bound unambiguously.</p><p><b>Severity: minor.</b> Clarify that a specified target hospital is the image of at most two arguments. No additional mathematical result is needed.</p><p>The deterministic transcript argument is correct. If $2Q&lt;s^2$, at least one modified instance agrees with every baseline answer. Determinism then forces identical subsequent queries and the same final answer, contradicting the different correct answers.</p><p>The resulting bounds<br>$$
+Q\geq\left\lceil\frac{s^2}{2}\right\rceil
+$$<br>and<br>$$
+Q\geq\frac{k^2}{18}
+$$<br>are correct. The inequality $\lfloor k/2\rfloor\geq k/3$ holds throughout the stated range $k\geq4$.</p><p><b>Finding:</b> The required lower bound is established for both query operations, uniformly as $\tau-2\eta\to\infty$.</p><h3>5. Exact algorithm</h3><h3>Necessary endpoint tightening</h3><p>If $q_j(i)&lt;c_j$, hospital $j$ strictly prefers $i$ to every assignment satisfying its original window. The pair cannot be assigned because it violates that hospital’s window. Stability therefore forces the resident’s assignment above $j$, giving the stated bound contributing to $B_i$.</p><p>The symmetric reasoning for $D_j$ is correct. Consequently every original-window stable bijection uses only edges in $E$ and remains stable when restricted to $E$.</p><h3>Preservation of original stability</h3><p>The four exclusion cases cover every pair outside $E$. Each supplies a strict preference for the assigned partner at one endpoint:</p><ul><li>A rank below the resident’s lower endpoint triggers the hospital’s tightened upper endpoint.</li><li>A rank below the hospital’s lower endpoint triggers the resident’s tightened upper endpoint.</li><li>A rank above either tightened upper endpoint is worse than that endpoint’s assignment.</li></ul><p>Thus a perfect matching stable on $E$ has no original blocking pair. Empty lists or upper endpoints below lower endpoints do not invalidate this argument; they simply prevent a perfect matching.</p><h3>Deferred acceptance</h3><p>The first rejection argument correctly establishes stability of the output on $E$, using the stated convention for unmatched agents.</p><p>The earliest-rejection argument correctly proves that, if a perfect stable matching $\mu$ exists, none of its edges can be rejected. Its use of strict preferences and bijectivity is justified. Therefore no resident can exhaust its list while unmatched, and the output is perfect.</p><p><b>Finding:</b> The algorithm correctly decides existence of a window-supported stable flow.</p><h3>6. Resource bounds and scope</h3><p>Recovering both sides’ complete rankings takes at most $2m\tau$ queries. Inversion, endpoint computation, ordered filtering, and deferred acceptance each take $O(m\tau)$ word operations. The storage bound is also correct.</p><p>The stated time bounds<br>$$
+O(L+m\tau)
+$$<br>in the word-RAM model and<br>$$
+O\bigl(L+m\tau\log(m+\tau)\bigr)
+$$<br>under the explicitly described rank/index bit-operation accounting are consistent with the implementation.</p><p>The conclusions distinguish the bounds appropriately:</p><ul><li>The lower bound rules out $o((\tau-2\eta)^2)$ deterministic exact queries.</li><li>The upper bound is $O(\tau^2)$ because $m=\tau$.</li><li>These give $\Theta(\tau^2)$ when $\tau-2\eta=\Theta(\tau)$.</li><li>They do not claim a uniformly tight upper bound depending only on $\tau-2\eta$.</li></ul><p>The mathematical proof is self-contained apart from the precisely stated application of Hall’s theorem. Neither cited paper is needed to justify the conclusion.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

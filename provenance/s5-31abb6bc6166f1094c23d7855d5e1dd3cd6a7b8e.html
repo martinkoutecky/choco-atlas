@@ -1,0 +1,410 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-31abb6bc6166f1094c23d7855d5e1dd3cd6a7b8e — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-31abb6bc6166f1094c23d7855d5e1dd3cd6a7b8e <span style="font-weight:normal;color:#8a7350">(s5-31abb6bc6166f1094c23d7855d5e1dd3cd6a7b8e)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 9 — class: other</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For any k ≥1 there exists a committee election with poly(k) voters and a committee W0 such that executing 0+-ls-PAV with lexicographic better response from W0 results in Ω(klog k) swaps.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates \(C\), committee size \(k\), a rational distribution \(\mu\) over approval ballots, an initial size-\(k\) committee \(W_0\), and the paper&#x27;s candidate order, compute the complete trajectory of strict PAV-improving swaps under lexicographic better response through the first swap-free committee. Characterize the worst-case trajectory length in \(m\), \(\tau\), \(L\), and \(k\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Input consists of a candidate set \(C\) with \(|C|=m\geq1\), an integer \(1\leq k\leq m\), an initial committee \(W_0\subseteq C\) of size \(k\), and a strict total order \(&lt;\) on \(C\).<br>A society is given by its support: \(\tau\) distinct approval types \(A_i\subseteq C\), each with positive binary rational mass \(\mu_i\), with \(\sum_i\mu_i=1\). Here \(\tau\) is the support size, not the number of possible approval types; \(L\) is the total binary input length.<br>The mass-weighted PAV score is \(S_\mu(W)=\sum_{i=1}^{\tau}\mu_i H_{|A_i\cap W|}\), where \(H_r\) is the harmonic number and \(H_0=0\).<br>At each committee \(W\), choose the lexicographically first pair \((b,a)\), ordered using \(&lt;\), among \(b\in C\setminus W\), \(a\in W\) satisfying \(S_\mu((W\setminus\{a\})\cup\{b\})&gt;S_\mu(W)\). Perform that swap and restart the search; stop when no such pair exists.<br>The computational problem is to produce the complete explicit trajectory \(W_0,\ldots,W_T\), including the first committee with no strictly improving swap; its length is \(T\).</p><p>Is the worst-case trajectory length quasipolynomial in \(m+\tau+L\), or can it be superquasipolynomial?<br>What are asymptotically tight trajectory-length bounds and corresponding bit running times for computing the complete trajectory, in \(m,\tau,L,k\)?</p><p>For finite electorates, lexicographic better response has a verified \(\Omega(k^{\log k})\) trajectory lower bound on instances with polynomially many voters and candidates. [Kraiczy–Elkind](https://drops.dagstuhl.de/storage/00lipics/lipics-vol308-esa2024/LIPIcs.ESA.2024.82/LIPIcs.ESA.2024.82.pdf)<br>These finite instances yield normalized rational-mass instances, so the same lower bound applies here as a direct consequence. No tight bound for the specified rational-mass trajectory was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the distribution to total mass one and required each listed support mass to be a positive binary rational.</li><li>Interpreted the candidate order as an input strict total order, with the added candidate compared first and the removed candidate second; search restarts after every swap.</li><li>Carried over the domain \(1\leq k\leq m\) and allowed arbitrary approval subsets, including the empty set.</li><li>Extended PAV to masses by taking its expectation under the distribution; only strictly positive score changes permit swaps.</li><li>Defined \(L\) as total binary input length and specified an explicit committee trajectory whose length counts swaps.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Proven results and scope</h3><p>The trajectory can be <b>superquasipolynomial in the total input size</b>. There are instances with<br>$$
+m=\Theta(h),\qquad k=m/2,\qquad \tau=\Theta(h),\qquad L=O(h^2),
+$$<br>and<br>$$
+T=2^{\Omega(h)}.
+$$</p><p>The joint dependence on all four parameters remains unresolved. The following additional results narrow that gap.</p><p>Let<br>$$
+r=\min\{k,m-k\}.
+$$</p><ul><li>If support size and input length are unrestricted, the worst-case length satisfies</li></ul><p>$$
+   \lfloor m/r\rfloor^r-1
+   \;\le\;
+   \mathsf T_{m,k}
+   \;\le\;
+   \binom mr-1
+   \qquad(r\geq1).
+   $$<br>Consequently,<br>$$
+   \log(\mathsf T_{m,k}+1)
+   =
+   \Theta\!\left(r\log(em/r)\right).
+   $$<br>For every fixed positive $r$, this gives the multiplicatively tight bound<br>$$
+   \mathsf T_{m,k}=\Theta(m^r).
+   $$</p><ul><li>For support size two,</li></ul><p>$$
+   T\leq5r,
+   $$<br>and instances attaining $T=r$ exist for every admissible $m,k$ with $r\geq1$. Thus the worst-case length for $\tau=2$ is $\Theta(r)$.</p><ul><li>The complete prescribed trajectory can be computed exactly with polynomial preprocessing and polynomial bit cost per output committee.</li></ul><p>The proofs below are self-contained except for one explicitly stated signed Max-Cut lower-bound theorem.</p><h3>2. General upper bounds</h3><p>For approval type $A_i$, define<br>$$
+\ell_i=\max\{0,k-(m-|A_i|)\},
+\qquad
+u_i=\min\{k,|A_i|\},
+\qquad
+h_i=u_i-\ell_i.
+$$</p><p>Every size-$k$ committee has intersection count between $\ell_i$ and $u_i$. Direct case analysis gives<br>$$
+h_i=\min\{k,m-k,|A_i|,m-|A_i|\}\leq r.
+$$</p><h3>2.1. Committee and count-vector bounds</h3><p>Strict score improvement prevents repetition of a committee.</p><p>It also prevents repetition of the vector<br>$$
+\bigl(|A_1\cap W|,\ldots,|A_\tau\cap W|\bigr),
+$$<br>because equal vectors have equal PAV scores. Therefore<br>$$
+T+1\leq
+\min\left\{
+\binom mk,\;
+\prod_{i=1}^{\tau}(h_i+1)
+\right\}
+\leq
+\min\left\{
+\binom mr,\;
+(r+1)^\tau
+\right\}.
+$$</p><p>In particular, $T=0$ when $k=m$.</p><h3>2.2. Rational score-lattice bound</h3><p>Write each mass in lowest terms as $\mu_i=p_i/q_i$, and put<br>$$
+Q=\operatorname{lcm}(q_1,\ldots,q_\tau).
+$$</p><p>Let<br>$$
+J=\bigcup_{i=1}^{\tau}\{\ell_i+1,\ldots,u_i\},
+\qquad
+D=\operatorname{lcm}(J),
+$$<br>with $D=1$ if $J$ is empty.</p><p>Subtract the fixed baseline<br>$$
+S_{\mathrm{base}}=\sum_i\mu_iH_{\ell_i}.
+$$<br>Every residual score is a sum of terms $\mu_i/t$ with $t\in J$. Because $q_i$ divides $Q$ and $t$ divides $D$, every residual score belongs to<br>$$
+\frac{1}{QD}\mathbb Z.
+$$<br>Thus every positive improvement is at least $1/(QD)$.</p><p>All scores lie in an interval of width<br>$$
+\mathcal R=\sum_i\mu_i(H_{u_i}-H_{\ell_i}),
+$$<br>so<br>$$
+T\leq\lfloor QD\mathcal R\rfloor.
+$$</p><p>Combining these arguments yields the instance-dependent bound<br>$$
+T\leq
+\min\left\{
+\binom mk-1,\;
+\prod_i(h_i+1)-1,\;
+\lfloor QD\mathcal R\rfloor
+\right\}.
+$$</p><p>For parameter-only estimates, $\log_2Q\leq L$, $\mathcal R\leq H_k$, and<br>$$
+\log_2D
+\leq
+\min\left\{
+4k,\;
+\tau r\log_2(k+1)
+\right\}.
+$$</p><p>The second estimate follows from $|J|\leq\sum_i h_i\leq\tau r$ and<br>$$
+D\leq\prod_{t\in J}t\leq k^{|J|}.
+$$</p><p>Here is an elementary justification of the first estimate. Write<br>$$
+d_a=\operatorname{lcm}(1,\ldots,a).
+$$<br>Then<br>$$
+d_{2a}/d_a\mid\binom{2a}{a}.
+$$<br>Indeed, if a prime acquires a new exponent in $d_{2a}$, its newly appearing prime power lies in $(a,2a]$. The corresponding summand in the prime valuation of $\binom{2a}{a}$ is one, while all other summands are nonnegative. Also, at most one new exponent appears for any prime. Since $\binom{2a}{a}\leq2^{2a}$, iteration over powers of two and rounding upward give $\log_2d_k\leq4k$.</p><p>In particular, for $r\geq1$,<br>$$
+T+1\leq
+\min\left\{
+\binom mr,\;
+(r+1)^\tau,\;
+1+2^{L+4k}H_k
+\right\},
+$$<br>and hence<br>$$
+\log(T+1)
+=
+O\!\left(
+\min\left\{
+r\log(em/r),\;
+\tau\log(r+1),\;
+L+k
+\right\}
+\right).
+$$</p><p>These are upper bounds; they are not jointly tight in general.</p><h3>3. Linear trajectory length for two approval types</h3><h3>3.1. Upper bound</h3><p>Suppose $\tau=2$, with masses $p,q&gt;0$. At a committee, write<br>$$
+a=|A_1\cap W|,
+\qquad
+b=|A_2\cap W|.
+$$</p><p>A swap changes each count by an element of $\{-1,0,1\}$. An improving swap cannot decrease a count without increasing the other: if both changes were nonpositive, the score could not increase.</p><p>Thus every improving swap is one of two kinds:</p><ul><li>a <b>dominance step</b>, which increases at least one count and decreases neither;</li><li>a <b>trade</b>, whose count change is $(-1,1)$ or $(1,-1)$.</li></ul><p>Let $N_{\mathrm{dom}}$ and $N_{\mathrm{tr}}$ denote their respective numbers.</p><p>Trades preserve $a+b$, while dominance steps increase it by at least one. Therefore<br>$$
+N_{\mathrm{dom}}\leq h_1+h_2\leq2r.
+$$</p><p>To bound trades, define<br>$$
+d=qa-pb,
+\qquad
+s=p+q.
+$$</p><p>A trade $(-1,1)$ improves precisely when<br>$$
+\frac{q}{b+1}-\frac{p}{a}&gt;0,
+$$<br>equivalently $d&gt;p$. It changes $d$ to $d-s$.</p><p>A trade $(1,-1)$ improves precisely when<br>$$
+\frac{p}{a+1}-\frac{q}{b}&gt;0,
+$$<br>equivalently $d&lt;-q$. It changes $d$ to $d+s$.</p><p>Define the nonnegative integer potential<br>$$
+\Phi(d)=
+\begin{cases}
+\left\lceil(d-p)/s\right\rceil,&amp;d&gt;p,\\
+0,&amp;-q\leq d\leq p,\\
+\left\lceil(-q-d)/s\right\rceil,&amp;d&lt;-q.
+\end{cases}
+$$</p><p>Every improving trade decreases $\Phi$ by exactly one. For example, if $d&gt;p$, then $d-s&gt;-q$, so the trade cannot cross directly into the opposite improving-trade region. It either remains above $p$, reducing the displayed ceiling by one, or enters $[-q,p]$, in which case the previous potential was one.</p><p>A dominance step changes $d$ by one of<br>$$
+q,\qquad -p,\qquad q-p.
+$$<br>Its absolute change is less than $s$. Distance to the interval $[-q,p]$ is a $1$-Lipschitz function, so a dominance step increases $\Phi$ by at most one.</p><p>We must also control the initial potential, which need not be bounded by $r$. Consider the trajectory before its first state with $d\in[-q,p]$, if such a state exists.</p><p>Neither a trade nor a dominance step can move directly from $d&gt;p$ to $d&lt;-q$, or conversely: the distance between these two open regions exceeds $s$, while every step changes $d$ by at most $s$. Hence, before the first visit to the interval, all trades have the same direction.</p><p>Their receiving count only increases during this initial portion, including during dominance steps. Its available range has width at most $r$. Consequently, this portion contains at most $r$ trades.</p><p>After the first visit to the interval, the potential starts at zero. Since every trade reduces it by one and every dominance step increases it by at most one, the remaining number of trades is at most the remaining number of dominance steps.</p><p>If the interval is never visited, all trades have the same direction throughout, so there are at most $r$ trades anyway. In both cases,<br>$$
+N_{\mathrm{tr}}\leq r+N_{\mathrm{dom}}.
+$$<br>Therefore<br>$$
+T=N_{\mathrm{tr}}+N_{\mathrm{dom}}
+\leq r+2N_{\mathrm{dom}}
+\leq5r.
+$$</p><p>This proof does not depend on the pivot rule or on the bit lengths of the masses.</p><h3>3.2. Matching asymptotic lower bound</h3><p>Assume $r\geq1$. Choose $A\subseteq C$ of size $r$ and a size-$k$ initial committee disjoint from $A$. Such a committee exists because $r\leq m-k$.</p><p>Use the two distinct approval types<br>$$
+A,\qquad C\setminus A
+$$<br>with masses<br>$$
+p=\frac{r+1}{r+2},
+\qquad
+q=\frac1{r+2}.
+$$</p><p>At a state with $a=|A\cap W|&lt;r$, replacing a candidate outside $A$ by one inside $A$ changes the score by<br>$$
+\frac{p}{a+1}-\frac{q}{k-a}&gt;0.
+$$<br>Indeed,<br>$$
+\frac{p}{q}=r+1&gt;
+\frac{a+1}{k-a},
+$$<br>because $a+1\leq r$ and $k-a\geq1$.</p><p>The reverse swap has negative gain:<br>$$
+\frac{q}{k-a+1}-\frac{p}{a}&lt;0
+\qquad(a&gt;0).
+$$<br>Swaps within either approval class have zero gain.</p><p>Thus every improving swap increases $a$ by one, and the prescribed trajectory has exactly<br>$$
+T=r
+$$<br>swaps. Together with the upper bound, this proves worst-case order $\Theta(r)$ for $\tau=2$.</p><p>For comparison, if $\tau=1$, the exact length is<br>$$
+T=\min\{k,|A_1|\}-|A_1\cap W_0|.
+$$<br>Every improvement increases the sole count by one, and such a swap exists whenever that count is below its maximum.</p><h3>4. Encoding arbitrary objectives on a fixed-size slice</h3><p>The next lemma permits longer trajectories when support size is sufficiently large.</p><h3>4.1. Encoding lemma</h3><p>Fix $1\leq r\leq m$. Let $f$ be any integer-valued function on the $r$-subsets of $C$.</p><p>There is a positive rational-mass PAV instance whose score, on size-$r$ committees $U$, has the form<br>$$
+S_\mu(U)=\alpha f(U)+\beta
+$$<br>for constants $\alpha&gt;0,\beta$.</p><p>There is also such an instance satisfying<br>$$
+S_\mu(C\setminus U)=\alpha f(U)+\beta
+$$<br>for every size-$r$ subset $U$.</p><p>Both constructions can use precisely all nonempty approval sets of size at most $r$, together with one empty approval type.</p><h3>Harmonic expansions</h3><p>For $0\leq t\leq d$,<br>$$
+H_t=\sum_{j=1}^{t}\frac{(-1)^{j+1}}{j}\binom tj.
+$$<br>To verify this, expand $(1-x)^t$ in<br>$$
+H_t=\int_0^1\frac{1-(1-x)^t}{x}\,dx.
+$$</p><p>We also need<br>$$
+H_{d-t}
+=
+H_d-\sum_{j=1}^{t}
+\frac{1}{j\binom dj}\binom tj.
+$$<br>The coefficient of $\binom tj$ in the finite-difference expansion of $H_{d-t}$ is, for $j\geq1$,<br>$$
+-\int_0^1x^{d-j}(1-x)^{j-1}\,dx
+=
+-\frac{(d-j)!(j-1)!}{d!}
+=
+-\frac{1}{j\binom dj}.
+$$<br>The integral formula follows by applying $j$ forward differences to<br>$$
+H_{d-t}=\int_0^1\frac{1-x^{d-t}}{1-x}\,dx.
+$$<br>The factorial evaluation follows by repeated integration by parts. Finite-difference expansion is exact here because $t$ ranges over the integers from zero to $d$.</p><p>For $B\subseteq C$, put<br>$$
+I_B(U)=\mathbf1[B\subseteq U].
+$$<br>Then<br>$$
+\binom{|A\cap U|}{j}
+=
+\sum_{\substack{B\subseteq A\\|B|=j}}I_B(U).
+$$</p><h3>Construction for selected subsets</h3><p>Initially use unnormalized positive rational weights $w_A$ for every nonempty approval set $A$ of size at most $r$.</p><p>The coefficient of $I_B(U)$, where $|B|=j$, in the resulting score is<br>$$
+\frac{(-1)^{j+1}}{j}
+\sum_{A\supseteq B}w_A.
+$$</p><p>Let<br>$$
+V=\max_{|U|=r}|f(U)|,
+\qquad K=V+1.
+$$<br>For every $r$-subset $A$, choose<br>$$
+w_A=r\bigl(K+(-1)^{r+1}f(A)\bigr)&gt;0.
+$$<br>Its degree-$r$ coefficient is<br>$$
+(-1)^{r+1}K+f(A).
+$$</p><p>Proceed downward through $j=r-1,\ldots,1$. At degree $j$, all weights on larger approval sets have already been fixed. Define<br>$$
+t_B=\sum_{A\supsetneq B}w_A,
+\qquad
+K_j=1+\left\lceil\max_{|B|=j}t_B\right\rceil,
+\qquad
+w_B=K_j-t_B&gt;0.
+$$</p><p>Every degree-$j$ coefficient is now the same number,<br>$$
+\gamma_j=\frac{(-1)^{j+1}}{j}K_j.
+$$</p><p>For a size-$r$ subset $U$, there are exactly $\binom rj$ contained $j$-subsets. Also, its only contained $r$-subset is $U$ itself. Therefore the unnormalized score is<br>$$
+\widehat S(U)
+=
+f(U)+(-1)^{r+1}K
++\sum_{j=1}^{r-1}\gamma_j\binom rj.
+$$<br>Everything except $f(U)$ is constant.</p><h3>Construction for omitted subsets</h3><p>Now evaluate the score on $C\setminus U$. An approval set $A$ of size $d$ contributes<br>$$
+w_AH_{d-|A\cap U|}.
+$$<br>The coefficient of $I_B(U)$, where $|B|=j$, is<br>$$
+-\frac1j
+\sum_{A\supseteq B}
+\frac{w_A}{\binom{|A|}{j}}.
+$$</p><p>Choose top-level weights<br>$$
+w_A=r(K-f(A))&gt;0
+\qquad(|A|=r).
+$$<br>Their degree-$r$ coefficients are $-K+f(A)$.</p><p>At degree $j&lt;r$, define<br>$$
+t_B=
+\sum_{A\supsetneq B}
+\frac{w_A}{\binom{|A|}{j}},
+\qquad
+K_j=1+\left\lceil\max_{|B|=j}t_B\right\rceil,
+\qquad
+w_B=K_j-t_B&gt;0.
+$$<br>Every degree-$j$ coefficient then equals $-K_j/j$. Thus<br>$$
+\widehat S(C\setminus U)=f(U)+\text{constant}.
+$$</p><h3>Normalization</h3><p>In either construction, clear a common denominator to obtain positive integer weights. Let their sum be $M$. Choose a power of two $Z&gt;M$, add the empty approval type with weight $Z-M$, and divide all weights by $Z$.</p><p>All masses are positive dyadic rationals and sum to one. The empty type contributes zero. Clearing denominators and normalization multiply every score difference by a positive constant, proving the lemma.</p><h3>4.2. Bit lengths</h3><p>Write<br>$$
+N_r=\sum_{j=1}^{r}\binom mj.
+$$</p><p>The selected-subset construction uses integer weights. In the omitted-subset construction, a common denominator divides<br>$$
+E=
+\prod_{j=1}^{r-1}\prod_{d=j+1}^{r}\binom dj.
+$$<br>This follows inductively: at degree $j$, the only new divisions are by $\binom dj$ for larger approval sets of size $d$. Since $\binom dj\leq2^d$,<br>$$
+\log_2E=O(r^3).
+$$</p><p>Let $R$ denote the sum of weights already constructed. A new degree-$j$ weight is at most $R+2$. Adding all degree-$j$ weights therefore satisfies<br>$$
+R_{\mathrm{new}}+2
+\leq
+\left(\binom mj+1\right)(R+2).
+$$<br>The top-level total is at most $\binom mr\,r(2V+1)$. Consequently,<br>$$
+\log_2(R_{\mathrm{final}}+2)
+=
+O\!\left(\log(V+1)+r^2\log(m+1)\right).
+$$</p><p>After clearing denominators and dyadic normalization, every mass has<br>$$
+O\!\left(r^3+r^2\log(m+1)+\log(V+1)\right)
+$$<br>bits.</p><p>These estimates also establish that the construction requires polynomial input length for each fixed $r$ when $V$ is polynomial in $m$.</p><h3>5. Long trajectories for arbitrary committee sizes</h3><h3>5.1. A lexicographic Hamilton trajectory on a product</h3><p>Consider $d$ coordinates, each taking values in $\{1,\ldots,n\}$. The local moves change one coordinate to any other value.</p><p>Use the rule: choose the smallest coordinate admitting an improvement, then the smallest improving alternative value.</p><p>We construct, from every starting vector $x$, a Hamilton path $P_d(x)$ that this rule follows when each vector&#x27;s objective value is its position in the path.</p><p>For $d=1$, list the starting value first, followed by every other value in increasing order.</p><p>For $d&gt;1$, order the last-coordinate values as follows: its starting value first, followed by the remaining values in increasing order. In each such fibre, run the recursively constructed path on the first $d-1$ coordinates. The first fibre starts at the given prefix; every subsequent fibre starts at the terminal prefix of the previous fibre.</p><p>This lists all $n^d$ vectors exactly once, with adjacent vectors differing in one coordinate.</p><p>To verify the pivot rule, consider a nonterminal state within a fibre. By induction, a move in one of the first $d-1$ coordinates advances to the next path state, and the prescribed rule chooses that move. Moves in coordinate $d$ have lower priority.</p><p>At the terminal state of a fibre, every vector in that fibre has already been visited. Hence no move in the first $d-1$ coordinates improves. Moves to earlier fibres decrease the objective, while moves to later fibres increase it. The smallest later last-coordinate value is exactly the next fibre in the construction.</p><p>At the last state of the last fibre, every possible destination has smaller objective value. Thus the path is the complete trajectory.</p><h3>5.2. Transfer to PAV</h3><p>Assume $r\geq1$ and put<br>$$
+n=\lfloor m/r\rfloor\geq2.
+$$<br>Choose disjoint groups<br>$$
+G_j=\{c_{j,1},\ldots,c_{j,n}\},
+\qquad 1\leq j\leq r.
+$$<br>Order candidates by group first and value second; put any leftover candidates last.</p><p>Call an $r$-subset valid if it contains exactly one candidate from each group and no leftover candidate. Valid subsets correspond to vectors in $\{1,\ldots,n\}^r$.</p><p>Assign to each valid subset its position, starting at zero, in the path $P_r((1,\ldots,1))$. Assign value $-1$ to every invalid $r$-subset. This defines an integer function $f$ on all $r$-subsets.</p><p>If $k=r$, use the selected-subset encoding from Section 4. Starting from a valid committee:</p><ul><li>a swap yielding an invalid committee decreases the score;</li><li>a valid swap changes one coordinate;</li><li>for a fixed inserted candidate, the only valid removal is the current candidate in that same group.</li></ul><p>Therefore the lexicographic pair rule implements exactly the coordinate-priority rule of Section 5.1.</p><p>If $k=m-r$, use the omitted-subset encoding and start with the complement of the initial valid subset. A swap transforms the omitted set by removing $b$ and inserting $a$. For it to stay valid, these candidates must belong to the same group. The outer ordering on $b$ prioritizes the smallest group, and the inner ordering on $a$ prioritizes the smallest alternative value. Thus the same coordinate rule applies.</p><p>In either case, the complete trajectory has<br>$$
+T=n^r-1=\lfloor m/r\rfloor^r-1.
+$$</p><p>The support size is<br>$$
+\tau=N_r+1.
+$$<br>Here $V\leq n^r$, so incidence-vector encoding gives<br>$$
+L=
+O\!\left(
+\tau\left[m+r^3+r^2\log(m+1)\right]
+\right).
+$$</p><h3>5.3. Consequences</h3><p>Let $\mathsf T_{m,k}$ be the maximum trajectory length over all supports, rational masses, orders, and initial committees, with $m,k$ fixed. The preceding construction and the committee-count upper bound prove<br>$$
+\lfloor m/r\rfloor^r-1
+\leq
+\mathsf T_{m,k}
+\leq
+\binom mr-1.
+$$</p><p>Because $m/r\geq2$, the quantities<br>$$
+\log\lfloor m/r\rfloor
+\quad\text{and}\quad
+\log(em/r)
+$$<br>differ by at most universal constant factors. Combining this with<br>$$
+\binom mr\leq(em/r)^r
+$$<br>gives<br>$$
+\log(\mathsf T_{m,k}+1)
+=
+\Theta\!\left(r\log(em/r)\right).
+$$</p><p>For fixed $r$,<br>$$
+\lfloor m/r\rfloor^r=\Theta(m^r),
+\qquad
+\binom mr=\Theta(m^r),
+$$<br>so the bounds are multiplicatively tight. In particular, both $k=2$ and $k=m-2$ admit worst-case length $\Theta(m^2)$.</p><p>This construction establishes the dependence on $m,k$ when $\tau,L$ are unrestricted. Its support can be large; the next construction establishes the superquasipolynomial claim with polynomial input length.</p><h3>6. Exponential trajectories with small support</h3><h3>6.1. Signed Max-Cut encoding</h3><p>Let $G=(V,E)$ be a simple graph with nonzero signed integer weights $w_e$. Put<br>$$
+s=|V|,
+\qquad
+R=\sum_{e\in E}|w_e|,
+\qquad
+P=8R+1.
+$$</p><p>Use candidates $v^0,v^1$ for each vertex, and committee size $s$. A valid committee chooses exactly one candidate from each vertex pair:<br>$$
+W(x)=\{v^{x_v}:v\in V\}.
+$$</p><p>Use these unnormalized approval weights:</p><ul><li>$\{v^0,v^1\}$ has weight $P$ for every vertex;</li><li>for a positive edge $uv$ of weight $w$, the types $\{u^0,v^0\}$ and $\{u^1,v^1\}$ each have weight $2w$;</li><li>for a negative edge $uv$ of weight $-q$, the types $\{u^0,v^1\}$ and $\{u^1,v^0\}$ each have weight $2q$.</li></ul><p>These approval types are distinct because the graph is simple.</p><p>For a positive edge, its two types contribute $3w$ when the endpoint states agree and $4w$ when they disagree. For a negative edge, they contribute $4q$ when the states agree and $3q$ when they disagree. Hence<br>$$
+\widehat S(W(x))
+=
+sP+
+\sum_{w_e&gt;0}3w_e+
+\sum_{w_e&lt;0}4|w_e|
++
+\sum_{uv\in E}w_{uv}\mathbf1[x_u\neq x_v].
+$$</p><p>Thus a within-pair swap improves exactly when the corresponding vertex flip improves the signed cut.</p><p>A swap between different vertex pairs changes the two vertex-type counts from $(1,1)$ to $(0,2)$, losing $P/2$. Each edge type can change its harmonic contribution by at most one, and all edge-type weights sum to $4R$. Therefore its total gain is at most<br>$$
+-P/2+4R=-1/2&lt;0.
+$$<br>Every improving swap from a valid committee remains valid.</p><p>Normalize dyadically by adding an empty type as in Section 4. This preserves all improvement signs. If the signed cut has a unique improving flip at each nonterminal trajectory state, the encoded PAV instance has a unique improving swap there. Its trajectory is then independent of candidate order.</p><h3>6.2. Applying the external theorem</h3><p>Michel and Scott construct simple signed integer-weighted graphs with $8h+4$ vertices, $13h+3$ edges, maximum absolute weight at most $2\cdot8^{h+1}$, and an initial cut whose unique improving flip trajectory has length $\Omega(3^h)$. These are the graphs in Section 2 and Theorem 2.1 of [Michel–Scott, *Superpolynomial smoothed complexity of 3-FLIP in Local Max-Cut*](https://people.maths.ox.ac.uk/scott/Papers/flip.pdf).</p><p>All encoding hypotheses hold: the graphs are simple, their edge weights are nonzero signed integers, and their improving trajectory is unique. The resulting parameters are<br>$$
+m=16h+8,\qquad
+k=8h+4,\qquad
+\tau=34h+11,
+$$<br>with<br>$$
+T=\Omega(3^h).
+$$</p><p>The integer weights used in the encoding and normalization have $O(h+\log h)$ bits. There are $O(h)$ approval types, each of size two except the empty type. Even incidence-vector encoding therefore gives<br>$$
+L=O(h^2).
+$$</p><p>Let $N=m+\tau+L$. Then $N=O(h^2)$, while $T=2^{\Omega(h)}$. For every fixed $c&gt;0$,<br>$$
+(\log N)^c=o(h).
+$$<br>Consequently, these trajectories exceed every bound $2^{O((\log N)^c)}$ with fixed $c$. The superquasipolynomial alternative is proved.</p><p>Together with $T&lt;2^m$, this also gives exponential order $2^{\Theta(m)}$ in the balanced regime, already with $\tau=\Theta(m)$ and polynomial input length.</p><h3>6.3. Small-support padding</h3><p>The construction also gives, for sufficiently large $r$, instances with<br>$$
+T=2^{\Omega(r)},\qquad \tau=O(r),
+$$<br>and input length polynomial in $m$.</p><p>Choose a core with $s=8h+4\leq r$ vertex pairs, taking the largest admissible $h$. Add $d=k-s$ initially selected padding candidates and $m-k-s$ unapproved candidates.</p><p>Let $M$ be the total unnormalized core weight. If $d&gt;0$, add one type approving exactly the selected padding candidates, with weight $d(M+1)$.</p><p>Removing a selected padding candidate loses<br>$$
+d(M+1)(H_d-H_{d-1})=M+1,
+$$<br>while all core types together can gain at most $M$. Such a swap cannot improve.</p><p>Replacing a core candidate by an unapproved candidate loses its vertex-type contribution $P$, while edge types can gain at most $4R&lt;P$. Cross-pair core swaps were already excluded. Thus padding membership stays fixed and the core trajectory is preserved.</p><p>All weights have polynomial bit length in $m$, and dyadic normalization completes the construction.</p><h3>7. Exact bit running time</h3><p>The following algorithm computes the prescribed trajectory, including its terminal committee.</p><p>Maintain the intersection counts<br>$$
+c_i=|A_i\cap W|.
+$$<br>For a proposed swap $(b,a)$, type $i$ contributes<br>$$
+\Delta_i=
+\begin{cases}
+\mu_i/(c_i+1),&amp;b\in A_i,\ a\notin A_i,\\
+-\mu_i/c_i,&amp;a\in A_i,\ b\notin A_i,\\
+0,&amp;\text{otherwise}.
+\end{cases}
+$$</p><p>A denominator is never zero in a nonzero contribution. Moreover, it belongs to $J$: the new intersection count must remain within $[\ell_i,u_i]$.</p><p>Precompute the integers<br>$$
+g_{i,t}=(Q\mu_i)D/t,
+\qquad \ell_i&lt;t\leq u_i.
+$$<br>There are at most $\tau r$ entries. The sign of a swap gain is exactly the sign of a sum of at most $\tau$ signed entries.</p><p>Set<br>$$
+B=
+2+\left\lceil\log_2(QD+1)\right\rceil
++\left\lceil\log_2(m+1)\right\rceil.
+$$<br>Then<br>$$
+B=
+O\!\left(
+L+\min\{k,\tau r\log(k+1)\}+\log(m+1)
+\right).
+$$</p><p>Every table entry and every partial sum uses $O(B)$ bits. Indeed, for any proposed swap, the sum of absolute contributions is at most<br>$$
+QD\sum_i\mu_i=QD.
+$$</p><p>Scan the $k(m-k)$ pairs in lexicographic order. Execute the first positive-gain swap, update the counts, and restart. A final full scan certifies termination.</p><p>Using schoolbook arithmetic, a conservative preprocessing bound is<br>$$
+P_{\mathrm{pre}}
+=
+O\!\left(
+L+\tau m+(\tau+k)B^3+\tau rB^2
+\right).
+$$<br>Here membership tables cost $O(L+\tau m)$; common denominators are constructed by gcd computations; and the integer table requires $O(\tau r)$ multiplications and divisions. The elementary Euclidean algorithm uses $O(B)$ divisions on $B$-bit integers, giving the stated conservative $O(B^3)$ cost per gcd.</p><p>Maintain the selected candidates in order and output each committee as a list of candidate indices. The complete bit running time is<br>$$
+O\!\left(
+P_{\mathrm{pre}}
++
+(T+1)\left[
+\tau k(m-k)B+k\log(m+1)
+\right]
+\right).
+$$</p><p>This is an exact algorithm with polynomial cost per output committee. When $k=m$, it immediately outputs $W_0$.</p><p>Under the stated representation, with fixed-width binary candidate indices, the output requires<br>$$
+\Omega\!\left((T+1)k\log(m+1)\right)
+$$<br>bit operations. Thus the algorithm is within a polynomial factor of explicit output size.</p><p>For the balanced, polynomial-input-length family in Section 6, every complete-trajectory algorithm needs $2^{\Omega(m)}$ output operations, and the displayed algorithm takes $2^{O(m)}$ bit operations. Hence exponential order is tight on that family.</p><p>This does not establish a tight joint bit-running-time bound for arbitrary simultaneous parameters.</p><h3>8. What remains open</h3><p>The dichotomy is settled: rational masses allow superquasipolynomial trajectories in total input size.</p><p>The dependence on $m,k$ is now determined to constant factors in the logarithm when support and precision are unrestricted; for fixed $r$, it is determined multiplicatively. Support sizes one and two also have linear worst-case length in $r$.</p><p>The remaining gap concerns simultaneous restrictions on support size, precision, and committee size. In particular, the large-support encoding does not establish matching lower bounds when $\tau$ is much smaller than $\sum_{j=1}^r\binom mj$. The small-support exponential construction establishes $2^{\Omega(r)}$, but generally leaves a gap to the upper bounds from Section 2.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 2, 5.3, 6.3, 7, and 8: The requested asymptotically tight trajectory-length bounds and corresponding bit running times for arbitrary simultaneous values of $m,\tau,L,k$ are not established. The prover acknowledges the unmatched parameter regimes; the unrestricted and small-support constructions do not close them.</li><li><b>minor</b> — Section 7, the preprocessing bound $P_{\mathrm{pre}}$: The concrete preprocessing estimate assumes reduced input fractions without stating that representation convention or accounting for reduction of nonreduced supplied fractions. State the reduced-input assumption or include the reduction cost; polynomial preprocessing and polynomial cost per output committee remain supported.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Verdict: partial, with substantial correct progress.</b> The argument establishes superquasipolynomial trajectories in total input size. It also establishes the stated unrestricted bounds in $m,k$, the bounds for support sizes one and two, and an exact algorithm with polynomial cost per output committee.</p><p>It does <b>not</b> supply asymptotically tight bounds for arbitrary simultaneous values of $m,\tau,L,k$, or corresponding tight joint bit running times. The prover explicitly acknowledges this limitation. I found no false central mathematical step.</p><h3>1. General upper bounds</h3><p>The intersection-count endpoints $\ell_i,u_i$ are correct. The identity<br>$$
+u_i-\ell_i=\min\{k,m-k,|A_i|,m-|A_i|\}
+$$<br>holds, including empty and universal approval types.</p><p>Strict score improvement excludes repeated committees and repeated intersection-count vectors. Consequently, both counting bounds are valid:<br>$$
+T+1\leq\binom mk,
+\qquad
+T+1\leq\prod_i(h_i+1).
+$$<br>The conclusion $T=0$ when $k=m$ is correct.</p><p>The lattice argument is also valid. After subtracting the baseline, all harmonic denominators belong to $J$, and each summand belongs to $(QD)^{-1}\mathbb Z$. Thus every positive improvement is at least $(QD)^{-1}$. The score range is at most $\mathcal R$, giving<br>$$
+T\leq\lfloor QD\mathcal R\rfloor.
+$$<br>The baseline itself need not belong to this lattice; the proof correctly applies the lattice argument to residual scores.</p><p>Both estimates for $D$ hold. In particular, the prime-valuation argument establishes<br>$$
+d_{2a}/d_a\mid\binom{2a}{a}.
+$$<br>Iteration and upward rounding give the stated bound $\log_2 d_k\leq4k$. The subsequent logarithmic upper bound correctly absorbs the factor $H_k$ into the $O(L+k)$ term.</p><p><b>Assessment:</b> correct. These are upper bounds, without a claim of joint tightness.</p><h3>2. Two approval types</h3><p>The classification into dominance steps and trades is exhaustive: a swap changes each count by at most one, and a nonpositive change in both counts cannot improve the score.</p><p>The trade conditions are correctly calculated:<br>$$
+(-1,1)\text{ improves}\iff qa-pb&gt;p,
+$$<br>$$
+(1,-1)\text{ improves}\iff qa-pb&lt;-q.
+$$<br>The necessary positive denominators follow from feasibility of the respective trades.</p><p>Each improving trade decreases $\Phi$ by exactly one. The interval $[-q,p]$ has width $p+q$, so a trade cannot jump into the opposite trade region. A dominance step changes $d$ by less than $p+q$ in absolute value and increases the ceiling potential by at most one.</p><p>The treatment of the initial potential is essential and valid. Before the first visit to the interval, trades have one direction, and their receiving count never decreases. Its range has width at most $r$. After that visit, the potential starts at zero. These observations justify<br>$$
+N_{\mathrm{tr}}\leq r+N_{\mathrm{dom}},
+\qquad
+T\leq5r.
+$$</p><p>The lower-bound construction satisfies the committee-size restrictions and uses distinct positive-mass types. Its forward gains are strictly positive, reverse gains strictly negative, and within-class gains zero. It therefore has exactly $r$ swaps under the prescribed rule.</p><p>The formula for $\tau=1$ is also correct.</p><p><b>Assessment:</b> the worst-case order $\Theta(r)$ for $\tau=2$ is established.</p><h3>3. Arbitrary-objective encoding</h3><p>Both harmonic expansions are correct. The finite-difference coefficient for the omitted-subset expansion has the stated negative sign and magnitude<br>$$
+\frac{1}{j\binom dj}.
+$$<br>The expansions apply on precisely the integer ranges used in the construction.</p><p>In the selected-subset construction, the top-degree coefficients encode $f(U)$ with coefficient one. The downward construction makes every lower-degree coefficient depend only on the degree. Such terms sum to constants on the fixed-size slice.</p><p>The omitted-subset construction has the same property, with the stated degree-dependent denominators. In both constructions, all weights are strictly positive. Clearing denominators, adding the empty approval type, and normalizing preserve every improvement sign.</p><p>The denominator product $E$ bounds the common denominator: the downward recursion introduces only the indicated divisions. The estimates for weight growth and normalized mass bit lengths follow from the displayed recurrence.</p><p><b>Assessment:</b> the encoding lemma and its size estimates are valid. The construction may have very large support, as the prover explicitly states.</p><h3>4. Product trajectories and transfer to PAV</h3><p>The recursive product path lists every vector exactly once. Its adjacency and pivot-rule claims hold:</p><ul><li>Within a fibre, the recursive next move has priority over moves in the last coordinate.</li><li>At a fibre endpoint, all destinations in that fibre have smaller objective value.</li><li>The smallest improving last-coordinate alternative is the next fibre.</li><li>The final vector has no improving destination.</li></ul><p>The transfer respects the actual ordering of swap pairs. For selected subsets, the inserted candidate determines coordinate priority and alternative-value priority. For omitted subsets, the outer ordering on the removed omitted candidate determines coordinate priority, and the inner ordering determines the alternative.</p><p>Invalid subsets always have smaller objective value than every trajectory state, so invalid swaps cannot interfere.</p><p>Thus the construction establishes<br>$$
+T=\lfloor m/r\rfloor^r-1.
+$$<br>Together with the committee-count upper bound, it establishes<br>$$
+\log(\mathsf T_{m,k}+1)
+=\Theta\!\left(r\log(em/r)\right),
+$$<br>and, for fixed positive $r$,<br>$$
+\mathsf T_{m,k}=\Theta(m^r).
+$$</p><p><b>Assessment:</b> correct, under the expressly unrestricted support and precision assumptions. For varying $r$, these are tight logarithmic bounds, not multiplicatively tight trajectory bounds.</p><h3>5. Small-support exponential construction</h3><p>The signed Max-Cut encoding is correct.</p><p>For a positive edge, the two approval types contribute $3w$ for agreement and $4w$ for disagreement. For a negative edge, they contribute $4q$ for agreement and $3q$ for disagreement. Therefore the variable part of the PAV score is exactly the signed cut objective.</p><p>A cross-pair swap loses $P/2$ from vertex types. Every edge-type count changes by at most one, so its harmonic contribution changes by at most its weight. The total possible edge gain is at most $4R$. Hence<br>$$
+-P/2+4R=-1/2.
+$$<br>This excludes every cross-pair improving swap from a valid committee.</p><p>I checked the external source. Its Section 2 gives the stated graph sizes and weight bound; Theorem 2.1 supplies the exponential trajectory. Its proof explicitly verifies uniqueness of the improving move at each trajectory step. The graph construction is simple and has nonzero signed integer weights. The hypotheses required by the encoding are therefore satisfied. [Michel–Scott, Section 2 and Theorem 2.1](https://people.maths.ox.ac.uk/scott/Papers/flip.pdf).</p><p>The resulting counts<br>$$
+m=16h+8,\qquad k=8h+4,\qquad \tau=34h+11
+$$<br>are correct, including the added empty type. The weight and incidence-vector estimates give $L=O(h^2)$.</p><p>Consequently,<br>$$
+N=m+\tau+L=O(h^2),
+\qquad
+T=2^{\Omega(h)}
+$$<br>exceeds every quasipolynomial bound of the stated form. <b>The superquasipolynomial alternative is established.</b></p><p>The padding argument also preserves the core trajectory. Its penalties exclude removal of selected padding candidates and replacement of core candidates by unapproved candidates. The parameter restrictions ensure both padding counts are nonnegative.</p><h3>6. Exact computation and bit running time</h3><p>The swap-gain formula is correct. Every denominator used by a nonzero contribution belongs to $J$, including decrement denominators. Therefore the integer table permits exact sign testing.</p><p>The table-entry and partial-sum bit bounds follow from<br>$$
+\sum_i|\text{scaled contribution}_i|\leq QD.
+$$<br>The algorithm scans pairs in the prescribed order, restarts after each accepted swap, and performs a terminal full scan. It therefore outputs the complete requested trajectory.</p><p>The per-committee bound and fixed-width output-size lower bound are valid under the stated representation. They establish polynomial overhead relative to explicit output size. The exponential running-time order claimed for the balanced family also follows.</p><p><b>Minor representation gap:</b> the concrete preprocessing bound uses fractions in lowest terms, but the task does not specify that input fractions are already reduced. If they are not, reducing them can involve integers whose lengths are governed by the supplied encoding rather than $B$. The displayed preprocessing calculation does not account for that operation.</p><p>Minimum clarification: state that the bound assumes reduced input fractions, or include the cost of reducing the supplied fractions. This does not affect the polynomial-overhead conclusion.</p><h3>7. Unresolved part of the assignment</h3><p><b>Major scope gap:</b> the requested tight joint bounds in $m,\tau,L,k$ remain unresolved. In particular, the supplied lower bounds do not generally match the upper bounds when support size and precision are simultaneously restricted.</p><p>The running-time analysis likewise provides an exact algorithm with polynomial overhead, rather than tight joint bit running times for all parameter regimes.</p><p>This is an acknowledged incomplete result, not a refutation of the proved constructions. To complete the assignment, the prover must supply matching bounds under simultaneous restrictions and matching running-time conclusions, or retain the explicit partial status. No expositional clarification alone closes this gap.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

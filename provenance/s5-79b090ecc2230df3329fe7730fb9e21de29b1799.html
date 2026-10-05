@@ -1,0 +1,294 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-79b090ecc2230df3329fe7730fb9e21de29b1799 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-79b090ecc2230df3329fe7730fb9e21de29b1799 <span style="font-weight:normal;color:#8a7350">(s5-79b090ecc2230df3329fe7730fb9e21de29b1799)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 5.3 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a rational distribution \(\mu\) over rankings of \(\mathcal C\) and a maximin-losing candidate \(l\), define \(p_\mu(a,b)=\sum_{t:a\succ_t b}\mu_t\). Choose rational evidence masses \(x_{ab}\) with \(0\le x_{ab}\le p_\mu(a,b)\) and \(x_{ab}+x_{ba}\le 1\). Call \(x\) sound if every ranking distribution \(\nu\) satisfying \(p_\nu(a,b)\ge x_{ab}\) has \(l\notin\arg\max_{c\in\mathcal C}\min_{d\ne c}p_\nu(c,d)\). Compute the infimum of \(\sum_{a\ne b}x_{ab}\) and, for each rational \(\epsilon&gt;0\), return sound evidence within \(\epsilon\) of that infimum.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(\mathcal C\) contain \(m\geq2\) candidates; types are strict total rankings of \(\mathcal C\). A society is given by its support: the list of its \(\tau\) types with positive mass, each mass a binary rational, with masses summing to \(1\). Here \(\tau\) is the support size, not the number of possible rankings; let \(L\) be the total input bit length.<br>For any ranking distribution \(\rho\), write \(p_\rho(a,b)=\sum_{t:a\succ_t b}\rho_t\) and let \(W(\rho)\) be its maximin winner set, including all tied winners. The input includes a society \(\mu\) and \(l\in\mathcal C\setminus W(\mu)\).<br>Evidence consists of rational numbers \(x_{ab}\) for distinct candidates, satisfying \(0\leq x_{ab}\leq p_\mu(a,b)\) and \(x_{ab}+x_{ba}\leq1\). It is sound if \(l\notin W(\nu)\) for every probability distribution \(\nu\) over all strict rankings satisfying \(p_\nu(a,b)\geq x_{ab}\); these distributions may have real masses and need not share the input support.<br>Define \(I(\mu,l)=\inf\{\sum_{a\ne b}x_{ab}:x\text{ is sound rational evidence}\}\). The computational problem is to compute this infimum exactly and, given binary rational \(\epsilon&gt;0\), return sound rational evidence of cost at most \(I(\mu,l)+\epsilon\).<br>Is this computational problem solvable in polynomial time in \(m,\tau,L\), including the encoding length of \(\epsilon\), or is it NP-hard?<br>For complete integer-weighted tournaments, minimum-total-weight evidence excluding a maximin loser from every tournament completion is computable in polynomial time. [Verified discrete result](https://arxiv.org/html/2608.23446v1).<br>That result permits arbitrary tournament completions rather than only pairwise probabilities induced by ranking distributions. No result settling the continuous problem above was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified at least two candidates, strict total rankings, unit total mass, and inclusion of all tied maximin winners.</li><li>Specified that completion distributions range over all strict rankings, may use real masses, and are not restricted to the input support.</li><li>Specified binary encoding of epsilon and exact computation of the infimum, while retaining the requested additive evidence guarantee.</li><li>Retained optimization over sound evidence without requiring inclusion minimality, as the graded question explicitly uses an infimum.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Status and new results</h3><p>The general optimization problem remains unresolved here. The following results advance the cases left open in the notes:</p><ul><li>For four candidates, if</li></ul><p>$$
+   \max_{a\ne l}p_\mu(a,l)\leq\frac34,
+   $$<br>then<br>$$
+   I(\mu,l)\geq\frac54.
+   $$<br>This strengthens the previous lower bound of $1$.</p><ul><li>This bound is sharp: if the maximum incoming probability is exactly $3/4$ and a second incoming probability exceeds $1/2$, then</li></ul><p>$$
+   I(\mu,l)=\frac54.
+   $$<br>Sound rational evidence within any prescribed $\epsilon$ is explicitly constructible in polynomial time.</p><ul><li>For arbitrary $m\geq3$, there is an exact, polynomial-time soundness criterion for evidence supported only on comparisons into $l$. In particular, such evidence, when its largest coordinate is at most $1-1/m$, must have cost strictly greater than</li></ul><p>$$
+   2-\frac3m.
+   $$<br>This restricted bound is sharp.</p><p>All counterexample distributions below may use rankings outside the input support, as permitted by the task.</p><h3>1. Definitions and cyclic distributions</h3><p>Write<br>$$
+u_{ab}=p_\mu(a,b),\qquad
+s_\rho(a)=\min_{b\ne a}p_\rho(a,b),\qquad
+M_\rho=\max_a s_\rho(a).
+$$<br>Thus $l$ is a winner precisely when $s_\rho(l)=M_\rho$.</p><p>The evidence cost is<br>$$
+c(x)=\sum_{a\ne b}x_{ab}.
+$$<br>Strict rankings imply<br>$$
+p_\rho(a,b)+p_\rho(b,a)=1.
+$$<br>In particular, the input caps imply the evidence pair constraints:<br>$$
+x_{ab}+x_{ba}\leq u_{ab}+u_{ba}=1.
+$$</p><h3>Lemma 1: Universal score bound and equality case</h3><p>Every ranking distribution satisfies<br>$$
+M_\rho\geq\frac1m.
+$$<br>If equality holds, there is a directed Hamiltonian cycle<br>$$
+v_0\longrightarrow v_1\longrightarrow\cdots
+\longrightarrow v_{m-1}\longrightarrow v_0
+$$<br>such that $\rho$ assigns mass $1/m$ to each ranking<br>$$
+R_i:\quad
+v_i\succ v_{i-1}\succ\cdots\succ v_{i+1},
+$$<br>where indices are interpreted modulo $m$.</p><p><b>Proof.</b> For each candidate $a$, choose an opponent $f(a)$ attaining $s_\rho(a)$. The graph of arcs $a\to f(a)$ has outdegree one and no loops, so it contains a directed cycle on distinct candidates, say $v_0,\ldots,v_{k-1}$.</p><p>Every strict ranking satisfies at least one comparison $v_i\succ v_{i+1}$. Otherwise it would satisfy every reverse comparison around this cycle, contradicting transitivity. Consequently,<br>$$
+1\leq\sum_{i=0}^{k-1}p_\rho(v_i,v_{i+1})
+=\sum_{i=0}^{k-1}s_\rho(v_i)
+\leq kM_\rho\leq mM_\rho.
+$$<br>This proves the bound.</p><p>If $M_\rho=1/m$, every inequality is an equality. Hence $k=m$ and every cycle comparison has probability $1/m$.</p><p>Let $N(t)$ count the forward cycle comparisons satisfied by ranking $t$. We have $N(t)\geq1$ and<br>$$
+\mathbb E_\rho N
+=\sum_{i=0}^{m-1}p_\rho(v_i,v_{i+1})=1.
+$$<br>Every positive-mass ranking therefore satisfies exactly one forward cycle comparison. If that comparison is $v_i\succ v_{i+1}$, all remaining reverse comparisons force exactly the ranking $R_i$. Only $R_i$ satisfies this unique forward comparison, so its mass is $1/m$. $\square$</p><h3>Lemma 2: Weighted cyclic profiles</h3><p>Fix the Hamiltonian cycle above. Assign masses $\lambda_i\geq0$, summing to $1$, to the rankings $R_i$. Then, for $1\leq d\leq m-1$,<br>$$
+p(v_i,v_{i+d})=\sum_{j=0}^{d-1}\lambda_{i+j},
+\qquad
+s(v_i)=\lambda_i.
+$$</p><p><b>Proof.</b> In the ranking $R_k$, the comparison $v_i\succ v_{i+d}$ holds exactly when $k$ lies in the forward cyclic segment<br>$$
+v_i,v_{i+1},\ldots,v_{i+d-1}.
+$$<br>Summing the corresponding masses proves the probability formula.</p><p>Every displayed sum contains $\lambda_i$, and the comparison with $v_{i+1}$ has probability exactly $\lambda_i$. Thus the minimum is $\lambda_i$. $\square$</p><p>For uniform masses, this gives<br>$$
+p(v_i,v_{i+d})=\frac dm.
+$$</p><h3>2. Exact criterion for evidence only into the loser</h3><p>Assume $m\geq3$. Consider evidence of the form<br>$$
+x_{al}=q_a\quad(a\ne l),
+$$<br>with every other coordinate zero. Let<br>$$
+Q=\max_{a\ne l}q_a,
+\qquad
+q_{(1)}\leq\cdots\leq q_{(m-1)}=Q
+$$<br>be the sorted incoming coordinates. Define<br>$$
+H_m=1-\frac1{m-1},
+\qquad
+T_m=1-\frac1m.
+$$</p><h3>Theorem 3: Complete incoming-evidence criterion</h3><p>The following statements characterize soundness.</p><ul><li>If $Q&gt;T_m$, the evidence is sound.</li><li>If $Q\leq H_m$, the evidence is unsound.</li><li>If $H_m&lt;Q\leq T_m$, the evidence is unsound exactly when</li></ul><p>$$
+  q_{(d)}\leq d(1-Q)
+  \quad\text{for every }1\leq d\leq m-1.
+  $$</p><p>In the third case, the last inequality is automatic. Thus soundness is equivalent to a violation for some $1\leq d\leq m-2$.</p><p><b>Proof.</b></p><p>If $Q&gt;T_m$, choose $a$ with $q_a=Q$. Every compatible distribution satisfies<br>$$
+s_\nu(l)\leq p_\nu(l,a)\leq1-Q&lt;\frac1m\leq M_\nu.
+$$<br>Hence $l$ cannot win.</p><p>Suppose next that $Q\leq H_m$. If $Q\leq1/2$, an equal mixture of a ranking and its reversal has every pairwise probability equal to $1/2$. It satisfies the evidence and makes every candidate a winner.</p><p>If $1/2&lt;Q\leq H_m$, put the other $m-1$ candidates in a uniform cyclic profile. Independently insert $l$ above all of them with probability $1-Q$ and below all of them with probability $Q$. Then<br>$$
+p(a,l)=Q\geq q_a
+\quad(a\ne l),
+\qquad
+s(l)=1-Q.
+$$<br>Every rival has score at most $1/(m-1)$, because its comparisons with the other rivals retain the uniform cyclic probabilities. Since<br>$$
+1-Q\geq\frac1{m-1},
+$$<br>candidate $l$ wins.</p><p>It remains to consider<br>$$
+H_m&lt;Q\leq T_m.
+$$<br>Set $s=1-Q$, so<br>$$
+\frac1m\leq s&lt;\frac1{m-1}.
+$$</p><p>First suppose a compatible distribution makes $l$ a winner. Its maximum score satisfies<br>$$
+M_\nu=s_\nu(l)\leq s.
+$$<br>Choose minimizing opponents as in Lemma 1. A cycle of length at most $m-1$ would give<br>$$
+1\leq kM_\nu\leq(m-1)s&lt;1,
+$$<br>a contradiction. The chosen cycle must therefore be Hamiltonian, and each of its arc probabilities is at most $s$.</p><p>For a rival $a$, let $d_a$ be its forward distance to $l$ on this cycle. These distances are exactly $1,\ldots,m-1$. If $a\succ l$ in a ranking, at least one forward comparison on the path from $a$ to $l$ must hold: if every comparison were reversed, transitivity would give $l\succ a$. Taking probabilities and applying the union bound yields<br>$$
+q_a\leq p_\nu(a,l)
+\leq\sum_{\text{arcs on the path}}p_\nu(\text{arc})
+\leq d_as.
+$$<br>For each $d$, the $d$ candidates whose distances are at most $d$ consequently have incoming requirements at most $ds$. Therefore<br>$$
+q_{(d)}\leq ds.
+$$</p><p>Conversely, assume all these inequalities hold. Label the rivals $v_1,\ldots,v_{m-1}$ so that $q_{v_d}=q_{(d)}$, and use the cycle<br>$$
+l\longrightarrow v_{m-1}\longrightarrow\cdots
+\longrightarrow v_1\longrightarrow l.
+$$<br>Define cyclic masses by<br>$$
+\lambda_l=s,
+\qquad
+\lambda_{v_d}
+=\min\{ds,Q\}-\min\{(d-1)s,Q\}.
+$$<br>All masses lie in $[0,s]$. Moreover, $Q\leq T_m$ implies $(m-1)s\geq Q$, so their sum is<br>$$
+s+\min\{(m-1)s,Q\}=s+Q=1.
+$$<br>Lemma 2 gives<br>$$
+p(v_d,l)=\min\{ds,Q\}\geq q_{(d)}.
+$$<br>It also gives $s(l)=s$ and every rival score at most $s$. Thus this distribution satisfies the evidence and makes $l$ a winner.</p><p>Finally,<br>$$
+q_{(m-1)}=Q\leq(m-1)(1-Q)
+$$<br>is equivalent to $Q\leq T_m$, so the last inequality is automatic. $\square$</p><p>The criterion requires only sorting and rational comparisons, and hence takes polynomial time in the evidence encoding length.</p><h3>Corollary 4: Sharp cost bound for incoming-only evidence</h3><p>If incoming-only evidence is sound and $Q\leq T_m$, then<br>$$
+c(x)&gt;2-\frac3m.
+$$</p><p><b>Proof.</b> By Theorem 3, some $1\leq d\leq m-2$ satisfies<br>$$
+q_{(d)}&gt;d(1-Q).
+$$<br>There are $m-d$ coordinates from $q_{(d)}$ through $q_{(m-1)}$. One is $Q$, and each of the other $m-d-1$ is strictly greater than $d(1-Q)$. Hence<br>$$
+c(x)&gt;Q+d(m-d-1)(1-Q).
+$$<br>Put $A=d(m-d-1)$. We have<br>$$
+A-(m-2)=(d-1)(m-d-2)\geq0.
+$$<br>In particular, $A\geq1$. The expression $A+(1-A)Q$ is nonincreasing in $Q$, so<br>$$
+Q+A(1-Q)
+\geq T_m+\frac Am
+\geq\frac{m-1}{m}+\frac{m-2}{m}
+=2-\frac3m.
+$$<br>This proves the claim. $\square$</p><p>The bound is sharp. Indeed, take distinct rivals $a,b$ and evidence<br>$$
+x_{al}=T_m,\qquad
+x_{bl}=\frac{m-2}{m}+\delta,
+$$<br>where $0&lt;\delta&lt;1/m$, with all other coordinates zero. Theorem 3 declares it sound because its second-largest incoming requirement exceeds<br>$$
+(m-2)(1-T_m)=\frac{m-2}{m}.
+$$<br>Its cost is $2-3/m+\delta$.</p><p>This sharpness concerns incoming-only evidence. It does not prove the same lower bound for unrestricted evidence when $m\geq5$.</p><h3>3. A stronger lower bound for unrestricted four-candidate evidence</h3><h3>Theorem 5</h3><p>Let $m=4$. Suppose an evidence vector satisfies the pair constraints and<br>$$
+x_{al}\leq\frac34\quad(a\ne l),
+\qquad
+c(x)\leq\frac54.
+$$<br>Then it is unsound.</p><p>The proof constructs a compatible distribution making $l$ a winner in every case.</p><h3>3.1. Two useful constructions</h3><p>First, fix a four-candidate Hamiltonian cycle. For $1/2&lt;q\leq3/4$, mix its uniform cyclic profile with a distribution having every pairwise probability $1/2$, using cyclic-profile weight<br>$$
+\alpha=4q-2.
+$$<br>By Lemma 2, comparisons at forward distances $1,2,3$ have probabilities respectively<br>$$
+1-q,\qquad\frac12,\qquad q.
+$$<br>Every candidate has score $1-q$.</p><p>Second, for three candidates $a,b,c$ and<br>$$
+\frac12&lt;r\leq q\leq\frac34,
+$$<br>the following masses define a ranking distribution:</p><p>| Ranking | Mass |<br>|---|---:|<br>| $a\succ b\succ c$ | $r/2$ |<br>| $b\succ a\succ c$ | $r/2$ |<br>| $c\succ a\succ b$ | $1/2-q+r/2$ |<br>| $c\succ b\succ a$ | $1/2-r/2$ |<br>| $a\succ c\succ b$ | $q-r$ |</p><p>Every mass is nonnegative: the only less immediate one satisfies<br>$$
+\frac12-q+\frac r2
+\geq\frac12-\frac34+\frac14=0.
+$$<br>The masses sum to $1$, and direct summation gives<br>$$
+p(a,c)=q,\qquad p(b,c)=r,\qquad p(a,b)=\frac12.
+$$<br>Place the fourth candidate above or below this entire block, each with probability $1/2$. Its comparisons with the block are all $1/2$.</p><p>In this four-candidate distribution, $a,b$ and the fourth candidate have score $1/2$, while $c$ has smaller score. Reversing the rankings instead gives<br>$$
+p(c,a)=q,\qquad p(c,b)=r,\qquad p(a,b)=\frac12,
+$$<br>and makes $c$ and the fourth candidate winners. In either construction, every comparison probability is at least $1-q\geq1/4$.</p><h3>3.2. No large coordinate, or a coordinate exceeding $3/4$</h3><p>If every coordinate is at most $1/2$, the distribution with every pairwise probability $1/2$ is a counterexample.</p><p>Suppose the largest coordinate is $x_{ab}=q&gt;3/4$. The incoming-coordinate hypothesis implies $b\ne l$.</p><p>Treat $a,b$ as an adjacent block, putting $a$ above $b$ with probability $q$. Put the block above or below the two other candidates with equal probabilities, and independently order those two candidates uniformly. This realizes<br>$$
+p(a,b)=q,\qquad p(b,a)=1-q,
+$$<br>with every other comparison equal to $1/2$.</p><p>Because $b\ne l$, candidate $l$ has score $1/2$ and is a winner. Every evidence coordinate other than $x_{ab}$ is at most<br>$$
+\frac54-q&lt;\frac12.
+$$<br>The reverse coordinate additionally satisfies $x_{ba}\leq1-q$. Thus the distribution satisfies all evidence.</p><p>Henceforth assume the largest coordinate $q$ satisfies<br>$$
+\frac12&lt;q\leq\frac34.
+$$</p><h3>3.3. Exactly one coordinate exceeds $1/2$</h3><p>Write $x_{ab}=q$ and $s=1-q$. The remaining evidence cost is at most<br>$$
+\frac54-q\leq2s.
+$$<br>Consequently, at most one remaining coordinate exceeds $s$.</p><p>Choose a Hamiltonian cycle containing $b\to a$. If there is an exceptional remaining coordinate $x_{cd}&gt;s$, it satisfies $x_{cd}\leq1/2$. It is not $x_{ba}$, because $x_{ba}\leq1-q=s$.</p><p>There is a cycle containing $b\to a$ but avoiding $c\to d$. To see this explicitly, let $e,f$ be the other two candidates. The cycles<br>$$
+b\to a\to e\to f\to b,
+\qquad
+b\to a\to f\to e\to b
+$$<br>share only the arc $b\to a$.</p><p>Apply the first construction in Section 3.1 to such a cycle. It realizes $p(a,b)=q$, while the exceptional comparison, being a noncycle arc, has probability at least $1/2$. Every other comparison has probability at least $s$. All candidates tie, and all evidence is satisfied.</p><h3>3.4. Two coordinates exceed $1/2$</h3><p>There cannot be three such coordinates, because their cost would exceed $3/2$. Denote the two large coordinates by $q\geq r&gt;1/2$, and put<br>$$
+h=\frac54-q-r.
+$$<br>Then<br>$$
+0\leq h&lt;\frac14,\qquad r\leq\frac58,
+$$<br>and every remaining evidence coordinate is at most $h$.</p><p>If the two large arcs have different tails and different heads, their reversals can be included in a Hamiltonian cycle. Indeed, the reversals form either disjoint directed edges or a directed path; a directed two-cycle is impossible because the evidence pair sum would exceed $1$. Complete these edges to a Hamiltonian cycle and apply Section 3.1 with parameter $q$. Both large evidence requirements are met, every other comparison is at least $1-q\geq1/4&gt;h$, and all candidates tie.</p><p>The remaining possibilities are a common head or a common tail.</p><p>If the common head is not $l$, use the three-candidate block construction. Candidate $l$ is one of its winners, and every comparison is at least $1/4&gt;h$.</p><p>If the common tail is $l$, or $l$ is outside the three involved candidates, use the reversed block construction. Again $l$ wins and all evidence is satisfied.</p><p>Only the following three configurations remain. Define<br>$$
+A=r-\frac14,\qquad
+B=\frac54-2r,\qquad
+D=\frac r2.
+$$<br>These numbers satisfy<br>$$
+A+B+2D=1,\qquad A\geq B,\qquad A\geq D,
+$$<br>and each is at least $h$. For $B$, this follows from<br>$$
+B-h=q-r\geq0;
+$$<br>for $A,D$, it follows from $A,D&gt;1/4&gt;h$.</p><p><b>Common head $l$.</b> Suppose the large requirements are<br>$$
+x_{al}=q,\qquad x_{bl}=r.
+$$<br>Let $c$ be the fourth candidate. Use cycle<br>$$
+l\to a\to b\to c\to l
+$$<br>with masses $(A,B,D,D)$ in that order. Lemma 2 gives<br>$$
+p(a,l)=B+2D=\frac54-r=q+h\geq q,
+\qquad
+p(b,l)=2D=r.
+$$<br>Candidate $l$ has the largest score $A$, and every comparison is at least $h$.</p><p><b>Common tail, with the larger requirement into $l$.</b> Suppose<br>$$
+x_{al}=q,\qquad x_{ab}=r.
+$$<br>Use cycle<br>$$
+l\to a\to c\to b\to l
+$$<br>with masses $(A,D,D,B)$. Then<br>$$
+p(a,l)=q+h\geq q,\qquad p(a,b)=r.
+$$<br>Again $l$ has the largest score, and every comparison is at least $h$.</p><p><b>Common tail, with the smaller requirement into $l$.</b> Suppose<br>$$
+x_{ab}=q,\qquad x_{al}=r.
+$$<br>Use cycle<br>$$
+l\to b\to a\to c\to l
+$$<br>with masses<br>$$
+\left(D,\ 1-\frac{3r}{2},\ D,\ D\right).
+$$<br>They are nonnegative and sum to $1$. Moreover,<br>$$
+1-\frac{3r}{2}\leq D
+$$<br>because $r&gt;1/2$. Thus $l$ is a winner. The two relevant comparisons are<br>$$
+p(a,l)=r,\qquad p(a,b)=\frac{3r}{2}\geq q.
+$$<br>For the latter inequality, use<br>$$
+q\leq\frac54-r&lt;\frac{3r}{2},
+$$<br>where the strict inequality follows from $r&gt;1/2$.</p><p>Every mass is at least $h$: this is already true for $D$, while<br>$$
+1-\frac{3r}{2}-h
+=q-\frac r2-\frac14
+\geq\frac r2-\frac14&gt;0.
+$$<br>Therefore every comparison is at least $h$, and all remaining evidence is satisfied.</p><p>These cases exhaust the possibilities, proving Theorem 5. $\square$</p><h3>4. An exactly solved family of four-candidate inputs</h3><h3>Corollary 6</h3><p>Suppose $m=4$ and there are distinct rivals $a,b$ such that<br>$$
+\max_{c\ne l}u_{cl}=\frac34,
+\qquad
+u_{al}=\frac34,
+\qquad
+u_{bl}&gt;\frac12.
+$$<br>Then<br>$$
+I(\mu,l)=\frac54.
+$$<br>For every rational $\epsilon&gt;0$, sound rational evidence of cost at most $5/4+\epsilon$ can be produced in polynomial time.</p><p><b>Proof.</b> Theorem 5 gives the lower bound.</p><p>Set<br>$$
+\delta=\min\left\{
+\frac{\epsilon}{2},
+\frac{u_{bl}-1/2}{2}
+\right\}&gt;0
+$$<br>and use only<br>$$
+x_{al}=\frac34,\qquad
+x_{bl}=\frac12+\delta.
+$$<br>These coordinates respect their input caps.</p><p>Suppose a compatible distribution makes $l$ a winner. Then<br>$$
+M_\nu=s_\nu(l)\leq p_\nu(l,a)\leq\frac14.
+$$<br>Lemma 1 forces equality and a uniform four-candidate cyclic profile. In such a profile, $p(l,a)=1/4$ forces $a$ to be the successor of $l$. Every other rival consequently has incoming probability to $l$ at most $1/2$. This contradicts<br>$$
+p_\nu(b,l)\geq\frac12+\delta.
+$$<br>The evidence is therefore sound. Its cost is $5/4+\delta\leq5/4+\epsilon$.</p><p>The construction uses rational comparisons and arithmetic of polynomial encoding length. $\square$</p><p>This family contains valid inputs with support size four. For example, assign mass $1/4$ to each ranking<br>$$
+a\succ b\succ l\succ c,\qquad
+a\succ b\succ c\succ l,\qquad
+a\succ c\succ l\succ b,\qquad
+b\succ c\succ l\succ a.
+$$<br>Every rival beats $l$ with probability $3/4$, so $s_\mu(l)=1/4$. Candidate $a$ beats each opponent with probability $3/4$, so $s_\mu(a)=3/4$. Thus $l$ is a loser, all the corollary’s hypotheses hold, and<br>$$
+I(\mu,l)=\frac54.
+$$</p><h3>5. What remains open</h3><p>The unrestricted four-candidate lower bound is strictly stronger than the result in the notes, and its equality value is attained as an infimum on an explicit family. The incoming-only criterion also explains when ranking transitivity supplies exclusions that are invisible to arbitrary pairwise completions.</p><p>Neither result provides a uniform polynomial-time optimizer or an optimization hardness reduction for variable $m$. In particular, the incoming-only lower bound $2-3/m$ has not been established for unrestricted evidence when $m\geq5$.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 5 and the overall response to USER_TASK: The unrestricted computational problem is not settled: no polynomial-time algorithm for exact computation of $I(\mu,l)$ and construction of $\epsilon$-optimal sound rational evidence, and no NP-hardness reduction, is supplied.</li><li><b>minor</b> — Corollary 4, sharpness paragraph: The displayed sharpness evidence is not explicitly paired with an admissible rational input society. State a society whose caps permit these coordinates and verify that $l\notin W(\mu)$; this is a routine clarification connecting the sharpness claim to USER_TASK.</li></ul>
+<div class="pre"><h3>Overall assessment</h3><p><b>The output establishes substantial partial results, but does not resolve the computational problem in <code>USER_TASK</code>.</b> The incoming-only soundness criterion, the unrestricted four-candidate lower bound, and the exactly solved four-candidate family are correct as written. I found no false central step or substantive mathematical gap in those arguments.</p><p>The prover explicitly acknowledges that the general complexity classification remains unresolved. Neither a polynomial-time algorithm for the requested unrestricted optimization nor an NP-hardness reduction is supplied.</p><h3>Step-by-step verification</h3><h3>1. Definitions and evidence constraints</h3><p>The definitions of $s_\rho(a)$ and $M_\rho$ correctly capture maximin scores and the winner set, including ties.</p><p>For distributions over strict rankings,<br>$$
+p_\rho(a,b)+p_\rho(b,a)=1.
+$$<br>Consequently, the input caps imply<br>$$
+x_{ab}+x_{ba}\leq u_{ab}+u_{ba}=1.
+$$<br>This is correct. The constructions need not use the input support, consistently with <code>USER_TASK</code>.</p><h3>2. Lemma 1: universal score bound and equality case</h3><p>The selected minimizing-opponent graph has one outgoing arc per vertex and no loops, so it contains a directed cycle of length $k$ satisfying $2\leq k\leq m$.</p><p>Every strict ranking satisfies at least one forward comparison on that cycle: satisfying all reverse comparisons would contradict transitivity. Therefore,<br>$$
+1\leq\sum_{i=0}^{k-1}p_\rho(v_i,v_{i+1})
+=\sum_{i=0}^{k-1}s_\rho(v_i)
+\leq kM_\rho
+\leq mM_\rho.
+$$<br>Every step is justified, establishing $M_\rho\geq 1/m$.</p><p>When $M_\rho=1/m$, equality throughout forces $k=m$ and every selected cycle-arc probability to equal $1/m$. The integer-valued count $N(t)$ satisfies $N(t)\geq1$ and has expectation $1$, so every positive-mass ranking satisfies exactly one forward cycle comparison.</p><p>For each possible unique forward comparison, the remaining reverse comparisons specify a chain containing all candidates and hence uniquely determine the displayed ranking $R_i$. Its mass equals the corresponding forward comparison probability, namely $1/m$.</p><p><b>Verdict:</b> correct, including for distributions with real masses.</p><h3>3. Lemma 2: weighted cyclic profiles</h3><p>The stated forward segment identifies exactly which cyclic rankings satisfy $v_i\succ v_{i+d}$. Thus,<br>$$
+p(v_i,v_{i+d})=\sum_{j=0}^{d-1}\lambda_{i+j}.
+$$<br>Every such sum contains $\lambda_i$, and the distance-one comparison has probability $\lambda_i$. Hence $s(v_i)=\lambda_i$.</p><p>The uniform-profile formula $p(v_i,v_{i+d})=d/m$ follows directly.</p><p><b>Verdict:</b> correct.</p><h3>4. Theorem 3: incoming-only soundness criterion</h3><p>All three regimes are covered, including their boundary points.</p><p><b>Case $Q&gt;T_m$.</b> The inequalities<br>$$
+s_\nu(l)\leq1-Q&lt;\frac1m\leq M_\nu
+$$<br>exclude $l$ from the winner set. This correctly handles tied winners by obtaining a strict score inequality.</p><p><b>Case $Q\leq H_m$.</b> If $Q\leq1/2$, the reversal mixture satisfies every requirement and ties every candidate. Otherwise, the stated insertion construction gives every incoming probability $Q$ and gives $l$ score $1-Q$. Each rival has a comparison against another rival of probability $1/(m-1)$, so its score is at most that value. Since $1-Q\geq1/(m-1)$, $l$ wins.</p><p>For $m=3$, the second subcase is empty because $H_3=1/2$; there is no omitted boundary case.</p><p><b>Intermediate regime: necessity.</b> With $s=1-Q$, a compatible winning distribution has $M_\nu\leq s$. Any selected cycle of length at most $m-1$ would contradict<br>$$
+1\leq kM_\nu\leq(m-1)s&lt;1.
+$$<br>Thus the cycle is Hamiltonian.</p><p>The transitivity implication along each path justifies the union bound<br>$$
+q_a\leq p_\nu(a,l)\leq d_as.
+$$<br>For each $d$, there are $d$ distinct rivals at distance at most $d$, each with requirement at most $ds$. This correctly implies $q_{(d)}\leq ds$.</p><p><b>Intermediate regime: sufficiency.</b> The proposed masses are nonnegative increments bounded by $s$. The condition $Q\leq T_m$ gives $(m-1)s\geq Q$, so they sum to $s+Q=1$. Lemma 2 yields<br>$$
+p(v_d,l)=\min\{ds,Q\}\geq q_{(d)}.
+$$<br>Candidate $l$ has score $s$, and every rival has score at most $s$. Thus the constructed distribution is compatible and makes $l$ a winner.</p><p>The final inequality is automatic precisely because<br>$$
+Q\leq(m-1)(1-Q)
+$$<br>is equivalent to $Q\leq T_m$.</p><p>Sorting and binary rational comparisons give the claimed polynomial-time test in the evidence encoding length.</p><p><b>Verdict:</b> correct. This tests a restricted evidence class; it does not optimize unrestricted evidence.</p><h3>5. Corollary 4: incoming-only cost bound and sharpness</h3><p>Soundness with $Q\leq T_m$ requires a violation<br>$$
+q_{(d)}&gt;d(1-Q)
+$$<br>for some $1\leq d\leq m-2$. Counting the coordinates from index $d$ onward correctly gives<br>$$
+c(x)&gt;Q+d(m-d-1)(1-Q).
+$$</p><p>The factorization<br>$$
+d(m-d-1)-(m-2)=(d-1)(m-d-2)\geq0
+$$<br>is correct throughout the stated range. Writing $A=d(m-d-1)$, the function $A+(1-A)Q$ is nonincreasing because $A\geq1$. Substituting $Q\leq T_m$ therefore has the correct inequality direction and gives<br>$$
+c(x)&gt;2-\frac3m.
+$$</p><p>In the sharpness construction, $0&lt;\delta&lt;1/m$ ensures that the largest coordinate remains $T_m$. The second-largest coordinate violates the criterion at $d=m-2$, including when $m=3$. Its cost approaches the bound from above.</p><p><b>Minor clarification:</b> the sharpness paragraph does not explicitly specify an admissible input society whose caps permit these coordinates. This is an expositional omission rather than a substantive mathematical obstacle. To tie sharpness explicitly to <code>USER_TASK</code>, the prover should state such a rational society and verify the input promise.</p><h3>6. Section 3.1: auxiliary four-candidate constructions</h3><p>The mixing weight $\alpha=4q-2$ lies in $(0,1]$. Mixing the uniform cyclic probabilities with $1/2$ gives exactly<br>$$
+1-q,\qquad \frac12,\qquad q
+$$<br>at forward distances one, two, and three. Every candidate therefore has score $1-q$.</p><p>For the three-candidate table, the masses sum to $1$ and are nonnegative in the stated range. Direct summation verifies<br>$$
+p(a,c)=q,\qquad p(b,c)=r,\qquad p(a,b)=\frac12.
+$$<br>After the fourth candidate is inserted above or below the block equally, candidates $a$, $b$, and the fourth candidate have score $1/2$, while $c$ has score $1-q&lt;1/2$.</p><p>Reversal produces the stated probabilities and makes $c$ and the fourth candidate winners. In both constructions, every comparison probability is at least $1-q\geq1/4$.</p><p><b>Verdict:</b> correct.</p><h3>7. Theorem 5: unrestricted four-candidate lower bound</h3><p>The case split is exhaustive.</p><p><b>Every coordinate at most $1/2$.</b> The uniform pairwise distribution satisfies all evidence and makes $l$ a winner.</p><p><b>Largest coordinate $q&gt;3/4$.</b> Its head cannot be $l$. The block construction realizes the required pair and makes all other comparisons $1/2$. Since the remaining evidence cost is less than $1/2$, all other requirements are satisfied, with the reverse requirement handled separately by the pair constraint. Candidate $l$ has score $1/2$ and wins.</p><p><b>Exactly one coordinate above $1/2$.</b> For $s=1-q$,<br>$$
+\frac54-q\leq2s
+$$<br>holds precisely throughout the assumed range $q\leq3/4$. Thus at most one remaining coordinate exceeds $s$.</p><p>The two displayed Hamiltonian cycles share only the required arc $b\to a$. Consequently, one avoids any exceptional arc distinct from that required arc. The exceptional comparison then has probability at least $1/2$, while all other comparisons have probability at least $s$. The construction satisfies the evidence and ties all candidates.</p><p><b>Two coordinates above $1/2$.</b> The cost bound implies<br>$$
+0\leq h&lt;\frac14,\qquad r\leq\frac58.
+$$<br>With different tails and heads, the reversed edges form disjoint edges or a directed path. A directed two-cycle is excluded by the pair constraint. They can therefore be included in a Hamiltonian cycle, giving both required probabilities $q$.</p><p>The ordinary and reversed block constructions correctly cover the stated common-head and common-tail cases. The three remaining configurations exhaust the possible positions of $l$.</p><p>For their special masses,<br>$$
+A+B+2D=1,\qquad
+A-B=3r-\frac32&gt;0,\qquad
+A-D=\frac r2-\frac14&gt;0.
+$$<br>Also, $B\geq h$ follows from $B-h=q-r\geq0$, while $A,D&gt;1/4&gt;h$. Thus all claims about normalization, maximum score, and remaining evidence are valid.</p><p>The first two special cycles give the displayed required probabilities by Lemma 2. In the final cycle, the exceptional mass is nonnegative because $r\leq5/8$, and it is at most $D$ because $r&gt;1/2$. The critical comparison bound is correct:<br>$$
+q\leq\frac54-r&lt;\frac{3r}{2}.
+$$<br>Its lower bound by $h$ is also correctly verified in the output.</p><p><b>Verdict:</b> Theorem 5 is proved. In particular, it covers evidence cost exactly $5/4$ and incoming coordinates exactly $3/4$.</p><h3>8. Corollary 6: exactly solved family</h3><p>Theorem 5 supplies $I(\mu,l)\geq5/4$.</p><p>The chosen $\delta$ is positive, rational, respects the cap for $x_{bl}$, and satisfies $\delta\leq\epsilon$. A compatible distribution making $l$ a winner would have<br>$$
+M_\nu=s_\nu(l)=\frac14
+$$<br>by Lemma 1. Its equality characterization forces a uniform cyclic profile.</p><p>In that profile, $p(l,a)=1/4$ forces $a$ to be the successor of $l$. Every distinct remaining rival then has incoming probability to $l$ at most $1/2$, contradicting the requirement for $b$. Thus the evidence is sound.</p><p>This proves the infimum value and the requested approximation construction for this family. The rational arithmetic has polynomial encoding length.</p><p>The four-ranking example is also correct: every rival beats $l$ with probability $3/4$, and $a$ beats each opponent with probability $3/4$. Hence the example satisfies the input promise and the corollary’s hypotheses.</p><h3>Issues and minimum required follow-up</h3><ul><li><b>Major — the computational classification remains open.</b> The output provides neither the requested unrestricted polynomial-time optimization algorithm nor an NP-hardness result. This is an acknowledged limitation, not a contradiction in the auxiliary proofs. Settling it requires additional mathematics; clarification alone cannot complete the assignment.</li></ul><ul><li><b>Minor — sharpness within the input model is implicit.</b> For Corollary 4, explicitly state an admissible rational society permitting the displayed evidence and verify that $l$ is initially a loser.</li></ul><p>The established restricted results are genuine progress. They do not imply a complexity classification for the continuous problem with variable $m$.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

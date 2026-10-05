@@ -1,0 +1,197 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-97b5422abbcb144028761082696b3f4cfdd7ecae — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-97b5422abbcb144028761082696b3f4cfdd7ecae <span style="font-weight:normal;color:#8a7350">(s5-97b5422abbcb144028761082696b3f4cfdd7ecae)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable in \(m,\tau,L,h,K,T_{\mathrm{sel}}\), with binary rational stage sizes.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 10 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Assuming the computation of f and d can be done in polynomial time, MS-GDA runs in polynomial time.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\) schools and \(\tau\) student types with rational masses \(\mu_t\), type-level school preferences and priority tiers, a master-list ordering of the tiers, and a rational downward-closed feasible occupancy polytope \(\mathcal F\), compute the exact aggregate assignment \(x_{tc}\) produced by staged GDA. At each stage, a supplied polynomial-time rule chooses a rational mass limit \(\delta_k\) such that the feasible residual occupancy vectors within that limit form a polymatroid; determine the runtime in the input bit length, \(\tau\), \(m\), the polytope description, and the number \(K\) of stages.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass a binary rational; \(\tau\) is the support size, not the number of possible types. Assume \(\sum_t\mu_t=1\), divisible mass, and \(m\ge1\). Each type strictly ranks its available schools and being unmatched; only mutually acceptable contracts may receive mass.<br>The input supplies school priority tiers, a strict master-list order of types refining its supplied tier ordering, and distinct positive rational contract weights \(w_{tc}\) respecting school priorities; these weights resolve ties and comparisons across schools.<br>Feasible occupancies form a nonempty bounded downward-closed polytope \(\mathcal F=\{z\in\mathbb R_{\ge0}^m:Az\le b\}\), given by explicit rational inequalities, with \(0\in\mathcal F\).<br>Initially the finalized occupancy is \(a=0\). At stage \(k\), a supplied deterministic rule selects \(0&lt;\delta_k\le\) remaining mass, with the promise that \(P_k=\{z\ge0:a+z\in\mathcal F,\ \sum_c z_c\le\delta_k\}\) is a polymatroid. Select exactly the first \(\delta_k\) remaining mass in master-list order, splitting a type at the boundary.<br>For offered amounts \(q_{tc}\), the joint school choice retains the amounts \(y_{tc}\) maximizing \(\sum_{t,c}w_{tc}y_{tc}\), subject to \(0\le y_{tc}\le q_{tc}\) and \((\sum_t y_{tc})_c\in P_k\); any residual optimization tie is resolved lexicographically in decreasing weight order.<br>Stage GDA starts with all selected mass offering its favorite acceptable school. In synchronous rounds, schools choose from retained offers plus new offers; each rejected portion advances to its next acceptable school in the following round, and portions exhausting their lists remain unmatched. Rejections are irrevocable for that portion and contract.<br>Use the terminal retained amounts, or their limit if infinitely many rounds occur. Finalize these amounts, add their occupancy to \(a\), and remove all selected mass, including unmatched mass. Reset proposal histories for the next stage; the rule is promised to exhaust the society in \(K\) stages. The output \(x_{tc}\) sums finalized assignments across stages.</p><p>Is exact computation of \(x_{tc}\) polynomial-time solvable, or is it NP-hard? State the runtime in \(m,\tau,L,h,K\) and the stage-selection cost \(T_{\mathrm{sel}}\), where \(h\) counts the inequalities describing \(\mathcal F\), \(L\) is the total input bit length, and \(T_{\mathrm{sel}}\) bounds one rule invocation on its rational state.</p><p>Discrete MS-GDA runs in polynomial time when feasibility evaluation and stage-size selection are polynomial-time computable. [Kimura et al.](https://doi.org/10.1007/s10458-025-09713-9)<br>For real-valued stable allocation in two totally ordered polymatroids, a side-optimal allocation can be computed in \(O(N^3\gamma)\), where \(N\) is the ground-set size and \(\gamma\) is the saturation/exchange-capacity computation time; this result does not explicitly treat the staged output specified above. [Iwata–Yokoi](https://www.keisu.t.u-tokyo.ac.jp/data/2017/METR17-02.pdf)</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized total mass to one because the continuous society is a distribution; all occupancy bounds and stage limits use the same mass units.</li><li>Specified strict student preferences including unmatched, available contracts, and mutual acceptability, following the discrete domain.</li><li>Refined master-list tier ties by a supplied strict type order and allowed a stage boundary to split a type.</li><li>Added distinct positive rational weights on type-school contracts respecting school priorities, because priorities within schools do not determine the joint choice under shared constraints.</li><li>Specified explicit rational inequalities and bounded, nonempty feasible occupancies containing zero; boundedness is explicit in the journal version.</li><li>Defined fractional joint school choice by weighted optimization with a deterministic residual tie-break, and specified synchronous proposal, retention, rejection, and limit conventions.</li><li>Made each positive stage limit also determine the selected mass; all selected mass exits after that stage, including unmatched portions, as in discrete MS-GDA.</li><li>Promised exhaustion in K stages rather than assuming that positive rational stage sizes imply finite termination, and exposed the stage-selection invocation cost in the runtime parameters.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result and computational interpretation</h3><p><b>Exact computation is polynomial-time solvable in \(m,\tau,L,h,K,T_{\mathrm{sel}}\).</b> The algorithm computes precisely the specified staged output, including the outcome of synchronous GDA.</p><p>I use the computational interpretation that each rule invocation returns a binary rational \(\delta_k\), with its output-writing cost included in \(T_{\mathrm{sel}}\). Without an effective representation of the selected stage sizes, an exact bit-complexity question would need further specification.</p><p>Put \(n=m\tau\). One conservative bound, using ordinary quadratic-cost rational arithmetic, is<br>\[
+O\!\left(
+L^3+KT_{\mathrm{sel}}
++Kn^3(hm+n)B^2
+\right),
+\]<br>where<br>\[
+B=O\!\left(
+(1+Kn^3)\bigl(L+\log(n+h+2)\bigr)
++KT_{\mathrm{sel}}
+\right).
+\]<br>Thus the bound is polynomial in all the requested parameters. Polynomial dependence on \(K\) and \(T_{\mathrm{sel}}\) is explicit; they need not themselves be polynomial in \(L\).</p><p>The essential point is to prove that the side-optimal polymatroid allocation algorithm reproduces each synchronous stage.</p><h3>1. A stage is an intersection of two ordered polymatroids</h3><p>Fix a stage, its finalized occupancy \(a\), its size \(\delta\), and the selected amounts \(M_t\), so that<br>\[
+\sum_t M_t=\delta.
+\]<br>Let \(E\) contain the mutually acceptable contracts of selected types with \(M_t&gt;0\). Write \(N=|E|\le m\tau\), and let \(E_t\) denote the contracts of type \(t\).</p><p>The type-side feasible polytope is<br>\[
+H=\left\{
+y\in\mathbb R_{\ge0}^{E}:
+\sum_{e\in E_t}y_e\le M_t\quad\text{for every }t
+\right\}.
+\]<br>It is the polymatroid with rank function<br>\[
+g(U)=\sum_{t:U\cap E_t\ne\varnothing}M_t.
+\]<br>Choose any total order \(\succ_H\) on \(E\) extending every type’s school preferences.</p><p>By the stage promise, \(P_k\) is a polymatroid. Its canonical rank function is<br>\[
+r(S)=\max_{z\in P_k}\sum_{c\in S}z_c.
+\]<br>The standard canonical-rank characterization of a polymatroid gives<br>\[
+P_k=\left\{
+z\ge0:\sum_{c\in S}z_c\le r(S)
+\quad\text{for every }S\subseteq\{1,\ldots,m\}
+\right\}.
+\]<br>In particular, \(r\) is normalized, monotone, and submodular. Every \(r(S)\) is rational because it is the optimal value of a bounded rational linear program.</p><p>For \(U\subseteq E\), let \(C(U)\) be its set of schools, and define<br>\[
+f(U)=r(C(U)).
+\]<br>This is also normalized, monotone, and submodular: school sets preserve unions, while<br>\[
+C(U\cap V)\subseteq C(U)\cap C(V).
+\]<br>Submodularity and monotonicity of \(r\) therefore imply submodularity of \(f\).</p><p>Moreover,<br>\[
+F=P(f)
+=\left\{
+y\ge0:
+\left(\sum_t y_{tc}\right)_c\in P_k
+\right\}.
+\]<br>Indeed, feasible occupancies imply every contract-subset inequality. Conversely, applying those inequalities to all contracts at any chosen set of schools implies the corresponding occupancy inequality.</p><p>Order \(E\) by decreasing contract weight, denoted \(\succ_F\). Distinct weights make this a total order.</p><p>We have therefore obtained two ordered polymatroids on the same ground set of at most \(m\tau\) contracts.</p><h3>2. Three ordered-polymatroid lemmas</h3><p>These lemmas establish the connection to the specified proposal process.</p><p>Let \(P(p)\) be a polymatroid on a finite ordered ground set. For an element \(e\), write<br>\[
+U_e=\{u:u\succeq e\}.
+\]<br>A set \(S\) is <b>tight at \(x\)</b> if \(x(S)=p(S)\). Define the blocking condition<br>\[
+\mathsf B_p(x,e)
+\quad\Longleftrightarrow\quad
+\text{some tight set }S\text{ satisfies }e\in S\subseteq U_e.
+\]<br>Unions and intersections of tight sets are tight. This follows by combining submodularity with<br>\[
+x(S)+x(T)=x(S\cup T)+x(S\cap T).
+\]</p><p>The condition \(\mathsf B_p(x,e)\) is the usual ordered-polymatroid condition that \(e\) is saturated and its minimal tight set contains no element below \(e\).</p><h3>Lemma 1: Greedy choice and rejected coordinates</h3><p>Given upper bounds \(q\ge0\), process coordinates in order, increasing each as far as feasibility and its bound \(q_e\) permit. Call the resulting vector \(C(q)\).</p><p>For \(y=C(q)\),<br>\[
+y_e&lt;q_e\quad\Longrightarrow\quad\mathsf B_p(y,e).
+\]</p><p>To prove this, consider a coordinate stopped by feasibility. Some rank inequality containing that coordinate is tight. At that moment all lower coordinates are zero. Intersecting the tight set with \(U_e\) leaves its vector sum unchanged; monotonicity of \(p\) and feasibility force the intersection to be tight as well. Later steps preserve it because it contains only coordinates already processed.</p><p>This greedy vector uniquely maximizes any strictly decreasing positive weighted sum. Here is an explicit justification. For a feasible \(v\le q\) and any order prefix \(U\), take the union \(T\) of blocking tight sets for coordinates \(e\in U\) with \(y_e&lt;v_e\). Then \(T\subseteq U\),<br>\[
+y(T)=p(T)\ge v(T),
+\]<br>and \(y_e\ge v_e\) on \(U\setminus T\). Hence<br>\[
+y(U)\ge v(U).
+\]<br>Writing the weighted objective as a positive linear combination of prefix sums proves optimality. If \(v\ne y\), at least one prefix inequality is strict, proving uniqueness.</p><p>Consequently, this greedy choice is exactly the school optimization specified in the task. Its residual lexicographic tie-breaking is unnecessary.</p><h3>Lemma 2: Blocking persists when retained offers are supplemented</h3><p>Suppose \(x\in P(p)\), \(q\ge x\), and \(y=C(q)\). Then<br>\[
+\mathsf B_p(x,e)\quad\Longrightarrow\quad\mathsf B_p(y,e).
+\]</p><p>Let \(S\subseteq U_e\) be tight at \(x\) and contain \(e\). For every \(u\in U_e\) with \(y_u&lt;x_u\), Lemma 1 supplies a tight set at \(y\) contained in \(U_u\). Let \(T\) be their union; an empty union is allowed.</p><p>Thus \(T\subseteq U_e\) is tight at \(y\), and \(y\ge x\) on \(S\setminus T\). Therefore<br>\[
+\begin{aligned}
+y(S\cup T)
+&amp;=p(T)+y(S\setminus T)\\
+&amp;\ge p(T)+x(S\setminus T)\\
+&amp;=p(T)+p(S)-x(S\cap T)\\
+&amp;\ge p(T)+p(S)-p(S\cap T)\\
+&amp;\ge p(S\cup T).
+\end{aligned}
+\]<br>Feasibility forces equality. Thus \(S\cup T\) witnesses \(\mathsf B_p(y,e)\).</p><h3>Lemma 3: A comparison principle</h3><p>Suppose \(x,z\in P(p)\) and<br>\[
+\forall u,\qquad x_u\ge z_u
+\quad\text{or}\quad
+\mathsf B_p(x,u).
+\]<br>Then<br>\[
+\mathsf B_p(z,e)\quad\Longrightarrow\quad z_e\ge x_e.
+\]</p><p>Choose a tight set \(S\subseteq U_e\) at \(z\) containing \(e\). For each \(u\in S\setminus\{e\}\) with \(x_u&lt;z_u\), choose a blocking tight set at \(x\), and let \(T\) be their union.</p><p>Every such \(u\) precedes \(e\), so \(e\notin T\). Also \(T\) is tight at \(x\). Submodularity gives<br>\[
+\begin{aligned}
+z(S\setminus T)
+&amp;=p(S)-z(S\cap T)\\
+&amp;\ge p(S)-p(S\cap T)\\
+&amp;\ge p(S\cup T)-p(T)\\
+&amp;\ge x(S\cup T)-x(T)\\
+&amp;=x(S\setminus T).
+\end{aligned}
+\]<br>On \(D=S\setminus(T\cup\{e\})\), the construction gives \(x(D)\ge z(D)\). Subtracting these coordinates yields \(z_e\ge x_e\).</p><h3>3. The synchronous stage terminates for rational data</h3><p>All school-side ranks \(f(U)\) and selected amounts \(M_t\) are rational. Choose a positive integer \(D\) making all of them integral after multiplication by \(D\).</p><p>By Lemma 1’s greedy construction, offers on the grid<br>\[
+D^{-1}\mathbb Z_{\ge0}^{E}
+\]<br>produce retained amounts on the same grid: each increment is the minimum of an offered residual and finitely many rank slacks. Thus every round’s offers, retained amounts, and rejected amounts remain on this grid.</p><p>Every round having a positive rejection rejects at least \(1/D\) mass. Each portion can be rejected at no more than \(m\) contracts, because it advances strictly down its list. Total rejected mass, counted with multiplicity over contracts, is therefore at most \(m\delta\).</p><p>There are consequently at most \(Dm\delta\) rounds with positive rejection. A round without rejection produces no subsequent proposals. The stage terminates after finitely many rounds.</p><p>This proves existence of its terminal output. It does <b>not</b> give a polynomial round bound, and the efficient algorithm below does not enumerate those rounds.</p><h3>4. The synchronous output is the unique side-optimal stable allocation</h3><p>For the type-side polymatroid,<br>\[
+\mathsf B_g(y,e)
+\quad\Longleftrightarrow\quad
+\sum_{\substack{u\in E_t\\u\succeq_t e}}y_u=M_t,
+\qquad e\in E_t.
+\]<br>To see this, any tight set containing \(e\) must saturate the selected amount of its type. Its contracts of that type must all precede \(e\). Conversely, a saturated type preference prefix is itself a suitable tight set.</p><p>Call \(z\in H\cap F\) stable when, for every contract \(e\),<br>\[
+\mathsf B_g(z,e)\quad\text{or}\quad\mathsf B_f(z,e).
+\]<br>This is precisely stability for the two ordered polymatroids.</p><h3>Rejection invariant</h3><p>Fix any stable allocation \(z\). We prove that, after every round,<br>\[
+e\text{ has ever received a positive rejection}
+\quad\Longrightarrow\quad
+y_e\ge z_e,
+\tag{1}
+\]<br>where \(y\) is the currently retained vector.</p><p>Suppose the invariant holds before a round. Let \(q\) consist of previous retained offers plus new offers, and let \(y=C_F(q)\). Since those offers represent distinct portions of selected mass,<br>\[
+q\in H.
+\]</p><p>If \(q_e&gt;z_e\), every school that its type prefers to \(e\) has received a positive rejection before this round: some portion could reach \(e\) only by passing all those schools. The induction hypothesis therefore gives<br>\[
+q_u\ge y^{\mathrm{previous}}_u\ge z_u
+\]<br>at every such better contract \(u\).</p><p>If \(\mathsf B_g(z,e)\) held, these inequalities together with \(q_e&gt;z_e\) would make \(q\)’s corresponding type prefix exceed \(M_t\), contradicting \(q\in H\). Stability of \(z\) consequently implies<br>\[
+q_e&gt;z_e\quad\Longrightarrow\quad\mathsf B_f(z,e).
+\]<br>Because \(y\le q\), we obtain<br>\[
+\forall e,\qquad z_e\ge y_e
+\quad\text{or}\quad
+\mathsf B_f(z,e).
+\]<br>Apply Lemma 3 with \(x=z\). At every newly rejected contract, Lemma 1 gives \(\mathsf B_f(y,e)\), hence \(y_e\ge z_e\).</p><p>For a previously rejected contract that is not newly rejected,<br>\[
+y_e=q_e\ge y^{\mathrm{previous}}_e\ge z_e.
+\]<br>This proves (1).</p><h3>Stability of the terminal vector</h3><p>Let \(y^*\) be the terminal vector. If \(\mathsf B_g(y^*,e)\) fails, positive mass of its type is assigned below \(e\) or remains unmatched. That mass must have passed through and been rejected at \(e\). Thus \(e\) has received a positive rejection.</p><p>At its rejection round, Lemma 1 established school-side blocking. Every later round supplements the retained vector with nonnegative new offers, so Lemma 2 preserves that blocking. Hence<br>\[
+\mathsf B_f(y^*,e).
+\]<br>Therefore \(y^*\) is stable.</p><h3>Side-optimality and uniqueness</h3><p>Fix a type preference prefix \(V\). If \(y^*_e\ge z_e\) throughout \(V\), then \(y^*(V)\ge z(V)\).</p><p>Otherwise choose \(e\in V\) with \(y^*_e&lt;z_e\). By (1), \(e\) was never rejected. No portion of its type can therefore finish below \(e\) or unmatched. Consequently,<br>\[
+y^*(V)=M_t\ge z(V).
+\]</p><p>Thus \(y^*\) dominates every stable allocation on every type preference prefix. Every prefix of \(\succ_H\) is a disjoint union of such type prefixes, so \(y^*\) is \(\succ_H\)-preferable to every stable allocation.</p><p>There can be only one allocation with this property: if two allocations dominate each other on every total-order prefix, all their prefix sums agree, and successive differences give equality coordinatewise.</p><p><b>The specified synchronous stage output is therefore the unique \(\succ_H\)-optimal stable allocation.</b></p><h3>5. Computing that allocation efficiently</h3><p>Iwata–Yokoi’s Theorems 6.6 and 7.7 compute the \(\succ_H\)-optimal stable allocation of two totally ordered polymatroids on \(N\) elements in \(O(N^3\gamma)\) time, where \(\gamma\) is the saturation/exchange-capacity computation time. The result applies to real-valued polymatroids. [Iwata–Yokoi](https://www.keisu.t.u-tokyo.ac.jp/data/2017/METR17-02.pdf)</p><p>All hypotheses were verified in Section 1; Section 4 proves that its output is exactly the required stage output.</p><p>The needed capacities can be computed directly from the explicit inequalities, without enumerating rank subsets.</p><p>Write<br>\[
+\widehat A=
+\begin{pmatrix}
+A\\
+\mathbf 1^\top
+\end{pmatrix},
+\qquad
+d=
+\begin{pmatrix}
+b-Aa\\
+\delta
+\end{pmatrix}.
+\]<br>For a school-feasible contract vector \(y\), let \(s_c=\sum_t y_{tc}\) and<br>\[
+\sigma_i=d_i-\widehat A_i s.
+\]</p><p>For \(e=(t,c)\), its school-side saturation capacity is<br>\[
+\widehat c_F(y,e)
+=
+\min_{i:\widehat A_{ic}&gt;0}
+\frac{\sigma_i}{\widehat A_{ic}}.
+\]<br>For distinct contracts \(e=(t,c)\) and \(v=(u,d&#x27;)\), its exchange capacity is<br>\[
+\overline c_F(y,e,v)
+=
+\min\!\left\{
+y_v,\;
+\min_{i:\widehat A_{ic}-\widehat A_{id&#x27;}&gt;0}
+\frac{\sigma_i}{\widehat A_{ic}-\widehat A_{id&#x27;}}
+\right\}.
+\]<br>An empty inner minimum is interpreted as \(+\infty\). These formulas follow by substituting the proposed one-coordinate increase or two-coordinate exchange into every explicit inequality. The term \(y_v\) enforces nonnegativity. They remain valid when the two contracts share a school.</p><p>On the type side,<br>\[
+\widehat c_H(y,e)=M_t-y(E_t),
+\]<br>and, for distinct contracts,<br>\[
+\overline c_H(y,e,v)=
+\begin{cases}
+y_v,&amp;e,v\in E_t,\\
+\min\{y_v,M_t-y(E_t)\},&amp;e\in E_t,\ v\notin E_t.
+\end{cases}
+\]</p><p>Recomputing occupancies, type totals, and row slacks gives<br>\[
+\gamma=O(hm+N)
+\]<br>rational arithmetic operations. Thus a stage requires<br>\[
+O\!\left(N^3(hm+N)\right)
+\]<br>such operations.</p><p>If \(E\) is empty, all selected mass is unmatched and the stage is handled directly.</p><h3>6. Staging and exact bit complexity</h3><p>At each stage, invoke the supplied selection rule, take the specified master-list prefix, compute its unique side-optimal allocation, finalize it, and remove the entire selected mass.</p><p>Induction over stages proves correctness: the computed finalized assignments equal those of synchronous GDA, so the next occupancy, remaining masses, and rational state are identical. The next rule invocation therefore selects the same stage.</p><p>It remains to bound rational lengths.</p><p>Clear the denominators in each original inequality using a positive multiplier. The resulting integer coefficients and right-hand sides have \(O(L)\) bits. Every school-capacity computation then divides a rational slack by an integer coefficient or coefficient difference of \(O(L)\) bits.</p><p>The Iwata–Yokoi algorithm updates allocations by adding or subtracting a minimum of computed capacities; its numerical updates introduce no further variable denominators. This follows from its augment and cycle update formulas. [Iwata–Yokoi, Section 3](https://www.keisu.t.u-tokyo.ac.jp/data/2017/METR17-02.pdf)</p><p>Maintain a common denominator for stored numerical state. Initially its logarithm is \(O(L)\). Each rule output can add at most \(O(T_{\mathrm{sel}})\) bits to that logarithm. Each capacity query can enlarge it by at most \(O(L)\) bits. There are \(O(Kn^3)\) queries altogether.</p><p>Selected, retained, finalized, and remaining masses are bounded by one. Row slacks introduce only the sizes of the integer input coefficients and sums over schools. Hence all relevant rational numerators and denominators have at most<br>\[
+B=O\!\left(
+(1+Kn^3)\bigl(L+\log(n+h+2)\bigr)
++KT_{\mathrm{sel}}
+\right)
+\]<br>bits.</p><p>Using \(O(B^2)\) elementary bit operations per rational arithmetic operation or comparison gives the stated bound<br>\[
+O\!\left(
+L^3+KT_{\mathrm{sel}}
++Kn^3(hm+n)B^2
+\right).
+\]</p><p>This settles exact computation of the specified output with polynomial dependence on support size, stages, and selection cost.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 5: saturation/exchange-capacity oracle specification: The formulas cover exchange capacities only for distinct contracts, but the cited algorithm also uses same-contract exchanges in self-loop handling. Explicitly state the standard value +infinity for the same-contract exchange capacity on both sides.</li></ul>
+<div class="pre"><p>The argument establishes polynomial-time exact computation of the specified staged output. The reduction to ordered polymatroids, the identification of synchronous GDA with the side-optimal allocation, and the bit-complexity argument all check out. I found one minor omission in the capacity-oracle specification.</p><ul><li><b>Computational interpretation and scope</b></li></ul><p>The prover explicitly assumes that each stage-selection invocation returns a binary rational, with output-writing time included in \(T_{\mathrm{sel}}\). This is the natural interpretation of the task’s reference to invoking the rule on its rational state. The qualification is stated openly and does not exploit a degenerate reading.</p><p>The claimed complexity is polynomial in the requested parameters, including \(K\) and \(T_{\mathrm{sel}}\). It does not claim that these two parameters are themselves polynomially bounded in \(L\).</p><ul><li><b>The type-side polymatroid</b></li></ul><p>The proposed rank function \(g\) is normalized, monotone, and submodular: each type contributes its selected mass exactly when the subset contains one of its contracts.</p><p>Its polymatroid inequalities describe precisely the individual type-mass constraints defining \(H\). Types with no mutually acceptable contracts contribute no coordinates and impose no additional assignment requirement; their selected mass may remain unmatched.</p><p>A total order extending all type preferences exists because the contract sets of different types are disjoint.</p><ul><li><b>The school-side polymatroid</b></li></ul><p>The stage promise justifies using the canonical rank function \(r\). Boundedness ensures the maxima defining it exist, and rationality of the stage inequalities ensures their values are rational.</p><p>The submodularity argument for \(f(U)=r(C(U))\) is valid. The direction of monotonicity used with \(C(U\cap V)\subseteq C(U)\cap C(V)\) is correct.</p><p>The identification of \(P(f)\) with school-feasible contract vectors also holds. Schools without any contract in \(E\) have zero occupancy. Thus their absence from the lifted ground set does not invalidate the converse implication.</p><p>Distinct positive weights supply exactly the required total school-side order.</p><ul><li><b>Lemma 1: greedy choice</b></li></ul><p>A coordinate stopped below its offered bound must encounter a tight rank inequality containing that coordinate. At that processing step, all later coordinates are zero. Intersecting the tight set with the processed prefix preserves its vector sum, and monotonicity together with feasibility forces tightness of that intersection.</p><p>Later greedy steps cannot alter this prefix-contained witness.</p><p>The prefix-dominance proof is valid: the union of the selected blocking witnesses is tight and contains every coordinate in the prefix where the competing vector exceeds the greedy vector. The remaining coordinates satisfy the required coordinatewise inequality.</p><p>Strictly decreasing positive weights express the objective as a positive combination of prefix sums. Consequently, the optimality and uniqueness conclusions follow. The task’s residual lexicographic tie-breaking is indeed unnecessary.</p><ul><li><b>Lemma 2: persistence of blocking</b></li></ul><p>Whenever \(y_u&lt;x_u\), the hypothesis \(q\ge x\) ensures \(y_u&lt;q_u\), so Lemma 1 applies.</p><p>The union \(T\) of the resulting witnesses is tight at \(y\), including when the union is empty. Every inequality in the displayed calculation has the correct direction. Feasibility forces equality at its endpoint, and \(S\cup T\) contains \(e\) while remaining inside \(U_e\).</p><p>The lemma is established.</p><ul><li><b>Lemma 3: comparison principle</b></li></ul><p>Every element of \(S\setminus\{e\}\) precedes \(e\). Its blocking witness therefore excludes \(e\), so the constructed union \(T\) also excludes \(e\).</p><p>The displayed chain correctly uses feasibility of \(z\), submodularity, feasibility of \(x\), and tightness of \(T\) at \(x\). On the remaining coordinates other than \(e\), the construction ensures \(x_u\ge z_u\).</p><p>Subtracting these coordinates gives the asserted inequality \(z_e\ge x_e\). There is no sign error.</p><ul><li><b>Finite termination of synchronous GDA</b></li></ul><p>There are finitely many rank values and selected masses, all rational, so a common denominator exists.</p><p>Greedy retention preserves the resulting rational grid. Splitting rejected mass and forwarding it also preserve that grid.</p><p>Each positive rejection round rejects at least \(1/D\) mass, while irrevocable advancement bounds total rejection mass, counted with multiplicity, by \(m\delta\). The finite-round conclusion follows.</p><p>The prover correctly distinguishes this termination argument from a polynomial-time simulation bound.</p><ul><li><b>Rejection invariant</b></li></ul><p>The invariant is initially vacuous.</p><p>The offered vector \(q\) belongs to \(H\): retained offers and new offers represent disjoint portions of selected mass.</p><p>If \(q_e&gt;z_e\), positive mass has previously reached \(e\). Every better acceptable contract of that type must therefore have received a rejection before the current round. The induction hypothesis supplies the stated lower bounds at those contracts.</p><p>These bounds would contradict the type-mass constraint if type-side blocking held at \(z\). Stability consequently supplies school-side blocking.</p><p>Lemma 3 is then applied with the correct orientation. Newly rejected contracts satisfy the invariant by Lemma 1; previously rejected contracts without a new rejection satisfy it because their offered amounts are fully retained.</p><ul><li><b>Terminal stability and side-optimality</b></li></ul><p>Failure of type-side blocking means that positive selected mass finishes below the contract or unmatched. Such mass must have passed through a rejection at that contract. Lemma 2 preserves the resulting school-side blocking through every subsequent round.</p><p>The terminal vector is therefore stable.</p><p>For side-optimality, if a coordinate in a type prefix is smaller than its value in a stable competitor, the rejection invariant shows that this coordinate was never rejected. Hence no mass of that type can finish below it or unmatched, and the terminal vector saturates that type prefix.</p><p>Summing type-prefix comparisons establishes dominance on every prefix of the total type-side order. Mutual prefix dominance implies coordinatewise equality, so the uniqueness argument is valid.</p><ul><li><b>Application of Iwata–Yokoi</b></li></ul><p>The cited Theorems 6.6 and 7.7 provide the stated \(O(N^3\gamma)\) algorithm and optimality under the same prefix-dominance definition used here. Their stability definition matches the prover’s tight-set blocking condition. Section 1 supplies the required two totally ordered polymatroids, and Section 4 identifies the required synchronous output with their side-optimal allocation. This theorem application is verified. [Iwata–Yokoi, Sections 6–7](https://www.keisu.t.u-tokyo.ac.jp/data/2017/METR17-02.pdf)</p><ul><li><b>Capacity formulas and arithmetic-operation bound</b></li></ul><p>The saturation formula follows correctly from the positive directional coefficients in the explicit inequalities.</p><p>For distinct contracts, the exchange formula correctly accounts for every inequality whose left side increases and for nonnegativity of the decreased coordinate. Negative coefficients in the supplied description do not invalidate it. Contracts sharing a school have zero school-occupancy direction, as the formula requires.</p><p>The type-side formulas are also correct.</p><p>Recomputing occupancies, type totals, and row slacks fits the claimed \(O(hm+N)\) arithmetic-operation bound.</p><p><b>Minor issue:</b> the oracle specification omits exchange capacity when both arguments are the same contract. The cited algorithm uses this case in its self-loop handling; the paper defines its value as \(+\infty\). This is a routine convention, not a missing mathematical argument. [Iwata–Yokoi, Sections 2–3](https://www.keisu.t.u-tokyo.ac.jp/data/2017/METR17-02.pdf)</p><p><b>Minimum clarification:</b> explicitly state the same-contract exchange-capacity convention for both oracle implementations.</p><ul><li><b>Staging and exact bit complexity</b></li></ul><p>Stage induction is valid because the computed finalized assignments agree with synchronous GDA, and all selected mass is removed in both processes. The deterministic rule therefore receives the same subsequent state.</p><p>Clearing each original inequality’s denominators produces integer coefficients of \(O(L)\) bits. Capacity denominators arise from division by such coefficients or their differences.</p><p>The cited numerical updates select minima of capacities and add or subtract those amounts; they introduce no additional variable divisions. This supports the prover’s denominator accounting. [Iwata–Yokoi, Section 3](https://www.keisu.t.u-tokyo.ac.jp/data/2017/METR17-02.pdf)</p><p>The \(O(Kn^3)\) capacity-query bound and the stage-rule output-length bound justify the stated \(B\). Bounded allocation masses and integer input coefficients also control numerator lengths.</p><p>Quadratic-cost exact rational arithmetic consequently yields the claimed runtime<br>\(O(L^3+KT_{\mathrm{sel}}+Kn^3(hm+n)B^2)\).</p><p>Empty contract sets and unmatched selected mass are handled explicitly. No major gap or false central step was found.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

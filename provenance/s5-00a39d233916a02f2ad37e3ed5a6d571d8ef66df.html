@@ -1,0 +1,309 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-00a39d233916a02f2ad37e3ed5a6d571d8ef66df — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-00a39d233916a02f2ad37e3ed5a6d571d8ef66df <span style="font-weight:normal;color:#8a7350">(s5-00a39d233916a02f2ad37e3ed5a6d571d8ef66df)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Corollary — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite support \(T\) of types with rational masses \(\mu_t\), a population size \(N\) with \(N\mu_t\) integral, \(k\) goods, bundle size bound \(d\), and per-capita supplies \(q_j\), compute a randomized allocation for the \(N\) named agents. A type \(t\) specifies a valuation \(v_t(B)\in[0,1]\) for each bundle \(B\) of size at most \(d\); the type-level allocation \(x_{tB}\) records the fraction of its mass assigned bundle \(B\). Require \((\epsilon,\delta)\)-joint differential privacy when one named agent changes type, and seek high welfare with small total supply violation under supplies \(Nq_j\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive mass, each mass \(\mu_t\) a binary rational; \(\tau\) is the support size, not the number of possible types. Require \(\sum_t\mu_t=1\), and give a binary integer \(N\geq1\) with \(N\mu_t\) integral. Let \(m=k\geq1\), \(1\leq d\leq k\), and \(\mathcal B=\{B\subseteq[k]:|B|\leq d\}\).<br>Each type explicitly lists rational values \(v_t(B)\in[0,1]\). Public per-capita supplies are rational \(q_j\in[0,1]\); public rational parameters satisfy \(0&lt;\epsilon\leq1\) and \(0&lt;\delta,\beta&lt;1/2\). Let \(L\) be the total input bit length, including valuation tables and \(N\).<br>A randomized mechanism computes a fractional allocation \(x_{tB}\geq0\) with \(\sum_Bx_{tB}\leq1\); these are conditional fractions within type \(t\), and the remaining fraction is unserved with value zero. Each named agent privately receives her type&#x27;s allocation vector. The internal type-indexed table is a compact representation; it is not publicly released, and delivery is by a trusted lookup using the recipient&#x27;s own type.<br>Define \(W(x)=N\sum_t\mu_t\sum_Bv_t(B)x_{tB}\) and \(V(x)=\sum_{j=1}^k\max\{0,N\sum_t\mu_t\sum_{B\ni j}x_{tB}-Nq_j\}\). Let \(\mathrm{OPT}\) maximize \(W\) over fractional allocations with \(V=0\).<br>Privacy is \((\epsilon,\delta)\)-joint differential privacy of the delivered vectors: changing one named agent&#x27;s valuation type must preserve differential privacy of the combined outputs to all other agents. This change transfers mass \(1/N\) between types and may change the support; the support and masses are private.<br>Require, jointly with probability at least \(1-\beta\), \(W(x)\geq\mathrm{OPT}-\alpha\) and \(V(x)\leq\alpha\), where \(\alpha=C\frac{kd}{\epsilon}\sqrt{\log(Nd/\delta)}\log(Ndk/\beta)\) for a universal constant \(C\).</p><p>Is attaining these welfare, supply-violation, and privacy guarantees possible by a randomized algorithm with preprocessing and per-recipient lookup time polynomial in \(m,\tau,L,d,1/\epsilon,\log(1/\delta),\log(1/\beta)\), or is attaining them NP-hard?</p><p>For an explicit list of agents, a jointly private algorithm achieves the stated additive welfare and total supply-violation bounds, efficiently with demand oracles ([Hsu et al.](https://arxiv.org/html/1411.0998)).<br>A later packing algorithm achieves additive welfare error and exact feasibility under minimum-supply conditions, with runtime linear in the explicit population size when other parameters are suppressed ([Huang and Zhu](https://arxiv.org/pdf/1905.00767)); this is a different guarantee and encoding.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized masses to sum to one and encoded N in binary.</li><li>Chose explicit rational valuation tables because the graded question did not specify valuation access.</li><li>Interpreted randomized allocation as a randomized fractional solution, matching the allocation corollary; no integral bundle sampling is required.</li><li>Restored the personal constraints that each type receives at most one bundle fraction in total, with a separate zero-value unserved option; no additional normalization of the empty bundle&#x27;s value is imposed.</li><li>Specified the fractional benchmark, total rather than maximum supply violation, confidence parameter, and additive error bound from the allocation corollary.</li><li>Restricted per-capita supplies to [0,1]; larger supplies are redundant because bundles contain at most one copy of each good.</li><li>Made support and masses private, allowed neighboring inputs to gain or lose supported types, and fixed adjacency to replacement of one named agent&#x27;s entire valuation type.</li><li>Used a trusted compact allocation table with private per-recipient lookup, and measured preprocessing and lookup separately, since explicitly delivering N outputs cannot take time polynomial in the binary support encoding alone.</li><li>Set m equal to the number k of goods and specified nondegenerate bundle and privacy parameter domains.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial result: a compact private mechanism, with an unresolved preprocessing bottleneck</h3><p>I do not settle the polynomial-time versus NP-hardness question for arbitrary $k$.</p><p>I prove a different general construction: one privately selected price vector suffices to obtain both guarantees, with additive error</p><p>$$
+O\!\left(\frac{kd}{\epsilon}\log\frac{Ndk}{\beta}\right).
+$$</p><p>The construction handles private support changes and has polynomial per-recipient lookup time. Its preprocessing, however, enumerates</p><p>$$
+\left(40N^2(k+1)d^2+1\right)^k
+$$</p><p>price vectors. Thus it does not establish the requested polynomial runtime for binary-encoded $N$.</p><p>If the permitted additive error is at least $N$, the zero allocation already satisfies the requirements, because $\mathrm{OPT}\leq N$. The construction below addresses the remaining case as well.</p><h3>1. The fractional problem and a repair inequality</h3><p>Write</p><p>$$
+n_t=N\mu_t,\qquad s_j=Nq_j.
+$$</p><p>The hypotheses imply that the $n_t$ are positive integers and sum to $N$.</p><p>Let $M=|\mathcal B|$. Substituting $z_{tB}=n_tx_{tB}$ expresses the nonprivate optimization problem as the rational linear program</p><p>$$
+\begin{aligned}
+\text{maximize}\quad&amp;
+\sum_{t,B}v_t(B)z_{tB},\\
+\text{subject to}\quad&amp;
+\sum_Bz_{tB}\leq n_t &amp;&amp;\text{for each }t,\\
+&amp;
+\sum_t\sum_{B\ni j}z_{tB}\leq s_j &amp;&amp;\text{for each }j,\\
+&amp;
+z_{tB}\geq0.
+\end{aligned}
+$$</p><p>There are $\tau M$ variables and $\tau+k$ substantive constraints. Explicit valuation tables make its encoding length polynomial in $L$. The feasible region is nonempty and bounded. Polynomial-time rational linear programming therefore solves the nonprivate problem in the required support encoding.</p><p>We shall also use the following inequality.</p><p><b>Repair lemma.</b> Every allocation satisfying the personal constraints obeys</p><p>$$
+W(x)\leq\mathrm{OPT}+V(x).
+$$</p><p><b>Proof.</b> Work with the count variables $z_{tB}=n_tx_{tB}$. Process goods sequentially. When a good’s current demand exceeds its supply, remove exactly that excess from allocation variables whose bundles contain the good.</p><p>This is possible because the excess is no larger than its current demand. Removing allocation preserves the personal constraints and cannot increase any other demand. Consequently, the amount removed while processing good $j$ is at most that good’s original excess.</p><p>The resulting allocation is feasible, and the total allocation mass removed is at most $V(x)$. Each removed unit has value at most $1$. The resulting welfare is therefore at least $W(x)-V(x)$, and is at most $\mathrm{OPT}$. This proves the inequality. $\square$</p><p>Define the penalized welfare</p><p>$$
+Q(x)=W(x)-2V(x).
+$$</p><p>The repair lemma gives a useful sufficient condition:</p><p>$$
+Q(x)\geq\mathrm{OPT}-a
+\quad\Longrightarrow\quad
+W(x)\geq\mathrm{OPT}-a,\qquad V(x)\leq a.
+$$</p><p>Indeed, the welfare assertion follows from $V(x)\geq0$. For violation,</p><p>$$
+\mathrm{OPT}-a
+\leq W(x)-2V(x)
+\leq\mathrm{OPT}-V(x).
+$$</p><h3>2. Smooth local responses admit a good price vector</h3><p>Introduce an additional action $\bot$, meaning unserved. Its value and resource vector are zero. For a bundle $B$, write $a(B)\in\{0,1\}^k$ for its incidence vector. There are</p><p>$$
+A=M+1\leq 2^{k+1}
+$$</p><p>actions, including $\bot$.</p><p>Set the public smoothing parameter</p><p>$$
+\gamma=\frac{1}{N(k+1)}.
+$$</p><p>For a price vector $p\in[0,2]^k$, define</p><p>$$
+u_{tB}(p)=v_t(B)-p\cdot a(B),\qquad u_{t\bot}(p)=0,
+$$</p><p>and the probability distribution</p><p>$$
+r_{ta}(p)=
+\frac{\exp(u_{ta}(p)/\gamma)}
+{\sum_b\exp(u_{tb}(p)/\gamma)}.
+$$</p><p>The bundle coordinates of $r_t(p)$ form a valid allocation vector; the $\bot$ coordinate is its unserved fraction.</p><p>Let $W(p)$, $D_j(p)$, $V(p)$, and $Q(p)$ denote the resulting welfare, demands, violation, and penalized welfare.</p><p><b>Lemma.</b> There exists $p^*\in[0,2]^k$ such that</p><p>$$
+Q(p^*)\geq\mathrm{OPT}-\log 2.
+$$</p><p><b>Proof.</b> Consider the smooth convex function</p><p>$$
+F_\gamma(p)
+=
+p\cdot s+
+\sum_tn_t\gamma
+\log\!\left(\sum_a\exp(u_{ta}(p)/\gamma)\right).
+$$</p><p>For every feasible allocation $y$, completed to a probability distribution by adding the unserved action,</p><p>$$
+\gamma\log\!\left(\sum_a e^{u_{ta}(p)/\gamma}\right)
+\geq \max_a u_{ta}(p)
+\geq \sum_a y_{ta}u_{ta}(p).
+$$</p><p>Because $p\geq0$ and the demands of $y$ are at most $s$, summing yields</p><p>$$
+F_\gamma(p)\geq W(y).
+$$</p><p>In particular,</p><p>$$
+F_\gamma(p)\geq\mathrm{OPT}
+\qquad\text{for every }p\in[0,2]^k.
+$$</p><p>Continuity and compactness supply a minimizer $p^*$. Differentiation gives</p><p>$$
+\frac{\partial F_\gamma}{\partial p_j}(p)=s_j-D_j(p).
+$$</p><p>The coordinatewise first-order conditions at a minimum over the box imply</p><p>$$
+\begin{aligned}
+p_j^*=0&amp;\ \Longrightarrow\ D_j(p^*)\leq s_j,\\
+0&lt;p_j^*&lt;2&amp;\ \Longrightarrow\ D_j(p^*)=s_j,\\
+p_j^*=2&amp;\ \Longrightarrow\ D_j(p^*)\geq s_j.
+\end{aligned}
+$$</p><p>Thus, coordinate by coordinate,</p><p>$$
+p_j^*(s_j-D_j(p^*))
+=-2\max\{D_j(p^*)-s_j,0\}.
+$$</p><p>For a probability vector $r$, let</p><p>$$
+H(r)=-\sum_a r_a\log r_a.
+$$</p><p>The defining Gibbs probabilities satisfy the exact identity</p><p>$$
+\gamma\log\!\left(\sum_a e^{u_{ta}(p)/\gamma}\right)
+=
+\sum_a r_{ta}(p)u_{ta}(p)+\gamma H(r_t(p)).
+$$</p><p>At $p^*$, it follows that</p><p>$$
+F_\gamma(p^*)
+=
+Q(p^*)+\gamma\sum_tn_tH(r_t(p^*)).
+$$</p><p>Since $H(r_t)\leq\log A$ and $\sum_tn_t=N$,</p><p>$$
+\gamma\sum_tn_tH(r_t(p^*))
+\leq\gamma N\log A
+\leq\log2.
+$$</p><p>Combining this with $F_\gamma(p^*)\geq\mathrm{OPT}$ proves the lemma. $\square$</p><p>This result accommodates positive empty-bundle values: the empty bundle is an ordinary action, distinct from the zero-valued unserved action.</p><h3>3. A public finite price grid preserves the guarantee</h3><p>We next bound how much penalized welfare changes with prices.</p><p>Let $p,p&#x27;\in[0,2]^k$, and put $h=\|p&#x27;-p\|_\infty$. Along the line segment between these prices, every action utility has derivative of absolute value at most $dh$. Differentiating the Gibbs probabilities gives</p><p>$$
+r_{ta}&#x27;=
+\frac{r_{ta}}{\gamma}
+\left(u_{ta}&#x27;-\sum_b r_{tb}u_{tb}&#x27;\right).
+$$</p><p>Therefore,</p><p>$$
+\sum_a|r_{ta}&#x27;|\leq\frac{2dh}{\gamma},
+$$</p><p>and integration gives</p><p>$$
+\operatorname{TV}(r_t(p),r_t(p&#x27;))
+\leq\frac{dh}{\gamma}.
+$$</p><p>Values lie in $[0,1]$, so</p><p>$$
+|W(p)-W(p&#x27;)|
+\leq\frac{Ndh}{\gamma}.
+$$</p><p>Every resource vector has $\ell_1$ norm at most $d$. Hence</p><p>$$
+\|D(p)-D(p&#x27;)\|_1
+\leq\frac{2Nd^2h}{\gamma}.
+$$</p><p>The map $D\mapsto\sum_j\max\{D_j-s_j,0\}$ is $1$-Lipschitz in $\ell_1$. Consequently,</p><p>$$
+|Q(p)-Q(p&#x27;)|
+\leq
+\frac{N(d+4d^2)h}{\gamma}
+\leq 5N^2(k+1)d^2h.
+$$</p><p>Define the public integer</p><p>$$
+G=20N^2(k+1)d^2
+$$</p><p>and the public candidate set</p><p>$$
+\mathcal P=
+\left\{0,\frac1G,\frac2G,\ldots,2\right\}^k.
+$$</p><p>Its cardinality is</p><p>$$
+K=(2G+1)^k.
+$$</p><p>Some grid point is within $1/G$ of $p^*$ in $\ell_\infty$. Thus</p><p>$$
+\max_{p\in\mathcal P}Q(p)
+\geq\mathrm{OPT}-\log2-\frac14.
+$$</p><p>The candidate set depends only on public parameters. In particular, it does not depend on the private support.</p><h3>4. Rational local responses and score sensitivity</h3><p>For an actual finite-bit algorithm, replace each Gibbs distribution by a deterministic rational approximation $\widetilde r_t(p)$ satisfying</p><p>$$
+\operatorname{TV}(\widetilde r_t(p),r_t(p))
+\leq \xi,
+\qquad
+\xi=\frac{1}{16N(1+4d)}.
+$$</p><p>The approximation rule is fixed independently of the society. Define $\widetilde W(p)$, $\widetilde D(p)$, $\widetilde V(p)$, and</p><p>$$
+\widetilde Q(p)=\widetilde W(p)-2\widetilde V(p)
+$$</p><p>using these rational responses.</p><p>The same expectation bounds as above imply</p><p>$$
+|\widetilde W(p)-W(p)|\leq N\xi,
+$$</p><p>$$
+\|\widetilde D(p)-D(p)\|_1\leq2Nd\xi,
+$$</p><p>and therefore</p><p>$$
+|\widetilde Q(p)-Q(p)|
+\leq N(1+4d)\xi=\frac1{16}.
+$$</p><p>In particular,</p><p>$$
+\max_{p\in\mathcal P}\widetilde Q(p)\geq\mathrm{OPT}-2.
+$$</p><p>Here is a certified polynomial-time implementation of the local approximation.</p><p>For each type and price, subtract the maximum action utility before exponentiating. Write the shifted exponents as</p><p>$$
+h_a=\frac{u_{ta}(p)-\max_bu_{tb}(p)}{\gamma}\leq0.
+$$</p><p>At least one corresponding exponential weight equals $1$.</p><p>Choose an integer $H$ with</p><p>$$
+2^H\geq\frac{64A}{\xi}.
+$$</p><p>Discard actions with $h_a&lt;-H$. Their total discarded weight is at most</p><p>$$
+Ae^{-H}\leq A2^{-H}\leq\frac{\xi}{64}.
+$$</p><p>For retained actions, approximate $e^{h_a}$ with absolute error at most</p><p>$$
+b_0=\frac{\xi}{128A},
+$$</p><p>clamping approximations to $[0,1]$ and keeping one maximum weight exactly $1$.</p><p>These approximations can be computed by rational Taylor sums. If the Taylor polynomial has degree $J$, its remainder for $h_a\in[-H,0]$ is at most</p><p>$$
+\frac{H^{J+1}}{(J+1)!}.
+$$</p><p>Using $j!\geq(j/e)^j$, it suffices to choose</p><p>$$
+J+1\geq12H,
+\qquad
+J+1\geq\left\lceil\log_2(1/b_0)\right\rceil.
+$$</p><p>Normalize the resulting nonnegative rational weights. Their total variation error from the normalized retained true weights is at most $\xi/64$: the total absolute weight error is at most $\xi/128$, and the true retained weight sum is at least $1$.</p><p>Finally choose $b$ with $2^b\geq8A/\xi$, round down all probabilities except one distinguished coordinate to multiples of $2^{-b}$, and assign the remaining probability to that coordinate. This produces nonnegative probabilities summing exactly to $1$, with additional total variation error at most $A2^{-b}\leq\xi/8$.</p><p>The combined error is smaller than $\xi$. All arithmetic uses polynomially many bits and polynomial time in the input size and public parameters.</p><p><b>Sensitivity lemma.</b> For each fixed public price $p$, replacing one named agent’s type changes $\widetilde Q(p)$ by at most</p><p>$$
+S=1+4d.
+$$</p><p><b>Proof.</b> The welfare contribution of either type is in $[0,1]$, so welfare changes by at most $1$. Each type’s expected resource vector is nonnegative and has $\ell_1$ norm at most $d$. Replacing it changes aggregate demand by at most $2d$ in $\ell_1$, and hence changes total violation by at most $2d$. Thus the penalized score changes by at most $1+4d$. $\square$</p><p>This argument remains valid when a type enters or leaves the support.</p><h3>5. Private selection gives both guarantees</h3><p>Consider first the ideal distribution on the finite public set $\mathcal P$:</p><p>$$
+\Pr[p]
+=
+\frac{\exp\!\left(\frac{\epsilon}{4S}\widetilde Q(p)\right)}
+{\sum_{p&#x27;\in\mathcal P}
+\exp\!\left(\frac{\epsilon}{4S}\widetilde Q(p&#x27;)\right)}.
+$$</p><h3>Privacy</h3><p>For neighboring societies, the sensitivity lemma bounds the ratio of corresponding unnormalized weights by $e^{\epsilon/4}$ in either direction. The same bound applies to the ratio of their normalizing constants. Hence every output probability ratio is at most $e^{\epsilon/2}$.</p><p>The ideal selected price is therefore $(\epsilon/2,0)$-differentially private.</p><h3>Accuracy</h3><p>Let $Q_{\max}=\max_{p\in\mathcal P}\widetilde Q(p)$. For any $a&gt;0$,</p><p>$$
+\Pr[\widetilde Q(p)&lt;Q_{\max}-a]
+\leq K\exp\!\left(-\frac{\epsilon a}{4S}\right).
+$$</p><p>Choosing</p><p>$$
+a=\frac{4S}{\epsilon}
+\left(\log K+\log\frac2\beta\right)
+$$</p><p>shows that, with probability at least $1-\beta/2$,</p><p>$$
+\widetilde Q(p)\geq\mathrm{OPT}-R,
+$$</p><p>where</p><p>$$
+R=
+2+\frac{4S}{\epsilon}
+\left(\log K+\log\frac2\beta\right).
+$$</p><p>The delivered allocation uses $\widetilde r_t(p)$, so its actual penalized welfare is precisely $\widetilde Q(p)$. The repair lemma proves, on the same event,</p><p>$$
+W(x)\geq\mathrm{OPT}-R,
+\qquad
+V(x)\leq R.
+$$</p><p>Moreover,</p><p>$$
+\log K
+=
+k\log\!\left(40N^2(k+1)d^2+1\right)
+=
+O\!\left(k\log(2Nkd)\right).
+$$</p><p>Since $S\leq5d$, $\epsilon\leq1$, and $\beta&lt;1/2$,</p><p>$$
+R=
+O\!\left(
+\frac{kd}{\epsilon}\log\frac{Ndk}{\beta}
+\right).
+$$</p><p>Finally, $\log(Nd/\delta)\geq\log2$. Thus a universal constant $C$ makes $R$ no larger than the error required in the question.</p><h3>Finite-bit price sampling</h3><p>Set</p><p>$$
+\theta=\min\left\{\frac{\delta}{8},\frac{\beta}{8}\right\}.
+$$</p><p>Enumerate the $K$ scores and subtract their maximum before exponentiating. Approximate the resulting normalized distribution within total variation distance $\theta$.</p><p>This can be done by exactly the truncation, Taylor approximation, normalization, and dyadic rounding procedure from Section 4, now applied to $K$ weights with error parameter $\theta$. The maximum shifted weight is $1$; a truncation threshold satisfying</p><p>$$
+2^H\geq\frac{64K}{\theta}
+$$</p><p>suffices. The required precision and number of random bits are polynomial in $\log K$ and $\log(1/\theta)$.</p><p>Let $\widehat P_{\mathcal D}$ denote the implemented price distribution and $P_{\mathcal D}$ the ideal distribution. For every event $E$ and neighboring societies,</p><p>$$
+\begin{aligned}
+\widehat P_{\mathcal D}(E)
+&amp;\leq P_{\mathcal D}(E)+\theta\\
+&amp;\leq e^{\epsilon/2}P_{\mathcal D&#x27;}(E)+\theta\\
+&amp;\leq e^{\epsilon/2}\widehat P_{\mathcal D&#x27;}(E)
+ +(1+e^{\epsilon/2})\theta\\
+&amp;\leq e^\epsilon\widehat P_{\mathcal D&#x27;}(E)+\delta.
+\end{aligned}
+$$</p><p>Here $e^{\epsilon/2}&lt;2$ and $\theta\leq\delta/8$. The reverse inequality follows by interchanging the societies.</p><p>The accuracy failure probability increases by at most $\theta$, and therefore remains below $\beta$.</p><h3>Joint privacy and private support</h3><p>After choosing $p$, an agent of type $t$ receives the bundle coordinates of $\widetilde r_t(p)$.</p><p>For a fixed changed agent, all other recipients’ valuation types remain unchanged. Their combined outputs are therefore a fixed function of the differentially private price vector and those unchanged types. Postprocessing proves $(\epsilon,\delta)$-joint differential privacy.</p><p>Neither the support nor the internal type-indexed allocation table is released. A type’s entry into or disappearance from the internal table creates no additional observable output under the stipulated trusted-delivery model.</p><p>Each recipient’s vector can be computed from her type and $p$ in polynomial time, or obtained from the internal table by polynomial-time lookup.</p><h3>6. Why this does not settle preprocessing complexity</h3><p>The construction is a bounded-time finite-bit algorithm, but its preprocessing enumerates</p><p>$$
+K=\left(40N^2(k+1)d^2+1\right)^k
+$$</p><p>candidates. Its runtime is $K$ times a polynomial in the stated input parameters. This dependence is not polynomial in the binary input length of $N$.</p><p>One might try to replace enumeration by private approximate minimization of the convex function $F_\gamma$. The following example shows why a dual objective approximation alone does not justify that replacement.</p><p>Take $k=d=1$, one supported type, singleton value $1$, empty-bundle value $0$, and supply $s=N/2$. With $\gamma=1/(2N)$, the singleton fraction is</p><p>$$
+r(p)=\frac{e^{(1-p)/\gamma}}{2+e^{(1-p)/\gamma}}.
+$$</p><p>The convex dual minimizer is</p><p>$$
+p^*=1-\gamma\log2,
+$$</p><p>because $r(p^*)=1/2$. At $p=1$, however,</p><p>$$
+r(1)=\frac13,
+\qquad
+W(1)=\frac N3,
+\qquad
+\mathrm{OPT}=\frac N2.
+$$</p><p>Thus the welfare loss is $N/6$.</p><p>Nevertheless,</p><p>$$
+F_\gamma&#x27;(p)=\frac N2-Nr(p),
+\qquad
+|F_\gamma&#x27;(p)|\leq\frac N2,
+$$</p><p>so</p><p>$$
+0\leq F_\gamma(1)-F_\gamma(p^*)
+\leq\frac N2\gamma\log2
+=\frac{\log2}{4}.
+$$</p><p>A constant dual objective error can therefore coexist with welfare loss proportional to $N$.</p><p>The penalized score itself also need not be concave. On $p&lt;p^*$ in this example,</p><p>$$
+Q(p)=N(1-r(p)),
+$$</p><p>and</p><p>$$
+r&#x27;&#x27;(p)=
+\frac{r(p)(1-r(p))(1-2r(p))}{\gamma^2}&lt;0.
+$$</p><p>Consequently $Q&#x27;&#x27;(p)&gt;0$ there. Efficient sampling from the score-based distribution cannot simply be justified by log-concave sampling.</p><p>The proven progress is a compact, support-independent private coordination mechanism with the desired accuracy and polynomial lookup. Efficient preprocessing for arbitrary $k$, or an appropriate hardness reduction, remains open in this write-up.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 6 and the overall response to USER_TASK: The mechanism enumerates $K=\left(40N^2(k+1)d^2+1\right)^k$ prices, so its preprocessing does not satisfy the requested polynomial bound for binary-encoded $N$. No alternative polynomial preprocessing algorithm or hardness reduction is supplied. The output therefore establishes a valid private construction but leaves the assigned complexity classification unresolved.</li></ul>
+<div class="pre"><p>The output establishes a valid partial result: a finite private mechanism attaining the requested accuracy, with polynomial per-recipient computation. It does <b>not</b> resolve whether the required preprocessing can run in polynomial time or whether attaining the guarantees is NP-hard. I found no mathematical error in the construction itself.</p><h3>Step-by-step verification</h3><h3>1. Fractional formulation and repair lemma</h3><p>The substitution $z_{tB}=n_tx_{tB}$ is valid because every supported type has positive integer count $n_t=N\mu_t$. It preserves welfare, resource consumption, and the personal allocation constraints.</p><p>The stated linear program correctly represents $\mathrm{OPT$. Its feasible region contains the zero allocation and is bounded by the personal constraints. Its explicit rational encoding has polynomial length in $L$, so the polynomial-time rational linear programming assertion applies to the <b>nonprivate</b> optimization problem.</p><p>The repair lemma is correct. At each processed good, the current excess can be removed from allocation variables containing that good. These removals preserve nonnegativity and personal constraints and cannot increase any resource demand. Hence the amount removed for each good is bounded by its original excess, and the total removed allocation mass is at most $V(x)$. Since all values lie in $[0,1]$, the welfare lost is at most this removed mass. Thus</p><p>$$
+W(x)\leq\mathrm{OPT}+V(x).
+$$</p><p>The subsequent implication is also correct:</p><p>$$
+Q(x)\geq\mathrm{OPT}-a
+\quad\Longrightarrow\quad
+W(x)\geq\mathrm{OPT}-a,\qquad V(x)\leq a.
+$$</p><p>Both guarantees therefore follow from one lower bound on penalized welfare.</p><h3>2. Existence of a good smooth-response price</h3><p>The action set correctly includes both the empty bundle and a separate unserved action. This distinction is necessary when the empty bundle has positive value. The bound</p><p>$$
+A=M+1\leq 2^{k+1}
+$$</p><p>holds for every permitted $k$ and $d$.</p><p>The lower bound $F_\gamma(p)\geq\mathrm{OPT}$ is valid: the log-sum-exp expression dominates expected utility under every completed feasible allocation, and the remaining term is</p><p>$$
+p\cdot(s-D(y))\geq0.
+$$</p><p>The minimizer exists by continuity on the compact price box. Differentiation correctly gives</p><p>$$
+\frac{\partial F_\gamma}{\partial p_j}=s_j-D_j.
+$$</p><p>The signs of all three stated boundary and interior optimality conditions are correct. They imply the coordinate identity</p><p>$$
+p_j^*(s_j-D_j(p^*))
+=-2\max\{D_j(p^*)-s_j,0\}.
+$$</p><p>The Gibbs entropy identity consequently yields</p><p>$$
+F_\gamma(p^*)
+=
+Q(p^*)+\gamma\sum_tn_tH(r_t(p^*)).
+$$</p><p>Finally,</p><p>$$
+\gamma\sum_tn_tH(r_t(p^*))
+\leq\frac{\log A}{k+1}\leq\log2.
+$$</p><p>Thus the claimed existence result $Q(p^*)\geq\mathrm{OPT}-\log2$ follows.</p><h3>3. Discretizing prices</h3><p>The derivative bound on action utilities is correct because each bundle contains at most $d$ goods. The stated Gibbs derivative formula gives</p><p>$$
+\operatorname{TV}(r_t(p),r_t(p&#x27;))
+\leq\frac{d\|p-p&#x27;\|_\infty}{\gamma}.
+$$</p><p>The welfare bound uses values in $[0,1]$. The demand bound uses the resource vectors’ $\ell_1$ norms, which are at most $d$. Both constants are valid.</p><p>Combining these bounds with the Lipschitz property of total excess demand gives</p><p>$$
+|Q(p)-Q(p&#x27;)|
+\leq5N^2(k+1)d^2\|p-p&#x27;\|_\infty.
+$$</p><p>With the stated grid spacing, the resulting loss is at most $1/4$. The grid cardinality</p><p>$$
+K=\left(40N^2(k+1)d^2+1\right)^k
+$$</p><p>is correct. Its independence from private support is established.</p><h3>4. Rational responses and finite-bit computation</h3><p>The perturbation estimates are correct:</p><p>$$
+|\widetilde W-W|\leq N\xi,
+\qquad
+\|\widetilde D-D\|_1\leq2Nd\xi,
+$$</p><p>and hence</p><p>$$
+|\widetilde Q-Q|\leq N(1+4d)\xi=\frac1{16}.
+$$</p><p>The weaker conclusion</p><p>$$
+\max_{p\in\mathcal P}\widetilde Q(p)\geq\mathrm{OPT}-2
+$$</p><p>therefore follows.</p><p>The numerical approximation procedure is sufficiently specified and its error bounds check out:</p><ul><li>Shifting utilities ensures a true maximum weight of exactly $1$.</li><li>Truncation discards total weight at most $\xi/64$.</li><li>For retained exponents, the Taylor remainder is bounded by the stated factorial expression.</li><li>Writing $j=J+1$, the conditions imply</li></ul><p>$$
+  \frac{H^j}{j!}\leq\left(\frac{eH}{j}\right)^j
+  \leq\left(\frac e{12}\right)^j&lt;2^{-j}\leq b_0.
+  $$</p><ul><li>Clamping cannot increase approximation error against a true weight in $[0,1]$.</li><li>Normalization and the final dyadic rounding keep the combined total variation error below $\xi$.</li></ul><p>The polynomial local computation claim is supported: the required truncation threshold and Taylor degree depend on logarithms of $A$, $N$, and $d$, while the exact rational utility calculations have polynomial bit length in the input encoding. Large numerical values of $N$ do not force enumeration of agents during this local computation.</p><h3>5. Score sensitivity</h3><p>The sensitivity lemma correctly compares one removed agent contribution with one added agent contribution.</p><p>Welfare changes by at most $1$. Each individual expected resource vector is nonnegative with $\ell_1$ norm at most $d$, so replacement changes aggregate demand by at most $2d$. Total violation consequently changes by at most $2d$. Therefore</p><p>$$
+|\widetilde Q_{\mathcal D}(p)-\widetilde Q_{\mathcal D&#x27;}(p)|
+\leq1+4d.
+$$</p><p>This proof covers support changes because the local response rule depends only on the type and public price, rather than on which other types are present.</p><h3>6. Private selection and accuracy</h3><p>For the ideal distribution, sensitivity bounds both the unnormalized weight ratio and the normalizing constant ratio by $e^{\epsilon/4}$. Their product gives the claimed $(\epsilon/2,0)$ privacy guarantee.</p><p>The accuracy tail estimate</p><p>$$
+\Pr[\widetilde Q(p)&lt;Q_{\max}-a]
+\leq K\exp\!\left(-\frac{\epsilon a}{4S}\right)
+$$</p><p>is valid. The chosen $a$ gives failure probability at most $\beta/2$, and the repair lemma then provides both required allocation inequalities with error $R$.</p><p>The asymptotic error calculation is correct:</p><p>$$
+R=O\!\left(\frac{kd}{\epsilon}\log\frac{Ndk}{\beta}\right).
+$$</p><p>Since $Nd/\delta&gt;2$, the factor $\sqrt{\log(Nd/\delta)}$ in the task is bounded below by a positive universal constant. Thus an appropriate universal $C$ makes the task’s permitted error at least $R$ throughout the specified domain.</p><p>The finite-bit sampler also checks out. Applying the approximation procedure to all $K$ weights gives the claimed total variation control. Such control contributes at most</p><p>$$
+(1+e^{\epsilon/2})\theta&lt;3\theta\leq\delta
+$$</p><p>to the privacy inequality. Accuracy failure increases by at most $\theta$, so it remains below $\beta$.</p><p>The sampler’s precision and random-bit requirements do not establish polynomial preprocessing: the procedure still enumerates all $K$ candidates.</p><h3>7. Joint privacy and delivery</h3><p>For any fixed changed agent, the types of all other recipients remain fixed between the neighboring societies. Their combined delivered vectors are therefore the same deterministic function of the selected price in both societies. Differential privacy of that price implies joint differential privacy by postprocessing.</p><p>The internal table and private support introduce no additional released outputs under the stipulated trusted-delivery model. The polynomial per-recipient computation claim follows from the verified local approximation procedure.</p><h3>8. Preprocessing and the illustrative obstruction</h3><p>The reported preprocessing cost is consistent with the construction: it is $K$ times a polynomial in the remaining parameters. This is not a polynomial bound in the binary encoding length of $N$, even for fixed positive $k$.</p><p>The final example is correctly computed. The separate empty and unserved actions explain the denominator $2$ in</p><p>$$
+r(p)=\frac{e^{(1-p)/\gamma}}{2+e^{(1-p)/\gamma}}.
+$$</p><p>The stated minimizer satisfies $r(p^*)=1/2$. At $p=1$, welfare is $N/3$, whereas $\mathrm{OPT}=N/2$. The derivative bound correctly limits the dual objective gap to $\log2/4$.</p><p>The second derivative calculation is also correct: on $p&lt;p^*$, one has $r(p)&gt;1/2$, so $r&#x27;&#x27;(p)&lt;0$ and $Q&#x27;&#x27;(p)&gt;0$. This establishes failure of concavity in the example.</p><p>These observations justify the limited claims made: constant dual objective accuracy alone does not guarantee the required welfare accuracy, and log-concave sampling cannot directly justify sampling from this score distribution. They establish neither computational hardness nor impossibility of another polynomial algorithm.</p><h3>Issue and minimum additional work</h3><p><b>Major — the requested complexity classification remains unresolved.</b> The construction has exponential preprocessing in the binary population encoding. No polynomial preprocessing algorithm or hardness reduction is supplied.</p><p>To resolve the assignment, a subsequent write-up must provide either a complete polynomial preprocessing method with verified accuracy, privacy, and bit complexity, or a hardness reduction applying to the task’s fractional allocations, additive tolerance, randomized success guarantee, and compact private-support encoding. Merely improving lookup time, identifying nonconcavity, or observing that this enumeration is expensive does not settle that question.</p><p>There are no additional substantive errors or minor gaps in the construction that I would require repaired. The partial claim is accurately qualified.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

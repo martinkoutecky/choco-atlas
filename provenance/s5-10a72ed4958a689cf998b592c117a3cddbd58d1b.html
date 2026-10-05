@@ -1,0 +1,156 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-10a72ed4958a689cf998b592c117a3cddbd58d1b — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-10a72ed4958a689cf998b592c117a3cddbd58d1b <span style="font-weight:normal;color:#8a7350">(s5-10a72ed4958a689cf998b592c117a3cddbd58d1b)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 8 — class: hardness</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\) alternatives and a finitely supported distribution \(\mu\) with positive binary-rational masses over pair-approval types \(\binom{[m]}{2}\), decide whether some candidate \(c\in[m]\) is fixed by every permutation \(\sigma\) satisfying \(\sigma\mu=\mu\). Return such a candidate when one exists.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(m\ge 2\) and \([m]=\{1,\ldots,m\}\). A pair-approval type is an unordered two-element subset of \([m]\).<br>A society is given by its support: \(\tau\) distinct types with positive binary-rational masses summing to \(1\); unlisted types have mass \(0\). Here \(\tau\) is the support size, not the number of possible types. Let \(L\) be the total input bit length; state running times in \(m,\tau,L\).<br>For a permutation \(\sigma\in S_m\), define \(\sigma(A)=\{\sigma(a):a\in A\}\) and \((\sigma\mu)(A)=\mu(\sigma^{-1}(A))\). Equality of masses is exact. All alternatives remain in the domain, including those occurring in no supported type.<br>Decide whether there exists \(c\in[m]\) such that every \(\sigma\in S_m\) with \(\sigma\mu=\mu\) satisfies \(\sigma(c)=c\); return any such candidate when one exists.</p><p>Is this decision problem in \(\mathrm{P}\), or is it \(\mathrm{NP}\)-hard?</p><p>For finite pair-approval profiles, the corresponding decision problem is \(\mathrm{GI}\)-complete under polynomial-time Turing reductions, even when each pair occurs at most once; quasipolynomial-time algorithms are known. [Xia](https://arxiv.org/pdf/2410.04179)<br>No result explicitly treating this binary-rational distribution formulation was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Specified masses summing to 1, interpreting distribution as a probability distribution.</li><li>Carried over the alternative domain m &gt;= 2 and assigned mass zero to unlisted types.</li><li>Defined the permutation action and exact equality of rational masses.</li><li>Retained alternatives absent from every supported type, as the discrete definition includes all alternatives.</li><li>Allowed any qualifying candidate to be returned; no tie-breaking rule is required.</li><li>Defined L as the total input bit length.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Proven classification and additional progress</h3><p>Let $D$ denote the decision problem in the question. The following results are proved below:</p><p>$$
+\mathrm{GI}\leq_T^p D\leq_T^p\mathrm{GI},
+\qquad
+D\in\mathrm{coNP}.
+$$</p><p>Consequently,</p><p>$$
+D\in\mathrm{P}
+\quad\Longleftrightarrow\quad
+\mathrm{GI}\in\mathrm{P}.
+$$</p><p>These results do not settle the requested choice between polynomial-time solvability and $\mathrm{NP}$-hardness.</p><p>The additional progress beyond the verified notes is a stronger lower bound: <b>the problem remains $\mathrm{GI}$-hard under polynomial-time Turing reductions even when every alternative occurs, the support graph is connected with diameter at most $3$, and there are exactly two distinct dyadic masses.</b> Thus the difficulty persists under substantial restrictions on the distribution.</p><p>Throughout, $\mathrm{NP}$-hardness means hardness under polynomial-time many-one reductions unless stated otherwise.</p><h3>1. Distributions as weighted graphs</h3><p>For a valid input $\mu$, define the weighted simple graph $G_\mu$ on $[m]$ by placing an edge on every supported pair $A$, with weight $\mu(A)$. There are exactly $\tau$ edges.</p><p>For any permutation $\sigma$,</p><p>$$
+\sigma\mu=\mu
+\quad\Longleftrightarrow\quad
+\mu(\sigma(A))=\mu(A)
+\text{ for every two-element subset }A\subseteq[m].
+$$</p><p>Indeed, substitute $\sigma(A)$ into the defining equality<br>$(\sigma\mu)(B)=\mu(\sigma^{-1}(B))$. Hence distribution-preserving permutations are precisely the weight-preserving automorphisms of $G_\mu$. A valid candidate is a vertex fixed by every such automorphism.</p><p>Let $V$ be the set of endpoints of supported pairs, and set</p><p>$$
+n=|V|,
+\qquad
+z=m-n.
+$$</p><p>Then $n\leq 2\tau$. Vertices in $V$ have positive degree, whereas the other $z$ vertices have degree zero. Therefore every automorphism preserves $V$, and every weighted automorphism of $G_\mu[V]$ extends independently by an arbitrary permutation of the unsupported alternatives.</p><p>It follows that:</p><ul><li>If $z=1$, the unique unsupported alternative is a valid candidate.</li><li>If $z\geq2$, each unsupported alternative can be moved by a transposition.</li><li>An active alternative is a valid candidate exactly when every weighted automorphism of $G_\mu[V]$ fixes it.</li></ul><p>No enumeration of all $m$ alternatives is necessary. When $z=1$, the missing label is</p><p>$$
+c=\frac{m(m+1)}2-\sum_{v\in V}v.
+$$</p><p>All integers in this computation have $O(\log(m+2))$ bits.</p><h3>2. Reduction to ordinary graph isomorphism</h3><p>We prove an algorithm for both decision and candidate selection using polynomially many ordinary graph-isomorphism queries.</p><h3>2.1 Encoding exact masses</h3><p>Partition the supported edges into their $q\leq\tau$ exact mass-equality classes. For binary-encoded rationals $a/b$ and $c/d$, equality is decided by comparing $ad$ and $bc$. Thus the partition can be computed in time polynomial in $L+\tau$.</p><p>Construct a vertex-colored incidence graph $B$:</p><ul><li>Each vertex of $V$ becomes a vertex of one common alternative color.</li><li>Each supported pair becomes a new edge vertex, colored by its mass-equality class.</li><li>An edge vertex is adjacent to its two endpoints.</li></ul><p>The alternative color differs from every edge color. The graph has</p><p>$$
+s=n+\tau\leq3\tau
+$$</p><p>vertices.</p><p>Every weighted automorphism of $G_\mu[V]$ extends to a color-preserving automorphism of $B$: map an edge vertex to the vertex representing the image pair. Conversely, a color-preserving automorphism of $B$ preserves alternative vertices, edge-weight classes, and incidence, so its restriction is a weighted automorphism of $G_\mu[V]$.</p><p>For $u\in V$, let $B_u$ be obtained by recoloring $u$ with a fresh distinguished color. Use the same distinguished color in every compared graph. Then</p><p>$$
+B_u\cong B_v
+\quad\Longleftrightarrow\quad
+\text{some weighted automorphism of }G_\mu[V]\text{ maps }u\text{ to }v,
+$$</p><p>where isomorphism on the left preserves colors.</p><p>For the forward implication, an isomorphism must map the uniquely distinguished vertex $u$ to $v$. Forgetting that distinguished color gives an automorphism of $B$, since both vertices originally had the alternative color. The reverse implication follows by extending a weighted automorphism to $B$.</p><p>Thus $u$ is a valid candidate precisely when all tests against $v\in V\setminus\{u\}$ return NO. At most $n(n-1)$ queries suffice.</p><h3>2.2 Removing colors</h3><p>Consider two colored simple graphs with $s$ vertices and common color labels $1,\ldots,k$. At each original vertex of color $i$, attach $(s+1)i$ new leaves.</p><p>All new vertices have degree one; every original vertex has degree at least $s+1$. Moreover, an original vertex of color $i$ has degree in</p><p>$$
+[(s+1)i,\ (s+1)i+s-1].
+$$</p><p>These intervals are disjoint. Therefore an uncolored isomorphism preserves original vertices and their colors. Its restriction is a color-preserving isomorphism. Conversely, a color-preserving isomorphism extends by bijectively matching the attached leaves.</p><p>The resulting graph has at most</p><p>$$
+s+s(s+1)k
+$$</p><p>vertices. Here $k\leq\tau+2$, so every ordinary GI query has $O((\tau+1)^3)$ vertices. This proves</p><p>$$
+D\leq_T^p\mathrm{GI}.
+$$</p><h3>2.3 Running time</h3><p>Let $T_{\mathrm{GI}}(N)$ bound the time for ordinary graph isomorphism on graphs with at most $N$ vertices. For an absolute constant $C$, the preceding algorithm takes</p><p>$$
+(L+\tau+\log(m+2))^{O(1)}
++
+O(\tau^2)\,
+T_{\mathrm{GI}}\!\left(C(\tau+1)^3\right).
+$$</p><p>The polynomial term includes exact arithmetic and construction of all queries. This states the dependence on $m,\tau,L$ and, in particular, avoids expansion of either the alternatives outside the support or the rational masses into voters.</p><p>Babai’s theorem gives an ordinary GI algorithm with running time $\exp((\log(N+2))^{O(1)})$. Its hypotheses apply to the uncolored simple graphs just constructed. Consequently, decision and candidate selection take time</p><p>$$
+(L+\tau+\log(m+2))^{O(1)}
++
+\exp((\log(\tau+2))^{O(1)}).
+$$</p><p>The external theorem used here is [Babai, *Graph Isomorphism in Quasipolynomial Time*](https://arxiv.org/abs/1512.03547).</p><h3>3. Stronger hardness: two dyadic masses and connected support</h3><p>We construct a polynomial-time many-one reduction from graph nonisomorphism to $D$. The output always has connected support of diameter at most $3$, all alternatives are active, and exactly two distinct dyadic masses occur.</p><p>Negating the answer then yields a polynomial-time Turing reduction from GI.</p><h3>3.1 Padding the source graphs</h3><p>First suppose the input graphs $G,H$ each have $n_0\geq1$ vertices.</p><p>Let $n$ be the least power of two with $n\geq n_0$. Add $n-n_0$ isolated vertices to each graph, obtaining $\widehat G,\widehat H$. Then</p><p>$$
+n&lt;2n_0,
+\qquad
+G\cong H
+\quad\Longleftrightarrow\quad
+\widehat G\cong\widehat H.
+$$</p><p>The forward implication is immediate by mapping the added isolates.</p><p>For the reverse implication, an isomorphism of the padded graphs restricts to an isomorphism between their induced graphs on positive-degree vertices. The original graphs therefore have isomorphic positive-degree parts with the same number of vertices. Because both original graphs have order $n_0$, they also have the same number of original isolated vertices. Extending the isomorphism by matching those isolates gives $G\cong H$.</p><p>Write</p><p>$$
+E=|E(\widehat G)|+|E(\widehat H)|.
+$$</p><h3>3.2 Choosing two masses</h3><p>Define</p><p>$$
+B=4n+4E+1.
+$$</p><p>Choose the least power of two $Q$ satisfying</p><p>$$
+Q\geq B+2n+1.
+$$</p><p>Set</p><p>$$
+a=Q-B,
+\qquad
+b=2n,
+\qquad
+P=2nQ.
+$$</p><p>These numbers satisfy</p><p>$$
+a\geq2n+1&gt;b&gt;0.
+$$</p><p>Since $n$ and $Q$ are powers of two, $P$ is also a power of two. Thus $a/P$ and $b/P$ are distinct positive dyadic masses.</p><p>The choice of a power-of-two order is what permits normalization using only these two masses.</p><h3>3.3 The support graph</h3><p>For each $K\in\{\widehat G,\widehat H\}$, construct a separate rooted graph $C(K)$:</p><ul><li>Introduce a root $r_K$.</li><li>Replace every vertex $v$ of $K$ by two vertices $v_0,v_1$, joined by an edge of integer weight $a$.</li><li>Join $r_K$ to both members of every pair by edges of integer weight $b$.</li><li>For every edge $\{u,v\}$ of $K$, place all four edges between $\{u_0,u_1\}$ and $\{v_0,v_1\}$, each with integer weight $b$.</li></ul><p>Finally, join $r_{\widehat G}$ and $r_{\widehat H}$ by one edge of integer weight $b$.</p><p>Divide every integer edge weight by $P$. All pairs used are distinct. There are</p><p>$$
+m=4n+2
+$$</p><p>alternatives and</p><p>$$
+\tau=6n+4E+1
+$$</p><p>supported pairs.</p><p>There are $2n$ edges of weight $a$ and $B$ edges of weight $b$. Therefore the total integer weight is</p><p>$$
+2na+Bb
+=
+2n(Q-B)+B(2n)
+=
+2nQ
+=
+P.
+$$</p><p>The masses consequently sum exactly to one.</p><p>Every alternative has positive degree. The graph is connected: within each half, the root is adjacent to every other vertex, and the roots are adjacent. Any two vertices in the same half have distance at most $2$; vertices in different halves have distance at most $3$.</p><p>Both masses occur: every represented vertex contributes an $a$-edge, and root edges supply $b$-edges.</p><p>Finally, $B=O(n+E)$ and the least admissible power of two satisfies</p><p>$$
+Q&lt;2(B+2n+1).
+$$</p><p>Hence all labels and masses have $O(\log(n+E+2))$ bits. The output length is</p><p>$$
+O((n+E)\log(n+E+2)),
+$$</p><p>so the construction is polynomial-time.</p><h3>3.4 Every nonroot vertex can move</h3><p>For each represented vertex $v$, the transposition of $v_0,v_1$ fixing all other vertices is a weighted automorphism.</p><p>Their mutual edge has weight $a$. Outside that pair, both vertices have the same root neighbor and the same neighbors arising from original graph edges, all with weight $b$. Swapping them therefore preserves every edge and its weight.</p><p>Thus no nonroot vertex is fixed by every automorphism. Only the two roots can be valid candidates.</p><h3>3.5 Root interchange characterizes source isomorphism</h3><p>The roots are exactly the vertices not incident to an edge of mass $a/P$. Every nonroot vertex belongs to one such edge. Therefore every weighted automorphism preserves the two-element root set.</p><p>Suppose an automorphism interchanges the roots. The root-to-root edge is then preserved setwise. Delete that edge. The resulting graph has exactly two connected components, namely $C(\widehat G)$ and $C(\widehat H)$, because each root is adjacent to every nonroot vertex in its half. The automorphism restricts to a weighted isomorphism</p><p>$$
+C(\widehat G)\cong C(\widehat H).
+$$</p><p>Within either component, the edges of mass $a/P$ identify precisely the pairs representing original vertices. The isomorphism therefore induces a bijection between the original vertex sets. For two distinct pairs, edges between them exist exactly when their corresponding original vertices are adjacent. Consequently, the induced bijection is an isomorphism</p><p>$$
+\widehat G\cong\widehat H.
+$$</p><p>Conversely, an isomorphism $f:\widehat G\to\widehat H$ extends to a weighted component isomorphism by sending the root to the root and $v_i$ to $f(v)_i$ for $i\in\{0,1\}$. Use this map on the first half and its inverse on the second. Their union preserves the root-to-root edge and gives an automorphism interchanging the roots.</p><p>We have proved</p><p>$$
+\text{an automorphism interchanges the roots}
+\quad\Longleftrightarrow\quad
+G\cong H.
+$$</p><p>If $G\not\cong H$, the two roots cannot be interchanged. Since their set is invariant, both are fixed by every automorphism, and the society answers YES.</p><p>If $G\cong H$, an automorphism moves both roots, and the pair transpositions move every nonroot vertex. The society answers NO.</p><p>Thus</p><p>$$
+D(\mu_{G,H})=\mathrm{YES}
+\quad\Longleftrightarrow\quad
+G\not\cong H.
+$$</p><h3>3.6 Exceptional source inputs</h3><p>If the graph orders differ, they are nonisomorphic. Output a path on three alternatives with edge masses $1/4$ and $3/4$. Its middle vertex is fixed by every automorphism, so this is a YES instance satisfying all the stated restrictions.</p><p>If both graphs have order zero, replace them by two one-vertex edgeless graphs and apply the construction. They are isomorphic, so the output is a NO instance satisfying the restrictions.</p><p>The reduction therefore covers arbitrary GI inputs. Together with Section 2, it proves $\mathrm{GI}$-completeness under polynomial-time Turing reductions, including the claimed restricted hardness.</p><h3>4. Membership in $\mathrm{coNP}$</h3><p>A NO instance means that every alternative can be moved by some distribution-preserving permutation. Different alternatives may require different permutations.</p><p>Compute $V,n,z$ as in Section 1. If $z=1$, the instance is necessarily YES, so a verifier for NO certificates rejects.</p><p>Otherwise, a certificate supplies, for every $v\in V$, a permutation $\pi_v$ of $V$ such that</p><p>$$
+\pi_v(v)\neq v
+$$</p><p>and $\pi_v$ preserves every supported pair and its exact mass.</p><p>Indexing $V$ by $[n]$, these $n$ permutations require $O(n^2\log(n+2))$ bits. Since $n\leq2\tau$, the certificate has polynomial length.</p><p>The verifier checks that each supplied map is a permutation, moves its designated vertex, and maps every supported pair to a supported pair of identical mass. These checks take polynomial time in $L+\tau+\log(m+2)$.</p><p>Preserving the supported pairs suffices also to preserve nonedges: a vertex permutation acts bijectively on all pairs, so its injective image of the finite support, contained in that support, must equal the support.</p><p>For soundness, each verified permutation extends to the full domain by fixing unsupported alternatives, so every active vertex can move. If $z\geq2$, each unsupported vertex can move by an isolated-vertex transposition. Hence no valid candidate exists.</p><p>For completeness, in any NO instance, each active vertex is moved by some full automorphism. Its restriction to $V$ supplies the required permutation.</p><p>Therefore,</p><p>$$
+D\in\mathrm{coNP}.
+$$</p><p>If $D$ were $\mathrm{NP}$-hard under polynomial-time many-one reductions, closure of $\mathrm{coNP}$ under such reductions would imply</p><p>$$
+\mathrm{NP}\subseteq\mathrm{coNP}.
+$$</p><p>Taking complements gives the reverse inclusion, and hence</p><p>$$
+\mathrm{NP}=\mathrm{coNP}.
+$$</p><p>This is a conditional consequence, not a proof that $D$ is not $\mathrm{NP}$-hard.</p><h3>5. A polynomial-time special case: all masses distinct</h3><p>Suppose all $\tau$ supported masses are pairwise distinct. Then every supported edge is preserved setwise by every weighted automorphism.</p><p>If a vertex $v$ has degree at least $2$, choose two distinct incident edges. Their intersection is $\{v\}$, so every automorphism fixes $v$.</p><p>If a connected component has at least three vertices, each degree-one vertex has a neighbor of degree at least $2$. That neighbor is fixed, and their edge is preserved setwise, so the degree-one vertex is also fixed. Thus every vertex of such a component is fixed.</p><p>Conversely, in a component consisting of one edge, exchanging its endpoints is an automorphism. If the active graph is a matching, no active candidate exists.</p><p>Consequently, under the distinct-mass hypothesis, the instance is YES exactly when</p><p>$$
+z=1
+\quad\text{or}\quad
+G_\mu[V]\text{ has a vertex of degree at least }2.
+$$</p><p>The unique unsupported vertex or any vertex of degree at least $2$ supplies a candidate. Exact mass comparisons and degree computation give a polynomial-time algorithm in $L+\tau+\log(m+2)$.</p><h3>6. Established conclusions and open points</h3><p>The classification is consistent with the finite-profile result in [Xia, *Computing Most Equitable Voting Rules*](https://arxiv.org/pdf/2410.04179). The arguments here operate directly on binary-rational masses and do not expand them into individual voters.</p><p>The strengthened construction shows that even connected support, diameter at most $3$, and only two distinct dyadic masses retain the graph-isomorphism lower bound. As a supplementary check, the construction’s normalization, support counts, diameter bound, and root-interchange equivalence were verified computationally for all $69$ ordered pairs of simple graphs of equal positive orders at most $3$. The proofs above establish the claims for arbitrary orders independently of that check.</p><p>The target question remains unresolved by these results. A polynomial-time algorithm for $D$ would give one for GI; a polynomial-time algorithm for GI would decide $D$ and return a candidate. An unconditional many-one $\mathrm{NP}$-hardness proof would imply $\mathrm{NP}=\mathrm{coNP}$.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The output establishes its stated partial results rigorously: polynomial-time Turing equivalence with $\mathrm{GI}$, membership in $\mathrm{coNP}$, the restricted hardness construction, and the distinct-mass special case. I found no mathematical error or gap requiring repair. It does <b>not</b> settle the requested choice between membership in $\mathrm{P}$ and $\mathrm{NP}$-hardness, and it explicitly acknowledges this limitation.</p><p><b>1. Weighted-graph interpretation and unsupported alternatives</b></p><p>The equivalence between distribution preservation and weight-preserving graph automorphism is correct. The substitution in the definition of $\sigma\mu$ establishes the required equality on all pairs, including pairs of mass zero.</p><p>The separation into active vertices $V$ and $z=m-|V|$ unsupported alternatives is valid: positive degree is invariant under automorphisms. Consequently:</p><ul><li>When $z=1$, the unsupported alternative is fixed by every automorphism.</li><li>When $z\geq2$, every unsupported alternative can move.</li><li>Automorphisms of the active weighted graph extend independently over the unsupported alternatives.</li></ul><p>The missing-label formula is correct when $z=1$. Its products, sums, and intermediate integers have $O(\log(m+2))$ bits. Valid inputs have positive total mass, so empty support introduces no omitted valid-input case.</p><p><b>2. Reduction to ordinary graph isomorphism</b></p><p>Exact rational comparison by cross multiplication is correct and has polynomial bit complexity. Assigning colors by mass-equality classes preserves precisely the distinctions relevant to automorphisms.</p><p>The incidence graph correctly represents the weighted graph. The separate alternative color prevents confusion between alternatives and edge vertices; simplicity ensures that each supported pair has a unique corresponding edge vertex.</p><p>The equivalence<br>$$
+B_u\cong B_v
+\quad\Longleftrightarrow\quad
+\text{some weighted automorphism maps }u\text{ to }v
+$$<br>is correct. The common distinguished color forces the required image, and forgetting that color restores the original alternative color. Testing every other active vertex therefore determines whether $u$ is fixed by every automorphism and supplies a candidate when one exists.</p><p>The leaf encoding removes colors correctly. Original vertices have degree at least $s+1$, while added leaves have degree one. The degree intervals for different colors are disjoint because the original degree contributes at most $s-1$. Both directions of the isomorphism correspondence follow as stated.</p><p>The query bound, graph-size bound, and polynomial construction overhead are valid. In particular, the algorithm depends polynomially on the explicit support and bit length and does not enumerate all unsupported alternatives.</p><p>The invoked quasipolynomial theorem is stated sufficiently precisely, and its hypotheses apply to the constructed ordinary simple graphs. The cited [Babai paper](https://arxiv.org/abs/1512.03547) supports the stated running-time bound. Substituting the polynomial query-size bound and absorbing the polynomial number of queries yields the displayed quasipolynomial bound.</p><p><b>3. Restricted hardness construction</b></p><p>The padding argument is correct, including graphs with existing isolated vertices. Equal original orders ensure that an isomorphism of the positive-degree parts leaves equal numbers of original isolates to match.</p><p>The numerical choices satisfy<br>$$
+a=Q-B\geq2n+1&gt;b=2n&gt;0.
+$$<br>Since $n$ and $Q$ are powers of two, $P=2nQ$ is a power of two. Both masses are therefore positive, distinct, and dyadic.</p><p>The support counts are correct:</p><ul><li>The two halves contribute $2n$ edges of weight $a$.</li><li>Root incidences contribute $4n$ edges of weight $b$.</li><li>Source edges contribute $4E$ edges of weight $b$.</li><li>The root bridge contributes one further edge of weight $b$.</li></ul><p>Thus the stated values of $m$, $\tau$, and $B$ agree with the construction. Normalization is exact:<br>$$
+2na+Bb=2n(Q-B)+2nB=P.
+$$</p><p>The construction creates no duplicate pairs. All vertices are active; connectivity and the diameter bound follow from the root adjacencies and bridge. The bound on $Q$ and the resulting output-length estimate are also correct.</p><p>Each represented pair admits the claimed transposition: its members have identical weighted adjacency outside their mutual edge. Hence every nonroot vertex can move.</p><p>The root-interchange argument is valid in both directions. The roots are exactly the vertices incident to no edge of mass $a/P$, making their set invariant. An automorphism interchanging them preserves their bridge; deleting that bridge separates the two rooted components. The uniquely identified $a/P$ pairs then recover the source vertices, and interpair adjacency recovers source adjacency.</p><p>Conversely, the stated extension of a source isomorphism and its inverse yields an automorphism interchanging the roots. The resulting answer reversal is therefore correct:<br>$$
+D(\mu_{G,H})=\mathrm{YES}
+\quad\Longleftrightarrow\quad
+G\not\cong H.
+$$</p><p>The exceptional inputs are handled correctly. The unequal-order output satisfies every advertised restriction, and the zero-order replacement preserves the required answer.</p><p>This establishes a many-one reduction from graph nonisomorphism and, by negating the oracle answer, the claimed Turing reduction from $\mathrm{GI}$. It does not establish $\mathrm{NP}$-hardness.</p><p>I also independently reproduced the stated check on all $69$ ordered pairs of labeled simple graphs of equal positive orders at most $3$: normalization, support counts, diameter, and root-interchange equivalence passed. This corroborates the supplementary computational claim; the written proof supplies the general justification.</p><p><b>4. Membership in $\mathrm{coNP}$</b></p><p>The certificate correctly respects the quantifiers. A NO instance requires a possibly different moving automorphism for each alternative; it does not require one automorphism moving all alternatives simultaneously.</p><p>The certificate length is polynomial because only active vertices are explicitly represented. Checking supported pairs and exact masses suffices: a permutation acts injectively on pairs, so mapping the finite support into itself maps it onto itself and preserves nonedges as well.</p><p>The treatment of unsupported alternatives gives soundness for both $z=0$ and $z\geq2$, while rejecting $z=1$ is necessary. Completeness follows from restricting each full automorphism to the invariant active set.</p><p>The conditional consequence of many-one $\mathrm{NP}$-hardness is correct: together with $\mathrm{coNP}$ membership, it would imply $\mathrm{NP}=\mathrm{coNP}$. The output correctly avoids interpreting this as an unconditional exclusion of hardness.</p><p><b>5. Distinct-mass special case</b></p><p>Distinct masses force every supported edge to be preserved setwise. The intersection argument fixes every vertex of degree at least two. The degree-one argument in components with at least three vertices is valid, and isolated edge components admit endpoint exchanges.</p><p>The resulting criterion and candidate-selection procedure are correct, including the unsupported-alternative cases and the single-edge active graph.</p><p><b>6. Adjudication and actionable feedback</b></p><p>The prover establishes substantial correct content and accurately describes it as partial. Its reductions prove<br>$$
+D\in\mathrm{P}\quad\Longleftrightarrow\quad\mathrm{GI}\in\mathrm{P},
+$$<br>but this equivalence supplies neither requested unconditional classification.</p><p>No additional clarification is needed to verify the established results. Settling the original target requires a further substantive result, rather than an expositional repair.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

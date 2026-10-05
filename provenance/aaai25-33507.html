@@ -1,0 +1,222 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Every Bit Helps: Achieving the Optimal Distortion with a Few Queries — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Every Bit Helps: Achieving the Optimal Distortion with a Few Queries <span style="font-weight:normal;color:#8a7350">(aaai25-33507)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 6 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>There is a λ-query single-winner voting rule that achieves a distortion of O(λ·(min{n, m})1/λ) and runs in poly(n, m) time. More precisely, if a β-approximately stable committee ex- ists for a given instance, the distortion guarantee is β · 1/λ · (min{n, m})1/λ. We provide the proof and the algorithm in the full ver- sion and discuss the main differences compared to one-sided matching below.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given candidates C, finite observable cohorts T with rational masses summing to one, a ranking for each cohort, a constant query budget lambda, and a promise that each cohort has one hidden utility vector consistent with its ranking, design or decide the existence of an adaptive deterministic policy making at most lambda value queries per cohort and outputting a candidate whose worst-case mass-weighted welfare distortion is at most D.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C\) be a nonempty set of \(m\) candidates. A society is given by its support: the list of \(\tau\) observable cohort types with positive binary rational masses \(p_t\), summing to \(1\), and a total ranking \(\sigma_t\) for each. Here \(\tau\) is the support size, not the number of possible rankings; distinct cohorts may share a ranking.<br>Each cohort has one fixed hidden utility vector \(u_t:C\to\mathbb R_{\ge0}\), shared by its entire mass, with \(u_t(\sigma_t(1))\ge\cdots\ge u_t(\sigma_t(m))\). Utilities have no normalization; utility ties are resolved by the supplied ranking.<br>A query \(Q(t,c)\) reveals exactly \(u_t(c)\). A deterministic policy chooses queries and its final candidate using the observable input and all previous answers, making at most \(\lambda\) queries to each cohort on every feasible history, where \(\lambda\ge1\) is a fixed integer. Cohorts cannot be split into independently queried subcohorts.<br>Define \(W_u(c)=\sum_t p_tu_t(c)\). Given a binary rational \(D\ge1\), a policy has distortion at most \(D\) if, for every consistent hidden profile \(u\), its output \(c_P(u)\) satisfies \(\max_{c\in C}W_u(c)\le D W_u(c_P(u))\); this also covers profiles with zero welfare. Let \(L\) be the total bit length of the observable input.</p><p>Is deciding whether such a policy exists solvable in time \(\operatorname{poly}(m,\tau,L)\) for each fixed \(\lambda\), or is it NP-hard for some fixed \(\lambda\)?</p><p>For a finite society of \(n\) agents, a deterministic polynomial-time rule achieves distortion \(O(\lambda(\min\{n,m\})^{1/\lambda})\) using at most \(\lambda\) value queries per agent. [Ebadian–Shah](https://www.cs.toronto.edu/~nisarg/papers/value-queries.pdf)<br>No result settling this exact cohort-policy existence problem was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Used the anchor&#x27;s supplied algorithmic classification to target the complexity of policy existence for a given threshold, rather than an asymptotic distortion bound.</li><li>Specified unnormalized nonnegative real utilities and weak utility inequalities along supplied total rankings, following the discrete utility domain.</li><li>Made queries exact and allowed adaptation across all cohorts; each observable cohort has one fixed vector and cannot be split into independently queried subcohorts.</li><li>Allowed distinct observable cohorts to share a ranking without requiring their hidden vectors to coincide.</li><li>Specified nonempty candidate and cohort supports, a fixed positive integer query budget, a binary rational threshold at least one, and total observable input bit length.</li><li>Used optimal welfare divided by selected welfare, as intended by the distortion bounds and proofs, rather than the reversed displayed definition; expressed the guarantee as an inequality to handle zero welfare.</li><li>Selected the decision variant explicitly, so polynomial running time concerns deciding policy existence and requires no encoding convention for real query answers or output policies.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Proven result and scope</h3><p><b>Theorem.</b> For $\lambda=1$, the cohort-policy existence problem is $\mathrm{coNP}$-complete under polynomial-time many-one reductions. Hardness holds even when each top candidate is the top of at most two cohorts.</p><p>This substantially narrows the complexity question: a polynomial-time algorithm for every fixed $\lambda$ would imply $\mathrm{P}=\mathrm{NP}$. It also establishes $\mathrm{NP}$-hardness under polynomial-time <b>Turing</b> reductions already for $\lambda=1$.</p><p>I use the customary <b>many-one</b> interpretation of the requested $\mathrm{NP}$-hardness. Under that interpretation, the original question remains partially unresolved: the proof below does not establish $\mathrm{NP}$-hardness for some fixed $\lambda\ge2$.</p><h3>2. An exact characterization for one query</h3><h3>2.1. Eliminating masses</h3><p>Set<br>$$
+v_t(c)=p_tu_t(c).
+$$</p><p>Since $p_t&gt;0$, this transformation is a bijection between admissible original utility vectors and arbitrary nonnegative vectors $v_t$ respecting the same rankings. Moreover,<br>$$
+W_u(c)=\sum_t v_t(c).
+$$</p><p>A query answer in either representation determines the answer in the other by multiplication or division by $p_t$. Thus the transformation preserves policies, query budgets, and distortion.</p><p>Throughout the proof, utilities refer to $v_t$, and welfare is their sum. In particular, policy existence is independent of the positive cohort masses.</p><h3>2.2. An unqueried top forces the output</h3><p>Write $h_t=\sigma_t(1)$.</p><p><b>Lemma 1.</b> At any feasible terminal history of a finite-distortion policy, an unqueried value $v_t(h_t)$ forces the output to be $h_t$.</p><p><b>Proof.</b> Suppose the output is $c\ne h_t$. Starting from any profile producing this history, increase only $v_t(h_t)$. Ranking consistency is preserved, and every queried value remains unchanged.</p><p>Determinism therefore preserves the entire history and output. The welfare of $c$ remains fixed, while that of $h_t$ becomes arbitrarily large, contradicting finite distortion. $\square$</p><h3>2.3. Querying all tops suffices when $\lambda=1$</h3><p><b>Lemma 2.</b> A one-query-per-cohort distortion-$D$ policy exists if and only if one exists that queries every cohort’s top candidate and then chooses its output.</p><p><b>Proof.</b> Let $P$ be any successful one-query policy. The replacement policy queries all tops, obtaining<br>$$
+a_t=v_t(h_t).
+$$</p><p>It then simulates $P$, answering every simulated query to cohort $t$ with $a_t$. This transcript is feasible: the flat vectors $v_t(d)=a_t$ for all $d$ produce it.</p><p>Let $c$ be the simulated output. If the simulation queried a non-top candidate in cohort $t$, its top was unqueried because the budget is one. Lemma 1 implies $c=h_t$.</p><p>Now fix any actual profile $v$ with the recorded top answers. Construct $v&#x27;$ by replacing each cohort queried at a non-top candidate during the simulation by its flat vector of value $a_t$. Retain all other cohorts.</p><p>Every simulated query receives the same answer on $v&#x27;$, so $P$ outputs $c$. Every modified cohort has $c=h_t$; consequently, its utility for $c$ is unchanged, while its utility for every rival weakly increases. Hence<br>$$
+W_{v&#x27;}(c)=W_v(c),
+\qquad
+W_{v&#x27;}(d)\ge W_v(d)\quad(d\in C).
+$$</p><p>The guarantee of $P$ gives<br>$$
+W_v(d)\le W_{v&#x27;}(d)\le D W_{v&#x27;}(c)=D W_v(c).
+$$</p><p>Thus the replacement succeeds for every completion of its top answers. $\square$</p><h3>2.4. Which outputs are safe?</h3><p>If all cohorts have a common top, that candidate is pointwise optimal. Henceforth assume there are at least two distinct tops. Put<br>$$
+H=\{h_1,\ldots,h_k\},
+\qquad
+r=D-1.
+$$</p><p>For a vector $a$ of top answers, define<br>$$
+A_c(a)=\sum_{t:h_t=c}a_t,
+\qquad
+F_c(a)=\max_{d\ne c}\sum_{t:d\succ_t c}a_t,
+$$<br>where $d\succ_t c$ means that $d$ precedes $c$ in cohort $t$’s ranking.</p><p><b>Lemma 3.</b> Candidate $c$ is safe for every completion of the top answers $a$ precisely when<br>$$
+F_c(a)\le rA_c(a).
+$$</p><p><b>Proof.</b> Fix a rival $d\ne c$. We maximize each cohort’s contribution<br>$$
+v_t(d)-Dv_t(c)
+$$<br>subject to its ranking and top answer.</p><ul><li>If $h_t=c$, the maximum is $-ra_t$, attained by a flat vector.</li><li>If $h_t\ne c$ and $d\succ_t c$, the maximum is $a_t$, attained by assigning $a_t$ to the prefix ending at $d$ and zero thereafter.</li><li>If $h_t\ne c$ and $c\succ_t d$, then</li></ul><p>$$
+  v_t(d)-Dv_t(c)\le(1-D)v_t(c)\le0.
+  $$<br>The maximum zero is attained by assigning zero to every non-top candidate.</p><p>These cases exhaust all possibilities. Cohorts are independent, so their maxima can be attained simultaneously for this fixed rival. Therefore<br>$$
+\max_{v:\,v_t(h_t)=a_t}
+\bigl(W_v(d)-DW_v(c)\bigr)
+=
+\sum_{t:d\succ_t c}a_t-rA_c(a).
+$$</p><p>Requiring this expression to be nonpositive for every rival proves the lemma. $\square$</p><p>For $a\ne0$, no candidate outside $H$ is safe: its $A_c(a)$ is zero, while some positive-answer cohort’s top precedes it, making $F_c(a)&gt;0$. If $a=0$, all utilities are zero.</p><p>Combining the lemmas gives<br>$$
+\text{A one-query policy exists}
+\iff
+\forall a\in\mathbb R_{\ge0}^{\tau}\setminus\{0\},
+\ \exists c\in H:\ F_c(a)\le rA_c(a).
+$$</p><p>Failure means that one answer vector satisfies<br>$$
+F_c(a)&gt;rA_c(a)\qquad(c\in H).
+$$</p><h3>3. Membership in $\mathrm{coNP}$</h3><p>At a failing vector, choose a witnessing rival $d_c\ne c$ for each $c\in H$. Then<br>$$
+\sum_{t:d_c\succ_t c}a_t-r\sum_{t:h_t=c}a_t&gt;0
+\qquad(c\in H).
+$$</p><p>Because these are finitely many strict homogeneous inequalities, a common positive scaling makes all their left sides at least one. Thus failure is equivalent to feasibility, for some chosen rivals, of<br>$$
+a_t\ge0,
+\qquad
+\sum_{t:d_c\succ_t c}a_t-r\sum_{t:h_t=c}a_t\ge1
+\qquad(c\in H).
+$$</p><p>Write $D=P/Q$, with positive integers $P\ge Q$. Clearing denominators gives<br>$$
+Q\sum_{t:d_c\succ_t c}a_t
+-
+(P-Q)\sum_{t:h_t=c}a_t
+\ge Q.
+$$</p><p>We verify that feasibility supplies a polynomial-size rational certificate.</p><p>Let $\mathcal P$ be this feasible polyhedron. Minimize $\sum_t a_t$ over $\mathcal P$. Given any feasible point $a^0$, the portion satisfying<br>$$
+\sum_t a_t\le\sum_t a_t^0
+$$<br>is nonempty and compact, because all coordinates are nonnegative. Thus a minimum exists. The minimizing face is also nonempty and compact, so it has an extreme point; successive minimization of the coordinates supplies one. Such a point is extreme in $\mathcal P$, since any convex decomposition in $\mathcal P$ must have both endpoints attain the same minimum objective.</p><p>At an extreme point, the active constraint normals span $\mathbb R^\tau$. Otherwise, a nonzero vector orthogonal to all active normals would allow sufficiently small perturbations in both directions while preserving every constraint, contradicting extremality.</p><p>Choose $\tau$ independent active constraints. Their coefficients and right-hand sides are integers of magnitude at most $P$. Cramer’s rule and Hadamard’s determinant bound show that each coordinate has numerator and denominator of magnitude at most<br>$$
+(\sqrt{\tau}\,P)^\tau.
+$$</p><p>Consequently, the rational vector has polynomial encoding length. A certificate consists of this vector and the chosen rivals. Its inequalities can be checked in polynomial time.</p><p>Therefore the one-query existence problem belongs to $\mathrm{coNP}$.</p><h3>4. A finite spectral characterization</h3><p>The next lemma is the key new structural result: spreading positive top answers among several cohorts with the same top cannot create a failure that requires such spreading.</p><h3>4.1. Matrix facts used</h3><p>For a finite nonnegative square matrix $M$, let $\rho(M)$ denote its spectral radius. We use these standard facts:</p><ul><li>The Perron–Frobenius theorem supplies nonzero nonnegative right and left eigenvectors for $\rho(M)$. If $M$ is irreducible, these vectors are strictly positive.</li><li>Gelfand’s formula states</li></ul><p>$$
+   \rho(M)=\lim_{\ell\to\infty}\|M^\ell\|^{1/\ell}
+   $$<br>for any matrix norm.</p><p>Two consequences will be useful. If $0\le N\le M$ entrywise, then $N^\ell\le M^\ell$; applying Gelfand’s formula with the maximum-row-sum norm gives<br>$$
+\rho(N)\le\rho(M).
+$$</p><p>Also, if $y\ge0$, $y\ne0$, and $M^{\mathsf T}y\ge sy$ for $s\ge0$, then<br>$$
+(M^{\mathsf T})^\ell y\ge s^\ell y.
+$$<br>Taking norms and applying Gelfand’s formula yields $\rho(M)\ge s$.</p><p>All matrices below are finite, square, and nonnegative, as these applications require.</p><h3>4.2. Selecting one cohort per top</h3><p>For every top candidate $h_j$, choose a cohort $t_j$ whose top is $h_j$. For every $h_i$, choose a rival $d_i\ne h_i$. Define<br>$$
+B_{ij}=
+\begin{cases}
+1,&amp;d_i\succ_{t_j}h_i,\\
+0,&amp;\text{otherwise}.
+\end{cases}
+$$</p><p>Since $h_i$ is the top of cohort $t_i$, every diagonal entry is zero.</p><p><b>Lemma 4.</b> A one-query policy fails to exist if and only if some such choices satisfy<br>$$
+\rho(B)&gt;r.
+$$</p><p><b>Proof: failure implies a matrix witness.</b></p><p>Let $a$ be a failing top-answer vector, and choose witnessing rivals $d_i$. Put<br>$$
+x_j=A_{h_j}(a).
+$$</p><p>Within each top group, choose probabilities $q_j(t)$ satisfying<br>$$
+a_t=x_jq_j(t).
+$$<br>When $x_j&gt;0$, take $q_j(t)=a_t/x_j$. When $x_j=0$, choose any probability distribution on that nonempty group.</p><p>Define the matrix<br>$$
+M_{ij}=\sum_{t:h_t=h_j}q_j(t)\,\mathbf 1[d_i\succ_t h_i].
+$$</p><p>The witnessing inequalities say exactly<br>$$
+Mx&gt;rx
+$$<br>componentwise.</p><p>To obtain a strictly positive vector, take $w=x+\varepsilon\mathbf 1$ for sufficiently small $\varepsilon&gt;0$. Every coordinate of $Mx-rx$ is strictly positive, so continuity ensures<br>$$
+Mw&gt;rw.
+$$<br>Hence<br>$$
+s=\min_i\frac{(Mw)_i}{w_i}&gt;r.
+$$</p><p>Let $y\ge0$, $y\ne0$, be a left Perron vector of $M$. Since $w&gt;0$, we have $y^{\mathsf T}w&gt;0$, and<br>$$
+\rho(M)y^{\mathsf T}w
+=
+y^{\mathsf T}Mw
+\ge
+s\,y^{\mathsf T}w.
+$$<br>Thus $\rho(M)&gt;r$.</p><p>For each group $j$, select $t_j$ maximizing<br>$$
+\sum_i y_i\mathbf 1[d_i\succ_t h_i]
+$$<br>over cohorts with top $h_j$. The resulting binary matrix $B$ satisfies<br>$$
+B^{\mathsf T}y\ge M^{\mathsf T}y=\rho(M)y.
+$$</p><p>The matrix consequence proved above gives<br>$$
+\rho(B)\ge\rho(M)&gt;r.
+$$</p><p><b>Proof: a matrix witness implies failure.</b></p><p>Suppose $\rho(B)&gt;r$, and take a nonzero nonnegative right Perron vector $z$:<br>$$
+Bz=\rho(B)z.
+$$</p><p>Give selected cohort $t_j$ top answer $z_j$, and give every unselected cohort top answer zero. These answers are feasible, for example using flat utility vectors.</p><p>For each $i$ with $z_i&gt;0$,<br>$$
+F_{h_i}(a)\ge(Bz)_i=\rho(B)z_i&gt;rz_i=rA_{h_i}(a).
+$$</p><p>If $z_i=0$, choose $j$ with $z_j&gt;0$. Necessarily $j\ne i$. The rival $h_j$ precedes $h_i$ in cohort $t_j$, so<br>$$
+F_{h_i}(a)\ge z_j&gt;0=rA_{h_i}(a).
+$$</p><p>Thus every top candidate fails its safety inequality. The characterization in Section 2 rules out a successful policy. $\square$</p><p>In particular, every failure has a witness with at most one positive top answer per top-candidate group.</p><h3>5. A spectral gap near the maximum</h3><p>Let $J$ be the $k$-by-$k$ all-ones matrix, and put<br>$$
+K=J-I.
+$$</p><p>Thus $K$ has every off-diagonal entry equal to one, and $\rho(K)=k-1$.</p><p><b>Lemma 5.</b> For $k\ge3$, every binary matrix $B$ with zero diagonal satisfies<br>$$
+\rho(B)&gt;k-1-\frac1k
+\iff
+B=K.
+$$</p><p><b>Proof.</b> The implication from $B=K$ is immediate.</p><p>Otherwise, choose a missing off-diagonal entry $(a,b)$. Then<br>$$
+B\le M:=K-E_{ab},
+$$<br>where $E_{ab}$ has its only nonzero entry, equal to one, at $(a,b)$.</p><p>The directed graph of $M$ is strongly connected: the single missing arc can be replaced by a two-arc path through a third vertex. Thus $M$ is irreducible.</p><p>Let $v&gt;0$ be its right Perron vector, let $\rho=\rho(M)$, and set $S=\sum_i v_i$. Row $b$ is unchanged, because $a\ne b$, so<br>$$
+\rho v_b=S-v_b,
+\qquad
+\frac{v_b}{S}=\frac1{\rho+1}.
+$$</p><p>Summing all eigenvector equations, and accounting for the single missing entry, gives<br>$$
+\rho S=(k-1)S-v_b.
+$$<br>Therefore<br>$$
+\rho=k-1-\frac1{\rho+1}.
+$$</p><p>In particular, $\rho&lt;k-1$, whence<br>$$
+\frac1{\rho+1}&gt;\frac1k.
+$$<br>It follows that<br>$$
+\rho(B)\le\rho(M)&lt;k-1-\frac1k.
+$$<br>$\square$</p><p>Combining Lemmas 4 and 5, at the rational distortion<br>$$
+D=k-\frac1k,
+$$<br>failure of a one-query policy is equivalent to the existence of cohort and rival choices producing the complete matrix $K$.</p><h3>6. A reduction proving $\mathrm{coNP}$-hardness</h3><p>We reduce unsatisfiability of a Boolean formula with at most three literals per clause to policy existence. Satisfiability for this class is $\mathrm{NP}$-complete. [Karp, “Reducibility Among Combinatorial Problems”](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/Karp.pdf)</p><p>Let the formula have variables $X_1,\ldots,X_n$ and nonempty clauses $C_1,\ldots,C_s$, with $n,s\ge1$. These restrictions preserve completeness: a fresh variable and a tautological clause can ensure nonemptiness without changing satisfiability.</p><h3>6.1. Candidates and cohorts</h3><p>Introduce distinct candidates:</p><ul><li>Variable candidates $v_1,\ldots,v_n$.</li><li>Clause candidates $c_1,\ldots,c_s$.</li><li>Two additional top candidates $b_1,b_2$.</li><li>A distinct candidate for every literal occurrence.</li><li>Two further candidates $q,z$.</li></ul><p>Let $R_i$ be the ordered list of literal-occurrence candidates for clause $C_i$, and define the block<br>$$
+B_i=(R_i,c_i).
+$$</p><p>Parenthesized lists below are rankings from highest to lowest; inserting a block means inserting all its entries.</p><p>There are two cohorts with top $v_j$, one for each Boolean value $\beta\in\{0,1\}$; one cohort with top $c_i$ for each clause; and one cohort with each top $b_1,b_2$. Thus<br>$$
+k=n+s+2,
+\qquad
+\tau=2n+s+2.
+$$</p><p>We set $\lambda=1$ and<br>$$
+D=k-\frac1k.
+$$</p><h3>The two rankings with tops $b_1,b_2$</h3><p>They are<br>$$
+(b_1,B_1,B_2,\ldots,B_s,q,b_2,z,v_1,\ldots,v_n)
+$$<br>and<br>$$
+(b_2,B_s,B_{s-1},\ldots,B_1,q,b_1,z,v_1,\ldots,v_n).
+$$</p><h3>Variable rankings</h3><p>For variable $X_j$ and value $\beta$, partition $R_i$ into two ordered lists:</p><ul><li>$G_i(j,\beta)$ contains occurrences involving another variable, together with occurrences involving $X_j$ whose literal is true under $\beta$.</li><li>$N_i(j,\beta)$ contains occurrences involving $X_j$ whose literal is false under $\beta$.</li></ul><p>The corresponding ranking is<br>$$
+\begin{aligned}
+(&amp;v_j,q,b_1,b_2,\\
+&amp;G_1(j,\beta),c_1,N_1(j,\beta),\ldots,
+G_s(j,\beta),c_s,N_s(j,\beta),\\
+&amp;z,v_1,\ldots,v_{j-1},v_{j+1},\ldots,v_n).
+\end{aligned}
+$$</p><h3>Clause rankings</h3><p>The cohort with top $c_i$ has ranking<br>$$
+(c_i,q,b_1,b_2,R_i,
+B_1,\ldots,B_{i-1},B_{i+1},\ldots,B_s,
+z,v_1,\ldots,v_n).
+$$</p><p>Each displayed ranking contains every candidate exactly once.</p><p>Choose any positive, polynomially encoded masses summing to one. For example, with $b=\lceil\log_2\tau\rceil$, give the first $\tau-1$ cohorts mass $2^{-b}$ and the final cohort mass<br>$$
+1-(\tau-1)2^{-b}&gt;0.
+$$<br>These are dyadic rationals.</p><p>There are at most $k+3s+2$ candidates. All rankings, masses, and $D$ have polynomial total encoding length, and the construction is computable in polynomial time.</p><h3>6.2. The two fixed rankings restrict clause challengers</h3><p>For each clause candidate $c_i$,<br>$$
+\{d:d\succ_{\sigma_{b_1}}c_i\}
+\cap
+\{d:d\succ_{\sigma_{b_2}}c_i\}
+=
+R_i.
+$$</p><p>Indeed, its own literal-occurrence candidates precede it in both rankings. Every other block precedes its block in one ranking and follows it in the other. Candidate $b_1$ follows all clause blocks in the second ranking, and $b_2$ does so in the first. The candidates $q,z$ and all variable candidates follow every clause block in both.</p><p>Consequently, if selected cohorts and challengers produce $K$, the challenger for clause candidate $c_i$ must belong to $R_i$.</p><h3>6.3. A satisfying assignment produces $K$</h3><p>Suppose $\beta_1,\ldots,\beta_n$ satisfies the formula. Select the variable cohort corresponding to $\beta_j$ for each $j$, and the unique cohort for every other top.</p><p>Choose challengers as follows:</p><ul><li>For $v_j$, choose $z$.</li><li>For $c_i$, choose an occurrence of a literal true under the assignment.</li><li>For $b_1$ and $b_2$, choose $q$.</li></ul><p>We check every kind of row.</p><p>For a variable row $v_j$, candidate $z$ precedes $v_j$ in every other selected cohort: it precedes all variable candidates in the clause and $b_1,b_2$ rankings, and all variable candidates other than the top in every variable ranking.</p><p>For a clause row $c_i$, its selected true literal occurrence precedes $c_i$:</p><ul><li>in both $b_1,b_2$ rankings;</li><li>in every other clause ranking, where the entire block $B_i$ occurs;</li><li>in every variable ranking, because it either involves another variable or is true under that variable’s selected value.</li></ul><p>For row $b_1$, candidate $q$ precedes $b_1$ in the $b_2$ ranking and every variable and clause ranking. The symmetric statement holds for row $b_2$.</p><p>Thus every off-diagonal entry is one. Diagonal entries are zero because each selected cohort ranks its own top first. Hence the matrix is $K$.</p><p>By Lemmas 4 and 5, no successful one-query policy exists.</p><h3>6.4. A matrix $K$ produces a satisfying assignment</h3><p>Conversely, suppose selected cohorts and challengers produce $K$. The selected variable cohorts specify values $\beta_1,\ldots,\beta_n$.</p><p>For each clause candidate $c_i$, Section 6.2 forces its challenger to be one of its own literal-occurrence candidates. Suppose this occurrence involves variable $X_j$.</p><p>Since the matrix is $K$, this occurrence precedes $c_i$ in the selected cohort with top $v_j$. By construction, occurrences involving $X_j$ precede $c_i$ in that ranking precisely when their literal is true under $\beta_j$.</p><p>Thus every clause has a true literal. The selected assignment satisfies the formula.</p><h3>6.5. Correctness of the reduction</h3><p>The preceding arguments establish<br>$$
+\text{Formula satisfiable}
+\iff
+\text{Some cohort and rival choices produce }K.
+$$</p><p>Using Lemmas 4 and 5 at $D=k-1/k$ gives<br>$$
+\text{Formula unsatisfiable}
+\iff
+\text{A one-query distortion-}D\text{ policy exists}.
+$$</p><p>This is a polynomial-time many-one reduction from a $\mathrm{coNP}$-complete problem to policy existence. Together with Section 3, it proves $\mathrm{coNP}$-completeness.</p><p>Each top candidate belongs to at most two cohorts, as asserted.</p><h3>7. What remains open</h3><p>The one-query problem is now classified as $\mathrm{coNP}$-complete. Therefore polynomial-time solvability for every fixed query budget would imply $\mathrm{P}=\mathrm{NP}$.</p><p>There is also a one-query polynomial-time Turing reduction from satisfiability to policy existence: construct the instance above, ask whether a policy exists, and negate the answer.</p><p>However, this does <b>not</b> establish many-one $\mathrm{NP}$-hardness. Indeed, many-one $\mathrm{NP}$-hardness for the one-query problem, together with its membership in $\mathrm{coNP}$, would imply $\mathrm{NP}=\mathrm{coNP}$. Establishing the requested many-one hardness for some fixed larger budget remains open here.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 1 and 7: scope of the result relative to USER_TASK: The proof establishes $\mathrm{coNP}$-completeness for $\lambda=1$ and polynomial-time Turing $\mathrm{NP}$-hardness, but does not establish polynomial-time many-one $\mathrm{NP}$-hardness for any fixed $\lambda$. The prover acknowledges this limitation; resolving the requested alternative requires additional mathematics.</li><li><b>minor</b> — Section 2.4 and subsequent distinct-top indexing: The notation $h_t$ initially indexes cohort tops, but $H=\{h_1,\ldots,h_k\}$ subsequently indexes distinct top candidates. Explicitly state the relabeling of distinct tops; otherwise the notation is ambiguous when cohorts share a top.</li></ul>
+<div class="pre"><h3>Verification report</h3><h3>Overall assessment</h3><p>The proof establishes the stated $\mathrm{coNP}$-completeness theorem for $\lambda=1$, subject to a minor indexing clarification. I found no false central step or substantive gap in the policy characterization, certificate argument, spectral characterization, or reduction.</p><p>The original task remains <b>partially resolved</b> under the customary polynomial-time many-one interpretation of $\mathrm{NP}$-hardness. The prover correctly acknowledges this limitation: $\mathrm{coNP}$-completeness establishes a strong complexity obstruction, but does not establish the requested many-one $\mathrm{NP}$-hardness alternative.</p><h3>Step-by-step verification</h3><h3>1. Eliminating cohort masses</h3><p>The substitution<br>$$
+v_t(c)=p_tu_t(c)
+$$<br>is valid because every $p_t$ is strictly positive. It preserves nonnegativity, ranking inequalities, and utility ties, and it is invertible separately in each cohort.</p><p>The welfare identity and correspondence between query answers are correct. An adaptive policy can translate each answer before choosing its next action, so the transformation preserves entire histories and query budgets.</p><p>The conclusion that policy existence is independent of the positive masses is justified specifically by the absence of utility normalization.</p><h3>2. Lemma 1: an unqueried top forces the output</h3><p>The perturbation is admissible: increasing only the top utility preserves every ranking inequality and leaves all queried coordinates unchanged.</p><p>Determinism preserves subsequent actions and the terminal output because the observed answers remain identical. If the output differs from that cohort’s top, its welfare stays fixed while the top candidate’s welfare becomes unbounded.</p><p>Thus the contradiction applies for every finite $D$, including histories whose output initially has zero welfare. The lemma is correct.</p><h3>3. Lemma 2: replacing an adaptive policy by top queries</h3><p>The simulated transcript is feasible: the profile consisting of flat cohort vectors produces every simulated answer.</p><p>The one-query budget is essential and is used correctly. If the simulation queries a non-top coordinate in a cohort, that cohort’s top remains unqueried, so Lemma 1 forces the simulated output to equal its top.</p><p>For an arbitrary actual completion of the recorded top answers, the modified profile reproduces the simulated transcript. In each modified cohort:</p><ul><li>The output candidate’s utility remains its recorded top value.</li><li>Every rival’s utility weakly increases.</li></ul><p>Unmodified cohorts need no further adjustment, including cohorts queried at their tops and cohorts not queried during the simulation. Consequently, the welfare comparison transfers the original guarantee to every actual completion.</p><p>Both directions of the equivalence are justified.</p><h3>4. Lemma 3: the safety inequality</h3><p>For each fixed rival, the three cases correctly exhaust all cohorts.</p><p>When the output candidate is the cohort’s top, its value is fixed at $a_t$, and the rival’s value is at most $a_t$. The maximum contribution is therefore<br>$$
+-(D-1)a_t,
+$$<br>with the stated flat-vector attainment.</p><p>When the rival precedes a non-top output candidate, the contribution is at most $a_t$. The stated prefix assignment attains it and respects the supplied ranking.</p><p>When the output candidate precedes the rival and is not the top, monotonicity and $D\ge1$ give a nonpositive contribution. Setting all non-top values to zero attains zero.</p><p>The independent cohort maxima may be attained simultaneously <b>for each fixed rival</b>. The proof does not require a single completion to maximize every rival’s expression simultaneously.</p><p>Thus the condition<br>$$
+F_c(a)\le(D-1)A_c(a)
+$$<br>is necessary and sufficient for that output to be safe for every completion.</p><h3>5. Universal characterization and zero answers</h3><p>For a nonzero answer vector, any candidate outside the set of tops has zero guaranteed welfare. A positive-answer cohort’s top supplies a rival with strictly positive contribution to its safety test. Hence such a candidate cannot be safe.</p><p>When all top answers are zero, nonnegativity and ranking consistency force every utility to be zero. All outputs satisfy the distortion condition.</p><p>The resulting universal characterization has the correct quantifier order: for each answer vector, the policy may choose a candidate that works for every completion of that vector.</p><p>There is one minor notation issue: the distinct top candidates require explicit reindexing, discussed below.</p><h3>6. Membership in $\mathrm{coNP}$</h3><p>Choosing one witnessing rival for each unsafe top correctly replaces the maxima by finitely many strict inequalities.</p><p>Because the system is homogeneous and every selected left side is strictly positive, a common positive scaling makes every left side at least one. The converse is immediate.</p><p>The rational-certificate argument is sound:</p><ul><li>Nonnegative coordinates make the bounded objective sublevel set compact.</li><li>An objective minimizer therefore exists.</li><li>Its minimizing face is compact and has an extreme point.</li><li>An extreme point of that face is extreme in the original polyhedron, by the objective-minimality argument given.</li><li>Active constraint normals must span the ambient space; otherwise sufficiently small perturbations in both directions preserve all constraints.</li></ul><p>After clearing denominators, the relevant matrix and right-hand-side entries have magnitude at most $P$. The determinant bound<br>$$
+(\sqrt{\tau}\,P)^\tau
+$$<br>applies both to denominators and to the Cramer numerators. Its logarithm is polynomial in the input parameters.</p><p>The rivals and rational answer vector therefore form a polynomial-size certificate, and exact rational verification takes polynomial time. The membership claim is established.</p><h3>7. Matrix facts</h3><p>The stated Perron–Frobenius conclusions apply to finite nonnegative square matrices. Strict positivity is invoked only when irreducibility has been established.</p><p>The entrywise monotonicity consequence correctly follows by using the maximum-row-sum norm in Gelfand’s formula.</p><p>The implication from<br>$$
+M^{\mathsf T}y\ge sy
+$$<br>to $\rho(M)\ge s$ also follows from the stated iterated inequality and a compatible norm. The required assumptions $y\ge0$, $y\ne0$, and $s\ge0$ are satisfied in its subsequent application.</p><p>No unverified theorem hypothesis breaks the argument.</p><h3>8. Lemma 4: failure implies a matrix witness</h3><p>The within-group probability distributions are well-defined. When a group has zero total answer, the arbitrary distribution does not affect the identity $a_t=x_jq_j(t)$.</p><p>The witnessing inequalities give strict inequality in every coordinate of $Mx-rx$, including coordinates where $x_i=0$. Hence the small perturbation to a strictly positive vector preserves the strict inequalities.</p><p>Pairing that vector with a nonzero nonnegative left Perron vector establishes $\rho(M)&gt;r$.</p><p>Selecting one cohort per group to maximize the left-vector weighted column score correctly gives<br>$$
+B^{\mathsf T}y\ge\rho(M)y.
+$$<br>The preceding matrix consequence then establishes $\rho(B)&gt;r$.</p><p>This direction is rigorous and does not assume irreducibility.</p><h3>9. Lemma 4: a matrix witness implies failure</h3><p>For positive Perron-vector coordinates, the selected rivals give the required strict safety violations directly.</p><p>The zero-coordinate case is handled correctly and is essential. A nonzero Perron vector has some positive coordinate; its selected cohort’s top precedes every other candidate in that cohort. This supplies a rival with positive welfare contribution for any zero-answer top.</p><p>Thus every top fails its safety test even when the matrix is reducible or its Perron vector has zero coordinates. No positivity assumption is missing.</p><h3>10. Lemma 5: the spectral gap</h3><p>A binary zero-diagonal matrix distinct from $K$ has a missing off-diagonal entry and is entrywise bounded by the stated matrix $M$.</p><p>For $k\ge3$, the missing directed edge can be replaced by a path through a third vertex, so irreducibility is established before invoking a positive Perron vector.</p><p>Both eigenvector calculations are correct:</p><ul><li>Row $b$ is unchanged because $a\ne b$.</li><li>Summing all rows subtracts exactly $v_b$ for the removed entry.</li></ul><p>They yield<br>$$
+\rho=k-1-\frac1{\rho+1}.
+$$<br>Since $v_b&gt;0$, this implies $\rho&lt;k-1$, and consequently the claimed strict gap follows.</p><p>The reduction uses $k=n+s+2\ge4$, so the lemma’s domain restriction is satisfied.</p><h3>11. Reduction source and encoding</h3><p>The invoked source problem, satisfiability with at most three literals per clause, is among the complete problems in the cited [Karp paper](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/Karp.pdf). The nonempty source restrictions are routine and do not affect the reduction’s substance.</p><p>Every displayed ranking contains each candidate exactly once. In particular, the variable rankings partition each occurrence list, and the clause rankings omit their own block after listing their own top and occurrences separately.</p><p>The counts are correct:<br>$$
+k=n+s+2,\qquad \tau=2n+s+2.
+$$<br>The candidate bound follows from the maximum of three occurrences per clause.</p><p>The masses are positive dyadic rationals, sum to one, and have polynomial encoding length. The distortion parameter is rational, has polynomial encoding length, and satisfies $D\ge1$.</p><p>The construction respects the fixed cohort model and does not split cohorts.</p><h3>12. Restricting clause challengers</h3><p>The prefix intersection in the two fixed rankings is exactly $R_i$:</p><ul><li>Own-clause occurrences precede $c_i$ in both.</li><li>Every other clause block is on opposite sides in the two block orders.</li><li>Each additional top candidate follows the clause blocks in the opposite ranking.</li><li>The remaining candidates follow all clause blocks.</li></ul><p>Since those two cohorts must be selected, a complete matrix forces each clause challenger into its own occurrence list. The argument is correct.</p><h3>13. Both directions of the reduction</h3><p>For a satisfying assignment, the proposed challengers produce every off-diagonal entry:</p><ul><li>The candidate $z$ precedes each variable candidate in every other selected cohort.</li><li>A selected true occurrence precedes its clause candidate in every other selected cohort.</li><li>The candidate $q$ precedes each additional top candidate in every other selected cohort.</li></ul><p>Diagonal entries vanish because each selected cohort ranks its own top first.</p><p>Conversely, a complete matrix forces each clause challenger to be an own-clause occurrence. Its comparison in the selected cohort of the occurrence’s variable certifies that the corresponding literal is true.</p><p>Thus the equivalence between satisfiability and existence of the complete matrix is proved. Combining it with the spectral characterization gives the correct reduction direction:<br>$$
+\text{unsatisfiable formula}
+\iff
+\text{successful one-query policy exists}.
+$$</p><p>The $\mathrm{coNP}$-hardness and the restriction to at most two cohorts per top follow.</p><h3>14. Complexity implications and scope</h3><p>The final complexity distinctions are accurate.</p><p>A polynomial-time algorithm for the one-query existence problem would yield a polynomial-time satisfiability algorithm by constructing the instance and complementing its answer. Thus polynomial-time solvability for every fixed budget would imply $\mathrm{P}=\mathrm{NP}$.</p><p>That complementing procedure is a Turing reduction. It is not a many-one reduction from satisfiability to policy existence.</p><p>The observation that many-one $\mathrm{NP}$-hardness together with membership in $\mathrm{coNP}$ would imply $\mathrm{NP}=\mathrm{coNP}$ is also correct.</p><p>Accordingly, the prover’s explicit partial-resolution claim is justified.</p><h3>Issues and minimum required follow-up</h3><ul><li><b>Major — unresolved requested alternative.</b> Sections 1 and 7 establish $\mathrm{coNP}$-completeness and Turing $\mathrm{NP}$-hardness, but leave many-one $\mathrm{NP}$-hardness for some fixed budget unproved. This is an acknowledged scope limitation, not an error in the established theorem. Settling the original question under that interpretation requires additional mathematics; no wording clarification can supply the missing reduction.</li></ul><ul><li><b>Minor — indexing distinct tops.</b> Section 2.2 defines $h_t$ using cohort indices, whereas Section 2.4 writes $H=\{h_1,\ldots,h_k\}$ and subsequently uses these symbols to index distinct top groups. With repeated tops, that notation is not literally justified by the earlier definition. Explicitly state that the distinct top candidates are being relabeled before using the group-indexed matrices.</li></ul><p>The established one-query theorem is genuine progress. Its verification does not depend on a missing structural lemma or an unproved spectral assertion.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,359 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-3573023d4cdaecfcf45aea26e941b36d1a012f5c — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-3573023d4cdaecfcf45aea26e941b36d1a012f5c <span style="font-weight:normal;color:#8a7350">(s5-3573023d4cdaecfcf45aea26e941b36d1a012f5c)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: hardness</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Let $\mathcal{ALG}$ be an arbitrary learning algorithm that uses only a polynomial number of training samples drawn i.i.d. from the underlying distribution and produces a predictor $g$. There exists a distribution $\mathcal{D}$ and a submodular target function $f^*$ such that, with probability at least $1/25$ (over the draw of the training samples), \[\Pr_{S,S&#x27; \sim \mathcal{D}} \left[\alpha(n) f(S) \leq f(S&#x27;) \text{ and } g \text{ predicts that } f(S) &gt; f(S&#x27;)\right] \geq \frac{1}{25},\] where $\alpha(n) = \Omega(n^{1/3}/\log n)$.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(n\), a supported society \((\mathcal T,\mu)\) of hidden nonnegative monotone submodular valuation types, a bundle distribution \(\mathcal D\), and type-labeled bundle samples with pairwise-comparison access, learn a comparator \(g_t\) for each type. For a target separation \(\alpha\), require with probability at least \(1-\delta\) that \(\Pr_{t\sim\mu,\,S,S&#x27;\sim\mathcal D}[\alpha f_t(S)\le f_t(S&#x27;)\text{ and }g_t\text{ predicts }f_t(S)&gt;f_t(S&#x27;)]\le\epsilon\); characterize the sample complexity, including whether the paper’s lower bound persists at \(\tau=1\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(m=n\geq2\) be the number of items. A society is given by its support: a list \(\mathcal T\) of \(\tau\) type identifiers with positive binary rational masses \(\mu_t\) summing to \(1\); \(\tau\) counts supported types, not possible valuations. Each type has a hidden nonnegative monotone submodular valuation \(f_t:2^{[n]}\to\mathbb R_{\geq0}\), with \(f_t(\varnothing)=0\).<br>An arbitrary unknown distribution \(\mathcal D\) over bundles supplies independent training observations \((t,S)\sim\mu\times\mathcal D\). For each type, the learner may compare only bundles observed with that type: the oracle returns \(1\) exactly when \(f_t(S)\leq f_t(S&#x27;)\). Cardinal values and prediction-time oracle access are unavailable.<br>For every type, output a comparator \(g_t\) that chooses one of two distinct bundles as larger, reverses its choice when their order is swapped, and reports equality on identical bundles. True value ties are exempt from error; abstention on distinct bundles is forbidden.<br>For \(\alpha\geq1\) and \(\epsilon,\delta\in(0,1)\), require, with probability at least \(1-\delta\) over training and learner randomness, \(\Pr_{t\sim\mu,\,S,S&#x27;\sim\mathcal D}[f_t(S)&lt;f_t(S&#x27;),\ \alpha f_t(S)\leq f_t(S&#x27;),\ g_t(S,S&#x27;)\text{ chooses }S]\leq\epsilon\), where the two test bundles are independent.<br>Let \(L\) be the total bit length of the explicit support and rational parameters. Measure sample complexity and running time in \(m=n,\tau,L,\alpha,1/\epsilon,1/\delta\); computation is unrestricted when defining minimum sample complexity.</p><p>What is the distribution-free sample complexity as a function of separation \(\alpha\) and the society parameters: when do polynomially many samples suffice, and when are superpolynomially many necessary?<br>Does the single-valuation lower bound persist at \(\tau=1\), and what is the optimal separation achievable with polynomially many samples?</p><p>For a single hidden valuation, known results report polynomial-sample impossibility for separation \(o(n^{1/3}/\log n)\), with constant error and failure probability, and efficient learning at separation \(\sqrt n\) using \(\widetilde O(n/\epsilon^3)\) samples ([source](https://proceedings.mlr.press/v49/balcan16b.pdf)).<br>No result for exactly the supported-society model above was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized society masses to sum to one and interpreted supported types as identifiers, with valuations remaining hidden.</li><li>Specified independent type-labeled observations from the product of the society distribution and the common bundle distribution.</li><li>Restricted comparison queries to training bundles observed with the queried type, matching the lower-bound proof&#x27;s information model; excluded oracle access during prediction.</li><li>Required opposite choices on reversed distinct bundles and prohibited abstention, repairing the literal one-sided guarantee&#x27;s vacuous constant-prediction loophole.</li><li>Exempted true value ties while retaining the weak multiplicative boundary for strictly unequal values, avoiding the zero-valued-tie degeneracy.</li><li>Used normalized valuations with empty-bundle value zero, following the supplied definition of valuation functions; imposed no upper range bound.</li><li>Set the item-count notation m equal to n and defined L using explicit inputs, since hidden real-valued functions and the unknown bundle distribution have no supplied finite encoding.</li><li>Specified alpha at least one, accuracy and confidence strictly between zero and one, and unrestricted computation for information-theoretic sample complexity.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial resolution, including the exact square-root endpoint</h3><p>The single-valuation lower bound persists at $\tau=1$. Explicitly listing supported types does not remove it.</p><p>I also close the endpoint issue identified in <code>NOTES</code>: <b>polynomially many samples suffice at $\alpha=\sqrt n$ under all the comparator and oracle conventions in the question.</b> In fact, the argument below proves sufficiency whenever<br>$$
+\alpha&gt;\sqrt{n-1}.
+$$</p><p>The optimal asymptotic separation remains unresolved. The rigorous conclusions are:</p><p>| Separation | Distribution-free conclusion |<br>|---|---|<br>| $\alpha=o(n^{1/3}/\log n)$ | Superpolynomial samples are necessary, already at $\tau=1$. |<br>| $\alpha&gt;\sqrt{n-1}$ | Polynomial samples and polynomial running time suffice. |<br>| $\alpha=\sqrt n$ | Included in the preceding upper bound, with the required weak separation inequality. |<br>| Between the lower and upper scales | Not settled here. |</p><p>Define<br>$$
+A=\sum_{t\in\mathcal T}\mu_t^{2/3}.
+$$<br>The society upper bound proved below is<br>$$
+N=
+\widetilde O\!\left(
+\frac{n\bigl(n+\log(\tau/\delta)\bigr)A^3}{\epsilon^3}
+\right)
+\qquad
+\text{for }\alpha&gt;\sqrt{n-1}.
+$$<br>Here<br>$$
+1\leq A^3\leq\tau.
+$$<br>For $\alpha&gt;\sqrt n$, the argument also recovers the sharper bound<br>$$
+N=
+\widetilde O\!\left(
+\frac{\bigl(n+\log(\tau/\delta)\bigr)A^3}{\epsilon^3}
+\right).
+$$<br>The notation $\widetilde O$ suppresses logarithmic factors in the displayed parameters.</p><p>These bounds contain no dependence on $1/\min_t\mu_t$. The exact endpoint argument incurs an additional factor of $n$; I do not claim this factor is necessary.</p><h3>1. Risk and comparator conventions</h3><p>For one valuation, write<br>$$
+R_\alpha(f,g)=
+\Pr_{S,S&#x27;\sim\mathcal D}
+\bigl[
+f(S)&lt;f(S&#x27;),\
+\alpha f(S)\leq f(S&#x27;),\
+g(S,S&#x27;)\text{ chooses }S
+\bigr].
+$$<br>The society risk is<br>$$
+R_\alpha=\sum_t\mu_t R_\alpha(f_t,g_t),
+$$<br>because the test type is independent of the two test bundles.</p><p>For every comparator,<br>$$
+0\leq R_\alpha(f,g)\leq\frac12.
+$$<br>Indeed, independence and exchangeability give<br>$$
+\Pr[f(S)&lt;f(S&#x27;)]
+=
+\Pr[f(S&#x27;)&lt;f(S)]
+\leq\frac12.
+$$<br>Thus $\epsilon\geq1/2$ is trivial. The substantive lower bounds below use fixed smaller error and failure probabilities.</p><p>Every comparator constructed here first returns equality on identical bundles. On distinct bundles it selects a physical bundle according to a rule invariant under swapping the arguments. Consequently, it always chooses a bundle, and swapping the arguments reverses the reported choice. True-value ties are broken by a fixed lexicographic order.</p><h3>2. Structural separation after fixing one item</h3><h3>2.1. Established approximation theorem</h3><p>We use the following existential ellipsoidal approximation theorem:</p><blockquote>If $h$ is a nonnegative, normalized, monotone submodular function on a ground set of size $q\geq1$, there are nonnegative weights $w_i$ such that, for every $U$,<br>$$
+&gt; h(U)\leq\sqrt{\sum_{i\in U}w_i}\leq\sqrt q\,h(U).
+&gt; $$</blockquote><p>This includes functions with zero-valued singleton coordinates. The theorem follows from the ellipsoidal approximation of the symmetrized polymatroid. We use its existence statement only; no cardinal oracle is needed to compute these weights. [Goemans–Harvey–Iwata–Mirrokni, *Approximating Submodular Functions Everywhere*](https://www.math.uwaterloo.ca/~harvey/Publications/SubmodularEverywhere/SubmodularEverywhere.pdf).</p><h3>2.2. Slice-separation lemma</h3><p>For $j\in[n]$ and $z\in\{0,1\}$, define the slice<br>$$
+C_{j,z}=\{S\subseteq[n]:\mathbf 1_{\{j\in S\}}=z\}.
+$$<br>Set<br>$$
+\beta=\sqrt{n-1}.
+$$</p><p><b>Lemma.</b> If $0\leq a&lt;b$ and $b&gt;\beta a$, then, on every slice $C_{j,z}$, an affine halfspace strictly separates<br>$$
+\{S\in C_{j,z}:f(S)\leq a\}
+$$<br>from<br>$$
+\{S\in C_{j,z}:f(S)\geq b\}.
+$$</p><p><b>Proof.</b> Put $B=\varnothing$ when $z=0$, and $B=\{j\}$ when $z=1$. Let $c=f(B)$ and define, on $[n]\setminus\{j\}$,<br>$$
+h(U)=f(B\cup U)-c.
+$$<br>This function is normalized. Monotonicity of $f$ makes it nonnegative and monotone. Submodularity follows because, for $U,V\subseteq[n]\setminus\{j\}$,<br>$$
+\begin{aligned}
+h(U)+h(V)
+&amp;=f(B\cup U)+f(B\cup V)-2c\\
+&amp;\geq f(B\cup(U\cup V))+f(B\cup(U\cap V))-2c\\
+&amp;=h(U\cup V)+h(U\cap V).
+\end{aligned}
+$$<br>Thus the approximation theorem applies with $q=n-1$.</p><p>If $a&lt;c$, the lower family is empty, so the constant positive classifier suffices. Otherwise $a\geq c$, and<br>$$
+b-c&gt;\beta(a-c),
+$$<br>since<br>$$
+b-c-\beta(a-c)
+=
+b-\beta a+(\beta-1)c&gt;0.
+$$<br>For the theorem’s weights, writing $S=B\cup U$ gives<br>$$
+f(S)\leq a
+\quad\Longrightarrow\quad
+w\cdot\chi(U)\leq(n-1)(a-c)^2,
+$$<br>and<br>$$
+f(S)\geq b
+\quad\Longrightarrow\quad
+w\cdot\chi(U)\geq(b-c)^2.
+$$<br>The latter bound is strictly larger than the former. A threshold between them gives the required affine halfspace. $\square$</p><p>The constants $c,a,b$ and the weights are used only to prove existence. The learner will determine sample constraints using comparisons.</p><h3>2.3. Why the direct endpoint argument needs repair</h3><p>The strictness issue is substantive. Let $n=d^2$, with $d\geq2$, partition the items into $d$ groups of size $d$, and define<br>$$
+f(S)=\text{number of groups intersected by }S.
+$$<br>This is a partition-matroid rank function.</p><p>Each entire group has value $1$, whereas each transversal containing one item from every group has value $d=\sqrt n$. The average indicator vector of the groups equals the average indicator vector of all transversals: every coordinate has average $1/d$. Therefore these two families cannot be strictly separated by an affine halfspace.</p><p>The slice lemma avoids this obstruction by reducing the ground-set dimension.</p><h3>3. A single-valuation learner at the endpoint</h3><p>Fix a desired error $\eta\in(0,1)$ and failure probability $\zeta\in(0,1)$.</p><h3>3.1. Landmarks and two coverage properties</h3><p>Put<br>$$
+h=\frac{\eta}{16}.
+$$<br>Draw an independent landmark sample of size<br>$$
+K=O\!\left(\frac1h\log\frac1{h\zeta}\right).
+$$<br>Sort it by the comparison oracle and retain representatives of its distinct value levels<br>$$
+v_1&lt;\cdots&lt;v_q,\qquad q\leq K.
+$$<br>These numerical levels are analytical notation. The learner knows only their order and equality classes.</p><p>With probability at least $1-\zeta/2$, both of the following properties hold:</p><ul><li>Every open gap between consecutive distinct landmark values, including the two tails, has probability at most $h$ under the distribution of $f(S)$.</li><li>Every bundle $S$ with $\mathcal D(S)\geq h$ occurs in the landmark sample.</li></ul><p>Here are distribution-free proofs.</p><p>For the first property, let $V=f(S)$, and write<br>$$
+F(v^-)=\Pr[V&lt;v],\qquad F(v)=\Pr[V\leq v].
+$$<br>Conditional on $V=v$, choose an auxiliary point uniformly in<br>$$
+[F(v^-),F(v)].
+$$<br>The resulting auxiliary points are independent uniform points in $[0,1]$. Any value gap containing no landmark corresponds to an interval containing no auxiliary point, whose length equals the gap’s probability mass. A grid of spacing $h/2$ and a union bound imply that all such empty intervals have length at most $h$ with failure probability at most $\zeta/4$, for the stated $K$.</p><p>For the second property, there are at most $1/h$ bundles with probability at least $h$. Each is missed with probability at most $e^{-Kh}$. A union bound gives failure probability at most $\zeta/4$, after increasing the constant in $K$.</p><p>These arguments allow arbitrary atoms and true-value ties.</p><h3>3.2. A landmark interval inside most separated pairs</h3><p>Condition on the first coverage property. Let<br>$$
+x=f(S),\qquad y=f(S&#x27;)
+$$<br>for independent test bundles.</p><p><b>Lemma.</b> Except on a set of ordered-pair probability at most $3h$, every pair with $y&gt;\beta x$ has landmark levels satisfying<br>$$
+x\leq a&lt;b\leq y,\qquad b&gt;\beta a.
+$$</p><p><b>Proof.</b> Let $a$ be the least landmark level at least $x$.</p><p>First, if no such $a$ exists, $x$ lies above the largest landmark. This has probability at most $h$.</p><p>Second, suppose $y\leq\beta a$. If $x$ is a landmark level, then $a=x$, contradicting $y&gt;\beta x$. Otherwise $x$ lies in a landmark gap with upper endpoint $a$ and lower endpoint $c$, using $c=0$ for the initial gap. Necessarily<br>$$
+\beta c&lt;y\leq\beta a.
+$$<br>The intervals $(\beta c,\beta a]$ are disjoint across these gaps. Independence gives the bound<br>$$
+\begin{aligned}
+&amp;\sum_{\text{gaps}}
+\Pr[x\text{ lies in the gap}]
+\Pr[\beta c&lt;y\leq\beta a]\\
+&amp;\hspace{2em}\leq
+h\sum_{\text{gaps}}\Pr[\beta c&lt;y\leq\beta a]
+\leq h.
+\end{aligned}
+$$</p><p>Finally, suppose $y&gt;\beta a$, but there is no landmark in $(\beta a,y]$. For each fixed $x$, all such $y$ lie in one landmark gap or the upper tail, of probability at most $h$. Averaging over $x$ gives another $h$.</p><p>Outside these three exceptions, choose a landmark $b\in(\beta a,y]$. $\square$</p><h3>3.3. The finite classifier construction</h3><p>Take a second sample, independent of the landmarks.</p><p>For each of the $2n$ slices $C$, and each pair of distinct landmark levels $a&lt;b$, solve the following feasibility problem for an affine halfspace on the remaining $n-1$ coordinates:</p><ul><li>Every second-sample bundle in $C$ with $f(S)\leq a$ must receive sign $-$.</li><li>Every second-sample bundle in $C$ with $f(S)\geq b$ must receive sign $+$.</li><li>All other bundles impose no constraint.</li></ul><p>Membership in these tails is determined solely by comparisons with the landmark representatives.</p><p><b>Store exactly one feasible halfspace for each feasible slice–interval pair.</b> This repairs the ambiguity identified by the verifier. There are at most $2nK^2$ stored halfspaces.</p><p>Separately within each slice, retain only intervals minimal under containment among the feasible intervals. Fix an order on the resulting finite list.</p><p>The prediction rule is:</p><ul><li>Return equality on identical inputs.</li><li>If both inputs occurred among the landmarks, use their stored true order, breaking ties lexicographically.</li><li>Otherwise scan the retained list. A halfspace is applicable only if both inputs belong to its slice. The first applicable halfspace giving different signs chooses the bundle assigned $+$.</li><li>If none does, use lexicographic order.</li></ul><p>This rule meets every output convention in the question.</p><h3>3.4. Generalization from the second sample</h3><p>For a fixed slice and landmark interval, define the tail-error set of a halfspace $u$ by<br>$$
+E_u=
+\{S\in C:f(S)\leq a,\ u(S)=+\}
+\cup
+\{S\in C:f(S)\geq b,\ u(S)=-\}.
+$$<br>Conditional on the landmarks, these tails and the slice are fixed.</p><p>The class of sets $E_u$ has VC dimension at most $n$. Indeed, on the two tails, its membership labels are obtained from affine-halfspace labels on $n-1$ coordinates by fixed flips; outside those tails membership is always false. Such fixed flips preserve the number of label patterns.</p><p>Set<br>$$
+\rho=\frac{\eta}{16nK^2}.
+$$<br>The consistent-class VC bound states that a class of VC dimension at most $d$ needs<br>$$
+O\!\left(
+\frac{d\log(1/\rho)+\log(1/\xi)}{\rho}
+\right)
+$$<br>independent observations to ensure that every empirically consistent member has true error at most $\rho$, with failure probability at most $\xi$.</p><p>Apply this theorem conditional on the landmarks, with $d=n$ and<br>$$
+\xi=\frac{\zeta}{4nK^2}.
+$$<br>Every stored feasible halfspace has zero empirical tail error. A union bound over at most $2nK^2$ slice–interval pairs therefore shows that a second sample of size<br>$$
+M=
+O\!\left(
+\frac{n\log(1/\rho)+\log(4nK^2/\zeta)}{\rho}
+\right)
+=
+\widetilde O\!\left(
+\frac{n\bigl(n+\log(1/\zeta)\bigr)}{\eta^3}
+\right)
+$$<br>makes every stored halfspace’s tail error at most $\rho$, with probability at least $1-\zeta/2$.</p><p>Conditional on this event, the probability that either test bundle belongs to any stored halfspace’s tail-error set is at most<br>$$
+2(2nK^2)\rho=\frac{\eta}{4}.
+$$</p><h3>3.5. Correctness on noncomplementary pairs</h3><p>Consider a pair outside both the landmark exceptions and the tail-error event, satisfying<br>$$
+x&lt;y,\qquad y&gt;\beta x.
+$$<br>Suppose the bundles are not complements.</p><p>They agree on membership of at least one item, so at least one slice contains both. The landmark lemma supplies an interval<br>$$
+x\leq a&lt;b\leq y,\qquad b&gt;\beta a.
+$$<br>By the slice-separation lemma, this interval is feasible in <b>every</b> slice.</p><p>Choose one slice containing both test bundles. Since the feasible intervals form a finite family, there is a retained minimal feasible interval $[c,d]$ contained in $[a,b]$. Hence<br>$$
+x\leq c&lt;d\leq y.
+$$<br>Outside its tail-error set, its halfspace labels $S$ negative and $S&#x27;$ positive.</p><p>Furthermore, no applicable retained halfspace can separate them in the wrong direction. Suppose a halfspace belonging to interval $[e,\ell]$ labels $S$ positive and $S&#x27;$ negative. Correctness on its tails forces<br>$$
+e&lt;x,\qquad y&lt;\ell.
+$$<br>Consequently,<br>$$
+e&lt;x\leq a&lt;b\leq y&lt;\ell.
+$$<br>Thus $[e,\ell]$ strictly contains the feasible interval $[a,b]$ in the same slice, contradicting its minimality.</p><p>There is therefore a correctly separating applicable halfspace, and every applicable separating halfspace chooses correctly. The prediction rule succeeds.</p><h3>3.6. Complementary pairs are handled by memorization</h3><p>Write<br>$$
+\overline S=[n]\setminus S,\qquad p_S=\mathcal D(S).
+$$<br>On the second landmark coverage property, every bundle absent from the landmark sample has $p_S&lt;h$.</p><p>If complementary test bundles both occurred among the landmarks, their order is known exactly. The probability that a complementary pair has an unmemorized endpoint is at most<br>$$
+\begin{aligned}
+&amp;\sum_{S\text{ absent}}p_Sp_{\overline S}
++
+\sum_{S:\overline S\text{ absent}}p_Sp_{\overline S}\\
+&amp;\hspace{2em}\leq
+h\sum_{S\text{ absent}}p_{\overline S}
++
+h\sum_{S:\overline S\text{ absent}}p_S
+\leq2h.
+\end{aligned}
+$$<br>The complement map is a bijection, which justifies the two bounds by $h$.</p><p>Combining the preceding arguments, the error on pairs with $x&lt;y$ and $y&gt;\beta x$ is at most<br>$$
+3h+2h+\frac{\eta}{4}
+=
+\frac{9\eta}{16}
+&lt;\eta.
+$$<br>The two training-success events hold jointly with probability at least $1-\zeta$.</p><p>If $\alpha&gt;\beta$, every pair eligible for $R_\alpha$ satisfies $y&gt;\beta x$. For $x&gt;0$, this follows from $y\geq\alpha x&gt;\beta x$. For $x=0$, it follows from the strict inequality $y&gt;x$.</p><p>We have proved<br>$$
+M_1=
+\widetilde O\!\left(
+\frac{n\bigl(n+\log(1/\zeta)\bigr)}{\eta^3}
+\right)
+\qquad
+\text{for every }\alpha&gt;\sqrt{n-1}.
+$$<br>In particular, this proves the exact $\alpha=\sqrt n$ endpoint.</p><h3>3.7. Oracle legality and running time</h3><p>All oracle calls compare bundles observed with this valuation. Two directional calls detect equality. Neither the slice baseline $f(B)$ nor any other cardinal value is queried or computed.</p><p>For a feasibility problem, write the affine score as $w\cdot\chi(S)+b$. Impose score at most $-1$ on negative sample points and at least $1$ on positive sample points. A strict separator on a finite sample can be scaled to satisfy these unit margins. The resulting linear program has rational coefficients of polynomial bit length.</p><p>There are polynomially many such programs, each of polynomial size. Rational linear programming supplies polynomial-size feasible solutions in polynomial time. Sorting, interval minimization, and prediction also take polynomial time.</p><h3>3.8. The sharper bound above $\sqrt n$</h3><p>For $\alpha&gt;\sqrt n$, use the whole domain as one slice and set $\beta=\sqrt n$.</p><p>The approximation theorem directly separates every interval with $b&gt;\beta a$. The landmark lemma and minimality proof apply unchanged, and there are no uncovered complementary pairs. There are now at most $K^2$ classifiers of VC dimension at most $n+1$.</p><p>Taking<br>$$
+\rho=\frac{\eta}{16K^2}
+$$<br>gives the sharper single-valuation bound<br>$$
+M_1=
+\widetilde O\!\left(
+\frac{n+\log(1/\zeta)}{\eta^3}
+\right).
+$$<br>This recovers the strict-separation upper bound from <code>NOTES</code> with an explicitly finite classifier list.</p><h3>4. Transfer to an explicitly supported society</h3><p>First,<br>$$
+1\leq A\leq\tau^{1/3}.
+$$<br>The lower bound follows from $\mu_t^{2/3}\geq\mu_t$. Jensen’s inequality gives<br>$$
+\frac1\tau\sum_t\mu_t^{2/3}
+\leq
+\left(\frac1\tau\sum_t\mu_t\right)^{2/3}
+=
+\tau^{-2/3},
+$$<br>proving the upper bound.</p><p>To make the allocation computable using rational arithmetic, choose rational approximations satisfying<br>$$
+A\leq\widehat A\leq2A,
+\qquad
+\mu_t^{1/3}\leq b_t\leq2\mu_t^{1/3}.
+$$<br>They can be computed to constant relative precision in polynomial time in $L$, for example by rational bisection. The required precision has polynomial bit length because every mass is a positive binary rational.</p><p>Assign type $t$ the allowance<br>$$
+\eta_t=\frac{\epsilon}{2\widehat A b_t}.
+$$<br>Ignore types with $\eta_t\geq1$, giving them lexicographic comparators. For active types, use the single-valuation learner with error $\eta_t$ and failure probability<br>$$
+\zeta_t=\frac{\delta}{2\tau}.
+$$<br>On success, the weighted risk satisfies<br>$$
+\begin{aligned}
+\sum_t\mu_t R_\alpha(f_t,g_t)
+&amp;\leq\sum_t\mu_t\min\{1,\eta_t\}\\
+&amp;\leq\frac{\epsilon}{2\widehat A}
+\sum_t\frac{\mu_t}{b_t}\\
+&amp;\leq\frac{\epsilon}{2\widehat A}
+\sum_t\mu_t^{2/3}
+\leq\frac{\epsilon}{2}.
+\end{aligned}
+$$</p><p>Let $B$ be a common bound consisting of<br>$$
+n\bigl(n+\log(\tau/\delta)\bigr)
+$$<br>times sufficient logarithmic factors. Such a common bound exists because, for every active type,<br>$$
+\eta_t\geq\frac{\epsilon}{8A}
+\geq\frac{\epsilon}{8\tau^{1/3}}.
+$$<br>The required number $K_t$ of observations for type $t$ obeys<br>$$
+\begin{aligned}
+K_t
+&amp;\leq CB\eta_t^{-3}\\
+&amp;=CB\left(\frac{2\widehat A b_t}{\epsilon}\right)^3\\
+&amp;\leq CB\left(\frac{4\widehat A}{\epsilon}\right)^3\mu_t.
+\end{aligned}
+$$</p><p>Take<br>$$
+N=
+\left\lceil
+C&#x27;B\left(\frac{4\widehat A}{\epsilon}\right)^3
+\right\rceil
+$$<br>total observations, for a sufficiently large absolute constant $C&#x27;$.</p><p>For an active type, $\eta_t&lt;1$ and $b_t\leq2\mu_t^{1/3}$ imply<br>$$
+\mu_t&gt;\left(\frac{\epsilon}{4\widehat A}\right)^3.
+$$<br>Thus its count $N_t$ has binomial mean $N\mu_t$ exceeding both $2K_t$ and a sufficiently large multiple of $\log(2\tau/\delta)$. A Chernoff bound gives<br>$$
+\Pr[N_t&lt;K_t]\leq\frac{\delta}{2\tau}.
+$$<br>A union bound shows that all active types receive enough observations with failure probability at most $\delta/2$.</p><p>Conditional on the complete sequence of type identifiers, all associated bundles remain independent draws from $\mathcal D$. Selecting the first $K_t$ observations for each active type therefore supplies the required independent per-type samples. Another union bound bounds the learner failures by $\delta/2$.</p><p>Consequently, with probability at least $1-\delta$, society risk is at most $\epsilon$. Since $\widehat A\leq2A$,<br>$$
+N=
+\widetilde O\!\left(
+\frac{n\bigl(n+\log(\tau/\delta)\bigr)A^3}{\epsilon^3}
+\right)
+$$<br>for $\alpha&gt;\sqrt{n-1}$.</p><p>Using the sharper single-valuation learner gives<br>$$
+N=
+\widetilde O\!\left(
+\frac{\bigl(n+\log(\tau/\delta)\bigr)A^3}{\epsilon^3}
+\right)
+$$<br>for $\alpha&gt;\sqrt n$.</p><p>The arithmetic, sample processing, comparisons, and output representation all have polynomial running time in the parameters requested in the question.</p><h3>5. Quantitative lower bounds</h3><h3>5.1. Established independently assignable matroid ranks</h3><p>We use the following established construction. Along ground-set sizes $n=d^3$, let<br>$$
+k=2^r,\qquad r\geq3,\qquad r=o(d).
+$$<br>For sufficiently large dimensions, there is a family $\mathcal A$ of $k$ bundles, each of size $d$, such that every assignment of the two ranks<br>$$
+\ell=8r,\qquad d
+$$<br>to these bundles is realized by a matroid rank function. [Balcan–Harvey, Theorem 8](https://www.math.uwaterloo.ca/~harvey/Publications/LearningSubmodular/1008.2159v1.pdf).</p><p>Matroid ranks meet all valuation hypotheses: they are nonnegative, normalized, and monotone. For completeness, their submodularity follows by extending a basis of $X\cap Y$ to one of $X$, and then extending that basis to one of $X\cup Y$. The newly added elements lie in $Y\setminus X$; together with the original intersection basis, they form an independent subset of $Y$. Hence<br>$$
+r(X\cup Y)-r(X)\leq r(Y)-r(X\cap Y),
+$$<br>which is the required submodular inequality.</p><p>Assume<br>$$
+\ell&lt;d,\qquad \alpha\leq\frac d\ell.
+$$<br>Let $\mathcal D$ be uniform on $\mathcal A$. Independently for every type and bundle, choose a fair low/high label, and choose a realizing matroid rank function for each type.</p><p>For the lower bound, grant the learner the cardinal labels of its observed bundles, knowledge of $\mathcal D$, and knowledge of the realizing family. These are additional information, so impossibility in this stronger observation model implies impossibility in the question’s model.</p><h3>5.2. Unobserved labels force error</h3><p>Fix a type $t$ and distinct bundles $B,C\in\mathcal A$. The probability that neither is observed with type $t$ in $N$ observations is<br>$$
+\left(1-\frac{2\mu_t}{k}\right)^N.
+$$<br>Conditional on this event, the training information, and the learner’s randomness, their labels remain independent fair bits.</p><p>The comparator must choose one physical bundle as larger. With probability $1/4$, its chosen bundle has rank $\ell$ and the other has rank $d$. This is a strict, $\alpha$-separated error.</p><p>For this unordered pair, exactly one ordered presentation then contributes to the risk. Each ordered presentation has test probability $1/k^2$. Thus the expected contribution of the unordered pair, conditional on absence, is<br>$$
+\frac1{4k^2}.
+$$<br>Summing over unordered pairs and types yields<br>$$
+\mathbb E[R_\alpha]\geq
+\frac18\left(1-\frac1k\right)
+\sum_t\mu_t
+\left(1-\frac{2\mu_t}{k}\right)^N.
+$$<br>This holds for arbitrary randomized learners and unrestricted computation.</p><p>For uniform masses, if<br>$$
+N\leq\frac{\tau k}{16},
+$$<br>Bernoulli’s inequality gives<br>$$
+\left(1-\frac{2}{\tau k}\right)^N
+\geq1-\frac{2N}{\tau k}
+\geq\frac78.
+$$<br>Since $k\geq8$,<br>$$
+\mathbb E[R_\alpha]\geq\frac{49}{512}.
+$$</p><p>Averaging over the random hidden society fixes a deterministic society with at least this expected risk over training and learner randomness. For any risk variable bounded by $1/2$,<br>$$
+\mathbb E[R_\alpha]
+\leq
+\epsilon+
+\left(\frac12-\epsilon\right)\Pr[R_\alpha&gt;\epsilon].
+$$<br>Therefore, on that deterministic society,<br>$$
+\Pr[R_\alpha&gt;\epsilon]
+\geq
+\frac{49/512-\epsilon}{1/2-\epsilon}.
+$$<br>At $\epsilon=\delta=1/100$, this exceeds $\delta$. Thus the stated guarantee fails.</p><p>These uniform societies require $\Omega(\tau k)$ observations. For arbitrary masses, the same constant-risk conclusion follows whenever $N\leq k/16$, because $\mu_t\leq1$.</p><h3>5.3. Superpolynomial necessity at the lower separation scale</h3><p>Suppose<br>$$
+\alpha(n)=o\!\left(\frac{n^{1/3}}{\log n}\right).
+$$<br>Along $n=d^3$, choose<br>$$
+r=
+\left\lfloor
+\sqrt{\frac{d\log_2 n}{16\alpha(n)}}
+\right\rfloor,
+\qquad k=2^r.
+$$<br>The assumption gives<br>$$
+\frac{d}{16\alpha(n)\log_2 n}\longrightarrow\infty.
+$$<br>Consequently,<br>$$
+\frac{r}{\log_2 n}\longrightarrow\infty.
+$$<br>Also, using $\alpha(n)\geq1$,<br>$$
+\frac rd
+\leq
+\sqrt{\frac{\log_2 n}{16d}}
+\longrightarrow0.
+$$<br>Finally, eventually<br>$$
+r\leq\frac{d}{16\alpha(n)},
+$$<br>so<br>$$
+\frac d{8r}\geq2\alpha(n).
+$$<br>All construction hypotheses hold, and the rank ratio exceeds the required separation. Moreover,<br>$$
+k=2^r=n^{\omega(1)}.
+$$<br>The preceding lower bound therefore requires superpolynomially many observations.</p><p>Taking $\tau=1$ and $\mu_1=1$ proves persistence in the exact single-supported-type model. Restriction to infinitely many cube-sized dimensions suffices to rule out a uniform polynomial sample bound.</p><p>The obstruction is witnessed with polynomially encoded parameters. If an explicit input is itself enormous, “superpolynomial in $n$” need not mean superpolynomial in its bit length $L$; the quantitative lower bound above avoids that ambiguity.</p><h3>5.4. Society size matters even at arbitrarily large separation</h3><p>At every finite $\alpha$, uniform societies also require $\Omega(\tau)$ samples at fixed small error and failure probabilities.</p><p>Let $\mathcal D$ be uniform on $\{1\}$ and $\{2\}$. For each type independently, choose one of the additive valuations with singleton weights<br>$$
+(0,1)\quad\text{or}\quad(1,0),
+$$<br>and zero weights on all other items.</p><p>For a type absent from training, its orientation remains a fair bit. The ordered low–high test pair has probability $1/4$, and any comparator chooses wrongly with probability $1/2$. Since its values are $0$ and $1$, the pair is separated for every finite $\alpha$. Therefore<br>$$
+\mathbb E[R_\alpha]\geq
+\frac18\sum_t\mu_t(1-\mu_t)^N.
+$$<br>For uniform masses and $N\leq\tau/4$,<br>$$
+\mathbb E[R_\alpha]\geq\frac3{32}.
+$$<br>The same expected-risk-to-failure calculation proves the claimed $\Omega(\tau)$ lower bound.</p><h3>6. A finite-domain bound at every separation</h3><p>For every $\alpha\geq1$, there is an unrestricted-computation upper bound<br>$$
+N=
+O\!\left(
+\frac{\tau2^n+\log(1/\delta)}{\epsilon}
+\right).
+$$</p><p>Let $M=\tau2^n$ be the size of the joint type–bundle domain. A fixed subset of joint probability greater than $\epsilon/2$ is entirely missed by $N$ observations with probability at most<br>$$
+e^{-N\epsilon/2}.
+$$<br>There are at most $2^M$ subsets. A union bound implies that, for the displayed sample size, the total unseen joint probability is at most $\epsilon/2$, with probability at least $1-\delta$.</p><p>Sort observed bundles separately for each type. Predict their true order whenever both test bundles were observed with their test type, breaking ties consistently; otherwise use lexicographic order.</p><p>If $U$ is the unseen joint probability, the chance that either test endpoint is unseen with its test type is at most $2U$. Hence risk is at most $\epsilon$. All comparisons used in this construction are permitted.</p><h3>7. What is established and what remains open</h3><p>The exact $\sqrt n$ endpoint is now proved for the supported-society model, including mandatory choice, reversal, ties, and the restriction to comparisons between observed bundles.</p><p>The lower bound remains superpolynomial at<br>$$
+\alpha=o(n^{1/3}/\log n),
+$$<br>already for one supported type. Independent hidden valuations can additionally impose a multiplicative $\tau$ sample requirement in uniform societies.</p><p>The optimal separation is <b>not determined</b>. The known single-valuation upper and lower scales also leave a gap in the cited work. [Balcan–Vitercik–White, *Learning Combinatorial Functions from Pairwise Comparisons*](https://proceedings.mlr.press/v49/balcan16b.pdf). The endpoint repair above does not close that asymptotic gap.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 5.3 and 7; resolution of USER_TASK: The optimal polynomial-sample separation and the intervening separation regime are not determined. The proved lower regime $\alpha=o(n^{1/3}/\log n)$ and upper regime $\alpha&gt;\sqrt{n-1}$ leave part of the requested characterization unresolved; the prover explicitly acknowledges this.</li><li><b>minor</b> — Section 1, statement about true-value ties: The assertion that true-value ties are broken lexicographically is stronger than the implemented prediction rule. A stored halfspace may separate equal-valued bundles between its constrained tails. Restrict the assertion to known landmark ties and the lexicographic fallback; exempt true-value ties do not affect the risk guarantee.</li><li><b>minor</b> — Sections 3.3 and 3.7, halfspace prediction: The binary label assigned when an affine score equals zero is unspecified. State a fixed boundary convention and use it consistently in prediction and the tail-error sets $E_u$.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Assessment: a sound partial resolution, with minor specification issues.</b> The stated polynomial-sample upper bounds and superpolynomial lower bound withstand verification. In particular, the argument covers the exact endpoint $\alpha=\sqrt n$ with the task’s weak separation inequality. It also establishes persistence of the lower bound at $\tau=1$.</p><p>The output does <b>not</b> determine the optimal separation achievable with polynomially many samples. It explicitly acknowledges this limitation. Thus it provides genuine progress but does not fully resolve <code>USER_TASK</code>.</p><h3>1. Risk definition and comparator conventions</h3><p>The decomposition<br>$$
+R_\alpha=\sum_t\mu_tR_\alpha(f_t,g_t)
+$$<br>correctly uses the independence of the test type and the two bundles.</p><p>The bound<br>$$
+R_\alpha(f,g)\leq\frac12
+$$<br>is correct: the error event is contained in $f(S)&lt;f(S&#x27;)$, and exchangeability bounds that event’s probability by $\frac12$. Consequently, the lower bounds appropriately use fixed error parameters below $\frac12$.</p><p>The prediction rule chooses a physical bundle independently of the presentation order. A fixed classifier order and a fixed lexicographic fallback therefore give the required reversal property. Identical inputs are handled explicitly.</p><p>Two minor issues remain:</p><ul><li><b>Minor — Section 1, true-value ties.</b> The statement “True-value ties are broken by a fixed lexicographic order” overstates the implemented rule. A stored halfspace can give different signs to equal-valued bundles lying between its constrained tails. The prediction rule would then follow the halfspace, rather than lexicographic order. This does not affect the requested guarantee because true-value ties are exempt.</li></ul><p><b>Minimum clarification:</b> restrict the statement to ties whose equality is known from landmark comparisons, and to the fallback rule.</p><ul><li><b>Minor — Sections 3.3 and 3.7, halfspace boundaries.</b> The sign assigned when an affine score equals zero is unspecified. Unit margins settle this for constrained training points, but prediction points can lie on a boundary.</li></ul><p><b>Minimum clarification:</b> specify a fixed binary boundary convention and use it consistently in prediction and the definition of $E_u$.</p><h3>2. Structural approximation and slice separation</h3><h3>Cited approximation theorem</h3><p>The existential $\sqrt q$ approximation is supported by the cited ellipsoidal argument. The source discusses removal of zero-valued singleton coordinates and the axis-aligned ellipsoid property, so the prover’s inclusion of such coordinates is legitimate. The displayed inequality is an equivalent normalization of the existential approximation. [Goemans–Harvey–Iwata–Mirrokni, Section 2](https://www.math.uwaterloo.ca/~harvey/Publications/SubmodularEverywhere/SubmodularEverywhere.pdf).</p><p>The prover uses this theorem only to establish existence of separators. It does not require access to cardinal values or computational recovery of the theorem’s weights.</p><h3>Slice lemma</h3><p>All hypotheses are checked correctly:</p><ul><li>The residual ground set has size $n-1\geq1$.</li><li>The function $h$ is normalized, nonnegative, monotone, and submodular.</li><li>If $a&lt;c$, the lower family is empty.</li><li>Otherwise, $a-c$ and $b-c$ are nonnegative, and</li></ul><p>$$
+  b-c-\beta(a-c)=b-\beta a+(\beta-1)c&gt;0
+  $$<br>because $\beta=\sqrt{n-1}\geq1$.</p><p>The two bounds on the weighted indicator score follow in the correct directions. Their strict separation justifies an intermediate affine threshold.</p><h3>Endpoint obstruction</h3><p>The partition-matroid example is correct. Both indicated families have the same average indicator vector, while their values are $1$ and $\sqrt n$. A strictly separating affine score would impose incompatible inequalities on that common average.</p><p>This establishes the claimed obstruction to the direct whole-domain separation argument. It does not establish an obstruction to learning, and the prover does not use it that way.</p><h3>3. Single-valuation learning argument</h3><h3>Landmark coverage</h3><p>Both coverage claims are valid for the stated sample size.</p><p>The value distribution has finite support, despite its values being real. The randomized distribution-transform argument handles atoms, and an empty value gap corresponds to an empty interval of matching probability mass. The grid union bound gives the asserted order of landmark sample complexity.</p><p>The heavy-bundle claim also follows: there are at most $1/h$ bundles of mass at least $h$, and each is missed with probability at most $e^{-Kh}$.</p><h3>Landmark interval lemma</h3><p>The three exceptional events are bounded correctly.</p><ul><li>If no landmark is at least $x$, then $x$ lies in the upper tail, of mass at most $h$.</li><li>When $y\leq\beta a$, a landmark value $x$ would contradict $y&gt;\beta x$. Otherwise, $x$ lies in an open gap. The corresponding intervals $(\beta c,\beta a]$ are disjoint, so independence yields the stated bound of $h$.</li><li>For fixed $x$, the eligible values of $y$ with no landmark in $(\beta a,y]$ lie within one open landmark gap or the upper tail. Their mass is at most $h$.</li></ul><p>The initial-gap convention $c=0$ is valid because valuations are nonnegative. The resulting exceptional ordered-pair probability is at most $3h$.</p><h3>Feasibility and generalization</h3><p>Tail membership is determined entirely by permitted comparisons with landmark representatives.</p><p>Storing one halfspace per feasible slice–interval pair makes the hypothesis list finite. There are at most $2nK^2$ stored classifiers.</p><p>Conditional on the landmarks:</p><ul><li>The slice and its two tails are fixed.</li><li>On those tails, membership in $E_u$ differs from halfspace classification only by fixed label flips.</li><li>Outside the tails, membership is always false.</li></ul><p>The VC-dimension bound of $n$ is therefore valid. The consistent-class bound applies to the independent second sample and controls <b>every</b> empirically consistent halfspace, including the adaptively selected stored one.</p><p>The confidence union bound and the test-endpoint union bound are correct. In particular,<br>$$
+2(2nK^2)\rho=\frac{\eta}{4}.
+$$<br>Substitution of $K$ and $\rho$ gives the claimed sample bound, with logarithmic factors suppressed.</p><h3>Minimality argument</h3><p>The central correctness argument is sound.</p><p>A noncomplementary pair shares at least one membership coordinate, hence lies in a common slice. The landmark lemma supplies a structurally feasible interval $[a,b]$. A retained minimal feasible interval contained in it correctly separates the pair outside the tail-error event.</p><p>For any applicable classifier that separates the pair incorrectly, absence of tail error forces<br>$$
+e&lt;x,\qquad y&lt;\ell.
+$$<br>Its interval therefore strictly contains the feasible interval $[a,b]$ in that same slice, contradicting retained minimality.</p><p>This argument controls the first applicable separating classifier, rather than merely establishing that some correct classifier exists.</p><h3>Complementary pairs and endpoint inclusion</h3><p>The complementary-pair calculation is correct. Every absent bundle has mass below $h$, and the complement map is a bijection. Thus complementary pairs with an unmemorized endpoint have total probability at most $2h$.</p><p>The combined bound is correctly calculated:<br>$$
+3h+2h+\frac{\eta}{4}=\frac{9\eta}{16}&lt;\eta.
+$$</p><p>For $\alpha&gt;\beta$, every eligible strict low–high pair satisfies $y&gt;\beta x$. The prover explicitly checks both $x&gt;0$ and $x=0$. Therefore the weak inequality in the task causes no endpoint gap at $\alpha=\sqrt n$.</p><h3>Oracle legality and computation</h3><p>All comparisons involve observed bundles of the relevant valuation. Equality detection by two directional comparisons is legal.</p><p>Strict separation of finitely many constrained points permits unit-margin constraints. These constraints have rational coefficients of polynomial bit length, and standard rational linear programming supplies polynomial-size feasible solutions in polynomial time.</p><p>The sharper whole-domain argument for $\alpha&gt;\sqrt n$ also checks out. Its smaller classifier list accounts for removal of the additional factor of $n$.</p><h3>4. Supported-society transfer</h3><p>The inequalities<br>$$
+1\leq A\leq\tau^{1/3}
+$$<br>are correct, including the Jensen calculation.</p><p>The rational approximations have attainable polynomial bit complexity. The allowance choice satisfies<br>$$
+\sum_t\mu_t\min\{1,\eta_t\}\leq\frac{\epsilon}{2}.
+$$<br>Ignoring types with $\eta_t\geq1$ is consequently justified.</p><p>For active types, the lower bound on $\eta_t$ permits a common logarithmic envelope. The estimate<br>$$
+K_t\leq CB\left(\frac{4\widehat A}{\epsilon}\right)^3\mu_t
+$$<br>uses the approximation bounds correctly.</p><p>The active-type condition supplies the necessary lower bound on $\mu_t$. With a sufficiently large constant, the proposed total sample size makes each active type’s expected count exceed both its quota and the required confidence threshold. The Chernoff and union-bound argument is valid.</p><p>Conditioning on the type sequence preserves independent draws from $\mathcal D$ for the associated bundles. Selecting the first required observations therefore supplies the independent per-type samples needed by the single-valuation proof.</p><p>The resulting bounds genuinely avoid dependence on $1/\min_t\mu_t$.</p><h3>5. Lower bounds</h3><h3>Matroid construction</h3><p>The independently assignable rank statement matches Theorem 8 of the cited version: a family of size $k=2^{o(n^{1/3})}$ admits independently prescribed low and high ranks on bundles of size $n^{1/3}$. The prover’s cube-sized dimensions and condition $r=o(d)$ satisfy this regime. [Balcan–Harvey, Theorem 8](https://www.math.uwaterloo.ca/~harvey/Publications/LearningSubmodular/1008.2159v1.pdf).</p><p>The supplied argument for submodularity of matroid ranks is valid.</p><h3>Unobserved-label calculation</h3><p>Granting observed cardinal labels strengthens the learner’s information. Since observations remain restricted to the constructed bundle family, unseen labels remain independent fair bits conditional on the training information.</p><p>The probability that neither endpoint is observed with type $t$ is correctly given by<br>$$
+\left(1-\frac{2\mu_t}{k}\right)^N.
+$$</p><p>For an unordered pair, the chosen physical bundle is low and the other high with probability $\frac14$. Only one ordered presentation contributes to the specified risk. The contribution $\frac1{4k^2}$ and the resulting aggregate lower bound are therefore correct.</p><p>For uniform masses, Bernoulli’s inequality gives the stated $\frac78$ bound. The constant<br>$$
+\frac18\cdot\frac78\cdot\frac78=\frac{49}{512}
+$$<br>is correct.</p><p>Averaging fixes a deterministic hidden society, and the conversion from expected risk to failure probability uses the valid bound $R_\alpha\leq\frac12$. At $\epsilon=\delta=\frac1{100}$, the resulting failure probability exceeds $\delta$.</p><h3>Superpolynomial scale and society dependence</h3><p>The selected sequence satisfies<br>$$
+\frac{r}{\log_2 n}\longrightarrow\infty,
+\qquad
+\frac rd\longrightarrow0.
+$$<br>The eventual rank-ratio inequality is correct, including the floor in the definition of $r$. Thus $k=n^{\omega(1)}$, yielding the asserted superpolynomial sample necessity.</p><p>Taking $\tau=1$ establishes persistence in the precise supported-type model. The cube-sized subsequence suffices to exclude a uniform polynomial bound, and the parameters can have polynomial encoding length.</p><p>The separate $\Omega(\tau)$ lower bound at every finite separation is also correct. Zero–one additive valuations meet the valuation assumptions and remain separated for every finite $\alpha$. The absence-probability and expected-risk calculations give the claimed constant lower bound.</p><h3>6. Finite-domain upper bound</h3><p>The union bound over subsets of the joint type–bundle domain is valid. It controls total unseen joint probability by $\epsilon/2$ at the stated sample size.</p><p>Each test endpoint has the same joint marginal distribution as a training observation. Their shared test type does not invalidate the union bound, so the probability that either endpoint is unseen is at most twice the unseen joint mass.</p><p>Sorting observed bundles within each type is legal and supplies the required predictions when both endpoints were observed.</p><h3>7. Remaining task-level issue and feedback</h3><p><b>Major — Sections 5.3 and 7, incomplete resolution of <code>USER_TASK</code>.</b> The output establishes sufficient and necessary regimes but does not determine the optimal polynomial-sample separation or classify the intervening range. This is explicitly acknowledged; it is not a false claim or a defect in the established bounds.</p><p><b>Minimum required completion:</b> determine the polynomial-sample threshold, or provide a matching characterization that resolves the gap between the stated lower and upper scales. This requires further mathematics, not an expositional clarification.</p><p>The immediate write-up repairs are limited to specifying halfspace boundary labels and narrowing the statement about lexicographic handling of true-value ties. Neither repair changes the verified sample bounds.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

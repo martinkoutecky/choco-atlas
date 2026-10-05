@@ -1,0 +1,332 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Tracking Truth by Weighting Proxies in Liquid Democracy — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Tracking Truth by Weighting Proxies in Liquid Democracy <span style="font-weight:normal;color:#8a7350">(aamas22-00166)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 3 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Algorithm 2 outputs an element of arg maxD∈D 𝑞D.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite type set \(T\), rational masses \(\mu\) with \(λ\mu_t∈ℤ\), accuracies \(q_t∈(1/2,1)\), and a connected type graph \(H\), form the cohort blow-up with \(λ\mu_t\) agents of type \(t\), identical accuracy, and uniform delegation access to adjacent cohorts. Each type chooses a feasible stochastic delegation kernel \(D\), inducing expected per-agent weights \(r_D(t)\). Find \(D\) maximizing \(Q_{λ,μ}(D)=\Pr[Σ_t r_D(t)(2X_t−λ\mu_t)&gt;0]+\frac12\Pr[Σ_t r_D(t)(2X_t−λ\mu_t)=0]\), where \(X_t\sim\operatorname{Binomial}(λ\mu_t,q_t)\) independently.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list \(T\) of \(\tau\) types with positive binary-rational masses \(\mu_t\), where \(\sum_t\mu_t=1\); \(\tau\) counts supported types, not possible types. There are \(m=2\) alternatives.<br>Input also includes binary-rational accuracies \(q_t\in(1/2,1)\), a binary-encoded positive integer \(\lambda\) with \(n_t=\lambda\mu_t\in\mathbb Z_{&gt;0}\), and a connected undirected simple graph \(H\) on \(T\). Require \(\tau\ge2\) or \(\lambda=1\), so the agent graph below is connected. Let \(L\) be the total input bit length.<br>Cohort \(t\) contains \(n_t\) agents, each initially carrying unit weight. Agents can delegate to themselves or to any agent in an adjacent cohort; delegation to another agent in their own cohort is unavailable.<br>A feasible kernel \(D\in\mathbb R_{\ge0}^{T\times T}\) has row sums one and \(D_{ts}=0\) unless \(s=t\) or \(\{t,s\}\in E(H)\). Each agent of type \(t\) chooses itself with probability \(D_{tt}\), and each particular agent in adjacent cohort \(s\) with probability \(D_{ts}/n_s\).<br>All agents independently sample one proxy, fixed throughout the resulting delegation chains. A self-delegating agent is a guru; weight follows the chain to its guru, while chains entering a cycle of length greater than one lose their weight.<br>For any agent \(i\) of type \(t\), define \(r_D(t)=\mathbb E[|\{j:\text{the chain from }j\text{ ends at guru }i\}|]\), counting zero when \(i\) is not a guru. Symmetry makes this independent of the chosen agent \(i\).<br>The two truth states have equal prior probability; conditional on either state, agents vote independently and each type-\(t\) agent is correct with probability \(q_t\). Weighted majority uses the deterministic expected weights \(r_D(t)\), with a fair coin resolving ties.<br>For independent \(X_t\sim\operatorname{Binomial}(n_t,q_t)\), maximize \(Q_{\lambda,\mu}(D)=\Pr[\sum_t r_D(t)(2X_t-n_t)&gt;0]+\tfrac12\Pr[\sum_t r_D(t)(2X_t-n_t)=0]\). Exact output kernel entries are represented as real algebraic numbers by integer polynomials and rational isolating intervals.<br>Is finding a feasible kernel maximizing \(Q_{\lambda,\mu}\) solvable in time polynomial in \(m,\tau,L\), or is it NP-hard? State running times in these quantities and any additional dependence on \(\lambda\).<br>For individually specified agents on connected undirected networks, an optimal expected-weight delegation construction is known, with claimed running time polynomial in the number of agents ([Zhang–Grossi, 2022](https://pure.uva.nl/ws/files/169357679/p1482.pdf)).<br>No complexity result for this exact succinct, type-symmetric cohort problem was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the positive masses to sum to one and made lambda a positive binary-encoded integer, so lambda is the total population size.</li><li>Made accuracies binary rationals and defined L as the total input bit length; polynomial time refers to the succinct input, not the expanded population.</li><li>Interpreted the diagonal kernel entry as self-delegation and off-diagonal entries as uniform delegation to adjacent cohorts; excluded delegation to distinct agents of the same cohort.</li><li>Required the expanded agent graph to be connected, excluding the singleton-type case with more than one agent under the specified access convention.</li><li>Defined expected weights using independent proxy choices sampled once per agent, transitive guru chains, and loss of weight in nontrivial cycles.</li><li>Specified equal truth-state priors, conditional independence of votes, symmetric accuracies across truth states, and fair random tie-breaking.</li><li>Allowed real-valued kernels and selected exact real-algebraic encodings for output entries to fix the computational representation.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial resolution and new results</h3><p>I do not resolve the general exact complexity classification. In particular, I prove neither a uniform polynomial-time exact algorithm nor $\mathrm{NP}$-hardness for the output model in the question.</p><p>The following results are proved below:</p><ul><li>The optimal accuracy is the unrestricted Bayes accuracy, independently of the connected graph $H$.</li><li>An exact rational maximizing kernel can be constructed in $\operatorname{poly}(\tau,L,\lambda)$ time.</li><li>For every integer $b\ge1$, a rational kernel whose accuracy is within $2^{-b}$ of optimal can be constructed in $\operatorname{poly}(\tau,L,b)$ time.</li><li>Exact optimization is polynomial-time when the <b>multiplicative rank of the odds ratios</b> is fixed. This extends the fixed-number-of-distinct-accuracies result in <code>NOTES</code>.</li><li>A suitable uniform separation bound for logarithmic forms would imply a polynomial-time exact algorithm.</li><li>A rational optimal kernel of polynomial encoding length always exists.</li></ul><p>I also prove a comparison reduction for the restricted problem of constructing a rational optimal kernel with acyclic nonself support. The restrictions matter: this reduction does not establish hardness for the unrestricted algebraic-output problem.</p><p>Throughout, $m=2$, and running times refer to bit complexity. Thus the displayed bounds have no additional variable dependence on $m$.</p><h3>1. Bayes optimality and its equality conditions</h3><p>Write<br>$$
+\mathcal K=\prod_{t\in T}\{0,\ldots,n_t\},
+\qquad
+\bar k_t=n_t-k_t,
+\qquad
+z_t(k)=2k_t-n_t.
+$$<br>Since $\sum_t n_t=\lambda$, every $k\in\mathcal K$ satisfies<br>$$
+\sum_t|z_t(k)|\le\lambda.
+$$</p><p>Conditional on truth state one, the count vector $k$ has probability<br>$$
+p_k=\prod_{t\in T}\binom{n_t}{k_t}
+q_t^{k_t}(1-q_t)^{n_t-k_t}.
+$$<br>Conditional on truth state two, it has probability $p_{\bar k}$. Both probabilities are positive.</p><p>For a rule selecting alternative one with probability $a(k)$ after observing $k$, equal-prior accuracy is<br>$$
+\frac12\sum_{k\in\mathcal K}
+\bigl[p_k a(k)+p_{\bar k}(1-a(k))\bigr].
+$$<br>Each summand is maximized by choosing alternative one when $p_k&gt;p_{\bar k}$ and alternative two when $p_k&lt;p_{\bar k}$. Consequently, every rule satisfies<br>$$
+Q\le Q^*:=\frac12\sum_{k\in\mathcal K}\max\{p_k,p_{\bar k}\}.
+$$</p><p>Define the positive log-odds weights<br>$$
+\ell_t=\log\frac{q_t}{1-q_t}&gt;0.
+$$<br>Cancellation of the binomial coefficients gives<br>$$
+\log\frac{p_k}{p_{\bar k}}=z(k)\cdot\ell.
+$$</p><p>For any nonnegative voting weights $r$, weighted majority with fair tie-breaking selects alternative one with probability $1$, $0$, or $1/2$ according to the sign of $z(k)\cdot r$. Complementing $k$ complements this selection probability. Its equal-prior accuracy therefore equals the objective in the question.</p><p>It follows that these weights attain $Q^*$ exactly when<br>$$
+\operatorname{sign}(z(k)\cdot r)
+=
+\operatorname{sign}(z(k)\cdot\ell)
+\quad\text{for every }k\text{ with }z(k)\cdot\ell\ne0.
+$$<br>Indeed, an incorrect decision or a fair tie at any strict likelihood comparison incurs a positive loss, because that count vector has positive probability. Conversely, preserving every strict comparison attains every pointwise maximum.</p><p><b>Bayes ties impose no constraint on the voting weights.</b> If $z(k)\cdot\ell=0$, either decision and a fair tie have the same accuracy.</p><h3>2. Realizing positive weights by an acyclic cohort kernel</h3><h3>Proposition</h3><p>Suppose $w_t&gt;0$ and<br>$$
+\sum_t n_t w_t=\lambda.
+$$<br>There is a feasible kernel $D$ with acyclic nonself support such that<br>$$
+r_D(t)=w_t
+\quad\text{for all }t.
+$$<br>For rational $w$, the construction uses polynomial time in the input length and the encoding length of $w$.</p><h3>Construction</h3><p>Root a spanning tree of $H$. Set<br>$$
+b_t=n_t-n_t w_t,
+\qquad
+\sum_t b_t=0.
+$$<br>For each nonroot vertex $u$, let $S_u$ be its rooted subtree and define<br>$$
+B_u=\sum_{t\in S_u}b_t.
+$$<br>Send $B_u$ from $u$ to its parent if $B_u&gt;0$, and send $-B_u$ in the reverse direction if $B_u&lt;0$. Let $F_{ts}$ denote these nonnegative directed flows.</p><p>Each tree edge carries flow in at most one direction, so the positive-flow graph is acyclic. The subtree identities imply<br>$$
+\sum_s F_{ts}-\sum_s F_{st}=b_t.
+$$<br>For a nonroot vertex, the signed sum is $B_t-\sum_{u\text{ child of }t}B_u=b_t$. At the root, the same identity follows from $\sum_t b_t=0$.</p><p>Define<br>$$
+G_t=n_t+\sum_sF_{st}
+=n_t w_t+\sum_sF_{ts},
+$$<br>and set<br>$$
+D_{tt}=\frac{n_t w_t}{G_t},
+\qquad
+D_{ts}=\frac{F_{ts}}{G_t}\quad(s\ne t).
+$$<br>All denominators are positive. The displayed identity for $G_t$ proves that each row sums to one. The support uses only self-delegation and edges of $H$.</p><h3>Verification under fixed proxies</h3><p>For an agent $i$, let $W_i$ be the number of initial units whose chains reach $i$, including its own unit, before following its proxy.</p><p>Under this construction, nonself delegation advances along an acyclic graph of types. Thus a chain reaching $i$ has not previously visited $i$’s type. Whether an initial unit reaches $i$ consequently depends only on other agents’ proxy choices. Hence $W_i$ is independent of $i$’s own proxy choice.</p><p>Let<br>$$
+U_t=\sum_{i\text{ of type }t}\mathbb E[W_i].
+$$<br>The independence just established and linearity of expectation give, in topological order,<br>$$
+U_t=n_t+\sum_sU_sD_{st}.
+$$<br>Induction yields $U_t=G_t$: for a source, both equal $n_t$; otherwise,<br>$$
+U_t=n_t+\sum_sG_s\frac{F_{st}}{G_s}
+=n_t+\sum_sF_{st}=G_t.
+$$</p><p>Cohort symmetry gives $\mathbb E[W_i]=G_t/n_t$. The final weight of guru $i$ is $W_i$ if it self-delegates, and zero otherwise. Therefore<br>$$
+r_D(t)=D_{tt}\frac{G_t}{n_t}=w_t.
+$$<br>Every chain eventually self-delegates, since its nonself steps follow a finite acyclic graph. Thus no weight is lost.</p><p>The construction requires only a spanning tree, subtree sums, and rational arithmetic; it does not expand the cohorts.</p><h3>Consequence</h3><p>Choose<br>$$
+w_t=\frac{\lambda\ell_t}{\sum_s n_s\ell_s}.
+$$<br>These positive weights meet the normalization and preserve all Bayes comparisons. Therefore<br>$$
+\max_D Q_{\lambda,\mu}(D)=Q^*.
+$$</p><p>The logarithms used here need not be algebraic. This establishes attainment over real kernels; the rational constructions below establish attainment within the required output representation.</p><p>If $\tau=1$, the hypotheses require $\lambda=1$. The unique feasible kernel is $D_{11}=1$, which is optimal. Henceforth assume $\tau\ge2$.</p><h3>3. Exact construction in time polynomial in $\lambda$</h3><p>Write<br>$$
+q_t=\frac{a_t}{b_t},
+\qquad
+c_t=b_t-a_t,
+\qquad
+\ell_t=\log\frac{a_t}{c_t},
+$$<br>where $a_t,c_t$ are positive integers at most $2^L$ and $a_t&gt;c_t$.</p><p>For any count vector, moving negative exponents between numerator and denominator expresses<br>$$
+\prod_t\left(\frac{a_t}{c_t}\right)^{z_t(k)}
+=\frac AB
+$$<br>with positive integers $A,B\le2^{\lambda L}$. If the corresponding logarithmic form is nonzero, then $A\ne B$, and<br>$$
+\left|\log\frac AB\right|
+\ge\frac{|A-B|}{\max\{A,B\}}
+\ge2^{-\lambda L}.
+$$<br>The first inequality follows by integrating $1/x$ between the smaller and larger integer.</p><p>Choose<br>$$
+p=\lambda L+\lceil\log_2\lambda\rceil+3
+$$<br>and rational approximations satisfying<br>$$
+|v_t-\ell_t|\le2^{-p}.
+$$<br>For every count vector,<br>$$
+|z(k)\cdot(v-\ell)|
+\le\lambda2^{-p}
+\le\frac18\,2^{-\lambda L}.
+$$<br>Thus every strict Bayes comparison is preserved.</p><p>These approximations are positive. Indeed,<br>$$
+\ell_t
+=\int_{c_t}^{a_t}\frac{dx}{x}
+\ge\frac{a_t-c_t}{a_t}
+\ge2^{-L},
+$$<br>whereas $2^{-p}&lt;2^{-L}/2$.</p><p>Normalize $v$ by<br>$$
+w_t=\frac{\lambda v_t}{\sum_s n_s v_s}
+$$<br>and apply Section 2. Normalization multiplies the weights by a common positive factor, so the resulting rational kernel is exactly optimal.</p><p>For completeness, the logarithms can be computed with polynomial bit complexity. Write an integer $a$ as $a=2^j y$ with $1\le y&lt;2$, and use<br>$$
+\log a=j\log2+
+2\sum_{h=0}^{\infty}\frac{u^{2h+1}}{2h+1},
+\qquad
+u=\frac{y-1}{y+1}\in[0,1/3).
+$$<br>The same series computes $\log2$ using $u=1/3$. The tail after $N$ terms is at most<br>$$
+\frac{2(1/3)^{2N+1}}{1-1/9}&lt;3^{-2N}.
+$$<br>Taking $N=O(p+\log(L+1))$ accounts for range reduction, subtraction, and dyadic rounding. Exact rational powers and sums have encoding length polynomial in $N,L$.</p><p>This proves the unconditional exact running-time bound<br>$$
+\operatorname{poly}(\tau,L,\lambda).
+$$<br>Because $\lambda$ is binary encoded, this does not establish polynomial time in the succinct input length.</p><p>Every output fraction $A/B$ meets the required algebraic representation: use the integer polynomial $Bx-A$ and the rational isolating interval $(-1,2)$.</p><h3>4. New result: polynomial-time accuracy approximation</h3><h3>Proposition</h3><p>For every integer $b\ge1$, one can construct a rational feasible kernel $D$ satisfying<br>$$
+Q_{\lambda,\mu}(D)\ge Q^*-2^{-b}
+$$<br>in time<br>$$
+\operatorname{poly}(\tau,L,b).
+$$<br>The dependence on population size is through $\log\lambda$, already included in $L$.</p><h3>Proof</h3><p>First suppose positive weights $v$ satisfy<br>$$
+\max_t|v_t-\ell_t|\le\delta.
+$$<br>If weighted majority using $v$ makes an incorrect decision or a fair tie at a strict Bayes comparison, then<br>$$
+|z(k)\cdot\ell|
+\le |z(k)\cdot(\ell-v)|
+\le\lambda\delta.
+$$</p><p>Let<br>$$
+M_k=\frac{p_k+p_{\bar k}}2.
+$$<br>These numbers sum to one. At a strict comparison, let $\rho_k$ be the probability that the weighted rule chooses the alternative opposite to the Bayes choice. Thus $\rho_k$ is $0$, $1/2$, or $1$. Subtracting the rule’s accuracy from Bayes accuracy gives<br>$$
+Q^*-Q(v)
+=
+\sum_{k:\,p_k\ne p_{\bar k}}
+M_k
+\frac{|p_k-p_{\bar k}|}{p_k+p_{\bar k}}
+\rho_k.
+$$<br>Since $p_k/p_{\bar k}=\exp(z(k)\cdot\ell)$,<br>$$
+\frac{|p_k-p_{\bar k}|}{p_k+p_{\bar k}}
+=
+\tanh\left(\frac{|z(k)\cdot\ell|}{2}\right).
+$$<br>Whenever $\rho_k&gt;0$, the preceding margin bound and $\tanh x\le x$ for $x\ge0$ imply<br>$$
+\frac{|p_k-p_{\bar k}|}{p_k+p_{\bar k}}
+\le\frac{\lambda\delta}{2}.
+$$<br>Therefore<br>$$
+Q^*-Q(v)\le\frac{\lambda\delta}{2}.
+$$</p><p>Now compute rational logarithm approximations with<br>$$
+p=L+\lceil\log_2\lambda\rceil+b+3,
+\qquad
+\delta=2^{-p}.
+$$<br>They are positive by the lower bound $\ell_t\ge2^{-L}$. Also,<br>$$
+\frac{\lambda\delta}{2}\le2^{-b}.
+$$<br>Normalize $v$ and apply Section 2. This preserves the voting rule and produces the claimed kernel.</p><p>The logarithm computation and kernel construction are polynomial in $\tau,L,p$. Since $\log\lambda\le L$, the stated running time follows. No count-vector enumeration or exact likelihood comparison is needed. $\square$</p><h3>5. New exact case: fixed multiplicative rank</h3><p>The relevant arithmetic dimension can be smaller than the number of distinct accuracies.</p><h3>5.1 Computing the multiplicative rank</h3><p>A <b>coprime basis</b> for the integers $a_t,c_t$ is a list of pairwise coprime integers $g_1,\ldots,g_s&gt;1$ such that each input integer is a product of powers of the $g_j$.</p><p>Such a basis and the exponents can be constructed in polynomial time without prime factorization. Start with the distinct input integers greater than one. Whenever distinct current bases $u,v$ have $g=\gcd(u,v)&gt;1$, replace them by<br>$$
+u/g,\quad v/g,\quad g,
+$$<br>discard ones, merge duplicates, and update the exponent representations.</p><p>This preserves every input factorization. Before merging duplicates, the product of current bases decreases from $uv$ to $uv/g$; merging decreases it further. Thus each iteration decreases its logarithm by at least $\log2$. The initial product has polynomial bit length, so there are polynomially many iterations. All bases remain at most $2^L$. Every representation exponent is at most $L$, because its base is at least two and the represented integer is at most $2^L$. Consequently, the gcd operations and representation updates have polynomial bit complexity.</p><p>Write the odds ratios as<br>$$
+\frac{a_t}{c_t}=\prod_{j=1}^s g_j^{E_{tj}},
+\qquad
+|E_{tj}|\le L,
+$$<br>and let<br>$$
+d=\operatorname{rank}_{\mathbb Q}E.
+$$<br>This $d$ is the multiplicative rank of the odds ratios.</p><p>To justify that interpretation, the numbers $\log g_j$ are linearly independent over $\mathbb Q$. After clearing denominators, a putative relation would give<br>$$
+\prod_jg_j^{h_j}=1
+$$<br>with integer $h_j$. A prime dividing a particular $g_j$ divides no other basis element, so its valuation forces $h_j=0$. Therefore rational linear relations among the $\ell_t$ are precisely rational relations among the rows of $E$.</p><p>Since every $\ell_t&gt;0$, we have $d\ge1$. Gaussian elimination computes $d$ in polynomial time.</p><h3>5.2 Reducing comparisons to $2d$ integer logarithms</h3><p>Choose $d$ independent rows, indexed by $I$, and $d$ columns, indexed by $J$, such that<br>$$
+A=E_{I,J}
+$$<br>is nonsingular. Set<br>$$
+\Delta=|\det A|,
+\qquad
+H_d=d^{d/2}L^d.
+$$<br>Hadamard’s inequality gives $\Delta\le H_d$.</p><p>Every row lies in the span of the selected rows. Cramer’s rule, applied on the selected columns, supplies integers $h_{ti}$ satisfying<br>$$
+E_t=\frac1\Delta\sum_{i\in I}h_{ti}E_i,
+\qquad
+|h_{ti}|\le H_d.
+$$<br>The numerator determinants obey the same bound because their entries also have absolute value at most $L$. Equality on the selected columns determines the coefficients uniquely; since $E_t$ belongs to the selected row span, it gives equality on all columns.</p><p>Consequently,<br>$$
+\ell_t=\frac1\Delta\sum_{i\in I}h_{ti}\ell_i.
+$$<br>For any voting coefficient vector $z=z(k)$, put<br>$$
+f_i=\sum_t z_t h_{ti}.
+$$<br>Then<br>$$
+z\cdot\ell=\frac1\Delta\sum_{i\in I}f_i\ell_i,
+\qquad
+|f_i|\le\lambda H_d.
+$$<br>Splitting each $\ell_i=\log a_i-\log c_i$ expresses the numerator using at most $2d$ integer logarithms.</p><h3>5.3 Applying a logarithmic-form bound</h3><p>We use this standard integer specialization of the Baker–Wüstholz theorem: for integers $A_j\ge2$, nonzero integer coefficients $e_j$, and<br>$$
+\Lambda=\sum_{j=1}^r e_j\log A_j\ne0,
+\qquad
+B=\max\{e,|e_1|,\ldots,|e_r|\},
+$$<br>one has<br>$$
+|\Lambda|
+\ge
+\exp\left(
+-C_r\prod_{j=1}^r\max\{1,\log A_j\}\log B
+\right),
+$$<br>where $C_r$ is effective and $C_r=2^{O(r\log(r+1))}$. This specialization is stated in [Etessami–Stewart–Yannakakis, Theorem 3.1](https://arxiv.org/pdf/1304.5429).</p><p>Here we discard bases equal to one and coefficients equal to zero. If $z\cdot\ell\ne0$, the remaining form is nonzero. Its number of terms is at most $2d$, its bases are at most $2^L$, and its coefficients have absolute value at most $\lambda H_d$. These verify all hypotheses.</p><p>Choose an integer<br>$$
+M=\left\lceil d\log_2(d+1)+d\log_2(L+1)\right\rceil+3,
+$$<br>so $H_d\le2^M$. Let $K_d$ be an effective integer upper bound on $C_r$ for $1\le r\le2d$, with<br>$$
+K_d=2^{O(d\log(d+1))}.
+$$<br>Define<br>$$
+R_d=
+K_d(L+1)^{2d}
+\bigl(1+\lceil\log_2\lambda\rceil+M\bigr)+M.
+$$<br>The theorem, followed by division by $\Delta\le2^M$, proves<br>$$
+z(k)\cdot\ell\ne0
+\quad\Longrightarrow\quad
+|z(k)\cdot\ell|\ge e^{-R_d}&gt;2^{-2R_d}.
+$$</p><p>Now approximate each logarithm to precision<br>$$
+p=2R_d+L+\lceil\log_2\lambda\rceil+3.
+$$<br>The aggregate approximation error is smaller than every nonzero margin, and positivity is preserved. Normalization and Section 2 therefore give an exact rational optimizer.</p><p>The running time is<br>$$
+\operatorname{poly}(\tau,L,R_d),
+$$<br>or, with parameter dependence displayed,<br>$$
+(d(L+1))^{O(d)}
+\operatorname{poly}(\tau,1+\log\lambda).
+$$<br>For fixed $d$, this is polynomial in $\tau,L$.</p><p>If $h$ is the number of distinct accuracies, then $d\le h$, because equal accuracies give equal rows of $E$. Thus this result includes the fixed-$h$ case.</p><p>There is an especially simple rank-one case. Choose any type $i$. Rank one gives rational numbers $\alpha_t$ with<br>$$
+\ell_t=\alpha_t\ell_i.
+$$<br>Since both logarithms are positive, $\alpha_t&gt;0$. The coefficients are computable from $E$, so using $v_t=\alpha_t$ gives an exact rational optimizer in polynomial time without logarithmic approximation.</p><h3>6. A conditional polynomial-time exact algorithm</h3><p>The following is an explicit <b>assumption</b>, not an unconditional result.</p><p>Suppose there is a fixed constant $C&gt;0$ such that every nonzero integer logarithmic form satisfies<br>$$
+\left|\sum_{j=1}^r e_j\log A_j\right|
+\ge
+\exp\left(
+-C
+\left(\sum_{j=1}^r\max\{1,\log A_j\}\right)
+\log\max\{e,|e_1|,\ldots,|e_r|\}
+\right).
+$$<br>Bounds sufficient for this assumption follow from the number-theoretic conjectures discussed in [Etessami–Stewart–Yannakakis, Section 3](https://arxiv.org/pdf/1304.5429).</p><p>For the voting forms, splitting the rational odds uses at most $2\tau$ bases, each at most $2^L$, with coefficients bounded by $\lambda$. The assumption therefore supplies the uniform bound<br>$$
+z(k)\cdot\ell\ne0
+\quad\Longrightarrow\quad
+|z(k)\cdot\ell|\ge e^{-R},
+$$<br>where one may choose<br>$$
+R=O\bigl(\tau(L+1)(1+\log\lambda)\bigr).
+$$<br>Approximating all logarithms with<br>$$
+p=2\lceil R\rceil+L+\lceil\log_2\lambda\rceil+3
+$$<br>preserves every strict comparison simultaneously. Section 2 then constructs an exact rational optimizer in $\operatorname{poly}(\tau,L)$ time.</p><p>This implication does not require enumerating the comparisons: one uniform margin bound suffices.</p><h3>7. Polynomial-size exact rational output always exists</h3><p>This existence result does not depend on any separation assumption.</p><p>For each voting vector $z=z(k)$ with $z\cdot\ell\ne0$, set<br>$$
+\sigma_z=\operatorname{sign}(z\cdot\ell).
+$$<br>Consider the finite polyhedron<br>$$
+P=\left\{
+v:
+v_t\ge1\text{ for every }t,\quad
+\sigma_z z\cdot v\ge1
+\text{ for every strict comparison}
+\right\}.
+$$<br>A sufficiently large positive multiple of $\ell$ belongs to $P$: there are finitely many positive signed margins.</p><p>Minimize $\sum_t v_t$ over $P$. Given any feasible point, its objective sublevel set in $P$ is nonempty and compact, because every coordinate is at least one and their sum is bounded. Thus the minimum is attained. The minimizing face is bounded and has a vertex, which is also a vertex of $P$.</p><p>At such a vertex, $\tau$ active constraint normals are linearly independent. Otherwise, a nonzero vector orthogonal to every active normal would permit sufficiently small perturbations in both directions, contradicting extremality. Hence the vertex satisfies<br>$$
+Av=\mathbf1
+$$<br>for a nonsingular integer matrix with entries bounded in absolute value by $\lambda$.</p><p>Cramer’s rule and Hadamard’s inequality give<br>$$
+|\det A|\le\tau^{\tau/2}\lambda^\tau
+$$<br>and the same bound for every numerator determinant. Therefore<br>$$
+u=|\det A|v
+$$<br>is a positive integer vector with<br>$$
+u_t\le\tau^{\tau/2}\lambda^\tau.
+$$<br>It preserves every strict Bayes comparison. Each coordinate has<br>$$
+O\bigl(\tau\log(\tau+1)+\tau\log(\lambda+1)\bigr)
+$$<br>bits.</p><p>Normalize $u$ and apply Section 2. With<br>$$
+S=\sum_t n_tu_t,
+$$<br>the retained cohort weights and subtree flows have common denominator $S$. Their numerators and the resulting kernel fractions have polynomial bit length in $\tau,L$.</p><p>Thus polynomial-size rational optimal output always exists. This proof does not locate it in polynomial time: the defining inequalities use the strict Bayes signs.</p><h3>8. A restricted comparison reduction</h3><p>Here is a valid reduction that also works when all input masses and accuracies are required to have finite binary expansions.</p><p>Consider comparison of products of powers of <b>odd</b> integers:<br>$$
+\operatorname{sign}\left(\sum_{i=1}^r e_i\log A_i\right),
+$$<br>where $A_i\ge3$ is odd and $e_i\ne0$ is binary encoded.</p><h3>Encoding odd bases by dyadic accuracies</h3><p>Starting from an odd integer $a&gt;1$, let $P$ be the smallest power of two exceeding $a$. Then<br>$$
+P/2&lt;a&lt;P,
+\qquad
+a&#x27;=P-a
+$$<br>is positive and odd, and has smaller bit length than $a$. The accuracy<br>$$
+q=a/P
+$$<br>is dyadic and belongs to $(1/2,1)$, with odds ratio $a/a&#x27;$.</p><p>Repeating until the remainder is one gives, in polynomial time,<br>$$
+A_i=\prod_j\frac{q_{ij}}{1-q_{ij}},
+\qquad
+q_{ij}\in(1/2,1).
+$$<br>The product telescopes, and the number of factors is at most the bit length of $A_i$.</p><p>Create one cohort for each factor, with<br>$$
+n_{ij}=2|e_i|,
+\qquad
+z_{ij}=2e_i.
+$$<br>Choose $\lambda$ to be a power of two strictly larger than $\sum_{i,j}n_{ij}$. Add a dummy cohort with<br>$$
+n_0=\lambda-\sum_{i,j}n_{ij},
+\qquad
+q_0=3/4,
+\qquad
+z_0=0.
+$$<br>Every cohort size is positive and even. Thus all selected $z$ coordinates are valid voting coefficients, and the masses $n_t/\lambda$ are dyadic. Choose $H$ to be a path.</p><p>The likelihood form at this selected count vector is<br>$$
+z\cdot\ell=2\sum_i e_i\log A_i.
+$$<br>The constructed instance has polynomial succinct encoding length.</p><p>Equality of the original products can first be tested in polynomial time using the coprime-basis construction of Section 5: equality holds exactly when every resulting basis exponent is zero. For a nonequal instance, every exact optimizer must preserve the sign of this selected comparison.</p><h3>What an acyclic rational optimizer would reveal</h3><p>Suppose an algorithm returns an exact optimal kernel with rational entries given as fractions and acyclic nonself support. Its expected weights can be computed in topological order:<br>$$
+U_t=n_t+\sum_sU_sD_{st},
+\qquad
+r_D(t)=\frac{D_{tt}U_t}{n_t}.
+$$<br>Section 2’s fixed-proxy independence argument applies to any such acyclic kernel.</p><p>This computation has polynomial bit complexity. Expanding $U_t$ as a sum over directed type paths shows that its denominator divides the product of the denominators of all nonself entries. Each path uses every edge at most once. Also $U_t\le\lambda$, because each initial unit visits a type at most once. Thus the recurrence’s exact rational values have polynomial encoding length.</p><p>Computing the sign of $z\cdot r_D$ consequently determines the original product comparison.</p><p>Therefore a polynomial-time rational acyclic exact-optimizer construction would yield a polynomial-time algorithm for this odd-base product-of-powers comparison problem. If arbitrary binary-encoded rational accuracies are allowed, the same construction directly handles general integer bases using $q_i=A_i/(A_i+1)$.</p><p><b>This is not an $\mathrm{NP}$-hardness result.</b> Moreover, an arbitrary optimizer for <code>USER_TASK</code> can return a cyclic kernel and general algebraic entries. The polynomial-time extraction above does not apply to that output. Existence of a rational acyclic optimum does not permit imposing those restrictions on an unrestricted optimizer oracle.</p><h3>9. Remaining exact complexity question</h3><p>The new approximation result shows that succinct population size does not obstruct obtaining arbitrarily high prescribed accuracy in polynomial time. The multiplicative-rank result also gives an exact polynomial algorithm for a broader class than fixed numbers of accuracies.</p><p>For unrestricted exact optimization, the missing step remains one of the following:</p><ul><li>A uniform polynomial-time construction preserving every strict Bayes comparison.</li><li>A valid hardness reduction for finding an arbitrary maximizing kernel in the stipulated algebraic representation.</li></ul><p>The structural realization theorem, small-output existence theorem, and restricted comparison reduction do not supply either step. Likewise, a running time polynomial in the individually specified population size can retain polynomial dependence on $\lambda$, which is exponential in its binary encoding length.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Opening disclaimer and Section 9: The unrestricted exact complexity question in USER_TASK remains unresolved: neither a polynomial-time exact construction in $\tau,L$ nor $\mathrm{NP}$-hardness for the stipulated algebraic output model is established. This is acknowledged incompleteness, not a false claim of completion.</li><li><b>minor</b> — Opening list of claimed results: reference to NOTES: The document NOTES is neither supplied nor identified, so the comparison with its prior result cannot be checked. Identify the reference or remove the comparison; the implication from fixed multiplicative rank to fixed numbers of distinct accuracies is independently justified.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: correct and substantial partial progress; the requested exact complexity classification remains unresolved.</b> The unconditional constructions and bounds withstand verification. The output expressly acknowledges that it proves neither a polynomial-time exact algorithm for the general succinct problem nor $\mathrm{NP}$-hardness.</p><p>No central mathematical step was found to be false. The main issue is incomplete resolution of <code>USER_TASK</code>, rather than an incorrect claim of completion.</p><h3>1. Bayes optimality and equality conditions</h3><p>The probability model is consistent with the task:</p><ul><li>Under truth state one, the count vector has probability $p_k$.</li><li>Under truth state two, it has probability $p_{\bar k}$.</li><li>Every count vector has positive probability because $q_t\in(1/2,1)$.</li></ul><p>The equal-prior accuracy formula for a randomized decision rule is correct. Maximizing its summands independently gives the stated upper bound<br>$$
+Q^*=\frac12\sum_{k\in\mathcal K}\max\{p_k,p_{\bar k}\}.
+$$</p><p>The likelihood-ratio calculation is also correct: the binomial coefficients cancel, leaving<br>$$
+\log\frac{p_k}{p_{\bar k}}=\sum_t(2k_t-n_t)\ell_t.
+$$</p><p>For weighted majority, complementing the count vector reverses the score and complements the decision probability, including at ties. This establishes the claimed correspondence between equal-prior accuracy and the objective in <code>USER_TASK</code>.</p><p>The equality condition is exact. At a strict likelihood comparison, an incorrect decision or a fair voting tie incurs positive loss. Conversely, matching every strict Bayes decision maximizes every relevant summand.</p><p>The statement that Bayes ties impose no constraint is correct. The proof does not unnecessarily require preservation of zero logarithmic forms.</p><p><b>Finding:</b> verified.</p><h3>2. Realization by an acyclic cohort kernel</h3><p>This is the principal structural result, and the fixed-proxy argument is valid.</p><p>The normalization implies<br>$$
+\sum_t b_t=0.
+$$<br>The signed subtree flows therefore satisfy the claimed divergence identities. At the root, the total-zero identity supplies the missing parent contribution.</p><p>Every positive-flow edge lies on a tree and is oriented in only one direction. Consequently, the directed nonself support is acyclic.</p><p>The identity<br>$$
+G_t=n_t+\sum_sF_{st}=n_tw_t+\sum_sF_{ts}
+$$<br>establishes positive denominators and row sums equal to one. All nonself entries use permitted graph edges.</p><p>The independence argument correctly addresses the model in which proxies are sampled once and remain fixed. In an acyclic graph of types, reaching an agent does not depend on that agent’s outgoing proxy choice. Hence the expected incoming weight can be multiplied by its proxy probabilities.</p><p>The recurrence<br>$$
+U_t=n_t+\sum_sU_sD_{st}
+$$<br>is valid in topological order. The induction identifying $U_t$ with $G_t$ checks out. Cohort symmetry and independence then give<br>$$
+r_D(t)=D_{tt}\frac{G_t}{n_t}=w_t.
+$$</p><p>Termination is also justified: a chain can take only finitely many nonself steps along the acyclic type graph. No weight is lost.</p><p>The rational construction uses only polynomially many arithmetic operations on quantities whose encoding lengths are polynomial in the input and supplied weights. It does not require expanding the population.</p><p>Applying this result to normalized log-odds establishes the graph-independent Bayes optimum over real kernels. The output correctly distinguishes this real construction from the later constructions meeting the algebraic output requirement.</p><p>The exceptional case $\tau=1$ is handled correctly: the task then requires $\lambda=1$, and the unique feasible kernel is optimal.</p><p><b>Finding:</b> verified.</p><h3>3. Exact construction with polynomial dependence on population size</h3><p>The integer-product separation bound is correct. Since<br>$$
+\sum_t|z_t(k)|\le\lambda,
+$$<br>the constructed numerator and denominator satisfy<br>$$
+A,B\le2^{\lambda L}.
+$$<br>For unequal positive integers $A,B$, integration of $1/x$ gives the stated lower bound<br>$$
+\left|\log\frac AB\right|\ge2^{-\lambda L}.
+$$</p><p>With the selected precision, the aggregate approximation error is at most one eighth of this lower bound. Thus all strict comparisons retain their signs.</p><p>Positivity is also checked correctly. The bound<br>$$
+\ell_t\ge2^{-L}
+$$<br>follows from the positive integer difference $a_t-c_t$, and the approximation error is smaller than half this bound.</p><p>The logarithm series, range reduction, and tail estimate are valid. The required number of terms is polynomial in the precision and input length, and exact rational evaluation has polynomial bit complexity. The unspecified constant in the term count is routine implementation detail, not a mathematical gap.</p><p>Normalization preserves every comparison. Section 2 then yields an exact rational optimizer in<br>$$
+\operatorname{poly}(\tau,L,\lambda)
+$$<br>time.</p><p>For the kernel entries, the proposed linear integer polynomial and interval $(-1,2)$ provide valid algebraic representations: every entry belongs to $[0,1]$, and a linear polynomial has exactly one root.</p><p>The output correctly states that polynomial dependence on $\lambda$ is insufficient for polynomial time in the succinct input length.</p><p><b>Finding:</b> verified.</p><h3>4. Polynomial-time accuracy approximation</h3><p>The margin argument is correct. Whenever the approximate weights disagree with a strict Bayes choice or produce a voting tie, the true likelihood margin is bounded by the aggregate weight error.</p><p>The loss identity has the correct normalization:<br>$$
+M_k\frac{|p_k-p_{\bar k}|}{p_k+p_{\bar k}}
+=\frac{|p_k-p_{\bar k}|}{2}.
+$$<br>Also, $\sum_kM_k=1$. Thus summing over complementary count vectors does not introduce an extra factor.</p><p>The likelihood ratio gives the displayed hyperbolic-tangent expression, and $\tanh x\le x$ applies in the stated range. Consequently,<br>$$
+Q^*-Q(v)\le\frac{\lambda\delta}{2}.
+$$</p><p>The selected precision ensures both positivity and error at most $2^{-b}$. Since $\log\lambda$ is part of the input length, the construction indeed runs in<br>$$
+\operatorname{poly}(\tau,L,b)
+$$<br>time.</p><p>This is an approximation guarantee for a constructed kernel. It does not require evaluating the optimal accuracy or enumerating count vectors.</p><p><b>Finding:</b> verified.</p><h3>5. Exact optimization at fixed multiplicative rank</h3><h3>Coprime-basis construction</h3><p>The refinement operation preserves the factorization representations. Its termination argument is valid: each operation decreases the product of the current distinct bases by at least a factor of two before any additional decrease from merging duplicates.</p><p>The initial logarithm of that product is polynomially bounded. The number and sizes of current bases remain polynomially bounded, and representation exponents cannot exceed the logarithmic size of the integer being represented. Thus the claimed polynomial bit complexity is justified.</p><p>Pairwise coprimality establishes rational independence of the basis logarithms by prime valuations. Therefore the rational rank of the exponent matrix is the multiplicative rank claimed.</p><h3>Reduction of logarithmic forms</h3><p>The selection of independent rows and nonsingular columns is valid. Cramer’s rule supplies the stated integer coefficients, with the sign of the determinant absorbed into their numerators.</p><p>The Hadamard bounds apply to both denominator and numerator determinants because their entries have absolute value at most $L$. Equality on the selected columns determines the row-span coefficients uniquely.</p><p>The voting coefficients therefore satisfy the claimed reduction and bound<br>$$
+|f_i|\le\lambda H_d.
+$$</p><h3>Cited theorem and precision</h3><p>The integer specialization stated in the output matches Theorem 3.1 of the cited paper, including the effective constant growth. The theorem does not require distinct or multiplicatively independent bases. After discarding bases equal to one and coefficients equal to zero, all hypotheses are met whenever the original form is nonzero. [Etessami–Stewart–Yannakakis, Theorem 3.1](https://arxiv.org/pdf/1304.5429)</p><p>The bounds on the bases, coefficients, and determinant justify $R_d$. Division by $\Delta$ is accounted for. The conversion<br>$$
+e^{-R_d}&gt;2^{-2R_d}
+$$<br>is valid, and the chosen approximation precision preserves every strict sign.</p><p>The running times<br>$$
+\operatorname{poly}(\tau,L,R_d)
+$$<br>and<br>$$
+(d(L+1))^{O(d)}\operatorname{poly}(\tau,1+\log\lambda)
+$$<br>are consistent. For fixed $d$, this gives polynomial time in $\tau,L$.</p><p>The rank-one case and the implication $d\le h$ are valid.</p><p><b>Finding:</b> verified, with one minor reference issue: the opening comparison to <code>NOTES</code> names an unavailable document. The mathematical inclusion of the fixed-number-of-distinct-accuracies case is independently established here.</p><h3>6. Conditional polynomial-time exact algorithm</h3><p>The separation bound is explicitly presented as an assumption. It is not misrepresented as an unconditional theorem.</p><p>Under that assumption, the number of logarithmic terms, their base sizes, and their coefficient sizes yield the stated polynomial bound on $R$. The approximation and realization steps then provide the claimed conditional algorithm.</p><p>The cited paper discusses conjectural bounds sufficient for this purpose. [Etessami–Stewart–Yannakakis, Section 3](https://arxiv.org/pdf/1304.5429)</p><p><b>Finding:</b> the conditional implication is verified; it contributes no unconditional general classification.</p><h3>7. Polynomial-size rational optimal output</h3><p>The polyhedron is nonempty because there are finitely many strict comparisons and all their signed log-odds margins are positive.</p><p>The bounded objective sublevel argument correctly establishes attainment. The minimizing face is bounded and therefore has a vertex, which is also a vertex of the original polyhedron.</p><p>At a vertex, the active normals must span the ambient space. The stated perturbation argument justifies selecting $\tau$ independent active constraints.</p><p>All constraint coefficients are integers bounded in absolute value by $\lambda$, and their right-hand sides are one. Cramer’s rule and Hadamard’s inequality therefore give the claimed coordinate bounds after clearing the determinant.</p><p>Normalization and the flow construction preserve polynomial encoding length. Thus a polynomial-size rational exact optimizer exists.</p><p>The output correctly distinguishes this existence theorem from an efficient method for finding the optimizer.</p><p><b>Finding:</b> verified.</p><h3>8. Restricted comparison reduction</h3><p>The odd-base encoding is valid. At each step, the remainder is positive, odd, and has smaller bit length. The odds ratios telescope, and the construction has polynomial encoding length.</p><p>The selected coordinates satisfy the voting-vector range and parity conditions. The dummy cohort is positive and even, its selected coordinate is valid, and the masses are dyadic. The path graph satisfies connectivity.</p><p>The likelihood form is exactly twice the original comparison form. Equality testing via the coprime basis is justified by the earlier construction.</p><p>For rational kernels with acyclic nonself support, the recurrence for expected weights is valid. The path-denominator argument and bound $U_t\le\lambda$ justify polynomial-size intermediate rational values and polynomial-time sign extraction.</p><p>The reduction consequently establishes the restricted implication claimed. It does not establish $\mathrm{NP}$-hardness, and the output correctly explains why it does not apply to arbitrary cyclic kernels with algebraic entries.</p><p><b>Finding:</b> verified.</p><h3>9. Outstanding issues and actionable feedback</h3><p><b>Major — incomplete resolution of the assigned target.</b> The general exact problem remains unclassified. Polynomial dependence on $\lambda$, approximation algorithms, fixed-rank algorithms, and polynomial-size output existence do not settle whether the unrestricted task has a polynomial-time exact algorithm or is $\mathrm{NP}$-hard.</p><p>To complete the assignment, the prover must supply one of the two general results it identifies, using the specified algebraic output model. This requires additional mathematics; no clarification of the existing arguments resolves it.</p><p><b>Minor — unavailable reference.</b> Identify <code>NOTES</code> with a precise accessible reference, or remove that comparison. This does not affect the independently proved fixed-rank result.</p><p>The direction is promising because its structural realization and arithmetic reductions are sound. The report should retain its explicit partial status.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

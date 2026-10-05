@@ -1,0 +1,105 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ijcai-2017-0056 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ijcai-2017-0056 <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2017-0056)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable: rank alternatives in nonincreasing order of their total approval masses \(w_a=\sum_{(r,S):\,a\in S}\mu_{r,S}\), resolving equal scores arbitrarily.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 2 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>For every ϵ &gt; 0, when the Mallows agents have possibly different noise parameters with average value p∗= 1 n P ℓ∈N pℓand their number is n ≥2(m −1)2 (2p∗−1)2 ln (m/ϵ), randomized approval returns the ground truth ranking of m alternatives with probability at least 1 −ϵ.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given \(m\), a known \(0&lt;\phi&lt;1\), and binary-rational masses \(\mu_{r,S}\) summing to one over randomized-approval types \((r,S)\), where \(r\in[m-1]\) and \(|S|=r\), find a ranking \(\hat{\sigma}\) maximizing \(\sum_{r,S}\mu_{r,S}\log\Pr[(r,S)\mid\hat{\sigma},\phi]\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(A=\{1,\ldots,m\}\), with \(m\geq2\), and let \(\mathcal R(A)\) denote its strict rankings. The known common noise parameter \(\phi\in(0,1)\) is a binary rational.<br>A society is given by its support: the list of \(\tau\) types \((r,S)\) with positive binary-rational masses \(\mu_{r,S}\), where \(1\leq r\leq m-1\), \(S\subseteq A\), \(|S|=r\), and \(\sum_{r,S}\mu_{r,S}=1\). Here \(\tau\) is the support size, not the number of possible types; \(L\) is the total input bit length.<br>Under a proposed central ranking \(\sigma\), independently choose \(r\) uniformly from \(\{1,\ldots,m-1\}\) and draw \(\pi\) from the Kendall-tau Mallows model with centre \(\sigma\) and parameter \(\phi\); report the unordered set of its first \(r\) alternatives.<br>Thus \(P_\sigma(r,S)=\frac{1}{m-1}\frac{\sum_{\pi\in\mathcal R(A):\operatorname{top}_r(\pi)=S}\phi^{d_{\mathrm{KT}}(\pi,\sigma)}}{\sum_{\rho\in\mathcal R(A)}\phi^{d_{\mathrm{KT}}(\rho,\sigma)}}\). Input masses are arbitrary observed frequencies, without a promise that they equal a model distribution or have uniform size marginals.<br>The optimization problem is to return any ranking maximizing \(\sum_{r,S}\mu_{r,S}\log P_\sigma(r,S)\); ties between maximizers may be resolved arbitrarily.</p><p>Can an exact maximizing ranking be computed in time polynomial in \(m,\tau,L\), or is this optimization problem NP-hard?</p><p>For finite independent Mallows voters, randomized approval recovers the central ranking with probability at least \(1-\epsilon\) when \(n\geq\frac{2(m-1)^2}{(2p^*-1)^2}\log(m/\epsilon)\), where \(0&lt;\epsilon&lt;1\) and \(p^*&gt;1/2\) is the average voter parameter. [Caragiannis–Micha](https://www.ijcai.org/Proceedings/2017/0022.pdf)<br>For fixed-size approval votes under Kendall-tau Mallows noise, approval winners are exactly the MLE best alternatives; this estimates the best alternative rather than the complete ranking. [Procaccia–Shah](https://www.cs.toronto.edu/~nisarg/papers/approval_voting.NIPS15.pdf) No result treating exactly the rational-mass optimization above was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Represent the known noise parameter as a binary rational included in the total input bit length.</li><li>Require at least two alternatives and strict complete rankings, consistent with nonempty proper approval sets.</li><li>Define the likelihood through uniform independent size selection and Kendall-tau Mallows sampling, including its normalization.</li><li>Treat masses as arbitrary observed frequencies, without imposing uniform size marginals or exact membership in the generative model.</li><li>Allow any exact maximizing ranking when the likelihood has ties.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Result</h3><p><b>An exact maximizing ranking is computable in time polynomial in \(m,\tau,L\).</b> Compute each alternative’s total approval mass<br>\[
+w_a=\sum_{(r,S):\,a\in S}\mu_{r,S},
+\]<br>and rank alternatives in nonincreasing order of \(w_a\). Every such ranking maximizes the likelihood, and these are exactly the maximizing rankings.</p><p>The proof applies to arbitrary observed masses and arbitrary size marginals.</p><h3>1. Factorization of a reported set’s probability</h3><p>Write \(\operatorname{pos}_\sigma(a)\) for the position of alternative \(a\) in \(\sigma\), starting at \(1\). For a finite set \(B\), let \(\sigma|_B\) denote the order induced by \(\sigma\) on \(B\).</p><p>Define \(Z_k(\phi)\) as the sum of \(\phi^{d_{\mathrm{KT}}(\eta,\gamma)}\) over all rankings \(\eta\) of a set of \(k\) alternatives, where \(\gamma\) is any fixed ranking. This sum depends only on \(k\) and \(\phi\): relabeling alternatives according to their positions in \(\gamma\) gives a distance-preserving bijection to permutations with the identity centre. In particular, the denominator in the question is \(Z_m(\phi)\).</p><p>Fix a reported type \((r,S)\). Every ranking \(\pi\) with \(\operatorname{top}_r(\pi)=S\) consists of a ranking \(\alpha\) of \(S\), followed by a ranking \(\beta\) of \(A\setminus S\). Conversely, each such pair \((\alpha,\beta)\) gives exactly one admissible \(\pi\).</p><p>Partition unordered pairs of alternatives into pairs within \(S\), pairs within its complement, and pairs crossing the two sets. The first two classes contribute respectively<br>\[
+d_{\mathrm{KT}}(\alpha,\sigma|_S)
+\quad\text{and}\quad
+d_{\mathrm{KT}}(\beta,\sigma|_{A\setminus S}).
+\]<br>Every admissible \(\pi\) places each member of \(S\) before every member of its complement. Consequently, its number of crossing disagreements with \(\sigma\) is the fixed quantity<br>\[
+c_\sigma(S)
+=
+\bigl|\{(b,a):b\notin S,\ a\in S,\
+\operatorname{pos}_\sigma(b)&lt;\operatorname{pos}_\sigma(a)\}\bigr|.
+\]<br>Thus<br>\[
+d_{\mathrm{KT}}(\pi,\sigma)
+=
+c_\sigma(S)
++d_{\mathrm{KT}}(\alpha,\sigma|_S)
++d_{\mathrm{KT}}(\beta,\sigma|_{A\setminus S}).
+\]<br>Summing over the independent choices of \(\alpha\) and \(\beta\) gives<br>\[
+P_\sigma(r,S)
+=
+\frac{Z_r(\phi)Z_{m-r}(\phi)}
+{(m-1)Z_m(\phi)}
+\,\phi^{c_\sigma(S)}.
+\]</p><p>To express the exponent through positions, list the positions occupied by \(S\) as \(t_1&lt;\cdots&lt;t_r\). Before its member at position \(t_i\), there are \(t_i-1\) alternatives, exactly \(i-1\) of which belong to \(S\). Hence that member contributes \(t_i-i\) crossing disagreements. Therefore<br>\[
+c_\sigma(S)
+=
+\sum_{i=1}^r(t_i-i)
+=
+\sum_{a\in S}\operatorname{pos}_\sigma(a)
+-\frac{r(r+1)}2.
+\]</p><h3>2. Reduction to sorting approval masses</h3><p>All probabilities above are positive because \(\phi&gt;0\). Taking logarithms and substituting the exponent yields<br>\[
+\log P_\sigma(r,S)
+=
+b_r
++(\log\phi)\sum_{a\in S}\operatorname{pos}_\sigma(a),
+\]<br>where<br>\[
+b_r=
+\log\!\left(\frac{Z_r(\phi)Z_{m-r}(\phi)}
+{(m-1)Z_m(\phi)}\right)
+-\frac{r(r+1)}2\log\phi
+\]<br>is independent of \(\sigma\).</p><p>Multiplying by the masses, summing over the given support, and exchanging finite sums gives<br>\[
+\sum_{r,S}\mu_{r,S}\log P_\sigma(r,S)
+=
+C+(\log\phi)\sum_{a\in A}w_a\operatorname{pos}_\sigma(a),
+\]<br>where \(C=\sum_{r,S}\mu_{r,S}b_r\) is independent of \(\sigma\).</p><p>Since \(0&lt;\phi&lt;1\), we have \(\log\phi&lt;0\). Maximizing the likelihood is therefore equivalent to minimizing<br>\[
+F(\sigma)=\sum_{a\in A}w_a\operatorname{pos}_\sigma(a).
+\]</p><p>Suppose adjacent positions \(i,i+1\) contain \(x,y\), with \(w_x&lt;w_y\). Swapping them changes \(F\) by<br>\[
+\bigl(iw_y+(i+1)w_x\bigr)
+-\bigl(iw_x+(i+1)w_y\bigr)
+=w_x-w_y&lt;0.
+\]<br>Thus any ranking with an adjacent strict increase in approval mass cannot minimize \(F\).</p><p>Repeatedly swapping such adjacent pairs sorts any ranking into nonincreasing approval mass and decreases \(F\) at each swap. All rankings sorted this way have the same value of \(F\), since rearranging alternatives with equal masses leaves their contribution unchanged. Hence every sorted ranking minimizes \(F\). Conversely, every ranking that is not sorted has an adjacent strict increase and is not optimal.</p><p>This proves both the algorithm and the characterization of all maximizers.</p><h3>3. Exact polynomial bit complexity</h3><p>Index the supported types by \(j\in\{1,\ldots,\tau\}\), and write their rational masses as \(\mu_j=p_j/q_j\), with positive integer denominators. Set<br>\[
+D=\prod_{j=1}^{\tau}q_j,
+\qquad
+W_a=\sum_{j:\,a\in S_j}p_j(D/q_j).
+\]<br>Then \(W_a=Dw_a\), so sorting the integer scores \(W_a\) sorts the approval masses exactly.</p><p>The bit length of \(D\) is at most the sum of the denominators’ bit lengths, hence is bounded by \(L\). Moreover, because the masses are positive and sum to \(1\), each \(W_a\) lies between \(0\) and \(D\). All intermediate score sums therefore have bit length bounded by \(O(L)\).</p><p>Computing \(D\), computing each integer \(p_j(D/q_j)\), and adding it to the scores of the alternatives in \(S_j\) takes polynomial time. There are at most \(\tau(m-1)\) score additions. Sorting requires \(O(m\log m)\) exact integer comparisons, also of polynomial bit complexity.</p><p>The algorithm never needs to evaluate logarithms or the partition functions. It returns an exact optimizer for every permitted common value of \(\phi\).</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p><b>Verdict: proved.</b> The prover resolves the optimization problem as stated. The probability factorization, reduction to sorting, characterization of all maximizers, and exact polynomial bit complexity are correct. No major or minor mathematical issues were found.</p><h3>1. Scope and input assumptions</h3><p>The proof uses exactly the relevant hypotheses: \(m\geq 2\), a common parameter \(0&lt;\phi&lt;1\), and positive rational masses on the explicitly listed support. It does not assume that the masses come from a Mallows distribution or that the size marginals are uniform.</p><p>The uniform selection of \(r\) in the model contributes the factor \(1/(m-1)\) to each reported type’s probability. Arbitrary observed size marginals therefore do not invalidate the calculation.</p><h3>2. Partition functions and probability factorization</h3><p>The definition of \(Z_k(\phi)\) is valid. Relabeling alternatives by their positions in the centre preserves Kendall-tau distance and gives a bijection to rankings with the identity centre. Thus the partition function depends only on \(k\) and \(\phi\).</p><p>For a fixed type \((r,S)\), the decomposition of an admissible ranking into a ranking of \(S\) followed by a ranking of its complement is bijective.</p><p>The distance decomposition is also correct:</p><ul><li>Disagreements within \(S\) are counted by \(d_{\mathrm{KT}}(\alpha,\sigma|_S)\).</li><li>Disagreements within the complement are counted by \(d_{\mathrm{KT}}(\beta,\sigma|_{A\setminus S})\).</li><li>Every admissible ranking places all of \(S\) before its complement, so its crossing disagreements are precisely the complement-before-\(S\) pairs in \(\sigma\).</li></ul><p>These classes exhaust the unordered pairs without overlap. Consequently, the stated additive distance identity is exact. Summing its exponential over the independent choices of the two internal rankings correctly gives<br>\[
+P_\sigma(r,S)=
+\frac{Z_r(\phi)Z_{m-r}(\phi)}{(m-1)Z_m(\phi)}
+\phi^{c_\sigma(S)}.
+\]<br>Both internal sets are nonempty because \(1\leq r\leq m-1\); no undefined partition function is required.</p><h3>3. Calculation of crossing disagreements</h3><p>For positions \(t_1&lt;\cdots&lt;t_r\), exactly \(i-1\) of the \(t_i-1\) preceding alternatives belong to \(S\). Thus \(t_i-i\) preceding alternatives belong to the complement.</p><p>Each crossing disagreement is counted once, at its member of \(S\). The resulting identity<br>\[
+c_\sigma(S)=
+\sum_{a\in S}\operatorname{pos}_\sigma(a)-\frac{r(r+1)}2
+\]<br>has the correct sign and constant.</p><h3>4. Reduction of the objective</h3><p>All probabilities are positive, so taking logarithms is legitimate. The definition of \(b_r\) correctly absorbs every term independent of \(\sigma\).</p><p>Exchanging the finite sums gives the stated objective<br>\[
+C+(\log\phi)\sum_{a\in A}w_a\operatorname{pos}_\sigma(a).
+\]<br>The coefficient of each position is exactly that alternative’s total approval mass. The constant \(C\) may depend on the observed size marginals, but it remains independent of the proposed ranking.</p><p>Since \(\log\phi&lt;0\), maximizing the original objective is exactly equivalent to minimizing \(F\). The direction of this equivalence is correct.</p><h3>5. Sorting and characterization of all maximizers</h3><p>The adjacent-swap calculation is correct: swapping \(x,y\) with \(w_x&lt;w_y\) changes \(F\) by \(w_x-w_y&lt;0\).</p><p>The subsequent sorting argument is valid. Such swaps terminate in a nonincreasing sequence of scores, and any sequence that is not nonincreasing has an adjacent strict increase. Thus every unsorted ranking admits a strict improvement.</p><p>All sorted rankings have the same score sequence at their positions; permutations within equal-score groups leave \(F\) unchanged. This establishes both claims: every sorted ranking is optimal, and every optimal ranking is sorted.</p><p>Equal scores and alternatives with zero approval mass are covered by this argument. The case \(m=2\) also satisfies all preceding calculations.</p><h3>6. Exact polynomial bit complexity</h3><p>The common-denominator construction is valid even if the input fractions are not reduced. Each \(D/q_j\) is an integer, and \(W_a=Dw_a\), so integer comparisons preserve all score comparisons and ties exactly.</p><p>The bit length of \(D\) is bounded by the sum of the denominator bit lengths, hence by \(L\). Positivity and normalization imply \(0\leq w_a\leq1\), so \(0\leq W_a\leq D\). Partial score sums also stay within this bound because every summand is nonnegative.</p><p>The required integer products, exact divisions, additions, and comparisons operate on polynomially bounded bit lengths. There are at most \(\tau(m-1)\) score additions and \(O(m\log m)\) sorting comparisons. These bounds establish polynomial running time in \(m,\tau,L\).</p><p>The algorithm needs neither numerical logarithms nor evaluation of partition functions. It therefore returns an exact optimizer without any unresolved numerical-comparison issue.</p><p>No additional clarification or repair is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

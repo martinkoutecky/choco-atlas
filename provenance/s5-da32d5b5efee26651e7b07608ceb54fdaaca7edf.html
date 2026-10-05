@@ -1,0 +1,237 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-da32d5b5efee26651e7b07608ceb54fdaaca7edf — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-da32d5b5efee26651e7b07608ceb54fdaaca7edf <span style="font-weight:normal;color:#8a7350">(s5-da32d5b5efee26651e7b07608ceb54fdaaca7edf)</span></h1>
+<p class="banner">NEW RESULT — continuous: polynomial-time · adversarial review: proved_with_minor_gaps</p>
+<p class="answer"><b>Answer:</b> Mass-based PACE achieves all the stated rates uniformly over the admissible independent arrival laws, with polynomial dependence on \(\tau,V,1/\min_a\mu_a\) and logarithmic factors in \(H\).</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 (Independent Case) — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given a finite set of agent types \(A\), positive rational masses \(\mu_a\) summing to one, bounded valuations \(v_a\) over a finite item catalogue \(\Theta\), a horizon \(H\), and independent arrival laws \(Q^1,\ldots,Q^H\) with \(\frac{1}{H}\sum_{s=1}^H\lVert Q^s-\bar Q\rVert_{\mathrm{TV}}\leq\delta\), consider a normalized unit-supply cohort arriving each period. Can a type-symmetric online PACE policy, allocating per-member amounts \(x_{a,s}\) with \(\sum_a\mu_a x_{a,s}\leq1\), achieve the analogues of Theorem 1’s per-type expected regret and envy rates \(\tilde O(\sqrt H+\sqrt{\delta}\,H)\), and mass-weighted mean-square utility and expenditure convergence rates \(\tilde O(\delta+1/H)\), relative to the mass-based expected-market and hindsight Eisenberg–Gale benchmarks? The hindsight benchmark maximizes \(\sum_a\mu_a\log U_a\), subject to \(U_a\leq\sum_s v_a(\theta_s)x_{a,s}\) and \(\sum_a\mu_a x_{a,s}\leq1\) for every period.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: a list \(A\) of \(\tau\geq1\) types with positive binary rational masses \(\mu_a\) summing to \(1\); \(\tau\) counts supported types, not possible types. Let \(m=|\Theta|\geq1\), \(H\geq1\), and let \(L\) be the total binary input length.<br>Valuations are rational, \(0\leq v_a(\theta)\leq V&lt;\infty\). Items \(\theta_s\sim Q^s\) arrive independently, where \(\bar Q=H^{-1}\sum_sQ^s\), \(\sum_\theta\bar Q(\theta)v_a(\theta)=1\), and \(H^{-1}\sum_s\|Q^s-\bar Q\|_{\mathrm{TV}}\leq\delta\in[0,1]\). The policy observes current valuations but does not know the arrival laws.<br>The same society receives allocations throughout the horizon. A type-symmetric allocation gives every member of type \(a\) the nonnegative amount \(x_{a,s}\), irrevocably, with \(\sum_a\mu_ax_{a,s}\leq1\); there is no additional individual cap.<br>Mass-based PACE initializes \(\beta_{a,1}=2\). In period \(s\), choose the first type \(w_s\) in a fixed order maximizing \(\beta_{a,s}v_a(\theta_s)\), and set \(x_{w_s,s}=1/\mu_{w_s}\), all other allocations zero.<br>Set \(u_{a,s}=v_a(\theta_s)x_{a,s}\), \(b_{a,s}=\beta_{a,s}u_{a,s}\), and \(\bar u_{a,s}=s^{-1}\sum_{j\leq s}u_{a,j}\). Update \(\beta_{a,s+1}=\operatorname{clip}_{[\mu_a/2,2]}(1/\bar u_{a,s})\), taking the update to be \(2\) when \(\bar u_{a,s}=0\).<br>The expected-market benchmark \(u^*\) maximizes \(\sum_a\mu_a\log u_a\) over nonnegative \(y_a(\theta)\), subject to \(u_a\leq\sum_\theta\bar Q(\theta)v_a(\theta)y_a(\theta)\) and \(\sum_a\mu_ay_a(\theta)\leq1\).<br>For the realized sequence \(\gamma\), the hindsight benchmark maximizes \(\sum_a\mu_a\log U_a\) subject to \(U_a\leq\sum_sv_a(\theta_s)z_{a,s}\), \(z_{a,s}\geq0\), and \(\sum_a\mu_az_{a,s}\leq1\); write its utilities as \(U_a^\gamma\) and \(u_a^\gamma=U_a^\gamma/H\). Omit types with zero realized total valuation from this objective and assign them benchmark utility zero.<br>Define \(\operatorname{Reg}_a=U_a^\gamma-\sum_su_{a,s}\), \(\operatorname{Envy}_a=\max_c\sum_sv_a(\theta_s)(x_{c,s}-x_{a,s})\), \(\bar b_a=H^{-1}\sum_sb_{a,s}\), and \(\|z\|_\mu^2=\sum_a\mu_az_a^2\).<br>Does mass-based PACE achieve, uniformly over these independent arrival laws, \(\mathbb E\operatorname{Reg}_a,\mathbb E\operatorname{Envy}_a\leq\widetilde O(\sqrt H+\sqrt\delta\,H)\) for every type, and \(\mathbb E\|\bar u_H-u^*\|_\mu^2,\mathbb E\|\bar u_H-u^\gamma\|_\mu^2,\mathbb E\|\bar b-\mathbf1\|_\mu^2\leq\widetilde O(\delta+1/H)\), or does some admissible family violate at least one rate?<br>Here \(\widetilde O\) hides polynomial dependence on \(\tau,V,1/\min_a\mu_a\) and logarithmic factors in \(H\). State implementation running times in \(m,\tau,L,H\).<br>For finitely many equal-budget agents, PACE achieves these regret, envy, utility, and expenditure rates under independent arrivals; an extension to unequal budgets is also stated ([source](https://proceedings.neurips.cc/paper_files/paper/2022/file/f0bc367ccb66afc776fcac8d15549516-Paper-Conference.pdf)). No result explicitly treating this mass-symmetric society was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Restored nonnegative valuations and unit expected valuation for each type; required rational valuation and arrival-law data to define the binary input length.</li><li>Interpreted the cohort as the same society receiving allocations across periods, as required by cumulative utility, envy, and pacing updates.</li><li>Used equal per-member budget one, hence aggregate type budget proportional to mass, and expenditure convergence to one per member.</li><li>Defined mass-based PACE by allocating the whole supply uniformly within the winning type, using fixed-order tie-breaking, initialization two, and clipping to the interval with endpoints half the type mass and two.</li><li>Allowed per-member amounts above one, since the supplied mass feasibility constraint imposes only an aggregate supply cap.</li><li>Defined the expected-market benchmark, per-member regret and envy, mass-weighted squared norms, and utility convergence to both benchmarks.</li><li>Handled zero-valued realized types by omitting their necessarily degenerate logarithmic terms and assigning them benchmark utility zero.</li><li>Made the hidden rate constants explicit, allowing polynomial dependence on inverse minimum mass rather than silently treating unequal masses as equal-sized agents.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>1. Result</h3><p><b>Mass-based PACE achieves all the stated rates.</b> The dependence hidden in \(\widetilde O\) can be bounded by a polynomial in \(\tau,V,1/\min_a\mu_a\), with no dependence on \(m\).</p><p>The proof below works directly with supported types and their masses. It does not expand rational masses into a population of individual agents. The cited paper establishes the corresponding finite-agent results; here the mass-symmetric formulation is proved explicitly. [Liao, Gao, and Kroer (2022)](https://proceedings.neurips.cc/paper_files/paper/2022/file/f0bc367ccb66afc776fcac8d15549516-Paper-Conference.pdf)</p><p>Write<br>\[
+\rho=\min_a\mu_a,\qquad
+M=\frac V\rho,\qquad
+r_H=\delta+\frac{1+\log H}{H}.
+\]<br>Normalization implies \(V\geq1\). Throughout, constants denoted by \(P\) are bounded by polynomials in \(\tau,V,\rho^{-1}\).</p><p>We prove<br>\[
+\mathbb E\|\bar u_H-u^*\|_\mu^2,\quad
+\mathbb E\|\bar u_H-u^\gamma\|_\mu^2,\quad
+\mathbb E\|\bar b-\mathbf1\|_\mu^2
+\leq P r_H
+\]<br>and, for every supported type \(a\),<br>\[
+\mathbb E\operatorname{Reg}_a,\quad
+\mathbb E\operatorname{Envy}_a
+\leq P H\sqrt{r_H}.
+\]<br>These imply the requested bounds.</p><h3>2. The market dual and its multiplier bounds</h3><p>First consider any distribution \(R\) for which every type has positive total value<br>\[
+t_a=\sum_\theta R(\theta)v_a(\theta)&gt;0.
+\]<br>Introduce aggregate allocation fractions \(q_a(\theta)=\mu_a y_a(\theta)\). The supply constraints become \(\sum_aq_a(\theta)\leq1\).</p><p>Define<br>\[
+f(\beta,\theta)=\max_a\beta_av_a(\theta),\qquad
+\psi(\beta)=-\sum_a\mu_a\log\beta_a,
+\]<br>and<br>\[
+F_R(\beta)=\sum_\theta R(\theta)f(\beta,\theta)+\psi(\beta),
+\qquad \beta\in(0,\infty)^\tau.
+\]</p><p>This objective has a unique minimizer \(\beta^R\). To verify existence, let \(b=\max_a\beta_a\) and \(t_{\min}=\min_at_a&gt;0\). Then<br>\[
+F_R(\beta)\geq t_{\min}b-\log b.
+\]<br>Consequently, sublevel sets have bounded \(b\). Within such a set, approaching any coordinate boundary \(\beta_a=0\) makes \(\psi\) diverge. Thus a minimizer exists in the positive orthant. Strict convexity of \(\psi\) gives uniqueness.</p><p>The subgradient optimality condition supplies fractions \(q_a^R(\theta)\) satisfying<br>\[
+q_a^R(\theta)\geq0,\qquad
+\sum_aq_a^R(\theta)=1,
+\]<br>supported on maximizers of \(\beta_a^Rv_a(\theta)\), such that<br>\[
+\sum_\theta R(\theta)v_a(\theta)q_a^R(\theta)
+=\frac{\mu_a}{\beta_a^R}.
+\]<br>Indeed, a subgradient of a finite maximum is a convex combination of its active gradients, and the subdifferential of the finite weighted sum is the corresponding sum of subdifferentials.</p><p>Put \(p(\theta)=f(\beta^R,\theta)\). Multiplying the preceding identities by \(\beta_a^R\) and summing gives<br>\[
+\sum_\theta R(\theta)p(\theta)=\sum_a\mu_a=1.
+\]<br>The allocations \(y_a^R=q_a^R/\mu_a\) therefore deliver utilities<br>\[
+u_a^R=\frac1{\beta_a^R}.
+\]</p><p>These utilities solve the primal benchmark. For any feasible utility vector \(u\),<br>\[
+\sum_a\mu_a\beta_a^Ru_a
+\leq \sum_\theta R(\theta)p(\theta)=1.
+\]<br>For positive \(u\), the supporting inequality for the logarithm gives<br>\[
+\sum_a\mu_a\log u_a
+\leq
+\sum_a\mu_a\log u_a^R
++\sum_a\mu_a\beta_a^R(u_a-u_a^R)
+\leq \sum_a\mu_a\log u_a^R.
+\]<br>A vector with a zero coordinate cannot improve the positive optimum.</p><p>Finally,<br>\[
+u_a^R\leq\frac{t_a}{\mu_a},
+\]<br>by feasibility. Also, \(\beta_a^Rv_a(\theta)\leq p(\theta)\), so \(\beta_a^Rt_a\leq1\). Hence<br>\[
+t_a\leq u_a^R\leq\frac{t_a}{\mu_a},
+\qquad
+\frac{\mu_a}{t_a}\leq\beta_a^R\leq\frac1{t_a}.
+\]</p><p>For \(R=\bar Q\), normalization yields<br>\[
+1\leq u_a^*\leq\frac1{\mu_a},
+\qquad
+\mu_a\leq\beta_a^*\leq1,
+\qquad
+u_a^*=\frac1{\beta_a^*}.
+\]</p><h3>3. PACE is dual averaging, with a deterministic bound</h3><p>Let<br>\[
+D=\prod_a[\mu_a/2,2],\qquad
+\sigma=\frac{\rho}{4},\qquad
+K=V+2\sqrt\tau.
+\]<br>We use the Euclidean norm in this section.</p><p>On \(D\), the Hessian of \(\psi\) has diagonal entries \(\mu_a/\beta_a^2\geq\rho/4\). Thus \(\psi\) is \(\sigma\)-strongly convex. Its gradient satisfies \(\|\nabla\psi\|_2\leq2\sqrt\tau\).</p><p>For the winner in period \(s\), define<br>\[
+g_s=v_{w_s}(\theta_s)e_{w_s}.
+\]<br>Then \(g_s\in\partial_\beta f(\beta_s,\theta_s)\), \(\|g_s\|_2\leq V\), and<br>\[
+g_{a,s}=\mu_au_{a,s}.
+\]<br>Consequently,<br>\[
+\beta_{s+1}
+=\arg\min_{\beta\in D}
+\left\{\sum_{j=1}^s g_j\cdot\beta+s\psi(\beta)\right\}.
+\]<br>Coordinatewise minimization gives precisely the update in the question, including the zero-utility convention. Moreover, \(\beta_1=(2,\ldots,2)\) minimizes \(\psi\) over \(D\).</p><p>Here is the deterministic estimate needed later. Define<br>\[
+B_H=2K\sqrt\tau+\frac{2K^2}{\sigma}(1+\log H).
+\]<br>For every realized sequence and every \(\beta\in D\),<br>\[
+\sum_{s=1}^H
+\bigl[f(\beta_s,\theta_s)+\psi(\beta_s)
+-f(\beta,\theta_s)-\psi(\beta)\bigr]
++\frac{H\sigma}{2}\|\beta_{H+1}-\beta\|_2^2
+\leq B_H. \tag{1}
+\]</p><p>To prove this, write<br>\[
+\ell_s(\beta)=g_s\cdot\beta+\psi(\beta),\quad
+h_s=\sum_{j=1}^s\ell_j,\quad
+m_s=\min_Dh_s,
+\]<br>with \(h_0=0\) and \(m_0=0\). Each \(\ell_s\) is \(K\)-Lipschitz on \(D\).</p><p>For \(s\geq2\), strong convexity of \(h_{s-1}\), together with optimality of \(\beta_{s+1}\) for \(h_s\), gives<br>\[
+\frac{(s-1)\sigma}{2}\|\beta_{s+1}-\beta_s\|_2^2
+\leq \ell_s(\beta_s)-\ell_s(\beta_{s+1})
+\leq K\|\beta_{s+1}-\beta_s\|_2.
+\]<br>Thus their distance is at most \(2K/((s-1)\sigma)\). For \(s=1\), the diameter bound gives distance at most \(2\sqrt\tau\).</p><p>Since<br>\[
+\ell_s(\beta_s)+m_{s-1}-m_s
+\leq \ell_s(\beta_s)-\ell_s(\beta_{s+1}),
+\]<br>telescoping and summing the harmonic bound give<br>\[
+\sum_s\ell_s(\beta_s)-h_H(\beta)
+\leq B_H+m_H-h_H(\beta)
+\leq B_H-\frac{H\sigma}{2}\|\beta_{H+1}-\beta\|_2^2.
+\]<br>The subgradient inequality for \(f\) now proves (1).</p><h3>4. Uniform multiplier control under independent arrivals</h3><p>Let \(d_s=\|Q^s-\bar Q\|_{\mathrm{TV}}\). Independence makes \(\beta_s\) independent of the current item \(\theta_s\).</p><p>For fixed \(\beta\in D\), the function<br>\(f(\beta,\theta)-f(\beta^*,\theta)\) takes values in \([-2V,2V]\). The finite-space total-variation inequality therefore gives<br>\[
+\left|
+\mathbb E_{Q^s}[f(\beta,\theta)-f(\beta^*,\theta)]
+-\mathbb E_{\bar Q}[f(\beta,\theta)-f(\beta^*,\theta)]
+\right|
+\leq4Vd_s.
+\]<br>Conditional application with \(\beta=\beta_s\), followed by strong convexity of \(F_{\bar Q}\), yields<br>\[
+\mathbb E\!\left[
+f(\beta_s,\theta_s)+\psi(\beta_s)
+-f(\beta^*,\theta_s)-\psi(\beta^*)\right]
+\geq
+\frac{\sigma}{2}\mathbb E\|\beta_s-\beta^*\|_2^2-4Vd_s.
+\]</p><p>Apply (1) with \(\beta=\beta^*\), sum, and use \(\sum_sd_s\leq H\delta\). We obtain<br>\[
+\sum_{s=1}^H\mathbb E\|\beta_s-\beta^*\|_2^2
++H\mathbb E\|\beta_{H+1}-\beta^*\|_2^2
+\leq T_H,
+\qquad
+T_H=\frac2\sigma(B_H+4VH\delta). \tag{2}
+\]<br>In particular, \(T_H/H\leq P r_H\). This controls both the terminal multiplier and the errors accumulated throughout the horizon.</p><h3>5. Utilities and expenditures, including clipped updates</h3><p>Every PACE period utility is at most \(M\), and every expected-market utility is also at most \(M\).</p><p>There is a deterministic coordinatewise bound<br>\[
+|\bar u_{a,H}-u_a^*|
+\leq C_0|\beta_{a,H+1}-\beta_a^*|,
+\qquad C_0=\frac{4V}{\rho^2}. \tag{3}
+\]<br>There are three cases:</p><ul><li>If the updated multiplier is interior, \(\bar u_{a,H}=1/\beta_{a,H+1}\). Its difference from \(1/\beta_a^*\) is at most \(2\rho^{-2}|\beta_{a,H+1}-\beta_a^*|\).</li><li>If it equals \(2\), its distance from \(\beta_a^*\leq1\) is at least \(1\), while the utility difference is at most \(M\).</li><li>If it equals \(\mu_a/2\), its distance from \(\beta_a^*\geq\mu_a\) is at least \(\rho/2\), while the utility difference is again at most \(M\).</li></ul><p>These cases include exact equality with a clipping endpoint and the zero-utility update.</p><p>Since the mass-weighted norm is bounded by the Euclidean norm, (2)–(3) imply<br>\[
+\mathbb E\|\bar u_H-u^*\|_\mu^2
+\leq C_0^2\frac{T_H}{H}
+\leq P r_H. \tag{4}
+\]</p><p>For expenditures, \(\beta_a^*u_a^*=1\), so<br>\[
+\bar b_a-1
+=\beta_a^*(\bar u_{a,H}-u_a^*)
++\frac1H\sum_s(\beta_{a,s}-\beta_a^*)u_{a,s}.
+\]<br>Using \(\beta_a^*\leq1\), \(u_{a,s}\leq M\), and Cauchy–Schwarz,<br>\[
+\|\bar b-\mathbf1\|_\mu^2
+\leq
+2\|\bar u_H-u^*\|_\mu^2
++\frac{2M^2}{H}\sum_s\|\beta_s-\beta^*\|_2^2.
+\]<br>Therefore<br>\[
+\mathbb E\|\bar b-\mathbf1\|_\mu^2
+\leq 2(C_0^2+M^2)\frac{T_H}{H}
+\leq P r_H. \tag{5}
+\]</p><h3>6. The hindsight benchmark, including absent types</h3><p>In fact, independence and normalization alone imply<br>\[
+\mathbb E\|u^\gamma-u^*\|_\mu^2\leq\frac{P}{H}. \tag{6}
+\]</p><p>Choose the expected-market fractions \(q_a^*(\theta)\) from Section 2 and put<br>\[
+g^*(\theta)=(v_a(\theta)q_a^*(\theta))_a.
+\]<br>They satisfy<br>\[
+\mathbb E_{\bar Q}g_a^*(\theta)=\frac{\mu_a}{\beta_a^*},
+\qquad
+\|g^*(\theta)\|_2\leq V.
+\]<br>The latter follows from \(\sum_aq_a^*(\theta)=1\).</p><p>Define the empirical dual<br>\[
+F_\gamma(\beta)=\frac1H\sum_sf(\beta,\theta_s)+\psi(\beta),
+\qquad
+\widehat\beta=\arg\min_DF_\gamma.
+\]<br>A subgradient of \(F_\gamma\) at \(\beta^*\) is<br>\[
+h=\frac1H\sum_sg^*(\theta_s)
+-\left(\frac{\mu_a}{\beta_a^*}\right)_a.
+\]<br>Because the laws average to \(\bar Q\), \(\mathbb Eh=0\). Independence eliminates covariance between distinct periods, giving<br>\[
+\mathbb E\|h\|_2^2\leq\frac{V^2}{H}.
+\]</p><p>Strong convexity and optimality of \(\widehat\beta\) imply<br>\[
+\sigma\|\widehat\beta-\beta^*\|_2^2
+\leq h\cdot(\beta^*-\widehat\beta).
+\]<br>For completeness, this follows by adding the strong subgradient inequality at \(\beta^*\) to the quadratic growth inequality at the constrained minimizer \(\widehat\beta\). Hence<br>\[
+\mathbb E\|\widehat\beta-\beta^*\|_2^2
+\leq\frac{V^2}{\sigma^2H}. \tag{7}
+\]</p><p>Let \(t_a^\gamma=H^{-1}\sum_sv_a(\theta_s)\) and consider the event<br>\[
+G=\{\,|t_a^\gamma-1|\leq1/2\text{ for all }a\,\}.
+\]<br>For each type, its mean is \(1\) and its variance is at most \(V^2/H\). Chebyshev’s inequality and a union bound give<br>\[
+\Pr(G^c)\leq\frac{4\tau V^2}{H}. \tag{8}
+\]</p><p>On \(G\), every type has positive realized value. Section 2, applied to the empirical distribution, shows that the unrestricted empirical multiplier satisfies<br>\[
+\frac{\mu_a}{t_a^\gamma}\leq\beta_a^\gamma
+\leq\frac1{t_a^\gamma}.
+\]<br>Thus \(\beta^\gamma\in D\), so \(\beta^\gamma=\widehat\beta\), and<br>\(u_a^\gamma=1/\widehat\beta_a\). Rescaling total utilities by \(H\) only adds a constant to the hindsight log objective. On \(G\), consequently,<br>\[
+\|u^\gamma-u^*\|_\mu^2
+\leq\frac4{\rho^4}\|\widehat\beta-\beta^*\|_2^2.
+\]</p><p>On \(G^c\), feasibility still gives \(0\leq u_a^\gamma\leq M\), including types assigned utility zero under the omission convention. Since \(0\leq u_a^*\leq M\), the squared weighted difference is at most \(M^2\).</p><p>Combining (7)–(8) proves (6), explicitly with<br>\[
+\mathbb E\|u^\gamma-u^*\|_\mu^2
+\leq
+\frac1H\left(\frac{4V^2}{\rho^4\sigma^2}
++4\tau M^2V^2\right).
+\]<br>Finally, (4), (6), and the squared triangle inequality give<br>\[
+\mathbb E\|\bar u_H-u^\gamma\|_\mu^2\leq P r_H. \tag{9}
+\]</p><h3>7. Regret and envy</h3><p>For regret,<br>\[
+\operatorname{Reg}_a=H(u_a^\gamma-\bar u_{a,H}).
+\]<br>A coordinate difference is bounded by its weighted norm divided by \(\sqrt{\mu_a}\). Cauchy–Schwarz and (9) therefore yield<br>\[
+\mathbb E\operatorname{Reg}_a
+\leq\frac{H}{\sqrt{\mu_a}}
+\sqrt{\mathbb E\|u^\gamma-\bar u_H\|_\mu^2}
+\leq P H\sqrt{r_H}.
+\]</p><p>For envy, fix \(a,c\) and set<br>\[
+A_a=\frac1H\sum_s|\beta_{a,s}-\beta_a^*|.
+\]<br>Whenever \(x_{c,s}&gt;0\), type \(c\) wins, and<br>\(\beta_{a,s}v_a(\theta_s)\leq\beta_{c,s}v_c(\theta_s)\).<br>Also \(x_{c,s}\leq1/\mu_c\). Thus<br>\[
+\beta_a^*\frac1H\sum_sv_a(\theta_s)x_{c,s}
+\leq \bar b_c+\frac V{\mu_c}A_a.
+\]<br>Subtracting \(\bar u_{a,H}\), using \(1/\beta_a^*=u_a^*\), and maximizing over \(c\), gives<br>\[
+\frac{\operatorname{Envy}_a}{H}
+\leq
+\frac1\rho\max_c|\bar b_c-1|
++|\bar u_{a,H}-u_a^*|
++\frac V{\rho^2}A_a.
+\]<br>The three terms have expected values at most \(P\sqrt{r_H}\): use (5) and<br>\(\max_c|z_c|\leq\rho^{-1/2}\|z\|_\mu\) for the first, (4) for the second, and (2) with Cauchy–Schwarz for the third. Hence<br>\[
+\mathbb E\operatorname{Envy}_a\leq P H\sqrt{r_H}.
+\]</p><p>Since<br>\[
+H\sqrt{r_H}
+\leq \sqrt{H(1+\log H)}+\sqrt\delta\,H,
+\]<br>all requested rates follow uniformly over the admissible laws.</p><h3>8. Implementation running times</h3><p>PACE needs no arrival-law information.</p><p>With explicitly listed valuations, preprocessing takes \(O(m\tau)\) arithmetic operations. Each period requires \(O(\tau)\) operations to update multipliers, evaluate bids, and select the first maximizer. Thus the total is<br>\[
+O(m\tau+H\tau)
+\]<br>arithmetic operations, with \(O(\tau)\) additional state beyond the valuation table.</p><p>For exact rational computation, let \(B=O(L+\log(H+1))\). Take a common denominator equal to the product of the input valuation denominators and maintain aggregate utility sums as integer numerators. Their bit lengths, and those of the multipliers and bid comparisons, remain \(O(B)\): only integer multiplicities up to \(H\) accumulate.</p><p>Using schoolbook integer arithmetic, an exact implementation therefore takes<br>\[
+O\bigl((m\tau+H\tau)B^2\bigr)
+\]<br>bit operations. A stored common-denominator table uses \(O((m\tau+\tau)B)\) bits. Allocations can be output as the winner and \(1/\mu_{w_s}\).</p><p>If all envy values are also tracked, maintain the matrix<br>\(\sum_sv_a(\theta_s)x_{c,s}\). Only the winning column changes each period. This adds \(O(H\tau+\tau^2)\) arithmetic operations and \(O(\tau^2B)\) bits of storage.</p><p>These bounds depend on the supported-type count \(\tau\), with no expansion by mass denominators.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>minor</b> — Section 8, exact rational computation: common-denominator representation: The phrase &#x27;aggregate utility sums&#x27; does not identify the stored quantities. The product of valuation denominators alone need not represent per-member utility sums as integer numerators, because allocation divides by the type mass. Specify the stored cumulative quantities and their denominators, explain how masses enter multiplier and bid calculations, and confirm the asserted bit-length bound.</li></ul>
+<div class="pre"><p>The mathematical argument establishes all the requested rates. I found one <b>minor ambiguity in the exact-arithmetic implementation description</b>, but no major gap in the rate proof.</p><p>The appropriate classification is <b>proved_with_minor_gaps</b>. The stated polynomial dependence on \(\tau,V,\rho^{-1}\), where \(\rho=\min_a\mu_a\), is supported throughout.</p><h3>Step-by-step verification</h3><h3>1. Definitions and scope</h3><p>The proof uses supported types directly and correctly incorporates their masses into both feasibility and the objective. It does not assume an individual allocation cap.</p><p>Normalization implies \(V\geq1\). The bound \(M=V/\rho\) applies to per-period PACE utilities and to normalized benchmark utilities. Every constant subsequently used has polynomial dependence on the permitted parameters.</p><p>The final estimates with \(r_H=\delta+(1+\log H)/H\) imply the requested rates, including at \(H=1\).</p><h3>2. Market dual and benchmark utilities</h3><p>The existence and uniqueness argument is valid:</p><ul><li>If \(b=\max_a\beta_a\), choosing a coordinate attaining this maximum gives the expected maximum term at least \(t_{\min}b\).</li><li>Since the masses sum to one, \(-\sum_a\mu_a\log\beta_a\geq-\log b\).</li><li>Consequently, sublevel sets are bounded above. Within such a set, a coordinate approaching zero forces the objective to infinity because its mass is positive.</li><li>Strict convexity of the logarithmic term gives uniqueness.</li></ul><p>The stated finite-maximum subgradient representation correctly supplies allocation fractions supported on maximizing types. This remains valid for zero-valued items and items having zero probability.</p><p>The optimality identities, price normalization, and supporting-logarithm inequality establish primal optimality. The bounds<br>\(\mu_a/t_a\leq\beta_a^R\leq1/t_a\)<br>follow from feasibility and the price inequality, respectively.</p><p>Applying these statements to \(\bar Q\) is justified by the normalization \(t_a=1\). In particular, \(\beta^*\in D\), which is needed later.</p><h3>3. Dual averaging and the deterministic estimate</h3><p>The correspondence with the specified PACE update is exact. The crucial mass identity is<br>\(g_{a,s}=\mu_a u_{a,s}\).<br>Coordinate minimization therefore yields the reciprocal average utility and the stipulated clipping rule. A zero cumulative utility yields the upper endpoint.</p><p>The strong-convexity constant \(\sigma=\rho/4\) and Lipschitz constant \(K=V+2\sqrt{\tau}\) are valid on \(D\).</p><p>The movement estimate follows from constrained optimality and strong convexity. The diameter bound handles the first round, and the harmonic sum is bounded by \(1+\log H\). The telescoping inequality has the correct signs.</p><p>Finally, the subgradient inequality bounds the actual loss difference above by its linearized counterpart. Thus equation (1), including its terminal quadratic term, is justified for every realized sequence and every comparator in \(D\).</p><h3>4. Independent-arrival multiplier control</h3><p>The current item is independent of \(\beta_s\), since the latter depends only on preceding observations. This permits the conditional total-variation comparison.</p><p>The interval \([-2V,2V]\) is a valid bound for the difference of the two maximum functions, so the error \(4Vd_s\) is valid under the usual total-variation convention.</p><p>Strong convexity applies at \(\beta^*\), the unrestricted expected-market minimizer. Combining this lower bound with equation (1) gives equation (2) with the stated constant and both accumulated and terminal multiplier errors.</p><p>The reasoning does not require identical arrival laws or positive expected valuation in every individual period.</p><h3>5. Utilities and expenditures</h3><p>The clipping argument is valid in all three cases.</p><p>For an interior multiplier, the reciprocal difference is bounded by \(2\rho^{-2}\) times the multiplier difference. At the upper endpoint, the separation from \(\beta_a^*\) is at least one. At the lower endpoint, it is at least \(\rho/2\). The constant \(C_0=4V/\rho^2\) dominates all these bounds.</p><p>These cases also cover endpoint equality and zero accumulated utility. Equation (4) follows.</p><p>The expenditure decomposition is an exact identity. Its subsequent bound correctly uses bounded utilities, Cauchy–Schwarz over periods, and domination of the mass-weighted norm by the Euclidean norm. Equation (5) follows.</p><h3>6. Hindsight benchmark and absent types</h3><p>The expected-market fractions provide a valid subgradient at \(\beta^*\) for each empirical observation. Its Euclidean norm is at most \(V\).</p><p>Although the period laws differ, their average is \(\bar Q\), so the average subgradient error has mean zero. Independence removes cross-period covariance and gives the stated second-moment bound.</p><p>The constrained strong-convexity argument has the correct direction:<br>\(\sigma\|\widehat\beta-\beta^*\|_2^2\leq h\cdot(\beta^*-\widehat\beta)\).<br>It justifies equation (7).</p><p>The event \(G\) and its probability estimate are also valid. Each empirical total valuation has mean one and variance at most \(V^2/H\); Chebyshev and the union bound give equation (8).</p><p>On \(G\), the unrestricted empirical multiplier lies in \(D\), so it equals the constrained minimizer. The reciprocal-utility bound has the correct squared constant.</p><p>On \(G^c\), feasibility bounds every normalized hindsight utility by \(M\). This remains true for omitted types assigned zero benchmark utility, including a realization with no positive valuations at all. The proof therefore avoids applying a positive-utility dual argument to absent types.</p><p>Equations (6) and (9) follow with the stated polynomial constants.</p><h3>7. Regret and envy</h3><p>The regret bound correctly follows from equation (9) and the coordinate bound supplied by the mass-weighted norm. Negative realized regret causes no difficulty because the argument supplies an upper bound.</p><p>For envy, the winning-bid inequality applies whenever the comparison type receives a positive allocation. Multiplication by its per-member allocation gives its expenditure term. Replacing the current multiplier of the envious type by its expected-market multiplier produces the stated error.</p><p>The subsequent constants correctly use \(\beta_a^*\geq\rho\) and \(\mu_c\geq\rho\). Taking the maximum over comparison types is controlled by<br>\(\max_c|z_c|\leq\rho^{-1/2}\|z\|_\mu\).<br>The accumulated multiplier estimate controls \(A_a\).</p><p>Thus both individual bounds follow uniformly over the admissible independent laws.</p><h3>8. Implementation running times</h3><p>The arithmetic-operation counts are consistent with scanning all supported types each period. The additional envy-tracking cost is also consistent with updating only the winning column.</p><p>The claimed polynomial bit-length bound is credible for this fixed-input, cumulative-sum computation. However, the description of the integer representation needs clarification.</p><p><b>Minor issue — Section 8, common-denominator representation.</b></p><p>The proof says:</p><blockquote>“Take a common denominator equal to the product of the input valuation denominators and maintain aggregate utility sums as integer numerators.”</blockquote><p>If “aggregate utility sums” means the per-member sums \(\sum_su_{a,s}\), this statement is false literally: division by \(\mu_a\) can introduce additional denominators.</p><p>For example, take two types with masses \(2/3\) and \(1/3\), one item, and both valuations equal to one. Put the first type first in the tie-breaking order. In the first period its utility is \(3/2\), whereas the product of valuation denominators is one. That utility cannot be stored as an integer numerator over the specified denominator. This example satisfies the task’s assumptions.</p><p>If “aggregate” instead denotes mass-weighted utility sums, the objection may disappear, but the stored quantity is not explicitly defined.</p><p><b>Minimum clarification required:</b> Specify exactly which cumulative quantities are represented by integer numerators, their denominators, and how masses enter the multiplier and bid calculations. Confirm the stated \(O(L+\log(H+1))\) bit-length bound for that representation.</p><p>This is a bookkeeping clarification, not a gap in the mathematical guarantees. The runtime is polynomial in the stated parameters \(m,\tau,L,H\); it is a horizon-linear sequential implementation, without a claim of polynomial dependence on \(\log H\).</p><p>The cited paper’s discussion supports the contextual attribution, including its statement about unequal weights. The submitted proof establishes the mass-symmetric guarantees independently of that extension. [Liao, Gao, and Kroer (2022)](https://proceedings.neurips.cc/paper_files/paper/2022/file/f0bc367ccb66afc776fcac8d15549516-Paper-Conference.pdf)</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

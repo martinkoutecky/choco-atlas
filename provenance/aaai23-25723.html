@@ -1,0 +1,277 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Fast and Interpretable Dynamics for Fisher Markets — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Fast and Interpretable Dynamics for Fisher Markets <span style="font-weight:normal;color:#8a7350">(aaai23-25723)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: algorithmic</p>
+<blockquote class="thmq extractq"><span class="extract-label">PDF text-layer excerpt — equations and symbol order may be approximate</span>Given an initial iterate x0 and stepsizes η0 j = 1/Lj, ∀j satisfying (4), let xk be the random iterates gener- ated by Algorithm 1. Then, E  F(xk+1)  −F ∗≤(1 −ρ)k F(x0) −F ∗ , (7) where ρ = min n µ mLmaxθ2(A,C), 1 m o and Lmax = maxj Lj. Karimi, Nutini, and Schmidt (2016) also develop a block- coordinate method that applies to EG. Unlike their result, our result admits larger stepsizes that can vary per block, as well as a line search strategy, which is helpful for practical performance as we show in numerical experiment section.</blockquote><p class="src">statement extracted from the paper’s text layer; consult the paper for the exact wording</p>
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given finitely many buyer types with rational masses, budgets, and valuation vectors, item supplies, and linear utilities, compute an \(\epsilon\)-Fisher equilibrium of the mass-weighted Eisenberg–Gale program using randomized item-block updates across types, with complexity measured in the number of types, items, input bits, and \(\log(1/\epsilon)\).</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of the \(\tau\) types with positive binary-rational masses \(a_t\), with \(\sum_t a_t=1\); \(\tau\) is the support size, not the number of possible types. There are \(m\ge1\) divisible items. Per-person budgets \(B_t&gt;0\), supplies \(s_j&gt;0\), and valuations \(v_{tj}\ge0\) are binary rationals; every type values some item, and every item is valued by some type. Let \(L\) be the total input bit length.<br>An allocation \(x_t\in\mathbb R_+^m\) is a per-person bundle, with utility \(u_t=\langle v_t,x_t\rangle\) and feasibility \(\sum_t a_tx_{tj}\le s_j\). The mass-weighted Eisenberg–Gale program maximizes \(\sum_t a_tB_t\log u_t\) over feasible allocations. At exact equilibrium, each bundle maximizes utility under \(\langle p,x_t\rangle\le B_t\), and positive-price items clear.<br>Put \(W=\sum_t a_tB_t\). For rational \(0&lt;\epsilon&lt;1\), an \(\epsilon\)-Fisher equilibrium means a feasible allocation with positive utilities and dual certificates \(p\ge0\), \(\beta_t&gt;0\), satisfying \(p_j\ge\beta_tv_{tj}\) and normalized primal–dual gap \(\sum_j s_jp_j-W+\sum_t a_tB_t\log\!\bigl(B_t/(\beta_tu_t)\bigr)\le\epsilon W\).<br>The required dynamics start at \(x^0_{tj}=s_jB_t/W\). Set \(c_t=\langle v_t,x_t^0\rangle\), and obtain \(\widetilde f\) from \(-\sum_t a_tB_t\log u_t\) by replacing each logarithmic term below \(c_t\) with its second-order Taylor continuation at \(c_t\).<br>Each iteration samples an item \(j\) independently and uniformly, and updates only its allocation column by \(x_{\cdot j}^{+}=\operatorname{Proj}_{K_j}(x_{\cdot j}-\eta_j\nabla_{\cdot j}\widetilde f(x))\), where \(K_j=\{z\ge0:\sum_t a_tz_t\le s_j\}\) and the projection is Euclidean. Positive stepsizes may be chosen adaptively; feasible finite-precision approximations are allowed, with all precision and auxiliary computation charged to runtime.</p><p>Does this mass-market problem admit randomized projected item-block computation in time polynomial in \(m,\tau,L,\log(1/\epsilon)\), with success probability at least \(2/3\), or is computing the specified approximate equilibrium NP-hard?</p><p>Known results: [Nan, Gao, and Kroer](https://arxiv.org/pdf/2303.00506) establish geometric convergence in expected objective gap for discrete projected item-block dynamics, with a rate depending on smoothness and a Hoffman constant, without a polynomial input-bit bound. [Orlin](https://drops.dagstuhl.de/storage/16dagstuhl-seminar-proceedings/dsp-vol10171/DagSemProc.10171.2/DagSemProc.10171.2.pdf) gives a strongly polynomial algorithm for ordinary linear Fisher equilibrium computation; it does not establish the requested bound for these randomized projected item-block dynamics.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized masses to a probability distribution; budgets and bundles are per person, so both resource constraints and the objective are mass-weighted.</li><li>Required positive rational supplies and budgets, nonnegative rational valuations, at least one positively valued item per type, and at least one interested type per item, excluding degeneracies incompatible with logarithmic optimization or meaningful item updates.</li><li>Defined the otherwise unspecified approximation by a primal–dual gap divided by total budget, consistent with the source&#x27;s use of duality gap as an accuracy measure.</li><li>Interpreted randomized item-block updates as the anchor&#x27;s Euclidean projected-gradient updates, with uniform independent item sampling and the second-order logarithmic continuation.</li><li>Fixed proportional initialization, allowed adaptive positive stepsizes and feasible finite-precision implementations, and counted all computation and precision costs.</li><li>Specified a constant success probability for randomized computation.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial progress: adaptive steps for overlapping valuations</h3><p>The general question remains unresolved here. I prove two new positive results for the prescribed dynamics, including their arithmetic and sampling bounds:</p><ul><li><b>For at most two support types, arbitrary overlapping valuations are allowed.</b></li><li><b>For any number of support types, the dynamics succeed when every item has a unique winner under the equilibrium dual certificates.</b></li></ul><p>Both constructions use the permitted feasible finite-precision approximations. They return an allocation with zero primal–dual gap with probability at least $2/3$ in polynomial time. The unresolved cases have at least three types and ties among equilibrium winners.</p><h3>1. Computing an equilibrium target</h3><p>Write<br>$$
+w_t=a_tB_t,
+\qquad
+W=\sum_t w_t.
+$$</p><p>First, an exact equilibrium can be computed in polynomial bit time without the dynamics restriction.</p><p>Introduce<br>$$
+z_{tj}=\frac{a_tx_{tj}}{s_j}.
+$$<br>Consider an ordinary linear Fisher market with unit supplies, buyer budgets $w_t$, and valuations<br>$$
+d_{tj}=s_jv_{tj}.
+$$<br>Its feasibility conditions are precisely<br>$$
+z_{tj}\ge0,
+\qquad
+\sum_t z_{tj}\le1.
+$$<br>Its buyer utility is<br>$$
+U_t=\sum_jd_{tj}z_{tj}=a_tu_t.
+$$<br>Thus its Eisenberg–Gale objective differs from the mass-market objective by the constant<br>$$
+\sum_t w_t\log a_t.
+$$</p><p>If $P_j$ denotes a transformed-market price, set $p_j=P_j/s_j$. Then<br>$$
+\sum_jP_jz_{tj}
+=
+a_t\sum_jp_jx_{tj}.
+$$<br>Consequently, budget constraints and utility maximizers correspond.</p><p>Orlin’s theorem supplies a strongly polynomial algorithm computing exact prices and allocations for an ordinary linear Fisher market with positive integer budgets, nonnegative integer valuations, and a positive valuation incident to every buyer and good. These incidence hypotheses hold here. Clearing budget denominators jointly and valuation denominators separately for each buyer satisfies the integrality hypotheses with polynomial encoding length. Buyer-specific valuation scaling preserves demands; common budget scaling scales prices. Hence the theorem applies after these scalings, and its output can be transformed back in polynomial bit time. [Orlin, Theorem 4.1](https://drops.dagstuhl.de/storage/16dagstuhl-seminar-proceedings/dsp-vol10171/DagSemProc.10171.2/DagSemProc.10171.2.pdf).</p><p>Fix the resulting rational equilibrium $(x^\star,p^\star)$, and put<br>$$
+u_t^\star=\langle v_t,x_t^\star\rangle,
+\qquad
+\beta_t^\star=\frac{B_t}{u_t^\star}.
+$$<br>These numbers have polynomial encoding length.</p><p>Every equilibrium price is positive: otherwise a type valuing a zero-price item would have unbounded budget-constrained utility. Every type spends its budget, since it values some item positively. Therefore all items clear, and<br>$$
+\sum_j s_jp_j^\star=W.
+$$<br>Utility maximization also gives<br>$$
+p_j^\star\ge\beta_t^\star v_{tj},
+$$<br>with equality whenever $x_{tj}^\star&gt;0$.</p><p>This establishes polynomial-time solvability of unrestricted equilibrium output. A hardness result for that output problem would therefore imply $\mathrm P=\mathrm{NP}$ under standard reductions. It does not settle the prescribed-trajectory question.</p><h3>2. Properties of the continued objective</h3><p>Define<br>$$
+V_t=\sum_j s_jv_{tj}&gt;0.
+$$<br>The specified initialization satisfies<br>$$
+c_t=\langle v_t,x_t^0\rangle=\frac{B_tV_t}{W}&gt;0.
+$$</p><p>Let<br>$$
+h_t(u)=
+\begin{cases}
+-w_t\log u,&amp;u\ge c_t,\\
+-w_t\log c_t-\dfrac{w_t}{c_t}(u-c_t)
++\dfrac{w_t}{2c_t^2}(u-c_t)^2,&amp;0\le u&lt;c_t.
+\end{cases}
+$$<br>Then<br>$$
+F(x)=\widetilde f(x)=\sum_t h_t(u_t).
+$$<br>Each $h_t$ is differentiable and strictly convex on $[0,\infty)$: its second derivative is $w_t/c_t^2$ below $c_t$ and $w_t/u^2$ above $c_t$, with matching derivatives at the junction.</p><h3>The equilibrium target minimizes the continuation</h3><p>Summing the equilibrium dual inequalities against supplies gives<br>$$
+\beta_t^\star V_t\le W.
+$$<br>Hence<br>$$
+u_t^\star=\frac{B_t}{\beta_t^\star}\ge c_t.
+$$</p><p>For every feasible $x$,<br>$$
+\sum_t a_t\beta_t^\star u_t
+\le
+\sum_j p_j^\star\sum_t a_tx_{tj}
+\le W.
+$$<br>Since $h_t&#x27;(u_t^\star)=-a_t\beta_t^\star$, it follows that<br>$$
+\sum_t h_t&#x27;(u_t^\star)(u_t-u_t^\star)
+=
+W-\sum_t a_t\beta_t^\star u_t
+\ge0.
+$$<br>Convexity therefore implies $F(x)\ge F(x^\star)$.</p><p>Moreover, every minimizer has utility vector $u^\star$. Otherwise, strict convexity in utilities would make its midpoint with $x^\star$ have smaller objective. Thus<br>$$
+u\ne u^\star
+\quad\Longrightarrow\quad
+F(x)&gt;F(x^\star).
+$$</p><h3>Rational marginal utilities</h3><p>Define<br>$$
+\alpha_t(u)=-\frac{h_t&#x27;(u)}{a_t}
+=
+\begin{cases}
+B_t/u,&amp;u\ge c_t,\\
+B_t(2c_t-u)/c_t^2,&amp;0\le u&lt;c_t.
+\end{cases}
+$$<br>This function is positive and strictly decreasing, and<br>$$
+\alpha_t(u_t^\star)=\beta_t^\star.
+$$<br>The column gradient is<br>$$
+g_{tj}:=\nabla_{tj}F(x)
+=
+-a_t\alpha_t(u_t)v_{tj}.
+$$<br>For rational allocations, all these derivatives are rational; evaluating them requires no logarithms.</p><p>Finally, if $u\ne u^\star$, the convexity inequality gives<br>$$
+\sum_j
+\left\langle g_{\cdot j},
+x_{\cdot j}^\star-x_{\cdot j}\right\rangle
+\le
+F(x^\star)-F(x)&lt;0.
+$$<br>Thus at least one column points strictly downhill toward its target.</p><h3>3. Positive steps that implement waiting</h3><p>Both algorithms below permanently settle columns. Their allocations always consist of columns drawn from the two rational allocations $x^0$ and $x^\star$.</p><p>Here is a finite-precision implementation that preserves a settled column when it is sampled.</p><p>Let $D$ be the product of the denominators of all coordinates of $x^0$ and $x^\star$. Given an integer precision parameter $P\ge1$, set<br>$$
+Q=2^PD.
+$$<br>Every coordinate of either allocation belongs to the grid $Q^{-1}\mathbb Z$.</p><p>For a column $z$ that should remain unchanged, compute its gradient $g$ and choose the positive rational step<br>$$
+\eta=\frac{1}{4Q(1+\|g\|_1)}.
+$$<br>If<br>$$
+r=\operatorname{Proj}_{K_j}(z-\eta g),
+$$<br>the Euclidean projection inequality, using $z\in K_j$, yields<br>$$
+\|r-z\|_2
+\le\eta\|g\|_2
+&lt;
+\frac{1}{4Q}.
+$$<br>For example, this follows directly from the projection variational inequality:<br>$$
+\|r-z\|_2^2
+\le
+\langle-\eta g,r-z\rangle.
+$$</p><p>Coordinatewise nearest-grid rounding of $r$ therefore returns exactly $z$. The returned allocation is feasible, and its error relative to the exact projected update is less than<br>$$
+\frac{1}{4Q}\le2^{-P-2}.
+$$<br>The bound certifies the rounded answer without explicitly computing $r$.</p><p>This implements an actual positive stepsize followed by a feasible finite-precision approximation. Taking<br>$$
+P=1+\left\lceil\log_2(1/\epsilon)\right\rceil
+$$<br>gives polynomial precision cost. The resulting allocation is exactly unchanged, so these rounding errors do not accumulate in the stored state.</p><h3>Sampling bound</h3><p>Suppose a phase designates one unsettled item and succeeds when that item is sampled. Waiting updates leave the state unchanged, so the designated successful update remains valid throughout the phase.</p><p>Allow<br>$$
+T=m\left\lceil\log_2(3m)\right\rceil
+$$<br>independent uniform samples per phase. Conditionally on any preceding history, the probability of missing its designated item is at most<br>$$
+(1-1/m)^T
+\le e^{-T/m}
+\le\frac{1}{3m}.
+$$<br>For at most $m$ phases, a union bound gives success probability at least $2/3$, with at most<br>$$
+m^2\left\lceil\log_2(3m)\right\rceil
+$$<br>samples.</p><h3>4. Proven result: arbitrary valuations with two types</h3><p><b>Theorem.</b> If $\tau\le2$, the permitted finite-precision projected item-block dynamics compute an allocation with zero requested gap with probability at least $2/3$ in time polynomial in $m,L,\log(1/\epsilon)$.</p><p>For $\tau=1$, the initialization already gives the only type every item, so assume $\tau=2$.</p><h3>One projected step can reach a downhill target column</h3><p>Fix a current clearing column $z$ and its target $z^\star$. Write<br>$$
+a=(a_1,a_2),
+\qquad
+d=(a_2,-a_1).
+$$<br>Both columns satisfy $a\cdot z=a\cdot z^\star=s_j$, so<br>$$
+z^\star-z=\kappa d
+$$<br>for some rational $\kappa$.</p><p>Suppose<br>$$
+\langle g,z^\star-z\rangle&lt;0.
+$$<br>Put $q=g\cdot d$. Then $\kappa q&lt;0$, and the rational stepsize<br>$$
+\eta=-\frac{\kappa(a_1^2+a_2^2)}{q}
+$$<br>is positive.</p><p>For $y=z-\eta g$, define<br>$$
+\lambda=-\frac{\eta\,a\cdot g}{a_1^2+a_2^2}\ge0.
+$$<br>The inequality follows because every gradient coordinate is nonpositive. Orthogonal decomposition along $a$ and $d$ gives<br>$$
+y-\lambda a
+=
+z-\eta\frac{q}{a_1^2+a_2^2}d
+=
+z+\kappa d
+=
+z^\star.
+$$<br>Since $z^\star\ge0$ and $a\cdot z^\star=s_j$, these equations satisfy the projection KKT conditions, with zero multipliers for nonnegativity. Strict convexity of squared distance therefore proves<br>$$
+\operatorname{Proj}_{K_j}(z-\eta g)=z^\star.
+$$<br>The calculation also applies when the target is an endpoint.</p><h3>Algorithm and termination</h3><p>Start at $x^0$. In each phase:</p><ul><li>If $u=u^\star$, stop.</li><li>Otherwise, select a column satisfying</li></ul><p>$$
+   \left\langle g_{\cdot j},
+   x_{\cdot j}^\star-x_{\cdot j}\right\rangle&lt;0.
+   $$</p><ul><li>Wait for that item using Section 3, then apply the displayed stepsize to set its column exactly to its target.</li></ul><p>Section 2 guarantees a selectable column. Already-settled columns contribute zero to the sum, so every successful phase settles a new column. After at most $m$ phases, either the algorithm has stopped or $x=x^\star$.</p><p>At stopping, output $p^\star,\beta^\star$. Since $u=u^\star$,<br>$$
+\sum_j s_jp_j^\star-W
++
+\sum_t w_t\log\frac{B_t}{\beta_t^\star u_t}
+=0.
+$$</p><p>Every intermediate utility is positive. Indeed, for each type some coordinate of $x_t^\star$ has positive utility contribution. In its column, either the target has already been installed, or the strictly positive initial coordinate remains.</p><h3>Arithmetic cost</h3><p>Every stored column is initial or target, so its encoding length remains polynomial. Utilities, gradients, eligibility tests, stepsizes, grid denominators, and certificates use rational arithmetic on numbers of polynomial encoding length.</p><p>A nonzero rational denominator such as $q$ can be numerically tiny, but taking its reciprocal increases encoding length only polynomially. Combined with Section 3’s sample bound and the charged equilibrium preprocessing, this proves the theorem.</p><h3>5. Proven result: unique equilibrium winners with any number of types</h3><p>Assume that each item $j$ has a unique type $o(j)$ satisfying<br>$$
+\beta_{o(j)}^\star v_{o(j)j}
+&gt;
+\beta_r^\star v_{rj}
+\qquad
+\text{for every }r\ne o(j).
+$$<br>This condition is checkable by rational comparisons after computing the target.</p><p>Complementarity forces the target allocation to be<br>$$
+x_{tj}^\star=
+\begin{cases}
+s_j/a_t,&amp;t=o(j),\\
+0,&amp;t\ne o(j).
+\end{cases}
+$$</p><p><b>Theorem.</b> Under this unique-winner hypothesis, the permitted dynamics compute an allocation with zero requested gap with probability at least $2/3$ in time polynomial in $m,\tau,L,\log(1/\epsilon)$.</p><h3>A suitable unsettled item always exists</h3><p>At the current allocation, define<br>$$
+R_t=\frac{\alpha_t(u_t)}{\beta_t^\star}.
+$$<br>If $u\ne u^\star$, some type satisfies $u_t&lt;u_t^\star$. Otherwise all utilities would be at least their equilibrium values, contradicting<br>$$
+\sum_t a_t\beta_t^\star u_t
+\le W
+=
+\sum_t a_t\beta_t^\star u_t^\star
+$$<br>unless every utility were equal.</p><p>Choose a type $t$ maximizing $R_t$. Strict decrease of $\alpha_t$ implies<br>$$
+R_t&gt;1,
+\qquad
+u_t&lt;u_t^\star.
+$$<br>Some item owned by $t$ must remain unsettled: if all its owned items had been installed, their utility contribution alone would equal $u_t^\star$, and all other contributions are nonnegative.</p><p>Choose such an item $j$. For every $r\ne t$,<br>$$
+\alpha_t(u_t)v_{tj}
+=
+R_t\beta_t^\star v_{tj}
+&gt;
+R_t\beta_r^\star v_{rj}
+\ge
+R_r\beta_r^\star v_{rj}
+=
+\alpha_r(u_r)v_{rj}.
+$$<br>Thus $t$ is the unique current winner as well.</p><h3>A rational step reaches the owner endpoint</h3><p>For this column, write<br>$$
+\gamma_r=\alpha_r(u_r)v_{rj}.
+$$<br>Then $\gamma_t&gt;\gamma_r$ for $r\ne t$, and $\gamma_t&gt;0$. The gradient is $g_r=-a_r\gamma_r$.</p><p>Given the current clearing column $z$, choose<br>$$
+\eta=
+1+\max\left(
+\left\{0,\frac{s_j/a_t-z_t}{a_t\gamma_t}\right\}
+\cup
+\left\{
+\frac{z_r/a_r-z_t/a_t+s_j/a_t^2}
+{\gamma_t-\gamma_r}:r\ne t
+\right\}
+\right).
+$$<br>All denominators are positive. Put<br>$$
+y_r=z_r+\eta a_r\gamma_r,
+\qquad
+\lambda=\frac{z_t+\eta a_t\gamma_t-s_j/a_t}{a_t}.
+$$<br>The first bound in the maximum ensures $\lambda\ge0$. Also,<br>$$
+y_t-\lambda a_t=s_j/a_t,
+$$<br>while, for $r\ne t$,<br>$$
+y_r-\lambda a_r
+=
+a_r\left(
+\frac{z_r}{a_r}-\frac{z_t}{a_t}
++\frac{s_j}{a_t^2}
+-\eta(\gamma_t-\gamma_r)
+\right)
+\le0.
+$$<br>Therefore<br>$$
+z_r^+=\max\{0,y_r-\lambda a_r\}
+$$<br>is exactly the target owner endpoint. It clears supply and satisfies the projection KKT conditions, proving that it is the Euclidean projection.</p><h3>Completion and bit complexity</h3><p>Designate this unsettled item, use rounded waiting updates until it is sampled, and install its target endpoint. Each successful phase settles one new column. Hence at most $m$ phases are needed, and Section 3 gives the required success probability.</p><p>All stored columns remain initial or target. The strict differences $\gamma_t-\gamma_r$ are nonzero rationals with polynomial encoding length; their reciprocals likewise have polynomial encoding length. Thus even extremely small winner separations do not invalidate the polynomial arithmetic bound.</p><p>At termination, $u=u^\star$, and $p^\star,\beta^\star$ give zero requested gap.</p><h3>6. Why the two-type argument does not directly extend</h3><p>For three types, a strictly downhill direction toward an equilibrium column need not be reachable by one scalar projected step.</p><p>Consider<br>$$
+a_1=a_2=a_3=\frac13,
+\qquad
+B_t=s_j=1,
+$$<br>with two items and valuations<br>$$
+v_1=(3,1),
+\qquad
+v_2=v_3=(1,1).
+$$<br>The initialization has every coordinate equal to $1$. An equilibrium is<br>$$
+x_1^\star=(2,0),
+\qquad
+x_2^\star=(1,1),
+\qquad
+x_3^\star=(0,2).
+$$<br>Indeed, its utilities are $(6,2,2)$, and<br>$$
+p^\star=(1/2,1/2),
+\qquad
+\beta^\star=(1/6,1/2,1/2).
+$$<br>Every type spends its budget on items attaining its maximum utility per unit price, and both supplies clear.</p><p>At initialization, the first-column gradient is<br>$$
+g=(-1/4,-1/6,-1/6).
+$$<br>Its target displacement is $(1,0,-1)$, so<br>$$
+\langle g,(1,0,-1)\rangle=-1/12&lt;0.
+$$<br>Nevertheless, the second and third coordinates of $z-\eta g$ are equal for every $\eta&gt;0$. The feasible set and Euclidean projection are invariant under exchanging these coordinates. Uniqueness of projection therefore makes the projected coordinates equal too. They cannot equal the target coordinates $1$ and $0$.</p><p>This example identifies a failure of the one-step target argument. It gives no general update lower bound: another equilibrium allocates the two columns as $(2,1/2,1/2)$ and $(0,3/2,3/2)$.</p><h3>7. Remaining question</h3><p>The proved classes permit overlapping valuations and adaptive steps far beyond reciprocal global smoothness bounds. Their proofs also explicitly account for precision, preprocessing, and uniform sampling.</p><p>For general markets with at least three types and tied equilibrium winners, I have neither a polynomial trajectory construction nor an obstruction covering every permitted adaptive rule.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 5–7 and the overall response to USER_TASK: The prescribed dynamics are established only for $\tau\le2$ and for markets with strict unique equilibrium winners. General markets with $\tau\ge3$ and tied equilibrium winners remain untreated; neither a polynomial trajectory bound nor the requested hardness conclusion follows.</li><li><b>minor</b> — Section 3 sampling bound and the algorithms in Sections 4–5: The bounded-runtime implementation does not explicitly specify what happens if the designated item is missed in all $T$ samples of a phase. State an explicit failure termination or fallback output on timeout; the existing probability bound already accounts for this event.</li></ul>
+<div class="pre"><h3>Verification report</h3><p><b>Overall assessment: partial progress.</b> The two restricted dynamics results are sound as written, apart from a minor omission concerning timeout handling. They do not resolve the general question in <code>USER_TASK</code>. No central false step or counterexample to either restricted theorem was found.</p><p>The distinction matters: polynomial-time equilibrium preprocessing is established for every input, but the prescribed projected item-block trajectory is established only for the two stated classes.</p><h3>1. Equilibrium preprocessing</h3><p><b>Verified.</b></p><p>The substitution<br>$$
+z_{tj}=\frac{a_tx_{tj}}{s_j}
+$$<br>correctly transforms feasibility into unit-supply feasibility. With budgets $w_t=a_tB_t$ and valuations $d_{tj}=s_jv_{tj}$, the transformed utility is indeed<br>$$
+U_t=a_tu_t.
+$$<br>Consequently, the two Eisenberg–Gale objectives differ by the stated allocation-independent constant.</p><p>The price transformation $p_j=P_j/s_j$ also gives the stated spending identity. Both utility maximization and budget feasibility therefore correspond under the transformation.</p><p>The cited result applies to integral budgets and utilities, assuming every buyer and every good has a positive valuation incident to it. The prover checks these hypotheses and correctly explains denominator clearing: common budget scaling and buyer-specific valuation scaling preserve the relevant demands. The source establishes exact equilibrium computation with a strongly polynomial algorithm; its rational reconstruction is consistent with the claimed polynomial encoding bound. [Orlin, Sections 1.1, 2, and 4](https://drops.dagstuhl.de/storage/16dagstuhl-seminar-proceedings/dsp-vol10171/DagSemProc.10171.2/DagSemProc.10171.2.pdf).</p><p>The subsequent equilibrium properties also check out:</p><ul><li>Every price is positive because a positively valued, zero-price good would make a buyer’s utility maximization unbounded.</li><li>Every buyer spends its budget.</li><li>Every item clears, and total revenue equals $W$.</li><li>The certificates $\beta_t^\star=B_t/u_t^\star$ satisfy the stated dual inequalities and complementary equalities.</li></ul><p>This establishes unrestricted equilibrium computation. It does <b>not</b> establish the prescribed trajectory bound, and the prover correctly maintains that distinction.</p><h3>2. Continued objective and its minimizers</h3><p><b>Verified.</b></p><p>The formula for $c_t$ follows directly from initialization. Its positivity follows from the valuation incidence assumptions.</p><p>The Taylor continuation has the correct coefficients. Its first and second derivatives match at $c_t$, and the stated second derivatives are positive throughout the domain. Thus the differentiability and strict convexity assertions are valid.</p><p>Summing the equilibrium dual inequalities against supplies correctly gives<br>$$
+\beta_t^\star V_t\le W,
+$$<br>and hence $u_t^\star\ge c_t$. This justifies evaluating the derivative at the equilibrium utility using the logarithmic branch.</p><p>The inequality<br>$$
+\sum_t a_t\beta_t^\star u_t\le W
+$$<br>holds for every feasible allocation. The resulting first-order convexity calculation proves that $x^\star$ minimizes the continuation.</p><p>Strict convexity in the utility vector, together with feasibility of the midpoint, correctly proves that every minimizer has utility vector $u^\star$. It does not require uniqueness of the allocation.</p><p>The formulas for $\alpha_t$ and the column gradient are correct, including their signs and behavior at $c_t$. The final convexity inequality correctly guarantees a column with strictly negative target directional derivative whenever $u\ne u^\star$.</p><h3>3. Waiting updates, precision, and sampling</h3><p><b>Verified, with one minor implementation omission.</b></p><p>The denominator product $D$ puts all stored coordinates on the proposed grid. Its bit length is polynomial because it is the product of polynomially many denominators of polynomial encoding length.</p><p>The projection variational inequality gives the stated displacement bound. Since each coordinate moves by less than $1/(4Q)$, nearest-grid rounding returns the original column exactly. That returned column is feasible, and its Euclidean error relative to the exact projected update satisfies the stated bound.</p><p>This is a permitted finite-precision approximation under <code>USER_TASK</code>. In particular, the write-up supplies an error certificate for returning the unchanged column without explicitly computing the projection. The stored state has no accumulated rounding error.</p><p>The sampling calculation is also correct. Conditional on previous phases, the designated item remains fixed while waiting, and independent uniform sampling gives the stated miss probability. The choice<br>$$
+T=m\left\lceil\log_2(3m)\right\rceil
+$$<br>is sufficient for the claimed union bound, including $m=1$.</p><p><b>Minor issue:</b> The algorithms say to wait until the designated item is sampled, while the polynomial runtime argument caps waiting at $T$ samples per phase. The behavior when those samples all miss is implicit.</p><p><b>Minimum clarification:</b> Explicitly state that a phase timeout terminates the algorithm with failure, or with a specified fallback output. This makes the bounded runtime implementation unambiguous; it does not change the success-probability argument.</p><h3>4. The result for at most two types</h3><p><b>Verified.</b></p><p>For two types, clearing columns lie on the same affine line, so the displacement representation<br>$$
+z^\star-z=\kappa(a_2,-a_1)
+$$<br>is correct.</p><p>The strict downhill condition implies $\kappa q&lt;0$, making the displayed stepsize positive. The orthogonal decomposition has the correct signs and coefficients. Because the gradient coordinates are nonpositive, the supply multiplier $\lambda$ is nonnegative.</p><p>The resulting equations satisfy the Euclidean projection optimality conditions. Zero nonnegativity multipliers are valid even when the target is an endpoint. Thus the projected step reaches the target exactly.</p><p>The phase-selection argument is valid: settled columns contribute zero, so a strictly downhill column must be unsettled. Each successful phase therefore settles a new column.</p><p>Positive intermediate utilities follow from the stated initial-or-target column invariant. At stopping, equality of the utility vectors gives zero requested primal–dual gap, whether or not the allocation itself equals $x^\star$.</p><p>The rational arithmetic argument is sufficient. Exact tests, stepsizes, and reciprocal operations involve numbers of polynomial encoding length; small nonzero rational values do not themselves cause superpolynomial bit length.</p><p>The single-type case is correctly handled by initialization.</p><h3>5. The unique-winner result</h3><p><b>Verified.</b></p><p>The strict winner condition, complementarity, and supply clearing force each target column to be the stated owner endpoint.</p><p>The argument establishing an under-served type when $u\ne u^\star$ is valid. Maximizing $R_t$ then yields $R_t&gt;1$ and $u_t&lt;u_t^\star$. Such a type must own an unsettled item, as argued.</p><p>The inequality chain proving that this owner is also the unique current winner is correct. It remains valid when a competing valuation is zero.</p><p>The endpoint stepsize formula also checks out. Its denominators are positive, its first bound makes $\lambda\ge0$, and the remaining bounds make every competing projected coordinate zero. The resulting allocation clears supply and satisfies the Euclidean projection conditions.</p><p>Termination, zero-gap certification, and arithmetic bounds follow from the same stored-column invariant and sampling argument. The intermediate-utility positivity argument from the two-type section applies unchanged here.</p><p>The result depends on the <b>strict</b> winner hypothesis. It provides no guarantee when equilibrium winners tie.</p><h3>6. The three-type example</h3><p><b>Verified, with the stated limited interpretation.</b></p><p>The displayed target allocation is feasible and clearing. Its utilities, prices, and certificates are correct; each buyer spends its budget on maximizing goods.</p><p>At initialization, the first-column gradient and directional derivative are correctly computed:<br>$$
+g=(-1/4,-1/6,-1/6),
+\qquad
+\langle g,(1,0,-1)\rangle=-1/12.
+$$</p><p>The symmetry argument is valid. The second and third coordinates of the pre-projection point agree, and the feasible set is invariant under exchanging them. Uniqueness of Euclidean projection therefore prevents reaching the displayed asymmetric target column in one step.</p><p>This refutes only the proposed generalization of that one-step target argument. The prover correctly states that it supplies no lower bound covering all adaptive rules or all equilibrium targets.</p><h3>7. Unresolved target and actionable feedback</h3><p><b>Major issue relative to <code>USER_TASK</code>: the general dynamics question remains unsettled.</b></p><p>Neither restricted theorem covers general inputs with at least three support types and tied equilibrium winners. The example does not establish a trajectory obstruction, and unrestricted equilibrium preprocessing does not establish that a permitted trajectory reaches an equilibrium in polynomial time.</p><p>This is an acknowledged limitation, not an internal contradiction or a false claim of completeness.</p><p><b>Minimum requirement for completion:</b> Provide an argument covering the remaining inputs that establishes either the requested polynomial runtime for the prescribed dynamics or the requested hardness conclusion. The existing restricted proofs do not imply either outcome.</p><p>The direction is promising because both restricted trajectory constructions survive verification. The appropriate adjudication remains <b>partial</b>, and the continuous problem’s requested complexity classification remains <b>unresolved</b>.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

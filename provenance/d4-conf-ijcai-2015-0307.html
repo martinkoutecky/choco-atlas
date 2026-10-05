@@ -1,0 +1,370 @@
+<!doctype html><html><head><meta charset="utf-8"><title>d4-conf-ijcai-2015-0307 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>d4-conf-ijcai-2015-0307 <span style="font-weight:normal;color:#8a7350">(d4-conf-ijcai-2015-0307)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Corollary 1 — class: hardness</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given iid samples from an unknown two-candidate society \(\mu\) over ballot types, estimate the mass-transfer margin \(\rho_r(\mu)\), the infimum mass whose ballot types must change for the winner set under \(r\) to change, within additive error \(c\rho_r(\mu)+\epsilon\) with failure probability at most \(\delta\). Determine the minimum sample complexity for rules \(r\) that reduce to plurality on two candidates.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Let \(C=\{a,b\}\), with ballot types the two strict rankings. A society is represented by its support: the list of its \(\tau\) positive-mass types, each mass a binary rational, summing to \(1\); \(\tau\) is the support size, not the number of possible types.<br>The support representation is hidden: an estimator accesses the unknown society \(\mu\) only through independent samples revealing complete ballots. The rule \(r\) agrees with plurality on every two-candidate mass profile and returns all tied winners.<br>Arbitrary fractions of existing mass may be reassigned to either ballot type, including an initially absent type, at unit cost per unit mass. Define \(\rho_r(\mu)=\inf_{\nu:r(\nu)\ne r(\mu)}\frac12\sum_t|\mu(t)-\nu(t)|\), where \(\nu\) ranges over probability distributions on these types.<br>For rational \(0\le c&lt;1\), \(0&lt;\epsilon&lt;1\), and \(0&lt;\delta&lt;1/2\), let \(N^*(c,\epsilon,\delta)\) be the least integer sample budget permitting a randomized estimator satisfying \(\Pr[|\widehat\rho-\rho_r(\mu)|\le c\rho_r(\mu)+\epsilon]\ge1-\delta\) for every such \(\mu\), with no restriction on its encoding length. Probability includes sampling and estimator randomness.<br>State any running times in \(m=2\), \(\tau\), total binary encoding length \(L\), sample budget, and accuracy parameters.</p><p>What is the minimum worst-case sample complexity \(N^*(c,\epsilon,\delta)\) for estimating this mass-transfer margin?</p><p>For finite elections, a verified sampling lower bound is \(\Omega((1-c)^2\epsilon^{-2}\log(1/\delta))\) in the small-error regime, while plurality admits an additive-error estimator using \(O(\epsilon^{-2}\log(1/\delta))\) samples. [Source](https://www.ijcai.org/Proceedings/15/Papers/162.pdf)<br>No source located establishes the exact minimum sample budget for the continuous oracle problem defined here.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Reconciled the required support representation with an unknown society by treating the representation as hidden and giving the estimator only iid ballot samples.</li><li>Normalized total mass to one and used strict complete rankings as ballot types.</li><li>Extended agreement with two-candidate plurality to all mass profiles and retained the full winner set at ties.</li><li>Allowed fractional mass transfers to either ballot type, including types initially absent from the support; transfer cost is total reassigned mass.</li><li>Allowed real-valued destination masses while keeping input masses binary rational.</li><li>Specified rational accuracy parameters with c in [0,1), epsilon in (0,1), and delta in (0,1/2).</li><li>Interpreted minimum sample complexity as the exact least worst-case sample budget, allowing randomized estimators without a computational restriction and uniformly over all input encoding lengths.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial resolution</h3><p>The exact minimum can be determined by a finite procedure throughout the regime<br>$$
+\epsilon\ge \frac{(1-c)^2}{8}.
+$$<br>Below this threshold, the exact minimum remains unresolved here.</p><p>In addition, the arguments below completely characterize when the minimum is zero, two, or three samples. They improve the exact regimes in the supplied notes.</p><h3>1. Statements of the proved results</h3><p>Set<br>$$
+\alpha=1-c,\qquad \beta=1+c,\qquad h=\frac{2\epsilon}{\alpha}.
+$$</p><p>Allowing a budget of zero samples,<br>$$
+N^*(c,\epsilon,\delta)=0
+\quad\Longleftrightarrow\quad
+\epsilon\ge\frac{\alpha}{4}.
+$$</p><p>Suppose henceforth that<br>$$
+0&lt;\epsilon&lt;\frac{\alpha}{4},
+$$<br>so that $0&lt;h&lt;1/2$. Define<br>$$
+d_2(h)=\frac{1}{2+4h^2}
+$$<br>and<br>$$
+d_3(h)=
+\begin{cases}
+\dfrac{1-4h^2}{2-4h^2},&amp;h^2\le\dfrac16,\\[6pt]
+\dfrac{1}{2+12h^2},&amp;h^2\ge\dfrac16.
+\end{cases}
+$$<br>The two expressions defining $d_3$ agree at $h^2=1/6$.</p><p>The following are exact:<br>$$
+N^*(c,\epsilon,\delta)=2
+\quad\Longleftrightarrow\quad
+\epsilon\ge\frac{\alpha^2}{8}
+\ \text{and}\ 
+\delta\ge d_2(h),
+$$<br>and<br>$$
+N^*(c,\epsilon,\delta)=3
+\quad\Longleftrightarrow\quad
+\epsilon\ge\frac{\alpha^2}{8}
+\ \text{and}\ 
+d_3(h)\le\delta&lt;d_2(h).
+$$<br>One sample never suffices in the regime under consideration.</p><p>In particular,<br>$$
+0&lt;\epsilon&lt;\frac{\alpha^2}{8}
+\quad\Longrightarrow\quad
+N^*(c,\epsilon,\delta)\ge4.
+$$</p><p>For example, when $c=0$ and $\epsilon=1/8$,<br>$$
+N^*(0,1/8,\delta)=
+\begin{cases}
+2,&amp;4/9\le\delta&lt;1/2,\\
+3,&amp;3/7\le\delta&lt;4/9,
+\end{cases}
+$$<br>and smaller confidence parameters require at least four samples.</p><p>Section 4 gives an exact finite decision procedure for every sample budget when<br>$$
+\frac{\alpha^2}{8}\le\epsilon&lt;\frac{\alpha}{4}.
+$$<br>Thus that entire parameter regime is settled algorithmically, including budgets larger than three.</p><h3>2. Reduction to a statistical estimation problem</h3><p>Let $p$ denote the mass of the ballot $a\succ b$. The mass of the other ballot is $1-p$. For a second society with parameter $q$, the mass-transfer distance is<br>$$
+\frac12\bigl(|p-q|+|(1-p)-(1-q)|\bigr)=|p-q|.
+$$</p><p>When $p&gt;1/2$, changing the winning set requires reaching $q\le1/2$, and the nearest such profile is the tied profile. The argument for $p&lt;1/2$ is symmetric. At $p=1/2$, arbitrarily small nonzero perturbations change the winning set. Consequently,<br>$$
+\rho_r(\mu)=\left|p-\frac12\right|.
+$$</p><p>Write<br>$$
+t=\left|p-\frac12\right|\in[0,1/2].
+$$<br>An output $y$ succeeds exactly when<br>$$
+y\in A(t):=[\alpha t-\epsilon,\ \beta t+\epsilon].
+$$</p><h3>Zero samples and the exclusion of one sample</h3><p>If $\epsilon\ge\alpha/4$, the constant output $\epsilon$ belongs to every $A(t)$, since<br>$$
+\alpha t-\epsilon\le\frac{\alpha}{2}-\epsilon\le\epsilon
+\le\beta t+\epsilon.
+$$</p><p>If $\epsilon&lt;\alpha/4$, the intervals<br>$$
+A(0)=[-\epsilon,\epsilon]
+\quad\text{and}\quad
+A(1/2)=
+\left[\frac{\alpha}{2}-\epsilon,\frac{\beta}{2}+\epsilon\right]
+$$<br>are disjoint. A common output distribution cannot assign probability at least $1-\delta&gt;1/2$ to both. This proves the zero-sample characterization.</p><p>More generally, suppose an estimator uses at most $N\ge1$ samples. It may be padded to use exactly $N$ samples. Under each unanimous society, successful estimation requires output greater than $\epsilon$. Therefore, conditional on either constant sample sequence, the probability of output greater than $\epsilon$ is at least $1-\delta$.</p><p>Under the tied society, these two sequences each have probability $2^{-N}$, and output greater than $\epsilon$ is a failure. Hence<br>$$
+\delta\ge2^{1-N}(1-\delta),
+$$<br>so<br>$$
+N\ge1+\log_2\frac{1-\delta}{\delta}.
+$$<br>Since $\delta&lt;1/2$, this excludes one sample.</p><h3>Restricting the output range</h3><p>In the nonzero-sample regime, define<br>$$
+y_{\mathrm{low}}=\epsilon,\qquad
+y_{\mathrm{high}}=\frac{\alpha}{2}-\epsilon.
+$$<br>Clipping any output to $[y_{\mathrm{low}},y_{\mathrm{high}}]$ cannot turn a success into a failure:</p><ul><li>Raising an output below $\epsilon$ to $\epsilon$ preserves success because every acceptable interval has upper endpoint at least $\epsilon$.</li><li>Lowering an output above $y_{\mathrm{high}}$ to $y_{\mathrm{high}}$ preserves success because every acceptable interval has lower endpoint at most $y_{\mathrm{high}}$.</li></ul><p>Thus outputs may be written as<br>$$
+y=\epsilon+\beta X,\qquad X\in[0,g],
+$$<br>where<br>$$
+R=\frac{\beta}{\alpha},
+\qquad
+g=\frac{\alpha/2-2\epsilon}{\beta}.
+$$<br>The defining relations give<br>$$
+Rg+h=\frac12.
+$$<br>The success condition becomes<br>$$
+X\le t\le RX+h.
+$$</p><p>The intervals overlap in the useful sense $g\le h$ exactly when<br>$$
+\epsilon\ge\frac{\alpha^2}{8}.
+$$<br>In that regime:</p><ul><li>For $0\le t&lt;g$, success means $X\le t$.</li><li>For $g\le t\le h$, every permitted output succeeds.</li><li>For $h&lt;t\le1/2$, success means $X\ge(t-h)/R$.</li></ul><p>This decomposition is the basis of the exact decision procedure.</p><h3>3. Symmetry and the available statistical experiment</h3><p>The hidden support representation does not affect the sample distribution: each sample is Bernoulli with parameter $p$.</p><p>An estimator can be symmetrized by randomly permuting its samples and randomly interchanging $a$ and $b$. This preserves its guarantee because the target $t$ is unchanged and the guarantee applies to both parameters $p$ and $1-p$.</p><p>For a symmetrized estimator using $N$ samples, the conditional output distribution depends only on<br>$$
+Z=\left|2K-N\right|,
+$$<br>where $K$ is the number of samples ranking $a$ first.</p><p>Let the possible values be<br>$$
+z_0&lt;z_1&lt;\cdots&lt;z_d.
+$$<br>For $p=1/2+t$, their probabilities are the rational polynomials<br>$$
+w_i(t)=
+\sum_{\substack{0\le k\le N\\|2k-N|=z_i}}
+\binom Nk
+\left(\frac12+t\right)^k
+\left(\frac12-t\right)^{N-k}.
+$$<br>Define<br>$$
+F_j(t)=\sum_{i=0}^{j}w_i(t),
+\qquad F_{-1}(t)=0.
+$$</p><p>For every $t&lt;1/2$, all the $w_i(t)$ are positive.</p><h3>Monotone likelihood ratios</h3><p>For $t&lt;1/2$, introduce $\theta\ge0$ by<br>$$
+\frac12+t=\frac{e^\theta}{2\cosh\theta}.
+$$<br>For suitable positive constants $b_i$,<br>$$
+w_i(t)=
+b_i\frac{\cosh(z_i\theta)}{(2\cosh\theta)^N}.
+$$</p><p>If $\theta_2&gt;\theta_1$, the likelihood ratio is increasing in $z_i$. Indeed,<br>$$
+\frac{\partial}{\partial\theta}\log\cosh(z\theta)
+=z\tanh(z\theta),
+$$<br>and this is increasing in $z\ge0$. Integrating between $\theta_1$ and $\theta_2$ proves the assertion.</p><p>Consequently, $Z$ is stochastically increasing in $t$. Also, for $u&gt;x$, among all tests $\phi_i\in[0,1]$ satisfying<br>$$
+\sum_i w_i(x)\phi_i\ge\gamma,
+$$<br>the minimum of<br>$$
+\sum_i w_i(u)\phi_i
+$$<br>is attained by filling the smallest $z_i$ first, with at most one fractional value. This follows directly by exchanging test mass from a larger likelihood ratio to a smaller one until the constraint is tight.</p><p>Here and below,<br>$$
+\gamma=1-\delta.
+$$</p><h3>4. An exact finite decision procedure in the overlap regime</h3><p>Assume<br>$$
+\frac{\alpha^2}{8}\le\epsilon&lt;\frac{\alpha}{4}.
+$$</p><p>For $x\in[0,g]$, let $\phi_x$ be the randomized lower-tail test having probability exactly $\gamma$ under parameter $x$. Explicitly,<br>$$
+\phi_x(i)=
+\min\left\{
+1,\,
+\max\left\{
+0,\,
+\frac{\gamma-F_{i-1}(x)}{w_i(x)}
+\right\}
+\right\}.
+$$<br>Define<br>$$
+T_N(x)=\sum_i w_i(Rx+h)\phi_x(i).
+$$</p><p><b>Exact feasibility criterion.</b> A budget of $N$ samples is feasible if and only if<br>$$
+T_N(x)\le\delta
+\qquad\text{for every }x\in[0,g].
+$$</p><h3>Necessity</h3><p>First, a guarantee for every admissible binary-rational society also gives the guarantee for every real parameter.</p><p>To see this, fix an estimator and a sample budget. Conditional on each of the finitely many sample sequences, its output has a fixed probability distribution. Since $A(t)$ is closed and its endpoints vary continuously, its success probability is upper semicontinuous in $p$. Approaching any real $p$ through binary rationals therefore preserves the lower bound $\gamma$ on success probability.</p><p>After symmetrization and clipping, let $G_i(x)$ be the conditional distribution function of $X$ given $Z=z_i$.</p><p>For $x&lt;g$, success at parameter $t=x$ implies<br>$$
+\sum_i w_i(x)G_i(x)\ge\gamma.
+$$<br>For any $v&gt;Rx+h$, output with $X\le x$ fails. Taking $v$ down to $Rx+h$, continuity of the sample probabilities gives<br>$$
+\sum_i w_i(Rx+h)G_i(x)\le\delta.
+$$</p><p>The likelihood-ratio argument in Section 3 shows that replacing the test $G_i(x)$ by $\phi_x(i)$ can only decrease the latter probability. Thus $T_N(x)\le\delta$ for $x&lt;g$. The functions $\phi_x(i)$ are continuous in $x$, so the inequality also holds at $x=g$.</p><h3>Sufficiency</h3><p>For each observation $z_i$, prescribe the conditional distribution function of $X$ by<br>$$
+\Pr[X\le x\mid Z=z_i]=\phi_x(i),
+\qquad 0\le x&lt;g,
+$$<br>and put the remaining probability at $X=g$.</p><p>These are valid distribution functions. To verify monotonicity, note that randomized lower-tail tests are totally ordered pointwise. Stochastic monotonicity implies that a test of probability $\gamma$ at a larger parameter must be at least as large pointwise as the corresponding test at a smaller parameter. Thus $\phi_x(i)$ is nondecreasing in $x$. Its displayed formula also proves continuity.</p><p>At $0\le t&lt;g$, success probability is<br>$$
+\sum_i w_i(t)\phi_t(i)=\gamma.
+$$<br>At $g\le t\le h$, success probability is one.</p><p>For $h&lt;t&lt;1/2$, put $x=(t-h)/R$. Continuity of the conditional distribution functions gives success probability<br>$$
+1-\sum_i w_i(t)\phi_x(i)
+=1-T_N(x)\ge\gamma.
+$$<br>At $t=1/2$, the atom at $g$ gives the same formula with $x=g$. This proves sufficiency.</p><h3>Reduction to finitely many polynomial inequalities</h3><p>If the quantile cutoff is $j$, then<br>$$
+F_{j-1}(x)\le\gamma\le F_j(x)
+$$<br>and<br>$$
+T_N(x)=
+F_{j-1}(Rx+h)
++
+\frac{\gamma-F_{j-1}(x)}{w_j(x)}
+w_j(Rx+h).
+$$<br>Since $w_j(x)&gt;0$ on $[0,g]$, the exact criterion is equivalent to requiring<br>$$
+\begin{aligned}
+&amp;[\delta-F_{j-1}(Rx+h)]w_j(x)\\
+&amp;\qquad-
+[\gamma-F_{j-1}(x)]w_j(Rx+h)
+\ge0
+\end{aligned}
+$$<br>for every $x\in[0,g]$ satisfying the cutoff inequalities, for each $j$.</p><p>These are finitely many univariate polynomial sign conditions with rational coefficients. They can be decided exactly by isolating their real roots, partitioning $[0,g]$ at those roots, and checking the signs on every resulting interval and boundary point.</p><p>Section 7 supplies a finite upper bound on the budget. Testing budgets up to that bound therefore determines the exact integer $N^*$ throughout the overlap regime. This is a finite algebraic procedure, rather than an optimization over unspecified estimators.</p><h3>5. Exact two- and three-sample minima</h3><p>For two samples, the symmetrized experiment has two outcomes: agreement and disagreement. Agreement has probability<br>$$
+q(t)=\frac12+2t^2.
+$$</p><p>For three samples, the two outcomes are unanimity and non-unanimity. Unanimity has probability<br>$$
+q(t)=\frac14+3t^2.
+$$</p><p>Both experiments have the form<br>$$
+q(t)=a+bt^2,\qquad b=4(1-a),
+$$<br>with $a=1/2$ or $a=1/4$. Call the outcome of probability $q(t)$ the high observation.</p><h3>A necessary testing bound</h3><p>Let $u$ and $v$ be the probabilities of output greater than $\epsilon$ conditional on the high and low observations, respectively.</p><p>At the tie,<br>$$
+au+(1-a)v\le\delta.
+$$<br>At every parameter $t&gt;h$, successful output must be greater than $\epsilon$. Taking $t$ down to $h$ gives<br>$$
+q(h)u+[1-q(h)]v\ge1-\delta.
+$$</p><p>Write $q=q(h)$. For fixed $\delta$, the largest possible left side of the second inequality, subject to the first, is<br>$$
+\begin{cases}
+q\delta/a,&amp;\delta\le a,\\[4pt]
+q+(1-q)(\delta-a)/(1-a),&amp;\delta\ge a.
+\end{cases}
+$$<br>Indeed, spending the allowed probability on $u$ first is optimal because<br>$$
+\frac qa&gt;\frac{1-q}{1-a}.
+$$</p><p>Solving for the smallest feasible $\delta$ gives<br>$$
+d(a,q)=
+\begin{cases}
+\dfrac{a}{a+q},&amp;a+q\ge1,\\[6pt]
+\dfrac{1-q}{2-a-q},&amp;a+q\le1.
+\end{cases}
+$$<br>Substituting $a=1/2$ gives $d_2(h)$; substituting $a=1/4$ gives $d_3(h)$.</p><h3>A ratio inequality</h3><p>Suppose $g\le h$ and $Rg+h=1/2$. For either of these experiments,<br>$$
+\frac{q(Rx+h)}{q(x)}
+\ge\frac{q(h)}a
+\qquad(0\le x\le g).
+$$</p><p>Here is a proof. Differentiation shows that the sign of the derivative of the ratio is the sign of<br>$$
+aRh+\bigl[a(R^2-1)-bh^2\bigr]x-bRhx^2.
+$$<br>This quadratic has positive constant term and negative leading coefficient, and therefore exactly one positive root. The ratio first increases and then decreases; its minimum on $[0,g]$ is at an endpoint.</p><p>At $x=0$, its value is $q(h)/a$. At $x=g$, its value is $1/q(g)$. It remains to show<br>$$
+q(h)q(g)\le a.
+$$</p><p>Since $R\ge1$,<br>$$
+h+g\le\frac12.
+$$<br>Put $H=1/2-g\ge h$ and $z=gH\le1/16$. Then<br>$$
+q(h)q(g)\le q(H)q(g)
+=a+bz(bz-2a)\le a.
+$$<br>The last inequality follows from<br>$$
+bz\le\frac b{16}=\frac{1-a}{4}\le2a,
+$$<br>which holds for both $a=1/2$ and $a=1/4$.</p><h3>Attaining the testing bound</h3><p>Let $d=d(a,q(h))$ and $\gamma=1-d$.</p><p>If $a+q(h)\ge1$, set<br>$$
+w=1,\qquad A=d.
+$$<br>If $a+q(h)\le1$, set<br>$$
+w=\frac{\gamma}{1-a},
+\qquad A=aw.
+$$<br>In both cases,<br>$$
+0&lt;w\le1,\qquad
+w-A=\gamma,\qquad
+1-w+A\frac{q(h)}a=\gamma.
+$$</p><p>Conditional on the low observation, output $X=0$ with probability $w$ and $X=g$ otherwise.</p><p>Conditional on the high observation, use the distribution function<br>$$
+L(x)=w-\frac{A}{q(x)}
+\qquad(0\le x&lt;g),
+$$<br>with the remaining probability placed at $g$. This is valid: $L(0)\ge0$, it is nondecreasing, and $L(g)&lt;1$.</p><p>For $0\le t&lt;g$, its success probability is<br>$$
+q(t)L(t)+[1-q(t)]w=w-A=\gamma.
+$$<br>For $g\le t\le h$, every output succeeds.</p><p>For $h&lt;t\le1/2$, write $x=(t-h)/R$. The success probability is<br>$$
+1-w+A\frac{q(t)}{q(x)}
+\ge
+1-w+A\frac{q(h)}a
+=\gamma.
+$$<br>Thus the necessary testing bound is attained whenever $g\le h$.</p><h3>Why the overlap condition is necessary</h3><p>Suppose $h&lt;g$. Choose a dyadic $t_1$ with<br>$$
+h&lt;t_1&lt;g.
+$$<br>Then $A(t_1)$ is disjoint from both $A(0)$ and $A(1/2)$.</p><p>For either the two- or three-sample experiment, its distribution at $t_1$ is a convex combination of its distributions at $0$ and $1/2$, because the experiment has just two outcomes and<br>$$
+a&lt;q(t_1)&lt;1.
+$$<br>At each endpoint, the probability of output in $A(t_1)$ is at most $\delta$. The same is therefore true at $t_1$, contradicting required success probability $1-\delta&gt;\delta$.</p><p>Consequently, neither two nor three samples can suffice when $h&lt;g$.</p><p>Combining necessity, attainability, and the exclusion of smaller budgets proves the exact characterizations in Section 1. Finally, direct algebra gives<br>$$
+d_3(h)&lt;d_2(h)
+\qquad(0&lt;h&lt;1/2),
+$$<br>so the stated three-sample regime is nonempty.</p><h3>6. Finite-coin implementation of the two- and three-sample optima</h3><p>The preceding distributions can also be replaced by distributions on countably many rational outputs, sampled with finitely many fair random bits almost surely. Thus their exact attainability does not depend on physically producing an arbitrary real number.</p><p>Retain $a,b,w,A,L$ from Section 5 and define<br>$$
+U(x)=w-\frac{Aq(h)}{a\,q(Rx+h)}.
+$$<br>It suffices to replace the high-observation distribution function by any distribution function $D$ satisfying<br>$$
+L(x)\le D(x)\le U(x)
+\qquad(0&lt;x&lt;g),
+$$<br>with $D(0)=L(0)$ and $D(g-)=L(g)$.</p><p>The ratio inequality proves $U(x)\ge L(x)$. More precisely, set<br>$$
+J=\min\left\{
+2aRh,\,
+2aRh+\bigl[a(R^2-1)-bh^2\bigr]g
+\right\}&gt;0.
+$$<br>Positivity follows from the strict endpoint inequality in the ratio proof. A direct calculation gives<br>$$
+U(x)-L(x)\ge\frac{AbJ}{a}\,x.
+$$<br>Also,<br>$$
+L(s)-L(r)\le\frac{Ab}{a^2}(s^2-r^2)
+\qquad(0\le r\le s\le g).
+$$</p><p>Choose the rational number<br>$$
+\eta=\min\left\{\frac12,\frac{aJ}{6g}\right\},
+\qquad
+r_j=g(1+\eta)^{-j}.
+$$<br>For $x\in[r_{j+1},r_j)$, define<br>$$
+D(x)=L(r_j).
+$$<br>Set $D(0)=L(0)$ and $D(g)=1$.</p><p>The preceding bounds imply<br>$$
+L(r_j)-L(r_{j+1})
+\le U(r_{j+1})-L(r_{j+1}).
+$$<br>Since $U$ is increasing, this proves $L\le D\le U$ on every such interval.</p><p>The resulting rational atom probabilities are:</p><ul><li>$L(0)$ at $0$;</li><li>$L(r_{j-1})-L(r_j)$ at $r_j$ for $j\ge1$;</li><li>$1-L(g)$ at $g$.</li></ul><p>They sum to one. The conditional tail probability of the index $j$ is at most<br>$$
+\frac1a(1+\eta)^{-2(j-1)}.
+$$<br>Consequently, sequential sampling of these rational atoms terminates almost surely and has finite moments of every fixed order.</p><p>For completeness, an exact rational coin with probability $s/t$ is sampled by drawing a uniform integer from $0$ through $2^\ell-1$, where $\ell=\lceil\log_2 t\rceil$, rejecting integers at least $t$, and accepting the event that the remaining integer is less than $s$. Each batch is accepted with probability greater than $1/2$.</p><h3>7. General bounds and computational costs</h3><p>Let<br>$$
+s=\frac{\epsilon}{\alpha},
+\qquad
+H(\delta)=(1-2\delta)\log\frac{1-\delta}{\delta},
+$$<br>and<br>$$
+D(x)=
+\left(\frac12+x\right)\log(1+2x)
++
+\left(\frac12-x\right)\log(1-2x).
+$$</p><p>Throughout the nonzero-sample regime,<br>$$
+\max\left\{
+1+\log_2\frac{1-\delta}{\delta},
+\frac{H(\delta)}{D(2s)}
+\right\}
+\le N^*
+\le
+\left\lceil
+\frac{1}{2s^2}\log\frac2\delta
+\right\rceil.
+$$</p><h3>Upper bound</h3><p>With $N$ samples, let $\widehat p$ be their empirical proportion ranking $a$ first and output<br>$$
+\widehat\rho=\alpha\left|\widehat p-\frac12\right|.
+$$<br>The reverse triangle inequality gives<br>$$
+|\widehat\rho-t|
+\le\alpha|\widehat p-p|+ct.
+$$<br>Thus $|\widehat p-p|\le s$ implies success.</p><p>The indicators are independent Bernoulli variables, so Hoeffding’s inequality gives<br>$$
+\Pr[|\widehat p-p|&gt;s]\le2e^{-2Ns^2}.
+$$<br>This proves the upper bound.</p><h3>Relative-entropy lower bound</h3><p>Choose dyadic $t&gt;2s$ with $t&lt;1/2$. The event that output exceeds $\epsilon$ has probability at most $\delta$ at the tie and at least $1-\delta$ at parameter $1/2+t$.</p><p>The relative entropy between their $N$-sample distributions is $ND(t)$. Passing to that event by the log-sum inequality yields<br>$$
+ND(t)\ge H(\delta).
+$$<br>Indeed, binary relative entropy increases in its first probability and decreases in its second when the first is larger, so its minimum over these probability constraints occurs at $1-\delta$ and $\delta$.</p><p>Dyadic alternatives can approach $2s$ from above. Continuity therefore gives<br>$$
+N\ge\frac{H(\delta)}{D(2s)}.
+$$<br>This use of arbitrarily close alternatives is valid because society encoding lengths are unrestricted.</p><p>The elementary relative-entropy bound by chi-squared divergence gives $D(x)\le4x^2$. For $\delta\le1/4$,<br>$$
+H(\delta)\ge\frac14\log\frac1\delta.
+$$<br>Hence, uniformly in that confidence range,<br>$$
+N^*(c,\epsilon,\delta)
+=
+\Theta\left(
+\frac{(1-c)^2}{\epsilon^2}\log\frac1\delta
+\right)
+$$<br>whenever $\epsilon&lt;(1-c)/4$.</p><p>This order does not extend uniformly to $\delta&lt;1/2$. For example, take<br>$$
+\alpha=2^{-j},\qquad
+c=1-\alpha,\qquad
+\epsilon=\alpha^2,\qquad
+\delta=\frac12-\alpha^2,
+\qquad j\ge3.
+$$<br>Here $h=2\alpha$ and $\delta\ge d_2(h)$, so the exact minimum is two samples, while<br>$$
+\frac{\alpha^2}{\epsilon^2}\log\frac1\delta
+=\alpha^{-2}\log\frac1\delta\longrightarrow\infty.
+$$</p><h3>Running times and representation dependence</h3><p>Let $B$ be the total binary encoding length of $c,\epsilon,\delta$.</p><p>A sufficient budget can be selected using rational arithmetic: compute<br>$$
+M=\min\{j:2^j\ge2/\delta\},
+\qquad
+\overline N=\left\lceil\frac{M}{2s^2}\right\rceil.
+$$<br>Since $M\ge\log(2/\delta)$, this budget satisfies the upper bound’s requirement. Its computation takes time polynomial in $B$.</p><p>For a supplied budget $N$, the empirical estimator takes<br>$$
+O\!\left(
+N\log(N+1)+\operatorname{poly}(B+\log(N+1))
+\right)
+$$<br>bit operations and $O(B+\log(N+1))$ working bits.</p><p>The rational implementations in Section 6 use exactly two or three ballots and expected time polynomial in $B$ and $\eta^{-1}$.</p><p>For the exact offline feasibility procedure, each budget produces $O(N)$ rational polynomials of degree at most $2N$, with coefficient encoding lengths<br>$$
+O\bigl(N(B+\log(N+1))\bigr).
+$$<br>Exact root isolation gives a terminating decision procedure; no sharper bit complexity bound is asserted here.</p><p>All sampling and estimation costs exclude the oracle’s sample-generation cost. Here $m=2$ and $\tau\le2$. The estimators never read the hidden society representation, so their sample requirements and computation have no dependence on its encoding length $L$.</p><p>The continuous-model bounds above are proved directly; the related [finite-election sampling results](https://www.ijcai.org/Proceedings/15/Papers/162.pdf) provide context rather than an exact solution to this oracle problem.</p><h3>8. Remaining open region</h3><p>The exact integer minimum is not determined here when<br>$$
+0&lt;\epsilon&lt;\frac{(1-c)^2}{8}.
+$$<br>In that region, the proof establishes $N^*\ge4$ and the general quantitative bounds, but the overlap-based feasibility criterion does not apply: intermediate parameters require simultaneous control of both tails of the output distribution.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Section 8, Remaining open region: The exact minimum $N^*(c,\epsilon,\delta)$ remains undetermined when $0&lt;\epsilon&lt;(1-c)^2/8$. The established lower bound and quantitative bounds do not resolve USER_TASK in this region; this is acknowledged incompleteness, not an error in the proved partial results.</li></ul>
+<div class="pre"><p>The output is a <b>correct partial resolution</b>, with no mathematical error found in the claimed partial results. It does <b>not</b> determine the exact minimum sample budget throughout the parameter range requested in <code>USER_TASK</code>. The remaining issue is explicitly acknowledged by the prover.</p><p><b>1. Reduction to the margin estimation problem</b></p><p>The reduction is correct. With $p$ denoting the mass of $a\succ b$, mass-transfer distance between two profiles is $|p-q|$. Because the rule returns all tied winners, the nearest winning-set change from a strict majority occurs at $q=1/2$. At a tie, arbitrarily small perturbations change the winning set. Thus, including the unanimous and tied profiles,<br>$$
+\rho_r(\mu)=\left|p-\frac12\right|.
+$$</p><p>The acceptable-output interval<br>$$
+A(t)=[\alpha t-\epsilon,\ \beta t+\epsilon]
+$$<br>is exactly equivalent to the requested estimation guarantee.</p><p><b>2. Zero samples, one sample, and clipping</b></p><p>The zero-sample characterization is correct. When $\epsilon\ge\alpha/4$, the stated constant output succeeds for every $t$. Below that threshold, $A(0)$ and $A(1/2)$ are disjoint, so a single output distribution cannot give both intervals probability exceeding $1/2$.</p><p>The constant-sequence argument correctly yields<br>$$
+\delta\ge 2^{1-N}(1-\delta).
+$$<br>Padding an estimator to a fixed budget preserves its output law, and the conditional output distributions on the two constant sequences are the same under the unanimous and tied societies. This excludes one sample under the stated restrictions.</p><p>Clipping preserves success for the reasons supplied. Substituting $y=\epsilon+\beta X$ gives precisely<br>$$
+X\le t\le RX+h.
+$$<br>The identities defining $g$, $R$, and $h$, and the equivalence<br>$$
+g\le h
+\quad\Longleftrightarrow\quad
+\epsilon\ge\frac{\alpha^2}{8},
+$$<br>are correct.</p><p><b>3. Symmetrization and likelihood ratios</b></p><p>The symmetrization is valid because the target and acceptance intervals depend only on $|p-1/2|$. After permutation and candidate-swap averaging, the conditional output law depends only on $Z=|2K-N|$.</p><p>The displayed probabilities $w_i(t)$ are correct and strictly positive for $t&lt;1/2$. Their hyperbolic-cosine representation establishes the claimed likelihood-ratio order: $z\tanh(z\theta)$ is increasing in $z$ for $\theta\ge0$.</p><p>The testing optimization is justified. At parameters $u&gt;x$, minimizing the probability under $u$ subject to a specified lower probability under $x$ fills observations in increasing likelihood-ratio order. Positivity of the weights permits tightening the constraint and performing the stated exchanges. The parameter endpoint $u=1/2$ follows by continuity.</p><p><b>4. Exact feasibility criterion in the overlap regime</b></p><p>Both directions of the criterion are valid.</p><p>For necessity:</p><ul><li>The extension from dyadic profiles to real parameters is justified by upper semicontinuity. Conditional output measures are fixed, the acceptance intervals are closed with continuously varying endpoints, and there are finitely many sample sequences.</li><li>For $x&lt;g$, the low-parameter success requirement gives the stated lower bound involving $G_i(x)$.</li><li>At parameters $v&gt;Rx+h$, every output with $X\le x$ fails. Taking the limit establishes the corresponding upper bound.</li><li>The testing optimization then implies $T_N(x)\le\delta$.</li><li>Continuity extends the inequality to $x=g$, where direct use of a parameter larger than $Rx+h$ would be unavailable.</li></ul><p>For sufficiency, the lower-tail tests are pointwise ordered, and stochastic monotonicity makes $\phi_x(i)$ nondecreasing in $x$. Together with continuity, this gives valid conditional distribution functions after adding the remaining mass at $g$.</p><p>The success calculations correctly treat the three parameter regions. At $t=1/2$, the relevant probability is the atom at $g$, whose mass is determined by the left limit $\phi_g(i)$. Thus the endpoint calculation is also valid.</p><p>The polynomial reduction correctly clears a strictly positive denominator. Root isolation and sign checks, including boundary points, provide a finite exact decision procedure. Combined with the finite sufficient budget in Section 7, this determines $N^*$ throughout the claimed overlap regime. No polynomial running-time claim is made for this procedure.</p><p><b>5. Exact two- and three-sample results</b></p><p>The experiment probabilities<br>$$
+q(t)=\frac12+2t^2
+\qquad\text{and}\qquad
+q(t)=\frac14+3t^2
+$$<br>are correct.</p><p>The necessary testing bound correctly optimizes the high-observation output probability first. Solving its two branches yields the displayed $d(a,q)$, and substitution gives precisely $d_2(h)$ and $d_3(h)$, including agreement at $h^2=1/6$.</p><p>I rechecked the critical algebra in the ratio inequality. The derivative numerator is<br>$$
+2b\left(
+aRh+[a(R^2-1)-bh^2]x-bRhx^2
+\right),
+$$<br>so the claimed derivative-sign expression is correct. Its endpoint-minimum argument is valid. The identity<br>$$
+q(H)q(g)=a+bz(bz-2a)
+$$<br>uses $b=4(1-a)$ and $H+g=1/2$; it checks out. The final inequality holds for both experiment values of $a$.</p><p>The proposed output distributions are valid, and their success probabilities attain the necessary bound. The endpoint $t=1/2$ is covered by their atoms at $g$.</p><p>When $h&lt;g$, the selected dyadic $t_1$ has an acceptance interval disjoint from both endpoint acceptance intervals. The two-outcome observation law at $t_1$ is a convex combination of the endpoint laws. Applying the same conditional output kernel preserves that mixture, giving the stated contradiction.</p><p>Consequently, the two- and three-sample characterizations, their boundary inclusions, and the numerical example are correct. The strict comparison $d_3(h)&lt;d_2(h)$ also holds throughout $0&lt;h&lt;1/2$.</p><p><b>6. Finite-coin implementation</b></p><p>The discretization argument is sound.</p><p>The strict endpoint product inequality implies the stated positivity of $J$. Direct algebra gives<br>$$
+U(x)-L(x)
+=
+\frac{Abx\left(2aRh+[a(R^2-1)-bh^2]x\right)}
+{a\,q(x)q(Rx+h)},
+$$<br>which supports the claimed lower bound. The bound on increments of $L$ and the choice of $\eta$ imply the staircase inequalities.</p><p>The staircase is right-continuous, has the stated nonnegative rational atom masses, and those masses telescope to one. Its jumps do not invalidate the success guarantee: upper bounds using $D(x)$ also bound the failure probability involving $D(x-)$.</p><p>The geometric tail ensures almost-sure termination and finite moments. Rational rejection sampling implements each required coin exactly. The expected-time statement allows dependence on $\eta^{-1}$, so it does not incorrectly claim a bound polynomial solely in the parameter encoding length.</p><p><b>7. General bounds and computational claims</b></p><p>The empirical estimator’s deterministic error bound is correct:<br>$$
+\left|\alpha\left|\widehat p-\frac12\right|-t\right|
+\le\alpha|\widehat p-p|+ct.
+$$<br>Hoeffding’s inequality applies to independent indicators taking values in $[0,1]$ and gives the stated sufficient sample budget.</p><p>The entropy lower bound correctly uses parameters with disjoint acceptance requirements. The sample-distribution relative entropy is $ND(t)$; including estimator randomness and passing to the output event cannot increase it. The constrained binary relative entropy is minimized at event probabilities $1-\delta$ and $\delta$, giving $H(\delta)$.</p><p>Unrestricted encoding length permits dyadic alternatives approaching $2s$ from above. The bounds $D(x)\le4x^2$ and $H(\delta)\ge\frac14\log(1/\delta)$ on the stated confidence range justify the claimed uniform asymptotic order.</p><p>The example showing failure of that order uniformly as $\delta$ approaches $1/2$ satisfies the exact two-sample conditions.</p><p>The stated empirical-estimator costs, rational sufficient-budget computation, polynomial degrees and coefficient sizes are consistent with the constructions. The independence from hidden society encoding length $L$ is justified: the estimators access only sampled ballots.</p><p><b>8. Blocking issue and minimum additional work</b></p><p><b>Major issue — incomplete resolution of <code>USER_TASK</code>.</b> Section 8 leaves the exact integer minimum undetermined when<br>$$
+0&lt;\epsilon&lt;\frac{(1-c)^2}{8}.
+$$<br>The lower bound of four samples and the quantitative upper and lower bounds do not determine that minimum.</p><p>This is a limitation of scope, not a false step in the partial proof. No additional clarification is needed to verify the established results. To complete the assigned task, the prover must supply an exact characterization or finite exact decision procedure for the remaining region, with necessity and sufficiency proved for the permitted randomized estimators.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

@@ -1,0 +1,485 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-72b68877b10f166453e287a401644d28ac8b564b — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-72b68877b10f166453e287a401644d28ac8b564b <span style="font-weight:normal;color:#8a7350">(s5-72b68877b10f166453e287a401644d28ac8b564b)</span></h1>
+<p class="banner">claim: partial · adversarial review: partial · round 2 (built on round 1&#x27;s attempt)</p>
+<p class="answer"><b>Answer:</b> —</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>SBIP regret theorem, \Cref{thm:noise_2_bits} — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>For each round \(t\), let a finite set of feature cohorts \(x_j\) have observed masses \(\mu_{t,j}\) summing to one. Sellers’ and buyers’ valuations follow the paper’s unknown noisy linear model, and the learner posts one common price \(p_{t,j}\) to each cohort, observing the exact mass of each side that accepts. What online policy minimizes worst-case pseudo-regret \(\sum_t\sum_j\mu_{t,j}[\max_p\egft(x_j,p)-\egft(x_j,p_{t,j})]\) over adversarial mass sequences and the paper’s admissible valuation models?</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>Fix a horizon \(T\), feature dimension \(m\), and distinct feature cohorts \(x_1,\ldots,x_\tau\in\mathbb Q^m\). Each round&#x27;s society is given by its support: these \(\tau\) types with positive binary-rational masses \(\mu_{t,j}\), summing to one; \(\tau\) is the support size, not the number of possible types. Let \(L\) be the total bit length of the rational input.<br>The feature support and mass sequence are chosen by an oblivious adversary; the support is known initially, but each mass vector is revealed only at its round&#x27;s start. Known bounds satisfy \(A,B\geq0\), \(C,H&gt;0\), \(2CH\geq1\), and \(\|x_j\|_2\leq B\).<br>Unknown fixed parameters \(\theta^s,\theta^b\in\mathbb R^m\) satisfy \(\|\theta^s\|_2,\|\theta^b\|_2\leq A\). Within every cohort and round, valuations have the product distribution \(s=x_j^\top\theta^s+\xi^s\), \(b=x_j^\top\theta^b+\xi^b\), where the two noises are independent, centered, and have unknown fixed densities supported on \([-C,C]\) and bounded by \(H\).<br>Set \(P=AB+C\). After seeing the current masses, the learner simultaneously posts one price \(p_{t,j}\in[-P,P]\) to both sides of each cohort. Trade requires \(s\leq p_{t,j}\leq b\); cohort welfare is the expectation under the product valuation distribution, with no reassignment between cohorts.<br>After all prices are posted, the only feedback is the exact pair of acceptance masses \(\mu_{t,j}\Pr(s\leq p_{t,j})\) and \(\mu_{t,j}\Pr(b\geq p_{t,j})\) for each cohort. There are no additional queries within a round.<br>Define \(g(x,p)=\mathbb E[(b-s)\mathbf1\{s\leq p\leq b\}]\) and \(R_T=\sum_{t=1}^T\sum_{j=1}^{\tau}\mu_{t,j}[\max_{p\in[-P,P]}g(x_j,p)-g(x_j,p_{t,j})]\). Let \(\mathcal R_T^*=\inf_\pi\sup_{x,\mu,\theta^s,\theta^b,f^s,f^b}\mathbb E_\pi R_T\), where the supremum ranges over the admissible inputs and models above and policies use only revealed information.<br>Use exact real arithmetic and comparisons for prices and feedback; express running times in \(m,\tau,L,T,A,B,C,H\).</p><p>What is the minimax order of \(\mathcal R_T^*\) as a function of \(T,m,\tau\) and the stated bounds, and which online policy attains it?</p><p>For one sampled seller–buyer pair per round with two-bit feedback, SBIP guarantees \(\widetilde O(T^{2/3})\) pseudo-regret under the bounded noisy linear model. [Source](https://proceedings.iclr.cc/paper_files/paper/2025/file/746cf1bc2337700f7f0c35c7b02638cc-Paper-Conference.pdf)<br>The noncontextual sampled-pair problem with independent valuations and bounded densities has minimax regret \(\Theta(T^{2/3})\). [Source](https://arxiv.org/abs/2109.12974)<br>No result settling the exact acceptance-mass model above was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Interpreted the finite feature cohorts as a fixed support, known initially, with positive masses each round and no positive lower bound on those masses.</li><li>Specified an oblivious adversary and revealed only the current mass vector before pricing, following the discrete learning protocol.</li><li>Interpreted exact acceptance masses as distributional probabilities multiplied by cohort mass, rather than noisy empirical fractions.</li><li>Made seller and buyer noises independent, with separate stationary centered densities shared across cohorts and rounds, as required by the intended discrete model.</li><li>Restricted prices to the valuation interval and retained weak acceptance inequalities and the same price on both sides.</li><li>Defined cohort welfare using independent within-cohort pairing, excluding reassignment across cohorts.</li><li>Selected expected minimax pseudo-regret, averaging over policy randomization and taking the worst case over admissible feature supports, mass sequences, and valuation models.</li><li>Used m for feature dimension and H for the density bound, reserving L for rational input bit length; specified exact real arithmetic because acceptance masses need not be rational.</li><li>Required the density class to be nonempty through C,H&gt;0 and 2CH&gt;=1.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Partial solution: all fixed-support horizon regimes, and the saturated case</h3><p>The full dependence on growing support size remains unresolved. However, the following results settle the horizon exponent for every fixed feasible support size and characterize the saturated-density case.</p><p>Write<br>$$
+D=AB,\qquad P=D+C.
+$$</p><p>The results below assume that the specified support size is feasible. Statements involving nonzero shifts assume $m\geq1$. If $m=0$, only $\tau=1$ is feasible and all shifts vanish.</p><h3>1. Proven results</h3><p>For every integer $1\leq n\leq T$, an explicit policy satisfies<br>$$
+\mathcal R_T^*
+\leq
+\min\left\{
+2PT,\,
+2Pn+\frac{36HP^2T}{n^{3/2}}
++
+\min\left\{
+32HP^2\tau\log\left(1+\frac{T}{\tau n}\right),
+\frac{8HP^2T}{n}
+\right\}
+\right\}.
+$$</p><p>Consequently, for fixed bounds and fixed feasible $\tau$,<br>$$
+\mathcal R_T^*=O(T^{2/5}).
+$$</p><p>The lower bound can be extended to <b>every strict density slack</b>, not just the regime $CH\geq6$ in the notes. Specifically, if $CH&gt;1/2$, define<br>$$
+\varepsilon=\min\left\{\frac{CH-1/2}{2},\frac1{100}\right\}.
+$$<br>Then<br>$$
+\mathcal R_T^*
+\geq
+2^{-25}C
+\max\left\{
+\varepsilon^2,\,
+\min\left\{
+\varepsilon^2T,\,
+\varepsilon^{4/5}T^{2/5}\tau^{-3/5}
+\right\}
+\right\}.
+$$<br>Thus, for every fixed admissible choice of bounds with $CH&gt;1/2$ and every fixed feasible $\tau$,<br>$$
+\boxed{\mathcal R_T^*=\Theta(T^{2/5}).}
+$$</p><p>At saturation, $2CH=1$, the answer is different. If $D=0$, regret is exactly zero. If $D&gt;0$ and $m\geq1$, then, for every $T\geq1$,<br>$$
+\boxed{
+\frac1{512}\min\left\{\frac{D^2}{C},D\right\}
+\leq
+\mathcal R_T^*
+\leq
+20\min\left\{\frac{D^2}{C},D\right\}.
+}
+$$<br>In particular, saturated-case regret is bounded independently of $T$, $m$, and $\tau$. There is also an exact formula:<br>$$
+\boxed{
+\mathcal R_T^*=\frac{D^2}{4C}
+\quad\text{when}\quad
+0\leq D\leq\frac{C}{\sqrt2}.
+}
+$$</p><p>The [SBIP paper](https://proceedings.iclr.cc/paper_files/paper/2025/file/746cf1bc2337700f7f0c35c7b02638cc-Paper-Conference.pdf) studies sampled acceptance bits. The proofs here use the exact marginal probabilities supplied by the present feedback model.</p><h3>2. Welfare reconstruction and regularity</h3><p>Fix a cohort. Put<br>$$
+F(p)=\Pr(s\leq p),\qquad Q(p)=\Pr(b\geq p),
+$$<br>and<br>$$
+U(p)=\int_{-P}^{p}F(u)\,du,\qquad
+V(p)=\int_p^P Q(u)\,du.
+$$</p><p>Cauchy–Schwarz gives<br>$$
+|x^\top\theta^s|,\ |x^\top\theta^b|\leq AB,
+$$<br>so all valuations belong to $[-P,P]$. Their marginal densities are bounded by $H$; hence $F$ and $Q$ are $H$-Lipschitz.</p><p>Independence and the decomposition<br>$$
+b-s=(b-p)+(p-s)
+$$<br>on the trade event give<br>$$
+\boxed{g(p)=F(p)V(p)+Q(p)U(p).}
+$$<br>Indeed, the layer-cake identities give<br>$$
+\mathbb E(p-s)_+=U(p),\qquad
+\mathbb E(b-p)_+=V(p),
+$$<br>and independence factors the two contributions.</p><p>The functions involved are absolutely continuous. Almost everywhere,<br>$$
+g&#x27;(p)=f^s(p)V(p)-f^b(p)U(p),
+$$<br>because the two cross terms cancel. Both terms being subtracted are nonnegative, so<br>$$
+|g&#x27;(p)|
+\leq H\max\{U(p),V(p)\}
+\leq 2HP.
+$$<br>Therefore $g$ is $K$-Lipschitz for<br>$$
+K=2HP.
+$$<br>Also,<br>$$
+0\leq g(p)\leq2P.
+$$</p><p>Every reported mass can be divided by its known positive cohort mass. A posted price therefore reveals $F(p)$ and $Q(p)$ exactly.</p><h3>3. General policy and upper bound</h3><h3>3.1. Exploration and quadrature</h3><p>Fix $n\in\{1,\ldots,T\}$. Set<br>$$
+W=2P,\qquad h=\frac{W}{n},
+$$<br>and partition $[-P,P]$ into $n$ consecutive cells of length $h$.</p><p>Let $k$ be the smallest power of two with $k\geq n$. In exploration round $i$, independently for each cohort, select uniformly one of the $k$ microcell midpoints in cell $i$. Post that price, denoted $q_{i,j}$.</p><p>For cohort $j$, define piecewise constant estimates<br>$$
+\widetilde F_j(u)=F_j(q_{i,j}),\qquad
+\widetilde Q_j(u)=Q_j(q_{i,j})
+$$<br>on cell $i$, and integrate them:<br>$$
+\widehat U_j(p)=\int_{-P}^p\widetilde F_j(u)\,du,\qquad
+\widehat V_j(p)=\int_p^P\widetilde Q_j(u)\,du.
+$$</p><p>At every previously queried price $q$, exact feedback allows the computation<br>$$
+\widehat g_j(q)
+=
+F_j(q)\widehat V_j(q)+Q_j(q)\widehat U_j(q).
+$$</p><p>We next bound the uniform integral error. Consider one marginal $F$. On one microcell of length $\ell$, midpoint quadrature has error at most<br>$$
+H\int_{-\ell/2}^{\ell/2}|u|\,du=\frac{H\ell^2}{4}.
+$$<br>Thus, for the randomly selected midpoint in a cell,<br>$$
+\left|
+\mathbb E[hF(q_i)]-\int_{\text{cell }i}F(u)\,du
+\right|
+\leq\frac{Hh^2}{4k}.
+$$</p><p>The independent centered variables<br>$$
+Z_i=hF(q_i)-\mathbb E[hF(q_i)]
+$$<br>have ranges of length at most $Hh^2$. Consequently,<br>$$
+\operatorname{Var}(Z_i)\leq\frac{H^2h^4}{4}.
+$$<br>For completeness, a variable taking values in an interval of length $r$ has variance at most $r^2/4$, by bounding its squared distance from the interval midpoint.</p><p>The partial sums of the $Z_i$ are a square-integrable martingale. Doob’s square-integrable maximal inequality and Cauchy–Schwarz therefore give<br>$$
+\mathbb E\max_{0\leq r\leq n}
+\left|\sum_{i=1}^r Z_i\right|
+\leq
+2\sqrt{\sum_{i=1}^n\operatorname{Var}(Z_i)}
+\leq Hh^2\sqrt n.
+$$</p><p>The total deterministic bias is at most<br>$$
+\frac{nHh^2}{4k}\leq\frac{HW^2}{4n^2}.
+$$<br>A partially integrated cell contributes at most $Hh^2$. Hence<br>$$
+\mathbb E\|\widehat U-U\|_\infty
+\leq
+\frac{HW^2}{n^{3/2}}+\frac{5HW^2}{4n^2}
+\leq
+\frac{9HW^2}{4n^{3/2}}.
+$$<br>Reversing the cells proves the same bound for the buyer suffix integral.</p><p>Define<br>$$
+\delta_j=
+\|\widehat U_j-U_j\|_\infty+
+\|\widehat V_j-V_j\|_\infty.
+$$<br>Then<br>$$
+\mathbb E\delta_j\leq\frac{18HP^2}{n^{3/2}},
+$$<br>and, at every queried price,<br>$$
+|\widehat g_j(q)-g_j(q)|\leq\delta_j.
+$$<br>The last bound remains valid for adaptive subsequent queries because the integral error is uniform over prices.</p><h3>3.2. Adaptive price selection</h3><p>After exploration, let $\mathcal Q_j$ contain all previously queried prices for cohort $j$. In every subsequent round, post a maximizer of<br>$$
+E_j(p)=
+\min_{q\in\mathcal Q_j}
+\{\widehat g_j(q)+K|p-q|\},
+\qquad p\in[-P,P].
+$$<br>Then add that price and its estimated welfare to the data.</p><p>This uses exactly one posted price per cohort per round.</p><p>Fix one cohort and one exploitation round. Let $p_t$ maximize $E$, let $p^*$ maximize $g$, and put<br>$$
+d_t=\min_{q\in\mathcal Q}|p_t-q|.
+$$<br>Continuity on the compact price interval ensures that both maxima exist.</p><p>For every $p$ and every queried $q$, Lipschitz continuity gives<br>$$
+g(p)\leq g(q)+K|p-q|
+\leq\widehat g(q)+\delta+K|p-q|.
+$$<br>Taking the minimum over $q$ yields<br>$$
+g(p)\leq E(p)+\delta.
+$$<br>Using a queried price nearest to $p_t$ gives<br>$$
+E(p_t)\leq g(p_t)+\delta+2Kd_t.
+$$<br>Therefore,<br>$$
+g(p^*)-g(p_t)\leq2\delta+2Kd_t.
+$$</p><h3>3.3. Weighted insertion distances</h3><p>Exploration places one query in each cell, so $d_{t,j}\leq h$.</p><p>For any $u&gt;0$, exploitation prices of one cohort with insertion distance at least $u$ are pairwise separated by at least $u$. There are at most $1+W/u$ such prices. Consequently,<br>$$
+\sum_{t,j}\mu_{t,j}\mathbf1\{d_{t,j}\geq u\}
+\leq
+\min\{T,\tau(1+W/u)\}.
+$$<br>For $0&lt;u\leq h\leq W$, this is at most<br>$$
+\min\{T,2\tau W/u\}.
+$$</p><p>Write<br>$$
+a=2\tau W,\qquad z=\frac{Th}{a}.
+$$<br>Layer-cake integration gives<br>$$
+\sum_{t,j}\mu_{t,j}d_{t,j}
+\leq
+\int_0^h\min\{T,a/u\}\,du
+=
+\begin{cases}
+az,&amp;z\leq1,\\
+a(1+\log z),&amp;z&gt;1.
+\end{cases}
+$$<br>For $z\leq1$, $\log(1+z)\geq z/2$. For $z\geq1$,<br>$$
+2\log(1+z)-1-\log z\geq0:
+$$<br>its value at $1$ is positive and its derivative is<br>$$
+\frac{z-1}{z(1+z)}\geq0.
+$$<br>Thus<br>$$
+\sum_{t,j}\mu_{t,j}d_{t,j}
+\leq
+4\tau W\log\left(1+\frac{T}{2\tau n}\right)
+\leq
+4\tau W\log\left(1+\frac{T}{\tau n}\right).
+$$<br>The simpler bound<br>$$
+\sum_{t,j}\mu_{t,j}d_{t,j}\leq\frac{WT}{n}
+$$<br>also holds.</p><p>Because the mass sequence is oblivious, its entries are fixed when taking expectations over exploration. Therefore,<br>$$
+\mathbb E\sum_{t,j}2\mu_{t,j}\delta_j
+\leq\frac{36HP^2T}{n^{3/2}}.
+$$<br>Adding exploration regret at most $2Pn$ proves the stated upper bound.</p><p>Choosing $n=\lceil T^{2/5}\rceil$ gives $O(T^{2/5})$ for fixed bounds and fixed $\tau$. Choosing $n=\lceil\sqrt T\rceil$ gives<br>$$
+O\bigl((P+HP^2)\sqrt T\bigr)
+$$<br>uniformly in $\tau$.</p><h3>3.4. Implementation and running time</h3><p>Sort the queried prices. Between consecutive queried prices, the envelope equals the minimum of<br>$$
+Kp+\min_{q\leq p}\{\widehat g(q)-Kq\},
+\qquad
+-Kp+\min_{q\geq p}\{\widehat g(q)+Kq\}.
+$$<br>Prefix and suffix minima compute the coefficients. On each interval, test its endpoints and the intersection of the two lines, when that intersection belongs to the interval.</p><p>On the left exterior interval, the envelope is decreasing affine, so its maximum occurs at $-P$. On the right exterior interval, it is increasing affine, so its maximum occurs at $P$.</p><p>Sorted insertion and a linear scan per cohort per round give<br>$$
+O(L+m\tau+\tau T^2)
+$$<br>unit-cost arithmetic and comparison operations, using<br>$$
+O(m\tau+\tau T)
+$$<br>real registers. Exploration uses $O(\tau n\log(2n))$ random bits. The choice $\lceil T^{2/5}\rceil$ can be found by integer comparisons of fifth powers with $T^2$, so no root-extraction operation is required.</p><h3>4. Lower bound for every $CH&gt;1/2$</h3><p>We first construct normalized noises supported on $[-1,1]$. Their permitted density bound is $CH$.</p><h3>4.1. A centered baseline with two strict maxima</h3><p>Fix the $\varepsilon$ defined in Section 1 and set<br>$$
+d=\frac{\varepsilon}{4},\qquad
+v=\frac{\varepsilon^3}{5}.
+$$<br>Define the seller baseline density<br>$$
+\begin{aligned}
+f_0(s)={}&amp;
+\frac12\mathbf1_{[-1,1]}(s)
++\varepsilon\mathbf1_{(0,d)}(s)
+-\varepsilon\mathbf1_{(-d,0)}(s)\\
+&amp;+v\mathbf1_{(-3/4,-1/2)}(s)
+-v\mathbf1_{(1/2,3/4)}(s).
+\end{aligned}
+$$<br>Fix the buyer density as<br>$$
+f^b(b)=f_0(-b).
+$$</p><p>The added mass is zero. The central perturbation has first moment $\varepsilon d^2$, and the outer perturbation has first moment<br>$$
+-\frac{5v}{16}=-\varepsilon d^2.
+$$<br>Thus both densities integrate to one and are centered. Their values lie between $1/2-\varepsilon$ and $1/2+\varepsilon$, and<br>$$
+\frac12+\varepsilon\leq CH.
+$$</p><p>Let $F_0,U_0$ denote the seller CDF and its lower integral. Reflection gives<br>$$
+Q_0(p)=F_0(-p),\qquad V_0(p)=U_0(-p),
+$$<br>so baseline welfare $g_0$ is even.</p><p>Direct integration gives<br>$$
+U_0(0)=\frac14,\qquad
+F_0(0)=\frac12-\frac{\varepsilon^2}{4}+\frac{\varepsilon^3}{20}\leq\frac12.
+$$<br>For $0&lt;p&lt;d$, the derivative formula becomes<br>$$
+g_0&#x27;(p)=\frac{\varepsilon}{2}-F_0(0)p
+\geq\frac{3\varepsilon}{8}.
+$$</p><p>For $d&lt;p&lt;1$, the seller and buyer densities are both $1/2$, except on $(1/2,3/4)$, where they are respectively $1/2-v$ and $1/2+v$. Hence<br>$$
+g_0&#x27;(p)\leq-\frac12[U_0(p)-U_0(-p)].
+$$<br>Since $f_0\geq1/2-\varepsilon$,<br>$$
+F_0(u)\geq(1/2-\varepsilon)(u+1),\qquad -1\leq u\leq1.
+$$<br>Consequently,<br>$$
+U_0(p)-U_0(-p)
+=\int_{-p}^pF_0(u)\,du
+\geq2(1/2-\varepsilon)p,
+$$<br>and<br>$$
+g_0&#x27;(p)\leq-(1/2-\varepsilon)p
+\leq-\frac{\varepsilon}{10}.
+$$</p><p>Evenness supplies the corresponding derivative signs on the negative half. Thus the two baseline maxima occur precisely at $-d$ and $d$.</p><h3>4.2. Hidden centered perturbations</h3><p>Partition<br>$$
+I^-=[-7/16,-3/8]
+$$<br>into $N$ cells of length<br>$$
+h=\frac1{16N}.
+$$<br>The translated interval<br>$$
+I^+=I^-+\frac{13}{16}=[3/8,7/16]
+$$<br>has matching cells.</p><p>Let $\phi_i$ equal $1$ on the first half of negative cell $i$, $-1$ on its second half, and zero elsewhere. Put<br>$$
+\gamma=\frac{\varepsilon}{100}.
+$$<br>For independent uniform signs $\sigma_i\in\{-1,1\}$, define<br>$$
+f_\sigma^s(s)
+=
+f_0(s)+\gamma\sum_{i=1}^N\sigma_i
+\left[
+\phi_i(s)-\phi_i\left(s-\frac{13}{16}\right)
+\right].
+$$</p><p>Each $\phi_i$ has zero integral and<br>$$
+\int s\phi_i(s)\,ds=-\frac{h^2}{4}.
+$$<br>Translation preserves this first moment because the integral of $\phi_i$ is zero. Therefore every paired perturbation preserves both total mass and mean.</p><p>The perturbed cells lie where $f_0=1/2$. Since $\gamma\leq\varepsilon$, all resulting densities remain nonnegative and bounded by $1/2+\varepsilon$.</p><p>Write<br>$$
+Z=\sum_{i=1}^N\sigma_i,\qquad
+a=\frac{\gamma h^2}{4}=\frac{\varepsilon}{102400N^2},
+\qquad
+\eta=aZ.
+$$<br>Between the two perturbed intervals,<br>$$
+F_\sigma=F_0,\qquad U_\sigma-U_0=\eta.
+$$<br>In particular,<br>$$
+g_\sigma(-d)-g_\sigma(d)
+=
+[Q_0(-d)-Q_0(d)]\eta
+=d\eta,
+$$<br>because<br>$$
+Q_0(-d)-Q_0(d)=\int_{-d}^df_0(u)\,du=d.
+$$</p><p>We must verify that the perturbations do not move the maxima. The triangular CDF perturbations satisfy<br>$$
+\|\Delta F\|_\infty\leq\frac{\gamma}{32N},
+\qquad
+\|\Delta U\|_\infty\leq\frac{\gamma}{512N}.
+$$<br>The buyer marginal is unchanged. Therefore, almost everywhere on $(-1,1)$,<br>$$
+|g_\sigma&#x27;-g_0&#x27;|
+\leq2\gamma+\frac{(1/2+\varepsilon)\gamma}{512N}
+&lt;3\gamma.
+$$<br>Since $3\gamma=3\varepsilon/100&lt;\varepsilon/10$, all four derivative signs proved above are preserved.</p><p>Thus the maxima remain at $-d$ and $d$. Every price $p\leq0$ has welfare at most $g_\sigma(-d)$, and every $p&gt;0$ has welfare at most $g_\sigma(d)$. Choosing the wrong side costs at least<br>$$
+da|Z|
+=
+\frac{\varepsilon^2}{409600N^2}|Z|.
+$$</p><h3>4.3. Learning a sign requires a costly query</h3><p>Outside the perturbed cell interiors, seller acceptance is unchanged. Within a cell, it depends only on that cell’s sign. Buyer acceptance is independent of every sign.</p><p>Strengthen the feedback by explicitly revealing that sign after any cell-interior query. Give the learner the baseline and the complete construction as well. A lower bound with this additional information applies to the original model.</p><p>Every sign-revealing query has regret at least $1/64$. Indeed, for every $p\in I^-\cup I^+$,<br>$$
+g_0(d)-g_0(p)
+\geq
+\frac{1/2-\varepsilon}{2}
+\left[\left(\frac38\right)^2-d^2\right]
+\geq
+\frac{49}{200}
+\left(\frac9{64}-\frac1{160000}\right)
+&gt;\frac1{32}.
+$$<br>Furthermore, the welfare identity gives<br>$$
+\|g_\sigma-g_0\|_\infty
+\leq
+2\|\Delta F\|_\infty+\|\Delta U\|_\infty
+&lt;\gamma.
+$$<br>Since $\gamma\leq1/10000$,<br>$$
+\max_p g_\sigma(p)-g_\sigma(q)
+&gt;
+\frac1{32}-2\gamma
+&gt;\frac1{64}
+$$<br>at every sign-revealing query $q$.</p><h3>4.4. Information versus regret</h3><p>Set both linear parameters to zero. Then all cohorts have these same distributions, regardless of their distinct features.</p><p>Choose constant dyadic masses with<br>$$
+\frac1{2\tau}\leq\mu_j\leq\frac2\tau.
+$$<br>To construct them, take a power of two $q$ with $\tau\leq q&lt;2\tau$ and distribute its $q$ units among the cohorts, giving each one or two units.</p><p>Let<br>$$
+K=\lfloor N/16\rfloor.
+$$<br>Adaptive queries of previously unrevealed signs reveal independent uniform signs: the chosen index depends only on previously revealed signs and policy randomness.</p><p>Consider any decision using at most $K$ signs. Complete its information to exactly $K$ signs. This can only decrease the optimal expected wrong-side loss.</p><p>Let $S_r$ be a sum of $r$ independent uniform signs. The optimal expected wrong-side loss, before multiplying by $da$, is<br>$$
+\frac{\mathbb E|S_N|-\mathbb E|S_K|}{2}.
+$$<br>To see this, conditional on the information, the two side losses are the conditional expectations of $Z_+$ and $(-Z)_+$. Their minimum is<br>$$
+\frac{
+\mathbb E[|Z|\mid\text{information}]
+-
+|\mathbb E[Z\mid\text{information}]|
+}{2}.
+$$<br>With exactly $K$ adaptively revealed signs, the posterior mean is their sum, which has distribution $S_K$.</p><p>The moments are<br>$$
+\mathbb E S_N^2=N,\qquad
+\mathbb E S_N^4=3N^2-2N.
+$$<br>Hölder’s inequality gives<br>$$
+N
+\leq
+(\mathbb E|S_N|)^{2/3}
+(\mathbb E S_N^4)^{1/3},
+$$<br>and hence<br>$$
+\mathbb E|S_N|\geq\sqrt{N/3}.
+$$<br>Also $\mathbb E|S_K|\leq\sqrt K\leq\sqrt N/4$. Therefore every such decision has expected wrong-side loss at least<br>$$
+\frac{da\sqrt N}{8}.
+$$</p><p>Let $E$ be the event that the original policy reveals more than $K$ distinct signs by the horizon, and write $p=\Pr(E)$.</p><p>Couple it with a policy that uses at most $K$ true signs. After the cap, this policy ignores additional true signs and supplies independent dummy signs to its internal simulation. On $E^c$, the two policies make identical decisions. Since a decision’s wrong-side loss lies between zero and $da|Z|$,<br>$$
+\mathbb E R_T
+\geq
+daT\left(\frac{\sqrt N}{8}-\mathbb E[|Z|\mathbf1_E]\right)
+\geq
+daT\left(\frac{\sqrt N}{8}-\sqrt{Np}\right).
+$$</p><p>If $p\leq1/256$, this yields<br>$$
+\mathbb E R_T
+\geq
+\frac{\varepsilon^2T}{6553600N^{3/2}}.
+$$<br>If $p&gt;1/256$, obtaining more than $K$ signs requires at least $K+1&gt;N/16$ costly queries. Thus<br>$$
+\mathbb E R_T
+\geq
+\frac{(K+1)p}{128\tau}
+&gt;
+\frac{N}{524288\tau}.
+$$<br>In all cases,<br>$$
+\mathbb E R_T
+\geq
+\min\left\{
+\frac{\varepsilon^2T}{6553600N^{3/2}},
+\frac{N}{524288\tau}
+\right\}.
+$$</p><p>Choose<br>$$
+N=\left\lceil(\varepsilon^2\tau T)^{2/5}\right\rceil.
+$$<br>If $\varepsilon^2\tau T\geq1$, then<br>$$
+N\leq2(\varepsilon^2\tau T)^{2/5},
+$$<br>and the displayed bound is at least<br>$$
+2^{-25}\varepsilon^{4/5}T^{2/5}\tau^{-3/5}.
+$$<br>If $\varepsilon^2\tau T&lt;1$, then $N=1$ and it is at least $2^{-25}\varepsilon^2T$.</p><p>Separately, taking $N=1$, the first round has no sign information. Its expected wrong-side loss is at least<br>$$
+\frac{da}{2}=\frac{\varepsilon^2}{819200},
+$$<br>independently of $\tau$.</p><p>Finally, scale all valuations by $C$. The noises are centered, supported on $[-C,C]$, and have densities bounded by<br>$$
+\frac{1/2+\varepsilon}{C}\leq H.
+$$<br>Regret scales by $C$. Averaging over the finite sign family gives a worst-case lower bound for every randomized policy. This proves the quantitative bound in Section 1.</p><h3>5. Saturated densities: bounded regret with unknown shifts</h3><p>Assume $2CH=1$.</p><h3>5.1. The noises are known uniform distributions</h3><p>For any admissible noise density $f$,<br>$$
+1=\int_{-C}^Cf(u)\,du\leq2CH=1.
+$$<br>The nonnegative function $H-f$ therefore has integral zero, forcing<br>$$
+f(u)=\frac1{2C}
+$$<br>almost everywhere on $[-C,C]$.</p><p>For one cohort, write its unknown shifts as $a,b\in[-D,D]$. Exact feedback is<br>$$
+F(p)=\operatorname{clip}\left(\frac{p-a+C}{2C},0,1\right),
+$$<br>$$
+Q(p)=\operatorname{clip}\left(\frac{b+C-p}{2C},0,1\right).
+$$<br>An interior probability identifies the corresponding shift:<br>$$
+a=p+C-2CF(p),\qquad b=p-C+2CQ(p).
+$$</p><p>The midpoint<br>$$
+p^*=\frac{a+b}{2}
+$$<br>is optimal. Here is a complete verification.</p><p>If $b-a\leq-2C$, no positive-surplus trade is possible. If $b-a\geq2C$, the midpoint makes every pair trade and achieves $b-a$, the largest possible welfare.</p><p>For $-2C&lt;b-a&lt;2C$, on the overlap of the two valuation supports,<br>$$
+g&#x27;(p)=
+\frac{(a+b-2p)(b-a+2C)}{8C^2}.
+$$<br>Its sign is positive below the midpoint and negative above it. To the left of the overlap, welfare is nondecreasing: either seller acceptance is zero, or buyer acceptance is one. To its right, welfare is nonincreasing: either buyer acceptance is zero, or seller acceptance is one. The midpoint is consequently globally optimal.</p><h3>5.2. One-round learning when $D\leq C$</h3><p>Post $0$ to every cohort in round one. Because $a,b\in[-C,C]$, including the endpoints,<br>$$
+a=C-2CF(0),\qquad b=2CQ(0)-C.
+$$<br>Thus all cohort shifts are known after that round. Subsequently post their optimal midpoints.</p><p>Let<br>$$
+z=\frac{a+b}{2},\qquad w=\frac{b-a}{2}.
+$$<br>Both $0$ and $z$ lie in the overlap of the supports. Integrating the derivative formula gives<br>$$
+g(z)-g(0)=\frac{(C+w)z^2}{4C^2}.
+$$<br>The constraints imply $|z|+|w|\leq D$. Writing $u=|z|$,<br>$$
+(C+w)z^2\leq(C+D-u)u^2.
+$$<br>On $0\leq u\leq D\leq C$, this last expression is increasing, since its derivative is<br>$$
+u[2(C+D)-3u]\geq0.
+$$<br>Its maximum is $CD^2$. Therefore,<br>$$
+R_T\leq\frac{D^2}{4C}.
+$$</p><h3>5.3. Search policy when $D&gt;C$</h3><p>Maintain, separately for each cohort, a common interval $[\ell,u]$ containing both shifts. Initially it is $[-D,D]$. In a search round, post its midpoint $p$.</p><p>If both feedback probabilities are endpoints, there are four cases:</p><ul><li>$F(p)=Q(p)=1$: every pair trades; keep this optimal price.</li><li>$F(p)=Q(p)=0$: seller valuations exceed buyer valuations almost surely; optimal welfare is zero.</li><li>$F(p)=0$, $Q(p)=1$: both shifts lie in $[p+C,u]$.</li><li>$F(p)=1$, $Q(p)=0$: both shifts lie in $[\ell,p-C]$.</li></ul><p>The last two cases replace interval width $w$ by $w/2-C$. If the interval becomes a point, both shifts are known. Otherwise an interior probability identifies at least one shift.</p><p>Once the seller shift $a$ is known, use at most two further rounds:</p><ul><li>Post $a+C$. If $Q=1$, this is an all-trade optimal price. If $0&lt;Q&lt;1$, recover $b$. If $Q=0$, then $b\leq a$.</li><li>In the last case, post $a-C$. An interior $Q$ recovers $b$; $Q=0$ implies $b\leq a-2C$ and zero optimal welfare; $Q=1$ implies $b=a$.</li></ul><p>Once the buyer shift $b$ is known, use the symmetric procedure: first post $b-C$, and, if necessary, post $b+C$.</p><p>All these prices belong to $[-P,P]$. Every additional query occupies a separate round.</p><p>Put<br>$$
+q=\left\lceil\log_2(1+D/C)\right\rceil.
+$$<br>There are at most $q$ search rounds per cohort. Indeed, after $r$ unresolved endpoint updates, the interval width is<br>$$
+\frac{2(D+C)}{2^r}-2C.
+$$</p><p>In calendar search round $t$, every still-searching cohort has interval width at most $2D\,2^{-(t-1)}$. Its optimal welfare is at most that width plus $2C$. Because masses sum to one, total search regret is at most<br>$$
+\sum_{t=1}^q[2D\,2^{-(t-1)}+2C]
+\leq4D+2Cq.
+$$</p><p>Each subsequent resolution query costs at most $4C$. For example, posting $a+C$ has zero regret if $b\geq a+2C$; otherwise optimal welfare is at most $4C$. A second seller-based query has optimal welfare at most $2C$, because then $b\leq a$. The buyer-based argument is symmetric.</p><p>Resolution queries can occur only in calendar rounds $2,\ldots,q+2$. Their weighted total regret is therefore at most $4C(q+1)$. Altogether,<br>$$
+R_T\leq4D+6Cq+4C.
+$$<br>For $D&gt;C$, the elementary inequality $\log_2(1+r)\leq r$ for $r\geq1$ gives<br>$$
+q\leq D/C+1,
+$$<br>and hence<br>$$
+R_T\leq20D.
+$$</p><p>The policy uses<br>$$
+O(L+m\tau+\tau T)
+$$<br>arithmetic and comparison operations and $O(m\tau+\tau)$ real registers. It reaches optimal prices for every cohort within $q+2$ rounds.</p><h3>5.4. Matching lower bounds and the exact small-shift value</h3><p>Assume $D&gt;0$ and $m\geq1$. Choose distinct rational features<br>$$
+x_j=q_je_1,\qquad B/2\leq q_j\leq B,
+$$<br>and any admissible constant positive dyadic masses.</p><p>First take<br>$$
+r=\min\{A,C/(2B)\}
+$$<br>and choose, with equal probability, the two parameter models<br>$$
+\theta^s=\theta^b=re_1
+\quad\text{or}\quad
+\theta^s=\theta^b=-re_1.
+$$<br>Their common cohort shifts are respectively $d_j=rq_j$ and $-d_j$, with<br>$$
+\min\{D/2,C/4\}\leq d_j\leq C/2.
+$$</p><p>For seller and buyer both uniform around a common shift $a$,<br>$$
+g(p)=
+\begin{cases}
+(C^2-(p-a)^2)/(4C),&amp;|p-a|\leq C,\\
+0,&amp;|p-a|&gt;C.
+\end{cases}
+$$<br>The regret is therefore<br>$$
+\frac{\min\{(p-a)^2,C^2\}}{4C}.
+$$<br>For $d\leq C/\sqrt2$ and every real $p$,<br>$$
+\min\{(p-d)^2,C^2\}+\min\{(p+d)^2,C^2\}\geq2d^2.
+$$<br>If neither square is clipped, their sum is $2p^2+2d^2$. If either is clipped, that term alone is at least $2d^2$.</p><p>First-round prices are independent of the selected parameter model. Applying this inequality to each cohort yields<br>$$
+\mathcal R_T^*
+\geq
+\min\left\{\frac{D^2}{16C},\frac{C}{64}\right\}.
+$$</p><p>For $D\geq8C$, use the two parameter models<br>$$
+(\theta^s,\theta^b)
+=
+((A/2)e_1,Ae_1)
+\quad\text{or}\quad
+(-Ae_1,-(A/2)e_1).
+$$<br>Writing $d_j=Aq_j\geq D/2$, their shifts are respectively<br>$$
+(d_j/2,d_j)
+\quad\text{and}\quad
+(-d_j,-d_j/2).
+$$<br>Since $d_j\geq4C$, each model admits all-pair trade and has optimal welfare $d_j/2$. Every price at most zero prevents trade in the positive model; every positive price prevents trade in the negative model. Averaging the first-round regrets gives<br>$$
+\mathcal R_T^*\geq D/8.
+$$</p><p>Combining these lower bounds proves<br>$$
+\mathcal R_T^*
+\geq
+\frac1{512}\min\left\{\frac{D^2}{C},D\right\}.
+$$</p><p>Finally, suppose $D\leq C/\sqrt2$. Choose all the distinct rational $q_j$ arbitrarily close to $B$, and use the common-shift models with parameters $\pm Ae_1$. The same clipped-square inequality gives a first-round lower bound approaching<br>$$
+\frac{A^2B^2}{4C}=\frac{D^2}{4C}.
+$$<br>Taking the supremum over admissible supports gives this lower bound exactly. Section 5.2 gives the matching upper bound, proving the asserted exact formula.</p><h3>6. Remaining open questions</h3><p>The full task remains open for nonsaturated densities when $\tau$ grows. The general policy treats cohorts separately, while the lower-bound construction uses common distributions across all cohorts. The resulting bounds do not match in their dependence on $\tau$ or in their dependence on density slack and the other bounds.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+<ul><li><b>major</b> — Sections 1, 3, 4, and 6: joint minimax dependence: The upper and lower bounds do not match for growing $\tau$, and the sharp joint dependence on $T,m,\tau$ is not established. Resolving USER_TASK requires matching bounds in these regimes and an attaining online policy.</li><li><b>major</b> — Sections 1, 4, and 6: dependence on the stated bounds: Outside saturation, the upper bound depends on $P=AB+C$ and $H$, whereas the lower bound uses $C$ and the density-slack parameter $\varepsilon$. Sharp dependence on $A,B,C,H$, including the transition as $CH\downarrow1/2$, remains unproved.</li></ul>
+<div class="pre"><p><b>Assessment: partial, with substantial verified results.</b> The argument establishes the stated general upper bound, the nonsaturated lower bound, the fixed-support horizon exponent, and the saturated-density characterization. I found no false central step in these arguments. It does not determine the full minimax dependence requested in <code>USER_TASK</code>, as the prover explicitly acknowledges.</p><ul><li><b>Scope, admissibility, and feedback</b></li></ul><p>The proof correctly distinguishes support size $\tau$ from the number of possible feature types. Its upper-bound policies query every cohort once per round and use only feedback available after posting all prices.</p><p>Dividing an acceptance mass by the corresponding known positive mass recovers the marginal acceptance probability exactly. This uses both positivity and exact feedback; neither sampled acceptance bits nor additional within-round queries are assumed.</p><p>The initial feasibility qualifications are appropriate. When $B=0$, only one distinct feature vector is available. When $m=0$, only $\tau=1$ is feasible and all shifts vanish. The introductory restriction that statements involving nonzero shifts assume $m\geq1$ must be retained when quoting the saturated lower bounds and exact formula.</p><ul><li><b>Welfare reconstruction and regularity: correct</b></li></ul><p>Cauchy–Schwarz establishes the valuation range $[-P,P]$. Translating the noise densities preserves their bound $H$, so the stated Lipschitz bounds for $F$ and $Q$ follow.</p><p>The reconstruction identity<br>$$
+   g(p)=F(p)V(p)+Q(p)U(p)
+   $$<br>correctly uses the product-distribution assumption. The layer-cake integrals have the correct limits because all valuations lie in $[-P,P]$.</p><p>Absolute continuity justifies the derivative calculation almost everywhere. The cross terms cancel, leaving<br>$$
+   g&#x27;(p)=f^s(p)V(p)-f^b(p)U(p).
+   $$<br>Since both subtracted terms are nonnegative and $U,V\leq2P$, the bound $|g&#x27;|\leq2HP$ is valid. Absolute continuity then gives the claimed global Lipschitz constant.</p><p>The welfare range $0\leq g(p)\leq2P$ is also valid: on the trade event, $0\leq b-s\leq2P$.</p><ul><li><b>Randomized quadrature: correct, including constants</b></li></ul><p>The exploration procedure uses a finite, exactly sampleable distribution over microcell midpoints. The single-microcell midpoint error and the resulting cell bias<br>$$
+   \frac{Hh^2}{4k}
+   $$<br>are correct.</p><p>The centered cell errors are independent, bounded, and square-integrable. Their stated range and variance bounds hold. The invoked square-integrable Doob inequality has the applicable form<br>$$
+   \mathbb E\max_{0\leq r\leq n}|M_r|^2
+   \leq4\mathbb E|M_n|^2.
+   $$<br>The partial sums here are a martingale, and independence gives the stated sum of variances. Thus the displayed expected maximal-error estimate follows.</p><p>The accumulated bias and partially integrated cell error give the claimed uniform integral bound. Reversing the cell order legitimately handles the buyer suffix integral. Substituting $W=2P$ yields<br>$$
+   \mathbb E\delta_j\leq\frac{18HP^2}{n^{3/2}}.
+   $$</p><p>The estimated-welfare error is uniform over prices, so it remains valid at later adaptively selected query prices. No independence between those later prices and the exploration data is required.</p><ul><li><b>Adaptive envelope policy and weighted regret: correct</b></li></ul><p>The envelope is continuous on a compact interval, so its maximum exists. The two inequalities comparing it with true welfare are valid, including the factor $2$ in<br>$$
+   g(p^*)-g(p_t)\leq2\delta+2Kd_t.
+   $$</p><p>Exploration places a query in every cell, implying $d_{t,j}\leq h$. Within a cohort, successive insertions with distance at least $u$ are pairwise separated by at least $u$. The packing count and its weighted extension are therefore valid.</p><p>Layer-cake integration gives the stated piecewise expression. Both logarithmic comparisons used afterward hold on their specified ranges. Multiplying by $2K$ and substituting $W=2P$ gives exactly the two insertion-distance contributions<br>$$
+   32HP^2\tau\log\left(1+\frac{T}{\tau n}\right),
+   \qquad
+   \frac{8HP^2T}{n}.
+   $$</p><p>Obliviousness makes the masses deterministic relative to the exploration randomness. Consequently, weighting the cohortwise expected errors produces the stated $36HP^2T/n^{3/2}$ term.</p><p>The exploration cost, trivial bound, and final upper bound all follow. The choices $n=\lceil T^{2/5}\rceil$ and $n=\lceil\sqrt T\rceil$ give the stated consequences. In particular, absorbing the logarithmic contribution into $O(T^{2/5})$ is legitimate for fixed $\tau$, but does not provide a matching joint rate for growing $\tau$.</p><ul><li><b>General-policy implementation: consistent with the arithmetic model</b></li></ul><p>On an interval between consecutive queried prices, separating queries to the left and right gives precisely the two affine expressions stated in the output. Prefix and suffix minima provide their coefficients.</p><p>Testing endpoints and an in-interval intersection suffices to maximize their minimum. The exterior-interval monotonicity statements have the correct directions.</p><p>Maintaining sorted queries, evaluating the fixed exploration integrals, and scanning the envelope fit within the stated<br>$$
+   O(L+m\tau+\tau T^2)
+   $$<br>unit-cost arithmetic and comparison bound. The register and random-bit bounds are also consistent with the construction. This is an arithmetic-operation bound under <code>USER_TASK</code>’s exact-real model, rather than a bit-complexity claim.</p><ul><li><b>Nonsaturated lower-bound construction: admissible and correctly calculated</b></li></ul><p>The baseline perturbations preserve total mass. Their first moments cancel:<br>$$
+   \varepsilon d^2=\frac{\varepsilon^3}{16},
+   \qquad
+   -\frac{5v}{16}=-\frac{\varepsilon^3}{16}.
+   $$<br>Reflection preserves centering for the buyer. The chosen $\varepsilon$ ensures the density bound.</p><p>The displayed values of $U_0(0)$ and $F_0(0)$ are correct. The central derivative formula and lower bound hold. Outside the central interval, the comparison with<br>$$
+   -\frac12[U_0(p)-U_0(-p)]
+   $$<br>is valid, including on the outer perturbation interval. The ensuing derivative bound has sufficient margin to establish the two baseline maxima.</p><p>Each paired hidden perturbation preserves mass and mean. The coefficients<br>$$
+   a=\frac{\varepsilon}{102400N^2},
+   \qquad
+   da=\frac{\varepsilon^2}{409600N^2}
+   $$<br>are correct.</p><p>The CDF and integrated-CDF perturbation bounds are valid conservative bounds. The derivative perturbation is smaller than the established derivative margins, so the two candidate maxima remain at $-d$ and $d$. The wrong-side loss calculation follows.</p><p>Prices outside the normalized valuation range have zero welfare and cannot invalidate the sidewise welfare comparisons. Thus allowing the larger original price interval when $D&gt;0$ does not defeat the construction.</p><ul><li><b>Information-versus-regret lower bound: correct</b></li></ul><p>Outside the perturbed cell interiors, acceptance feedback contains no sign information. Inside a cell, the seller acceptance probability depends only on its corresponding sign. Providing that sign explicitly strengthens feedback and is a valid lower-bound reduction.</p><p>The baseline welfare gap at every revealing query exceeds the claimed threshold. The uniform welfare perturbation bound preserves a regret cost of at least $1/64$.</p><p>The dyadic mass construction is valid and satisfies the stated bounds. Because the parameters are zero, all cohorts share the same distributions without requiring equal features.</p><p>Previously unrevealed signs remain independent uniform signs under adaptive index selection. Completing a decision’s information to exactly $K$ revealed signs can only reduce its optimal expected loss. The conditional-loss formula and the distribution of the resulting posterior mean are correct.</p><p>The second and fourth moments of $S_N$, the application of Hölder’s inequality, and the bound for $S_K$ give the claimed residual loss.</p><p>The capped-policy coupling is valid: after the cap, true feedback concerning further signs is ignored and dummy signs drive the internal simulation. On $E^c$, the policies coincide. The loss difference is bounded by $da|Z|$ per unit round weight, and Cauchy–Schwarz gives the displayed event correction.</p><p>The alternative revealing-query cost correctly includes the minimum cohort mass. Both probability cases and the choice of $N$ yield the stated constants. The separate first-round bound is also valid because all first-round prices precede any sign feedback.</p><p>Scaling by $C$ preserves admissibility and multiplies regret by $C$. Averaging over the finite sign family supplies the claimed worst-case lower bound for randomized policies.</p><p>Consequently, the fixed-feasible-support conclusion<br>$$
+   \mathcal R_T^*=\Theta(T^{2/5})
+   $$<br>is established for fixed admissible bounds with $CH&gt;1/2$.</p><ul><li><b>Saturated densities and midpoint optimality: correct</b></li></ul><p>Equality in the density-cap integral forces both noise densities to be uniform almost everywhere. The clipped acceptance formulas and shift-identification formulas are correct, including endpoint identification when the prior shift range is $[-C,C]$ and the posted price is zero.</p><p>The three midpoint-optimality cases cover all relative shifts. In the overlap case, the displayed derivative is correct and has the claimed sign. Outside the overlap, the stated monotonicity follows from the relevant acceptance probability being zero or one.</p><p>For $D\leq C$, zero and the midpoint belong to the closed overlap. Integrating the derivative gives the stated regret formula. The constraint $|z|+|w|\leq D$, monotonicity calculation, and resulting bound $D^2/(4C)$ are valid. Degenerate overlap endpoints cause no exception.</p><ul><li><b>Saturated search policy and lower bounds: correct</b></li></ul><p>All four endpoint-feedback cases have the stated implications. The unresolved cases update the common interval width to $w/2-C$. A collapsed interval identifies both shifts.</p><p>The two additional resolution queries have the stated consequences, including equality cases. Their prices lie in the permitted interval, and each occupies a separate round.</p><p>The interval-width recurrence gives the search-round bound. The calendar-round accounting correctly allows different cohorts to enter resolution at different times: weighted search and resolution costs remain bounded using the unit total mass in each round. The simplification to $20D$ is valid for $D&gt;C$.</p><p>The common-shift welfare formula and clipped-square inequality are correct. First-round independence from the selected model supplies the small-shift lower bound. The separated positive and negative models satisfy the norm constraints and give the large-shift lower bound. Combining their ranges produces the stated $1/512$ constant.</p><p>For the exact small-shift result, distinct rational features can approach the boundary norm arbitrarily closely. Using a supremum, rather than claiming an attained boundary support, correctly handles this issue. Subject to the introductory dimension restriction, the exact formula follows.</p><ul><li><b>Unresolved requirements and minimal feedback</b></li></ul><p>The general upper and lower bounds do not match when $\tau$ grows. They also do not establish sharp dependence on $A,B,C,H$, including the approach to saturation. The influence of shared noise distributions and linear shifts on the joint minimax rate remains undetermined.</p><p>These are substantive missing results relative to <code>USER_TASK</code>, not defects in the established partial bounds. Another round must supply matching joint bounds and a policy attaining them, or continue to describe the answer explicitly as partial. No expositional clarification alone would settle these outstanding requirements.</p><p>The comparison with sampled feedback is accurate: the cited paper defines two-bit feedback through realized acceptance indicators. Its guarantees do not resolve the exact acceptance-mass model. [SBIP paper](https://proceedings.iclr.cc/paper_files/paper/2025/file/746cf1bc2337700f7f0c35c7b02638cc-Paper-Conference.pdf)</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

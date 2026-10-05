@@ -1,0 +1,131 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Fair Division of Chores with Budget Constraints — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #3f7d45; color: #3f7d45; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>Fair Division of Chores with Budget Constraints <span style="font-weight:normal;color:#8a7350">(d4-conf-sagt-2024-0013)</span></h1>
+<p class="banner">NEW RESULT — discrete: polynomial-time → continuous: polynomial-time · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> Polynomial-time solvable in \(m=r\), \(\tau\), and \(L\); an envy-free allocation always exists under the unrestricted residual-support condition.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 9 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given budget types \(b\in[\tau]\) with masses \(\mu_b&gt;0\), budgets \(B_b\), and divisible chore types \(k\in[r]\) with per-capita supplies \(q_k\), find per-agent bundles \(X_b=(X_{b,k})_{k\in[r]}\) and residual supplies \(R_k=q_k-\sum_b\mu_bX_{b,k}\ge0\) such that \(\sum_k s_kX_{b,k}\le B_b\), every \(Y\le X_b\) with \(\sum_k s_kY_k\le B_{b&#x27;}\) satisfies \(\sum_k d_kY_k\le\sum_k d_kX_{b&#x27;}\), and every finite \(Y\) supported on \(\{k:R_k&gt;0\}\) with size at most \(B_{b&#x27;}\) satisfies the same inequality; find such an allocation in time polynomial in \(\tau\), \(r\), and the encoding length.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>A society is given by its support: the list of \(\tau\geq1\) budget types with positive masses \(\mu_b\), each mass a binary rational; \(\tau\) is the support size, not the number of possible types. Normalize \(\sum_b\mu_b=1\).<br>There are \(m=r\geq1\) divisible chore types, with per-capita supplies \(q_k&gt;0\), objective unit sizes \(s_k&gt;0\), objective unit disutilities \(d_k\geq0\), and budgets \(B_b&gt;0\). All input numbers are binary rationals; \(L\) is their total encoding length.<br>For a nonnegative quantity vector \(Z\in\mathbb R_{\geq0}^r\), write \(s(Z)=\sum_k s_kZ_k\) and \(d(Z)=\sum_k d_kZ_k\); vector inequalities are componentwise.<br>An allocation gives every agent of type \(b\) the same bundle \(X_b\in\mathbb R_{\geq0}^r\), with \(s(X_b)\leq B_b\), and assigns residual supplies \(R_k=q_k-\sum_b\mu_bX_{b,k}\geq0\) to a housekeeper.<br>Envy-freeness requires, for every pair \(b,b&#x27;\), that every \(0\leq Y\leq X_b\) with \(s(Y)\leq B_{b&#x27;}\) satisfies \(d(Y)\leq d(X_{b&#x27;})\).<br>It also requires, for every \(b&#x27;\), that every finite vector \(Y\in\mathbb R_{\geq0}^r\) with \(Y_k=0\) whenever \(R_k=0\) and \(s(Y)\leq B_{b&#x27;}\) satisfies \(d(Y)\leq d(X_{b&#x27;})\); these test vectors have no coordinatewise bound by \(R\).</p><p>Is finding such an envy-free allocation solvable in time polynomial in \(m=r\), \(\tau\), and \(L\), or is this computational problem NP-hard?</p><p>For a finite list of agents and divisible chores, an envy-free allocation always exists and is polynomial-time computable, with housekeeper comparisons restricted to subbundles of its actual residual bundle ([Elkind–Igarashi–Teh](https://arxiv.org/html/2410.23979v1)).<br>No result settling the distribution-over-budget-types problem with the residual-support condition above was located.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Normalized the society&#x27;s masses to sum to one, interpreting supplies as quantities per unit total population.</li><li>Specified positive budgets and unit sizes, nonnegative disutilities, and binary-rational input data, following the finite-agent model.</li><li>Listed only chore types with positive supply; zero-supply types can be omitted. Identified the chore dimension m with r.</li><li>Interpreted per-agent bundles as nonnegative quantities rather than fractions bounded by one, with one common bundle for each budget type.</li><li>Interpreted a finite residual-support test bundle as a vector with finite nonnegative real coordinates, retaining the graded question&#x27;s absence of a coordinatewise residual-supply bound.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><h3>Polynomial-time solvability</h3><p><b>The problem is polynomial-time solvable in \(m=r\), \(\tau\), and \(L\).</b> An envy-free allocation always exists, including under the unrestricted residual-support condition.</p><p>The construction below uses the common size and disutility functions directly. It does not require extending the finite-agent theorem of [Elkind–Igarashi–Teh](https://arxiv.org/html/2410.23979v1).</p><h3>1. Size coordinates and density order</h3><p>Define the density and total available size of chore \(k\) by</p><p>\[
+\rho_k=\frac{d_k}{s_k},
+\qquad
+Q_k=s_kq_k.
+\]</p><p>Relabel chores so that \(\rho_1\geq\cdots\geq\rho_m\), breaking ties arbitrarily. For a bundle \(X_b\), let \(v_{b,k}=s_kX_{b,k}\) denote its size in coordinate \(k\). Thus its total size and disutility are respectively \(\sum_kv_{b,k}\) and \(\sum_k\rho_kv_{b,k}\).</p><p>Let \(B_{\max}=\max_bB_b\), and define</p><p>\[
+F(t)=\sum_b\mu_b\min\{B_b,t\},
+\qquad
+H=F(B_{\max})=\sum_b\mu_bB_b.
+\]</p><p>The function \(F\) is continuous and strictly increasing on \([0,B_{\max}]\). Indeed, if \(0\leq t&lt;t&#x27;\leq B_{\max}\), every summand is nondecreasing, and any type with budget \(B_{\max}\) contributes the strictly positive increment \(\mu_b(t&#x27;-t)\). Consequently, every \(u\in[0,H]\) has a unique inverse value \(F^{-1}(u)\) in this interval.</p><h3>2. Construction and feasibility</h3><p>Set \(C_0=0\), and, for \(k\in\{1,\ldots,m\}\), define</p><p>\[
+C_k=\sum_{j=1}^kQ_j,
+\qquad
+u_k=\min\{C_k,H\},
+\qquad
+t_k=F^{-1}(u_k).
+\]</p><p>Also set \(u_0=t_0=0\). Allocate</p><p>\[
+v_{b,k}
+=
+\min\{B_b,t_k\}-\min\{B_b,t_{k-1}\},
+\qquad
+X_{b,k}=\frac{v_{b,k}}{s_k}.
+\]</p><p>Since the sequence \(t_k\) is nondecreasing, all allocated quantities are nonnegative. Telescoping gives, for every prefix \(k\),</p><p>\[
+\sum_{j=1}^kv_{b,j}=\min\{B_b,t_k\}.
+\]</p><p>In particular, \(s(X_b)=\min\{B_b,t_m\}\leq B_b\).</p><p>The aggregate allocated size of chore \(k\) is</p><p>\[
+\sum_b\mu_bv_{b,k}
+=
+F(t_k)-F(t_{k-1})
+=
+u_k-u_{k-1}.
+\]</p><p>This increment lies between \(0\) and \(Q_k\): if \(C_{k-1}\geq H\), it is zero; otherwise it equals \(\min\{Q_k,H-C_{k-1}\}\). Dividing by \(s_k&gt;0\) proves \(\sum_b\mu_bX_{b,k}\leq q_k\). Hence the construction is feasible.</p><h3>3. Envy-freeness between budget types</h3><p>Fix any source type \(b\), comparison type \(c\), and test vector \(0\leq Y\leq X_b\) satisfying \(s(Y)\leq B_c\).</p><p>Write \(w_k=s_kY_k\), and define the cumulative sizes</p><p>\[
+W_k=\sum_{j=1}^kw_j,
+\qquad
+V_k=\sum_{j=1}^kv_{c,j}=\min\{B_c,t_k\}.
+\]</p><p>Because \(Y\leq X_b\),</p><p>\[
+W_k\leq\sum_{j=1}^kv_{b,j}
+=\min\{B_b,t_k\}\leq t_k.
+\]</p><p>Also, nonnegativity and the test budget imply \(W_k\leq s(Y)\leq B_c\). Combining these bounds gives \(W_k\leq V_k\) for every \(k\).</p><p>Summation by parts yields</p><p>\[
+d(Y)
+=
+\sum_{k=1}^m\rho_kw_k
+=
+\rho_mW_m+
+\sum_{k=1}^{m-1}(\rho_k-\rho_{k+1})W_k.
+\]</p><p>The identity follows by substituting \(w_k=W_k-W_{k-1}\), with \(W_0=0\), and collecting terms. Every coefficient on the right is nonnegative, since the densities are nonnegative and nonincreasing. Therefore,</p><p>\[
+d(Y)
+\leq
+\rho_mV_m+
+\sum_{k=1}^{m-1}(\rho_k-\rho_{k+1})V_k
+=
+\sum_{k=1}^m\rho_kv_{c,k}
+=
+d(X_c).
+\]</p><p>This proves every required comparison between budget types. For \(m=1\), the displayed sums with upper limit \(m-1\) are empty, and the argument remains valid.</p><h3>4. The unrestricted residual-support condition</h3><p>Let \(R_k=q_k-\sum_b\mu_bX_{b,k}\). From the aggregate allocation formula,</p><p>\[
+\sum_{k=1}^ms_kR_k
+=
+C_m-u_m
+=
+\max\{C_m-H,0\}.
+\]</p><p>If \(R=0\), the support condition forces every housekeeper test vector to be zero, so all comparisons hold.</p><p>Suppose instead that some residual coordinate is positive. Since all \(s_k&gt;0\), the preceding identity implies \(C_m&gt;H\). Let</p><p>\[
+h=\min\{k:C_k&gt;H\}.
+\]</p><p>For \(k&lt;h\), both \(C_{k-1}\) and \(C_k\) are at most \(H\), so chore \(k\) is fully allocated. Thus every residual-supported coordinate has index at least \(h\), and consequently density at most \(\rho_h\).</p><p>On the other hand, \(u_h=H\), so \(t_h=B_{\max}\). For every \(k&gt;h\), both \(t_k\) and \(t_{k-1}\) equal \(B_{\max}\), giving \(v_{b,k}=0\). Every bundle therefore uses only coordinates with density at least \(\rho_h\). Moreover, every budget is filled:</p><p>\[
+s(X_b)=\min\{B_b,t_m\}=B_b.
+\]</p><p>It follows that</p><p>\[
+d(X_b)=\sum_{k=1}^h\rho_kv_{b,k}
+\geq
+\rho_h\sum_{k=1}^hv_{b,k}
+=
+\rho_hB_b.
+\]</p><p>Now fix any comparison type \(b\) and any finite nonnegative vector \(Y\) supported on the residual coordinates with \(s(Y)\leq B_b\). Every coordinate used by \(Y\) has density at most \(\rho_h\), so</p><p>\[
+d(Y)\leq\rho_hs(Y)\leq\rho_hB_b\leq d(X_b).
+\]</p><p>This argument imposes <b>no coordinatewise bound by \(R\)</b>, and therefore proves exactly the stronger housekeeper condition in the question.</p><h3>5. Exact polynomial-time computation</h3><p>It remains to verify that the construction has polynomial bit complexity.</p><p>Let the distinct budgets be \(0=\beta_0&lt;\beta_1&lt;\cdots&lt;\beta_J=B_{\max}\), where \(J\leq\tau\). On each interval \([\beta_j,\beta_{j+1}]\), define</p><p>\[
+A_j=\sum_{b:B_b\leq\beta_j}\mu_bB_b,
+\qquad
+M_j=\sum_{b:B_b&gt;\beta_j}\mu_b.
+\]</p><p>Here \(M_j&gt;0\), and</p><p>\[
+F(t)=A_j+M_jt.
+\]</p><p>For \(u&lt;H\), locate an interval satisfying \(F(\beta_j)\leq u&lt;F(\beta_{j+1})\). Its inverse value is exactly</p><p>\[
+F^{-1}(u)=\frac{u-A_j}{M_j}.
+\]</p><p>For \(u=H\), return \(B_{\max}\).</p><p>Thus the algorithm sorts the chores and budget breakpoints, computes rational sums, locates the inverse intervals, and evaluates the allocation formula. It uses polynomially many rational operations and outputs \(m\tau\) rational coordinates.</p><p>All intermediate quantities have polynomial encoding length. Specifically, \(Q_k\), \(C_k\), \(H\), \(A_j\), \(M_j\), and the breakpoint values are sums of polynomially many products of input rationals. Such sums admit common denominators of polynomial bit length. Each inverse value then requires one subtraction and one division, and each output coordinate requires two minima, one subtraction, and one division. These operations preserve polynomial bit length. Exact arithmetic therefore takes time polynomial in \(m\), \(\tau\), and \(L\).</p><p>The proof covers arbitrary positive rational masses, repeated budgets, equal densities, and zero disutilities.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover’s claim is <b>proved</b>. The construction satisfies feasibility, all comparisons between budget types, and the unrestricted residual-support condition. Its exact rational implementation runs in polynomial time. I found no mathematical gaps requiring repair.</p><h3>1. Coordinates, density order, and inverse function</h3><p>Because every \(s_k&gt;0\), the transformation \(v_{b,k}=s_kX_{b,k}\) is well-defined and preserves nonnegativity and componentwise comparisons. The identities for size and disutility follow directly from the definitions.</p><p>The density ordering satisfies \(\rho_1\geq\cdots\geq\rho_m\geq0\), including when densities coincide or disutilities vanish.</p><p>The claimed strict increase of \(F\) on \([0,B_{\max}]\) is correct. A type attaining \(B_{\max}\) exists and has positive mass. For any \(0\leq t&lt;t&#x27;\leq B_{\max}\), its contribution increases by precisely \(\mu_b(t&#x27;-t)&gt;0\), while all other contributions are nondecreasing.</p><p>Together with continuity, \(F(0)=0\), and \(F(B_{\max})=H\), this justifies the unique inverse on the entire stated domain, including both endpoints.</p><h3>2. Construction and feasibility</h3><p>Each \(u_k\) belongs to \([0,H]\), so every inverse value used in the construction exists. Monotonicity of the cumulative supplies and of \(F^{-1}\) gives nondecreasing \(t_k\). Thus every allocation coordinate is nonnegative.</p><p>The prefix identity<br>\[
+\sum_{j=1}^k v_{b,j}=\min\{B_b,t_k\}
+\]<br>is a valid telescoping sum, since \(t_0=0\) and budgets are positive. At \(k=m\), it proves budget feasibility.</p><p>The aggregate allocation identity is also exact:<br>\[
+\sum_b\mu_bv_{b,k}=u_k-u_{k-1}.
+\]<br>The stated case distinction correctly bounds this increment between \(0\) and \(Q_k\), including when a cumulative supply equals \(H\). Division by positive \(s_k\) therefore establishes supply feasibility coordinate by coordinate.</p><h3>3. Comparisons between budget types</h3><p>The proof fixes arbitrary source and comparison types and an arbitrary admissible test vector. It therefore addresses the required universal quantifiers.</p><p>For every prefix, componentwise domination gives \(W_k\leq t_k\). Nonnegativity and the comparison budget give \(W_k\leq B_c\). Consequently,<br>\[
+W_k\leq\min\{B_c,t_k\}=V_k.
+\]</p><p>The summation-by-parts identity is correct. Its coefficients are nonnegative: \(\rho_m\geq0\) and \(\rho_k-\rho_{k+1}\geq0\). Replacing each \(W_k\) by its upper bound \(V_k\) is therefore justified and yields precisely \(d(Y)\leq d(X_c)\).</p><p>The explicitly stated empty-sum convention handles \(m=1\). Equal densities and zero densities cause no problem.</p><h3>4. Unrestricted residual-support comparisons</h3><p>The residual-size identity follows from supply feasibility and the aggregate allocation formula:<br>\[
+\sum_k s_kR_k=C_m-u_m=\max\{C_m-H,0\}.
+\]<br>Because residual coordinates are nonnegative and sizes are positive, a positive residual coordinate implies \(C_m&gt;H\). Thus the index \(h\) used in the proof exists whenever needed.</p><p>For every \(k&lt;h\), the construction allocates the entire supply of coordinate \(k\). Hence all residual-supported coordinates have indices at least \(h\), and their densities are at most \(\rho_h\).</p><p>Conversely, \(t_h=B_{\max}\), and all allocation coordinates with indices greater than \(h\) vanish. Every budget is filled because \(t_m=B_{\max}\). These facts justify the lower bound<br>\[
+d(X_b)\geq\rho_hB_b.
+\]</p><p>The boundary case \(C_{h-1}=H\) is covered: allocation at coordinate \(h\) may be zero, but the claimed allocation-support and density bounds still hold.</p><p>For every admissible housekeeper test vector, the residual-support restriction therefore gives<br>\[
+d(Y)\leq\rho_hs(Y)\leq\rho_hB_b\leq d(X_b).
+\]<br>No step assumes \(Y\leq R\). This proves exactly the stronger condition in the task.</p><p>When \(R=0\), the support restriction forces \(Y=0\), and the comparison holds because all disutilities are nonnegative.</p><h3>5. Exact polynomial-time computation</h3><p>The piecewise-affine description of \(F\) is correct on each consecutive breakpoint interval. Here \(\beta_0=0\) is the introduced endpoint, and the interval indices run from \(0\) to \(J-1\). On each such interval, a positive-mass type has budget greater than its left endpoint, so \(M_j&gt;0\).</p><p>The inverse formula is valid, including at lower interval endpoints. The separate treatment of \(u=H\) covers the terminal endpoint.</p><p>The bit-complexity argument is sufficient. The sums and products forming the supplies, cumulative supplies, budget totals, affine coefficients, and breakpoint values have polynomial encoding length. Each inverse and output coordinate then uses only a fixed number of further rational operations. Exact sorting and interval comparisons also operate on rationals of polynomial encoding length.</p><p>There are polynomially many operations and \(m\tau\) output coordinates. Thus the stated polynomial running time follows.</p><h3>6. Scope and repair feedback</h3><p>The proof covers the entire specified input domain and establishes existence as well as polynomial-time construction. It invokes no external theorem, so verification does not depend on extending the cited finite-agent result.</p><p>No repair or additional clarification is needed.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>

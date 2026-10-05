@@ -1,0 +1,246 @@
+<!doctype html><html><head><meta charset="utf-8"><title>s5-99545d6f3f155ec87cdb6be2ddb230181e516a39 — provenance</title>
+<link rel="stylesheet" href="../katex/katex.min.css">
+<script defer src="../katex/katex.min.js"></script>
+<script defer src="../katex/contrib/auto-render.min.js"></script>
+<style>
+ body { background:#f2e8d0; color:#2e2416; font-family: Georgia, 'Iowan Old Style', serif; max-width: 62em; margin: 2em auto; padding: 0 1em; line-height: 1.5; }
+ h1 { font-size: 1.4em; border-bottom: 2px solid #8a7350; padding-bottom: .3em; }
+ h2 { font-size: 1.0em; color: #5a4632; margin: 2em 0 .6em; letter-spacing: 1.5px; text-transform: uppercase; }
+ .pre { background: #f9f3e3; border: 1px solid #d6c69e; padding: 1em 1.2em; font-size: .92em; line-height: 1.55; margin-bottom: 1.4em; overflow-x: auto; overflow-wrap: anywhere; }
+ .pre p { margin: .55em 0; } .pre h3 { font-size: .98em; margin: 1.1em 0 .3em; color: #3b2f23; }
+ .pre ul { margin: .3em 0 .8em; } .pre blockquote { margin: .6em 0; padding: .3em 1em; border-left: 3px solid #c9b992; }
+ .pre code { background: #efe6cd; padding: 0 .25em; font-size: .92em; }
+ .katex-display { overflow-x: auto; overflow-y: hidden; }
+ .banner { padding: .5em .9em; border: 2px solid #a08030; color: #7a6017; display: inline-block; font-weight: bold; margin: .4em 0 1em; }
+ .answer { font-size: 1.1em; margin: .8em 0 1.4em; }
+ .thmq { border-left: 3px solid #c8a028; margin: .6em 0 .2em; padding: .4em 1em; background: #f9f3e3; font-style: italic; }
+ .extractq { border-color:#8a7350; border-style:dashed; background:#eee6d4; font-style:normal; }
+ .extract-label { display:block; color:#6b573b; font: bold .72em/1.3 system-ui,sans-serif; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.45em; }
+ .src { color: #8a7350; font-size: .82em; margin: .2em 0 0 1em; }
+ ul { line-height: 1.5; }
+ a { color: #5a4632; }
+</style></head><body>
+<p><a href="../index.html">← back to the atlas</a></p>
+<h1>s5-99545d6f3f155ec87cdb6be2ddb230181e516a39 <span style="font-weight:normal;color:#8a7350">(s5-99545d6f3f155ec87cdb6be2ddb230181e516a39)</span></h1>
+<p class="banner">claim: resolved · adversarial review: proved</p>
+<p class="answer"><b>Answer:</b> For \(\alpha&gt;1/9\), the expected time is \(\Theta(N\log N)\) for every fixed \(p&lt;1\). For \(\alpha=1/9\), it is \(\Theta(N^{4/3})\) when \(p\le1/4\), and \(\Theta(N\log N)\) when \(p&gt;1/4\). For \(0&lt;\alpha&lt;1/9\), using the definitions above, it is \(\Theta(Ne^{NA_\alpha})\) when \(p\le x_+\), \(\Theta(\sqrt N e^{NF_\alpha(p)})\) when \(x_+&lt;p&lt;p_c\), and \(\Theta(N\log N)\) when \(p\ge p_c\), including equality.</p>
+<h2>The anchor (named result in the paper)</h2>
+<p>Theorem 1 — class: algorithmic</p>
+
+<h2>The continuous mirror question, as graded</h2><div class="pre"><p>Given rational \(\alpha\in(0,1)\) and initial superior-opinion mass \(p\), let \(\mu^{(N)}=(1-k_N/N,k_N/N)\), where \(k_N=\lceil pN\rceil\). At state \(k\), an update transfers mass \(1/N\) upward with probability \(u_N(k)=(1-k/N)\left[\alpha+(1-\alpha)(k/(N-1))^2\right]\), downward with probability \(d_N(k)=(1-\alpha)(k/N)((N-k)/(N-1))^2\), and otherwise leaves the mass unchanged. Classify the expected time to reach superior-opinion mass \(1\) as \(N\to\infty\); for \(\alpha&lt;1/9\), determine the critical initial mass separating \(\Theta(N\log N)\) time from exponential expected time.</p></div>
+<h2>Packaged proof task (what the prover saw — nothing else)</h2><div class="pre"><p>There are \(m=2\) opinion types, inferior \(0\) and superior \(1\), with total mass \(1\). A society is given by its support: the list of its \(\tau\) types with positive mass, each mass a binary rational; \(\tau\) is the support size, not the number of possible types. Measure computational running times in \(m,\tau,L,N\), where \(L\) is the input bit length.<br>Fix binary rational parameters \(\alpha\in(0,1)\) and \(p\in[0,1)\), independently of \(N\). For each integer \(N\ge2\), let \(K_N(0)=\lceil pN\rceil\) and \(\mu_N(t)=(1-K_N(t)/N,K_N(t)/N)\).<br>At each discrete update, the Markov chain \(K_N\) moves from \(k\) to \(k+1\) with probability \(u_N(k)=(1-k/N)[\alpha+(1-\alpha)(k/(N-1))^2]\), to \(k-1\) with probability \(d_N(k)=(1-\alpha)(k/N)((N-k)/(N-1))^2\), and otherwise stays put; \(N\) is absorbing.<br>Let \(T_N=\inf\{t\ge0:K_N(t)=N\}\); time counts individual updates, and asymptotic constants may depend on \(\alpha,p\).</p><p>What is the asymptotic order of \(\mathbb E[T_N]\) as \(N\to\infty\) for every fixed \(\alpha,p\), including \(\alpha=1/9\)? For \(\alpha&lt;1/9\), which initial masses yield \(\Theta(N\log N)\) time and which yield exponential expected time, and what happens at their boundary?</p><p>Known results: the finite-agent model has exactly these transition probabilities, so the mass notation describes the same stochastic process. The [published analysis](https://wrap.warwick.ac.uk/id/eprint/178842/13/phase-transitions-in-biased-opinion-dynamics-with-2-choices-rule.pdf) establishes \(\Theta(N\log N)\) for \(\alpha&gt;1/9\) and claims the same bound at or above an explicitly characterized initial-mass threshold for \(\alpha&lt;1/9\), with an exponential lower bound below it.<br>That analysis also claims these results for the exact transitions above, but its theorem excludes \(\alpha=1/9\); no separate continuous-side result was verified.</p></div>
+<h2>Modeling choices made when packaging the task</h2><ul><li>Restricted the undefined initial-mass domain to rational p in [0,1), following the discrete model and excluding initially complete consensus.</li><li>Made alpha and p fixed independently of N, specified N at least 2, and counted time in individual discrete updates.</li><li>Normalized total society mass to 1, omitted zero-mass types from the support, and defined L as the input bit length.</li><li>Retained the critical bias alpha=1/9 because the supplied domain includes it, and explicitly included behavior at the initial-mass boundary.</li></ul>
+<h2>Prover output (gpt-6.1-sol / high, Bolzano prover prompt)</h2><div class="pre"><p><b>1. Complete classification</b></p><p>All logarithms below are natural. The bounds count individual updates, and their constants may depend on the fixed parameters \(\alpha,p\).</p><p>For \(0&lt;\alpha&lt;1/9\), define<br>\[
+x_-=\frac{1-\sqrt{1-\frac{8\alpha}{1-\alpha}}}{4},
+\qquad
+x_+=\frac{1+\sqrt{1-\frac{8\alpha}{1-\alpha}}}{4},
+\]<br>and<br>\[
+f_\alpha(x)=\frac{(1-\alpha)x(1-x)}{\alpha+(1-\alpha)x^2},
+\qquad
+F_\alpha(x)=\int_{x_-}^{x}\log f_\alpha(y)\,dy,
+\qquad
+A_\alpha=F_\alpha(x_+)&gt;0.
+\]<br>There is a unique \(p_c=p_c(\alpha)\in(x_+,1)\) satisfying \(F_\alpha(p_c)=0\).</p><p>The complete answer is:</p><p>| Parameter regime | Initial mass | \(\mathbb E[T_N]\) |<br>|---|---|---|<br>| \(\alpha&gt;1/9\) | Every fixed \(p&lt;1\) | \(\Theta(N\log N)\) |<br>| \(\alpha=1/9\) | \(0\le p\le1/4\) | \(\Theta(N^{4/3})\) |<br>| \(\alpha=1/9\) | \(1/4&lt;p&lt;1\) | \(\Theta(N\log N)\) |<br>| \(0&lt;\alpha&lt;1/9\) | \(0\le p\le x_+\) | \(\Theta\!\left(N e^{NA_\alpha}\right)\) |<br>| \(0&lt;\alpha&lt;1/9\) | \(x_+&lt;p&lt;p_c\) | \(\Theta\!\left(\sqrt N\,e^{NF_\alpha(p)}\right)\) |<br>| \(0&lt;\alpha&lt;1/9\) | \(p_c\le p&lt;1\) | \(\Theta(N\log N)\) |</p><p>Thus the subcritical boundary \(p=p_c\) belongs to the fast regime, whereas the critical boundary \((\alpha,p)=(1/9,1/4)\) has order \(N^{4/3}\).</p><p>The subcritical threshold agrees with [Theorem 3.1 of the published analysis](https://wrap.warwick.ac.uk/id/eprint/178842/13/phase-transitions-in-biased-opinion-dynamics-with-2-choices-rule.pdf). The proof below independently treats the exact transitions, establishes matching exponential bounds, and resolves \(\alpha=1/9\).</p><p><b>2. Exact hitting-time formula and comparison</b></p><p>Write \(s_N=\lceil pN\rceil\), and let \(H_N(k)\) be the expected absorption time starting from \(k\).</p><p>These expectations are finite: from every nonabsorbing state there is a positive probability of reaching \(N\) by successive upward moves within \(N\) updates. Since the state space is finite, the minimum of these probabilities is positive; successive blocks of \(N\) updates consequently give a geometric tail bound.</p><p>Set<br>\[
+e_N(k)=H_N(k)-H_N(k+1),
+\qquad
+\rho_N(k)=\frac{d_N(k)}{u_N(k)}.
+\]<br>The first-step equations give<br>\[
+u_N(0)e_N(0)=1,
+\qquad
+u_N(k)e_N(k)-d_N(k)e_N(k-1)=1
+\quad(1\le k&lt;N).
+\]<br>Solving this recurrence and then telescoping yields<br>\[
+e_N(k)=\sum_{j=0}^{k}\frac{1}{u_N(j)}
+                \prod_{\ell=j+1}^{k}\rho_N(\ell),
+\qquad
+\mathbb E[T_N]=\sum_{k=s_N}^{N-1}e_N(k).
+\tag{1}
+\]<br>Empty products equal \(1\).</p><p>In particular, \(u_N(k)\le1-k/N\), so the diagonal terms in (1) imply<br>\[
+\mathbb E[T_N]\ge
+N\sum_{h=1}^{N-s_N}\frac1h
+=\Omega(N\log N),
+\tag{2}
+\]<br>because \(p&lt;1\) is fixed.</p><p>To handle the exact denominators \(N-1\), define<br>\[
+\bar u_N(k)=
+\left(1-\frac{k}{N}\right)
+\left[\alpha+(1-\alpha)\left(\frac{k}{N}\right)^2\right]
+\]<br>and<br>\[
+\bar e_N(k)=
+\sum_{j=0}^{k}\frac{1}{\bar u_N(j)}
+       \prod_{\ell=j+1}^{k}f_\alpha(\ell/N).
+\]<br>For \(x=k/N\), direct cancellation gives<br>\[
+\rho_N(k)=
+\frac{(1-\alpha)x(1-x)}
+     {\alpha(1-1/N)^2+(1-\alpha)x^2}.
+\]<br>Consequently, for \(1\le k&lt;N\),<br>\[
+1\le\frac{\rho_N(k)}{f_\alpha(k/N)}
+\le(1-1/N)^{-2},
+\qquad
+0\le\log\frac{\rho_N(k)}{f_\alpha(k/N)}
+\le\frac4N.
+\]<br>Also \(\bar u_N(k)\le u_N(k)\le4\bar u_N(k)\). Every product in (1) contains at most \(N\) factors; therefore, term by term,<br>\[
+\frac14\bar e_N(k)\le e_N(k)\le e^4\bar e_N(k).
+\tag{3}
+\]<br>This comparison is uniform in \(N,k\). Henceforth, \(X\asymp Y\) means two-sided multiplicative bounds by positive constants independent of \(N\), uniformly over any indicated indices.</p><p><b>3. A reduction to a compact double sum</b></p><p>We record a reduction used in both remaining parameter regimes.</p><p>Choose fixed numbers \(0&lt;\varepsilon&lt;r&lt;1\), with \(p&lt;r\), such that \(f_\alpha\) is uniformly below \(1\) near \(0\) and throughout \([r,1]\). Put<br>\[
+h_N=\lceil\varepsilon N\rceil,
+\qquad R_N=\lfloor rN\rfloor,
+\qquad v_N=\max(s_N,h_N).
+\]<br>Let \(F\) be any antiderivative of \(g=\log f_\alpha\) on a neighborhood of \([\varepsilon,r]\).</p><p>For sufficiently small \(\varepsilon\), the recurrence<br>\[
+\bar e_N(k)=\frac1{\bar u_N(k)}
+                 +f_\alpha(k/N)\bar e_N(k-1)
+\]<br>shows that \(\bar e_N(k)\asymp1\) for \(0\le k\le h_N\): the coefficients \(f_\alpha(k/N)\) are bounded by a constant below \(1\), and the forcing terms are bounded above and below.</p><p>On the compact interval, \(g\) has bounded derivative. Comparing each right-endpoint rectangle with its integral gives, uniformly for \(h_N\le j\le k\le R_N\),<br>\[
+\prod_{\ell=j+1}^{k}f_\alpha(\ell/N)
+\asymp
+\exp\!\left(N[F(k/N)-F(j/N)]\right).
+\tag{4}
+\]<br>Indeed, the logarithmic error is bounded by<br>\(\sup|g&#x27;|(k-j)/N\), hence by a constant.</p><p>Unrolling the recurrence from \(h_N\), and using the bounded forcing terms on the compact interval, now gives<br>\[
+\bar e_N(k)\asymp B_N(k),
+\qquad
+B_N(k)=\sum_{j=h_N}^{k}
+          e^{N[F(k/N)-F(j/N)]}.
+\tag{5}
+\]<br>Define<br>\[
+D_N=\sum_{k=v_N}^{R_N}B_N(k).
+\]</p><p>The contribution before \(h_N\) is \(O(N)\). For the upper tail, let \(q_r&lt;1\) bound \(f_\alpha\) on \([r,1]\). Since<br>\[
+\frac1{\bar u_N(j)}
+\le\frac{N}{\alpha(N-j)}
+\le\frac{N}{\alpha(N-k)}
+\quad(j\le k),
+\]<br>the recurrence implies<br>\[
+\bar e_N(k)\le
+q_r^{\,k-R_N}\bar e_N(R_N)
++\frac{N}{\alpha(1-q_r)(N-k)}
+\quad(k&gt;R_N).
+\]<br>Its sum is \(O(\bar e_N(R_N)+N\log N)\). Moreover,<br>\(\bar e_N(R_N)\le C B_N(R_N)\le C D_N\).</p><p>Combining this with (2), (3), and (5) proves the useful equivalence<br>\[
+\mathbb E[T_N]\asymp N\log N+D_N.
+\tag{6}
+\]</p><p><b>4. Supercritical bias</b></p><p>A direct calculation gives<br>\[
+1-f_\alpha(x)=
+\frac{2(1-\alpha)(x-1/4)^2+(9\alpha-1)/8}
+     {\alpha+(1-\alpha)x^2}.
+\tag{7}
+\]<br>For \(\alpha&gt;1/9\), the numerator is strictly positive. Continuity on \([0,1]\) therefore gives \(\max f_\alpha=q&lt;1\).</p><p>Thus<br>\[
+\bar e_N(k)\le
+\frac{N}{\alpha(N-k)}
+\sum_{j=0}^{k}q^{k-j}
+\le\frac{N}{\alpha(1-q)(N-k)}.
+\]<br>Summing and applying (3) gives \(O(N\log N)\). The matching lower bound is (2), proving the first row of the classification.</p><p><b>5. Subcritical bias: threshold and exponential orders</b></p><p>Assume \(0&lt;\alpha&lt;1/9\), and abbreviate \(F=F_\alpha\), \(A=A_\alpha\).</p><p>Equation (7) shows that<br>\[
+f_\alpha(x)&lt;1 \text{ on }(0,x_-)\cup(x_+,1),
+\qquad
+f_\alpha(x)&gt;1 \text{ on }(x_-,x_+).
+\]<br>Hence \(F\) decreases to its local minimum \(F(x_-)=0\), increases to its local maximum \(F(x_+)=A&gt;0\), and then strictly decreases.</p><p>To prove that it crosses zero before \(1\), observe that<br>\[
+f_\alpha(x)f_\alpha(1-x)=
+\frac{(1-\alpha)^2x^2(1-x)^2}
+ {[\alpha+(1-\alpha)x^2][\alpha+(1-\alpha)(1-x)^2]}
+&lt;1.
+\]<br>By symmetry,<br>\[
+\int_{x_-}^{1-x_-}\log f_\alpha(x)\,dx&lt;0.
+\]<br>Also \(1-x_-&gt;x_+\), so the integral from \(1-x_-\) to \(1\) is negative. The endpoint singularity is logarithmic and integrable. Therefore \(F(1)&lt;0\). Continuity and strict decrease on \((x_+,1)\) establish the claimed unique \(p_c\).</p><p>For reduction (6), choose \(2\varepsilon&lt;x_-\) and \(r&gt;\max(p,p_c)\).</p><p>The stationary points are nondegenerate:<br>\[
+F&#x27;&#x27;(x_-)=(\log f_\alpha)&#x27;(x_-)&gt;0,
+\qquad
+F&#x27;&#x27;(x_+)=(\log f_\alpha)&#x27;(x_+)&lt;0.
+\]<br>These signs follow by differentiating<br>\[
+f_\alpha(x)-1=
+-\frac{2(1-\alpha)(x-x_-)(x-x_+)}
+       {\alpha+(1-\alpha)x^2}
+\]<br>at its two roots.</p><p>Uniqueness and nondegeneracy of the extrema imply, on the indicated compact intervals,<br>\[
+F(x)\ge c(x-x_-)^2
+\quad(\varepsilon\le x\le x_+),
+\qquad
+A-F(x)\ge c(x-x_+)^2
+\quad(x_-\le x\le r).
+\tag{8}
+\]<br>For example, away from the stationary point the relevant quotient is positive and continuous; at the stationary point its limit is a positive second-derivative constant.</p><p>The resulting lattice Gaussian estimates are<br>\[
+\sum_{j=h_N}^{\lfloor Nx_+\rfloor}e^{-NF(j/N)}
+\asymp\sqrt N,
+\qquad
+\sum_{\substack{k:\,x_-\le k/N\le r}}e^{NF(k/N)}
+\asymp\sqrt N\,e^{NA}.
+\tag{9}
+\]<br>The upper bounds follow from (8) and summing Gaussians. The lower bounds follow by restricting to windows of width \(\sqrt N\) indices around the stationary points, where Taylor’s theorem bounds the exponent’s change by a constant.</p><p><b>Starting at or below \(x_+\).</b> Suppose \(p\le x_+\). In the double sum \(D_N\), pairs with \(k/N&lt;x_-\) have exponent at most zero, since \(F\) decreases there. Pairs with \(j/N&gt;x_+\) also have exponent at most zero. Their total contribution is \(O(N^2)\).</p><p>For all remaining pairs, extending the summation to the rectangle \(j/N\le x_+\), \(k/N\ge x_-\), and using (9), gives an upper bound \(CNe^{NA}\). Since \(A&gt;0\), this also absorbs \(O(N^2)\).</p><p>For the lower bound, take \(j\) within \(\sqrt N\) indices of \(Nx_-\) and<br>\[
+\lceil Nx_+\rceil\le k\le\lceil Nx_+\rceil+\lfloor\sqrt N\rfloor.
+\]<br>These pairs satisfy \(j\le k\) and \(k\ge s_N\), including when \(p=x_+\). Taylor’s theorem gives<br>\(N[F(k/N)-F(j/N)]\ge NA-C\). There are order \(N\) such pairs. Consequently,<br>\[
+D_N\asymp Ne^{NA}.
+\]<br>Equation (6) proves \(\mathbb E[T_N]=\Theta(Ne^{NA})\).</p><p><b>Starting above \(x_+\).</b> Suppose \(p&gt;x_+\). For \(k\ge s_N\), the part of \(B_N(k)\) with \(j/N\le x_+\) factorizes; by (9), it is<br>\[
+\asymp\sqrt N\,e^{NF(k/N)}.
+\tag{10}
+\]</p><p>The remaining part is uniformly \(O(1)\). To verify this, choose \(t\in(x_+,p)\). For \(x_+&lt;j/N\le t\),<br>\[
+F(k/N)-F(j/N)\le F(p)-F(t)&lt;0,
+\]<br>so these at most \(N\) terms sum to \(O(Ne^{-cN})\). For \(j/N&gt;t\), \(F&#x27;\) is bounded above by a negative constant on \([t,r]\), giving<br>\[
+N[F(k/N)-F(j/N)]\le-c(k-j).
+\]<br>Those terms form a bounded geometric sum. The diagonal term is \(1\), so together with (10),<br>\[
+B_N(k)\asymp1+\sqrt N\,e^{NF(k/N)}.
+\tag{11}
+\]</p><p>Likewise \(F&#x27;\) is uniformly negative on \([p,r]\), and therefore<br>\[
+\sum_{k=s_N}^{R_N}e^{NF(k/N)}
+\asymp e^{NF(p)}.
+\tag{12}
+\]<br>The upper bound follows from a geometric sum; the lower bound uses its first term. Rounding does not change the order because \(s_N/N=p+O(N^{-1})\) and \(F&#x27;\) is bounded here.</p><p>Equations (6), (11), and (12) yield<br>\[
+\mathbb E[T_N]\asymp
+N\log N+\sqrt N\,e^{NF(p)}
+\quad(p&gt;x_+).
+\tag{13}
+\]<br>When \(x_+&lt;p&lt;p_c\), \(F(p)&gt;0\), so the exponential term dominates. When \(p\ge p_c\), \(F(p)\le0\), so the answer is \(\Theta(N\log N)\). At equality, the second term in (13) is only \(\sqrt N\).</p><p><b>6. Critical bias</b></p><p>Now assume \(\alpha=1/9\) and write \(q=1/4\). Then<br>\[
+f(x)=\frac{8x(1-x)}{1+8x^2},
+\qquad
+1-f(x)=\frac{16(x-q)^2}{1+8x^2}.
+\tag{14}
+\]<br>Thus \(g=\log f\le0\), with equality only at \(q\). Using \(\log z\le z-1\),<br>\[
+g(x)\le-\frac{16}{9}(x-q)^2
+\quad(0&lt;x&lt;1).
+\tag{15}
+\]<br>In a fixed neighborhood of \(q\), there is also a bound<br>\[
+g(x)\ge-C(x-q)^2.
+\tag{16}
+\]<br>Indeed, write \(f(x)=1-z(x)\), with \(z(x)\) given by (14), and choose the neighborhood so that \(z(x)\le1/2\); then \(\log(1-z)\ge-2z\).</p><p>Choose \(2\varepsilon&lt;q\), \(r&gt;\max(p,q)\), and let \(F&#x27;=g\). Reduction (6) applies.</p><p>For \(h=k-j\ge1\), (15) gives<br>\[
+N[F(k/N)-F(j/N)]
+\le-c\left[
+\frac{h^3}{12N^2}
++h\left(\frac{k}{N}-\frac{h}{2N}-q\right)^2
+\right].
+\tag{17}
+\]<br>Here we used the exact identity<br>\[
+\int_a^b(x-q)^2\,dx
+=\frac{(b-a)^3}{12}
+ +(b-a)\left(\frac{a+b}{2}-q\right)^2.
+\]</p><p>For each fixed \(h\), the lattice Gaussian sum over \(k\) in (17) is at most \(CN/\sqrt h\). Including the \(O(N)\) diagonal terms, we obtain<br>\[
+D_N\le CN+
+CN\sum_{h=1}^{N}h^{-1/2}e^{-c&#x27;h^3/N^2}
+=O(N^{4/3}).
+\tag{18}
+\]<br>For completeness, the last sum is \(O(N^{1/3})\): its summand is decreasing, and its integral satisfies<br>\[
+\int_0^\infty x^{-1/2}e^{-c&#x27;x^3/N^2}\,dx
+=N^{1/3}\int_0^\infty y^{-1/2}e^{-c&#x27;y^3}\,dy,
+\]<br>with a finite final integral.</p><p><b>Starting at or below \(q\).</b> Suppose \(p\le q\), and let \(w_N=\lfloor N^{2/3}\rfloor\). Restrict the double sum to<br>\[
+\lceil Nq\rceil-w_N\le j\le\lfloor Nq\rfloor,
+\qquad
+\lceil Nq\rceil\le k\le\lceil Nq\rceil+w_N.
+\]<br>For sufficiently large \(N\), these pairs lie in the compact interval and satisfy \(j\le k\), \(k\ge s_N\). Along every corresponding interval, \(|x-q|=O(N^{-1/3})\). By (16),<br>\[
+N[F(k/N)-F(j/N)]
+=N\int_{j/N}^{k/N}g(x)\,dx\ge-C.
+\]<br>There are order \(w_N^2=N^{4/3}\) pairs, each contributing at least a positive constant. Combining this lower bound with (18) gives \(D_N\asymp N^{4/3}\). Since \(N\log N=o(N^{4/3})\), equation (6) proves<br>\[
+\mathbb E[T_N]=\Theta(N^{4/3})
+\quad(p\le1/4).
+\]</p><p><b>Starting above \(q\).</b> Suppose \(p&gt;q\), and choose \(t\in(q,p)\). The function \(F\) is decreasing throughout the compact interval. For \(j/N\le t\) and \(k\ge s_N\),<br>\[
+F(k/N)-F(j/N)\le F(p)-F(t)&lt;0,
+\]<br>so those terms sum to \(O(Ne^{-cN})\). For \(j/N&gt;t\), \(g\) is uniformly negative on \([t,r]\), and the remaining terms form a bounded geometric sum. Hence \(B_N(k)=O(1)\) uniformly for \(k\ge s_N\), giving \(D_N=O(N)\). Equation (6) proves<br>\[
+\mathbb E[T_N]=\Theta(N\log N)
+\quad(p&gt;1/4).
+\]</p><p>These estimates use the population parameter \(N\). With two opinion types, the initial support size satisfies \(\tau\le2\); it does not replace \(N\) in the update-time bounds.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<h2>Adversarial review (gpt-6.1-sol / medium, Bolzano verifier prompt)</h2>
+
+<div class="pre"><p>The prover resolves the assigned hitting-time question. The argument is correct for the exact transition probabilities, including both boundary cases. I found no major or minor mathematical issues requiring repair.</p><ul><li><b>Scope and claimed classification</b></li></ul><p>The output covers every fixed \(\alpha\in(0,1)\) and \(p\in[0,1)\). It distinguishes the critical value \(\alpha=1/9\), the subcritical threshold \(p_c\), and the intermediate subcritical range \(x_+&lt;p&lt;p_c\).</p><p>Constants are consistently allowed to depend on the fixed parameters. The proof does not claim uniform estimates as \(\alpha\) or \(p\) approach a regime boundary. That restriction matches the task.</p><ul><li><b>Finite expectations and exact hitting-time formula</b></li></ul><p>The finiteness argument is valid. Every upward transition from a nonabsorbing state has positive probability. For each fixed \(N\), the finite collection of probabilities of successive upward paths has a positive minimum. Applying the Markov property in blocks of \(N\) updates gives the stated geometric tail bound.</p><p>With \(H_N(N)=0\), the first-step equations correctly yield<br>\[
+   u_N(k)e_N(k)-d_N(k)e_N(k-1)=1
+   \]<br>for \(1\le k&lt;N\), together with \(u_N(0)e_N(0)=1\). Iterating this recurrence gives equation (1), and telescoping gives the expected absorption time from \(s_N\).</p><p>The lower bound (2) is correct: for \(k&lt;N\), the bracket in \(u_N(k)\) is at most \(1\). Moreover, fixed \(p&lt;1\) ensures that \(N-s_N\) grows linearly with \(N\), so the harmonic sum has order \(\log N\). This includes \(p=0\).</p><ul><li><b>Comparison with the modified coefficients</b></li></ul><p>The cancellation producing<br>\[
+   \rho_N(k)=
+   \frac{(1-\alpha)x(1-x)}
+   {\alpha(1-1/N)^2+(1-\alpha)x^2}
+   \]<br>is correct.</p><p>Both bounds on \(\rho_N(k)/f_\alpha(k/N)\) hold for \(1\le k&lt;N\). The logarithmic bound \(4/N\) is valid throughout \(N\ge2\). The comparison<br>\[
+   \bar u_N(k)\le u_N(k)\le4\bar u_N(k)
+   \]<br>also holds, including \(k=0\).</p><p>Since each product contains at most \(N\) factors, the termwise comparison (3) follows with the stated constants. Thus replacing the exact denominators by the modified coefficients preserves all subsequent asymptotic orders. This step is essential and is justified.</p><ul><li><b>Reduction to the compact double sum</b></li></ul><p>The choices of \(\varepsilon\) and \(r\) are available in both applications. In particular, \(r&gt;p\) ensures that the starting index lies below \(R_N\) for sufficiently large \(N\).</p><p>The bounded forcing terms and contraction near zero justify \(\bar e_N(k)\asymp1\) up to \(h_N\). On the compact interval, the rectangle-integral comparison has uniformly bounded logarithmic error, so (4) is valid. Unrolling the recurrence then gives (5); its initial contribution at \(h_N\) is accounted for by the term \(j=h_N\).</p><p>In the upper tail, every coefficient used after \(R_N\) is evaluated at a point in \([r,1]\). The forcing-term bound and geometric summation give the claimed tail estimate. Since \(B_N(R_N)\) is included in \(D_N\), this contribution is controlled.</p><p>Together with the universal lower bound, these estimates establish (6). No contribution relevant to the final orders is omitted.</p><ul><li><b>Supercritical regime</b></li></ul><p>Identity (7) is algebraically correct. For \(\alpha&gt;1/9\), its numerator is strictly positive everywhere on \([0,1]\). Continuity therefore supplies a fixed bound \(\max f_\alpha&lt;1\).</p><p>The geometric-series estimate for \(\bar e_N(k)\), followed by summation, gives \(O(N\log N)\). Equation (2) supplies the matching lower bound. The first classification row is proved.</p><ul><li><b>Subcritical threshold and exponential orders</b></li></ul><p>The roots \(x_-\) and \(x_+\), the signs of \(f_\alpha-1\), and the resulting monotonicity of \(F_\alpha\) are correct. In particular, \(A_\alpha&gt;0\).</p><p>The product inequality involving \(f_\alpha(x)f_\alpha(1-x)\) is strict on the relevant interval. The symmetry argument correctly proves a negative integral over \([x_-,1-x_-]\). The remaining integral to \(1\) is negative and converges because its endpoint singularity is logarithmic. Consequently, \(F_\alpha(1)&lt;0\), and strict decrease beyond \(x_+\) proves existence and uniqueness of \(p_c\).</p><p>The second-derivative signs, compact quadratic bounds (8), and lattice estimates (9) are valid on their stated domains.</p><p>For \(p\le x_+\), the partition of double-sum pairs is exhaustive. The terms assigned the \(O(N^2)\) bound have nonpositive exponent; the remaining rectangle is controlled by (9). The lower-bound windows contain order \(N\) admissible pairs, including when \(p=x_+\). Thus the order \(Ne^{NA_\alpha}\) is established.</p><p>For \(p&gt;x_+\), the factorization (10), bounded remainder in (11), and decreasing-endpoint estimate (12) are justified. Rounding \(pN\) changes the exponent by only a bounded amount. Equation (13) therefore proves both the intermediate exponential order and the fast regime.</p><p>At \(p=p_c\), the exponential contribution in (13) has order \(\sqrt N\), so it is dominated by \(N\log N\). The threshold equality is explicitly settled.</p><p>The claimed agreement of the threshold characterization with the published theorem is supported by [Theorem 3.1](https://wrap.warwick.ac.uk/id/eprint/178842/13/phase-transitions-in-biased-opinion-dynamics-with-2-choices-rule.pdf). The present proof establishes its bounds independently.</p><ul><li><b>Critical regime</b></li></ul><p>Identity (14) and inequalities (15)–(16) are correct. The global upper bound and local lower bound are applied on appropriate domains.</p><p>The integral identity used in (17) is exact, with the stated coefficient \(1/12\). The lattice Gaussian estimate is valid uniformly for \(1\le h\le N\). The integral scaling in (18) gives the stated \(O(N^{1/3})\) bound for the remaining sum, hence \(D_N=O(N^{4/3})\).</p><p>When \(p\le1/4\), the lower-bound rectangle contains order \(N^{4/3}\) admissible pairs. Its intervals stay within the neighborhood required for (16), and their exponents are bounded below uniformly. The ceiling and floor choices preserve admissibility at \(p=1/4\).</p><p>When \(p&gt;1/4\), choosing \(t\in(1/4,p)\) gives the asserted exponentially small contribution from earlier indices and a bounded geometric contribution from later ones. Hence \(D_N=O(N)\), as claimed.</p><p>Both critical classification rows follow.</p><ul><li><b>Internal consistency and feedback</b></li></ul><p>All six classification rows agree with the estimates actually proved. The support-size observation \(\tau\le2\) correctly distinguishes support from population size. There is no unresolved mathematical step and no repair feedback is needed.</p><p>These are stochastic update-time results. They do not establish a computational-complexity classification for a separate continuous problem, so the required continuous-status field is marked unresolved without affecting the proof verdict.</p><p>⟨structured verdict parsed — rendered above⟩</p></div>
+<p style="color:#8a7350;font-size:.85em">Tier: machine-proved, adversarially reviewed by an independent model. No human has checked this proof.
+Generated from pipeline artifacts by tools/atlas_build.py.</p>
+<script>document.addEventListener("DOMContentLoaded", () => renderMathInElement(document.body, {delimiters: [
+ {left: "$$", right: "$$", display: true}, {left: "\\[", right: "\\]", display: true},
+ {left: "\\(", right: "\\)", display: false}, {left: "$", right: "$", display: false}], ignoredClasses: ["nk"], macros: {"\\textsc": "\\textrm{#1}", "\\mathbbm": "\\mathbb{#1}"}, throwOnError: false}));</script>
+</body></html>
